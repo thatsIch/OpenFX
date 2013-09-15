@@ -6,13 +6,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ResourceBundle;
 
-import org.opencv.core.Core;
-import org.opencv.core.CvType;
-import org.opencv.core.Mat;
-import org.opencv.core.Point;
-import org.opencv.core.Scalar;
-import org.opencv.highgui.Highgui;
-
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -27,9 +20,15 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 
+import org.opencv.core.Core;
+import org.opencv.core.CvType;
+import org.opencv.core.Mat;
+import org.opencv.core.Point;
+import org.opencv.core.Scalar;
+import org.opencv.highgui.Highgui;
+
 import com.google.common.eventbus.EventBus;
 import com.google.inject.Inject;
-import com.google.inject.Injector;
 import com.google.inject.Singleton;
 import com.thatsich.core.java.Log;
 import com.thatsich.sample.javafx.command.ICommandProvider;
@@ -46,6 +45,7 @@ import com.thatsich.sample.javafx.view.component.LedMatrix;
 @Singleton
 public class DisplayPresenter implements Initializable, IDisplayPresenter {
 
+	private File lastLocation;
 	private Stage stage;
 	
 	// GUI Elements
@@ -70,18 +70,10 @@ public class DisplayPresenter implements Initializable, IDisplayPresenter {
 	// Output
 	@FXML private Button ButtonSaveOutput;
 	
-	private File lastLocation;
 	
-	
-	@Inject
-	private Log log;
-	
-	@Inject
-	private ICommandProvider commandProvider;
-	
-	@SuppressWarnings("unused")
-	@Inject
-	private EventBus bus;
+	@Inject private Log log;
+	@Inject private ICommandProvider commandProvider;
+	@Inject private EventBus bus;
 	
 	/**
 	 * CTOR
