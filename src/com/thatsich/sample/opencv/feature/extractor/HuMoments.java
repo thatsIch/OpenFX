@@ -21,6 +21,8 @@ public class HuMoments implements IFeatureExtractor {
 		
 	}
 	
+	@Override public String getName() { return this.getClass().getSimpleName(); }
+	
 	@Override
 	public Mat extractFeature(Mat image) {		
 		

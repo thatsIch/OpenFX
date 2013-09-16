@@ -4,9 +4,9 @@ import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 
-import com.thatsich.core.opencv.metric.ADistance;
+import com.thatsich.core.opencv.metric.AMetric;
 
-public class EuclideanDistance extends ADistance {
+public class EuclideanDistance extends AMetric {
 
 	/**
 	 * ||a - b||_2 = SQRT(sum(a_i - b_i)^2)

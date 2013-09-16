@@ -2,9 +2,9 @@ package com.thatsich.sample.opencv.metric;
 
 import org.opencv.core.Mat;
 
-import com.thatsich.core.opencv.metric.IDistance;
+import com.thatsich.core.opencv.metric.AMetric;
 
-public class ManhattenDistance implements IDistance {
+public class ManhattenDistance extends AMetric {
 
 	/**
 	 * ||a - b||_1 = sum(abs(a_i - b_i))
@@ -14,5 +14,4 @@ public class ManhattenDistance implements IDistance {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
 }
