@@ -3,7 +3,6 @@ package com.thatsich.sample.javafx.model;
 import java.nio.file.Path;
 
 import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;
 
@@ -42,9 +41,9 @@ public interface IStateModel {
 	
 	
 	// Property
-	public ListProperty<Path> getImagePathsProperty();
-	public ListProperty<IErrorGenerator> getErrorGeneratorsProperty();
-	public ListProperty<IMetric> getMetricsProperty();
+	public ObjectProperty<ObservableList<Path>> getImagePathsProperty();
+	public ObjectProperty<ObservableList<IErrorGenerator>> getErrorGeneratorsProperty();
+	public ObjectProperty<ObservableList<IMetric>> getMetricsProperty();
 	
 	public ObjectProperty<Path> getImagePathProperty();
 	public ObjectProperty<IErrorGenerator> getErrorGeneratorProperty();

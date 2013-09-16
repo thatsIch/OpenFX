@@ -147,7 +147,7 @@ public class DisplayPresenter implements Initializable, IDisplayPresenter {
 		this.ChoiceBoxDisplayImage.setConverter(new StringPathConverter());
 
 		// update each other when either change
-//		this.ChoiceBoxDisplayImage.itemsProperty().bindBidirectional(this.stateModel.getImagePathsProperty());
+		this.ChoiceBoxDisplayImage.itemsProperty().bindBidirectional(this.stateModel.getImagePathsProperty());
 		this.ChoiceBoxDisplayImage.valueProperty().bindBidirectional(this.stateModel.getImagePathProperty());
 	}
 	
@@ -157,7 +157,7 @@ public class DisplayPresenter implements Initializable, IDisplayPresenter {
 		this.ChoiceBoxErrorGenerator.setConverter(new StringErrorGeneratorConverter());
 		
 		// update each other when either change
-//		this.ChoiceBoxErrorGenerator.itemsProperty().bindBidirectional(this.stateModel.getErrorGeneratorsProperty());
+		this.ChoiceBoxErrorGenerator.itemsProperty().bindBidirectional(this.stateModel.getErrorGeneratorsProperty());
 		this.ChoiceBoxErrorGenerator.valueProperty().bindBidirectional(this.stateModel.getErrorGeneratorProperty());
 	}
 	
@@ -167,7 +167,7 @@ public class DisplayPresenter implements Initializable, IDisplayPresenter {
 		this.ChoiceBoxMetric.setConverter(new StringMetricConverter());
 		
 		// update each other when either change
-//		this.ChoiceBoxMetric.itemsProperty().bindBidirectional(this.stateModel.getMetricsProperty());
+		this.ChoiceBoxMetric.itemsProperty().bindBidirectional(this.stateModel.getMetricsProperty());
 		this.ChoiceBoxMetric.valueProperty().bindBidirectional(this.stateModel.getMetricProperty());
 	}
 	

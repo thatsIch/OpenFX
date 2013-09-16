@@ -30,7 +30,12 @@
                     </Label>
                     <Label text="Display Image" GridPane.columnIndex="0" GridPane.rowIndex="1">
                       <labelFor>
-                        <ChoiceBox id="displayImageChoice" fx:id="ChoiceBoxDisplayImage" prefWidth="128.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <ChoiceBox id="displayImageChoice" fx:id="ChoiceBoxDisplayImage" prefWidth="128.0" GridPane.columnIndex="1" GridPane.rowIndex="1"> 
+                        	<items>
+							  <FXCollections fx:factory="observableArrayList">
+							  </FXCollections>
+							</items>
+                        </ChoiceBox>
                       </labelFor>
                     </Label>
                     <Label text="Remove Image" GridPane.columnIndex="0" GridPane.rowIndex="2">
@@ -70,7 +75,12 @@
                   <children>
                     <Label text="Use ErrorGenerator" GridPane.columnIndex="0" GridPane.rowIndex="0">
                       <labelFor>
-                        <ChoiceBox fx:id="ChoiceBoxErrorGenerator" prefWidth="128.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                        <ChoiceBox fx:id="ChoiceBoxErrorGenerator" prefWidth="128.0" GridPane.columnIndex="1" GridPane.rowIndex="0"> 
+	                       	<items>
+							  <FXCollections fx:factory="observableArrayList">
+							  </FXCollections>
+							</items>
+                        </ChoiceBox>
                       </labelFor>
                     </Label>
                     <fx:reference source="ChoiceBoxErrorGenerator" />
@@ -83,7 +93,7 @@
                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   </rowConstraints>
                 </GridPane>
-                <ImageView fx:id="modified" fitHeight="0.0" fitWidth="0.0" pickOnBounds="true" preserveRatio="true" VBox.margin="$x1">
+                <ImageView fx:id="modified" fitHeight="0.0" fitWidth="0.0" pickOnBounds="true" preserveRatio="true">
                   <image>
                     <Image url="@../../../../../../res/img/error.jpg" />
                   </image>
@@ -98,8 +108,13 @@
                   <children>
                     <Slider fx:id="SliderFrameSize" prefWidth="128.0" showTickLabels="true" showTickMarks="true" GridPane.columnIndex="1" GridPane.rowIndex="0" />
                     <Label labelFor="$SliderFrameSize" text="Frame Size (PX x PX)" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                    <ChoiceBox fx:id="ChoiceBoxMetric" prefWidth="125.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                    <Label labelFor="$ChoiceBoxMetric" text="Choose Metric" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                    <ChoiceBox fx:id="ChoiceBoxMetric" prefWidth="125.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  		<items>
+							<FXCollections fx:factory="observableArrayList">
+							</FXCollections>
+						</items>
+					</ChoiceBox>
+                   <Label labelFor="$ChoiceBoxMetric" text="Choose Metric" GridPane.columnIndex="0" GridPane.rowIndex="1" />
                     <Slider fx:id="SliderThreshold" majorTickUnit="25.0" showTickLabels="true" showTickMarks="true" value="0.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                     <Label labelFor="$SliderThreshold" text="Threshold" GridPane.columnIndex="0" GridPane.rowIndex="2" />
                   </children>
@@ -114,8 +129,7 @@
                   </rowConstraints>
                 </GridPane>
                 <LedMatrix fx:id="result" />
-                <Label alignment="BOTTOM_CENTER" labelFor="$result" minHeight="-Infinity" minWidth="-Infinity" text="Result">
-                </Label>
+                <Label alignment="BOTTOM_CENTER" labelFor="$result" minHeight="-Infinity" minWidth="-Infinity" text="Result" />
               </children>
             </VBox>
           </children>

@@ -6,12 +6,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
+import javafx.scene.control.ChoiceBox;
 
 import com.thatsich.core.opencv.error.generator.IErrorGenerator;
 import com.thatsich.core.opencv.metric.IMetric;
@@ -30,16 +29,16 @@ public class StateModel implements IStateModel {
 	final private Path outputPath;
 
 	// Properties
-	private ListProperty<Path> imagePaths = new SimpleListProperty<Path>();
-	private ListProperty<IErrorGenerator> errorGenerators = new SimpleListProperty<IErrorGenerator>();
-	private ListProperty<IMetric> metrics = new SimpleListProperty<IMetric>();
+	final private ObjectProperty<ObservableList<Path>> imagePaths = new ChoiceBox<Path>().itemsProperty();
+	final private ObjectProperty<ObservableList<IErrorGenerator>> errorGenerators = new ChoiceBox<IErrorGenerator>().itemsProperty();
+	final private ObjectProperty<ObservableList<IMetric>> metrics = new ChoiceBox<IMetric>().itemsProperty();
 	
-	private ObjectProperty<Path> imagePath = new SimpleObjectProperty<Path>();
-	private ObjectProperty<IErrorGenerator> errorGenerator = new SimpleObjectProperty<IErrorGenerator>();
-	private ObjectProperty<IMetric> metric = new SimpleObjectProperty<IMetric>();
+	final private ObjectProperty<Path> imagePath = new SimpleObjectProperty<Path>();
+	final private ObjectProperty<IErrorGenerator> errorGenerator = new SimpleObjectProperty<IErrorGenerator>();
+	final private ObjectProperty<IMetric> metric = new SimpleObjectProperty<IMetric>();
 	
-	private IntegerProperty frameSize = new SimpleIntegerProperty();
-	private IntegerProperty threshold = new SimpleIntegerProperty();
+	final private IntegerProperty frameSize = new SimpleIntegerProperty();
+	final private IntegerProperty threshold = new SimpleIntegerProperty();
 	
 	/**
 	 * @throws IOException 
@@ -97,14 +96,14 @@ public class StateModel implements IStateModel {
 	 * Property Implementation
 	 * ==================================================
 	 */
-	@Override public ListProperty<Path> getImagePathsProperty() { return this.imagePaths; }
-	@Override public ListProperty<IErrorGenerator> getErrorGeneratorsProperty() { return this.errorGenerators; }
-	@Override public IntegerProperty getFrameSizeProperty() { return this.frameSize; }
+	@Override public ObjectProperty<ObservableList<Path>> getImagePathsProperty() { return this.imagePaths; }
+	@Override public ObjectProperty<ObservableList<IErrorGenerator>> getErrorGeneratorsProperty() { return this.errorGenerators; }
+	@Override public ObjectProperty<ObservableList<IMetric>> getMetricsProperty() { return this.metrics; }
 	
 	@Override public ObjectProperty<Path> getImagePathProperty() { return this.imagePath; }
 	@Override public ObjectProperty<IErrorGenerator> getErrorGeneratorProperty() { return this.errorGenerator; }
 	@Override public ObjectProperty<IMetric> getMetricProperty() { return this.metric; }
 	
-	@Override public ListProperty<IMetric> getMetricsProperty() { return this.metrics; }
+	@Override public IntegerProperty getFrameSizeProperty() { return this.frameSize; }
 	@Override public IntegerProperty getThresholdProperty() { return this.threshold; }
 }
