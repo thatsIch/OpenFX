@@ -1,7 +1,10 @@
 package com.thatsich.sample.javafx.presenter;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -27,11 +30,15 @@ import org.opencv.core.Point;
 import org.opencv.core.Scalar;
 import org.opencv.highgui.Highgui;
 
-import com.google.common.eventbus.EventBus;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.thatsich.core.java.Log;
-import com.thatsich.sample.javafx.command.ICommandProvider;
+import com.thatsich.core.java.StringErrorGeneratorConverter;
+import com.thatsich.core.java.StringMetricConverter;
+import com.thatsich.core.java.StringPathConverter;
+import com.thatsich.core.opencv.error.generator.IErrorGenerator;
+import com.thatsich.core.opencv.metric.IMetric;
+import com.thatsich.sample.javafx.model.IStateModel;
 import com.thatsich.sample.javafx.view.component.LedMatrix;
 
 /**
@@ -45,7 +52,7 @@ import com.thatsich.sample.javafx.view.component.LedMatrix;
 @Singleton
 public class DisplayPresenter implements Initializable, IDisplayPresenter {
 
-	private File lastLocation;
+	private Path lastFileChooserPath;
 	private Stage stage;
 	
 	// GUI Elements
@@ -53,18 +60,18 @@ public class DisplayPresenter implements Initializable, IDisplayPresenter {
 	
 	// Original Pane
 	@FXML private Button ButtonAddImage;
-	@FXML private ChoiceBox<String> ChoiceBoxDisplayImage;
+	@FXML private ChoiceBox<Path> ChoiceBoxDisplayImage;
 	@FXML private Button ButtonRemoveImage;
 	@FXML private ImageView original;
 	
 	// Modified Pane
 	@FXML private ImageView modified;
-	@FXML private ChoiceBox<String> ChoiceBoxErrorGenerator;
+	@FXML private ChoiceBox<IErrorGenerator> ChoiceBoxErrorGenerator;
 	
 	// Result Pane
 	@FXML private LedMatrix result;
 	@FXML private Slider SliderFrameSize;
-	@FXML private ChoiceBox<String> ChoiceBoxMetric;
+	@FXML private ChoiceBox<IMetric> ChoiceBoxMetric;
 	@FXML private Slider SliderThreshold;
 	
 	// Output
@@ -72,8 +79,9 @@ public class DisplayPresenter implements Initializable, IDisplayPresenter {
 	
 	
 	@Inject private Log log;
-	@Inject private ICommandProvider commandProvider;
-	@Inject private EventBus bus;
+//	@Inject private ICommandProvider commandProvider;
+	@Inject private IStateModel stateModel;
+//	@Inject private EventBus bus;
 	
 	/**
 	 * CTOR
@@ -96,30 +104,16 @@ public class DisplayPresenter implements Initializable, IDisplayPresenter {
 	
 	@Override
 	public Stage getStage() {
+				
+		if (this.stage != null) return this.stage;
+		if (this.root == null) throw new IllegalStateException("Root not set.");
 		
-		if (this.stage != null) {
-			return this.stage;
-		}
-		
-		// catch root
-		if (this.root == null) {
-			this.log.severe("Root not set.");
-			return null;
-		}
-		
-		// catch scene
 		final Scene scene = this.root.getScene();
-		if (scene == null) {
-			this.log.severe("Scene not set.");
-			return null;
-		}
+		if (scene == null) throw new IllegalStateException("Scene not set.");
 		
 		// catch stage
 		final Stage stage = (Stage) scene.getWindow();
-		if (stage == null) {
-			this.log.severe("Window not set.");
-			return null;
-		}
+		if (stage == null) throw new IllegalStateException("Window not set.");
 		
 		this.stage = stage;
 		
@@ -135,50 +129,134 @@ public class DisplayPresenter implements Initializable, IDisplayPresenter {
 	public void initialize(URL url, ResourceBundle resourceBundle) {
 		this.log.info("entering");
 		
-		this.initSliderFrameSize();
-		this.initSliderThreshold();
-		
 		this.initChoiceBoxDisplayImage();
 		this.initChoiceBoxErrorGenerator();
 		this.initChoiceBoxMetric();
+		
+//		this.initImageOriginal();
+//		this.initImageModified();
+//		this.initImageResult();
+		
+		this.initSliderFrameSize();
+		this.initSliderThreshold();
 	}
+	
+	private void initChoiceBoxDisplayImage() {
+		
+		// need own converter to display Proper FileNames
+		this.ChoiceBoxDisplayImage.setConverter(new StringPathConverter());
+
+		// update each other when either change
+//		this.ChoiceBoxDisplayImage.itemsProperty().bindBidirectional(this.stateModel.getImagePathsProperty());
+		this.ChoiceBoxDisplayImage.valueProperty().bindBidirectional(this.stateModel.getImagePathProperty());
+	}
+	
+	private void initChoiceBoxErrorGenerator() {
+		
+		// own converter for proper name display
+		this.ChoiceBoxErrorGenerator.setConverter(new StringErrorGeneratorConverter());
+		
+		// update each other when either change
+//		this.ChoiceBoxErrorGenerator.itemsProperty().bindBidirectional(this.stateModel.getErrorGeneratorsProperty());
+		this.ChoiceBoxErrorGenerator.valueProperty().bindBidirectional(this.stateModel.getErrorGeneratorProperty());
+	}
+	
+	private void initChoiceBoxMetric() {
+		
+		// own converter for proper name display
+		this.ChoiceBoxMetric.setConverter(new StringMetricConverter());
+		
+		// update each other when either change
+//		this.ChoiceBoxMetric.itemsProperty().bindBidirectional(this.stateModel.getMetricsProperty());
+		this.ChoiceBoxMetric.valueProperty().bindBidirectional(this.stateModel.getMetricProperty());
+	}
+	
+//	private void initImageOriginal() {
+//		this.original.imageProperty().bind(this.stateModel.getOriginalImageProperty());
+//	}
+//	
+	private void initSliderFrameSize() {
+		this.SliderFrameSize.valueProperty().addListener(new ChangeListener<Number>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Number> ov, Number oldValue, Number newValue) {
+				log.finer("entering");
+				log.fine(newValue.toString());
+			}
+			
+		});
+	}
+	
+	private void initSliderThreshold() {
+		this.SliderThreshold.valueProperty().addListener(new ChangeListener<Number>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				log.finer("entering");
+				log.fine(newValue.toString());
+			}
+			
+		});		
+	}
+	
+	
 
 	/*
 	 * ================================================== 
 	 * GUI Implementation 
 	 * ==================================================
 	 */
-	@FXML private void onAddImageAction() {
-		this.log.info("entering");
-		
-		// set filter
+	@FXML private void onAddImageAction() throws IOException {
+
+		this.log.info("Setting up FileChooser.");	
 		FileChooser fileChooser = new FileChooser();
 		ExtensionFilter filter = new ExtensionFilter("PNG files (*.png)", "*.png");
 		fileChooser.getExtensionFilters().add(filter);
 		fileChooser.setTitle("Add Image File");
-		if (this.lastLocation != null) fileChooser.setInitialDirectory(this.lastLocation);
+		if (this.lastFileChooserPath != null) fileChooser.setInitialDirectory(this.lastFileChooserPath.toFile());
 		
-		// get file
+		this.log.info("Showing FileChooser.");
 		File file = fileChooser.showOpenDialog(null);
-		
+
 		if (file == null) {
 			this.log.warning("No File selected.");
 			return;
 		}
 		
-		File parent = file.getParentFile();
-		if (parent.exists() && parent.isDirectory()) {
-			this.lastLocation = parent;
+		Path filePath = file.toPath();
+		this.log.info("Converted File to Path Object: " + filePath.toString());
+		
+		this.lastFileChooserPath = filePath.getParent();
+		this.log.info("Stored last DirectoryPath: " + this.lastFileChooserPath.toString());
+		
+		Path newPath = this.stateModel.getInputPath().resolve(filePath.getFileName());
+		this.log.info("Created new Path: " + newPath);
+		
+		if (Files.exists(newPath)) {
+			this.log.info("Duplicate found: File already exists.");
+			return;
 		}
 		
-		// add file to choicebox
-		this.ChoiceBoxDisplayImage.getItems().add(file.getName());
+		Path copiedPath = Files.copy(filePath, newPath);
+		this.log.info("Copied selection ("+ filePath +") into InputFolder ("+this.stateModel.getInputPath()+"): " + copiedPath);
+				
+		this.ChoiceBoxDisplayImage.getItems().add(copiedPath);
+		this.log.info("Added copy to ChoiceBoxDisplayImage: " + copiedPath.toString());
 	}
 	
-	@FXML private void onRemoveImageAction() {
-		this.log.info("entering");
+	@FXML private void onRemoveImageAction() throws IOException {
+		Path choice = this.ChoiceBoxDisplayImage.getValue();
 		
+		if (choice == null || Files.notExists(choice)) {
+			this.log.info("Choice was empty. Deleting nothing.");
+			return;
+		}
 		
+		this.log.info("Removing Image from List.");
+		this.ChoiceBoxDisplayImage.getItems().remove(choice);
+		
+		this.log.info("Deleting Image from InputFolder.");
+		Files.delete(choice);
 	}
 	
 	@FXML private void onSaveOutputAction() {
@@ -205,63 +283,5 @@ public class DisplayPresenter implements Initializable, IDisplayPresenter {
 		Highgui.imwrite(sResult, mResult);
 	}
 	
-	private void initSliderFrameSize() {
-		this.SliderFrameSize.valueProperty().addListener(new ChangeListener<Number>() {
-
-			@Override
-			public void changed(ObservableValue<? extends Number> ov, Number oldValue, Number newValue) {
-				log.finer("entering");
-				log.fine(newValue.toString());
-			}
-			
-		});
-	}
 	
-	private void initSliderThreshold() {
-		this.SliderThreshold.valueProperty().addListener(new ChangeListener<Number>() {
-
-			@Override
-			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-				log.finer("entering");
-				log.fine(newValue.toString());
-			}
-			
-		});		
-	}
-	
-	private void initChoiceBoxDisplayImage() {
-		this.ChoiceBoxDisplayImage.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-
-			@Override
-			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				log.finer("entering");
-				log.fine(newValue.toString());
-			}
-		
-		});
-	}
-	
-	private void initChoiceBoxErrorGenerator() {
-		this.ChoiceBoxErrorGenerator.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-
-			@Override
-			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				log.finer("entering");
-				log.fine(newValue.toString());
-			}
-		
-		});	
-	}
-	
-	private void initChoiceBoxMetric() {
-		this.ChoiceBoxMetric.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-
-			@Override
-			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				log.finer("entering");
-				log.fine(newValue.toString());
-			}
-		
-		});	
-	}
 }
