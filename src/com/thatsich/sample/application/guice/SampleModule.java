@@ -11,13 +11,10 @@ import com.google.inject.spi.TypeListener;
 import com.thatsich.core.java.Log;
 import com.thatsich.sample.javafx.command.CommandProvider;
 import com.thatsich.sample.javafx.command.ICommandProvider;
-import com.thatsich.sample.javafx.command.LoadImageCommand;
 import com.thatsich.sample.javafx.model.IStateModel;
 import com.thatsich.sample.javafx.model.StateModel;
 import com.thatsich.sample.javafx.presenter.DisplayPresenter;
 import com.thatsich.sample.javafx.presenter.IDisplayPresenter;
-import com.thatsich.sample.javafx.service.ILoadImageService;
-import com.thatsich.sample.javafx.service.LoadImageService;
 import com.thatsich.sample.javafx.view.DisplayView;
 import com.thatsich.sample.javafx.view.IDisplayView;
 
@@ -78,12 +75,10 @@ public class SampleModule extends AbstractModule {
 	
 	private void mapCommands() {
 		bind(ICommandProvider.class).to(CommandProvider.class).in(Scopes.SINGLETON);
-		
-		bind(LoadImageCommand.class);
 	}
 	
 	private void mapServices() {
-		bind(ILoadImageService.class).to(LoadImageService.class);
+		
 	}
 	
 	private void mapModels() {
