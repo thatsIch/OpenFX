@@ -148,6 +148,8 @@ public class DisplayPresenter implements Initializable, IDisplayPresenter {
 
 		// update each other when either change
 		this.ChoiceBoxDisplayImage.itemsProperty().bindBidirectional(this.stateModel.getImagePathsProperty());
+//		ObjectProperty<ObservableList<Path>> paths = new SimpleObjectProperty<ObservableList<Path>>();
+//		paths.bind(this.ChoiceBoxDisplayImage.itemsProperty());
 		this.ChoiceBoxDisplayImage.valueProperty().bindBidirectional(this.stateModel.getImagePathProperty());
 	}
 	

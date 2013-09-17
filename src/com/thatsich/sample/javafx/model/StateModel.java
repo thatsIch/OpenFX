@@ -1,6 +1,7 @@
 package com.thatsich.sample.javafx.model;
 
 import java.io.IOException;
+import java.nio.file.DirectoryIteratorException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
@@ -13,6 +14,8 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ChoiceBox;
 
+import com.google.inject.Inject;
+import com.thatsich.core.java.Log;
 import com.thatsich.core.opencv.error.generator.IErrorGenerator;
 import com.thatsich.core.opencv.metric.IMetric;
 
@@ -41,11 +44,16 @@ public class StateModel implements IStateModel {
 	final private IntegerProperty frameSize = new SimpleIntegerProperty();
 	final private IntegerProperty threshold = new SimpleIntegerProperty();
 	
+	// Injects
+	final private Log log;
+	
 	/**
 	 * @throws IOException 
 	 * 
 	 */
-	public StateModel() throws IOException {
+	@Inject
+	public StateModel(Log log) throws IOException {
+		this.log = log;
 		final Path parent = FileSystems.getDefault().getPath("");
 		
 		this.inputPath = parent.resolve("input").toAbsolutePath();
@@ -57,12 +65,22 @@ public class StateModel implements IStateModel {
 		this.initImagePaths();
 	}
 	
-	private void initImagePaths() throws IOException {
-		
-		DirectoryStream<Path> stream = Files.newDirectoryStream(this.inputPath);
-		
-		for (Path child : stream) {
-			this.imagePaths.get().add(child);
+	/**
+	 * Initialize the ImagePath variable 
+	 * with all images in the input folder 
+	 */
+	private void initImagePaths() {
+
+		System.out.println(this.log == null);
+		// TODO : only files, possibly only image files
+		// bmp, OpenCV offers support for the image formats Windows bitmap (bmp), portable image formats (pbm, pgm, ppm) and Sun raster (sr, ras). With help of plugins (you need to specify to use them if you build yourself the library, nevertheless in the packages we ship present by default) you may also load image formats like JPEG (jpeg, jpg, jpe), JPEG 2000 (jp2 - codenamed in the CMake as Jasper), TIFF files (tiff, tif) and portable network graphics (png). Furthermore, OpenEXR is also a possibility.
+		try (DirectoryStream<Path> stream = Files.newDirectoryStream(this.inputPath)) {
+			for (Path child : stream) {
+				this.imagePaths.get().add(child);
+				this.log.info("Added " + child + " from input.");
+			}	
+		} catch (IOException | DirectoryIteratorException e) {
+			e.printStackTrace();
 		}
 	}
 	
