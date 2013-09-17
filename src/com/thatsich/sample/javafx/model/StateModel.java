@@ -1,6 +1,7 @@
 package com.thatsich.sample.javafx.model;
 
 import java.io.IOException;
+import java.nio.file.DirectoryStream;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -52,6 +53,17 @@ public class StateModel implements IStateModel {
 		
 		if (Files.notExists(this.inputPath) || !Files.isDirectory(this.inputPath)) Files.createDirectory(this.inputPath);
 		if (Files.notExists(this.outputPath) || !Files.isDirectory(this.outputPath)) Files.createDirectory(this.outputPath); 
+		
+		this.initImagePaths();
+	}
+	
+	private void initImagePaths() throws IOException {
+		
+		DirectoryStream<Path> stream = Files.newDirectoryStream(this.inputPath);
+		
+		for (Path child : stream) {
+			this.imagePaths.get().add(child);
+		}
 	}
 	
 	/*

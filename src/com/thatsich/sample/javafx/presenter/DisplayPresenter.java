@@ -209,15 +209,21 @@ public class DisplayPresenter implements Initializable, IDisplayPresenter {
 	@FXML private void onAddImageAction() throws IOException {
 
 		this.log.info("Setting up FileChooser.");	
+//		Filechooserb
 		FileChooser fileChooser = new FileChooser();
-		ExtensionFilter filter = new ExtensionFilter("PNG files (*.png)", "*.png");
-		fileChooser.getExtensionFilters().add(filter);
+		ExtensionFilter filterPNG = new ExtensionFilter("PNG files (*.png)", "*.png");
+		fileChooser.getExtensionFilters().add(filterPNG);
 		fileChooser.setTitle("Add Image File");
-		if (this.lastFileChooserPath != null) fileChooser.setInitialDirectory(this.lastFileChooserPath.toFile());
+		if (this.lastFileChooserPath != null) {
+			fileChooser.setInitialDirectory(this.lastFileChooserPath.toFile());
+		}
+		else {
+			fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+		}
 		
-		this.log.info("Showing FileChooser.");
 		File file = fileChooser.showOpenDialog(null);
-
+		this.log.info("Showed FileChooser.");
+		
 		if (file == null) {
 			this.log.warning("No File selected.");
 			return;
