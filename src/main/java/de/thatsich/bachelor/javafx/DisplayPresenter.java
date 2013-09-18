@@ -1,6 +1,5 @@
 package de.thatsich.bachelor.javafx;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
@@ -20,8 +19,6 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.stage.FileChooser;
-import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 
 import org.opencv.core.Core;
@@ -38,6 +35,7 @@ import de.thatsich.core.Log;
 import de.thatsich.core.StringErrorGeneratorConverter;
 import de.thatsich.core.StringMetricConverter;
 import de.thatsich.core.StringPathConverter;
+import de.thatsich.core.javafx.ImageFileChooser;
 import de.thatsich.core.javafx.LedMatrix;
 import de.thatsich.core.opencv.IErrorGenerator;
 import de.thatsich.core.opencv.IMetric;
@@ -53,7 +51,6 @@ import de.thatsich.core.opencv.IMetric;
 @Singleton
 public class DisplayPresenter implements Initializable, IDisplayPresenter {
 
-	private Path lastFileChooserPath;
 	private Stage stage;
 	
 	// GUI Elements
@@ -74,20 +71,18 @@ public class DisplayPresenter implements Initializable, IDisplayPresenter {
 	@FXML private Button ButtonRemoveImage;
 	@FXML private Button ButtonSaveOutput;
 	
-	final private Log log;
+	@Inject private Log log;
+	
 //	final private ICommandProvider commandProvider;
-	final private IStateModel stateModel;
+	@Inject private IStateModel stateModel;
+	@Inject private ImageFileChooser chooser;
 //	final private EventBus bus;
 	
 	/**
 	 * CTOR
 	 * constructor needed, else initialized function will not get activated
 	 */
-	@Inject
-	public DisplayPresenter(IStateModel model, Log log) {
-		this.stateModel = model;
-		this.log = log;
-	}
+	public DisplayPresenter() {}
 	
 
 	
@@ -124,6 +119,10 @@ public class DisplayPresenter implements Initializable, IDisplayPresenter {
 	 * Initializable Implementation 
 	 * ==================================================
 	 */
+	
+	/**
+	 * 
+	 */
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -138,35 +137,47 @@ public class DisplayPresenter implements Initializable, IDisplayPresenter {
 		
 		this.initSliderFrameSize();
 		this.initSliderThreshold();
+		
+		
 	}
 	
+	/**
+	 * 
+	 */
 	private void initChoiceBoxDisplayImage() {
 		
-		// need own converter to display Proper FileNames
 		this.ChoiceBoxDisplayImage.setConverter(new StringPathConverter());
+		this.log.info("Set up StringPathConverter for proper name display.");
 		
 		this.ChoiceBoxDisplayImage.itemsProperty().bindBidirectional(this.stateModel.getImagePathsProperty());
 		this.ChoiceBoxDisplayImage.valueProperty().bindBidirectional(this.stateModel.getImagePathProperty());
+		this.log.info("Bound ChoiceBoxDisplayImage to Model.");
 	}
 	
+	/**
+	 * 
+	 */
 	private void initChoiceBoxErrorGenerator() {
 		
-		// own converter for proper name display
 		this.ChoiceBoxErrorGenerator.setConverter(new StringErrorGeneratorConverter());
+		this.log.info("Set up StringErrorGeneratorConverter for proper name display.");
 		
-		// update each other when either change
 		this.ChoiceBoxErrorGenerator.itemsProperty().bindBidirectional(this.stateModel.getErrorGeneratorsProperty());
 		this.ChoiceBoxErrorGenerator.valueProperty().bindBidirectional(this.stateModel.getErrorGeneratorProperty());
+		this.log.info("Bound ChoiceBoxErrorGenerator to Model.");
 	}
 	
+	/**
+	 * 
+	 */
 	private void initChoiceBoxMetric() {
 		
-		// own converter for proper name display
 		this.ChoiceBoxMetric.setConverter(new StringMetricConverter());
+		this.log.info("Set up ChoiceBoxMetric for proper name display.");
 		
-		// update each other when either change
 		this.ChoiceBoxMetric.itemsProperty().bindBidirectional(this.stateModel.getMetricsProperty());
 		this.ChoiceBoxMetric.valueProperty().bindBidirectional(this.stateModel.getMetricProperty());
+		this.log.info("Bound ChoiceBoxMetric to Model.");
 	}
 	
 	private void initImageViewInput() {
@@ -219,33 +230,18 @@ public class DisplayPresenter implements Initializable, IDisplayPresenter {
 	 */
 	@FXML private void onAddImageAction() throws IOException {
 
-		this.log.info("Setting up FileChooser.");	
+		
 //		Filechooserb
-		FileChooser fileChooser = new FileChooser();
-		ExtensionFilter filterPNG = new ExtensionFilter("PNG files (*.png)", "*.png");
-		fileChooser.getExtensionFilters().add(filterPNG);
-		fileChooser.setTitle("Add Image File");
-		if (this.lastFileChooserPath != null) {
-			fileChooser.setInitialDirectory(this.lastFileChooserPath.toFile());
-		}
-		else {
-			fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
-		}
-		
-		File file = fileChooser.showOpenDialog(null);
-		this.log.info("Showed FileChooser.");
-		
-		if (file == null) {
-			this.log.warning("No File selected.");
-			return;
-		}
-		
-		Path filePath = file.toPath();
-		this.log.info("Converted File to Path Object: " + filePath.toString());
-		
-		this.lastFileChooserPath = filePath.getParent();
-		this.log.info("Stored last DirectoryPath: " + this.lastFileChooserPath.toString());
-		
+//		FileChooser fileChooser = new FileChooser();
+//		ExtensionFilter filterPNG = new ExtensionFilter("PNG files (*.png)", "*.png");
+//		fileChooser.getExtensionFilters().add(filterPNG);
+//		fileChooser.setTitle("Add Image File");
+//		fileChooser.setInitialDirectory(new File(this.config.getLastLocationString()));
+//		
+//		File file = fileChooser.showOpenDialog(null);
+		Path filePath = this.chooser.show();
+		if (filePath == null) return;
+	
 		Path newPath = this.stateModel.getInputPath().resolve(filePath.getFileName());
 		this.log.info("Created new Path: " + newPath);
 		
