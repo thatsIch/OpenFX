@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.thatsich.core.javafx.LedMatrix?>
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?scenebuilder-classpath-element ../../../../../../bin?>
+
+<AnchorPane fx:id="root" prefHeight="-1.0" prefWidth="-1.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="de.thatsich.bachelor.javafx.DisplayPresenter">
+  <!-- TODO Add Nodes -->
+  <children>
+    <VBox id="VBox" alignment="CENTER" layoutX="0.0" layoutY="0.0" spacing="5.0">
+      <children>
+        <HBox alignment="BOTTOM_CENTER" prefHeight="-1.0" prefWidth="-1.0" spacing="5.0">
+          <children>
+            <VBox id="VBox" alignment="BOTTOM_CENTER" spacing="5.0">
+              <children>
+                <GridPane>
+                  <children>
+                    <Label text="Add Image" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                      <labelFor>
+                        <Button id="addImageButton" fx:id="ButtonAddImage" mnemonicParsing="false" onAction="#onAddImageAction" prefWidth="128.0" text="Add Image" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                      </labelFor>
+                    </Label>
+                    <Label text="Display Image" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                      <labelFor>
+                        <ChoiceBox id="displayImageChoice" fx:id="ChoiceBoxDisplayImage" prefWidth="128.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                          <items>
+                            <FXCollections fx:factory="observableArrayList" />
+                          </items>
+                        </ChoiceBox>
+                      </labelFor>
+                    </Label>
+                    <Label text="Remove Image" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                      <labelFor>
+                        <Button id="removeImageButton" fx:id="ButtonRemoveImage" mnemonicParsing="false" onAction="#onRemoveImageAction" prefWidth="128.0" text="Remove Image" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                      </labelFor>
+                    </Label>
+                    <fx:reference source="ButtonAddImage" />
+                    <fx:reference source="ButtonRemoveImage" />
+                    <fx:reference source="ChoiceBoxDisplayImage" />
+                  </children>
+                  <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  </columnConstraints>
+                  <rowConstraints>
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  </rowConstraints>
+                </GridPane>
+                <ImageView id="original" fx:id="ImageViewInput" fitHeight="0.0" fitWidth="0.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                    <Image url="@brick.jpg" />
+                  </image>
+                </ImageView>
+                <Label alignment="BOTTOM_CENTER" labelFor="$ImageViewInput" minHeight="-Infinity" minWidth="-Infinity" text="Original" />
+              </children>
+              <padding>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" fx:id="x2" />
+              </padding>
+            </VBox>
+            <Separator orientation="VERTICAL" prefHeight="200.0" />
+            <VBox id="VBox" alignment="BOTTOM_CENTER" padding="$x2" spacing="5.0">
+              <children>
+                <GridPane>
+                  <children>
+                    <Label text="Use ErrorGenerator" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                      <labelFor>
+                        <ChoiceBox fx:id="ChoiceBoxErrorGenerator" prefWidth="128.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                          <items>
+                            <FXCollections fx:factory="observableArrayList" />
+                          </items>
+                        </ChoiceBox>
+                      </labelFor>
+                    </Label>
+                    <fx:reference source="ChoiceBoxErrorGenerator" />
+                  </children>
+                  <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  </columnConstraints>
+                  <rowConstraints>
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  </rowConstraints>
+                </GridPane>
+                <ImageView id="modified" fx:id="ImageViewError" fitHeight="0.0" fitWidth="0.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                    <Image url="@error.jpg" />
+                  </image>
+                </ImageView>
+                <Label alignment="BOTTOM_CENTER" labelFor="$ImageViewError" minHeight="-Infinity" minWidth="-Infinity" text="Modified" />
+              </children>
+            </VBox>
+            <Separator orientation="VERTICAL" prefHeight="200.0" />
+            <VBox id="VBox" alignment="BOTTOM_CENTER" padding="$x2" spacing="5.0">
+              <children>
+                <GridPane>
+                  <children>
+                    <Slider fx:id="SliderFrameSize" prefWidth="128.0" showTickLabels="true" showTickMarks="true" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                    <Label labelFor="$SliderFrameSize" text="Frame Size (PX x PX)" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                    <ChoiceBox fx:id="ChoiceBoxMetric" prefWidth="125.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                      <items>
+                        <FXCollections fx:factory="observableArrayList" />
+                      </items>
+                    </ChoiceBox>
+                    <Label labelFor="$ChoiceBoxMetric" text="Choose Metric" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                    <Slider fx:id="SliderThreshold" majorTickUnit="25.0" showTickLabels="true" showTickMarks="true" value="0.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                    <Label labelFor="$SliderThreshold" text="Threshold" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                  </children>
+                  <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  </columnConstraints>
+                  <rowConstraints>
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  </rowConstraints>
+                </GridPane>
+                <LedMatrix id="result" fx:id="LedMatrixDetection" />
+                <Label alignment="BOTTOM_CENTER" labelFor="$LedMatrixDetection" minHeight="-Infinity" minWidth="-Infinity" text="Result" />
+              </children>
+            </VBox>
+          </children>
+        </HBox>
+        <HBox id="HBox" alignment="CENTER" spacing="5.0">
+          <children>
+            <Button fx:id="ButtonSaveOutput" mnemonicParsing="false" onAction="#onSaveOutputAction" text="Save Output" />
+          </children>
+          <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" fx:id="x3" />
+          </padding>
+        </HBox>
+      </children>
+    </VBox>
+  </children>
+</AnchorPane>
