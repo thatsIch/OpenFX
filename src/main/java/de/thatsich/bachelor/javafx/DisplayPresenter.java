@@ -149,15 +149,6 @@ public class DisplayPresenter implements Initializable, IDisplayPresenter {
 		
 		this.nodeChoiceBoxDisplayImage.itemsProperty().bindBidirectional(this.stateModel.getImagePathsProperty());
 		this.nodeChoiceBoxDisplayImage.valueProperty().bindBidirectional(this.stateModel.getImagePathProperty());
-		this.nodeChoiceBoxDisplayImage.valueProperty().addListener(new ChangeListener<Path>() {
-
-			@Override
-			public void changed(ObservableValue<? extends Path> observable,
-					Path oldValue, Path newValue) {
-				System.out.println(newValue);
-				System.out.println(stateModel.getImagePathProperty().getValue());
-			}
-		});
 		this.log.info("Bound ChoiceBoxDisplayImage to Model.");
 	}
 	
@@ -191,8 +182,6 @@ public class DisplayPresenter implements Initializable, IDisplayPresenter {
 
 		this.stateModel.getImagePathProperty().addListener(new ChangeListener<Path>() {
 			@Override
-			
-			// TODO hier vllt mit BufferedImage arbeiten (siehe Notizen)
 			public void changed(ObservableValue<? extends Path> observable, Path oldValue, Path newValue) {
 				nodeImageViewInput.imageProperty().setValue(new Image("file:" + newValue.toString()));
 			}
