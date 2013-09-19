@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import de.thatsich.core.javafx.*?>
 <?import de.thatsich.core.javafx.LedMatrix?>
 <?import java.lang.*?>
 <?import javafx.collections.*?>
@@ -8,7 +9,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
-<?scenebuilder-classpath-element ../../../../../../bin?>
+<?scenebuilder-classpath-element ../../../../../../../bin?>
 
 <AnchorPane fx:id="root" prefHeight="-1.0" prefWidth="-1.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="de.thatsich.bachelor.javafx.DisplayPresenter">
   <!-- TODO Add Nodes -->
@@ -54,7 +55,7 @@
                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   </rowConstraints>
                 </GridPane>
-                <ImageView id="original" fx:id="ImageViewInput" fitHeight="0.0" fitWidth="0.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView id="original" fx:id="ImageViewInput" fitHeight="250.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true">
                   <image>
                     <Image url="@brick.jpg" />
                   </image>
@@ -89,7 +90,7 @@
                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   </rowConstraints>
                 </GridPane>
-                <ImageView id="modified" fx:id="ImageViewError" fitHeight="0.0" fitWidth="0.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView id="modified" fx:id="ImageViewError" fitHeight="250.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true">
                   <image>
                     <Image url="@error.jpg" />
                   </image>

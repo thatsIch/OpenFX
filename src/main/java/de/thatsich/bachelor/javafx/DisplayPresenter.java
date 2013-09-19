@@ -183,17 +183,10 @@ public class DisplayPresenter implements Initializable, IDisplayPresenter {
 	private void initImageViewInput() {
 
 		this.stateModel.getImagePathProperty().addListener(new ChangeListener<Path>() {
-
 			@Override
 			public void changed(ObservableValue<? extends Path> observable, Path oldValue, Path newValue) {
-				System.out.println(new Image(newValue.toString()));
-				
-//				newValue.
-//				test.
-				System.out.println(newValue);
-//				original.imageProperty().setValue(new Image(newValue.toString()));
+				ImageViewInput.imageProperty().setValue(new Image("file:" + newValue.toString()));
 			}
-			
 		});
 	}
 	

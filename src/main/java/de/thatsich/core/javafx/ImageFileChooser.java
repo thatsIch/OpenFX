@@ -8,6 +8,8 @@ import java.util.List;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 
+import javax.annotation.PostConstruct;
+
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -47,6 +49,7 @@ public class ImageFileChooser {
 	 */
 	@Inject
 	public ImageFileChooser(Log log, IConfigService config) {
+		System.out.println("Jetzt");
 		this.chooser = new FileChooser();
 		this.log = log;
 		this.config = config;
@@ -63,11 +66,14 @@ public class ImageFileChooser {
 			lastLocation = new File(System.getProperty("user.home"));
 		}
 		
-//		System.out.println(this.config.getLastLocationString());
 		this.chooser.setInitialDirectory(lastLocation);
 		this.log.info("Set up initial directory: " + lastLocation.getAbsolutePath());
 	}
-
+	
+	@PostConstruct
+	public void test() {
+		System.out.println("Jetzt test");
+	}
 	
 	public Path show() {
 		File result = this.chooser.showOpenDialog(null);
@@ -87,6 +93,7 @@ public class ImageFileChooser {
 	 * 
 	 * @return
 	 */
+	// TODO change to one image filter or add an opencv one as first and let the others just be there
 	private List<ExtensionFilter> getExtensions() {	
 		List<ExtensionFilter> extensionFilters = new ArrayList<ExtensionFilter>(7);
 		
@@ -108,12 +115,12 @@ public class ImageFileChooser {
 		tiff.add("*.tiff");
 		tiff.add("*.tif");
 		
+		extensionFilters.add(new ExtensionFilter("Portable Network Graphics (png)", "*.png"));
+		extensionFilters.add(new ExtensionFilter("JPEG (jpeg, jpg, jpe)", jpeg));
 		extensionFilters.add(new ExtensionFilter("Windows Bitmap (bmp)", "*.bmp"));
 		extensionFilters.add(new ExtensionFilter("Portable Image (pbm, pgm, ppm)", portableImages));
-		extensionFilters.add(new ExtensionFilter("JPEG (jpeg, jpg, jpe)", jpeg));
 		extensionFilters.add(new ExtensionFilter("JPEG 2000 (jp2)", "*.jp2"));
 		extensionFilters.add(new ExtensionFilter("TIFF (jpeg, jpg, jpe)", tiff));
-		extensionFilters.add(new ExtensionFilter("Portable Network Graphics (png)", "*.png"));
 		extensionFilters.add(new ExtensionFilter("OpenEXR (exr)", "*.exr"));
 		
 		return extensionFilters;
