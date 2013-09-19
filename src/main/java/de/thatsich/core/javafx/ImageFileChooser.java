@@ -2,8 +2,6 @@ package de.thatsich.core.javafx;
 
 import java.io.File;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
 
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -49,7 +47,6 @@ public class ImageFileChooser {
 	 */
 	@Inject
 	public ImageFileChooser(Log log, IConfigService config) {
-		System.out.println("Jetzt");
 		this.chooser = new FileChooser();
 		this.log = log;
 		this.config = config;
@@ -94,35 +91,32 @@ public class ImageFileChooser {
 	 * @return
 	 */
 	// TODO change to one image filter or add an opencv one as first and let the others just be there
-	private List<ExtensionFilter> getExtensions() {	
-		List<ExtensionFilter> extensionFilters = new ArrayList<ExtensionFilter>(7);
+	private ExtensionFilter getExtensions() {	
 		
-		List<String> portableImages = new ArrayList<String>(3);
-		portableImages.add("*.pbm");
-		portableImages.add("*.pgm");
-		portableImages.add("*.ppm");
+		String[] extensions = {
+			"*.pbm",
+			"*.pgm",
+			"*.ppm",
+			
+			"*.sr",
+			"*.ras",
+			
+			"*.jpeg",
+			"*.jpg",
+			"*.jpe",
+			
+			"*.tiff",
+			"*.tif",
+			
+			"*.png",
+			
+			"*.bmp",
+			
+			"*.jp2",
+			
+			"*.exr",
+		};
 		
-		List<String> sunRaster = new ArrayList<String>(2);
-		sunRaster.add("*.sr");
-		sunRaster.add("*.ras");
-		
-		List<String> jpeg = new ArrayList<String>(3);
-		jpeg.add("*.jpeg");
-		jpeg.add("*.jpg");
-		jpeg.add("*.jpe");
-		
-		List<String> tiff = new ArrayList<String>(2);
-		tiff.add("*.tiff");
-		tiff.add("*.tif");
-		
-		extensionFilters.add(new ExtensionFilter("Portable Network Graphics (png)", "*.png"));
-		extensionFilters.add(new ExtensionFilter("JPEG (jpeg, jpg, jpe)", jpeg));
-		extensionFilters.add(new ExtensionFilter("Windows Bitmap (bmp)", "*.bmp"));
-		extensionFilters.add(new ExtensionFilter("Portable Image (pbm, pgm, ppm)", portableImages));
-		extensionFilters.add(new ExtensionFilter("JPEG 2000 (jp2)", "*.jp2"));
-		extensionFilters.add(new ExtensionFilter("TIFF (jpeg, jpg, jpe)", tiff));
-		extensionFilters.add(new ExtensionFilter("OpenEXR (exr)", "*.exr"));
-		
-		return extensionFilters;
+		return new ExtensionFilter("OpenCV Supported", extensions);
 	}
 }
