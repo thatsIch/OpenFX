@@ -6,8 +6,6 @@ import java.nio.file.Path;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 
-import javax.annotation.PostConstruct;
-
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -15,6 +13,11 @@ import de.thatsich.bachelor.service.IConfigService;
 import de.thatsich.core.Log;
 
 /**
+ * ImageFileChooser
+ * 
+ * Injected Singleton Class.
+ * Set up automatically the last selected location
+ * and enables only OpenCV Supported images.
  * 
  * @author Tran Minh Do
  *
@@ -43,7 +46,10 @@ public class ImageFileChooser {
 	private final Log log;
 	
 	/**
+	 * Guice Injected Constructor
 	 * 
+	 * @param Log log Injecting Logger
+	 * @param IConfigService config Access to preferences
 	 */
 	@Inject
 	public ImageFileChooser(Log log, IConfigService config) {
@@ -67,6 +73,12 @@ public class ImageFileChooser {
 		this.log.info("Set up initial directory: " + lastLocation.getAbsolutePath());
 	}
 
+	
+	/**
+	 * Show the Open Dialog
+	 * 
+	 * @return null if no file selected else the selected File converted to Path
+	 */
 	public Path show() {
 		File result = this.chooser.showOpenDialog(null);
 
@@ -82,8 +94,8 @@ public class ImageFileChooser {
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * Results in an Array of File-Extensions used by OpenCV
+	 * @return all OpenCV-supported Image-extensions
 	 */
 	// TODO change to one image filter or add an opencv one as first and let the others just be there
 	private ExtensionFilter getExtensions() {	
