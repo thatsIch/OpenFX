@@ -123,6 +123,7 @@ public class ImageFileChooser {
 			
 			"*.exr",
 		};
+		this.log.info("Created Extension Array: " + extensions.length + ".");
 		
 		return new ExtensionFilter("OpenCV Supported", extensions);
 	}
