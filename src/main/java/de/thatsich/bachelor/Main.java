@@ -18,6 +18,8 @@ import com.google.inject.Module;
 
 import de.thatsich.bachelor.guice.SampleModule;
 import de.thatsich.bachelor.javafx.IDisplayView;
+import de.thatsich.core.guice.LoggerModule;
+import de.thatsich.core.guice.PostInitModule;
 
 
 /**
@@ -90,6 +92,8 @@ public class Main extends GuiceApplication {
 	 * @param modules Empty Module-List 
 	 */
 	@Override public void init(List<Module> modules) {
+		modules.add(new LoggerModule());
 		modules.add(new SampleModule());
+		modules.add(new PostInitModule());
 	}
 }
