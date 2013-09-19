@@ -95,34 +95,18 @@ public class ImageFileChooser {
 	}
 	
 	/**
-	 * Results in an Array of File-Extensions used by OpenCV
+	 * Results in an Array of File-Extensions used by OpenCV and JavaFX (jpg, png)
 	 * @return all OpenCV-supported Image-extensions
 	 */
 	// TODO change to one image filter or add an opencv one as first and let the others just be there
 	private ExtensionFilter getExtensions() {	
 		
 		String[] extensions = {
-			"*.pbm",
-			"*.pgm",
-			"*.ppm",
-			
-			"*.sr",
-			"*.ras",
-			
 			"*.jpeg",
 			"*.jpg",
 			"*.jpe",
-			
-			"*.tiff",
-			"*.tif",
-			
+
 			"*.png",
-			
-			"*.bmp",
-			
-			"*.jp2",
-			
-			"*.exr",
 		};
 		this.log.info("Created Extension Array: " + extensions.length + ".");
 		

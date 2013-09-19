@@ -10,7 +10,6 @@ import java.util.ResourceBundle;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -20,9 +19,6 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.MouseDragEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import org.opencv.core.Core;
@@ -133,7 +129,6 @@ public class DisplayPresenter implements Initializable, IDisplayPresenter {
 		this.initChoiceBoxErrorGenerator();
 		this.initChoiceBoxMetric();
 		
-		// TODO switch to relativ pathes > enables you to put the jar afterswards somewhere else
 		this.initImageViewInput();
 //		this.initImageModified();
 //		this.initImageResult();
@@ -154,6 +149,15 @@ public class DisplayPresenter implements Initializable, IDisplayPresenter {
 		
 		this.nodeChoiceBoxDisplayImage.itemsProperty().bindBidirectional(this.stateModel.getImagePathsProperty());
 		this.nodeChoiceBoxDisplayImage.valueProperty().bindBidirectional(this.stateModel.getImagePathProperty());
+		this.nodeChoiceBoxDisplayImage.valueProperty().addListener(new ChangeListener<Path>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Path> observable,
+					Path oldValue, Path newValue) {
+				System.out.println(newValue);
+				System.out.println(stateModel.getImagePathProperty().getValue());
+			}
+		});
 		this.log.info("Bound ChoiceBoxDisplayImage to Model.");
 	}
 	
@@ -202,72 +206,6 @@ public class DisplayPresenter implements Initializable, IDisplayPresenter {
 				log.fine(newValue.toString());
 			}
 		});
-		
-		this.nodeSliderFrameSize.setOnDragDetected(new EventHandler<MouseEvent>() {
-
-			@Override
-			public void handle(MouseEvent event) {
-				System.out.println("setOnDragDetected");
-			}
-		});
-		
-		this.nodeSliderFrameSize.setOnDragDone(new EventHandler<DragEvent>() {
-
-			@Override
-			public void handle(DragEvent event) {
-				System.out.println("setOnDragDone");
-			}
-		});
-
-		this.nodeSliderFrameSize.setOnDragDropped(new EventHandler<DragEvent>() {
-
-			@Override
-			public void handle(DragEvent event) {
-				System.out.println("setOnDragDropped");
-			}
-		});
-
-		this.nodeSliderFrameSize.setOnDragEntered(new EventHandler<DragEvent>() {
-
-			@Override
-			public void handle(DragEvent event) {
-				System.out.println("setOnDragEntered");
-			}
-		});
-		
-		this.nodeSliderFrameSize.setOnDragExited(new EventHandler<DragEvent>() {
-
-			@Override
-			public void handle(DragEvent event) {
-				System.out.println("setOnDragExited");
-			}
-		});
-		
-		this.nodeSliderFrameSize.setOnDragOver(new EventHandler<DragEvent>() {
-
-			@Override
-			public void handle(DragEvent event) {
-				System.out.println("setOnDragOver");
-			}
-		});
-		
-		this.nodeSliderFrameSize.setOnMouseDragReleased(new EventHandler<MouseDragEvent>() {
-
-			@Override
-			public void handle(MouseDragEvent event) {
-				System.out.println("setOnMouseDragReleased");
-			}
-		});
-		
-		this.nodeSliderFrameSize.setOnMouseReleased(new EventHandler<MouseEvent>() {
-
-			@Override
-			public void handle(MouseEvent event) {
-				System.out.println("setOnMouseReleased");
-			}
-		});
-		
-//		this.SliderFrameSize.setonmouse
 	}
 	
 	private void initSliderThreshold() {
@@ -346,12 +284,5 @@ public class DisplayPresenter implements Initializable, IDisplayPresenter {
 		Highgui.imwrite(sModified, mModified);
 		Highgui.imwrite(sResult, mResult);
 	}
-	
-	@FXML private void onFrameSizeDragDropped() {
-		System.out.println("Drag Released");
-	}
-	
-	@FXML private void onSliderThresholdDragDropped() {
-		
-	}
+
 }

@@ -78,14 +78,15 @@ public class StateModel implements IStateModel {
 	/**
 	 * Initialize the ImagePath variable 
 	 * with all images in the input folder 
+	 * supported by OpenCV and JavaFX (jpg, png)
 	 */
 	private void initImagePaths() {
 
-		final String GLOB_PATTERN = "*.{bmp,png,pbm,pgm,ppm,sr,ras,jpeg,jpg,jpe,jp2,tiff,tif,exr}";
+		final String GLOB_PATTERN = "*.{png,jpeg,jpg,jpe}";
 		
 		try (DirectoryStream<Path> stream = Files.newDirectoryStream(this.inputPath, GLOB_PATTERN)) {
 			for (Path child : stream) {
-				this.imagePaths.get().add(child);
+				this.imagePaths.get().add(child.toAbsolutePath());
 				this.log.info("Added " + child + " with Attribute " + Files.probeContentType(child));
 			}
 		} catch (IOException | DirectoryIteratorException e) {
