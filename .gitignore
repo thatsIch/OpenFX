@@ -1,4 +1,5 @@
-/bin
+bin/
 
-/.settings
-/input
+.settings/
+input/
+output/

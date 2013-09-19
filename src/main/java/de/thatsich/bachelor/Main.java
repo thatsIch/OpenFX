@@ -25,6 +25,7 @@ import de.thatsich.bachelor.javafx.IDisplayView;
  * @author Tran Minh Do
  */
 //TODO Error Generator
+//TODO falls ich mal Objects speichern muss mit Registry, dann mal in Favs gucken
 public class Main extends GuiceApplication {
 	
 	/**
@@ -39,7 +40,7 @@ public class Main extends GuiceApplication {
 	 */
     public static void main(String[] args) {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-        
+//        System.out.println("what");
         Main.launch(args);
     }
 

@@ -6,6 +6,7 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;
 import de.thatsich.core.opencv.IErrorGenerator;
+import de.thatsich.core.opencv.IFeatureExtractor;
 import de.thatsich.core.opencv.IMetric;
 
 public interface IStateModel {
@@ -30,10 +31,12 @@ public interface IStateModel {
 	public void setImagePaths(ObservableList<Path> imagePaths);
 	public void setErrorGenerators(ObservableList<IErrorGenerator> errorGenerators);
 	public void setMetrics(ObservableList<IMetric> metrics);
+	public void setFeatureExtractors(ObservableList<IFeatureExtractor> featureExtractors);
 	
 	public void setImagePath(Path path);
 	public void setErrorGenerator(IErrorGenerator generator);
 	public void setMetric(IMetric metric);
+	public void setFeatureExtractor(IFeatureExtractor featureExtractor);
 	
 	public void setFrameSize(int size);
 	public void setThreshold(int threshold);
@@ -43,11 +46,14 @@ public interface IStateModel {
 	public ObjectProperty<ObservableList<Path>> getImagePathsProperty();
 	public ObjectProperty<ObservableList<IErrorGenerator>> getErrorGeneratorsProperty();
 	public ObjectProperty<ObservableList<IMetric>> getMetricsProperty();
+	public ObjectProperty<ObservableList<IFeatureExtractor>> getFeatureExtractorsProperty();
 	
 	public ObjectProperty<Path> getImagePathProperty();
 	public ObjectProperty<IErrorGenerator> getErrorGeneratorProperty();
 	public ObjectProperty<IMetric> getMetricProperty();
+	public ObjectProperty<IFeatureExtractor> getFeatureExtractorProperty();
 	
 	public IntegerProperty getFrameSizeProperty();
 	public IntegerProperty getThresholdProperty();
+	
 }

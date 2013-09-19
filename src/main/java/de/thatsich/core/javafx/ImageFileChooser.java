@@ -81,6 +81,7 @@ public class ImageFileChooser {
 	 */
 	public Path show() {
 		File result = this.chooser.showOpenDialog(null);
+		this.log.info("Showing Open Dialog.");
 
 		if (result == null) {
 			this.log.warning("No File selected.");
