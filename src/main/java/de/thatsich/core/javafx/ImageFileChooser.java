@@ -66,12 +66,7 @@ public class ImageFileChooser {
 		this.chooser.setInitialDirectory(lastLocation);
 		this.log.info("Set up initial directory: " + lastLocation.getAbsolutePath());
 	}
-	
-	@PostConstruct
-	public void test() {
-		System.out.println("Jetzt test");
-	}
-	
+
 	public Path show() {
 		File result = this.chooser.showOpenDialog(null);
 
