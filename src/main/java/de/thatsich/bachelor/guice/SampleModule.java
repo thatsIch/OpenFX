@@ -13,22 +13,26 @@ import de.thatsich.bachelor.javafx.IStateModel;
 import de.thatsich.bachelor.javafx.StateModel;
 import de.thatsich.bachelor.service.ConfigService;
 import de.thatsich.bachelor.service.IConfigService;
-import de.thatsich.core.Log;
 
+
+/**
+ * Guice Graph of the whole MVP structure
+ * 
+ * @author Minh
+ *
+ */
 public class SampleModule extends AbstractModule {
 
-	final private Log log;
-	
-	public SampleModule() {
-		this.log = new Log();
-	}
-	
+	/**
+	 * AbstractModule Implementation
+	 * 
+	 * Wires up all the interfaces to their representation 
+	 * or implementation.
+	 */
 	@Override
 	protected void configure() {
 		super.bind(SampleModule.class).toInstance(this);
 
-		this.mapLogger();
-		
 		this.mapViews();
 		this.mapPresenters();
 		this.mapCommands();
@@ -42,13 +46,8 @@ public class SampleModule extends AbstractModule {
 	 * ==================================================
 	 * used to map interfaces to implementations
 	 */
-	private void mapLogger() {
-		super.bind(Log.class).toInstance(this.log);
-	}
-	
 	private void mapViews() {
 		super.bind(IDisplayView.class).to(DisplayView.class).in(Scopes.SINGLETON);
-//		super.bind(ImageFileChooser.class);
 	}
 	
 	private void mapPresenters() {
