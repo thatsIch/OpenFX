@@ -8,16 +8,18 @@ import com.google.inject.Inject;
 
 import de.thatsich.core.Log;
 
+/**
+ * Calculates the Manhatten Distance
+ * 
+ * @author Minh
+ *
+ */
 public class ManhattenDistance extends AMetric {
 
-	@Inject private Log log;
-	
 	/**
-	 * Default CTOR
+	 * Injected Logger
 	 */
-	public ManhattenDistance() {
-		
-	}
+	@Inject private Log log;
 	
 	/**
 	 * ||a - b||_1 = sum(abs(a_i - b_i))
