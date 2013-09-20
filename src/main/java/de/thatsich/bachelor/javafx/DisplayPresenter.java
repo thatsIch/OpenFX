@@ -77,10 +77,7 @@ public class DisplayPresenter implements Initializable, IDisplayPresenter {
 	 * IDisplayPresenter Implementation
 	 * ==================================================
 	 */
-	@Override
-	public Parent getRoot() {
-		return this.nodeRoot;
-	}
+
 	
 	/* 
 	 * ================================================== 
