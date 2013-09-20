@@ -13,13 +13,11 @@ import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.stage.Stage;
 
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
@@ -50,8 +48,6 @@ import de.thatsich.core.opencv.IMetric;
  */
 @Singleton
 public class DisplayPresenter implements Initializable, IDisplayPresenter {
-
-	private Stage stage;
 	
 	// GUI Elements
 	@FXML private Parent nodeRoot;
@@ -73,17 +69,8 @@ public class DisplayPresenter implements Initializable, IDisplayPresenter {
 	@FXML private Button nodeButtonSaveOutput;
 	
 	@Inject private Log log;
-	
 	@Inject private IStateModel stateModel;
 	@Inject private ImageFileChooser chooser;
-
-	/**
-	 * CTOR
-	 * constructor needed, else initialized function will not get activated
-	 */
-	public DisplayPresenter() {}
-	
-
 	
 	/*
 	 * ==================================================
@@ -95,52 +82,32 @@ public class DisplayPresenter implements Initializable, IDisplayPresenter {
 		return this.nodeRoot;
 	}
 	
-	@Override
-	public Stage getStage() {
-				
-		if (this.stage != null) return this.stage;
-		if (this.nodeRoot == null) throw new IllegalStateException("Root not set.");
-		
-		final Scene scene = this.nodeRoot.getScene();
-		if (scene == null) throw new IllegalStateException("Scene not set.");
-		
-		// catch stage
-		final Stage stage = (Stage) scene.getWindow();
-		if (stage == null) throw new IllegalStateException("Window not set.");
-		
-		this.stage = stage;
-		
-		return stage;
-	}
-	
 	/* 
 	 * ================================================== 
 	 * Initializable Implementation 
 	 * ==================================================
 	 */
-	
-	/**
-	 * 
-	 */
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
 
+		// ChoiceBoxes
 		this.initChoiceBoxDisplayImage();
 		this.initChoiceBoxErrorGenerator();
 		this.initChoiceBoxMetric();
+		this.initChoiceBoxFeatureExtractor();
 		
+		// ImageViews
 		this.initImageViewInput();
-//		this.initImageModified();
-//		this.initImageResult();
+		this.initImageModified();
+		this.initImageResult();
 		
+		// Sliders
 		this.initSliderFrameSize();
 		this.initSliderThreshold();
-		
-		
 	}
 	
 	/**
-	 * 
+	 * Bind ChoiceBoxDisplayImage together with its corresponding Model part.
 	 */
 	private void initChoiceBoxDisplayImage() {
 		
@@ -153,7 +120,7 @@ public class DisplayPresenter implements Initializable, IDisplayPresenter {
 	}
 	
 	/**
-	 * 
+	 * Bind ChoiceBoxErrorGenerator together with its corresponding Model part.
 	 */
 	private void initChoiceBoxErrorGenerator() {
 		
@@ -166,7 +133,7 @@ public class DisplayPresenter implements Initializable, IDisplayPresenter {
 	}
 	
 	/**
-	 * 
+	 * Bind ChoiceBoxMetric together with its corresponding Model part.
 	 */
 	private void initChoiceBoxMetric() {
 		
@@ -178,6 +145,13 @@ public class DisplayPresenter implements Initializable, IDisplayPresenter {
 		this.log.info("Bound ChoiceBoxMetric to Model.");
 	}
 	
+	/**
+	 * 
+	 */
+	private void initChoiceBoxFeatureExtractor() {
+		
+	}
+	
 	private void initImageViewInput() {
 
 		this.stateModel.getImagePathProperty().addListener(new ChangeListener<Path>() {
@@ -186,6 +160,14 @@ public class DisplayPresenter implements Initializable, IDisplayPresenter {
 				nodeImageViewInput.imageProperty().setValue(new Image("file:" + newValue.toString()));
 			}
 		});
+	}
+	
+	private void initImageModified() {
+		
+	}
+	
+	private void initImageResult() {
+		
 	}
 	
 	private void initSliderFrameSize() {
