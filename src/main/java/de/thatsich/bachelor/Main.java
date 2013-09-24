@@ -16,7 +16,7 @@ import com.cathive.fx.guice.GuiceApplication;
 import com.google.inject.Inject;
 import com.google.inject.Module;
 
-import de.thatsich.bachelor.guice.SampleModule;
+import de.thatsich.bachelor.guice.WiringModule;
 import de.thatsich.bachelor.javafx.IDisplayView;
 import de.thatsich.core.guice.LoggerModule;
 import de.thatsich.core.guice.PostInitModule;
@@ -27,7 +27,6 @@ import de.thatsich.core.guice.PostInitModule;
  * @author Tran Minh Do
  */
 //TODO Error Generator
-//TODO falls ich mal Objects speichern muss mit Registry, dann mal in Favs gucken
 public class Main extends GuiceApplication {
 	
 	/**
@@ -92,7 +91,7 @@ public class Main extends GuiceApplication {
 	 */
 	@Override public void init(List<Module> modules) {
 		modules.add(new LoggerModule());
-		modules.add(new SampleModule());
+		modules.add(new WiringModule());
 		modules.add(new PostInitModule());
 	}
 }
