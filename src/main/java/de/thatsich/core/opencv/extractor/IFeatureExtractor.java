@@ -1,4 +1,4 @@
-package de.thatsich.core.opencv;
+package de.thatsich.core.opencv.extractor;
 
 import org.opencv.core.Mat;
 

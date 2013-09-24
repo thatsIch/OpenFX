@@ -1,4 +1,4 @@
-package de.thatsich.core.opencv;
+package de.thatsich.core.opencv.metric;
 
 import com.google.inject.Inject;
 

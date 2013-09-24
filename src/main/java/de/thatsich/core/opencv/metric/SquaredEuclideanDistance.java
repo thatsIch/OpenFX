@@ -1,4 +1,4 @@
-package de.thatsich.core.opencv;
+package de.thatsich.core.opencv.metric;
 
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
@@ -9,12 +9,12 @@ import com.google.inject.Inject;
 import de.thatsich.core.Log;
 
 /**
- * Calculates the Manhatten Distance
+ * Squared Euclidiean distance to be more aggressive vs higher values
  * 
  * @author Minh
  *
  */
-public class ManhattenDistance extends AMetric {
+public class SquaredEuclideanDistance extends AMetric {
 
 	/**
 	 * Injected Logger
@@ -22,26 +22,27 @@ public class ManhattenDistance extends AMetric {
 	@Inject private Log log;
 	
 	/**
-	 * ||a - b||_1 = sum(abs(a_i - b_i))
+	 * ||a - b||^2_2 = sum(a_i - b_i)^2
 	 */
 	@Override
 	public double getDistance(Mat original, Mat compare) {
-		double result = 0;
 		
 		if (!(original.size().equals(compare.size()))) throw new IllegalStateException("Size of original and compare differ.");
-		this.log.info("Checked for size: " + original.size() + ", " + compare.size() + " size.");
+		this.log.info("Tested for same size.");
 		
 		if (original.channels() != 1 && compare.channels() != 1) throw new IllegalStateException("Not GrayScale.");
-		this.log.info("Checked for grayscale: " + original.channels() + ", " + compare.channels() + " channels.");
+		this.log.info("Tested for GrayScale images");
 		
 		Mat diff = new Mat(original.size(), CvType.CV_8UC1);
 		Core.absdiff(original, compare, diff);
-		System.out.println(compare.dump());
-		this.log.info("Absolute difference between both Mats.");
+		this.log.info("Creating diff mat.");
 		
-		result = Core.sumElems(diff).val[0];
-		this.log.info("Sum: " + result);
+		Core.pow(diff, 2, diff);
+		this.log.info("Sqaure each element within.");
 		
-		return 0;
+		double result = Core.sumElems(diff).val[0]; 
+		this.log.info("Result is " + result);
+		
+		return result;
 	}
 }

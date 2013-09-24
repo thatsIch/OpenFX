@@ -1,7 +1,7 @@
 package de.thatsich.core;
 
 import javafx.util.StringConverter;
-import de.thatsich.core.opencv.IMetric;
+import de.thatsich.core.opencv.metric.IMetric;
 
 public class StringMetricConverter extends StringConverter<IMetric> {
 

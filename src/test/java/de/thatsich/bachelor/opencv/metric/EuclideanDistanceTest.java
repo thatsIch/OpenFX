@@ -1,4 +1,4 @@
-package com.thatsich.sample.opencv.metric.test;
+package de.thatsich.bachelor.opencv.metric;
 
 import junit.framework.TestCase;
 import junit.runner.Version;
@@ -10,7 +10,7 @@ import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 
-import de.thatsich.core.opencv.EuclideanDistance;
+import de.thatsich.core.opencv.metric.EuclideanDistance;
 
 public class EuclideanDistanceTest extends TestCase {
 

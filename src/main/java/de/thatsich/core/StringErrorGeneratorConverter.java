@@ -1,7 +1,7 @@
 package de.thatsich.core;
 
 import javafx.util.StringConverter;
-import de.thatsich.core.opencv.IErrorGenerator;
+import de.thatsich.core.opencv.error.IErrorGenerator;
 
 public class StringErrorGeneratorConverter extends StringConverter<IErrorGenerator> {
 

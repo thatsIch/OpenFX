@@ -34,9 +34,9 @@ import de.thatsich.core.StringErrorGeneratorConverter;
 import de.thatsich.core.StringMetricConverter;
 import de.thatsich.core.StringPathConverter;
 import de.thatsich.core.javafx.ImageFileChooser;
-import de.thatsich.core.opencv.IErrorGenerator;
-import de.thatsich.core.opencv.IFeatureExtractor;
-import de.thatsich.core.opencv.IMetric;
+import de.thatsich.core.opencv.error.IErrorGenerator;
+import de.thatsich.core.opencv.extractor.IFeatureExtractor;
+import de.thatsich.core.opencv.metric.IMetric;
 
 /**
  * Facilitat the communication between

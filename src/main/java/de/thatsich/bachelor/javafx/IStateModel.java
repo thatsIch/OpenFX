@@ -5,9 +5,9 @@ import java.nio.file.Path;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;
-import de.thatsich.core.opencv.IErrorGenerator;
-import de.thatsich.core.opencv.IFeatureExtractor;
-import de.thatsich.core.opencv.IMetric;
+import de.thatsich.core.opencv.error.IErrorGenerator;
+import de.thatsich.core.opencv.extractor.IFeatureExtractor;
+import de.thatsich.core.opencv.metric.IMetric;
 
 public interface IStateModel {
 

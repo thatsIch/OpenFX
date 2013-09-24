@@ -18,13 +18,13 @@ import com.google.inject.Inject;
 
 import de.thatsich.core.Log;
 import de.thatsich.core.guice.PostInit;
-import de.thatsich.core.opencv.EuclideanDistance;
-import de.thatsich.core.opencv.IErrorGenerator;
-import de.thatsich.core.opencv.IFeatureExtractor;
-import de.thatsich.core.opencv.IMetric;
-import de.thatsich.core.opencv.ManhattenDistance;
-import de.thatsich.core.opencv.MaximumDistance;
-import de.thatsich.core.opencv.SquaredEuclideanDistance;
+import de.thatsich.core.opencv.error.IErrorGenerator;
+import de.thatsich.core.opencv.extractor.IFeatureExtractor;
+import de.thatsich.core.opencv.metric.EuclideanDistance;
+import de.thatsich.core.opencv.metric.IMetric;
+import de.thatsich.core.opencv.metric.ManhattenDistance;
+import de.thatsich.core.opencv.metric.MaximumDistance;
+import de.thatsich.core.opencv.metric.SquaredEuclideanDistance;
 
 
 /**

@@ -1,4 +1,7 @@
-package de.thatsich.core.opencv;
+package de.thatsich.core.opencv.extractor;
+
+import de.thatsich.core.Log;
+
 
 
 /**
@@ -8,6 +11,8 @@ package de.thatsich.core.opencv;
  *
  */
 public abstract class AFeatureExtractor implements IFeatureExtractor {
+	
+	protected Log log;
 	
 	/**
 	 * gets the name of the feature extractor 
