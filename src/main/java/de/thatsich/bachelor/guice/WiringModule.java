@@ -21,7 +21,7 @@ import de.thatsich.bachelor.service.IConfigService;
  * @author Minh
  *
  */
-public class SampleModule extends AbstractModule {
+public class WiringModule extends AbstractModule {
 
 	/**
 	 * AbstractModule Implementation
@@ -31,7 +31,7 @@ public class SampleModule extends AbstractModule {
 	 */
 	@Override
 	protected void configure() {
-		super.bind(SampleModule.class).toInstance(this);
+		super.bind(WiringModule.class).toInstance(this);
 
 		this.mapViews();
 		this.mapPresenters();
