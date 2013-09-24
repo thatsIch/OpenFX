@@ -168,10 +168,19 @@ public class DisplayPresenter implements Initializable, IDisplayPresenter {
 	}
 	
 	private void initSliderFrameSize() {
-		this.nodeSliderFrameSize.valueProperty().addListener(new ChangeListener<Number>() {
+//		this.nodeSliderFrameSize.valueProperty().addListener(new ChangeListener<Number>() {
+//			@Override
+//			public void changed(ObservableValue<? extends Number> ov, Number oldValue, Number newValue) {
+//				log.fine(newValue.toString());
+//			}
+//		});
+		
+		this.nodeSliderFrameSize.valueChangingProperty().addListener(new ChangeListener<Boolean>() {
+
 			@Override
-			public void changed(ObservableValue<? extends Number> ov, Number oldValue, Number newValue) {
-				log.fine(newValue.toString());
+			public void changed(ObservableValue<? extends Boolean> observable,
+					Boolean oldValue, Boolean newValue) {
+				System.out.println(newValue);
 			}
 		});
 	}
