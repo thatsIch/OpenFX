@@ -2,10 +2,14 @@ package de.thatsich.core;
 
 import java.util.prefs.Preferences;
 
+/**
+ * 
+ * @author Minh
+ *
+ */
 public abstract class AConfiguration {
 	final private Preferences prefs = Preferences.userNodeForPackage(this.getClass());
 
-	// Getter byte[], boolean, int, long, float, double, String  
 	protected byte[] get(String key, byte[] def) {
 		return this.prefs.getByteArray(key, def);
 	}
