@@ -1,32 +1,31 @@
-package de.thatsich.core.opencv.metric;
+package de.thatsich.bachelor.opencv.metric;
 
 import org.opencv.core.Core;
+import org.opencv.core.Core.MinMaxLocResult;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 
 import com.google.inject.Inject;
 
 import de.thatsich.core.Log;
+import de.thatsich.core.opencv.metric.AMetric;
 
 /**
- * Squared Euclidiean distance to be more aggressive vs higher values
+ * Metric which uses the maximum distance to distinguish two mats
  * 
  * @author Minh
  *
  */
-public class SquaredEuclideanDistance extends AMetric {
+public class MaximumDistance extends AMetric {
 
-	/**
-	 * Injected Logger
-	 */
 	@Inject private Log log;
 	
 	/**
-	 * ||a - b||^2_2 = sum(a_i - b_i)^2
+	 * ||a - b||_\infty = max(abs(a_i - b_i))
 	 */
 	@Override
 	public double getDistance(Mat original, Mat compare) {
-		
+				
 		if (!(original.size().equals(compare.size()))) throw new IllegalStateException("Size of original and compare differ.");
 		this.log.info("Tested for same size.");
 		
@@ -37,12 +36,10 @@ public class SquaredEuclideanDistance extends AMetric {
 		Core.absdiff(original, compare, diff);
 		this.log.info("Creating diff mat.");
 		
-		Core.pow(diff, 2, diff);
-		this.log.info("Sqaure each element within.");
+		MinMaxLocResult minMax = Core.minMaxLoc(diff);
+		this.log.info("Maximum found: " + minMax.maxVal);
 		
-		double result = Core.sumElems(diff).val[0]; 
-		this.log.info("Result is " + result);
-		
-		return result;
+		return minMax.maxVal;
 	}
+
 }

@@ -16,15 +16,15 @@ import javafx.scene.control.ChoiceBox;
 
 import com.google.inject.Inject;
 
+import de.thatsich.bachelor.opencv.metric.EuclideanDistance;
+import de.thatsich.bachelor.opencv.metric.ManhattenDistance;
+import de.thatsich.bachelor.opencv.metric.MaximumDistance;
+import de.thatsich.bachelor.opencv.metric.SquaredEuclideanDistance;
 import de.thatsich.core.Log;
 import de.thatsich.core.guice.PostInit;
 import de.thatsich.core.opencv.error.IErrorGenerator;
 import de.thatsich.core.opencv.extractor.IFeatureExtractor;
-import de.thatsich.core.opencv.metric.EuclideanDistance;
 import de.thatsich.core.opencv.metric.IMetric;
-import de.thatsich.core.opencv.metric.ManhattenDistance;
-import de.thatsich.core.opencv.metric.MaximumDistance;
-import de.thatsich.core.opencv.metric.SquaredEuclideanDistance;
 
 
 /**

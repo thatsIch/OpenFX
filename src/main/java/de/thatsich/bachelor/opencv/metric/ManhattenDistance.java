@@ -1,4 +1,4 @@
-package de.thatsich.core.opencv.metric;
+package de.thatsich.bachelor.opencv.metric;
 
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
@@ -7,6 +7,7 @@ import org.opencv.core.Mat;
 import com.google.inject.Inject;
 
 import de.thatsich.core.Log;
+import de.thatsich.core.opencv.metric.AMetric;
 
 /**
  * Calculates the Manhatten Distance

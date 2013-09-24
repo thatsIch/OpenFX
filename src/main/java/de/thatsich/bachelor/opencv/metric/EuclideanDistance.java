@@ -1,30 +1,24 @@
-package de.thatsich.core.opencv.metric;
+package de.thatsich.bachelor.opencv.metric;
 
 import org.opencv.core.Core;
-import org.opencv.core.Core.MinMaxLocResult;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 
-import com.google.inject.Inject;
-
-import de.thatsich.core.Log;
+import de.thatsich.core.opencv.metric.AMetric;
 
 /**
- * Metric which uses the maximum distance to distinguish two mats
- * 
+ * Calculates the Euclidean Distance between 2 Mats
  * @author Minh
  *
  */
-public class MaximumDistance extends AMetric {
+public class EuclideanDistance extends AMetric {
 
-	@Inject private Log log;
-	
 	/**
-	 * ||a - b||_\infty = max(abs(a_i - b_i))
+	 * ||a - b||_2 = SQRT(sum(a_i - b_i)^2)
 	 */
 	@Override
-	public double getDistance(Mat original, Mat compare) {
-				
+	public double getDistance(Mat original, Mat compare) throws IllegalStateException {
+
 		if (!(original.size().equals(compare.size()))) throw new IllegalStateException("Size of original and compare differ.");
 		this.log.info("Tested for same size.");
 		
@@ -35,10 +29,15 @@ public class MaximumDistance extends AMetric {
 		Core.absdiff(original, compare, diff);
 		this.log.info("Creating diff mat.");
 		
-		MinMaxLocResult minMax = Core.minMaxLoc(diff);
-		this.log.info("Maximum found: " + minMax.maxVal);
+		Core.pow(diff, 2, diff);
+		this.log.info("Sqaure each element within.");
+	
+		double result = Core.sumElems(diff).val[0];
+		this.log.info("Sum all elements together.");
 		
-		return minMax.maxVal;
+		result = Math.sqrt(result);
+		this.log.info("Squareroot the sum.");
+				
+		return 0;
 	}
-
 }

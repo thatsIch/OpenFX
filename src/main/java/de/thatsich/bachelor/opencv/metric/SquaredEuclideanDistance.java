@@ -1,22 +1,33 @@
-package de.thatsich.core.opencv.metric;
+package de.thatsich.bachelor.opencv.metric;
 
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 
+import com.google.inject.Inject;
+
+import de.thatsich.core.Log;
+import de.thatsich.core.opencv.metric.AMetric;
+
 /**
- * Calculates the Euclidean Distance between 2 Mats
+ * Squared Euclidiean distance to be more aggressive vs higher values
+ * 
  * @author Minh
  *
  */
-public class EuclideanDistance extends AMetric {
+public class SquaredEuclideanDistance extends AMetric {
 
 	/**
-	 * ||a - b||_2 = SQRT(sum(a_i - b_i)^2)
+	 * Injected Logger
+	 */
+	@Inject private Log log;
+	
+	/**
+	 * ||a - b||^2_2 = sum(a_i - b_i)^2
 	 */
 	@Override
-	public double getDistance(Mat original, Mat compare) throws IllegalStateException {
-
+	public double getDistance(Mat original, Mat compare) {
+		
 		if (!(original.size().equals(compare.size()))) throw new IllegalStateException("Size of original and compare differ.");
 		this.log.info("Tested for same size.");
 		
@@ -29,13 +40,10 @@ public class EuclideanDistance extends AMetric {
 		
 		Core.pow(diff, 2, diff);
 		this.log.info("Sqaure each element within.");
-	
-		double result = Core.sumElems(diff).val[0];
-		this.log.info("Sum all elements together.");
 		
-		result = Math.sqrt(result);
-		this.log.info("Squareroot the sum.");
-				
-		return 0;
+		double result = Core.sumElems(diff).val[0]; 
+		this.log.info("Result is " + result);
+		
+		return result;
 	}
 }

@@ -10,8 +10,6 @@ import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 
-import de.thatsich.core.opencv.metric.EuclideanDistance;
-
 public class EuclideanDistanceTest extends TestCase {
 
 	private EuclideanDistance euclid;
