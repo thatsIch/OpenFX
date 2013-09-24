@@ -1,6 +1,11 @@
 package de.thatsich.core.guice;
 
 import com.google.inject.AbstractModule;
+import com.google.inject.TypeLiteral;
+import com.google.inject.matcher.AbstractMatcher;
+import com.google.inject.spi.InjectionListener;
+import com.google.inject.spi.TypeEncounter;
+import com.google.inject.spi.TypeListener;
 
 /**
  * Enables the guice application to use the PostInit Interface 
@@ -20,18 +25,25 @@ public class PostInitModule extends AbstractModule {
 	protected void configure() {
 		super.bind(PostInitModule.class).toInstance(this);
 		
-//		super.bindListener(Matchers.subclassesOf(PostInit.class), new TypeListener() {
-//		    @Override
-//		    public <I> void hear(TypeLiteral<I> typeLiteral, TypeEncounter<I> typeEncounter) {
-//		        typeEncounter.register(new InjectionListener<I>() {
-//		            @Override
-//		            public void afterInjection(Object i) {
-//		            	PostInit m = (PostInit) i;
-//		                m.init();
-//		            }
-//		        });
-//		    }
-//		});
+		super.bindListener(
+			new AbstractMatcher<TypeLiteral<?>>() {
+				public boolean matches(TypeLiteral<?> typeLiteral) {
+					return PostInit.class.isAssignableFrom(typeLiteral.getRawType());
+				}
+			}, 
+				
+			new TypeListener() {
+		    @Override
+		    public <I> void hear(TypeLiteral<I> typeLiteral, TypeEncounter<I> typeEncounter) {
+		        typeEncounter.register(new InjectionListener<I>() {
+		            @Override
+		            public void afterInjection(Object i) {
+		            	PostInit m = (PostInit) i;
+		                m.init();
+		            }
+		        });
+		    }
+		});
 	}
 
 }

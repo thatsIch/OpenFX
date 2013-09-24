@@ -17,6 +17,7 @@ import javafx.scene.control.ChoiceBox;
 import com.google.inject.Inject;
 
 import de.thatsich.core.Log;
+import de.thatsich.core.guice.PostInit;
 import de.thatsich.core.opencv.EuclideanDistance;
 import de.thatsich.core.opencv.IErrorGenerator;
 import de.thatsich.core.opencv.IFeatureExtractor;
@@ -32,7 +33,7 @@ import de.thatsich.core.opencv.SquaredEuclideanDistance;
  * @author Tran Minh Do
  *
  */
-public class StateModel implements IStateModel {
+public class StateModel implements IStateModel, PostInit {
 
 	// Fields
 	final private Path inputPath;
@@ -114,6 +115,15 @@ public class StateModel implements IStateModel {
 	
 	private void initFeatureExtractors() {
 //		this.
+	}
+	
+	/*
+	 * ==================================================
+	 * PostInit Implementation
+	 * ==================================================
+	 */
+	public void init() {
+		System.out.println("IT WORKS");
 	}
 	
 	/*
