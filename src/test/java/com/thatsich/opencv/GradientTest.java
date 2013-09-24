@@ -15,7 +15,7 @@ import de.thatsich.bachelor.opencv.Gradient;
 @RunWith(JUnit4.class)
 public class GradientTest {
 
-	private static Gradient gradient = new Gradient();
+	private final Gradient gradient = new Gradient();
 	private final Mat one1x1 = Mat.ones(1, 1, CvType.CV_8U);
 	private final Mat zero1x1 = Mat.zeros(1, 1, CvType.CV_8U);
 	
