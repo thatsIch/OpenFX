@@ -4,9 +4,9 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-public class EuclideanDistanceTest extends AMetricTest {
-	public EuclideanDistanceTest() {
-		super(new EuclideanDistance());
+public class MaximumDistanceTest extends AMetricTest {
+	public MaximumDistanceTest() {
+		super(new MaximumDistance());
 	}
 
 	@Test
@@ -20,7 +20,7 @@ public class EuclideanDistanceTest extends AMetricTest {
 	@Test
 	public void getDistance_UnequalBiggerMatrix_ShouldPass() {
 		double test = super.metric.getDistance(super.zero3x3, super.one3x3);
-		double compare = 3;
+		double compare = 1;
 		
 		assertEquals(test + " ~= " + compare, test, compare, 0);
 	}

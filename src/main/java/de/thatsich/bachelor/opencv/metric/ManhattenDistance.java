@@ -4,9 +4,6 @@ import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 
-import com.google.inject.Inject;
-
-import de.thatsich.core.Log;
 import de.thatsich.core.opencv.metric.AMetric;
 
 /**
@@ -16,33 +13,20 @@ import de.thatsich.core.opencv.metric.AMetric;
  *
  */
 public class ManhattenDistance extends AMetric {
-
-	/**
-	 * Injected Logger
-	 */
-	@Inject private Log log;
-	
 	/**
 	 * ||a - b||_1 = sum(abs(a_i - b_i))
 	 */
 	@Override
-	public double getDistance(Mat original, Mat compare) {
-		double result = 0;
+	public double getDistance(Mat original, Mat compare) throws IllegalStateException {
+		if (original == null) throw new IllegalArgumentException("Original is null.");
+		if (compare == null) throw new IllegalArgumentException("Compare is null.");
+		if (original.type() != CvType.CV_8U) throw new IllegalArgumentException("Original is not grayscale.");
+		if (compare.type() != CvType.CV_8U) throw new IllegalArgumentException("Compare is not grayscale.");
+		if (compare.empty()) throw new IllegalArgumentException("Original is empty.");
+		if (original.empty()) throw new IllegalArgumentException("Compare is empty.");
+		if (!(original.size().equals(compare.size()))) throw new IllegalArgumentException("Size of Original and Compare differ.");
 		
-		if (!(original.size().equals(compare.size()))) throw new IllegalStateException("Size of original and compare differ.");
-		this.log.info("Checked for size: " + original.size() + ", " + compare.size() + " size.");
-		
-		if (original.channels() != 1 && compare.channels() != 1) throw new IllegalStateException("Not GrayScale.");
-		this.log.info("Checked for grayscale: " + original.channels() + ", " + compare.channels() + " channels.");
-		
-		Mat diff = new Mat(original.size(), CvType.CV_8UC1);
-		Core.absdiff(original, compare, diff);
-		System.out.println(compare.dump());
-		this.log.info("Absolute difference between both Mats.");
-		
-		result = Core.sumElems(diff).val[0];
-		this.log.info("Sum: " + result);
-		
-		return 0;
+		// Core.NORM_L1 correspond to ManhattenDistance sum(abs(o - c))
+		return Core.norm(original, compare, Core.NORM_L1);
 	}
 }

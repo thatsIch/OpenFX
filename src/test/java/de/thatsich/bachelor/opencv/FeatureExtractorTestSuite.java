@@ -8,6 +8,7 @@ import org.opencv.core.Core;
 
 import de.thatsich.bachelor.opencv.extractor.GradientTest;
 import de.thatsich.bachelor.opencv.extractor.GrayLevelCooccurenceHistogramTest;
+import de.thatsich.bachelor.opencv.extractor.HuMomentTest;
 import de.thatsich.bachelor.opencv.extractor.LocalBinaryPatternTest;
 import de.thatsich.bachelor.opencv.extractor.MeanTest;
 import de.thatsich.bachelor.opencv.extractor.VarianceTest;
@@ -16,6 +17,7 @@ import de.thatsich.bachelor.opencv.extractor.VarianceTest;
 @SuiteClasses({
 	GradientTest.class,
 	GrayLevelCooccurenceHistogramTest.class,
+	HuMomentTest.class,
 	LocalBinaryPatternTest.class,
 	MeanTest.class,
 	VarianceTest.class

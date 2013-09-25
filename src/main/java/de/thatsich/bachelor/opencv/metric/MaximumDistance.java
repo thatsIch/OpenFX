@@ -1,13 +1,9 @@
 package de.thatsich.bachelor.opencv.metric;
 
 import org.opencv.core.Core;
-import org.opencv.core.Core.MinMaxLocResult;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 
-import com.google.inject.Inject;
-
-import de.thatsich.core.Log;
 import de.thatsich.core.opencv.metric.AMetric;
 
 /**
@@ -17,29 +13,21 @@ import de.thatsich.core.opencv.metric.AMetric;
  *
  */
 public class MaximumDistance extends AMetric {
-
-	@Inject private Log log;
-	
 	/**
 	 * ||a - b||_\infty = max(abs(a_i - b_i))
 	 */
 	@Override
 	public double getDistance(Mat original, Mat compare) {
-				
-		if (!(original.size().equals(compare.size()))) throw new IllegalStateException("Size of original and compare differ.");
-		this.log.info("Tested for same size.");
+		if (original == null) throw new IllegalArgumentException("Original is null.");
+		if (compare == null) throw new IllegalArgumentException("Compare is null.");
+		if (original.type() != CvType.CV_8U) throw new IllegalArgumentException("Original is not grayscale.");
+		if (compare.type() != CvType.CV_8U) throw new IllegalArgumentException("Compare is not grayscale.");
+		if (compare.empty()) throw new IllegalArgumentException("Original is empty.");
+		if (original.empty()) throw new IllegalArgumentException("Compare is empty.");
+		if (!(original.size().equals(compare.size()))) throw new IllegalArgumentException("Size of Original and Compare differ.");
 		
-		if (original.channels() != 1 && compare.channels() != 1) throw new IllegalStateException("Not GrayScale.");
-		this.log.info("Tested for GrayScale images");
-		
-		Mat diff = new Mat(original.size(), CvType.CV_8UC1);
-		Core.absdiff(original, compare, diff);
-		this.log.info("Creating diff mat.");
-		
-		MinMaxLocResult minMax = Core.minMaxLoc(diff);
-		this.log.info("Maximum found: " + minMax.maxVal);
-		
-		return minMax.maxVal;
+		// Core.NORM_L2 correspond to EuclideanDistance max(abs(o - c))
+		return Core.norm(original, compare, Core.NORM_INF);
 	}
 
 }
