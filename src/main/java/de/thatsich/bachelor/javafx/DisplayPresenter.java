@@ -37,8 +37,7 @@ import de.thatsich.core.StringFeatureExtractorConverter;
 import de.thatsich.core.StringMetricConverter;
 import de.thatsich.core.StringPathConverter;
 import de.thatsich.core.javafx.ImageFileChooser;
-import de.thatsich.core.opencv.ImageConverter;
-import de.thatsich.core.opencv.ImageShow;
+import de.thatsich.core.opencv.Images;
 import de.thatsich.core.opencv.error.IErrorGenerator;
 import de.thatsich.core.opencv.extractor.IFeatureExtractor;
 import de.thatsich.core.opencv.metric.IMetric;
@@ -274,7 +273,6 @@ public class DisplayPresenter implements Initializable, IDisplayPresenter {
 	}
 
 	@FXML private void onTestAction() {
-		ImageShow show = new ImageShow();
 		Histogram histo = new Histogram();
 		
 		Mat lena = Highgui.imread("input/LENA512.BMP");
@@ -282,8 +280,8 @@ public class DisplayPresenter implements Initializable, IDisplayPresenter {
 		Imgproc.cvtColor(lena, lenaGray, Imgproc.COLOR_BGR2GRAY);
 		
 		Mat histogram = histo.calc(lenaGray);
-		Image img = ImageConverter.matToImage(histogram);
+		Image img = Images.matToImage(histogram);
 
-		show.show(img);
+		Images.show(img);
 	}
 }
