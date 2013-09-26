@@ -111,6 +111,7 @@
         <RowConstraints maxHeight="25.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
       </rowConstraints>
     </GridPane>
+    <Button id="ButtonTest" fx:id="nodeButtonTest" mnemonicParsing="false" onAction="#onTestAction" text="Test" GridPane.columnIndex="2" GridPane.rowIndex="3" />
   </children>
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />

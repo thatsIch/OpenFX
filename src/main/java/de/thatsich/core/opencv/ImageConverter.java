@@ -9,6 +9,7 @@ import org.opencv.core.MatOfByte;
 import org.opencv.highgui.Highgui;
 import org.opencv.imgproc.Imgproc;
 
+// TODO Check if this was implemented correctly, getting only black image
 public abstract class ImageConverter {
 	
 	public static Image matToImage(Mat m) {
