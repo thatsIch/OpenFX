@@ -25,15 +25,20 @@ import org.opencv.core.Mat;
 import org.opencv.core.Point;
 import org.opencv.core.Scalar;
 import org.opencv.highgui.Highgui;
+import org.opencv.imgproc.Imgproc;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
+import de.thatsich.bachelor.opencv.Histogram;
 import de.thatsich.core.Log;
 import de.thatsich.core.StringErrorGeneratorConverter;
+import de.thatsich.core.StringFeatureExtractorConverter;
 import de.thatsich.core.StringMetricConverter;
 import de.thatsich.core.StringPathConverter;
 import de.thatsich.core.javafx.ImageFileChooser;
+import de.thatsich.core.opencv.ImageConverter;
+import de.thatsich.core.opencv.ImageShow;
 import de.thatsich.core.opencv.error.IErrorGenerator;
 import de.thatsich.core.opencv.extractor.IFeatureExtractor;
 import de.thatsich.core.opencv.metric.IMetric;
@@ -67,6 +72,7 @@ public class DisplayPresenter implements Initializable, IDisplayPresenter {
 	@FXML private Button nodeButtonAddImage;
 	@FXML private Button nodeButtonRemoveImage;
 	@FXML private Button nodeButtonSaveOutput;
+	@FXML private Button nodeButtonTest;
 	
 	@Inject private Log log;
 	@Inject private IStateModel stateModel;
@@ -147,6 +153,12 @@ public class DisplayPresenter implements Initializable, IDisplayPresenter {
 	 */
 	private void initChoiceBoxFeatureExtractor() {
 		
+		this.nodeChoiceBoxFeatureExtractor.setConverter(new StringFeatureExtractorConverter());
+		this.log.info("Set up ChoiceBoxFeatureExtractor for proper name display.");
+		
+		this.nodeChoiceBoxFeatureExtractor.itemsProperty().bindBidirectional(this.stateModel.getFeatureExtractorsProperty());
+		this.nodeChoiceBoxFeatureExtractor.valueProperty().bindBidirectional(this.stateModel.getFeatureExtractorProperty());
+		this.log.info("Bound ChoiceBoxFeatureExtractor to Model.");
 	}
 	
 	private void initImageViewInput() {
@@ -193,8 +205,7 @@ public class DisplayPresenter implements Initializable, IDisplayPresenter {
 				log.finer("entering");
 				log.fine(newValue.toString());
 			}
-			
-		});		
+		});	
 	}
 	
 	
@@ -262,4 +273,17 @@ public class DisplayPresenter implements Initializable, IDisplayPresenter {
 		Highgui.imwrite(sResult, mResult);
 	}
 
+	@FXML private void onTestAction() {
+		ImageShow show = new ImageShow();
+		Histogram histo = new Histogram();
+		
+		Mat lena = Highgui.imread("input/LENA512.BMP");
+		Mat lenaGray = new Mat(lena.width(), lena.height(), CvType.CV_8U);
+		Imgproc.cvtColor(lena, lenaGray, Imgproc.COLOR_BGR2GRAY);
+		
+		Mat histogram = histo.calc(lenaGray);
+		Image img = ImageConverter.matToImage(histogram);
+
+		show.show(img);
+	}
 }

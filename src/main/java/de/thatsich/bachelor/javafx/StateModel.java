@@ -16,6 +16,12 @@ import javafx.scene.control.ChoiceBox;
 
 import com.google.inject.Inject;
 
+import de.thatsich.bachelor.opencv.extractor.Gradient;
+import de.thatsich.bachelor.opencv.extractor.GrayLevelCooccurenceHistogram;
+import de.thatsich.bachelor.opencv.extractor.HuMoments;
+import de.thatsich.bachelor.opencv.extractor.LocalBinaryPatternHistogram;
+import de.thatsich.bachelor.opencv.extractor.Mean;
+import de.thatsich.bachelor.opencv.extractor.Variance;
 import de.thatsich.bachelor.opencv.metric.EuclideanDistance;
 import de.thatsich.bachelor.opencv.metric.ManhattenDistance;
 import de.thatsich.bachelor.opencv.metric.MaximumDistance;
@@ -97,7 +103,9 @@ public class StateModel implements IStateModel, PostInit {
 	}
 	
 	private void initErrorGenerators() {
-		
+//		this.errorGenerators.get().addAll(
+//			null
+//		);
 	}
 	
 	
@@ -114,7 +122,14 @@ public class StateModel implements IStateModel, PostInit {
 	}
 	
 	private void initFeatureExtractors() {
-//		this.
+		this.featureExtractors.get().addAll(
+			new Gradient(),
+			new GrayLevelCooccurenceHistogram(),
+			new HuMoments(),
+			new LocalBinaryPatternHistogram(),
+			new Mean(),
+			new Variance()
+		);
 	}
 	
 	/*
@@ -123,7 +138,7 @@ public class StateModel implements IStateModel, PostInit {
 	 * ==================================================
 	 */
 	public void init() {
-		System.out.println("IT WORKS");
+		
 	}
 	
 	/*
