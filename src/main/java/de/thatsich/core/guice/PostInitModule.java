@@ -28,7 +28,7 @@ public class PostInitModule extends AbstractModule {
 		super.bindListener(
 			new AbstractMatcher<TypeLiteral<?>>() {
 				public boolean matches(TypeLiteral<?> typeLiteral) {
-					return PostInit.class.isAssignableFrom(typeLiteral.getRawType());
+					return IPostInit.class.isAssignableFrom(typeLiteral.getRawType());
 				}
 			}, 
 				
@@ -38,7 +38,7 @@ public class PostInitModule extends AbstractModule {
 		        typeEncounter.register(new InjectionListener<I>() {
 		            @Override
 		            public void afterInjection(Object i) {
-		            	PostInit m = (PostInit) i;
+		            	IPostInit m = (IPostInit) i;
 		                m.init();
 		            }
 		        });

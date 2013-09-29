@@ -7,99 +7,45 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.text.*?>
 
-<GridPane fx:id="root" alignment="CENTER" hgap="5.0" vgap="5.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="de.thatsich.bachelor.javafx.DisplayPresenter">
+<GridPane fx:id="root" alignment="TOP_CENTER" hgap="5.0" vgap="5.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="de.thatsich.bachelor.javafx.DisplayPresenter">
   <!-- TODO Add Nodes -->
   <children>
-    <HBox prefHeight="-1.0" prefWidth="-1.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
-      <children>
-        <VBox id="VBox" alignment="TOP_LEFT" prefWidth="125.0" spacing="5.0" />
-        <VBox prefHeight="-1.0" prefWidth="-1.0" spacing="5.0" />
-      </children>
-    </HBox>
-    <VBox maxHeight="-1.0" prefHeight="-1.0" prefWidth="-1.0" spacing="0.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
-      <children>
-        <Button id="ButtonAddImage" fx:id="nodeButtonAddImage" mnemonicParsing="false" onAction="#onAddImageAction" prefWidth="250.00009999999747" text="Add Image" />
-        <Button id="ButtonRemoveImage" fx:id="nodeButtonRemoveImage" mnemonicParsing="false" onAction="#onRemoveImageAction" prefWidth="250.0" text="Remove Image">
-          <VBox.margin>
-            <Insets top="5.0" fx:id="x1" />
-          </VBox.margin>
-        </Button>
-        <HBox alignment="CENTER_RIGHT" prefHeight="-1.0" prefWidth="-1.0" VBox.margin="$x1">
-          <children>
-            <Label prefWidth="125.0" text="Choose Image" />
-            <ChoiceBox id="ChoiceBoxDisplayImage" fx:id="nodeChoiceBoxDisplayImage" pickOnBounds="false" prefWidth="125.0" />
-          </children>
-        </HBox>
-      </children>
-    </VBox>
-    <ImageView id="ImageViewInput" fx:id="nodeImageViewInput" fitHeight="250.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+    <ImageView id="ImageViewInput" fx:id="nodeImageViewInput" fitHeight="250.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
       <image>
         <Image url="@brick.jpg" />
       </image>
     </ImageView>
-    <ImageView id="ImageViewError" fx:id="nodeImageViewError" fitHeight="250.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+    <ImageView id="ImageViewError" fx:id="nodeImageViewError" fitHeight="250.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
       <image>
         <Image url="@error.jpg" />
       </image>
     </ImageView>
-    <ImageView id="ImageViewMatrix" fx:id="nodeImageViewMatrix" fitHeight="250.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+    <ImageView id="ImageViewMatrix" fx:id="nodeImageViewResult" fitHeight="250.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
       <image>
         <Image url="@error.jpg" />
       </image>
     </ImageView>
-    <Label text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-    <Label labelFor="$nodeImageViewInput" text="Label" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-    <Label text="Label" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-    <Button id="ButtonSaveOutput" fx:id="nodeButtonSaveOutput" mnemonicParsing="false" onAction="#onSaveOutputAction" text="Save Output" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
-    <GridPane alignment="CENTER" maxHeight="-1.0" prefHeight="-1.0" GridPane.columnIndex="2" GridPane.rowIndex="0">
+    <Label labelFor="$nodeImageViewError" text="Generated Error Sample" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+    <Label labelFor="$nodeImageViewInput" text="Image from DataBase" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+    <Label labelFor="$nodeImageViewResult" text="Test Result" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+    <GridPane alignment="TOP_CENTER" maxHeight="-1.0" prefHeight="-1.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
       <children>
-        <Slider id="SliderThreshold" fx:id="nodeSliderThreshold" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-        <Slider id="SliderFrameSize" fx:id="nodeSliderFrameSize" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-        <Label text="Frame Size (PX x PX)" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-        <Label text="Threshold" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-      </children>
-      <columnConstraints>
-        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-      </columnConstraints>
-      <rowConstraints>
-        <RowConstraints maxHeight="25.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="25.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
-      </rowConstraints>
-    </GridPane>
-    <GridPane maxHeight="70.0" prefHeight="50.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="0" GridPane.valignment="TOP">
-      <children>
-        <Label text="Error Generator" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-        <Label text="Metric" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-        <Label text="Feature Extractor" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-        <ChoiceBox id="ChoiceBoxErrorGenerator" fx:id="nodeChoiceBoxErrorGenerator" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
-          <items>
-            <FXCollections fx:factory="observableArrayList">
-              <String fx:value="Item 1" />
-              <String fx:value="Item 2" />
-              <String fx:value="Item 3" />
-            </FXCollections>
-          </items>
-        </ChoiceBox>
-        <ChoiceBox id="ChoiceBoxMetric" fx:id="nodeChoiceBoxMetric" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-          <items>
-            <FXCollections fx:factory="observableArrayList">
-              <String fx:value="Item 1" />
-              <String fx:value="Item 2" />
-              <String fx:value="Item 3" />
-            </FXCollections>
-          </items>
-        </ChoiceBox>
-        <ChoiceBox id="ChoiceBoxFeatureExtractor" fx:id="nodeChoiceBoxFeatureExtractor" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-          <items>
-            <FXCollections fx:factory="observableArrayList">
-              <String fx:value="Item 1" />
-              <String fx:value="Item 2" />
-              <String fx:value="Item 3" />
-            </FXCollections>
-          </items>
-        </ChoiceBox>
+        <Slider id="SliderFrameSize" fx:id="nodeSliderFrameSize" max="32.0" min="4.0" showTickLabels="true" showTickMarks="true" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+        <Label labelFor="$nodeSliderFrameSize" text="Frame Size (PX x PX)" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+        <Label text="Feature Extractor" GridPane.columnIndex="0" GridPane.rowIndex="1">
+          <labelFor>
+            <ChoiceBox id="ChoiceBoxFeatureExtractor" fx:id="nodeChoiceBoxFeatureExtractor" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+          </labelFor>
+        </Label>
+        <fx:reference source="nodeChoiceBoxFeatureExtractor" />
+        <ChoiceBox fx:id="nodeChoiceBoxBinaryClassifier" prefWidth="125.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+        <Label labelFor="$nodeChoiceBoxBinaryClassifier" text="Binary Classifier" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+        <ChoiceBox fx:id="nodeChoiceBoxSample" prefWidth="125.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+        <Label labelFor="$nodeChoiceBoxSample" text="Sample" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+        <Button fx:id="nodeButtonTrain" mnemonicParsing="false" onAction="#onTrainAction" prefWidth="125.0" text="Train" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+        <Button fx:id="nodeButtonTest" mnemonicParsing="false" onAction="#onTestAction" prefWidth="125.00009999999747" text="Test" GridPane.columnIndex="1" GridPane.rowIndex="4" />
       </children>
       <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -109,9 +55,72 @@
         <RowConstraints maxHeight="25.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
         <RowConstraints maxHeight="25.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
         <RowConstraints maxHeight="25.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="25.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="25.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
       </rowConstraints>
     </GridPane>
-    <Button id="ButtonTest" fx:id="nodeButtonTest" mnemonicParsing="false" onAction="#onTestAction" text="Test" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+    <GridPane maxHeight="70.0" prefHeight="50.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP">
+      <children>
+        <Label text="Error Generator" GridPane.columnIndex="0" GridPane.rowIndex="0">
+          <labelFor>
+            <ChoiceBox id="ChoiceBoxErrorGenerator" fx:id="nodeChoiceBoxErrorGenerator" minWidth="25.0" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+          </labelFor>
+        </Label>
+        <fx:reference source="nodeChoiceBoxErrorGenerator" />
+        <TextField fx:id="nodeTextFieldErrorCount" alignment="CENTER_RIGHT" prefWidth="200.0" text="1" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+        <Label labelFor="$nodeTextFieldErrorCount" text="Create Error Count" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+        <ChoiceBox id="nodeChoiceBoxDisplayError" fx:id="nodeChoiceBoxDisplayedError" prefWidth="125.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+        <Label labelFor="$nodeChoiceBoxDisplayedError" text="Displayed Error" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+        <Button fx:id="nodeButtonPermutateErrors" mnemonicParsing="false" onAction="#onPermutateErrorsAction" prefWidth="125.0" text="Permutate Errors" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+        <Button fx:id="nodeButtonGenerateErrors" mnemonicParsing="false" onAction="#onGenerateErrorsAction" prefWidth="125.0" text="Generate Errors" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+        <Button fx:id="nodeButtonRemoveError" mnemonicParsing="false" onAction="#onRemoveErrorAction" prefWidth="125.0" text="Remove Error" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+        <Button fx:id="nodeButtonResetErrors" mnemonicParsing="false" onAction="#onResetErrorsAction" prefWidth="125.0" text="Reset Errors" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+      </children>
+      <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      </columnConstraints>
+      <padding>
+        <Insets fx:id="x2" />
+      </padding>
+      <rowConstraints>
+        <RowConstraints maxHeight="-1.0" minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="-1.0" minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
+        <RowConstraints minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
+        <RowConstraints minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
+        <RowConstraints minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
+      </rowConstraints>
+    </GridPane>
+    <GridPane padding="$x2" GridPane.columnIndex="0" GridPane.margin="$x2" GridPane.rowIndex="1">
+      <children>
+        <ChoiceBox id="ChoiceBoxDisplayImage" fx:id="nodeChoiceBoxDisplayImage" pickOnBounds="false" prefWidth="125.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+        <Label labelFor="$nodeChoiceBoxDisplayImage" prefWidth="125.0" text="Display" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+        <Button id="ButtonRemoveImage" fx:id="nodeButtonRemoveImage" mnemonicParsing="false" onAction="#onRemoveImageAction" prefWidth="250.0" text="Remove Image" GridPane.columnIndex="1" GridPane.rowIndex="2">
+          <font>
+            <Font size="11.0" fx:id="x1" />
+          </font>
+        </Button>
+        <Button id="ButtonAddImage" fx:id="nodeButtonAddImage" font="$x1" mnemonicParsing="false" onAction="#onAddImageAction" prefWidth="250.00009999999747" text="Add Image" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+        <Button fx:id="nodeButtonResetDatabase" font="$x1" mnemonicParsing="false" onAction="#onResetDatabaseAction" prefWidth="125.0" text="Reset Database" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      </children>
+      <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      </columnConstraints>
+      <rowConstraints>
+        <RowConstraints maxHeight="-Infinity" minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="-Infinity" minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="-Infinity" minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="-Infinity" minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
+      </rowConstraints>
+    </GridPane>
+    <Label text="Database" textOverrun="ELLIPSIS" GridPane.columnIndex="0" GridPane.rowIndex="0">
+      <font>
+        <Font name="System Bold" size="14.0" fx:id="x3" />
+      </font>
+    </Label>
+    <Label font="$x3" text="Error" textOverrun="ELLIPSIS" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+    <Label font="$x3" text="Train &amp; Test" GridPane.columnIndex="2" GridPane.rowIndex="0" />
   </children>
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />

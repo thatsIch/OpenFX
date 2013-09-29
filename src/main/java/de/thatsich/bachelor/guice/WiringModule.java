@@ -4,13 +4,11 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Scopes;
 
 import de.thatsich.bachelor.javafx.CommandProvider;
-import de.thatsich.bachelor.javafx.DisplayPresenter;
 import de.thatsich.bachelor.javafx.DisplayView;
 import de.thatsich.bachelor.javafx.ICommandProvider;
-import de.thatsich.bachelor.javafx.IDisplayPresenter;
-import de.thatsich.bachelor.javafx.IDisplayView;
-import de.thatsich.bachelor.javafx.IStateModel;
 import de.thatsich.bachelor.javafx.StateModel;
+import de.thatsich.bachelor.javafx.model.ErrorDatabase;
+import de.thatsich.bachelor.javafx.model.ImageDatabase;
 import de.thatsich.bachelor.service.ConfigService;
 import de.thatsich.bachelor.service.IConfigService;
 
@@ -34,7 +32,6 @@ public class WiringModule extends AbstractModule {
 		super.bind(WiringModule.class).toInstance(this);
 
 		this.mapViews();
-		this.mapPresenters();
 		this.mapCommands();
 		this.mapServices();
 		this.mapModels();
@@ -47,11 +44,7 @@ public class WiringModule extends AbstractModule {
 	 * used to map interfaces to implementations
 	 */
 	private void mapViews() {
-		super.bind(IDisplayView.class).to(DisplayView.class).in(Scopes.SINGLETON);
-	}
-	
-	private void mapPresenters() {
-		super.bind(IDisplayPresenter.class).to(DisplayPresenter.class).in(Scopes.SINGLETON);
+		super.bind(DisplayView.class).in(Scopes.SINGLETON);
 	}
 	
 	private void mapCommands() {
@@ -63,6 +56,8 @@ public class WiringModule extends AbstractModule {
 	}
 	
 	private void mapModels() {
-		bind(IStateModel.class).to(StateModel.class).in(Scopes.SINGLETON);
+		super.bind(StateModel.class).in(Scopes.SINGLETON);
+		super.bind(ImageDatabase.class).in(Scopes.SINGLETON);
+		super.bind(ErrorDatabase.class).in(Scopes.SINGLETON);
 	}
 }

@@ -2,6 +2,6 @@ package de.thatsich.core.guice;
 
 
 
-public interface PostInit {
+public interface IPostInit {
 	public void init();
 }

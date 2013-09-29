@@ -6,4 +6,4 @@ import de.thatsich.core.javafx.AFXMLView;
 
 
 @Singleton
-public class DisplayView extends AFXMLView implements IDisplayView {}
+public class DisplayView extends AFXMLView {}

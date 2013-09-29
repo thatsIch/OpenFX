@@ -17,7 +17,7 @@ import com.google.inject.Inject;
 import com.google.inject.Module;
 
 import de.thatsich.bachelor.guice.WiringModule;
-import de.thatsich.bachelor.javafx.IDisplayView;
+import de.thatsich.bachelor.javafx.DisplayView;
 import de.thatsich.core.guice.LoggerModule;
 import de.thatsich.core.guice.PostInitModule;
 
@@ -27,13 +27,14 @@ import de.thatsich.core.guice.PostInitModule;
  * @author Tran Minh Do
  */
 //TODO Error Generator
+//TODO absdiff um Fehler zu finden
 public class Main extends GuiceApplication {
 	
 	/**
 	 * First instantiated view.
 	 */
 	@Inject
-	private IDisplayView view;
+	private DisplayView view;
 
 	/**
 	 * 
