@@ -10,8 +10,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import org.opencv.core.Core;
+import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfByte;
+import org.opencv.core.Point;
+import org.opencv.core.Scalar;
 import org.opencv.highgui.Highgui;
 import org.opencv.imgproc.Imgproc;
 
@@ -119,4 +123,66 @@ public class Images {
 
 		return result;
 	}
+	
+	
+	/**
+	 * Calculates the max value of an int array.
+	 * Faster than the actual Arrays operation since 
+	 * there is no need to convert into a list first
+	 * 
+	 * @param array to be searched array
+	 * @return max value of the searched array
+	 */
+	private static int maxValue(int[] array) {
+		int max = 0;
+		
+		for (int i = 0; i < array.length; i++) {
+			max = Math.max(max, array[i]);
+		}
+		
+		return max;
+	}
+	
+	/**
+	 * Calculates the histogram of the input image.
+	 * It needs to be grayscale (CvType.CV_8U).
+	 * 
+	 * @param image Image which the histogram is based on
+	 * @return Histogram of image
+	 */
+	public static Mat getHistogram(Mat image) {
+		if (image == null) throw new IllegalArgumentException("Image is null.");
+		if (image.type() != CvType.CV_8U) throw new IllegalArgumentException("Image is not grayscale. " + image.type());
+		if (image.empty()) throw new IllegalArgumentException("Image is empty.");
+		
+		final int bins = 256;
+		final int height = 256;
+		final int[] histogram = new int[bins];
+
+		// calculate histogram
+		for (int row = 0; row < image.rows(); row++) {
+			for (int col = 0; col < image.cols(); col++) {
+				final int pixelValue = (int) image.get(row, col)[0];
+				histogram[pixelValue]++;
+			}
+		}
+		
+		// normalize
+		final int peak = maxValue(histogram);
+		
+		// convert into displayable matrix
+		final Mat canvas = Mat.ones(height, bins, CvType.CV_8U);
+		for (int i = 0; i < bins; i++) {
+			
+			Core.line(
+				canvas, 
+				new Point(i, canvas.rows()), 
+				new Point(i, canvas.rows() - (histogram[i] * canvas.rows() / peak)), 
+				new Scalar(200)
+			);
+		}
+		
+		return canvas;
+	}
+	
 }
