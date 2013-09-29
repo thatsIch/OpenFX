@@ -80,6 +80,15 @@ public class ImageFileChooser {
 	 * @return null if no file selected else the selected File converted to Path
 	 */
 	public Path show() {
+		File lastLocation = new File(this.config.getLastLocationString());
+		if (!lastLocation.isDirectory()) {
+			this.log.warning("Last Location is invalid, loading user dir.");
+			lastLocation = new File(System.getProperty("user.home"));
+		}
+		
+		this.chooser.setInitialDirectory(lastLocation);
+		this.log.info("Set up initial directory: " + lastLocation.getAbsolutePath());
+		
 		File result = this.chooser.showOpenDialog(null);
 		this.log.info("Showing Open Dialog.");
 
