@@ -21,6 +21,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 import de.thatsich.bachelor.javafx.model.ErrorDatabase;
+import de.thatsich.bachelor.javafx.model.ErrorDatabase.ErrorEntry;
 import de.thatsich.bachelor.javafx.model.ImageDatabase;
 import de.thatsich.bachelor.javafx.model.ImageDatabase.ImageEntry;
 import de.thatsich.core.Log;
@@ -45,6 +46,7 @@ public class DisplayPresenter implements Initializable {
 	@FXML private Parent nodeRoot;
 	
 	@FXML private ChoiceBox<ImageEntry> nodeChoiceBoxDisplayImage;
+	@FXML private ChoiceBox<ErrorEntry> nodeChoiceBoxDisplayedError;
 	@FXML private ChoiceBox<IErrorGenerator> nodeChoiceBoxErrorGenerator;
 	@FXML private ChoiceBox<IFeatureExtractor> nodeChoiceBoxFeatureExtractor;
 	
@@ -79,6 +81,7 @@ public class DisplayPresenter implements Initializable {
 
 		// ChoiceBoxes
 		this.bindChoiceBoxDisplayImage();
+		this.bindChoiceBoxDisplayedError();
 		this.bindChoiceBoxErrorGenerator();
 		this.bindChoiceBoxFeatureExtractor();
 		
@@ -98,13 +101,21 @@ public class DisplayPresenter implements Initializable {
 	 * Bind ChoiceBoxDisplayImage together with its corresponding Model part.
 	 */
 	private void bindChoiceBoxDisplayImage() {
-		
 		this.nodeChoiceBoxDisplayImage.setConverter(ImageDatabase.ImageEntry.CONVERTER);
-		this.log.info("Set up StringPathConverter for proper name display.");
+		this.log.info("Set up ItemEntryStringConverter for proper name display.");
 		
 		this.nodeChoiceBoxDisplayImage.itemsProperty().bindBidirectional(this.imageDatabase.getImageEntriesProperty());
 		this.nodeChoiceBoxDisplayImage.valueProperty().bindBidirectional(this.imageDatabase.getImageEntryProperty());
 		this.log.info("Bound ChoiceBoxDisplayImage to Model.");
+	}
+	
+	private void bindChoiceBoxDisplayedError() {
+		this.nodeChoiceBoxDisplayedError.setConverter(ErrorDatabase.ErrorEntry.CONVERTER);
+		this.log.info("Set up ErrorEntryStringConverter for proper name display.");
+		
+		this.nodeChoiceBoxDisplayedError.itemsProperty().bindBidirectional(this.errorDatabase.getErrorEntriesProperty());
+		this.nodeChoiceBoxDisplayedError.valueProperty().bindBidirectional(this.errorDatabase.getErrorEntryProperty());
+		this.log.info("Bound ChoiceBoxDisplayedError to Model.");
 	}
 	
 	/**
@@ -134,17 +145,13 @@ public class DisplayPresenter implements Initializable {
 	}
 	
 	private void bindImageViewInput() {
-
 		this.imageDatabase.getImageEntryProperty().addListener(new ChangeListener<ImageEntry>() {
-
 			@Override
-			public void changed(ObservableValue<? extends ImageEntry> observable,
-					ImageEntry oldValue, ImageEntry newValue) {
+			public void changed(ObservableValue<? extends ImageEntry> observable, ImageEntry oldValue, ImageEntry newValue) {
 				if (newValue != null) {
 					nodeImageViewInput.imageProperty().setValue(newValue.getImage());
 				}
 			}
-			
 		});
 		
 		ImageEntry entry = this.imageDatabase.getImageEntryProperty().get();
@@ -154,7 +161,19 @@ public class DisplayPresenter implements Initializable {
 	}
 	
 	private void bindImageModified() {
+		this.errorDatabase.getErrorEntryProperty().addListener(new ChangeListener<ErrorEntry>() {
+			@Override
+			public void changed(ObservableValue<? extends ErrorEntry> observable, ErrorEntry oldValue, ErrorEntry newValue) {
+				if (newValue != null) {
+					nodeImageViewError.imageProperty().setValue(newValue.getImage());
+				}
+			}
+		});
 		
+		ErrorEntry entry = this.errorDatabase.getErrorEntryProperty().get();
+		if (entry != null) {
+			this.nodeImageViewError.imageProperty().setValue(entry.getImage());
+		}
 	}
 	
 	private void initImageResult() {
@@ -180,23 +199,16 @@ public class DisplayPresenter implements Initializable {
 	}
 	
 	private void bindTextFieldErrorCount() {
-//		this.nodeTextFieldErrorCount.textProperty().bindBidirectional(
-//			this.errorDatabase.getErrorCountProperty(), 
-//			new StringConverter<Integer>() {
-//	
-//				@Override
-//				public Integer fromString(String arg0) {
-//					// TODO Auto-generated method stub
-//					return null;
-//				}
-//	
-//				@Override
-//				public String toString(Integer arg0) {
-//					// TODO Auto-generated method stub
-//					return null;
-//				}
-//			}
-//		);
+		this.nodeTextFieldErrorCount.textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				if (newValue.matches("\\d+")) {
+					errorDatabase.getErrorLoopCount().set(Integer.parseInt(newValue));
+				} else {
+					nodeTextFieldErrorCount.setText(oldValue);
+				}
+			}
+		});
 	}
 	
 
@@ -251,8 +263,8 @@ public class DisplayPresenter implements Initializable {
 		
 	}
 	
-	@FXML private void onResetErrorsAction() {
-		
+	@FXML private void onResetErrorsAction() throws IOException {
+		this.errorDatabase.resetErrorDatabase();
 	}
 	
 	@FXML private void onTrainAction() {

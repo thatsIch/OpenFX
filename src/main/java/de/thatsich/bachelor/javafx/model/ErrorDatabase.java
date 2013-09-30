@@ -12,10 +12,13 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.image.Image;
 import javafx.util.StringConverter;
 
 import org.opencv.core.Core;
@@ -41,8 +44,10 @@ public class ErrorDatabase {
 	final private ObjectProperty<ObservableList<IErrorGenerator>> errorGenerators = new ChoiceBox<IErrorGenerator>().itemsProperty();
 	final private ObjectProperty<IErrorGenerator> errorGenerator = new SimpleObjectProperty<IErrorGenerator>();
 	
-	final private ObjectProperty<ObservableList<ErrorEntry>> errors = new ChoiceBox<ErrorEntry>().itemsProperty();
-	final private ObjectProperty<ErrorEntry> error = new SimpleObjectProperty<ErrorEntry>();
+	final private ObjectProperty<ObservableList<ErrorEntry>> errorEntries = new ChoiceBox<ErrorEntry>().itemsProperty();
+	final private ObjectProperty<ErrorEntry> errorEntry = new SimpleObjectProperty<ErrorEntry>();
+	
+	final private IntegerProperty errorLoopCount = new SimpleIntegerProperty();
 	
 	/**
 	 * Injected CTOR
@@ -83,16 +88,16 @@ public class ErrorDatabase {
 		
 		try (DirectoryStream<Path> stream = Files.newDirectoryStream(this.errorFolderPath, GLOB_PATTERN)) {
 			for (Path child : stream) {
-				this.errors.get().add(new ErrorEntry(child));
+				this.errorEntries.get().add(new ErrorEntry(child));
 				this.log.info("Added " + child + " with Attribute " + Files.probeContentType(child));
 			}
 		} catch (IOException | DirectoryIteratorException e) {
 			e.printStackTrace();
 		}
-		this.log.info("All OpenCV Supported Images added: " + this.errors.get().size() + ".");
+		this.log.info("All OpenCV Supported Images added: " + this.errorEntries.get().size() + ".");
 		
-		if (this.errors.get().size() > 0) {
-			this.error.set(this.errors.get().get(0));
+		if (this.errorEntries.get().size() > 0) {
+			this.errorEntry.set(this.errorEntries.get().get(0));
 			this.log.info("Initialized with first Image.");
 		}
 	}
@@ -119,11 +124,18 @@ public class ErrorDatabase {
 		ErrorEntry entry = new ErrorEntry(image, error, imagePath);
 		this.log.info("Instantiated ErrorEntry.");
 		
-		this.errors.get().add(entry);
+		this.errorEntries.get().add(entry);
 		this.log.info("Error added to Model.");
 		
-		this.error.set(entry);
+		this.errorEntry.set(entry);
 		this.log.info("Error set to current.");
+	}
+	
+	public void resetErrorDatabase() throws IOException {
+		for (ErrorEntry e : this.errorEntries.get()) {
+			Files.delete(e.getPath());
+		}
+		this.errorEntries.get().clear();
 	}
 	
 	// ==================================================
@@ -143,6 +155,10 @@ public class ErrorDatabase {
 	// ==================================================
 	public ObjectProperty<ObservableList<IErrorGenerator>> getErrorGeneratorsProperty() { return this.errorGenerators; }
 	public ObjectProperty<IErrorGenerator> getErrorGeneratorProperty() { return this.errorGenerator; }
+	public ObjectProperty<ObservableList<ErrorEntry>> getErrorEntriesProperty() { return this.errorEntries; }
+	public ObjectProperty<ErrorEntry> getErrorEntryProperty() { return this.errorEntry; }
+	public IntegerProperty getErrorLoopCount() { return this.errorLoopCount; }
+	
 	
 	public static class ErrorEntry {
 		private final Mat originalMat;
@@ -191,36 +207,31 @@ public class ErrorDatabase {
 			this.errorMat = encodedImageChannelMats.get(1);
 		}
 		
+		// TODO
 		public Mat getErrorMatrix(int frameSize) {
 			Mat result = new Mat();
 			
 			return result;
 		}
 		
-		public Mat getOriginalMat() {
-			return this.originalMat;
-		}
+		// ==================================================
+		// Getter Implementation
+		// ==================================================
+		public Mat getOriginalMat() { return this.originalMat; }
+		public Mat getErrorMat() { return this.errorMat; }
+		public String getName() { return this.storagePath.getFileName().toString(); }
+		//TODO
+		public Image getImage() { return Images.matToImage(errorMat); }
+		public Path getPath() { return this.storagePath; }
 		
-		public Mat getErrorMat() {
-			return this.errorMat;
-		}
-		
-		public String getName() {
-			return this.storagePath.getFileName().toString();
-		}
-		
+		/**
+		 * JavaFX Converter to display the file name in Control-Objects instead something random
+		 * 
+		 * @author Minh
+		 */
 		private static class Converter extends StringConverter<ErrorEntry> {
-
-			@Override
-			public ErrorEntry fromString(String string) {
-				return null;
-			}
-
-			@Override
-			public String toString(ErrorEntry entry) {
-				return entry.getName();
-			}
-			
+			@Override public ErrorEntry fromString(String string) { return null; }
+			@Override public String toString(ErrorEntry entry) { return entry.getName(); }
 		}
 	}
 }

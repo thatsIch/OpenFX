@@ -152,13 +152,7 @@ public class ImageDatabase {
 //	public Path getInputPath() { return this.inputPath; }
 //	public Path getOutputPath() { return this.outputPath; }
 //	public Path getImagePath() { return this.imagePath.get(); }
-	
-	// ==================================================
-	// Setter Implementation
-	// ==================================================
-//	@Override public void setImagePath(Path path) { this.imagePath.set(path); }
-	
-	
+		
 	// ==================================================
 	// Property Implementation
 	// ==================================================

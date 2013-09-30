@@ -12,7 +12,7 @@ public class LineError extends AErrorGenerator implements IErrorGenerator {
 
 	private final int MEAN_LENGTH = 100;
 	private final int STDDEV_LENTH = 50;
-	private final int MIN_LINE_THICKNESS = 1;
+	private final int MIN_LINE_THICKNESS = 2;
 	private final int MAX_LINE_THICKNESS = 5;
 	
 	@Override
@@ -26,8 +26,8 @@ public class LineError extends AErrorGenerator implements IErrorGenerator {
 		final int width = in.width();
 		final int height = in.height();
 		
-		final int leftWidth = width - offset_x;
-		final int leftHeight = height - offset_y;
+		final int leftWidth = width - Math.abs(offset_x);
+		final int leftHeight = height - Math.abs(offset_y);
 		
 		final int x1 = (int) Math.round(Math.random() * leftWidth);
 		final int y1 = (int) Math.round(Math.random() * leftHeight);
