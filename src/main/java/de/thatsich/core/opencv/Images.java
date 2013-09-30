@@ -185,4 +185,14 @@ public class Images {
 		return canvas;
 	}
 	
+	
+	/**
+	 * Creates a Mat Object for the specified Path to the Image.
+	 * 
+	 * @param path Path to the Image
+	 * @return Image converted to OpenCV Mat Object
+	 */
+	public static Mat getMatFromPath(Path path) {
+		return Highgui.imread(path.toAbsolutePath().toString());
+	}
 }

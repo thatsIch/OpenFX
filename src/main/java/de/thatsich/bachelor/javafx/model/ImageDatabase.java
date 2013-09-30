@@ -11,20 +11,25 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.image.Image;
+import javafx.util.StringConverter;
+
+import org.opencv.core.Mat;
 
 import com.google.inject.Inject;
 
 import de.thatsich.core.Log;
+import de.thatsich.core.opencv.Images;
 
 public class ImageDatabase {
 
 	// Fields
-	final private Path inputPath;
-	final private Path outputPath;
+	final private Path inputFolderPath;
+	final private Path outputFolderPath;
 	
 	// properties
-	final private ObjectProperty<Path> imagePath = new SimpleObjectProperty<Path>();
-	final private ObjectProperty<ObservableList<Path>> imagePaths = new ChoiceBox<Path>().itemsProperty();
+	final private ObjectProperty<ImageEntry> imageEntry = new SimpleObjectProperty<ImageEntry>();
+	final private ObjectProperty<ObservableList<ImageEntry>> imageEntries = new ChoiceBox<ImageEntry>().itemsProperty();
 	
 	// Injects
 	final private Log log;
@@ -33,12 +38,12 @@ public class ImageDatabase {
 	private ImageDatabase(Log log) throws IOException {
 		this.log = log;
 		
-		this.inputPath = Paths.get("input");
-		this.outputPath = Paths.get("output");
+		this.inputFolderPath = Paths.get("input");
+		this.outputFolderPath = Paths.get("output");
 		
-		if (Files.notExists(this.inputPath) || !Files.isDirectory(this.inputPath)) Files.createDirectory(this.inputPath);
-		if (Files.notExists(this.outputPath) || !Files.isDirectory(this.outputPath)) Files.createDirectory(this.outputPath); 
-		
+		if (Files.notExists(this.inputFolderPath) || !Files.isDirectory(this.inputFolderPath)) Files.createDirectory(this.inputFolderPath);
+		if (Files.notExists(this.outputFolderPath) || !Files.isDirectory(this.outputFolderPath)) Files.createDirectory(this.outputFolderPath); 
+			
 		this.initImagePaths();
 	}
 	
@@ -51,15 +56,20 @@ public class ImageDatabase {
 
 		final String GLOB_PATTERN = "*.{png,jpeg,jpg,jpe}";
 		
-		try (DirectoryStream<Path> stream = Files.newDirectoryStream(this.inputPath, GLOB_PATTERN)) {
+		try (DirectoryStream<Path> stream = Files.newDirectoryStream(this.inputFolderPath, GLOB_PATTERN)) {
 			for (Path child : stream) {
-				this.imagePaths.get().add(child.toAbsolutePath());
+				this.imageEntries.get().add(new ImageEntry(child.toAbsolutePath()));
 				this.log.info("Added " + child + " with Attribute " + Files.probeContentType(child));
 			}
 		} catch (IOException | DirectoryIteratorException e) {
 			e.printStackTrace();
 		}
-		this.log.info("All OpenCV Supported Images added: " + this.imagePaths.get().size() + ".");
+		this.log.info("All OpenCV Supported Images added: " + this.imageEntries.get().size() + ".");
+		
+		if (this.imageEntries.get().size() > 0) {
+			this.imageEntry.set(this.imageEntries.get().get(0));
+			this.log.info("Initialized with first Image.");
+		}
 	}
 	
 	// ==================================================
@@ -75,7 +85,7 @@ public class ImageDatabase {
 		 */
 		public void addImage(Path imagePath) throws IOException {
 			
-			Path newPath = this.inputPath.resolve(imagePath.getFileName());
+			Path newPath = this.inputFolderPath.resolve(imagePath.getFileName());
 			this.log.info("Created new Path: " + newPath);
 			
 			if (Files.exists(newPath)) {
@@ -84,10 +94,14 @@ public class ImageDatabase {
 			}
 					
 			Path copiedPath = Files.copy(imagePath, newPath);
-			this.log.info("Copied selection ("+ imagePath +") into InputFolder ("+this.inputPath+"): " + copiedPath);
+			this.log.info("Copied selection ("+ imagePath +") into InputFolder ("+this.inputFolderPath+"): " + copiedPath);
 			
-			this.imagePaths.get().add(copiedPath);
+			ImageEntry copy = new ImageEntry(copiedPath);
+			this.imageEntries.get().add(copy);
 			this.log.info("Added copy to ChoiceBoxDisplayImage: " + copiedPath.toString());
+			
+			this.imageEntry.set(copy);
+			this.log.info("Set currently selected Image to " + copiedPath);
 		}
 		
 		/**
@@ -97,18 +111,23 @@ public class ImageDatabase {
 		 * @throws IOException
 		 */
 		public void removeSelectedImage() throws IOException {
-			Path choice = this.imagePath.get();
+			ImageEntry choice = this.imageEntry.get();
 			
-			if (choice == null || Files.notExists(choice)) {
+			if (choice == null || Files.notExists(choice.getPath())) {
 				this.log.info("Choice was empty. Deleting nothing.");
 				return;
 			}
 			
-			Files.delete(choice);
+			Files.delete(choice.getPath());
 			this.log.info("Choice deleted from InputFolder.");
 			
-			this.imagePaths.get().remove(choice);
+			this.imageEntries.get().remove(choice);
 			this.log.info("Choice removed from internal Representation.");
+			
+			if (this.imageEntries.get().size() > 0) {
+				this.imageEntry.set(this.imageEntries.get().get(0));
+				this.log.info("ChoiceBox reset to first ImageEntry.");
+			}
 		}
 		
 		
@@ -120,10 +139,10 @@ public class ImageDatabase {
 		 * @throws IOException 
 		 */
 		public void resetImageDatabase() throws IOException {
-			for (Path p : this.imagePaths.get()) {
-				Files.delete(p);
-				this.imagePaths.get().remove(p);
+			for (ImageEntry p : this.imageEntries.get()) {
+				Files.delete(p.getPath());
 			}
+			this.imageEntries.get().clear();
 		}
 	
 	
@@ -143,6 +162,57 @@ public class ImageDatabase {
 	// ==================================================
 	// Property Implementation
 	// ==================================================
-	public ObjectProperty<ObservableList<Path>> getImagePathsProperty() { return this.imagePaths; }
-	public ObjectProperty<Path> getImagePathProperty() { return this.imagePath; }
+	public ObjectProperty<ObservableList<ImageEntry>> getImageEntriesProperty() { return this.imageEntries; }
+	public ObjectProperty<ImageEntry> getImageEntryProperty() { return this.imageEntry; }
+	
+	public static class ImageEntry {
+		private Mat imageMat;
+		private Path imagePath;
+		public static Converter CONVERTER;
+		
+		public ImageEntry(Path imagePath) {
+			this.imageMat = Images.getMatFromPath(imagePath);
+			this.imageMat = Images.toGrayScale(this.imageMat);
+			this.imagePath = imagePath;
+			ImageEntry.CONVERTER = new Converter();
+		}
+		
+		public ImageEntry(Mat imageMat, Path imagePath) {
+			this.imageMat = Images.toGrayScale(imageMat);
+			this.imagePath = imagePath;
+			ImageEntry.CONVERTER = new Converter();
+		}
+		
+		public void store() {
+			Images.store(this.imageMat, this.imagePath);
+		}
+		
+		public Image getImage() {
+			return Images.matToImage(this.imageMat);
+		}
+		
+		public Mat getMat() {
+			return this.imageMat;
+		}
+		
+		public Path getPath() {
+			return this.imagePath;
+		}
+		
+		public String getName() {
+			return this.imagePath.getFileName().toString();
+		}
+		
+		private static class Converter extends StringConverter<ImageEntry> {
+			@Override 
+			public ImageEntry fromString(String string) {
+				return null;
+			}
+
+			@Override
+			public String toString(ImageEntry imageEntry) {
+				return imageEntry.getName();
+			}	
+		}
+	}
 }

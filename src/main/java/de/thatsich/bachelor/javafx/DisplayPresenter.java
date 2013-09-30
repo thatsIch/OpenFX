@@ -12,18 +12,20 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Slider;
-import javafx.scene.image.Image;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+
+import org.opencv.core.Mat;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 import de.thatsich.bachelor.javafx.model.ErrorDatabase;
 import de.thatsich.bachelor.javafx.model.ImageDatabase;
+import de.thatsich.bachelor.javafx.model.ImageDatabase.ImageEntry;
 import de.thatsich.core.Log;
 import de.thatsich.core.StringErrorGeneratorConverter;
 import de.thatsich.core.StringFeatureExtractorConverter;
-import de.thatsich.core.StringPathConverter;
 import de.thatsich.core.javafx.ImageFileChooser;
 import de.thatsich.core.opencv.error.IErrorGenerator;
 import de.thatsich.core.opencv.extractor.IFeatureExtractor;
@@ -42,7 +44,7 @@ public class DisplayPresenter implements Initializable {
 	// GUI Elements
 	@FXML private Parent nodeRoot;
 	
-	@FXML private ChoiceBox<Path> nodeChoiceBoxDisplayImage;
+	@FXML private ChoiceBox<ImageEntry> nodeChoiceBoxDisplayImage;
 	@FXML private ChoiceBox<IErrorGenerator> nodeChoiceBoxErrorGenerator;
 	@FXML private ChoiceBox<IFeatureExtractor> nodeChoiceBoxFeatureExtractor;
 	
@@ -52,6 +54,8 @@ public class DisplayPresenter implements Initializable {
 	
 	@FXML private Slider nodeSliderFrameSize;
 
+	@FXML private TextField nodeTextFieldErrorCount;
+	
 	@Inject private Log log;
 	@Inject private StateModel stateModel;
 	@Inject private ImageDatabase imageDatabase;
@@ -74,14 +78,17 @@ public class DisplayPresenter implements Initializable {
 	public void initialize(URL url, ResourceBundle resourceBundle) {
 
 		// ChoiceBoxes
-		this.initChoiceBoxDisplayImage();
-		this.initChoiceBoxErrorGenerator();
-		this.initChoiceBoxFeatureExtractor();
+		this.bindChoiceBoxDisplayImage();
+		this.bindChoiceBoxErrorGenerator();
+		this.bindChoiceBoxFeatureExtractor();
 		
 		// ImageViews
-		this.initImageViewInput();
-		this.initImageModified();
+		this.bindImageViewInput();
+		this.bindImageModified();
 		this.initImageResult();
+		
+		// TextFields
+		this.bindTextFieldErrorCount();
 		
 		// Sliders
 		this.initSliderFrameSize();
@@ -90,20 +97,20 @@ public class DisplayPresenter implements Initializable {
 	/**
 	 * Bind ChoiceBoxDisplayImage together with its corresponding Model part.
 	 */
-	private void initChoiceBoxDisplayImage() {
+	private void bindChoiceBoxDisplayImage() {
 		
-		this.nodeChoiceBoxDisplayImage.setConverter(new StringPathConverter());
+		this.nodeChoiceBoxDisplayImage.setConverter(ImageDatabase.ImageEntry.CONVERTER);
 		this.log.info("Set up StringPathConverter for proper name display.");
 		
-		this.nodeChoiceBoxDisplayImage.itemsProperty().bindBidirectional(this.imageDatabase.getImagePathsProperty());
-		this.nodeChoiceBoxDisplayImage.valueProperty().bindBidirectional(this.imageDatabase.getImagePathProperty());
+		this.nodeChoiceBoxDisplayImage.itemsProperty().bindBidirectional(this.imageDatabase.getImageEntriesProperty());
+		this.nodeChoiceBoxDisplayImage.valueProperty().bindBidirectional(this.imageDatabase.getImageEntryProperty());
 		this.log.info("Bound ChoiceBoxDisplayImage to Model.");
 	}
 	
 	/**
 	 * Bind ChoiceBoxErrorGenerator together with its corresponding Model part.
 	 */
-	private void initChoiceBoxErrorGenerator() {
+	private void bindChoiceBoxErrorGenerator() {
 		
 		this.nodeChoiceBoxErrorGenerator.setConverter(new StringErrorGeneratorConverter());
 		this.log.info("Set up StringErrorGeneratorConverter for proper name display.");
@@ -116,7 +123,7 @@ public class DisplayPresenter implements Initializable {
 	/**
 	 * 
 	 */
-	private void initChoiceBoxFeatureExtractor() {
+	private void bindChoiceBoxFeatureExtractor() {
 		
 		this.nodeChoiceBoxFeatureExtractor.setConverter(new StringFeatureExtractorConverter());
 		this.log.info("Set up ChoiceBoxFeatureExtractor for proper name display.");
@@ -126,17 +133,27 @@ public class DisplayPresenter implements Initializable {
 		this.log.info("Bound ChoiceBoxFeatureExtractor to Model.");
 	}
 	
-	private void initImageViewInput() {
+	private void bindImageViewInput() {
 
-		this.imageDatabase.getImagePathProperty().addListener(new ChangeListener<Path>() {
+		this.imageDatabase.getImageEntryProperty().addListener(new ChangeListener<ImageEntry>() {
+
 			@Override
-			public void changed(ObservableValue<? extends Path> observable, Path oldValue, Path newValue) {
-				nodeImageViewInput.imageProperty().setValue(new Image("file:" + newValue.toString()));
+			public void changed(ObservableValue<? extends ImageEntry> observable,
+					ImageEntry oldValue, ImageEntry newValue) {
+				if (newValue != null) {
+					nodeImageViewInput.imageProperty().setValue(newValue.getImage());
+				}
 			}
+			
 		});
+		
+		ImageEntry entry = this.imageDatabase.getImageEntryProperty().get();
+		if (entry != null) {
+			this.nodeImageViewInput.imageProperty().setValue(entry.getImage());
+		}
 	}
 	
-	private void initImageModified() {
+	private void bindImageModified() {
 		
 	}
 	
@@ -160,6 +177,26 @@ public class DisplayPresenter implements Initializable {
 				System.out.println(newValue);
 			}
 		});
+	}
+	
+	private void bindTextFieldErrorCount() {
+//		this.nodeTextFieldErrorCount.textProperty().bindBidirectional(
+//			this.errorDatabase.getErrorCountProperty(), 
+//			new StringConverter<Integer>() {
+//	
+//				@Override
+//				public Integer fromString(String arg0) {
+//					// TODO Auto-generated method stub
+//					return null;
+//				}
+//	
+//				@Override
+//				public String toString(Integer arg0) {
+//					// TODO Auto-generated method stub
+//					return null;
+//				}
+//			}
+//		);
 	}
 	
 
@@ -200,7 +237,10 @@ public class DisplayPresenter implements Initializable {
 	}
 	
 	@FXML private void onGenerateErrorsAction() {
-		
+		ImageEntry imageEntry = this.imageDatabase.getImageEntryProperty().get();
+		Mat image = imageEntry.getMat().clone();
+
+		this.errorDatabase.applyErrorOn(image);
 	}
 	
 	@FXML private void onRemoveErrorAction() {
