@@ -73,77 +73,76 @@ public class ImageDatabase {
 	}
 	
 	// ==================================================
-		// Image Database Implementation
-		// ==================================================
+	// Image Database Implementation
+	// ==================================================
+	
+	/**
+	 * Checks for duplicate (already copied images/names)
+	 * if no duplicate is found it will copy it into the input folder
+	 * and add it to the model
+	 * 
+	 * @throws IOException
+	 */
+	public void addImage(Path imagePath) throws IOException {
 		
-		/**
-		 * Checks for duplicate (already copied images/names)
-		 * if no duplicate is found it will copy it into the input folder
-		 * and add it to the model
-		 * 
-		 * @throws IOException
-		 */
-		public void addImage(Path imagePath) throws IOException {
-			
-			Path newPath = this.inputFolderPath.resolve(imagePath.getFileName());
-			this.log.info("Created new Path: " + newPath);
-			
-			if (Files.exists(newPath)) {
-				this.log.info("Duplicate found: File already exists.");
-				return;
-			}
-					
-			Path copiedPath = Files.copy(imagePath, newPath);
-			this.log.info("Copied selection ("+ imagePath +") into InputFolder ("+this.inputFolderPath+"): " + copiedPath);
-			
-			ImageEntry copy = new ImageEntry(copiedPath);
-			this.imageEntries.get().add(copy);
-			this.log.info("Added copy to ChoiceBoxDisplayImage: " + copiedPath.toString());
-			
-			this.imageEntry.set(copy);
-			this.log.info("Set currently selected Image to " + copiedPath);
+		Path newPath = this.inputFolderPath.resolve(imagePath.getFileName());
+		this.log.info("Created new Path: " + newPath);
+		
+		if (Files.exists(newPath)) {
+			this.log.info("Duplicate found: File already exists.");
+			return;
+		}
+				
+		Path copiedPath = Files.copy(imagePath, newPath);
+		this.log.info("Copied selection ("+ imagePath +") into InputFolder ("+this.inputFolderPath+"): " + copiedPath);
+		
+		ImageEntry copy = new ImageEntry(copiedPath);
+		this.imageEntries.get().add(copy);
+		this.log.info("Added copy to ChoiceBoxDisplayImage: " + copiedPath.toString());
+		
+		this.imageEntry.set(copy);
+		this.log.info("Set currently selected Image to " + copiedPath);
+	}
+	
+	/**
+	 * Checks if something is chosen before then do nothing
+	 * but if something is chose it will be deleted and removed from Model.
+	 * 
+	 * @throws IOException
+	 */
+	public void removeSelectedImage() throws IOException {
+		ImageEntry choice = this.imageEntry.get();
+		
+		if (choice == null || Files.notExists(choice.getPath())) {
+			this.log.info("Choice was empty. Deleting nothing.");
+			return;
 		}
 		
-		/**
-		 * Checks if something is chosen before then do nothing
-		 * but if something is chose it will be deleted and removed from Model.
-		 * 
-		 * @throws IOException
-		 */
-		public void removeSelectedImage() throws IOException {
-			ImageEntry choice = this.imageEntry.get();
-			
-			if (choice == null || Files.notExists(choice.getPath())) {
-				this.log.info("Choice was empty. Deleting nothing.");
-				return;
-			}
-			
-			Files.delete(choice.getPath());
-			this.log.info("Choice deleted from InputFolder.");
-			
-			this.imageEntries.get().remove(choice);
-			this.log.info("Choice removed from internal Representation.");
-			
-			if (this.imageEntries.get().size() > 0) {
-				this.imageEntry.set(this.imageEntries.get().get(0));
-				this.log.info("ChoiceBox reset to first ImageEntry.");
-			}
-		}
+		Files.delete(choice.getPath());
+		this.log.info("Choice deleted from InputFolder.");
 		
+		this.imageEntries.get().remove(choice);
+		this.log.info("Choice removed from internal Representation.");
 		
-		/**
-		 * Iterates through the whole list,
-		 * deletes the image
-		 * and its reference
-		 * 
-		 * @throws IOException 
-		 */
-		public void resetImageDatabase() throws IOException {
-			for (ImageEntry p : this.imageEntries.get()) {
-				Files.delete(p.getPath());
-			}
-			this.imageEntries.get().clear();
+		if (this.imageEntries.get().size() > 0) {
+			this.imageEntry.set(this.imageEntries.get().get(0));
+			this.log.info("ChoiceBox reset to first ImageEntry.");
 		}
+	}
+	
+	/**
+	 * Iterates through the whole list,
+	 * deletes the image
+	 * and its reference
+	 * 
+	 * @throws IOException 
+	 */
+	public void resetImageDatabase() throws IOException {
+		for (ImageEntry p : this.imageEntries.get()) {
+			Files.delete(p.getPath());
+		}
+		this.imageEntries.get().clear();
+	}
 	
 	
 	// ==================================================
@@ -152,6 +151,7 @@ public class ImageDatabase {
 //	public Path getInputPath() { return this.inputPath; }
 //	public Path getOutputPath() { return this.outputPath; }
 //	public Path getImagePath() { return this.imagePath.get(); }
+	public ObservableList<ImageEntry> getImageEntries() { return this.imageEntries.get(); }
 		
 	// ==================================================
 	// Property Implementation

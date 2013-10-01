@@ -14,6 +14,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.util.StringConverter;
 
 import org.opencv.core.Mat;
 
@@ -22,12 +23,14 @@ import com.google.inject.Singleton;
 
 import de.thatsich.bachelor.javafx.model.ErrorDatabase;
 import de.thatsich.bachelor.javafx.model.ErrorDatabase.ErrorEntry;
+import de.thatsich.bachelor.javafx.model.EvaluationDatabase;
 import de.thatsich.bachelor.javafx.model.ImageDatabase;
 import de.thatsich.bachelor.javafx.model.ImageDatabase.ImageEntry;
 import de.thatsich.core.Log;
 import de.thatsich.core.StringErrorGeneratorConverter;
 import de.thatsich.core.StringFeatureExtractorConverter;
 import de.thatsich.core.javafx.ImageFileChooser;
+import de.thatsich.core.opencv.classifier.IBinaryClassifier;
 import de.thatsich.core.opencv.error.IErrorGenerator;
 import de.thatsich.core.opencv.extractor.IFeatureExtractor;
 
@@ -49,6 +52,11 @@ public class DisplayPresenter implements Initializable {
 	@FXML private ChoiceBox<ErrorEntry> nodeChoiceBoxDisplayedError;
 	@FXML private ChoiceBox<IErrorGenerator> nodeChoiceBoxErrorGenerator;
 	@FXML private ChoiceBox<IFeatureExtractor> nodeChoiceBoxFeatureExtractor;
+	@FXML private ChoiceBox<IBinaryClassifier> nodeChoiceBoxBinaryClassifier;
+	// TODO add real class
+	@FXML private ChoiceBox<Object> nodeChoiceBoxSample;
+	
+	
 	
 	@FXML private ImageView nodeImageViewInput;
 	@FXML private ImageView nodeImageViewError;
@@ -59,9 +67,9 @@ public class DisplayPresenter implements Initializable {
 	@FXML private TextField nodeTextFieldErrorCount;
 	
 	@Inject private Log log;
-	@Inject private StateModel stateModel;
 	@Inject private ImageDatabase imageDatabase;
 	@Inject private ErrorDatabase errorDatabase;
+	@Inject private EvaluationDatabase evalDatabase;
 	@Inject private ImageFileChooser chooser;
 	
 	/*
@@ -138,8 +146,8 @@ public class DisplayPresenter implements Initializable {
 		this.nodeChoiceBoxFeatureExtractor.setConverter(new StringFeatureExtractorConverter());
 		this.log.info("Set up ChoiceBoxFeatureExtractor for proper name display.");
 		
-		this.nodeChoiceBoxFeatureExtractor.itemsProperty().bindBidirectional(this.stateModel.getFeatureExtractorsProperty());
-		this.nodeChoiceBoxFeatureExtractor.valueProperty().bindBidirectional(this.stateModel.getFeatureExtractorProperty());
+		this.nodeChoiceBoxFeatureExtractor.itemsProperty().bindBidirectional(this.evalDatabase.getFeatureExtractorsProperty());
+		this.nodeChoiceBoxFeatureExtractor.valueProperty().bindBidirectional(this.evalDatabase.getSelectedFeatureExtractorProperty());
 		this.log.info("Bound ChoiceBoxFeatureExtractor to Model.");
 	}
 	
@@ -199,12 +207,28 @@ public class DisplayPresenter implements Initializable {
 		}
 	}
 	
-	//TODO bind SliderFrameSize correctly
+	/**
+	 * Set the specific values of the frame size associated with each tick
+	 * and sets the labelformatter to fit the representation
+	 * 
+	 * Java 7 has a bug with the Labels
+	 */
 	private void initSliderFrameSize() {
+		// write values in power of 2
+		// only if slider is let loose
 		this.nodeSliderFrameSize.valueChangingProperty().addListener(new ChangeListener<Boolean>() {
-			@Override public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-				System.out.println(newValue);
+			@Override
+			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldBool, Boolean newBool) {
+				if (newBool == false) {
+					evalDatabase.setFrameSize((int) Math.pow(2, nodeSliderFrameSize.getValue()));
+				}				
 			}
+		});
+		
+		// set labels to pwoer of 2
+		this.nodeSliderFrameSize.setLabelFormatter(new StringConverter<Double>() {
+			@Override public String toString(Double tick) { return String.format("%d", (int) Math.pow(2, tick)); }
+			@Override public Double fromString(String paramString) { return 0.0; }
 		});
 	}
 	
@@ -260,7 +284,7 @@ public class DisplayPresenter implements Initializable {
 	}
 	
 	@FXML private void onPermutateErrorsAction() {
-		
+		this.errorDatabase.permutateImageWithErrors(this.imageDatabase.getImageEntries());
 	}
 	
 	@FXML private void onResetErrorsAction() throws IOException {
@@ -268,44 +292,10 @@ public class DisplayPresenter implements Initializable {
 	}
 	
 	@FXML private void onTrainAction() {
-		
+		this.evalDatabase.trainBinaryClassifier();
 	}
 	
 	@FXML private void onTestAction() {
-		
+		this.evalDatabase.testBinaryClassifier();
 	}
-	
-//	@FXML private void onSaveOutputAction() {
-//
-//		// Prepare FileNames: use DateTime as unique identifier
-//		String dateTime = new SimpleDateFormat("yyyy-MM-dd.HH-mm-ss").format(new Date());
-//		this.log.info("TimeStamp: " + dateTime);	
-//		
-//		String sOriginal = dateTime + ".original.png";
-//		String sModified = dateTime + ".modified.png";
-//		String sResult = dateTime + ".result.png";
-//		
-//		Mat mOriginal = Mat.zeros(100, 100, CvType.CV_8SC3);
-//		Mat mModified = Mat.zeros(100, 100, CvType.CV_8SC3);
-//		Mat mResult = Mat.zeros(100, 100, CvType.CV_8SC3);
-//		
-//		Core.rectangle(mOriginal, new Point(10, 10), new Point(90, 90), new Scalar(255, 0, 0), 2);
-//		Core.rectangle(mModified, new Point(10, 10), new Point(90, 90), new Scalar(0, 255, 0), 4);
-//		Core.rectangle(mResult, new Point(10, 10), new Point(90, 90), new Scalar(0, 0, 255), 8);
-//		
-//		Highgui.imwrite(sOriginal, mOriginal);
-//		Highgui.imwrite(sModified, mModified);
-//		Highgui.imwrite(sResult, mResult);
-//	}
-
-//	@FXML private void onTestAction() {
-//		Mat lena = Highgui.imread("input/LENA512.BMP");
-//		Mat lenaGray = new Mat(lena.width(), lena.height(), CvType.CV_8U);
-//		Imgproc.cvtColor(lena, lenaGray, Imgproc.COLOR_BGR2GRAY);
-//		
-//		Mat histogram = Images.getHistogram(lenaGray);
-//		Image img = Images.matToImage(histogram);
-//
-//		Images.show(img);
-//	}
 }

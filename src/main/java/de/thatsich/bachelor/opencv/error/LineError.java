@@ -17,23 +17,25 @@ public class LineError extends AErrorGenerator implements IErrorGenerator {
 	
 	@Override
 	public Mat generateError(Mat in) {
+		// Initialize a Radian and Length based on the Settings
 		final int length = (int) Math.round(Math.random() * this.STDDEV_LENTH + this.MEAN_LENGTH);
-		final double radian = (Math.random() * Math.PI) + Math.PI / 2;
+		final double radian = (3 * Math.PI / 2) + (Math.random() * Math.PI);
 		
+		// Calculates the Bounding Box of the Error
 		final int offset_x = (int) Math.round(Math.cos(radian) * length);
 		final int offset_y = (int) Math.round(Math.sin(radian) * length);
 		
-		final int width = in.width();
-		final int height = in.height();
+		// Check only the rest area if we want to see the whole boundary Box
+		final int leftWidth = in.width() - offset_x;
+		final int leftHeight = in.height() - Math.abs(offset_y);
 		
-		final int leftWidth = width - Math.abs(offset_x);
-		final int leftHeight = height - Math.abs(offset_y);
-		
+		// Randomize First Point and add Offset to get Second.
 		final int x1 = (int) Math.round(Math.random() * leftWidth);
-		final int y1 = (int) Math.round(Math.random() * leftHeight);
+		final int y1 = (int) Math.round(Math.random() * leftHeight) - (offset_y  < 0 ? offset_y : 0) ;
 		final int x2 = x1 + offset_x;
 		final int y2 = y1 + offset_y;
 		
+		// Randomize Color and Thickness
 		final Scalar color = new Scalar((int) Math.round(Math.random() * 255));
 		final int thickness = (int) Math.round(Math.random() * (this.MAX_LINE_THICKNESS - MIN_LINE_THICKNESS) + MIN_LINE_THICKNESS);
 		

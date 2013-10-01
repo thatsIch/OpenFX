@@ -26,7 +26,6 @@ import de.thatsich.core.guice.PostInitModule;
  * Main Execution Class
  * @author Tran Minh Do
  */
-//TODO absdiff um Fehler zu finden
 public class Main extends GuiceApplication {
 	
 	/**

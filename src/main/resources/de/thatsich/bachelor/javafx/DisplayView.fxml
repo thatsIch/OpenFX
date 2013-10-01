@@ -32,7 +32,7 @@
     <Label labelFor="$nodeImageViewResult" text="Test Result" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
     <GridPane alignment="TOP_CENTER" maxHeight="-1.0" prefHeight="-1.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
       <children>
-        <Slider id="SliderFrameSize" fx:id="nodeSliderFrameSize" max="32.0" min="4.0" showTickLabels="true" showTickMarks="true" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+        <Slider id="SliderFrameSize" fx:id="nodeSliderFrameSize" blockIncrement="1.0" majorTickUnit="1.0" max="5.0" min="2.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="2.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
         <Label labelFor="$nodeSliderFrameSize" text="Frame Size (PX x PX)" GridPane.columnIndex="0" GridPane.rowIndex="0" />
         <Label text="Feature Extractor" GridPane.columnIndex="0" GridPane.rowIndex="1">
           <labelFor>
@@ -131,9 +131,9 @@
     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
   </padding>
   <rowConstraints>
-    <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="19.0" minHeight="10.0" prefHeight="19.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="125.0" minHeight="10.0" prefHeight="125.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="250.0" minHeight="10.0" prefHeight="250.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="15.0" minHeight="10.0" prefHeight="15.0" vgrow="SOMETIMES" />
   </rowConstraints>
 </GridPane>

@@ -27,6 +27,7 @@ import org.opencv.core.Mat;
 
 import com.google.inject.Inject;
 
+import de.thatsich.bachelor.javafx.model.ImageDatabase.ImageEntry;
 import de.thatsich.bachelor.opencv.error.LineError;
 import de.thatsich.core.Log;
 import de.thatsich.core.opencv.Images;
@@ -111,11 +112,21 @@ public class ErrorDatabase {
 		if (image == null) throw new IllegalArgumentException("Image is null.");
 		if (image.type() != CvType.CV_8U) throw new IllegalArgumentException("Image is not grayscale. " + image.type());
 		if (image.empty()) throw new IllegalArgumentException("Image is empty.");
+
+		this.applyErrorOn(image, this.errorGenerator.get());
+	}
+	
+	private void applyErrorOn(Mat image, IErrorGenerator generator) {
+		if (image == null) throw new IllegalArgumentException("Image is null.");
+		if (image.type() != CvType.CV_8U) throw new IllegalArgumentException("Image is not grayscale. " + image.type());
+		if (image.empty()) throw new IllegalArgumentException("Image is empty.");
 		
-		System.out.println(this.getErrorLoopCount());
+		if (generator == null) throw new IllegalArgumentException("Generator is null.");
+		
+		this.log.info("Looping for " + this.getErrorLoopCount() + " Errors.");
 		for (int errorCount = 0; errorCount < this.errorLoopCount.get(); errorCount++) {
 			Mat error = Mat.zeros(image.size(), CvType.CV_8U);
-			error = this.errorGenerator.get().generateError(error);
+			error = generator.generateError(error);
 			this.log.info("Error generated.");
 			
 			String dateTime = this.errorGenerator.get().getName() + new SimpleDateFormat("yyyy-MM-dd.HH-mm-ss-SSS").format(new Date());
@@ -171,6 +182,20 @@ public class ErrorDatabase {
 		}
 	}
 	
+	/**
+	 * Creates for every image in the database
+	 * a set of errors
+	 * 
+	 * @param imageEntries
+	 */
+	public void permutateImageWithErrors(ObservableList<ImageEntry> imageEntries) {
+		for (ImageEntry entry : imageEntries) {
+			for (IErrorGenerator gen : this.errorGenerators.get()) {
+				this.applyErrorOn(entry.getMat(), gen);
+			}
+		}
+	}
+	
 	// ==================================================
 	// Getter Implementation
 	// ==================================================
@@ -208,7 +233,6 @@ public class ErrorDatabase {
 		 * @param errorMat
 		 * @param storagePath
 		 */
-		// TODO Bild direkt speichern nach generieren
 		public ErrorEntry(Mat originalMat, Mat errorMat, Path storagePath) {
 			this.originalMat = originalMat;
 			this.errorMat = errorMat;

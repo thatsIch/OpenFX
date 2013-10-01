@@ -6,8 +6,8 @@ import com.google.inject.Scopes;
 import de.thatsich.bachelor.javafx.CommandProvider;
 import de.thatsich.bachelor.javafx.DisplayView;
 import de.thatsich.bachelor.javafx.ICommandProvider;
-import de.thatsich.bachelor.javafx.StateModel;
 import de.thatsich.bachelor.javafx.model.ErrorDatabase;
+import de.thatsich.bachelor.javafx.model.EvaluationDatabase;
 import de.thatsich.bachelor.javafx.model.ImageDatabase;
 import de.thatsich.bachelor.service.ConfigService;
 import de.thatsich.bachelor.service.IConfigService;
@@ -56,8 +56,8 @@ public class WiringModule extends AbstractModule {
 	}
 	
 	private void mapModels() {
-		super.bind(StateModel.class).in(Scopes.SINGLETON);
 		super.bind(ImageDatabase.class).in(Scopes.SINGLETON);
 		super.bind(ErrorDatabase.class).in(Scopes.SINGLETON);
+		super.bind(EvaluationDatabase.class).in(Scopes.SINGLETON);
 	}
 }
