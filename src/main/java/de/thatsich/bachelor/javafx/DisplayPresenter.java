@@ -54,11 +54,8 @@ public class DisplayPresenter implements Initializable {
 	@FXML private ChoiceBox<IErrorGenerator> nodeChoiceBoxErrorGenerator;
 	@FXML private ChoiceBox<IFeatureExtractor> nodeChoiceBoxFeatureExtractor;
 	@FXML private ChoiceBox<IBinaryClassifier> nodeChoiceBoxBinaryClassifier;
-	// TODO add real class
-	@FXML private ChoiceBox<Object> nodeChoiceBoxSample;
-	
-	
-	
+	@FXML private ChoiceBox<ErrorEntry> nodeChoiceBoxSample;
+		
 	@FXML private ImageView nodeImageViewInput;
 	@FXML private ImageView nodeImageViewError;
 	@FXML private ImageView nodeImageViewMatrix;
@@ -72,21 +69,11 @@ public class DisplayPresenter implements Initializable {
 	@Inject private ErrorDatabase errorDatabase;
 	@Inject private EvaluationDatabase evalDatabase;
 	@Inject private ImageFileChooser chooser;
-	
-	/*
-	 * ==================================================
-	 * IDisplayPresenter Implementation
-	 * ==================================================
-	 */
 
-	
-	/* 
-	 * ================================================== 
-	 * Initializable Implementation 
-	 * ==================================================
-	 */
-	@Override
-	public void initialize(URL url, ResourceBundle resourceBundle) {
+	// ================================================== 
+	// Initializable Implementation 
+	// ==================================================
+	@Override public void initialize(URL url, ResourceBundle resourceBundle) {
 
 		// ChoiceBoxes
 		this.bindChoiceBoxDisplayImage();
@@ -97,14 +84,14 @@ public class DisplayPresenter implements Initializable {
 		
 		// ImageViews
 		this.bindImageViewInput();
-		this.bindImageModified();
-		this.initImageResult();
+		this.bindImageViewError();
+		this.bindImageViewTest();
 		
 		// TextFields
 		this.bindTextFieldErrorCount();
 		
 		// Sliders
-		this.initSliderFrameSize();
+		this.bindSliderFrameSize();
 	}
 	
 	/**
@@ -201,7 +188,7 @@ public class DisplayPresenter implements Initializable {
 	/**
 	 * Bind ErrorImageView to the Model and initialize the Image if possible.
 	 */
-	private void bindImageModified() {
+	private void bindImageViewError() {
 		this.errorDatabase.getErrorEntryProperty().addListener(new ChangeListener<ErrorEntry>() {
 			@Override
 			public void changed(ObservableValue<? extends ErrorEntry> observable, ErrorEntry oldValue, ErrorEntry newValue) {
@@ -223,7 +210,7 @@ public class DisplayPresenter implements Initializable {
 	 * 
 	 * Java 7 has a bug with the Labels
 	 */
-	private void initSliderFrameSize() {
+	private void bindSliderFrameSize() {
 		// write values in power of 2
 		// only if slider is let loose
 		this.nodeSliderFrameSize.valueChangingProperty().addListener(new ChangeListener<Boolean>() {
@@ -242,7 +229,7 @@ public class DisplayPresenter implements Initializable {
 		});
 	}
 	
-	private void initImageResult() {
+	private void bindImageViewTest() {
 		
 	}
 

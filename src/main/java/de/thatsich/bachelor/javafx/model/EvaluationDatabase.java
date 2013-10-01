@@ -61,6 +61,11 @@ public class EvaluationDatabase {
 			new Variance()
 		);
 		this.log.info("Initialized Feature Extractors.");
+		
+		if (this.featureExtractors.get().size() > 0) {
+			this.selectedFeatureExtractor.set(this.featureExtractors.get().get(0));
+			this.log.info("Initialized with first Feature Extractor.");
+		}
 	}
 	
 	private void initBinaryClassifiers() {
@@ -69,6 +74,11 @@ public class EvaluationDatabase {
 			new SVM()
 		);
 		this.log.info("Initialized Binary Classifiers.");
+		
+		if (this.binaryClassifiers.get().size() > 0) {
+			this.selectedBinaryClassifier.set(this.binaryClassifiers.get().get(0));
+			this.log.info("Initialized with first Binary Classifier.");
+		}
 	}
 	
 	/**
@@ -76,6 +86,7 @@ public class EvaluationDatabase {
 	 * except the one selected. And trains the selected
 	 * Binary Classifier with the FeatureVectors
 	 */
+	// TODO implement trainBC
 	public void trainBinaryClassifier() {
 		
 	}
@@ -84,6 +95,7 @@ public class EvaluationDatabase {
 	 * Tests the trained BinaryClassifier with the selected 
 	 * Sample and saving the result into output folder
 	 */
+	// TODO implement testBC
 	public void testBinaryClassifier() {
 		
 	}

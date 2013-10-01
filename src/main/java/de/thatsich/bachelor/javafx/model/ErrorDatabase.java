@@ -265,7 +265,7 @@ public class ErrorDatabase {
 			this.errorMat = encodedImageChannelMats.get(1);
 		}
 		
-		// TODO
+		// TODO implement getErrorMatrix
 		public Mat getErrorMatrix(int frameSize) {
 			Mat result = new Mat();
 			
@@ -278,7 +278,7 @@ public class ErrorDatabase {
 		public Mat getOriginalMat() { return this.originalMat; }
 		public Mat getErrorMat() { return this.errorMat; }
 		public String getName() { return this.storagePath.getFileName().toString(); }
-		//TODO
+		//TODO display the error matrix as grayscale completely with original image
 		public Image getImage() { return Images.matToImage(errorMat); }
 		public Path getPath() { return this.storagePath; }
 		
