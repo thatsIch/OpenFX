@@ -30,11 +30,4 @@ public class Gradient extends AFeatureExtractor implements IFeatureExtractor {
 		
 		return result;
 	}
-
-	@Override
-	public double compareFeature(Mat leftImage, Mat rightImage) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
 }

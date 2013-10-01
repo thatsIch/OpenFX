@@ -21,11 +21,4 @@ public class Variance extends AFeatureExtractor implements IFeatureExtractor {
 
 		return variance;
 	}
-
-	@Override
-	public double compareFeature(Mat leftImage, Mat rightImage) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
 }

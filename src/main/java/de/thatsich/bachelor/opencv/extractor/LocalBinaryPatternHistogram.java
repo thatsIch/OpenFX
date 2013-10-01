@@ -47,11 +47,4 @@ public class LocalBinaryPatternHistogram extends AFeatureExtractor implements
 		
 		return histogramContainer;
 	}
-
-	@Override
-	public double compareFeature(Mat leftImage, Mat rightImage) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
 }

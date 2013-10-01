@@ -75,11 +75,4 @@ public class GrayLevelCooccurenceHistogram extends AFeatureExtractor implements 
 		
 		return new MatOfInt(histogram);
 	}
-
-	@Override
-	public double compareFeature(Mat leftImage, Mat rightImage) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
 }

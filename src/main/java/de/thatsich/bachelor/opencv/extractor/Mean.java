@@ -29,11 +29,4 @@ public class Mean extends AFeatureExtractor implements IFeatureExtractor {
 
 		return new MatOfDouble(meanRGBA.val[0]);
 	}
-
-	@Override
-	public double compareFeature(Mat leftImage, Mat rightImage) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
 }

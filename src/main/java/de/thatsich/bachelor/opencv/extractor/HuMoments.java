@@ -30,33 +30,4 @@ public class HuMoments extends AFeatureExtractor implements IFeatureExtractor {
 		
 		return hu;
 	}
-
-	/**
-	 * 
-	 */
-	@Override
-	public double compareFeature(Mat leftImage, Mat rightImage) {
-
-		final Mat leftResult = this.extractFeature(leftImage);
-		@SuppressWarnings("unused")
-		final Mat rightResult = this.extractFeature(rightImage);
-
-		// both images needs to be same size I think
-		if (!leftImage.size().equals(rightImage.size())) throw new IllegalStateException("HuMoments.compareFeature: Invalid Sizes " + leftImage.size() + ", " + rightImage.size()); 
-		
-		@SuppressWarnings("unused")
-		double distance = 0;
-		for (int row = 0; row < leftResult.rows(); row++) {
-			for (int col = 0; col < leftResult.cols(); col++) {
-				double value = leftResult.get(row, col)[0];
-				System.out.print(value);
-				// Transform
-				value = (-1) * Math.signum(value) * Math.log10(Math.abs(value));
-				System.out.println(", " + value);
-				
-			}
-		}
-		
-		return 0;
-	}
 }
