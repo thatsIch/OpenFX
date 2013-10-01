@@ -112,25 +112,33 @@ public class ErrorDatabase {
 		if (image.type() != CvType.CV_8U) throw new IllegalArgumentException("Image is not grayscale. " + image.type());
 		if (image.empty()) throw new IllegalArgumentException("Image is empty.");
 		
-		Mat error = Mat.zeros(image.size(), CvType.CV_8U);
-		error = this.errorGenerator.get().generateError(error);
-		this.log.info("Error generated.");
-		
-		String dateTime = this.errorGenerator.get().getName() + new SimpleDateFormat("yyyy-MM-dd.HH-mm-ss-SSS").format(new Date());
-		
-		Path imagePath = this.errorFolderPath.resolve(dateTime + ".png");
-		this.log.info("Path: " + imagePath);
-
-		ErrorEntry entry = new ErrorEntry(image, error, imagePath);
-		this.log.info("Instantiated ErrorEntry.");
-		
-		this.errorEntries.get().add(entry);
-		this.log.info("Error added to Model.");
-		
-		this.errorEntry.set(entry);
-		this.log.info("Error set to current.");
+		System.out.println(this.getErrorLoopCount());
+		for (int errorCount = 0; errorCount < this.errorLoopCount.get(); errorCount++) {
+			Mat error = Mat.zeros(image.size(), CvType.CV_8U);
+			error = this.errorGenerator.get().generateError(error);
+			this.log.info("Error generated.");
+			
+			String dateTime = this.errorGenerator.get().getName() + new SimpleDateFormat("yyyy-MM-dd.HH-mm-ss-SSS").format(new Date());
+			
+			Path imagePath = this.errorFolderPath.resolve(dateTime + ".png");
+			this.log.info("Path: " + imagePath);
+	
+			ErrorEntry entry = new ErrorEntry(image, error, imagePath);
+			this.log.info("Instantiated ErrorEntry.");
+			
+			this.errorEntries.get().add(entry);
+			this.log.info("Error added to Model.");
+			
+			this.errorEntry.set(entry);
+			this.log.info("Error set to current.");
+		}
 	}
 	
+	/**
+	 * Deletes all ErrorEntries from HDD and Model
+	 * 
+	 * @throws IOException If Image could not be deleted.
+	 */
 	public void resetErrorDatabase() throws IOException {
 		for (ErrorEntry e : this.errorEntries.get()) {
 			Files.delete(e.getPath());
@@ -138,11 +146,37 @@ public class ErrorDatabase {
 		this.errorEntries.get().clear();
 	}
 	
+	/**
+	 * Removes the selected ErrorEntry
+	 * 
+	 * @throws IOException Throws exception if file could not be deleted (for example if it is already deleted while the app is running)
+	 */
+	public void removeSelectedError() throws IOException {
+		ErrorEntry entry = this.errorEntry.get();
+		
+		if (entry == null || Files.notExists(entry.getPath())) {
+			this.log.info("Choice was empty. Deleting nothing.");
+			return;
+		}
+		
+		Files.delete(entry.getPath());
+		this.log.info("Choice deleted from ErrorFolder.");
+		
+		this.errorEntries.get().remove(entry);
+		this.log.info("Choice removed from internal Representation.");
+		
+		if (this.errorEntries.get().size() > 0) {
+			this.errorEntry.set(this.errorEntries.get().get(0));
+			this.log.info("ChoiceBox reset to first ErrorEntry.");
+		}
+	}
+	
 	// ==================================================
 	// Getter Implementation
 	// ==================================================
 //	public ObservableList<IErrorGenerator> getErrorGenerators() { return this.errorGenerators.get(); }
 //	public IErrorGenerator getErrorGenerator() { return this.errorGenerator.get(); }
+	public int getErrorLoopCount() { return this.errorLoopCount.get(); }
 	
 	// ==================================================
 	// Setter Implementation
@@ -157,7 +191,7 @@ public class ErrorDatabase {
 	public ObjectProperty<IErrorGenerator> getErrorGeneratorProperty() { return this.errorGenerator; }
 	public ObjectProperty<ObservableList<ErrorEntry>> getErrorEntriesProperty() { return this.errorEntries; }
 	public ObjectProperty<ErrorEntry> getErrorEntryProperty() { return this.errorEntry; }
-	public IntegerProperty getErrorLoopCount() { return this.errorLoopCount; }
+	public IntegerProperty getErrorLoopCountProperty() { return this.errorLoopCount; }
 	
 	
 	public static class ErrorEntry {
