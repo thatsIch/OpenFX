@@ -11,7 +11,9 @@ public class HuMomentTest extends AFeatureExtractorTest {
 		super(new HuMoments());
 	}
 	
-	// TODO wirklichen Test schreiben
+	/**
+	 * No real test needed since only wrapper
+	 */
 	@Test
 	public void testExtractFeature_ShouldPass() {
 		super.extractor.extractFeature(super.one1x1);
