@@ -122,7 +122,6 @@ public class DisplayPresenter implements Initializable {
 	 * Bind ChoiceBoxErrorGenerator together with its corresponding Model part.
 	 */
 	private void bindChoiceBoxErrorGenerator() {
-		
 		this.nodeChoiceBoxErrorGenerator.setConverter(new StringErrorGeneratorConverter());
 		this.log.info("Set up StringErrorGeneratorConverter for proper name display.");
 		
@@ -132,7 +131,7 @@ public class DisplayPresenter implements Initializable {
 	}
 	
 	/**
-	 * 
+	 * Bind ChoiceBoxFeatureExtractor to the Model.
 	 */
 	private void bindChoiceBoxFeatureExtractor() {
 		
@@ -144,6 +143,9 @@ public class DisplayPresenter implements Initializable {
 		this.log.info("Bound ChoiceBoxFeatureExtractor to Model.");
 	}
 	
+	/**
+	 * Bind ImageViewInput to the Model and sets the initial Image if there is one loaded.
+	 */
 	private void bindImageViewInput() {
 		this.imageDatabase.getImageEntryProperty().addListener(new ChangeListener<ImageEntry>() {
 			@Override
@@ -160,6 +162,27 @@ public class DisplayPresenter implements Initializable {
 		}
 	}
 	
+	/**
+	 * Bind TextFieldErrorCount to the Model and tries to validate the input to only non-negative inputs
+	 * and initialize the value for it
+	 */
+	private void bindTextFieldErrorCount() {
+		this.nodeTextFieldErrorCount.textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				if (newValue.matches("\\d+")) {
+					errorDatabase.getErrorLoopCountProperty().set(Integer.parseInt(newValue));
+				} else {
+					nodeTextFieldErrorCount.setText(oldValue);
+				}
+			}
+		});
+		this.errorDatabase.getErrorLoopCountProperty().set(1);
+	}
+	
+	/**
+	 * Bind ErrorImageView to the Model and initialize the Image if possible.
+	 */
 	private void bindImageModified() {
 		this.errorDatabase.getErrorEntryProperty().addListener(new ChangeListener<ErrorEntry>() {
 			@Override
@@ -176,41 +199,18 @@ public class DisplayPresenter implements Initializable {
 		}
 	}
 	
-	private void initImageResult() {
-		
-	}
-	
+	//TODO bind SliderFrameSize correctly
 	private void initSliderFrameSize() {
-//		this.nodeSliderFrameSize.valueProperty().addListener(new ChangeListener<Number>() {
-//			@Override
-//			public void changed(ObservableValue<? extends Number> ov, Number oldValue, Number newValue) {
-//				log.fine(newValue.toString());
-//			}
-//		});
-		
 		this.nodeSliderFrameSize.valueChangingProperty().addListener(new ChangeListener<Boolean>() {
-
-			@Override
-			public void changed(ObservableValue<? extends Boolean> observable,
-					Boolean oldValue, Boolean newValue) {
+			@Override public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
 				System.out.println(newValue);
 			}
 		});
 	}
 	
-	private void bindTextFieldErrorCount() {
-		this.nodeTextFieldErrorCount.textProperty().addListener(new ChangeListener<String>() {
-			@Override
-			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				if (newValue.matches("\\d+")) {
-					errorDatabase.getErrorLoopCount().set(Integer.parseInt(newValue));
-				} else {
-					nodeTextFieldErrorCount.setText(oldValue);
-				}
-			}
-		});
+	private void initImageResult() {
+		
 	}
-	
 
 	// ================================================== 
 	// GUI Implementation 
@@ -223,7 +223,7 @@ public class DisplayPresenter implements Initializable {
 	 * @throws IOException
 	 */
 	@FXML private void onAddImageAction() throws IOException {
-
+		
 		Path filePath = this.chooser.show();
 		if (filePath == null) return;
 	
@@ -255,8 +255,8 @@ public class DisplayPresenter implements Initializable {
 		this.errorDatabase.applyErrorOn(image);
 	}
 	
-	@FXML private void onRemoveErrorAction() {
-		
+	@FXML private void onRemoveErrorAction() throws IOException {
+		this.errorDatabase.removeSelectedError();
 	}
 	
 	@FXML private void onPermutateErrorsAction() {
