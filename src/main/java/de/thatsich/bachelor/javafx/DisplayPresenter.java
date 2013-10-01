@@ -30,6 +30,7 @@ import de.thatsich.core.Log;
 import de.thatsich.core.StringErrorGeneratorConverter;
 import de.thatsich.core.StringFeatureExtractorConverter;
 import de.thatsich.core.javafx.ImageFileChooser;
+import de.thatsich.core.opencv.classifier.ABinaryClassifier;
 import de.thatsich.core.opencv.classifier.IBinaryClassifier;
 import de.thatsich.core.opencv.error.IErrorGenerator;
 import de.thatsich.core.opencv.extractor.IFeatureExtractor;
@@ -92,6 +93,7 @@ public class DisplayPresenter implements Initializable {
 		this.bindChoiceBoxDisplayedError();
 		this.bindChoiceBoxErrorGenerator();
 		this.bindChoiceBoxFeatureExtractor();
+		this.bindChoiceBoxBinaryClassifiers();
 		
 		// ImageViews
 		this.bindImageViewInput();
@@ -142,13 +144,21 @@ public class DisplayPresenter implements Initializable {
 	 * Bind ChoiceBoxFeatureExtractor to the Model.
 	 */
 	private void bindChoiceBoxFeatureExtractor() {
-		
 		this.nodeChoiceBoxFeatureExtractor.setConverter(new StringFeatureExtractorConverter());
 		this.log.info("Set up ChoiceBoxFeatureExtractor for proper name display.");
 		
 		this.nodeChoiceBoxFeatureExtractor.itemsProperty().bindBidirectional(this.evalDatabase.getFeatureExtractorsProperty());
 		this.nodeChoiceBoxFeatureExtractor.valueProperty().bindBidirectional(this.evalDatabase.getSelectedFeatureExtractorProperty());
 		this.log.info("Bound ChoiceBoxFeatureExtractor to Model.");
+	}
+	
+	private void bindChoiceBoxBinaryClassifiers() {
+		this.nodeChoiceBoxBinaryClassifier.setConverter(ABinaryClassifier.CONVERTER);
+		this.log.info("Set up ChoiceBoxBinaryClassifiers for proper name display.");
+		
+		this.nodeChoiceBoxBinaryClassifier.itemsProperty().bindBidirectional(this.evalDatabase.getBinaryClassifiersProperty());
+		this.nodeChoiceBoxBinaryClassifier.valueProperty().bindBidirectional(this.evalDatabase.getSelectedBinaryClassifierProperty());
+		this.log.info("Bound ChoiceBoxBinaryClassifier to Model.");
 	}
 	
 	/**

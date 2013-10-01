@@ -10,6 +10,8 @@ import javafx.scene.control.ChoiceBox;
 import com.google.inject.Inject;
 
 import de.thatsich.bachelor.javafx.model.ErrorDatabase.ErrorEntry;
+import de.thatsich.bachelor.opencv.classifier.RandomForest;
+import de.thatsich.bachelor.opencv.classifier.SVM;
 import de.thatsich.bachelor.opencv.extractor.Gradient;
 import de.thatsich.bachelor.opencv.extractor.GrayLevelCooccurenceHistogram;
 import de.thatsich.bachelor.opencv.extractor.HuMoments;
@@ -31,7 +33,7 @@ public class EvaluationDatabase {
 	
 	// Binary Classifier
 	private final ObjectProperty<ObservableList<IBinaryClassifier>> binaryClassifiers = new ChoiceBox<IBinaryClassifier>().itemsProperty();
-	private final ObjectProperty<IFeatureExtractor> selectedBinaryClassifier = new SimpleObjectProperty<IFeatureExtractor>();
+	private final ObjectProperty<IBinaryClassifier> selectedBinaryClassifier = new SimpleObjectProperty<IBinaryClassifier>();
 	
 	// ErrorEntry
 	private final ObjectProperty<ObservableList<ErrorEntry>> errorEntries = new ChoiceBox<ErrorEntry>().itemsProperty();
@@ -46,6 +48,7 @@ public class EvaluationDatabase {
 		this.log = log;
 		
 		this.initFeatureExtractors();
+		this.initBinaryClassifiers();
 	}
 	
 	private void initFeatureExtractors() {
@@ -58,6 +61,14 @@ public class EvaluationDatabase {
 			new Variance()
 		);
 		this.log.info("Initialized Feature Extractors.");
+	}
+	
+	private void initBinaryClassifiers() {
+		this.binaryClassifiers.get().addAll(
+			new RandomForest(),
+			new SVM()
+		);
+		this.log.info("Initialized Binary Classifiers.");
 	}
 	
 	/**
@@ -90,6 +101,12 @@ public class EvaluationDatabase {
 	// ==================================================
 	// Property Implementation
 	// ==================================================
+	// Feature Extractors
 	public ObjectProperty<ObservableList<IFeatureExtractor>> getFeatureExtractorsProperty() { return this.featureExtractors; }
 	public ObjectProperty<IFeatureExtractor> getSelectedFeatureExtractorProperty() { return this.selectedFeatureExtractor; }
+	
+	// Binary Classifiers
+	public ObjectProperty<ObservableList<IBinaryClassifier>> getBinaryClassifiersProperty() { return this.binaryClassifiers; }
+	public ObjectProperty<IBinaryClassifier> getSelectedBinaryClassifierProperty() { return this.selectedBinaryClassifier; }
+	
 }
