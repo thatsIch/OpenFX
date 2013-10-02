@@ -2,6 +2,7 @@ package de.thatsich.bachelor.opencv.extractor;
 
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.core.MatOfFloat;
 import org.opencv.core.MatOfInt;
 
 import de.thatsich.core.opencv.extractor.AFeatureExtractor;
@@ -11,7 +12,7 @@ public class LocalBinaryPatternHistogram extends AFeatureExtractor implements
 		IFeatureExtractor {
 
 	@Override
-	public Mat extractFeature(Mat image) {
+	public MatOfFloat extractFeature(Mat image) {
 		if (image == null) throw new IllegalArgumentException("Image is null.");
 		if (image.type() != CvType.CV_8U) throw new IllegalArgumentException("Image is not grayscale.");
 		if (image.rows() < 3 || image.cols() < 3) throw new IllegalArgumentException("Image is smaller than 3x3");
@@ -45,6 +46,6 @@ public class LocalBinaryPatternHistogram extends AFeatureExtractor implements
 		// wrap it around a mat
 		MatOfInt histogramContainer = new MatOfInt(histogram);
 		
-		return histogramContainer;
+		return new MatOfFloat(histogramContainer);
 	}
 }

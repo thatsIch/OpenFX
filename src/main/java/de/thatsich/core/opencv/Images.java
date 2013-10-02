@@ -104,6 +104,10 @@ public class Images {
 	 */
 	public static Mat[][] split(Mat image, int frameWidth, int frameHeight) {
 		// catch if frame width % frame size != 0 
+		if (image == null) throw new IllegalArgumentException("Image is null.");
+		if (frameHeight == 0) throw new IllegalArgumentException("FrameHeight is 0.");
+		if (frameWidth == 0) throw new IllegalArgumentException("FrameHeight is 0.");
+		
 		final int frameCountX = (int) Math.round((image.width() / frameWidth) + 0.5) ;
 		final int frameCountY = (int) Math.round((image.height() / frameHeight) + 0.5) ;
 

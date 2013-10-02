@@ -7,6 +7,11 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ChoiceBox;
 
+import org.opencv.core.Core;
+import org.opencv.core.CvType;
+import org.opencv.core.Mat;
+import org.opencv.core.MatOfFloat;
+
 import com.google.inject.Inject;
 
 import de.thatsich.bachelor.javafx.model.ErrorDatabase.ErrorEntry;
@@ -19,6 +24,7 @@ import de.thatsich.bachelor.opencv.extractor.LocalBinaryPatternHistogram;
 import de.thatsich.bachelor.opencv.extractor.Mean;
 import de.thatsich.bachelor.opencv.extractor.Variance;
 import de.thatsich.core.Log;
+import de.thatsich.core.opencv.Images;
 import de.thatsich.core.opencv.classifier.IBinaryClassifier;
 import de.thatsich.core.opencv.extractor.IFeatureExtractor;
 
@@ -43,6 +49,14 @@ public class EvaluationDatabase {
 	// Injections
 	private final Log log;
 	
+	/**
+	 * Injected CTOR
+	 * Initialize all Lists with default values if needed
+	 * and set the first value to the first elem of the list
+	 * if list is not empty.
+	 * 
+	 * @param log Injected Logger
+	 */
 	@Inject
 	private EvaluationDatabase(Log log) {
 		this.log = log;
@@ -51,6 +65,11 @@ public class EvaluationDatabase {
 		this.initBinaryClassifiers();
 	}
 	
+	/**
+	 * Initialize Feature Extracotrs
+	 * - adding all known to the list
+	 * - select the first in list if available
+	 */
 	private void initFeatureExtractors() {
 		this.featureExtractors.get().addAll(
 			new Gradient(),
@@ -68,9 +87,14 @@ public class EvaluationDatabase {
 		}
 	}
 	
+	/**
+	 * Initialize Binary Classifiers
+	 * - adding all known to the list
+	 * - select the first in list if available
+	 */
 	private void initBinaryClassifiers() {
 		this.binaryClassifiers.get().addAll(
-			new RandomForest(),
+			new RandomForest(this.log),
 			new SVM()
 		);
 		this.log.info("Initialized Binary Classifiers.");
@@ -86,9 +110,48 @@ public class EvaluationDatabase {
 	 * except the one selected. And trains the selected
 	 * Binary Classifier with the FeatureVectors
 	 */
-	// TODO implement trainBC
 	public void trainBinaryClassifier() {
+		IFeatureExtractor extractor = this.selectedFeatureExtractor.get();
+		ErrorEntry testEntry = this.selectedErrorEntry.get();
+		int frameSize = this.frameSize.get();
 		
+		if (extractor == null) throw new IllegalStateException("Extractor is null.");
+		if (testEntry == null) throw new IllegalStateException("ErrorException is null.");
+		if (frameSize == 0) throw new IllegalStateException("FrameSize is 0.");
+		
+		MatOfFloat positiveFeatureMat = new MatOfFloat();
+		MatOfFloat negativeFeatureMat = new MatOfFloat();
+//		Mat labelMatrix = new Mat();
+		
+		// Extracts all ErrorEntries but the selected one
+		for (ErrorEntry entry : this.errorEntries.get()) {
+			
+//			System.out.println(Core.sumElems(entry.getOriginalWithErrorMat()));
+			if (!entry.equals(testEntry)) {
+				
+				// split the image into frames to reduce dimension
+				Mat[][] originalErrorSplit = Images.split(entry.getOriginalWithErrorMat(), frameSize, frameSize);
+				Mat[][] errorSplit = Images.split(entry.getErrorMat(), frameSize, frameSize);
+				
+				for (int col = 0; col < originalErrorSplit.length; col++) {
+					for (int row = 0; row < originalErrorSplit[col].length; row++) {
+						Mat featureVector = extractor.extractFeature(originalErrorSplit[col][row]);
+
+						// if contain an error classify it as positive match
+						if (Core.sumElems(errorSplit[col][row]).val[0] != 0) {
+							positiveFeatureMat.push_back(featureVector.t());
+						}
+						
+						// else its a negative match
+						else {
+							negativeFeatureMat.push_back(featureVector.t());
+						}
+					}
+				}
+			}
+		}
+		
+		this.selectedBinaryClassifier.get().train(positiveFeatureMat, negativeFeatureMat);
 	}
 	
 	/**
@@ -96,8 +159,29 @@ public class EvaluationDatabase {
 	 * Sample and saving the result into output folder
 	 */
 	// TODO implement testBC
+	// TODO evtl die FrameSize und FeatureGenerator fest an den BinaryClassifier binden
 	public void testBinaryClassifier() {
+		int frameSize = this.frameSize.get();
+		IFeatureExtractor extractor = this.selectedFeatureExtractor.get();
+		ErrorEntry testEntry = this.selectedErrorEntry.get();
 		
+		// test each against it
+		Mat[][] errorSplit = Images.split(testEntry.getErrorMat(), frameSize, frameSize);
+		for (int col = 0; col < errorSplit.length; col++) {
+			for (int row = 0; row < errorSplit[col].length; row++) {
+				Mat featureVector = extractor.extractFeature(errorSplit[col][row]).t();
+				featureVector.convertTo(featureVector, CvType.CV_32FC1);
+				this.log.info("FV with Size (" + featureVector.cols() + ", " + featureVector.rows() + ") is " + featureVector.type());
+				
+				System.out.println(this.selectedBinaryClassifier.get().predict(featureVector));
+			}
+		}
+		
+//		Mat featureVector = extractor.extractFeature(errorSplit[0][0]).t();
+//		featureVector.convertTo(featureVector, CvType.CV_32FC1);
+//		this.log.info("FV with Size (" + featureVector.cols() + ", " + featureVector.rows() + ") is " + featureVector.type());
+//		
+//		System.out.println(this.selectedBinaryClassifier.get().predict(featureVector));
 	}
 	
 	// ==================================================
@@ -121,4 +205,8 @@ public class EvaluationDatabase {
 	public ObjectProperty<ObservableList<IBinaryClassifier>> getBinaryClassifiersProperty() { return this.binaryClassifiers; }
 	public ObjectProperty<IBinaryClassifier> getSelectedBinaryClassifierProperty() { return this.selectedBinaryClassifier; }
 	
+	// Error Entries
+	public ObjectProperty<ObservableList<ErrorEntry>> getErrorEntriesProperty() { return this.errorEntries; }
+	public ObjectProperty<ErrorEntry> getSelectedErrorEntryProperty() { return this.selectedErrorEntry; }
 }
+

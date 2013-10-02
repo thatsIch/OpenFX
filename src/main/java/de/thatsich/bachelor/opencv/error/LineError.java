@@ -36,7 +36,7 @@ public class LineError extends AErrorGenerator implements IErrorGenerator {
 		final int y2 = y1 + offset_y;
 		
 		// Randomize Color and Thickness
-		final Scalar color = new Scalar((int) Math.round(Math.random() * 255));
+		final Scalar color = new Scalar((int) Math.round(Math.random() * 255 + 1));
 		final int thickness = (int) Math.round(Math.random() * (this.MAX_LINE_THICKNESS - MIN_LINE_THICKNESS) + MIN_LINE_THICKNESS);
 		
 		Core.line(in, new Point(x1, y1), new Point(x2, y2), color, thickness);

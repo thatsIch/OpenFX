@@ -52,6 +52,9 @@ public class ErrorDatabase {
 	
 	/**
 	 * Injected CTOR
+	 * Creates an Error-Folder where all the errors will be stored.
+	 * Initialize the ErrorGenerators
+	 * and load all already created errors from HDD
 	 * 
 	 * @param log Logger
 	 * @throws IOException If Error Folder cannot be created.
@@ -125,7 +128,7 @@ public class ErrorDatabase {
 		
 		this.log.info("Looping for " + this.getErrorLoopCount() + " Errors.");
 		for (int errorCount = 0; errorCount < this.errorLoopCount.get(); errorCount++) {
-			Mat error = Mat.zeros(image.size(), CvType.CV_8U);
+			Mat error = image.clone();
 			error = generator.generateError(error);
 			this.log.info("Error generated.");
 			
@@ -218,10 +221,11 @@ public class ErrorDatabase {
 	public ObjectProperty<ErrorEntry> getErrorEntryProperty() { return this.errorEntry; }
 	public IntegerProperty getErrorLoopCountProperty() { return this.errorLoopCount; }
 	
-	
 	public static class ErrorEntry {
 		private final Mat originalMat;
 		private final Mat errorMat;
+		private final Mat originalWithError;
+		
 		private final Path storagePath;
 		public static Converter CONVERTER = new Converter();
 		
@@ -233,14 +237,16 @@ public class ErrorDatabase {
 		 * @param errorMat
 		 * @param storagePath
 		 */
-		public ErrorEntry(Mat originalMat, Mat errorMat, Path storagePath) {
+		public ErrorEntry(Mat originalMat, Mat originalWithErrorMat, Path storagePath) {
 			this.originalMat = originalMat;
-			this.errorMat = errorMat;
+			this.originalWithError = originalWithErrorMat;
+			this.errorMat = new Mat();
+			Core.absdiff(originalMat, originalWithErrorMat, this.errorMat);
+			
 			this.storagePath = storagePath;
 			
 			// Creates a third channel as dummy because you cannot save a 2 channel image
-			Mat dummyChan = Mat.zeros(this.originalMat.size(), CvType.CV_8U);
-			List<Mat> listMat = Arrays.asList(this.originalMat, this.errorMat, dummyChan);
+			List<Mat> listMat = Arrays.asList(this.originalMat, this.originalWithError, this.errorMat);
 			Mat mergedMat = new Mat(originalMat.size(), CvType.CV_8UC3);
 			Core.merge(listMat, mergedMat);
 			
@@ -262,14 +268,8 @@ public class ErrorDatabase {
 			Core.split(encodedImage, encodedImageChannelMats);
 			
 			this.originalMat = encodedImageChannelMats.get(0);
-			this.errorMat = encodedImageChannelMats.get(1);
-		}
-		
-		// TODO implement getErrorMatrix
-		public Mat getErrorMatrix(int frameSize) {
-			Mat result = new Mat();
-			
-			return result;
+			this.originalWithError = encodedImageChannelMats.get(1);
+			this.errorMat = encodedImageChannelMats.get(2);
 		}
 		
 		// ==================================================
@@ -278,8 +278,8 @@ public class ErrorDatabase {
 		public Mat getOriginalMat() { return this.originalMat; }
 		public Mat getErrorMat() { return this.errorMat; }
 		public String getName() { return this.storagePath.getFileName().toString(); }
-		//TODO display the error matrix as grayscale completely with original image
-		public Image getImage() { return Images.matToImage(errorMat); }
+		public Mat getOriginalWithErrorMat() { return this.originalWithError; }
+		public Image getImage() { return Images.matToImage(this.getOriginalWithErrorMat()); }
 		public Path getPath() { return this.storagePath; }
 		
 		/**

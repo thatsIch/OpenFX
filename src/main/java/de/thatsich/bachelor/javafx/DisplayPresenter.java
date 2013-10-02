@@ -81,6 +81,7 @@ public class DisplayPresenter implements Initializable {
 		this.bindChoiceBoxErrorGenerator();
 		this.bindChoiceBoxFeatureExtractor();
 		this.bindChoiceBoxBinaryClassifiers();
+		this.bindChoiceBoxSamples();
 		
 		// ImageViews
 		this.bindImageViewInput();
@@ -139,6 +140,9 @@ public class DisplayPresenter implements Initializable {
 		this.log.info("Bound ChoiceBoxFeatureExtractor to Model.");
 	}
 	
+	/**
+	 * Bind ChoiceBoxBinaryClassifier to the Model.
+	 */
 	private void bindChoiceBoxBinaryClassifiers() {
 		this.nodeChoiceBoxBinaryClassifier.setConverter(ABinaryClassifier.CONVERTER);
 		this.log.info("Set up ChoiceBoxBinaryClassifiers for proper name display.");
@@ -146,6 +150,22 @@ public class DisplayPresenter implements Initializable {
 		this.nodeChoiceBoxBinaryClassifier.itemsProperty().bindBidirectional(this.evalDatabase.getBinaryClassifiersProperty());
 		this.nodeChoiceBoxBinaryClassifier.valueProperty().bindBidirectional(this.evalDatabase.getSelectedBinaryClassifierProperty());
 		this.log.info("Bound ChoiceBoxBinaryClassifier to Model.");
+	}
+	
+	/**
+	 * Bind ChoiceBoxSample to Model
+	 * and link both Models
+	 */
+	private void bindChoiceBoxSamples() {
+		this.nodeChoiceBoxSample.setConverter(ErrorDatabase.ErrorEntry.CONVERTER);
+		this.log.info("Set up ErrorEntryStringConverter for proper name display.");
+		
+		this.nodeChoiceBoxSample.itemsProperty().bindBidirectional(this.evalDatabase.getErrorEntriesProperty());
+		this.nodeChoiceBoxSample.valueProperty().bindBidirectional(this.evalDatabase.getSelectedErrorEntryProperty());
+		this.log.info("Bound ChoiceBoxDisplayedError to Model.");
+		
+		this.evalDatabase.getErrorEntriesProperty().bind(this.errorDatabase.getErrorEntriesProperty());
+		this.log.info("Bound both ErrorEntryLists in Models together.");
 	}
 	
 	/**
@@ -221,6 +241,7 @@ public class DisplayPresenter implements Initializable {
 				}				
 			}
 		});
+		this.evalDatabase.setFrameSize((int) Math.pow(2, this.nodeSliderFrameSize.getValue()));
 		
 		// set labels to pwoer of 2
 		this.nodeSliderFrameSize.setLabelFormatter(new StringConverter<Double>() {
@@ -294,5 +315,12 @@ public class DisplayPresenter implements Initializable {
 	
 	@FXML private void onTestAction() {
 		this.evalDatabase.testBinaryClassifier();
+//		Mat ones = new Mat(3, 3, CvType.CV_8U, new Scalar(100));
+//		Mat twos = new Mat(3, 3, CvType.CV_8U, new Scalar(255));
+//		Images.show(ones);
+//		Images.show(twos);
+//		Mat thre = new Mat();
+//		Core.absdiff(ones, twos, thre);
+//		Images.show(thre);
 	}
 }

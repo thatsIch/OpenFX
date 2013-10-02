@@ -2,6 +2,7 @@ package de.thatsich.bachelor.opencv.classifier;
 
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.core.MatOfFloat;
 import org.opencv.ml.CvSVM;
 
 import de.thatsich.core.opencv.classifier.ABinaryClassifier;
@@ -17,7 +18,7 @@ public class SVM extends ABinaryClassifier {
 	}
 	
 	@Override
-	public void train(Mat positiveTrainData, Mat negativeTrainData) {
+	public void train(MatOfFloat positiveTrainData, MatOfFloat negativeTrainData) {
 		final Mat trainImages = new Mat();
 		final Mat trainLabels = new Mat();
 		
