@@ -8,7 +8,7 @@ import org.opencv.ml.CvRTParams;
 import org.opencv.ml.CvRTrees;
 
 import de.thatsich.core.Log;
-import de.thatsich.core.opencv.classifier.ABinaryClassifier;
+import de.thatsich.core.opencv.ABinaryClassifier;
 
 public class RandomForest extends ABinaryClassifier {
 

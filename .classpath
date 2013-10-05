@@ -9,5 +9,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/GuiceFX 2.1.2"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Guice 3.0"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JavaCSV 2.4"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

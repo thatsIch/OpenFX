@@ -7,8 +7,8 @@ import org.opencv.core.MatOfDouble;
 import org.opencv.core.MatOfFloat;
 import org.opencv.core.Scalar;
 
-import de.thatsich.core.opencv.extractor.AFeatureExtractor;
-import de.thatsich.core.opencv.extractor.IFeatureExtractor;
+import de.thatsich.core.opencv.AFeatureExtractor;
+import de.thatsich.core.opencv.IFeatureExtractor;
 
 /**
  * Calculates the mean of an Image.

@@ -10,7 +10,7 @@ import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 
-import de.thatsich.core.opencv.metric.IMetric;
+import de.thatsich.core.opencv.IMetric;
 
 @RunWith(JUnit4.class)
 public abstract class AMetricTest {

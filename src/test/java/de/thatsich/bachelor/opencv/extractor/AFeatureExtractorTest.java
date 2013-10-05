@@ -8,7 +8,7 @@ import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 
-import de.thatsich.core.opencv.extractor.IFeatureExtractor;
+import de.thatsich.core.opencv.IFeatureExtractor;
 
 @RunWith(JUnit4.class)
 public abstract class AFeatureExtractorTest {

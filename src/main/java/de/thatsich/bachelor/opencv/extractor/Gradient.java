@@ -5,7 +5,7 @@ import org.opencv.core.Mat;
 import org.opencv.core.MatOfFloat;
 import org.opencv.imgproc.Imgproc;
 
-import de.thatsich.core.opencv.extractor.AFeatureExtractor;
+import de.thatsich.core.opencv.AFeatureExtractor;
 
 
 /**

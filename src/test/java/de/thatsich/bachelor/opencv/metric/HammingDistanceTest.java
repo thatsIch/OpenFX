@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import de.thatsich.core.opencv.HammingDistance;
+
 public class HammingDistanceTest extends AMetricTest {
 	public HammingDistanceTest() {
 		super(new HammingDistance());

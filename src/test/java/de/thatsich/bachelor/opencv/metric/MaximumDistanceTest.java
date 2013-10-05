@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import de.thatsich.core.opencv.MaximumDistance;
+
 public class MaximumDistanceTest extends AMetricTest {
 	public MaximumDistanceTest() {
 		super(new MaximumDistance());

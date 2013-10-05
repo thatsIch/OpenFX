@@ -5,8 +5,8 @@ import org.opencv.core.Mat;
 import org.opencv.core.MatOfFloat;
 import org.opencv.core.MatOfInt;
 
-import de.thatsich.core.opencv.extractor.AFeatureExtractor;
-import de.thatsich.core.opencv.extractor.IFeatureExtractor;
+import de.thatsich.core.opencv.AFeatureExtractor;
+import de.thatsich.core.opencv.IFeatureExtractor;
 
 public class LocalBinaryPatternHistogram extends AFeatureExtractor implements
 		IFeatureExtractor {

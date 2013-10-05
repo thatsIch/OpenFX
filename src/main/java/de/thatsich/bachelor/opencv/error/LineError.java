@@ -5,8 +5,8 @@ import org.opencv.core.Mat;
 import org.opencv.core.Point;
 import org.opencv.core.Scalar;
 
-import de.thatsich.core.opencv.error.AErrorGenerator;
-import de.thatsich.core.opencv.error.IErrorGenerator;
+import de.thatsich.core.opencv.AErrorGenerator;
+import de.thatsich.core.opencv.IErrorGenerator;
 
 public class LineError extends AErrorGenerator implements IErrorGenerator {
 

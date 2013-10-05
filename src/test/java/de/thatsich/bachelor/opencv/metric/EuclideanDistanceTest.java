@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import de.thatsich.core.opencv.EuclideanDistance;
+
 public class EuclideanDistanceTest extends AMetricTest {
 	public EuclideanDistanceTest() {
 		super(new EuclideanDistance());

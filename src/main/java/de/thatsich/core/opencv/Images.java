@@ -59,7 +59,7 @@ public class Images {
 		final Pane layout = new HBox();
 		final Scene scene = new Scene(layout);
 		final Stage stage = new Stage();
-		final Image img = matToImage(image);
+		final Image img = toImage(image);
 		
 		view.setImage(img);
 		layout.getChildren().add(view);
@@ -74,7 +74,7 @@ public class Images {
 	 * @param m Mat to be converted
 	 * @return Converted Image
 	 */
-	public static Image matToImage(Mat m) {
+	public static Image toImage(Mat m) {
 		MatOfByte buffer = new MatOfByte();
 		Highgui.imencode(".png", m, buffer);
 		
@@ -196,7 +196,7 @@ public class Images {
 	 * @param path Path to the Image
 	 * @return Image converted to OpenCV Mat Object
 	 */
-	public static Mat getMatFromPath(Path path) {
+	public static Mat toMat(Path path) {
 		return Highgui.imread(path.toAbsolutePath().toString());
 	}
 }

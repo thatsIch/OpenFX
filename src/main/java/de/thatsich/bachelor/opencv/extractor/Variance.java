@@ -6,8 +6,8 @@ import org.opencv.core.Mat;
 import org.opencv.core.MatOfDouble;
 import org.opencv.core.MatOfFloat;
 
-import de.thatsich.core.opencv.extractor.AFeatureExtractor;
-import de.thatsich.core.opencv.extractor.IFeatureExtractor;
+import de.thatsich.core.opencv.AFeatureExtractor;
+import de.thatsich.core.opencv.IFeatureExtractor;
 
 public class Variance extends AFeatureExtractor implements IFeatureExtractor {
 

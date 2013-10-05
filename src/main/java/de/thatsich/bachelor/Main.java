@@ -17,7 +17,7 @@ import com.google.inject.Inject;
 import com.google.inject.Module;
 
 import de.thatsich.bachelor.guice.WiringModule;
-import de.thatsich.bachelor.javafx.DisplayView;
+import de.thatsich.bachelor.javafx.presentation.DisplayView;
 import de.thatsich.core.guice.LoggerModule;
 import de.thatsich.core.guice.PostInitModule;
 

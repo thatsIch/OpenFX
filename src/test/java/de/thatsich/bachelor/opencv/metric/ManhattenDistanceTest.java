@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import de.thatsich.core.opencv.ManhattenDistance;
+
 public class ManhattenDistanceTest extends AMetricTest {
 	public ManhattenDistanceTest() {
 		super(new ManhattenDistance());
