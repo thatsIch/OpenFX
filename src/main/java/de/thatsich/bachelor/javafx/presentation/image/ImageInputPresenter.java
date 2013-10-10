@@ -79,7 +79,7 @@ public class ImageInputPresenter extends AFXMLPresenter {
 			return;
 		}
 		
-		this.fileSystemService.deleteFile(new DeleteSucceededHandler(), choice);
+		this.fileSystemService.deleteFile(new DeleteSucceededHandler(), choice.getPath());
 		this.log.info("File deleted and removed from EntryList.");
 	}
 	
@@ -90,7 +90,7 @@ public class ImageInputPresenter extends AFXMLPresenter {
 	 */
 	@FXML private void onResetDatabaseAction() throws IOException {
 		for (ImageEntry entry : this.images.getImageEntries()) {
-			this.fileSystemService.deleteFile(new DeleteSucceededHandler(), entry);
+			this.fileSystemService.deleteFile(new DeleteSucceededHandler(), entry.getPath());
 		}
 		this.log.info("EntryList resetted.");
 	}
@@ -121,7 +121,7 @@ public class ImageInputPresenter extends AFXMLPresenter {
 	 */
 	private class DeleteSucceededHandler implements EventHandler<WorkerStateEvent> {
 		@Override public void handle(WorkerStateEvent event) {
-			final ImageEntry deletion = (ImageEntry) event.getSource().getValue();
+			final ImageEntry deletion = images.getSelectedImageEntry();
 			
 			images.removeImageEntry(deletion);
 			log.info("Removed ImageEntry from Database.");

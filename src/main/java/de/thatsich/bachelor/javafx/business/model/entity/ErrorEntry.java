@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringProperty;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.scene.image.Image;
@@ -23,6 +24,7 @@ public class ErrorEntry {
 	private final Mat originalWithError;
 	private final ReadOnlyStringWrapper errorClass = new ReadOnlyStringWrapper();
 	private final ReadOnlyStringWrapper errorName = new ReadOnlyStringWrapper();
+	private final ReadOnlyObjectWrapper<Mat> mergedMat = new ReadOnlyObjectWrapper<Mat>();
 	
 	private final Path storagePath;
 	
@@ -47,9 +49,7 @@ public class ErrorEntry {
 		List<Mat> listMat = Arrays.asList(this.originalMat, this.originalWithError, this.errorMat);
 		Mat mergedMat = new Mat(originalMat.size(), CvType.CV_8UC3);
 		Core.merge(listMat, mergedMat);
-		
-		// write to disk
-		Images.store(mergedMat, storagePath);	
+		this.mergedMat.set(mergedMat);	
 	}
 	
 	/**
@@ -70,6 +70,7 @@ public class ErrorEntry {
 		this.originalMat = encodedImageChannelMats.get(0);
 		this.originalWithError = encodedImageChannelMats.get(1);
 		this.errorMat = encodedImageChannelMats.get(2);
+		this.mergedMat.set(encodedImage);
 	}
 	
 	/** 
@@ -101,6 +102,7 @@ public class ErrorEntry {
 	public Mat getOriginalMat() { return this.originalMat; }
 	public Mat getErrorMat() { return this.errorMat; }
 	public Mat getOriginalWithErrorMat() { return this.originalWithError; }
+	public Mat getMergedMat() { return this.mergedMat.get(); }
 	public Image getImage() { return Images.toImage(this.getOriginalWithErrorMat()); }
 	public Path getPath() { return this.storagePath; }
 	

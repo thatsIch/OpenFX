@@ -76,10 +76,6 @@ public class ImageDatabase {
 		this.log.info("All OpenCV Supported Images added: " + this.imageEntries.get().size() + ".");
 	}
 	
-	// ==================================================
-	// Image Database Implementation
-	// ==================================================
-	
 	/**
 	 * 
 	 */

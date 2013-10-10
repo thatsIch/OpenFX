@@ -6,7 +6,6 @@ import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 import de.thatsich.bachelor.javafx.business.command.CopyFileCommand;
 import de.thatsich.bachelor.javafx.business.command.DeleteFileCommand;
-import de.thatsich.bachelor.javafx.business.model.entity.ImageEntry;
 import de.thatsich.core.javafx.ACommandService;
 
 public class FileSystemService extends ACommandService {
@@ -19,9 +18,9 @@ public class FileSystemService extends ACommandService {
 		copyFileCommand.start();
 	}
 	
-	public void deleteFile(EventHandler<WorkerStateEvent> handler, ImageEntry entry) {
+	public void deleteFile(EventHandler<WorkerStateEvent> handler, Path filePath) {
 		DeleteFileCommand deleteFileCommand = this.commandProvider.get(DeleteFileCommand.class);
-		deleteFileCommand.setEntry(entry);
+		deleteFileCommand.setFilePath(filePath);
 		deleteFileCommand.setOnSucceeded(handler);
 		deleteFileCommand.start();
 	}
