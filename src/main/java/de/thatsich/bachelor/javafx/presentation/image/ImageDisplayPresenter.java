@@ -6,22 +6,20 @@ import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
 
 import com.google.inject.Inject;
 
 import de.thatsich.bachelor.javafx.business.model.ImageDatabase;
-import de.thatsich.bachelor.javafx.business.model.ImageDatabase.ImageEntry;
-import de.thatsich.core.Log;
+import de.thatsich.bachelor.javafx.business.model.entity.ImageEntry;
+import de.thatsich.core.javafx.AFXMLPresenter;
 
-public class ImageDisplayPresenter implements Initializable {
+public class ImageDisplayPresenter extends AFXMLPresenter {
 
 	// Nodes
 	@FXML private ImageView nodeImageViewInput;
 	
 	// Injects
-	@Inject private Log log;
 	@Inject private ImageDatabase images;
 	
 	@Override

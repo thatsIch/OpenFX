@@ -11,21 +11,24 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.image.Image;
-import javafx.util.StringConverter;
-
-import org.opencv.core.Mat;
 
 import com.google.inject.Inject;
 
+import de.thatsich.bachelor.javafx.business.model.entity.ImageEntry;
 import de.thatsich.core.Log;
-import de.thatsich.core.opencv.Images;
 
+/**
+ * Model class for storing the images
+ * and a simple interface importing
+ * images through Path Objects
+ * 
+ * @author Minh
+ *
+ */
 public class ImageDatabase {
 
 	// Fields
 	final private Path inputFolderPath;
-	final private Path outputFolderPath;
 	
 	// properties
 	final private ObjectProperty<ImageEntry> imageEntry = new SimpleObjectProperty<ImageEntry>();
@@ -34,17 +37,23 @@ public class ImageDatabase {
 	// Injects
 	final private Log log;
 	
+	
+	/**
+	 * Injected CTOR
+	 * 
+	 * @param log Logger
+	 * @param provider CommandProvider
+	 * @throws IOException If the Folder for input and output could not be created
+	 */
 	@Inject
 	private ImageDatabase(Log log) throws IOException {
 		this.log = log;
 		
 		this.inputFolderPath = Paths.get("input");
-		this.outputFolderPath = Paths.get("output");
-		
 		if (Files.notExists(this.inputFolderPath) || !Files.isDirectory(this.inputFolderPath)) Files.createDirectory(this.inputFolderPath);
-		if (Files.notExists(this.outputFolderPath) || !Files.isDirectory(this.outputFolderPath)) Files.createDirectory(this.outputFolderPath); 
 			
 		this.initImagePaths();
+		this.resetSelection();
 	}
 	
 	/**
@@ -65,11 +74,6 @@ public class ImageDatabase {
 			e.printStackTrace();
 		}
 		this.log.info("All OpenCV Supported Images added: " + this.imageEntries.get().size() + ".");
-		
-		if (this.imageEntries.get().size() > 0) {
-			this.imageEntry.set(this.imageEntries.get().get(0));
-			this.log.info("Initialized with first Image.");
-		}
 	}
 	
 	// ==================================================
@@ -77,136 +81,36 @@ public class ImageDatabase {
 	// ==================================================
 	
 	/**
-	 * Checks for duplicate (already copied images/names)
-	 * if no duplicate is found it will copy it into the input folder
-	 * and add it to the model
 	 * 
-	 * @throws IOException
 	 */
-	public void addImage(Path imagePath) throws IOException {
-		
-		Path newPath = this.inputFolderPath.resolve(imagePath.getFileName());
-		this.log.info("Created new Path: " + newPath);
-		
-		if (Files.exists(newPath)) {
-			this.log.info("Duplicate found: File already exists.");
-			return;
-		}
-				
-		Path copiedPath = Files.copy(imagePath, newPath);
-		this.log.info("Copied selection ("+ imagePath +") into InputFolder ("+this.inputFolderPath+"): " + copiedPath);
-		
-		ImageEntry copy = new ImageEntry(copiedPath);
-		this.imageEntries.get().add(copy);
-		this.log.info("Added copy to ChoiceBoxDisplayImage: " + copiedPath.toString());
-		
-		this.imageEntry.set(copy);
-		this.log.info("Set currently selected Image to " + copiedPath);
-	}
-	
-	/**
-	 * Checks if something is chosen before then do nothing
-	 * but if something is chose it will be deleted and removed from Model.
-	 * 
-	 * @throws IOException
-	 */
-	public void removeSelectedImage() throws IOException {
-		ImageEntry choice = this.imageEntry.get();
-		
-		if (choice == null || Files.notExists(choice.getPath())) {
-			this.log.info("Choice was empty. Deleting nothing.");
-			return;
-		}
-		
-		Files.delete(choice.getPath());
-		this.log.info("Choice deleted from InputFolder.");
-		
-		this.imageEntries.get().remove(choice);
-		this.log.info("Choice removed from internal Representation.");
-		
+	public void resetSelection() {
 		if (this.imageEntries.get().size() > 0) {
 			this.imageEntry.set(this.imageEntries.get().get(0));
-			this.log.info("ChoiceBox reset to first ImageEntry.");
+			this.log.info("Reset to first ImageEntry.");
 		}
 	}
-	
-	/**
-	 * Iterates through the whole list,
-	 * deletes the image
-	 * and its reference
-	 * 
-	 * @throws IOException 
-	 */
-	public void resetImageDatabase() throws IOException {
-		for (ImageEntry p : this.imageEntries.get()) {
-			Files.delete(p.getPath());
-		}
-		this.imageEntries.get().clear();
-	}
-	
 	
 	// ==================================================
 	// Getter Implementation
 	// ==================================================
-//	public Path getInputPath() { return this.inputPath; }
-//	public Path getOutputPath() { return this.outputPath; }
-//	public Path getImagePath() { return this.imagePath.get(); }
+	public Path getInputPath() { return this.inputFolderPath; }
 	public ObservableList<ImageEntry> getImageEntries() { return this.imageEntries.get(); }
-		
+	public ImageEntry getSelectedImageEntry() { return this.imageEntry.get(); }
+	
+	// ==================================================
+	// Setter Implementation
+	// ==================================================
+	public void setImageEntry(ImageEntry entry) { this.imageEntry.set(entry); }
+	
+	// ==================================================
+	// Modifier Implementation
+	// ==================================================
+	public void addImageEntry(ImageEntry entry) { this.imageEntries.get().add(entry); }
+	public void removeImageEntry(ImageEntry entry) { this.imageEntries.get().remove(entry); }
+	
 	// ==================================================
 	// Property Implementation
 	// ==================================================
 	public ObjectProperty<ObservableList<ImageEntry>> getImageEntriesProperty() { return this.imageEntries; }
-	public ObjectProperty<ImageEntry> getImageEntryProperty() { return this.imageEntry; }
-	
-	public static class ImageEntry {
-		private Mat imageMat;
-		private Path imagePath;
-		public static Converter CONVERTER;
-		
-		public ImageEntry(Path imagePath) {
-			this.imageMat = Images.toMat(imagePath);
-			this.imageMat = Images.toGrayScale(this.imageMat);
-			this.imagePath = imagePath;
-			ImageEntry.CONVERTER = new Converter();
-		}
-		
-		public ImageEntry(Mat imageMat, Path imagePath) {
-			this.imageMat = Images.toGrayScale(imageMat);
-			this.imagePath = imagePath;
-			ImageEntry.CONVERTER = new Converter();
-		}
-		
-		public void store() {
-			Images.store(this.imageMat, this.imagePath);
-		}
-		
-		public Image getImage() {
-			return Images.toImage(this.imageMat);
-		}
-		
-		public Mat getMat() {
-			return this.imageMat;
-		}
-		
-		public Path getPath() {
-			return this.imagePath;
-		}
-		
-		public String getName() {
-			return this.imagePath.getFileName().toString();
-		}
-		
-		private static class Converter extends StringConverter<ImageEntry> {
-			@Override 
-			public ImageEntry fromString(String string) {
-				return null;
-			}
-
-			@Override
-			public String toString(ImageEntry imageEntry) {
-				return imageEntry.getName();
-			}	
-		}
-	}
+	public ObjectProperty<ImageEntry> getImageEntryProperty() { return this.imageEntry; }	
 }

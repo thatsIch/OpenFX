@@ -1,4 +1,4 @@
-package de.thatsich.core.opencv;
+package de.thatsich.bachelor.javafx.business.model.entity;
 
 import org.opencv.core.MatOfFloat;
 

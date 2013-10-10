@@ -3,8 +3,6 @@ package de.thatsich.bachelor.guice;
 import com.google.inject.AbstractModule;
 import com.google.inject.Scopes;
 
-import de.thatsich.bachelor.javafx.business.command.CommandProvider;
-import de.thatsich.bachelor.javafx.business.command.ICommandProvider;
 import de.thatsich.bachelor.javafx.business.model.ErrorDatabase;
 import de.thatsich.bachelor.javafx.business.model.EvaluationDatabase;
 import de.thatsich.bachelor.javafx.business.model.ImageDatabase;
@@ -16,7 +14,8 @@ import de.thatsich.bachelor.javafx.presentation.error.ErrorInputView;
 import de.thatsich.bachelor.javafx.presentation.image.ImageDisplayView;
 import de.thatsich.bachelor.javafx.presentation.image.ImageInputView;
 import de.thatsich.bachelor.service.ConfigService;
-import de.thatsich.bachelor.service.IConfigService;
+import de.thatsich.core.javafx.CommandProvider;
+import de.thatsich.core.javafx.ICommandProvider;
 
 
 /**
@@ -67,7 +66,7 @@ public class WiringModule extends AbstractModule {
 	}
 	
 	private void mapServices() {
-		super.bind(IConfigService.class).to(ConfigService.class).in(Scopes.SINGLETON);
+		super.bind(ConfigService.class).in(Scopes.SINGLETON);
 	}
 	
 	private void mapModels() {

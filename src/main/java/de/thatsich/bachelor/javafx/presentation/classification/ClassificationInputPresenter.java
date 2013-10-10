@@ -3,16 +3,6 @@ package de.thatsich.bachelor.javafx.presentation.classification;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import com.google.inject.Inject;
-
-import de.thatsich.bachelor.javafx.business.model.ErrorDatabase;
-import de.thatsich.bachelor.javafx.business.model.EvaluationDatabase;
-import de.thatsich.bachelor.javafx.business.model.ErrorDatabase.ErrorEntry;
-import de.thatsich.core.Log;
-import de.thatsich.core.javafx.StringFeatureExtractorConverter;
-import de.thatsich.core.opencv.ABinaryClassifier;
-import de.thatsich.core.opencv.IBinaryClassifier;
-import de.thatsich.core.opencv.IFeatureExtractor;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -20,6 +10,17 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Slider;
 import javafx.util.StringConverter;
+
+import com.google.inject.Inject;
+
+import de.thatsich.bachelor.javafx.business.model.ErrorDatabase;
+import de.thatsich.bachelor.javafx.business.model.EvaluationDatabase;
+import de.thatsich.bachelor.javafx.business.model.entity.ErrorEntry;
+import de.thatsich.core.Log;
+import de.thatsich.core.javafx.StringFeatureExtractorConverter;
+import de.thatsich.core.opencv.ABinaryClassifier;
+import de.thatsich.core.opencv.IBinaryClassifier;
+import de.thatsich.core.opencv.IFeatureExtractor;
 
 public class ClassificationInputPresenter implements Initializable {
 	
@@ -74,7 +75,7 @@ public class ClassificationInputPresenter implements Initializable {
 	 * and link both Models
 	 */
 	private void bindChoiceBoxSamples() {
-		this.nodeChoiceBoxSample.setConverter(ErrorDatabase.ErrorEntry.CONVERTER);
+//		this.nodeChoiceBoxSample.setConverter(ErrorDatabase.ErrorEntry.CONVERTER);
 		this.log.info("Set up ErrorEntryStringConverter for proper name display.");
 		
 		this.nodeChoiceBoxSample.itemsProperty().bindBidirectional(this.evalDatabase.getErrorEntriesProperty());

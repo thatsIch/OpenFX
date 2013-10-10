@@ -1,4 +1,4 @@
-package de.thatsich.bachelor.javafx.business.command;
+package de.thatsich.core.javafx;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;

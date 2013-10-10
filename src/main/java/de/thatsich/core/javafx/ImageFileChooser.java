@@ -9,7 +9,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
-import de.thatsich.bachelor.service.IConfigService;
+import de.thatsich.bachelor.service.ConfigService;
 import de.thatsich.core.Log;
 
 /**
@@ -38,7 +38,7 @@ public class ImageFileChooser {
 	/**
 	 * Injected Config to retrieve last location.
 	 */
-	private final IConfigService config;
+	private final ConfigService config;
 	
 	/**
 	 * Injected Logger
@@ -52,7 +52,7 @@ public class ImageFileChooser {
 	 * @param IConfigService config Access to preferences
 	 */
 	@Inject
-	public ImageFileChooser(Log log, IConfigService config) {
+	public ImageFileChooser(Log log, ConfigService config) {
 		this.chooser = new FileChooser();
 		this.log = log;
 		this.config = config;

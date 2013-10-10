@@ -5,37 +5,47 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.util.ResourceBundle;
 
+import javafx.concurrent.WorkerStateEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+
 import com.google.inject.Inject;
 
 import de.thatsich.bachelor.javafx.business.model.ImageDatabase;
-import de.thatsich.bachelor.javafx.business.model.ImageDatabase.ImageEntry;
-import de.thatsich.core.Log;
+import de.thatsich.bachelor.javafx.business.model.entity.ImageEntry;
+import de.thatsich.bachelor.service.FileSystemService;
+import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.javafx.ImageFileChooser;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.ChoiceBox;
 
-public class ImageInputPresenter implements Initializable {
+/**
+ * Presenter
+ * 
+ * Represents the input controls for the image database part.
+ * Offers basic ability to modify the underlying image-database.
+ *  
+ *  
+ * @author Tran Minh Do
+ *
+ */
+public class ImageInputPresenter extends AFXMLPresenter {
 
-	// Nodes
-	@FXML private ChoiceBox<ImageEntry> nodeChoiceBoxDisplayImage;
-	
 	// Injects
-	@Inject private Log log;
+	@Inject private FileSystemService fileSystemService;
+	
 	@Inject private ImageDatabase images;
 	@Inject private ImageFileChooser chooser;
-
 	
+	// ================================================== 
+	// Initializable Implementation 
+	// ==================================================
 	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
-		this.nodeChoiceBoxDisplayImage.setConverter(ImageDatabase.ImageEntry.CONVERTER);
-		this.log.info("Set up ItemEntryStringConverter for proper name display.");
-		
-		this.nodeChoiceBoxDisplayImage.itemsProperty().bindBidirectional(this.images.getImageEntriesProperty());
-		this.nodeChoiceBoxDisplayImage.valueProperty().bindBidirectional(this.images.getImageEntryProperty());
-		this.log.info("Bound ChoiceBoxDisplayImage to Model.");
+	public void initialize(URL url, ResourceBundle bundle) {
+
 	}
 
+	// ================================================== 
+	// View Implementation 
+	// ==================================================
 	/**
 	 * Shows a FileChooser and
 	 * adds selected image to model
@@ -46,8 +56,13 @@ public class ImageInputPresenter implements Initializable {
 		
 		Path filePath = this.chooser.show();
 		if (filePath == null) return;
-	
-		this.images.addImage(filePath);
+		this.log.info("Fetched Path from chosen Image.");
+		
+		Path copyPath = this.images.getInputPath().resolve(filePath.getFileName());
+		this.log.info("Created new Path: " + copyPath);
+		
+		this.fileSystemService.copyFile(new AddImageSucceededHandler(), filePath, copyPath);
+		this.log.info("File copied and inserted into EntryList.");
 	}
 	
 	/**
@@ -56,7 +71,16 @@ public class ImageInputPresenter implements Initializable {
 	 * @throws IOException
 	 */
 	@FXML private void onRemoveImageAction() throws IOException {
-		this.images.removeSelectedImage();
+		final ImageEntry choice = this.images.getSelectedImageEntry();
+		this.log.info("Fetched selected ImageEntry.");
+		
+		if (choice == null) {
+			this.log.info("Selection was empty. Deleting nothing.");
+			return;
+		}
+		
+		this.fileSystemService.deleteFile(new DeleteSucceededHandler(), choice);
+		this.log.info("File deleted and removed from EntryList.");
 	}
 	
 	/**
@@ -65,6 +89,45 @@ public class ImageInputPresenter implements Initializable {
 	 * @throws IOException 
 	 */
 	@FXML private void onResetDatabaseAction() throws IOException {
-		this.images.resetImageDatabase();
+		for (ImageEntry entry : this.images.getImageEntries()) {
+			this.fileSystemService.deleteFile(new DeleteSucceededHandler(), entry);
+		}
+		this.log.info("EntryList resetted.");
+	}
+	
+	/**
+	 * Handler for what should happen if the Command was successfull 
+	 * for adding the image to the input directory.
+	 * 
+	 * @author Minh
+	 */
+	private class AddImageSucceededHandler implements EventHandler<WorkerStateEvent> {
+		@Override public void handle(WorkerStateEvent event) {
+			Path copiedPath = (Path) event.getSource().getValue();
+			ImageEntry copy = new ImageEntry(copiedPath);
+			images.addImageEntry(copy);
+			log.info("Added copy to ChoiceBoxDisplayImage: " + copiedPath.toString());
+			
+			images.setImageEntry(copy);
+			log.info("Set currently selected Image to " + copiedPath);
+		}
+	}
+	
+	/**
+	 * Handler for what should happen if the Command was successfull 
+	 * for adding the image to the input directory.
+	 * 
+	 * @author Minh
+	 */
+	private class DeleteSucceededHandler implements EventHandler<WorkerStateEvent> {
+		@Override public void handle(WorkerStateEvent event) {
+			final ImageEntry deletion = (ImageEntry) event.getSource().getValue();
+			
+			images.removeImageEntry(deletion);
+			log.info("Removed ImageEntry from Database.");
+			
+			images.resetSelection();
+			log.info("Reset Selection to the first.");
+		}
 	}
 }

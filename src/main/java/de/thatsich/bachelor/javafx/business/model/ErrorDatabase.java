@@ -7,10 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
@@ -18,20 +15,17 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.image.Image;
-import javafx.util.StringConverter;
 
-import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 
 import com.google.inject.Inject;
 
-import de.thatsich.bachelor.javafx.business.model.ImageDatabase.ImageEntry;
+import de.thatsich.bachelor.javafx.business.model.entity.ErrorEntry;
+import de.thatsich.bachelor.javafx.business.model.entity.ImageEntry;
 import de.thatsich.bachelor.opencv.error.LineError;
 import de.thatsich.core.Log;
 import de.thatsich.core.opencv.IErrorGenerator;
-import de.thatsich.core.opencv.Images;
 
 public class ErrorDatabase {
 	
@@ -220,76 +214,4 @@ public class ErrorDatabase {
 	public ObjectProperty<ObservableList<ErrorEntry>> getErrorEntriesProperty() { return this.errorEntries; }
 	public ObjectProperty<ErrorEntry> getErrorEntryProperty() { return this.errorEntry; }
 	public IntegerProperty getErrorLoopCountProperty() { return this.errorLoopCount; }
-	
-	public static class ErrorEntry {
-		private final Mat originalMat;
-		private final Mat errorMat;
-		private final Mat originalWithError;
-		
-		private final Path storagePath;
-		public static Converter CONVERTER = new Converter();
-		
-		
-		/**
-		 * Generating ErrorEntry CTOR
-		 * 
-		 * @param originalMat
-		 * @param errorMat
-		 * @param storagePath
-		 */
-		public ErrorEntry(Mat originalMat, Mat originalWithErrorMat, Path storagePath) {
-			this.originalMat = originalMat;
-			this.originalWithError = originalWithErrorMat;
-			this.errorMat = new Mat();
-			Core.absdiff(originalMat, originalWithErrorMat, this.errorMat);
-			
-			this.storagePath = storagePath;
-			
-			// Creates a third channel as dummy because you cannot save a 2 channel image
-			List<Mat> listMat = Arrays.asList(this.originalMat, this.originalWithError, this.errorMat);
-			Mat mergedMat = new Mat(originalMat.size(), CvType.CV_8UC3);
-			Core.merge(listMat, mergedMat);
-			
-			Images.store(mergedMat, storagePath);	
-		}
-		
-		/**
-		 * Reading ErrorEntry CTOR
-		 * 
-		 * @param storagePath
-		 */
-		public ErrorEntry(Path storagePath) {
-			this.storagePath = storagePath;
-			
-			Mat encodedImage = Images.toMat(storagePath);
-			
-			// split channels to extract GL and Error Mat
-			List<Mat> encodedImageChannelMats = new ArrayList<Mat>(); 
-			Core.split(encodedImage, encodedImageChannelMats);
-			
-			this.originalMat = encodedImageChannelMats.get(0);
-			this.originalWithError = encodedImageChannelMats.get(1);
-			this.errorMat = encodedImageChannelMats.get(2);
-		}
-		
-		// ==================================================
-		// Getter Implementation
-		// ==================================================
-		public Mat getOriginalMat() { return this.originalMat; }
-		public Mat getErrorMat() { return this.errorMat; }
-		public String getName() { return this.storagePath.getFileName().toString(); }
-		public Mat getOriginalWithErrorMat() { return this.originalWithError; }
-		public Image getImage() { return Images.toImage(this.getOriginalWithErrorMat()); }
-		public Path getPath() { return this.storagePath; }
-		
-		/**
-		 * JavaFX Converter to display the file name in Control-Objects instead something random
-		 * 
-		 * @author Minh
-		 */
-		private static class Converter extends StringConverter<ErrorEntry> {
-			@Override public ErrorEntry fromString(String string) { return null; }
-			@Override public String toString(ErrorEntry entry) { return entry.getName(); }
-		}
-	}
 }

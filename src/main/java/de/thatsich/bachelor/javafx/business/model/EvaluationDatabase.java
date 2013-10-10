@@ -14,7 +14,7 @@ import org.opencv.core.MatOfFloat;
 
 import com.google.inject.Inject;
 
-import de.thatsich.bachelor.javafx.business.model.ErrorDatabase.ErrorEntry;
+import de.thatsich.bachelor.javafx.business.model.entity.ErrorEntry;
 import de.thatsich.bachelor.opencv.classifier.RandomForest;
 import de.thatsich.bachelor.opencv.classifier.SVM;
 import de.thatsich.bachelor.opencv.extractor.Gradient;
