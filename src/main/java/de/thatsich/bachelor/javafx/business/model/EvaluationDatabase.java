@@ -17,12 +17,6 @@ import com.google.inject.Inject;
 import de.thatsich.bachelor.javafx.business.model.entity.ErrorEntry;
 import de.thatsich.bachelor.opencv.classifier.RandomForest;
 import de.thatsich.bachelor.opencv.classifier.SVM;
-import de.thatsich.bachelor.opencv.extractor.Gradient;
-import de.thatsich.bachelor.opencv.extractor.GrayLevelCooccurenceHistogram;
-import de.thatsich.bachelor.opencv.extractor.HuMoments;
-import de.thatsich.bachelor.opencv.extractor.LocalBinaryPatternHistogram;
-import de.thatsich.bachelor.opencv.extractor.Mean;
-import de.thatsich.bachelor.opencv.extractor.Variance;
 import de.thatsich.core.Log;
 import de.thatsich.core.opencv.IBinaryClassifier;
 import de.thatsich.core.opencv.IFeatureExtractor;
@@ -61,31 +55,9 @@ public class EvaluationDatabase {
 	private EvaluationDatabase(Log log) {
 		this.log = log;
 		
-		this.initFeatureExtractors();
 		this.initBinaryClassifiers();
 	}
 	
-	/**
-	 * Initialize Feature Extracotrs
-	 * - adding all known to the list
-	 * - select the first in list if available
-	 */
-	private void initFeatureExtractors() {
-		this.featureExtractors.get().addAll(
-			new Gradient(),
-			new GrayLevelCooccurenceHistogram(),
-			new HuMoments(),
-			new LocalBinaryPatternHistogram(),
-			new Mean(),
-			new Variance()
-		);
-		this.log.info("Initialized Feature Extractors.");
-		
-		if (this.featureExtractors.get().size() > 0) {
-			this.selectedFeatureExtractor.set(this.featureExtractors.get().get(0));
-			this.log.info("Initialized with first Feature Extractor.");
-		}
-	}
 	
 	/**
 	 * Initialize Binary Classifiers

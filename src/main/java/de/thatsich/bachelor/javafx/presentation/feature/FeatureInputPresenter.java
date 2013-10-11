@@ -12,7 +12,6 @@ import javafx.util.StringConverter;
 
 import com.google.inject.Inject;
 
-import de.thatsich.bachelor.javafx.business.model.ErrorDatabase;
 import de.thatsich.bachelor.javafx.business.model.FeatureSpace;
 import de.thatsich.bachelor.service.ConfigService;
 import de.thatsich.core.javafx.AFXMLPresenter;
@@ -27,9 +26,7 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 
 	// Injects
 	@Inject private ConfigService config;
-	
 	@Inject private FeatureSpace features;
-	@Inject private ErrorDatabase errorDatabase;
 	
 	@Override
 	public void initialize(URL url, ResourceBundle bundle) {
@@ -50,6 +47,16 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 		this.nodeChoiceBoxFeatureExtractor.itemsProperty().bindBidirectional(this.features.getFeatureExtractorsProperty());
 		this.nodeChoiceBoxFeatureExtractor.valueProperty().bindBidirectional(this.features.getSelectedFeatureExtractorProperty());
 		this.log.info("Bound ChoiceBoxFeatureExtractor to Model.");
+		
+		this.nodeChoiceBoxFeatureExtractor.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+			@Override public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				config.setLastFeatureExtractorIndexInt(newValue.intValue());
+			}
+		});
+		this.log.info("Bound ChoiceBoxFeatureExtractor to Config.");
+		
+		this.nodeChoiceBoxFeatureExtractor.getSelectionModel().select(this.config.getLastFeatureExtractorIndexInt());
+		this.log.info("Initialized ChoiceBoxFeatureExtractor from Config.");
 	}	
 	
 	/**

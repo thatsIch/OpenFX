@@ -9,12 +9,20 @@ import org.opencv.core.Mat;
 
 import de.thatsich.bachelor.javafx.business.command.ApplyErrorCommand;
 import de.thatsich.bachelor.javafx.business.command.CreateErrorImageCommand;
+import de.thatsich.bachelor.javafx.business.command.DeleteErrorEntryCommand;
 import de.thatsich.bachelor.javafx.business.model.entity.ErrorEntry;
 import de.thatsich.core.javafx.ACommandService;
 import de.thatsich.core.opencv.IErrorGenerator;
 
-public class ErrorGeneratorService extends ACommandService {
-
+public class ErrorSpaceService extends ACommandService {
+	
+	public void deleteErrorImage(EventHandler<WorkerStateEvent> handler, ErrorEntry entry) {
+		DeleteErrorEntryCommand deleteFileCommand = this.commandProvider.get(DeleteErrorEntryCommand.class);
+		deleteFileCommand.setErrorEntry(entry);
+		deleteFileCommand.setOnSucceeded(handler);
+		deleteFileCommand.start();
+	}
+	
 	public void applyErrorImage(EventHandler<WorkerStateEvent> handler, Mat image, Path imagePath, IErrorGenerator generator) {
 		ApplyErrorCommand applyErrorCommand = this.commandProvider.get(ApplyErrorCommand.class);
 		applyErrorCommand.setImageMat(image);

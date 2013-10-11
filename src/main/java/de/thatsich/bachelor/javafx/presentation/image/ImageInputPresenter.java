@@ -13,7 +13,7 @@ import com.google.inject.Inject;
 
 import de.thatsich.bachelor.javafx.business.model.ImageDatabase;
 import de.thatsich.bachelor.javafx.business.model.entity.ImageEntry;
-import de.thatsich.bachelor.service.FileSystemService;
+import de.thatsich.bachelor.service.ImageSpaceService;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.javafx.ImageFileChooser;
 
@@ -30,7 +30,7 @@ import de.thatsich.core.javafx.ImageFileChooser;
 public class ImageInputPresenter extends AFXMLPresenter {
 
 	// Injects
-	@Inject private FileSystemService fileSystemService;
+	@Inject private ImageSpaceService fileSystemService;
 	
 	@Inject private ImageDatabase images;
 	@Inject private ImageFileChooser chooser;
@@ -79,7 +79,7 @@ public class ImageInputPresenter extends AFXMLPresenter {
 			return;
 		}
 		
-		this.fileSystemService.deleteFile(new DeleteSucceededHandler(), choice.getPath());
+		this.fileSystemService.deleteImageEntry(new DeleteSucceededHandler(), choice);
 		this.log.info("File deleted and removed from EntryList.");
 	}
 	
@@ -90,7 +90,7 @@ public class ImageInputPresenter extends AFXMLPresenter {
 	 */
 	@FXML private void onResetDatabaseAction() throws IOException {
 		for (ImageEntry entry : this.images.getImageEntries()) {
-			this.fileSystemService.deleteFile(new DeleteSucceededHandler(), entry.getPath());
+			this.fileSystemService.deleteImageEntry(new DeleteSucceededHandler(), entry);
 		}
 		this.log.info("EntryList resetted.");
 	}

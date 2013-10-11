@@ -17,8 +17,8 @@ import de.thatsich.bachelor.javafx.presentation.image.ImageDisplayView;
 import de.thatsich.bachelor.javafx.presentation.image.ImageInputView;
 import de.thatsich.bachelor.javafx.presentation.image.ImageListView;
 import de.thatsich.bachelor.service.ConfigService;
-import de.thatsich.bachelor.service.ErrorGeneratorService;
-import de.thatsich.bachelor.service.FileSystemService;
+import de.thatsich.bachelor.service.ErrorSpaceService;
+import de.thatsich.bachelor.service.ImageSpaceService;
 import de.thatsich.core.javafx.CommandProvider;
 import de.thatsich.core.javafx.ICommandProvider;
 
@@ -74,8 +74,8 @@ public class WiringModule extends AbstractModule {
 	
 	private void mapServices() {
 		super.bind(ConfigService.class).in(Scopes.SINGLETON);
-		super.bind(FileSystemService.class).in(Scopes.SINGLETON);
-		super.bind(ErrorGeneratorService.class).in(Scopes.SINGLETON);
+		super.bind(ImageSpaceService.class).in(Scopes.SINGLETON);
+		super.bind(ErrorSpaceService.class).in(Scopes.SINGLETON);
 	}
 	
 	private void mapModels() {

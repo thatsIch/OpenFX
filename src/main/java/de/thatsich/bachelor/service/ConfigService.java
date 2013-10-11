@@ -19,6 +19,7 @@ public class ConfigService extends AConfiguration {
 	private static final String LAST_ERROR_GENERATOR = "last_error_generator";
 	private static final String LAST_ERROR_COUNT = "last_error_count";
 	private static final String LAST_FRAME_SIZE = "last_frame_size";
+	private static final String LAST_FEATURE_EXTRACTOR_INDEX = "last_feature_extractor";
 	
 	
 	/**
@@ -30,6 +31,8 @@ public class ConfigService extends AConfiguration {
 	private static final int DEFAULT_LAST_ERROR_GENERATOR = 0;
 	private static final int DEFAULT_LAST_ERROR_COUNT = 1;
 	private static final int DEFAULT_LAST_FRAME_SIZE = 2;
+	private static final int DEFAULT_LAST_FEATURE_EXTRACTOR_INDEX = 0;
+	
 	
 	// ================================================== 
 	// Getter Implementation 
@@ -76,6 +79,13 @@ public class ConfigService extends AConfiguration {
 		return super.get(LAST_FRAME_SIZE, DEFAULT_LAST_FRAME_SIZE);
 	}
 	
+	/**
+	 * 
+	 */
+	public int getLastFeatureExtractorIndexInt() {
+		return super.get(LAST_FEATURE_EXTRACTOR_INDEX, DEFAULT_LAST_FEATURE_EXTRACTOR_INDEX);
+	}
+	
 	// ================================================== 
 	// Setter Implementation 
 	// ==================================================
@@ -119,5 +129,12 @@ public class ConfigService extends AConfiguration {
 	 */
 	public void setLastFrameSizeInt(int lastFrameSize) {
 		super.set(LAST_FRAME_SIZE, lastFrameSize);
+	}
+	
+	/**
+	 * 
+	 */
+	public void setLastFeatureExtractorIndexInt(int lastFeatureExtractorIndex) {
+		super.set(LAST_FEATURE_EXTRACTOR_INDEX, lastFeatureExtractorIndex);
 	}
 }

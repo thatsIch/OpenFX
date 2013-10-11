@@ -3,19 +3,9 @@ package de.thatsich.bachelor.javafx.presentation.feature;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellDataFeatures;
-import javafx.scene.control.TableView;
-import javafx.util.Callback;
-
 import com.google.inject.Inject;
 
 import de.thatsich.bachelor.javafx.business.model.ImageDatabase;
-import de.thatsich.bachelor.javafx.business.model.entity.ImageEntry;
 import de.thatsich.core.javafx.AFXMLPresenter;
 
 public class FeatureListPresenter extends AFXMLPresenter {

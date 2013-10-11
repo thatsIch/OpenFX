@@ -5,10 +5,11 @@ import java.nio.file.Path;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 import de.thatsich.bachelor.javafx.business.command.CopyFileCommand;
-import de.thatsich.bachelor.javafx.business.command.DeleteFileCommand;
+import de.thatsich.bachelor.javafx.business.command.DeleteImageEntryCommand;
+import de.thatsich.bachelor.javafx.business.model.entity.ImageEntry;
 import de.thatsich.core.javafx.ACommandService;
 
-public class FileSystemService extends ACommandService {
+public class ImageSpaceService extends ACommandService {
 
 	public void copyFile(EventHandler<WorkerStateEvent> handler, Path originPath, Path copyPath) {
 		CopyFileCommand copyFileCommand = this.commandProvider.get(CopyFileCommand.class);
@@ -18,9 +19,9 @@ public class FileSystemService extends ACommandService {
 		copyFileCommand.start();
 	}
 	
-	public void deleteFile(EventHandler<WorkerStateEvent> handler, Path filePath) {
-		DeleteFileCommand deleteFileCommand = this.commandProvider.get(DeleteFileCommand.class);
-		deleteFileCommand.setFilePath(filePath);
+	public void deleteImageEntry(EventHandler<WorkerStateEvent> handler, ImageEntry entry) {
+		DeleteImageEntryCommand deleteFileCommand = this.commandProvider.get(DeleteImageEntryCommand.class);
+		deleteFileCommand.setImageEntry(entry);
 		deleteFileCommand.setOnSucceeded(handler);
 		deleteFileCommand.start();
 	}
