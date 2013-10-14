@@ -1,6 +1,7 @@
 package de.thatsich.bachelor.javafx.presentation.feature;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 
@@ -79,17 +80,27 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 	private void bindSliderFrameSize() {
 		// write values in power of 2
 		// only if slider is let loose
-		this.nodeSliderFrameSize.valueChangingProperty().addListener(new ChangeListener<Boolean>() {
-			@Override
-			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldBool, Boolean newBool) {
-				if (newBool == false) {
-					final int frameSize = (int) nodeSliderFrameSize.getValue();
-					
-					featureSpace.setFrameSize((int) Math.pow(2, frameSize));
-					config.setLastFrameSizeInt(frameSize);
-				}				
+		this.nodeSliderFrameSize.valueProperty().addListener(new ChangeListener<Number>() {
+
+			@Override public void changed(ObservableValue<? extends Number> paramObservableValue, Number oldValue, Number newValue) {
+				if (nodeSliderFrameSize.valueChangingProperty().get() == false) {
+					featureSpace.setFrameSize((int) Math.pow(2, newValue.doubleValue()));
+					config.setLastFrameSizeInt(newValue.intValue());
+				}
 			}
 		});
+//		
+//		this.nodeSliderFrameSize.valueChangingProperty().addListener(new ChangeListener<Boolean>() {
+//			@Override
+//			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldBool, Boolean newBool) {
+//				if (newBool == false) {
+//					final int frameSize = (int) nodeSliderFrameSize.getValue();
+//					
+//					featureSpace.setFrameSize((int) Math.pow(2, frameSize));
+//					config.setLastFrameSizeInt(frameSize);
+//				}				
+//			}
+//		});
 	
 		this.log.info("Bound FrameSize to Database.");
 		
@@ -166,11 +177,12 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 	 * 
 	 * @author Minh
 	 */
+	@SuppressWarnings("unchecked")
 	private class ExtractSucceededHandler implements EventHandler<WorkerStateEvent> {
 		@Override public void handle(WorkerStateEvent event) {
-			final FeatureVector fv = (FeatureVector) event.getSource().getValue();
+			final List<FeatureVector> fv = (List<FeatureVector>) event.getSource().getValue();
 			
-			featureSpace.getFeatureVectorListProperty().get().add(fv);
+			featureSpace.getFeatureVectorListProperty().get().addAll(fv);
 			log.info("Added FeatureVector to Database.");
 		}
 	}

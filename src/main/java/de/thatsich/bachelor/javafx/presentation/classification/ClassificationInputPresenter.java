@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
+import javafx.util.StringConverter;
 
 import com.google.inject.Inject;
 
@@ -53,7 +54,16 @@ public class ClassificationInputPresenter implements Initializable {
 	 * and link both Models
 	 */
 	private void bindChoiceBoxSamples() {
-//		this.nodeChoiceBoxSample.setConverter(ErrorDatabase.ErrorEntry.CONVERTER);
+		this.nodeChoiceBoxSample.setConverter(new StringConverter<ErrorEntry>() {
+			
+			@Override public String toString(ErrorEntry entry) {
+				return entry.getErrorNameProperty().get();
+			}
+			
+			@Override public ErrorEntry fromString(String paramString) {
+				return null;
+			}
+		});
 		this.log.info("Set up ErrorEntryStringConverter for proper name display.");
 		
 		this.nodeChoiceBoxSample.itemsProperty().bindBidirectional(this.evalDatabase.getErrorEntriesProperty());

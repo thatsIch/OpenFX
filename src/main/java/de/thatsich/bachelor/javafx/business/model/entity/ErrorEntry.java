@@ -28,7 +28,6 @@ public class ErrorEntry {
 	
 	private final Path storagePath;
 	
-	
 	/**
 	 * Generating ErrorEntry CTOR
 	 * 
