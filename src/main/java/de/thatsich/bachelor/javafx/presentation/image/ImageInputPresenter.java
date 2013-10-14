@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutorService;
 
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
@@ -11,10 +12,12 @@ import javafx.fxml.FXML;
 
 import com.google.inject.Inject;
 
+import de.thatsich.bachelor.javafx.business.command.CommandFactory;
+import de.thatsich.bachelor.javafx.business.command.DeleteImageEntryCommand;
 import de.thatsich.bachelor.javafx.business.model.ImageDatabase;
 import de.thatsich.bachelor.javafx.business.model.entity.ImageEntry;
-import de.thatsich.bachelor.service.ImageSpaceService;
 import de.thatsich.core.javafx.AFXMLPresenter;
+import de.thatsich.core.javafx.CommandExecutor;
 import de.thatsich.core.javafx.ImageFileChooser;
 
 /**
@@ -30,8 +33,7 @@ import de.thatsich.core.javafx.ImageFileChooser;
 public class ImageInputPresenter extends AFXMLPresenter {
 
 	// Injects
-	@Inject private ImageSpaceService fileSystemService;
-	
+	@Inject private CommandFactory commander;	
 	@Inject private ImageDatabase images;
 	@Inject private ImageFileChooser chooser;
 	
@@ -61,7 +63,7 @@ public class ImageInputPresenter extends AFXMLPresenter {
 		Path copyPath = this.images.getInputPath().resolve(filePath.getFileName());
 		this.log.info("Created new Path: " + copyPath);
 		
-		this.fileSystemService.copyFile(new AddImageSucceededHandler(), filePath, copyPath);
+		this.commander.createCopyFileCommand(new AddImageSucceededHandler(), filePath, copyPath).start();
 		this.log.info("File copied and inserted into EntryList.");
 	}
 	
@@ -79,7 +81,7 @@ public class ImageInputPresenter extends AFXMLPresenter {
 			return;
 		}
 		
-		this.fileSystemService.deleteImageEntry(new DeleteSucceededHandler(), choice);
+		this.commander.createDeleteImageEntryCommand(new DeleteSucceededHandler(), choice).start();
 		this.log.info("File deleted and removed from EntryList.");
 	}
 	
@@ -89,12 +91,33 @@ public class ImageInputPresenter extends AFXMLPresenter {
 	 * @throws IOException 
 	 */
 	@FXML private void onResetDatabaseAction() throws IOException {
+		final ExecutorService executor = CommandExecutor.newFixedThreadPool(this.images.getImageEntries().size());
+		this.log.info("Initialized Executor for resetting all Errors.");
+		
 		for (ImageEntry entry : this.images.getImageEntries()) {
-			this.fileSystemService.deleteImageEntry(new DeleteSucceededHandler(), entry);
+			DeleteImageEntryCommand command = this.commander.createDeleteImageEntryCommand(new DeleteSucceededHandler(), entry);
+			command.setExecutor(executor);
+			command.start();
 		}
 		this.log.info("EntryList resetted.");
+		
+		executor.execute(new Runnable() {
+			
+			@Override
+			public void run() {
+				System.gc();
+			}
+		});
+		this.log.info("Running Garbage Collector.");
+		
+		executor.shutdown();
+		this.log.info("Shutting down Executor.");
 	}
 	
+	
+	// ================================================== 
+	// Handler Implementation 
+	// ==================================================
 	/**
 	 * Handler for what should happen if the Command was successfull 
 	 * for adding the image to the input directory.

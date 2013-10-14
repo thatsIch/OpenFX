@@ -3,7 +3,6 @@ package de.thatsich.bachelor.opencv.extractor;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfFloat;
-import org.opencv.core.MatOfInt;
 
 import de.thatsich.core.opencv.AFeatureExtractor;
 import de.thatsich.core.opencv.IFeatureExtractor;
@@ -55,7 +54,7 @@ public class GrayLevelCooccurenceHistogram extends AFeatureExtractor implements 
 		if (image.type() != CvType.CV_8U) throw new IllegalArgumentException("Image is not grayscale.");
 		if (image.empty()) throw new IllegalArgumentException("Image is empty.");
 		
-		int[] histogram = new int[256];
+		float[] histogram = new float[256];
 		System.out.println(image.size());
 		// Runtime Variables
 		int rows = image.rows();
@@ -74,6 +73,6 @@ public class GrayLevelCooccurenceHistogram extends AFeatureExtractor implements 
 			}
 		}
 		
-		return new MatOfFloat(new MatOfInt(histogram));
+		return new MatOfFloat(histogram);
 	}
 }

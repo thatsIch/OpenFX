@@ -17,10 +17,6 @@ import de.thatsich.bachelor.javafx.presentation.image.ImageDisplayView;
 import de.thatsich.bachelor.javafx.presentation.image.ImageInputView;
 import de.thatsich.bachelor.javafx.presentation.image.ImageListView;
 import de.thatsich.bachelor.service.ConfigService;
-import de.thatsich.bachelor.service.ErrorSpaceService;
-import de.thatsich.bachelor.service.ImageSpaceService;
-import de.thatsich.core.javafx.CommandProvider;
-import de.thatsich.core.javafx.ICommandProvider;
 
 
 /**
@@ -42,7 +38,6 @@ public class WiringModule extends AbstractModule {
 		super.bind(WiringModule.class).toInstance(this);
 
 		this.mapViews();
-		this.mapCommands();
 		this.mapServices();
 		this.mapModels();
 	}
@@ -68,14 +63,8 @@ public class WiringModule extends AbstractModule {
 		super.bind(ClassificationInputView.class).in(Scopes.SINGLETON);
 	}
 	
-	private void mapCommands() {
-		bind(ICommandProvider.class).to(CommandProvider.class).in(Scopes.SINGLETON);
-	}
-	
 	private void mapServices() {
 		super.bind(ConfigService.class).in(Scopes.SINGLETON);
-		super.bind(ImageSpaceService.class).in(Scopes.SINGLETON);
-		super.bind(ErrorSpaceService.class).in(Scopes.SINGLETON);
 	}
 	
 	private void mapModels() {

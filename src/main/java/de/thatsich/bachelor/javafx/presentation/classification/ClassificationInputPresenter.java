@@ -3,13 +3,9 @@ package de.thatsich.bachelor.javafx.presentation.classification;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Slider;
-import javafx.util.StringConverter;
 
 import com.google.inject.Inject;
 
@@ -17,18 +13,14 @@ import de.thatsich.bachelor.javafx.business.model.ErrorDatabase;
 import de.thatsich.bachelor.javafx.business.model.EvaluationDatabase;
 import de.thatsich.bachelor.javafx.business.model.entity.ErrorEntry;
 import de.thatsich.core.Log;
-import de.thatsich.core.javafx.StringFeatureExtractorConverter;
 import de.thatsich.core.opencv.ABinaryClassifier;
 import de.thatsich.core.opencv.IBinaryClassifier;
-import de.thatsich.core.opencv.IFeatureExtractor;
 
 public class ClassificationInputPresenter implements Initializable {
 	
 	// Nodes
-	@FXML private ChoiceBox<IFeatureExtractor> nodeChoiceBoxFeatureExtractor;
 	@FXML private ChoiceBox<IBinaryClassifier> nodeChoiceBoxBinaryClassifier;
 	@FXML private ChoiceBox<ErrorEntry> nodeChoiceBoxSample;
-	@FXML private Slider nodeSliderFrameSize;
 
 	// Injects
 	@Inject private Log log;
@@ -38,26 +30,12 @@ public class ClassificationInputPresenter implements Initializable {
 	@Override
 	public void initialize(URL url, ResourceBundle bundle) {
 		this.bindChoiceBoxBinaryClassifiers();
-		this.bindChoiceBoxFeatureExtractor();
 		this.bindChoiceBoxSamples();
-		this.bindSliderFrameSize();
 	}
 
 	// ================================================== 
 	// Bindings Implementation 
 	// ==================================================
-	/**
-	 * Bind ChoiceBoxFeatureExtractor to the Model.
-	 */
-	private void bindChoiceBoxFeatureExtractor() {
-		this.nodeChoiceBoxFeatureExtractor.setConverter(new StringFeatureExtractorConverter());
-		this.log.info("Set up ChoiceBoxFeatureExtractor for proper name display.");
-		
-		this.nodeChoiceBoxFeatureExtractor.itemsProperty().bindBidirectional(this.evalDatabase.getFeatureExtractorsProperty());
-		this.nodeChoiceBoxFeatureExtractor.valueProperty().bindBidirectional(this.evalDatabase.getSelectedFeatureExtractorProperty());
-		this.log.info("Bound ChoiceBoxFeatureExtractor to Model.");
-	}
-	
 	/**
 	 * Bind ChoiceBoxBinaryClassifier to the Model.
 	 */
@@ -84,34 +62,6 @@ public class ClassificationInputPresenter implements Initializable {
 		
 		this.evalDatabase.getErrorEntriesProperty().bind(this.errorDatabase.getErrorEntriesProperty());
 		this.log.info("Bound both ErrorEntryLists in Models together.");
-	}
-	
-	
-	
-	/**
-	 * Set the specific values of the frame size associated with each tick
-	 * and sets the labelformatter to fit the representation
-	 * 
-	 * Java 7 has a bug with the Labels
-	 */
-	private void bindSliderFrameSize() {
-		// write values in power of 2
-		// only if slider is let loose
-		this.nodeSliderFrameSize.valueChangingProperty().addListener(new ChangeListener<Boolean>() {
-			@Override
-			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldBool, Boolean newBool) {
-				if (newBool == false) {
-					evalDatabase.setFrameSize((int) Math.pow(2, nodeSliderFrameSize.getValue()));
-				}				
-			}
-		});
-		this.evalDatabase.setFrameSize((int) Math.pow(2, this.nodeSliderFrameSize.getValue()));
-		
-		// set labels to pwoer of 2
-		this.nodeSliderFrameSize.setLabelFormatter(new StringConverter<Double>() {
-			@Override public String toString(Double tick) { return String.format("%d", (int) Math.pow(2, tick)); }
-			@Override public Double fromString(String paramString) { return 0.0; }
-		});
 	}
 	
 	// ================================================== 

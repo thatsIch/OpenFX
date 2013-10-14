@@ -3,7 +3,6 @@ package de.thatsich.bachelor.opencv.extractor;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
-import org.opencv.core.MatOfDouble;
 import org.opencv.core.MatOfFloat;
 import org.opencv.core.Scalar;
 
@@ -28,6 +27,9 @@ public class Mean extends AFeatureExtractor implements IFeatureExtractor {
 		// returns a RBGA scalar, since grayscale only first is needed
 		Scalar meanRGBA = Core.mean(image);
 
-		return new MatOfFloat(new MatOfDouble(meanRGBA.val[0]));
+		// convert to float array
+		float floatVal = (float) meanRGBA.val[0];
+
+		return new MatOfFloat(floatVal);
 	}
 }

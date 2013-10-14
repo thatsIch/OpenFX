@@ -7,12 +7,14 @@
 <?import javafx.scene.layout.HBox?>
 
 <HBox xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="de.thatsich.bachelor.javafx.presentation.feature.FeatureListPresenter">
-  <TableView id="node" fx:id="nodeTableViewFeatureList" prefHeight="-1.0" prefWidth="-1.0">
+  <TableView id="node" fx:id="nodeTableViewFeatureVectorList" prefHeight="-1.0" prefWidth="-1.0">
     <columns>
-      <TableColumn editable="false" prefWidth="100.0" sortable="false" text="Class" fx:id="nodeTableColumnFeatureClass" />
-      <TableColumn editable="false" prefWidth="100.0" sortable="false" text="Extractor" fx:id="nodeTableColumnFeatureExtractor" />
-      <TableColumn editable="false" prefWidth="100.0" sortable="false" text="Frame Size" fx:id="nodeTableColumnFeatureFrameSize" />
-      <TableColumn editable="false" prefWidth="100.0" sortable="false" text="Time" fx:id="nodeTableColumnFeatureTime" />
+      <TableColumn editable="false" prefWidth="100.0" sortable="false" text="Class" fx:id="nodeTableColumnClassName" />
+      <TableColumn editable="false" prefWidth="100.0" sortable="false" text="Extractor" fx:id="nodeTableColumnExtractorName" />
+      <TableColumn editable="false" prefWidth="100.0" sortable="false" text="Frame Size" fx:id="nodeTableColumnFrameSize" />
+      <TableColumn editable="false" prefWidth="100.0" sortable="false" text="ID" fx:id="nodeTableColumnID" />
+      <TableColumn editable="false" prefWidth="100.0" sortable="false" text="Label" fx:id="nodeTableColumnFeatureLabel" />
+      <TableColumn editable="false" prefWidth="100.0" sortable="false" text="Vector" fx:id="nodeTableColumnFeatureVector" />
     </columns>
   </TableView>
 </HBox>

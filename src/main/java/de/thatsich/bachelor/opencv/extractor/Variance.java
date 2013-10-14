@@ -19,7 +19,11 @@ public class Variance extends AFeatureExtractor implements IFeatureExtractor {
 				
 		MatOfDouble variance = new MatOfDouble();
 		Core.meanStdDev(image, new MatOfDouble(), variance);
-
-		return new MatOfFloat(variance);
+		double[] varianceArray = variance.toArray();
+		
+		// convert to float array
+		float floatVal = (float) varianceArray[0];
+		
+		return new MatOfFloat(floatVal);
 	}
 }

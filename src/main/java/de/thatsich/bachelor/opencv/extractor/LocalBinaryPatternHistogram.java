@@ -3,7 +3,6 @@ package de.thatsich.bachelor.opencv.extractor;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfFloat;
-import org.opencv.core.MatOfInt;
 
 import de.thatsich.core.opencv.AFeatureExtractor;
 import de.thatsich.core.opencv.IFeatureExtractor;
@@ -18,7 +17,7 @@ public class LocalBinaryPatternHistogram extends AFeatureExtractor implements
 		if (image.rows() < 3 || image.cols() < 3) throw new IllegalArgumentException("Image is smaller than 3x3");
 		
 		// 8 neighbors equal to 256 bins
-		int[] histogram = new int[256];
+		float[] histogram = new float[256];
 		
 		// Traverse the mat
 		for (int row = 1; row < image.rows() - 1; row++) {
@@ -37,15 +36,10 @@ public class LocalBinaryPatternHistogram extends AFeatureExtractor implements
 				sum += (image.get(row + 1, col - 1)[0] > center) ? 1 << 6 : 0;
 				sum += (image.get(row - 0, col - 1)[0] > center) ? 1 << 7 : 0;
 				
-				System.out.println(sum);
-				
 				histogram[sum] += 1;
 			}
 		}
 		
-		// wrap it around a mat
-		MatOfInt histogramContainer = new MatOfInt(histogram);
-		
-		return new MatOfFloat(histogramContainer);
+		return new MatOfFloat(histogram);
 	}
 }

@@ -8,27 +8,18 @@
 
 <GridPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="de.thatsich.bachelor.javafx.presentation.classification.ClassificationInputPresenter">
   <children>
-    <Slider id="SliderFrameSize" fx:id="nodeSliderFrameSize" blockIncrement="1.0" majorTickUnit="1.0" max="5.0" min="2.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="2.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-    <Label labelFor="$nodeSliderFrameSize" text="Frame Size (PX x PX)" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-    <Label text="Feature Extractor" GridPane.columnIndex="0" GridPane.rowIndex="1">
-      <labelFor>
-        <ChoiceBox id="ChoiceBoxFeatureExtractor" fx:id="nodeChoiceBoxFeatureExtractor" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      </labelFor>
-    </Label>
-    <fx:reference source="nodeChoiceBoxFeatureExtractor" />
-    <ChoiceBox fx:id="nodeChoiceBoxBinaryClassifier" prefWidth="125.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-    <Label labelFor="$nodeChoiceBoxBinaryClassifier" text="Binary Classifier" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-    <ChoiceBox fx:id="nodeChoiceBoxSample" prefWidth="125.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-    <Label labelFor="$nodeChoiceBoxSample" text="Sample" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-    <Button fx:id="nodeButtonTrain" mnemonicParsing="false" onAction="#onTrainAction" prefWidth="125.0" text="Train" GridPane.columnIndex="0" GridPane.rowIndex="4" />
-    <Button fx:id="nodeButtonTest" mnemonicParsing="false" onAction="#onTestAction" prefWidth="125.00009999999747" text="Test" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+    <ChoiceBox fx:id="nodeChoiceBoxBinaryClassifier" prefWidth="125.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+    <Label labelFor="$nodeChoiceBoxBinaryClassifier" text="Binary Classifier" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+    <ChoiceBox fx:id="nodeChoiceBoxSample" prefWidth="125.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+    <Label labelFor="$nodeChoiceBoxSample" text="Sample" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+    <Button fx:id="nodeButtonTrain" mnemonicParsing="false" onAction="#onTrainAction" prefWidth="125.0" text="Train" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+    <Button fx:id="nodeButtonTest" mnemonicParsing="false" onAction="#onTestAction" prefWidth="125.00009999999747" text="Test" GridPane.columnIndex="1" GridPane.rowIndex="3" />
   </children>
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
   <rowConstraints>
-    <RowConstraints maxHeight="25.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
     <RowConstraints maxHeight="25.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
     <RowConstraints maxHeight="25.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
     <RowConstraints maxHeight="25.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />

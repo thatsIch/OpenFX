@@ -4,8 +4,8 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.ChoiceBox;
 
 import org.opencv.core.MatOfFloat;
 
@@ -28,9 +28,10 @@ public class FeatureSpace {
 	
 	// Properties
 	private final IntegerProperty frameSize = new SimpleIntegerProperty();
-	
-	private final ObjectProperty<ObservableList<IFeatureExtractor>> featureExtractors = new ChoiceBox<IFeatureExtractor>().itemsProperty();
+	private final ObjectProperty<ObservableList<IFeatureExtractor>> featureExtractors = new SimpleObjectProperty<ObservableList<IFeatureExtractor>>();
 	private final ObjectProperty<IFeatureExtractor> selectedFeatureExtractor = new SimpleObjectProperty<IFeatureExtractor>();
+	private final ObjectProperty<ObservableList<FeatureVector>> featureVectorList = new SimpleObjectProperty<ObservableList<FeatureVector>>();
+	private final ObjectProperty<FeatureVector> selectedFeatureVector = new SimpleObjectProperty<FeatureVector>();
 	
 	// Injections
 	private final Log log;
@@ -39,14 +40,20 @@ public class FeatureSpace {
 	public FeatureSpace(Log log) {
 		this.log = log;
 		
+		ObservableList<FeatureVector> featureVectors = FXCollections.observableArrayList();
+		ObservableList<IFeatureExtractor> featureExtractors = FXCollections.observableArrayList();
+		
+		this.featureVectorList.set(featureVectors);
+		this.featureExtractors.set(featureExtractors);
+		
 		this.initFeatureExtractors();
 	}
 	
 	
-	public void addFeatureVector(FeatureVector featureVector) {
-		this.featureVectors.push_back(featureVector.getFeatureVector().t());
-		this.classificationLabels.push_back(featureVector.getClassificationLabel().t());
-	}
+//	public void addFeatureVector(FeatureVector featureVector) {
+////		this.featureVectors.push_back(featureVector.getFeatureVector().t());
+////		this.classificationLabels.push_back(featureVector.getClassificationLabel().t());
+//	}
 	
 	public MatOfFloat getFeatureVectors() {
 		return this.featureVectors;
@@ -89,6 +96,11 @@ public class FeatureSpace {
 	public void setFrameSize(int frameSize) { this.frameSize.set(frameSize); }
 	
 	// ==================================================
+	// Modifier Implementation
+	// ==================================================
+	public void addFeatureVector(FeatureVector featureVector) { this.featureVectorList.get().add(featureVector); }
+	
+	// ==================================================
 	// Property Implementation
 	// ==================================================
 	// Frame Size
@@ -97,6 +109,6 @@ public class FeatureSpace {
 	// Feature Extractors
 	public ObjectProperty<ObservableList<IFeatureExtractor>> getFeatureExtractorsProperty() { return this.featureExtractors; }
 	public ObjectProperty<IFeatureExtractor> getSelectedFeatureExtractorProperty() { return this.selectedFeatureExtractor; }
-	
-	
+	public ObjectProperty<ObservableList<FeatureVector>> getFeatureVectorListProperty() { return this.featureVectorList; }
+	public ObjectProperty<FeatureVector> getSelectedFeatureVectorProperty() { return this.selectedFeatureVector; }
 }

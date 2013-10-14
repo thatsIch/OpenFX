@@ -5,8 +5,13 @@ import java.nio.file.Path;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
+import javafx.event.EventHandler;
 
 import org.opencv.core.Mat;
+
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
 import de.thatsich.bachelor.javafx.business.model.entity.ErrorEntry;
 import de.thatsich.core.javafx.Command;
@@ -18,6 +23,14 @@ public class ApplyErrorCommand extends Command<ErrorEntry> {
 	final private ObjectProperty<Mat> imageMat = new SimpleObjectProperty<Mat>();
 	final private ObjectProperty<Path> imagePath = new SimpleObjectProperty<Path>();
 	final private ObjectProperty<IErrorGenerator> generator = new SimpleObjectProperty<IErrorGenerator>();
+	
+	@Inject
+	public ApplyErrorCommand(@Assisted EventHandler<WorkerStateEvent> handler, @Assisted Mat imageMat, @Assisted Path imagePath, @Assisted IErrorGenerator generator) {
+		super(handler);
+		this.imageMat.set(imageMat);
+		this.imagePath.set(imagePath);
+		this.generator.set(generator);
+	}
 	
 	@Override
 	protected Task<ErrorEntry> createTask() {
@@ -36,9 +49,4 @@ public class ApplyErrorCommand extends Command<ErrorEntry> {
 			}
 		};
 	}
-
-	// Setter
-	public void setImageMat(Mat imageMat) { this.imageMat.set(imageMat); }
-	public void setImagePath(Path imagePath) { this.imagePath.set(imagePath); }
-	public void setErrorGenerator(IErrorGenerator generator) { this.generator.set(generator); }
 }
