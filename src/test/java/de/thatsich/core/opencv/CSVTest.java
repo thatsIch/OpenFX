@@ -2,37 +2,41 @@ package de.thatsich.core.opencv;
 
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.security.InvalidParameterException;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.opencv.core.Core;
-import org.opencv.core.Mat;
 
 @RunWith(JUnit4.class)
 public class CSVTest {
 
-	/**
-	 * Initializing OpenCV Library for all TestClasses
-	 */
-	@BeforeClass
-	public static void init() {
-		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-	}
-	
-	@Test
-	public void testWrite() throws IOException {
-		Mat m = Mat.zeros(2, 2, 0);
-
-		CSV.write(Paths.get("test.csv"), m);
-	}
-	
-	@Test
-	public void testRead() throws IOException {
-		Mat m = CSV.read(Paths.get("test.csv"));
-		
-		m.dump();
+	@Test(expected = InvalidParameterException.class)
+	public void testWrite_PathNull_ShouldThrowException() throws IOException {
+		List<float[]> test = new ArrayList<float[]>();
+		test.add(new float[]{1});
+		CSVService.write(null, test);
 	}
 
+	@Test(expected = InvalidParameterException.class)
+	public void testWrite_ValuesNull_ShouldThrowException() throws IOException {
+		CSVService.write(Paths.get("").resolve("Silly Path"), null);
+	}
+
+	@Test(expected = InvalidParameterException.class)
+	public void testWrite_ValuesEmpty_ShouldThrowException() throws IOException {
+		CSVService.write(Paths.get(""), new ArrayList<float[]>());
+	}
+
+	@Test(expected = InvalidParameterException.class)
+	public void testRead_PathNull_ShouldThrowException() throws IOException {
+		CSVService.read(null);
+	}
+	
+	@Test(expected = IOException.class)
+	public void testRead_PathSilly_ShouldThrowException() throws IOException {
+		CSVService.read(Paths.get("").resolve("Silly Path"));
+	}
 }
