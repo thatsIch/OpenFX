@@ -6,8 +6,8 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.ChoiceBox;
 import de.thatsich.bachelor.javafx.business.model.entity.FeatureVector;
 import de.thatsich.core.opencv.IFeatureExtractor;
 
@@ -23,9 +23,9 @@ public class FeatureSpace {
 	// Properties
 	private final ObjectProperty<Path> featureVectorFolderPath = new SimpleObjectProperty<Path>();
 	private final IntegerProperty frameSize = new SimpleIntegerProperty();
-	private final ObjectProperty<ObservableList<IFeatureExtractor>> featureExtractors = new SimpleObjectProperty<ObservableList<IFeatureExtractor>>(FXCollections.observableArrayList(), "Feature Extractor List");
+	private final ObjectProperty<ObservableList<IFeatureExtractor>> featureExtractors = new ChoiceBox<IFeatureExtractor>().itemsProperty();
 	private final ObjectProperty<IFeatureExtractor> selectedFeatureExtractor = new SimpleObjectProperty<IFeatureExtractor>();
-	private final ObjectProperty<ObservableList<FeatureVector>> featureVectorList = new SimpleObjectProperty<ObservableList<FeatureVector>>(FXCollections.observableArrayList(), "Feature Vector List");
+	private final ObjectProperty<ObservableList<FeatureVector>> featureVectorList = new ChoiceBox<FeatureVector>().itemsProperty();
 	private final ObjectProperty<FeatureVector> selectedFeatureVector = new SimpleObjectProperty<FeatureVector>();
 	
 //	public void addFeatureVector(FeatureVector featureVector) {
