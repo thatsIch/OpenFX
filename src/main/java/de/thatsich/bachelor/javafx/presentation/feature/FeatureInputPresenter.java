@@ -1,6 +1,8 @@
 package de.thatsich.bachelor.javafx.presentation.feature;
 
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
@@ -44,6 +46,24 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 	public void initialize(URL url, ResourceBundle bundle) {
 		this.bindChoiceBoxFeatureExtractor();
 		this.bindSliderFrameSize();
+		
+		this.initFeatureExtractorList();
+		this.initFeatureVectorList();
+	}
+	
+	private void initFeatureExtractorList() {
+		final InitFeatureExtractorListSucceededHandler handler = new InitFeatureExtractorListSucceededHandler();
+		
+		this.commander.createInitFeatureExtractorListCommand(handler).start();
+		this.log.info("Initialized FeatureExtractorList Creation.");
+	}
+	
+	private void initFeatureVectorList() {
+		final Path folderPath = Paths.get("featurevectors");
+		final InitFeatureVectorListSucceededHandler handler = new InitFeatureVectorListSucceededHandler();
+		
+		this.commander.createInitFeatureVectorListCommand(handler, folderPath).start();
+		this.log.info("Initialized FeatureVectorList Creation.");
 	}
 
 	// ================================================== 
@@ -173,6 +193,37 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 	// ================================================== 
 	// Handler Implementation 
 	// ==================================================
+	/**
+	 * Handler for what should happen if the Command was successfull 
+	 * for initializing the feature extractor list
+	 * 
+	 * @author Minh
+	 */
+	@SuppressWarnings("unchecked")
+	private class InitFeatureExtractorListSucceededHandler implements EventHandler<WorkerStateEvent> {
+		@Override public void handle(WorkerStateEvent event) {
+			final List<IFeatureExtractor> extractorList = (List<IFeatureExtractor>) event.getSource().getValue();
+			
+			featureSpace.getFeatureExtractorsProperty().get().addAll(extractorList);
+			log.info("Added FeatureExtractor to Database.");
+		}
+	}
+	
+	/**
+	 * Handler for what should happen if the Command was successfull 
+	 * for initializing the feature vector list
+	 * 
+	 * @author Minh
+	 */
+	@SuppressWarnings("unchecked")
+	private class InitFeatureVectorListSucceededHandler implements EventHandler<WorkerStateEvent> {
+		@Override public void handle(WorkerStateEvent event) {
+			final List<FeatureVector> featureVectorList = (List<FeatureVector>) event.getSource().getValue();
+			
+			featureSpace.getFeatureVectorListProperty().get().addAll(featureVectorList);
+			log.info("Added FeatureExtractor to Database.");
+		}
+	}
 	
 	/**
 	 * Handler for what should happen if the Command was successfull 

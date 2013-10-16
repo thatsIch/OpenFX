@@ -26,6 +26,8 @@ public interface CommandFactory {
 	public DeleteErrorEntryCommand createDeleteErrorEntryCommand(EventHandler<WorkerStateEvent> handler, ErrorEntry entry);
 	public CreateErrorImageCommand createCreateErrorImageCommand(EventHandler<WorkerStateEvent> handler, ErrorEntry entry);
 	
+	public InitFeatureExtractorListCommand createInitFeatureExtractorListCommand(EventHandler<WorkerStateEvent> handler);
+	public InitFeatureVectorListCommand createInitFeatureVectorListCommand(EventHandler<WorkerStateEvent> handler, Path folderPath);
 	public ExtractFeatureVectorFromErrorEntryCommand createExtractFeatureVectorCommand(EventHandler<WorkerStateEvent> handler, ErrorEntry errorEntry, IFeatureExtractor extractor, int frameSize);
 	public RemoveFeatureVectorCommand createRemoveFeatureVectorCommand(EventHandler<WorkerStateEvent> handler, FeatureVector featureVector);
 }
