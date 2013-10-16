@@ -24,7 +24,7 @@ public class ImageDisplayPresenter extends AFXMLPresenter {
 	
 	@Override
 	public void initialize(URL url, ResourceBundle bundle) {
-		this.images.getImageEntryProperty().addListener(new ChangeListener<ImageEntry>() {
+		this.images.getSelectedImageEntryProperty().addListener(new ChangeListener<ImageEntry>() {
 			@Override
 			public void changed(ObservableValue<? extends ImageEntry> observable, ImageEntry oldValue, ImageEntry newValue) {
 				if (newValue != null) {
@@ -34,7 +34,7 @@ public class ImageDisplayPresenter extends AFXMLPresenter {
 		});
 		this.log.info("Bound ImageView to Model.");
 		
-		ImageEntry entry = this.images.getImageEntryProperty().get();
+		ImageEntry entry = this.images.getSelectedImageEntryProperty().get();
 		if (entry != null) {
 			this.nodeImageViewInput.imageProperty().setValue(entry.getImage());
 			this.log.info("Initialized nodeImageViewInput.");

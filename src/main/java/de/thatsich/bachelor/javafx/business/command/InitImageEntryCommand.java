@@ -37,11 +37,13 @@ public class InitImageEntryCommand extends Command<List<ImageEntry>> {
 
 			@Override
 			protected List<ImageEntry> call() throws Exception {
+				final Path imageInputFolderPath = imageInputPath.get();
 				final List<ImageEntry> result = new ArrayList<ImageEntry>();
-
 				final String GLOB_PATTERN = "*.{png,jpeg,jpg,jpe}";
 				
-				try (DirectoryStream<Path> stream = Files.newDirectoryStream(imageInputPath.get(), GLOB_PATTERN)) {
+				if (Files.notExists(imageInputFolderPath) || !Files.isDirectory(imageInputFolderPath)) Files.createDirectory(imageInputFolderPath);
+				
+				try (DirectoryStream<Path> stream = Files.newDirectoryStream(imageInputFolderPath, GLOB_PATTERN)) {
 					for (Path child : stream) {
 						result.add(new ImageEntry(child.toAbsolutePath()));
 						log.info("Added " + child + " with Attribute " + Files.probeContentType(child));

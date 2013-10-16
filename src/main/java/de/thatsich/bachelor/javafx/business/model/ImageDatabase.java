@@ -1,21 +1,12 @@
 package de.thatsich.bachelor.javafx.business.model;
 
-import java.io.IOException;
-import java.nio.file.DirectoryIteratorException;
-import java.nio.file.DirectoryStream;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ChoiceBox;
-
-import com.google.inject.Inject;
-
 import de.thatsich.bachelor.javafx.business.model.entity.ImageEntry;
-import de.thatsich.core.Log;
 
 /**
  * Model class for storing the images
@@ -26,68 +17,16 @@ import de.thatsich.core.Log;
  *
  */
 public class ImageDatabase {
-
-	// Fields
-	final private Path inputFolderPath;
 	
 	// properties
 	final private ObjectProperty<Path> imageInputFolderPath = new SimpleObjectProperty<Path>();
-	final private ObjectProperty<ImageEntry> imageEntry = new SimpleObjectProperty<ImageEntry>();
-	final private ObjectProperty<ObservableList<ImageEntry>> imageEntries = new ChoiceBox<ImageEntry>().itemsProperty();
-	
-	// Injects
-	final private Log log;
-	
-	
-	/**
-	 * Injected CTOR
-	 * 
-	 * @param log Logger
-	 * @param provider CommandProvider
-	 * @throws IOException If the Folder for input and output could not be created
-	 */
-	@Inject
-	private ImageDatabase(Log log) throws IOException {
-		this.log = log;
-		
-		this.inputFolderPath = Paths.get("input");
-		if (Files.notExists(this.inputFolderPath) || !Files.isDirectory(this.inputFolderPath)) Files.createDirectory(this.inputFolderPath);
-			
-//		this.initImagePaths();
-		this.resetSelection();
-	}
-	
-	/**
-	 * 
-	 */
-	public void resetSelection() {
-		if (this.imageEntries.get().size() > 0) {
-			this.imageEntry.set(this.imageEntries.get().get(0));
-			this.log.info("Reset to first ImageEntry.");
-		}
-	}
-	
-	// ==================================================
-	// Getter Implementation
-	// ==================================================
-	public Path getInputPath() { return this.inputFolderPath; }
-	public ObservableList<ImageEntry> getImageEntries() { return this.imageEntries.get(); }
-	public ImageEntry getSelectedImageEntry() { return this.imageEntry.get(); }
-	
-	// ==================================================
-	// Setter Implementation
-	// ==================================================
-	public void setImageEntry(ImageEntry entry) { this.imageEntry.set(entry); }
-	
-	// ==================================================
-	// Modifier Implementation
-	// ==================================================
-	public void addImageEntry(ImageEntry entry) { this.imageEntries.get().add(entry); }
-	public void removeImageEntry(ImageEntry entry) { this.imageEntries.get().remove(entry); }
-	
+	final private ObjectProperty<ImageEntry> selectedImageEntry = new SimpleObjectProperty<ImageEntry>();
+	final private ObjectProperty<ObservableList<ImageEntry>> imageEntryList = new ChoiceBox<ImageEntry>().itemsProperty();
+
 	// ==================================================
 	// Property Implementation
 	// ==================================================
-	public ObjectProperty<ObservableList<ImageEntry>> getImageEntriesProperty() { return this.imageEntries; }
-	public ObjectProperty<ImageEntry> getImageEntryProperty() { return this.imageEntry; }	
+	public ObjectProperty<ObservableList<ImageEntry>> getImageEntryListProperty() { return this.imageEntryList; }
+	public ObjectProperty<ImageEntry> getSelectedImageEntryProperty() { return this.selectedImageEntry; }	
+	public ObjectProperty<Path> getImageInputFolderPathProperty() { return this.imageInputFolderPath; }
 }

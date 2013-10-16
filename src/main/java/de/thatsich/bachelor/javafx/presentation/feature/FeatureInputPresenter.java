@@ -84,32 +84,35 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 
 			@Override public void changed(ObservableValue<? extends Number> paramObservableValue, Number oldValue, Number newValue) {
 				if (nodeSliderFrameSize.valueChangingProperty().get() == false) {
-					featureSpace.setFrameSize((int) Math.pow(2, newValue.doubleValue()));
-					config.setLastFrameSizeInt(newValue.intValue());
+					int result = 0;
+					int value = newValue.intValue();
+					
+					switch(value) {
+						case 2:
+							result = 7; break;
+						case 3:
+							result = 9; break;
+						case 4:
+							result = 15; break;
+						case 5:
+							result = 31; break;
+						default:
+							throw new IllegalStateException("Expected numbers out of range");
+					}
+					
+					featureSpace.getFrameSizeProperty().set(result);
+					config.setLastFrameSizeInt(value);
 				}
 			}
 		});
-//		
-//		this.nodeSliderFrameSize.valueChangingProperty().addListener(new ChangeListener<Boolean>() {
-//			@Override
-//			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldBool, Boolean newBool) {
-//				if (newBool == false) {
-//					final int frameSize = (int) nodeSliderFrameSize.getValue();
-//					
-//					featureSpace.setFrameSize((int) Math.pow(2, frameSize));
-//					config.setLastFrameSizeInt(frameSize);
-//				}				
-//			}
-//		});
-	
 		this.log.info("Bound FrameSize to Database.");
 		
 		int frameSize = this.config.getLastFrameSizeInt();
 		this.nodeSliderFrameSize.setValue(frameSize);
-		this.featureSpace.setFrameSize(frameSize);
 		this.log.info("Initialized FrameSize from Config.");
 		
 		// set labels to pwoer of 2
+		// Java 7 Bug
 		this.nodeSliderFrameSize.setLabelFormatter(new StringConverter<Double>() {
 			@Override public String toString(Double tick) { return String.format("%d", (int) Math.pow(2, tick)); }
 			@Override public Double fromString(String paramString) { return 0.0; }

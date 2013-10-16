@@ -3,6 +3,7 @@ package de.thatsich.bachelor.javafx.presentation.image;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
@@ -50,9 +51,10 @@ public class ImageInputPresenter extends AFXMLPresenter {
 	 * Initialize all ImageEntries
 	 */
 	private void initImages() {
-		final Path imageInputPath = this.images.getInputPath();
+		final Path imageInputPath = Paths.get("input");
 		final InitImageSucceededHandler handler = new InitImageSucceededHandler();
 		
+		this.images.getImageInputFolderPathProperty().set(imageInputPath);
 		this.commander.createInitImageEntryCommand(handler, imageInputPath).start();
 		this.log.info("Inialized ImageEntrie Retrieval.");
 	}
@@ -72,7 +74,7 @@ public class ImageInputPresenter extends AFXMLPresenter {
 		if (filePath == null) return;
 		this.log.info("Fetched Path from chosen Image.");
 		
-		Path copyPath = this.images.getInputPath().resolve(filePath.getFileName());
+		Path copyPath = this.images.getImageInputFolderPathProperty().get().resolve(filePath.getFileName());
 		this.log.info("Created new Path: " + copyPath);
 		
 		this.commander.createCopyFileCommand(new AddImageSucceededHandler(), filePath, copyPath).start();
@@ -85,7 +87,7 @@ public class ImageInputPresenter extends AFXMLPresenter {
 	 * @throws IOException
 	 */
 	@FXML private void onRemoveImageAction() throws IOException {
-		final ImageEntry choice = this.images.getSelectedImageEntry();
+		final ImageEntry choice = this.images.getSelectedImageEntryProperty().get();
 		this.log.info("Fetched selected ImageEntry.");
 		
 		if (choice == null) {
@@ -103,10 +105,11 @@ public class ImageInputPresenter extends AFXMLPresenter {
 	 * @throws IOException 
 	 */
 	@FXML private void onResetDatabaseAction() throws IOException {
-		final ExecutorService executor = CommandExecutor.newFixedThreadPool(this.images.getImageEntries().size());
+		final List<ImageEntry> imageEntryList = this.images.getImageEntryListProperty().get();
+		final ExecutorService executor = CommandExecutor.newFixedThreadPool(imageEntryList.size());
 		this.log.info("Initialized Executor for resetting all Errors.");
 		
-		for (ImageEntry entry : this.images.getImageEntries()) {
+		for (ImageEntry entry : imageEntryList) {
 			DeleteImageEntryCommand command = this.commander.createDeleteImageEntryCommand(new DeleteSucceededHandler(), entry);
 			command.setExecutor(executor);
 			command.start();
@@ -137,7 +140,7 @@ public class ImageInputPresenter extends AFXMLPresenter {
 			final List<ImageEntry> commandResult = (List<ImageEntry>) event.getSource().getValue();
 			log.info("Retrieved ImageEntr List");
 			
-			images.getImageEntriesProperty().get().addAll(commandResult);
+			images.getImageEntryListProperty().get().addAll(commandResult);
 		}
 		
 	}
@@ -152,10 +155,10 @@ public class ImageInputPresenter extends AFXMLPresenter {
 		@Override public void handle(WorkerStateEvent event) {
 			Path copiedPath = (Path) event.getSource().getValue();
 			ImageEntry copy = new ImageEntry(copiedPath);
-			images.addImageEntry(copy);
+			images.getImageEntryListProperty().get().add(copy);
 			log.info("Added copy to ChoiceBoxDisplayImage: " + copiedPath.toString());
 			
-			images.setImageEntry(copy);
+			images.getSelectedImageEntryProperty().set(copy);
 			log.info("Set currently selected Image to " + copiedPath);
 		}
 	}
@@ -168,13 +171,17 @@ public class ImageInputPresenter extends AFXMLPresenter {
 	 */
 	private class DeleteSucceededHandler implements EventHandler<WorkerStateEvent> {
 		@Override public void handle(WorkerStateEvent event) {
-			final ImageEntry deletion = images.getSelectedImageEntry();
+			final ImageEntry deletion = images.getSelectedImageEntryProperty().get();
+			final List<ImageEntry> imageEntryList = images.getImageEntryListProperty().get();
 			
-			images.removeImageEntry(deletion);
+			imageEntryList.remove(deletion);
 			log.info("Removed ImageEntry from Database.");
 			
-			images.resetSelection();
-			log.info("Reset Selection to the first.");
+			if (imageEntryList.size() > 0) {
+				final ImageEntry first = images.getImageEntryListProperty().get().get(0);
+				images.getSelectedImageEntryProperty().set(first);
+				log.info("Reset Selection to the first.");
+			}
 		}
 	}
 }

@@ -31,7 +31,7 @@ public class ImageListPresenter extends AFXMLPresenter {
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		this.nodeTableViewImageList.itemsProperty().bind(this.images.getImageEntriesProperty());
+		this.nodeTableViewImageList.itemsProperty().bind(this.images.getImageEntryListProperty());
 		this.log.info("Bound nodeTableViewImageList to ImageDatabase.");
 		
 		this.nodeTableColumnImageList.setCellValueFactory(new Callback<CellDataFeatures<ImageEntry, String>, ObservableValue<String>>() {
@@ -43,7 +43,7 @@ public class ImageListPresenter extends AFXMLPresenter {
 		
 		this.nodeTableViewImageList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<ImageEntry>() {
 			@Override public void changed(ObservableValue<? extends ImageEntry> paramObservableValue, ImageEntry oldValue, ImageEntry newValue) {
-				images.getImageEntryProperty().set(newValue);
+				images.getSelectedImageEntryProperty().set(newValue);
 				
 				final int index = nodeTableViewImageList.getSelectionModel().getSelectedIndex();
 				config.setLastImageIndexInt(index);
