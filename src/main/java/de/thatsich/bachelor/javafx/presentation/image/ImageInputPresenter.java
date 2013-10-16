@@ -3,6 +3,7 @@ package de.thatsich.bachelor.javafx.presentation.image;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 
@@ -42,7 +43,18 @@ public class ImageInputPresenter extends AFXMLPresenter {
 	// ==================================================
 	@Override
 	public void initialize(URL url, ResourceBundle bundle) {
-
+		this.initImages();
+	}
+	
+	/**
+	 * Initialize all ImageEntries
+	 */
+	private void initImages() {
+		final Path imageInputPath = this.images.getInputPath();
+		final InitImageSucceededHandler handler = new InitImageSucceededHandler();
+		
+		this.commander.createInitImageEntryCommand(handler, imageInputPath).start();
+		this.log.info("Inialized ImageEntrie Retrieval.");
 	}
 
 	// ================================================== 
@@ -118,6 +130,18 @@ public class ImageInputPresenter extends AFXMLPresenter {
 	// ================================================== 
 	// Handler Implementation 
 	// ==================================================
+	@SuppressWarnings("unchecked")
+	private class InitImageSucceededHandler implements EventHandler<WorkerStateEvent> {
+		@Override public void handle(WorkerStateEvent event) {
+			
+			final List<ImageEntry> commandResult = (List<ImageEntry>) event.getSource().getValue();
+			log.info("Retrieved ImageEntr List");
+			
+			images.getImageEntriesProperty().get().addAll(commandResult);
+		}
+		
+	}
+	
 	/**
 	 * Handler for what should happen if the Command was successfull 
 	 * for adding the image to the input directory.

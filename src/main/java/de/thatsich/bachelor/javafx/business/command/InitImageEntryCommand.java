@@ -15,6 +15,7 @@ import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 
 import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
 import de.thatsich.bachelor.javafx.business.model.entity.ImageEntry;
 import de.thatsich.core.javafx.Command;
@@ -24,7 +25,7 @@ public class InitImageEntryCommand extends Command<List<ImageEntry>> {
 	private final ObjectProperty<Path> imageInputPath = new SimpleObjectProperty<Path>();
 	
 	@Inject
-	protected InitImageEntryCommand(EventHandler<WorkerStateEvent> handler, Path imageInputPath) {
+	protected InitImageEntryCommand(@Assisted EventHandler<WorkerStateEvent> handler, @Assisted Path imageInputPath) {
 		super(handler);
 		this.imageInputPath.set(imageInputPath);
 	}

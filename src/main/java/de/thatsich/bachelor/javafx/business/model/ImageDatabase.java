@@ -31,6 +31,7 @@ public class ImageDatabase {
 	final private Path inputFolderPath;
 	
 	// properties
+	final private ObjectProperty<Path> imageInputFolderPath = new SimpleObjectProperty<Path>();
 	final private ObjectProperty<ImageEntry> imageEntry = new SimpleObjectProperty<ImageEntry>();
 	final private ObjectProperty<ObservableList<ImageEntry>> imageEntries = new ChoiceBox<ImageEntry>().itemsProperty();
 	
@@ -52,28 +53,8 @@ public class ImageDatabase {
 		this.inputFolderPath = Paths.get("input");
 		if (Files.notExists(this.inputFolderPath) || !Files.isDirectory(this.inputFolderPath)) Files.createDirectory(this.inputFolderPath);
 			
-		this.initImagePaths();
+//		this.initImagePaths();
 		this.resetSelection();
-	}
-	
-	/**
-	 * Initialize the ImagePath variable 
-	 * with all images in the input folder 
-	 * supported by OpenCV and JavaFX (jpg, png)
-	 */
-	private void initImagePaths() {
-
-		final String GLOB_PATTERN = "*.{png,jpeg,jpg,jpe}";
-		
-		try (DirectoryStream<Path> stream = Files.newDirectoryStream(this.inputFolderPath, GLOB_PATTERN)) {
-			for (Path child : stream) {
-				this.imageEntries.get().add(new ImageEntry(child.toAbsolutePath()));
-				this.log.info("Added " + child + " with Attribute " + Files.probeContentType(child));
-			}
-		} catch (IOException | DirectoryIteratorException e) {
-			e.printStackTrace();
-		}
-		this.log.info("All OpenCV Supported Images added: " + this.imageEntries.get().size() + ".");
 	}
 	
 	/**
