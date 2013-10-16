@@ -44,13 +44,13 @@ public class ImageInputPresenter extends AFXMLPresenter {
 	// ==================================================
 	@Override
 	public void initialize(URL url, ResourceBundle bundle) {
-		this.initImages();
+		this.initImageEntryList();
 	}
 	
 	/**
 	 * Initialize all ImageEntries
 	 */
-	private void initImages() {
+	private void initImageEntryList() {
 		final Path imageInputPath = Paths.get("input");
 		final InitImageSucceededHandler handler = new InitImageSucceededHandler();
 		

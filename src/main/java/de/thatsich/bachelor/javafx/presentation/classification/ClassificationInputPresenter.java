@@ -70,7 +70,7 @@ public class ClassificationInputPresenter implements Initializable {
 		this.nodeChoiceBoxSample.valueProperty().bindBidirectional(this.evalDatabase.getSelectedErrorEntryProperty());
 		this.log.info("Bound ChoiceBoxDisplayedError to Model.");
 		
-		this.evalDatabase.getErrorEntriesProperty().bind(this.errorDatabase.getErrorEntriesProperty());
+		this.evalDatabase.getErrorEntriesProperty().bind(this.errorDatabase.getErrorEntryListProperty());
 		this.log.info("Bound both ErrorEntryLists in Models together.");
 	}
 	

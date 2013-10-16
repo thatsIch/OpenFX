@@ -16,10 +16,12 @@ import de.thatsich.core.opencv.IErrorGenerator;
 import de.thatsich.core.opencv.IFeatureExtractor;
 
 public interface CommandFactory {
-	public InitImageEntryCommand createInitImageEntryCommand(EventHandler<WorkerStateEvent> handler, Path imageInputPath);
+	public InitImageEntryListCommand createInitImageEntryCommand(EventHandler<WorkerStateEvent> handler, Path imageInputFolderPath);
 	public CopyFileCommand createCopyFileCommand(EventHandler<WorkerStateEvent> handler, @Assisted("origin") Path originPath, @Assisted("copy") Path copyPath);
 	public DeleteImageEntryCommand createDeleteImageEntryCommand(EventHandler<WorkerStateEvent> handler, ImageEntry entry);
 	
+	public InitErrorEntryListCommand createInitErrorEntryListCommand(EventHandler<WorkerStateEvent> handler, Path errorInputFolderPath);
+	public InitErrorGeneratorListCommand createInitErrorGeneratorListCommand(EventHandler<WorkerStateEvent> handler); 
 	public ApplyErrorCommand createApplyErrorCommand(EventHandler<WorkerStateEvent> handler, Mat imageMat, Path imagePath, IErrorGenerator generator);
 	public DeleteErrorEntryCommand createDeleteErrorEntryCommand(EventHandler<WorkerStateEvent> handler, ErrorEntry entry);
 	public CreateErrorImageCommand createCreateErrorImageCommand(EventHandler<WorkerStateEvent> handler, ErrorEntry entry);

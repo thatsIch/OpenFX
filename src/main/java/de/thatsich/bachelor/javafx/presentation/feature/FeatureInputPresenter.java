@@ -125,7 +125,7 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 	// ==================================================
 	@FXML private void onExtractAction() {
 		final IFeatureExtractor extractor = this.featureSpace.getSelectedFeatureExtractorProperty().get();
-		final ErrorEntry errorEntry = this.errorDatabase.getSelectedErrorEntry();
+		final ErrorEntry errorEntry = this.errorDatabase.getSelectedErrorEntryProperty().get();
 		final int frameSize = this.featureSpace.getFrameSizeProperty().get();
 		this.log.info("Extracted all necessary information for a FeatureVector.");
 		
