@@ -21,11 +21,12 @@ import com.google.inject.assistedinject.Assisted;
 
 import de.thatsich.bachelor.javafx.business.model.entity.ErrorEntry;
 import de.thatsich.bachelor.javafx.business.model.entity.FeatureVector;
+import de.thatsich.bachelor.service.CSVService;
 import de.thatsich.core.javafx.Command;
 import de.thatsich.core.opencv.IFeatureExtractor;
 import de.thatsich.core.opencv.Images;
 
-public class ExtractFeatureVectorCommand extends Command<List<FeatureVector>> {
+public class ExtractFeatureVectorFromErrorEntryCommand extends Command<List<FeatureVector>> {
 
 	// Properties
 	private final ObjectProperty<ErrorEntry> errorEntry = new SimpleObjectProperty<ErrorEntry>();
@@ -33,19 +34,18 @@ public class ExtractFeatureVectorCommand extends Command<List<FeatureVector>> {
 	private final IntegerProperty frameSize = new SimpleIntegerProperty();
 	
 	@Inject
-	public ExtractFeatureVectorCommand(@Assisted EventHandler<WorkerStateEvent> handler, @Assisted ErrorEntry errorEntry, @Assisted IFeatureExtractor extractor, @Assisted int frameSize) {
+	public ExtractFeatureVectorFromErrorEntryCommand(@Assisted EventHandler<WorkerStateEvent> handler, @Assisted ErrorEntry errorEntry, @Assisted IFeatureExtractor extractor, @Assisted int frameSize) {
 		super(handler);
 		this.errorEntry.set(errorEntry);
 		this.featureExtractor.set(extractor);
 		this.frameSize.set(frameSize);
 	}
 	
+	// TODO responsibility vllt in die beans schieben. ist einfacher fürs erste: kann wahrscheinlich gar nicht, weil eine datei != ein FeatureVector sondern gleich ein Set von FVs
 	@Override
 	protected Task<List<FeatureVector>> createTask() {
 		return new Task<List<FeatureVector>>() {
 
-			// TODO Label richtig berechnen
-			// TODO über ganzes Bild iteratieren
 			// TODO wahrscheinlich Randfälle weglassen, weil nicht gut
 			
 			@Override
@@ -54,17 +54,11 @@ public class ExtractFeatureVectorCommand extends Command<List<FeatureVector>> {
 				final String extractorName = featureExtractor.get().getName();
 				final int size = frameSize.get();
 				final String id = UUID.randomUUID().toString();
-//				final MatOfFloat featureLabel = new MatOfFloat(1);
-//				final MatOfFloat featureVectorMat = featureExtractor.get().extractFeature(errorEntry.get().getOriginalWithErrorMat());
 				log.info("Prepared all necessary information.");
 				
-				List<FeatureVector> result = FXCollections.observableArrayList();
-				
-//				MatOfFloat positiveFeatureMat = new MatOfFloat();
-//				MatOfFloat negativeFeatureMat = new MatOfFloat();
-				
-				Mat[][] originalErrorSplit = Images.split(errorEntry.get().getOriginalWithErrorMat(), size, size);
-				Mat[][] errorSplit = Images.split(errorEntry.get().getErrorMat(), size, size);
+				final List<FeatureVector> result = FXCollections.observableArrayList();
+				final Mat[][] originalErrorSplit = Images.split(errorEntry.get().getOriginalWithErrorMat(), size, size);
+				final Mat[][] errorSplit = Images.split(errorEntry.get().getErrorMat(), size, size);
 				
 				log.info("" + originalErrorSplit.length);
 				
@@ -72,7 +66,7 @@ public class ExtractFeatureVectorCommand extends Command<List<FeatureVector>> {
 					log.info("Col: " + col);
 					for (int row = 0; row < originalErrorSplit[col].length; row++) {
 						log.info("Row: " + row);
-						MatOfFloat featureVector = featureExtractor.get().extractFeature(originalErrorSplit[col][row]);
+						final MatOfFloat featureVector = featureExtractor.get().extractFeature(originalErrorSplit[col][row]);
 
 						// if contain an error classify it as positive match
 						if (Core.sumElems(errorSplit[col][row]).val[0] != 0) {
@@ -87,6 +81,17 @@ public class ExtractFeatureVectorCommand extends Command<List<FeatureVector>> {
 						}
 					}
 				}
+				
+				StringBuffer buffer = new StringBuffer();
+				buffer.append(className);
+				buffer.append("_");
+				buffer.append(extractorName);
+				buffer.append("_");
+				buffer.append(size);
+				buffer.append("_");
+				buffer.append(id);
+				
+				CSVService.write(null, null);
 				
 				log.info("Extracted FeatureVectors: " + result.size());
 				return result;

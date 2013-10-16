@@ -1,4 +1,4 @@
-package de.thatsich.core.opencv;
+package de.thatsich.bachelor.service;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
