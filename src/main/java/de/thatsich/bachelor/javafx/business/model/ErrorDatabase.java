@@ -22,18 +22,6 @@ public class ErrorDatabase {
 	final private IntegerProperty errorLoopCount = new SimpleIntegerProperty();
 	
 	// ==================================================
-	// Setter Implementation
-	// ==================================================
-	public void setErrorEntry(ErrorEntry entry) { this.errorEntry.set(entry); }
-	public void setErrorLoopCount(int count) { this.errorLoopCount.set(count); }
-	
-	// ==================================================
-	// Modifier Implementation
-	// ==================================================
-	public void removeErrorEntry(ErrorEntry entry) { this.errorEntries.get().remove(entry); }
-	public void addErrorEntry(ErrorEntry entry) { this.errorEntries.get().add(entry); }
-	
-	// ==================================================
 	// Property Implementation
 	// ==================================================
 	public ObjectProperty<Path> getErrorEntryFolderPath() { return this.errorEntryFolderPath; }
