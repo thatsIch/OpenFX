@@ -21,13 +21,13 @@ import de.thatsich.bachelor.javafx.business.command.CommandFactory;
 import de.thatsich.bachelor.javafx.business.command.DeleteFeatureVectorCommand;
 import de.thatsich.bachelor.javafx.business.command.ExtractFeatureVectorFromErrorEntryCommand;
 import de.thatsich.bachelor.javafx.business.command.GetLastFeatureExtractorIndexCommand;
+import de.thatsich.bachelor.javafx.business.command.GetLastFrameSizeCommand;
 import de.thatsich.bachelor.javafx.business.command.InitFeatureExtractorListCommand;
 import de.thatsich.bachelor.javafx.business.command.SetLastFeatureExtractorIndexCommand;
 import de.thatsich.bachelor.javafx.business.model.ErrorDatabase;
 import de.thatsich.bachelor.javafx.business.model.FeatureSpace;
 import de.thatsich.bachelor.javafx.business.model.entity.ErrorEntry;
 import de.thatsich.bachelor.javafx.business.model.entity.FeatureVector;
-import de.thatsich.bachelor.service.ConfigService;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.javafx.CommandExecutor;
 import de.thatsich.core.javafx.StringFeatureExtractorConverter;
@@ -40,7 +40,7 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 	@FXML private Slider nodeSliderFrameSize;
 
 	// Injects
-	@Inject private ConfigService config;
+//	@Inject private ConfigService config;
 	@Inject private CommandFactory commander;
 	@Inject private ErrorDatabase errorDatabase;
 	@Inject private FeatureSpace featureSpace;
@@ -51,6 +51,7 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 		this.bindSliderFrameSize();
 		
 		this.initFeatureExtractorList();
+		this.initFrameSize();
 	}
 	
 	/**
@@ -75,6 +76,14 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 		
 		executor.shutdown();
 		this.log.info("Shutting down Executor.");
+	}
+	
+	private void initFrameSize() {
+		final GetLastFrameSizeSucceededHandler handler = new GetLastFrameSizeSucceededHandler(); 
+		final GetLastFrameSizeCommand command = this.commander.createGetLastFrameSizeCommand();
+		command.setOnSucceeded(handler);
+		command.start();
+		this.log.info("Initialized LastFrameSize Retrieval.");
 	}
 
 	// ================================================== 
@@ -130,15 +139,11 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 					}
 					
 					featureSpace.getFrameSizeProperty().set(result);
-					config.setLastFrameSizeInt(value);
+					commander.createSetLastFrameSizeCommand(value).start();
 				}
 			}
 		});
 		this.log.info("Bound FrameSize to Database.");
-		
-		int frameSize = this.config.getLastFrameSizeInt();
-		this.nodeSliderFrameSize.setValue(frameSize);
-		this.log.info("Initialized FrameSize from Config.");
 		
 		// set labels to pwoer of 2
 		// Java 7 Bug
@@ -279,6 +284,26 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 				final IFeatureExtractor selectedFeatureExtractor = featureSpace.getFeatureExtractorsProperty().get(commandResult);
 				featureSpace.getSelectedFeatureExtractorProperty().set(selectedFeatureExtractor);
 				log.info("Set LastSelectedFeatureExtractor in Model.");
+			}
+		}
+	}
+	
+	/**
+	 * Handler for what should happen if the Command was successfull 
+	 * for getting LastFrameSize
+	 * 
+	 * @author Minh
+	 */
+	private class GetLastFrameSizeSucceededHandler implements EventHandler<WorkerStateEvent> {
+
+		@Override
+		public void handle(WorkerStateEvent event) {
+			final Integer commandResult = (Integer) event.getSource().getValue();
+			log.info("Retrieved LastFrameSize.");
+			
+			if (commandResult != null) {
+				nodeSliderFrameSize.setValue(commandResult);
+				log.info("Initialized FrameSize from Config.");
 			}
 		}
 	}

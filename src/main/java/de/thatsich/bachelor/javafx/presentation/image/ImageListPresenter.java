@@ -68,9 +68,7 @@ public class ImageListPresenter extends AFXMLPresenter {
 				images.getSelectedImageEntryProperty().set(newValue);
 				
 				final int index = nodeTableViewImageList.getSelectionModel().getSelectedIndex();
-				final SetLastImageEntryIndexSucceededHandler handler = new SetLastImageEntryIndexSucceededHandler();
 				final SetLastImageEntryIndexCommand command = commander.createSetLastImageEntryIndexCommand(index);
-				command.setOnSucceeded(handler);
 				command.start();
 				log.info("Seleced index " + index);
 			}
@@ -145,18 +143,6 @@ public class ImageListPresenter extends AFXMLPresenter {
 				nodeTableViewImageList.getSelectionModel().select(commandResult);
 				log.info("Set last selected image entry index in TableView.");
 			}
-		}
-	}
-	
-	/**
-	 * Handler for what should happen if the Command was successfull 
-	 * for setting the last image entry index
-	 * 
-	 * @author Minh
-	 */
-	private class SetLastImageEntryIndexSucceededHandler implements EventHandler<WorkerStateEvent> {
-		@Override public void handle(WorkerStateEvent event) {
-			
 		}
 	}
 }

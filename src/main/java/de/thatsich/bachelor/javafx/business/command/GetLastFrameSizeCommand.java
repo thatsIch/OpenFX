@@ -7,7 +7,7 @@ import com.google.inject.Inject;
 import de.thatsich.bachelor.service.ConfigService;
 import de.thatsich.core.javafx.Command;
 
-public class GetLastImageEntryIndexCommand extends Command<Integer> {
+public class GetLastFrameSizeCommand extends Command<Integer> {
 
 	// Injects
 	@Inject private ConfigService config;
@@ -16,7 +16,7 @@ public class GetLastImageEntryIndexCommand extends Command<Integer> {
 	protected Task<Integer> createTask() {
 		return new Task<Integer>() {
 			@Override protected Integer call() throws Exception {
-				return config.getLastImageIndexInt();
+				return config.getLastFrameSizeInt();
 			}
 		};
 	}
