@@ -6,6 +6,8 @@ import java.util.ResourceBundle;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.concurrent.WorkerStateEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
@@ -14,9 +16,9 @@ import javafx.util.Callback;
 
 import com.google.inject.Inject;
 
+import de.thatsich.bachelor.javafx.business.command.CommandFactory;
 import de.thatsich.bachelor.javafx.business.model.ImageDatabase;
 import de.thatsich.bachelor.javafx.business.model.entity.ImageEntry;
-import de.thatsich.bachelor.service.ConfigService;
 import de.thatsich.core.javafx.AFXMLPresenter;
 
 public class ImageListPresenter extends AFXMLPresenter {
@@ -27,7 +29,7 @@ public class ImageListPresenter extends AFXMLPresenter {
 	
 	// Injects
 	@Inject private ImageDatabase images;
-	@Inject ConfigService config;
+	@Inject private CommandFactory commander;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -46,13 +48,15 @@ public class ImageListPresenter extends AFXMLPresenter {
 				images.getSelectedImageEntryProperty().set(newValue);
 				
 				final int index = nodeTableViewImageList.getSelectionModel().getSelectedIndex();
-				config.setLastImageIndexInt(index);
+				commander.createSetLastImageEntryIndexCommand(new SetLastImageEntryIndexSucceededHandler(), index).start();
+				log.info("Seleced index " + index);
 			}
 		});
 		this.log.info("Bound ImageDatabase to selection of nodeTableViewImageList.");
-		
-		final int index = this.config.getLastImageIndexInt();
-		this.nodeTableViewImageList.getSelectionModel().select(index);
 	}
-
+	
+	private class SetLastImageEntryIndexSucceededHandler implements EventHandler<WorkerStateEvent> {
+		@Override public void handle(WorkerStateEvent event) {}
+		
+	}
 }

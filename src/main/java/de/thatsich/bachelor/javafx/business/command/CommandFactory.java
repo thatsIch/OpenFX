@@ -17,6 +17,8 @@ import de.thatsich.core.opencv.IFeatureExtractor;
 
 public interface CommandFactory {
 	public InitImageEntryListCommand createInitImageEntryCommand(EventHandler<WorkerStateEvent> handler, Path imageInputFolderPath);
+	public InitSelectedImageEntryCommand createInitSelectedImageEntryCommand(EventHandler<WorkerStateEvent> handler);
+	public SetLastImageEntryIndexCommand createSetLastImageEntryIndexCommand(EventHandler<WorkerStateEvent> handler, int lastImageEntryIndex);
 	public CopyFileCommand createCopyFileCommand(EventHandler<WorkerStateEvent> handler, @Assisted("origin") Path originPath, @Assisted("copy") Path copyPath);
 	public DeleteImageEntryCommand createDeleteImageEntryCommand(EventHandler<WorkerStateEvent> handler, ImageEntry entry);
 	

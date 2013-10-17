@@ -52,11 +52,18 @@ public class ImageInputPresenter extends AFXMLPresenter {
 	 */
 	private void initImageEntryList() {
 		final Path imageInputPath = Paths.get("input");
-		final InitImageSucceededHandler handler = new InitImageSucceededHandler();
+		final EventHandler<WorkerStateEvent> handler = new InitImageSucceededHandler();
 		
 		this.images.getImageInputFolderPathProperty().set(imageInputPath);
 		this.commander.createInitImageEntryCommand(handler, imageInputPath).start();
 		this.log.info("Inialized ImageEntrie Retrieval.");
+	}
+	
+	private void initSelectedImageEntry() {
+		final EventHandler<WorkerStateEvent> handler = new InitSelectedImageEntrySucceededHandler();
+		
+		this.commander.createInitSelectedImageEntryCommand(handler).start();
+		this.log.info("Inialized last selected image entry Retrieval.");
 	}
 
 	// ================================================== 
@@ -133,6 +140,17 @@ public class ImageInputPresenter extends AFXMLPresenter {
 	// ================================================== 
 	// Handler Implementation 
 	// ==================================================
+	private class InitSelectedImageEntrySucceededHandler implements EventHandler<WorkerStateEvent> {
+		@Override public void handle(WorkerStateEvent event) {
+			final int commandResult = (int) event.getSource().getValue();
+			log.info("Retrieved last selected image entry index.");
+			
+			final ImageEntry selectedImageEntry = images.getImageEntryListProperty().get().get(commandResult);
+			images.getSelectedImageEntryProperty().set(selectedImageEntry);
+		}
+		
+	}
+	
 	@SuppressWarnings("unchecked")
 	private class InitImageSucceededHandler implements EventHandler<WorkerStateEvent> {
 		@Override public void handle(WorkerStateEvent event) {
@@ -141,6 +159,8 @@ public class ImageInputPresenter extends AFXMLPresenter {
 			log.info("Retrieved ImageEntr List");
 			
 			images.getImageEntryListProperty().get().addAll(commandResult);
+			
+			initSelectedImageEntry();
 		}
 		
 	}
