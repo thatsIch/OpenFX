@@ -20,7 +20,7 @@ import javafx.util.StringConverter;
 import com.google.inject.Inject;
 
 import de.thatsich.bachelor.javafx.business.command.CommandFactory;
-import de.thatsich.bachelor.javafx.business.command.RemoveFeatureVectorCommand;
+import de.thatsich.bachelor.javafx.business.command.DeleteFeatureVectorCommand;
 import de.thatsich.bachelor.javafx.business.model.ErrorDatabase;
 import de.thatsich.bachelor.javafx.business.model.FeatureSpace;
 import de.thatsich.bachelor.javafx.business.model.entity.ErrorEntry;
@@ -176,7 +176,7 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 		this.log.info("Initialized Executor for resetting all FeatureVectors.");
 		
 		for (FeatureVector fv : this.featureSpace.getFeatureVectorListProperty().get()) {
-			RemoveFeatureVectorCommand command = this.commander.createRemoveFeatureVectorCommand(new RemoveSucceededHandler(), fv);
+			DeleteFeatureVectorCommand command = this.commander.createRemoveFeatureVectorCommand(new RemoveSucceededHandler(), fv);
 			command.setExecutor(executor);
 			command.start();
 			this.log.info("FeatureVector Deletion executed.");

@@ -22,8 +22,7 @@ import de.thatsich.bachelor.javafx.presentation.DisplayView;
 import de.thatsich.core.guice.LoggerModule;
 import de.thatsich.core.guice.PostInitModule;
 
-// TODO nochmal alles durchgehen und schaun ob etwas selected ist
-// TODO wichtig besoners in den DAtenbanken
+// TODO nochmal alles durchgehen und schaun ob etwas selected ist wichtig besoners in den Datenbanken
 
 /**
  * Main Execution Class

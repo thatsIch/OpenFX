@@ -12,7 +12,7 @@ import com.google.inject.assistedinject.Assisted;
 import de.thatsich.bachelor.javafx.business.model.entity.FeatureVector;
 import de.thatsich.core.javafx.Command;
 
-public class RemoveFeatureVectorCommand extends Command<FeatureVector> {
+public class DeleteFeatureVectorCommand extends Command<FeatureVector> {
 
 	// Properties
 	private final ObjectProperty<FeatureVector> featureVector = new SimpleObjectProperty<FeatureVector>();
@@ -20,7 +20,7 @@ public class RemoveFeatureVectorCommand extends Command<FeatureVector> {
 	// Injections
 	
 	@Inject
-	public RemoveFeatureVectorCommand(@Assisted EventHandler<WorkerStateEvent> handler, @Assisted FeatureVector featureVector) {
+	public DeleteFeatureVectorCommand(@Assisted EventHandler<WorkerStateEvent> handler, @Assisted FeatureVector featureVector) {
 		super(handler);
 		this.featureVector.set(featureVector);
 	}

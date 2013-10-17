@@ -54,7 +54,7 @@ public class ConfigService extends AConfiguration {
 	/**
 	 * 
 	 */
-	public int getLastErrorIndexInt() {
+	public int getLastErrorEntryIndexInt() {
 		return super.get(LAST_ERROR, DEFAULT_LAST_ERROR);
 	}
 	

@@ -24,6 +24,8 @@ public interface CommandFactory {
 	
 	public InitErrorEntryListCommand createInitErrorEntryListCommand(EventHandler<WorkerStateEvent> handler, Path errorInputFolderPath);
 	public InitErrorGeneratorListCommand createInitErrorGeneratorListCommand(EventHandler<WorkerStateEvent> handler); 
+	public GetLastErrorGeneratorIndexCommand createGetLastErrorGeneratorIndexCommand(EventHandler<WorkerStateEvent> handler);
+	public GetLastErrorEntryIndexCommand createGetLastErrorEntryIndexCommand(EventHandler<WorkerStateEvent> handler);
 	public ApplyErrorCommand createApplyErrorCommand(EventHandler<WorkerStateEvent> handler, Mat imageMat, Path imagePath, IErrorGenerator generator);
 	public DeleteErrorEntryCommand createDeleteErrorEntryCommand(EventHandler<WorkerStateEvent> handler, ErrorEntry entry);
 	public CreateErrorImageCommand createCreateErrorImageCommand(EventHandler<WorkerStateEvent> handler, ErrorEntry entry);
@@ -31,5 +33,5 @@ public interface CommandFactory {
 	public InitFeatureExtractorListCommand createInitFeatureExtractorListCommand(EventHandler<WorkerStateEvent> handler);
 	public InitFeatureVectorListCommand createInitFeatureVectorListCommand(EventHandler<WorkerStateEvent> handler, Path folderPath);
 	public ExtractFeatureVectorFromErrorEntryCommand createExtractFeatureVectorCommand(EventHandler<WorkerStateEvent> handler, ErrorEntry errorEntry, IFeatureExtractor extractor, int frameSize);
-	public RemoveFeatureVectorCommand createRemoveFeatureVectorCommand(EventHandler<WorkerStateEvent> handler, FeatureVector featureVector);
+	public DeleteFeatureVectorCommand createRemoveFeatureVectorCommand(EventHandler<WorkerStateEvent> handler, FeatureVector featureVector);
 }
