@@ -33,6 +33,7 @@ public interface CommandFactory {
 	
 	public InitFeatureExtractorListCommand createInitFeatureExtractorListCommand(EventHandler<WorkerStateEvent> handler);
 	public InitFeatureVectorListCommand createInitFeatureVectorListCommand(EventHandler<WorkerStateEvent> handler, Path folderPath);
+	public GetLastFeatureExtractorIndexCommand createGetLastFeatureExtractorIndexCommand(EventHandler<WorkerStateEvent> handler);
 	public ExtractFeatureVectorFromErrorEntryCommand createExtractFeatureVectorCommand(EventHandler<WorkerStateEvent> handler, ErrorEntry errorEntry, IFeatureExtractor extractor, int frameSize);
 	public DeleteFeatureVectorCommand createRemoveFeatureVectorCommand(EventHandler<WorkerStateEvent> handler, FeatureVector featureVector);
 }

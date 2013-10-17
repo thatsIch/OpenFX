@@ -1,8 +1,6 @@
 package de.thatsich.bachelor.javafx.presentation.feature;
 
 import java.net.URL;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.security.InvalidParameterException;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -21,6 +19,8 @@ import com.google.inject.Inject;
 
 import de.thatsich.bachelor.javafx.business.command.CommandFactory;
 import de.thatsich.bachelor.javafx.business.command.DeleteFeatureVectorCommand;
+import de.thatsich.bachelor.javafx.business.command.GetLastFeatureExtractorIndexCommand;
+import de.thatsich.bachelor.javafx.business.command.InitFeatureExtractorListCommand;
 import de.thatsich.bachelor.javafx.business.model.ErrorDatabase;
 import de.thatsich.bachelor.javafx.business.model.FeatureSpace;
 import de.thatsich.bachelor.javafx.business.model.entity.ErrorEntry;
@@ -49,22 +49,28 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 		this.bindSliderFrameSize();
 		
 		this.initFeatureExtractorList();
-		this.initFeatureVectorList();
 	}
 	
+	/**
+	 * Gets FeatureExtractorList and preselects last selected one.
+	 */
 	private void initFeatureExtractorList() {
-		final InitFeatureExtractorListSucceededHandler handler = new InitFeatureExtractorListSucceededHandler();
+		final InitFeatureExtractorListSucceededHandler initHandler = new InitFeatureExtractorListSucceededHandler();
+		final GetLastFeatureExtractorIndexSucceededHandler lastHandler = new GetLastFeatureExtractorIndexSucceededHandler(); 
+		final ExecutorService executor = CommandExecutor.newFixedThreadPool(1);
 		
-		this.commander.createInitFeatureExtractorListCommand(handler).start();
-		this.log.info("Initialized FeatureExtractorList Creation.");
-	}
-	
-	private void initFeatureVectorList() {
-		final Path folderPath = Paths.get("featurevectors");
-		final InitFeatureVectorListSucceededHandler handler = new InitFeatureVectorListSucceededHandler();
+		final InitFeatureExtractorListCommand initCommand =	this.commander.createInitFeatureExtractorListCommand(initHandler);
+		initCommand.setExecutor(executor);
+		initCommand.start();
+		this.log.info("Initialized FeatureExtractorList Retrieval.");
 		
-		this.commander.createInitFeatureVectorListCommand(handler, folderPath).start();
-		this.log.info("Initialized FeatureVectorList Creation.");
+		final GetLastFeatureExtractorIndexCommand lastCommand = this.commander.createGetLastFeatureExtractorIndexCommand(lastHandler);
+		lastCommand.setExecutor(executor);
+		lastCommand.start();
+		this.log.info("Initialized LastFeatureExtractorIndex Retrieval.");
+		
+		executor.shutdown();
+		this.log.info("Shutting down Executor.");
 	}
 
 	// ================================================== 
@@ -216,22 +222,6 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 	
 	/**
 	 * Handler for what should happen if the Command was successfull 
-	 * for initializing the feature vector list
-	 * 
-	 * @author Minh
-	 */
-	@SuppressWarnings("unchecked")
-	private class InitFeatureVectorListSucceededHandler implements EventHandler<WorkerStateEvent> {
-		@Override public void handle(WorkerStateEvent event) {
-			final List<FeatureVector> featureVectorList = (List<FeatureVector>) event.getSource().getValue();
-			
-			featureSpace.getFeatureVectorListProperty().get().addAll(featureVectorList);
-			log.info("Added FeatureExtractor to Database.");
-		}
-	}
-	
-	/**
-	 * Handler for what should happen if the Command was successfull 
 	 * for extracting the featurevector
 	 * 
 	 * @author Minh
@@ -258,6 +248,27 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 			
 			featureSpace.getFeatureVectorListProperty().get().remove(fv);
 			log.info("Removed FeatureVector from Database.");
+		}
+	}
+	
+	/**
+	 * Handler for what should happen if the Command was successfull 
+	 * for getting LastFeatureExtractorIndex
+	 * 
+	 * @author Minh
+	 */
+	private class GetLastFeatureExtractorIndexSucceededHandler implements EventHandler<WorkerStateEvent> {
+
+		@Override
+		public void handle(WorkerStateEvent event) {
+			final Integer commandResult = (Integer) event.getSource().getValue();
+			log.info("Retrieved LastFeatureExtractorIndex.");
+			
+			if (commandResult != null) {
+				final IFeatureExtractor selectedFeatureExtractor = featureSpace.getFeatureExtractorsProperty().get(commandResult);
+				featureSpace.getSelectedFeatureExtractorProperty().set(selectedFeatureExtractor);
+				log.info("Set LastSelectedFeatureExtractor in Model.");
+			}
 		}
 	}
 }
