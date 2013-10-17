@@ -3,11 +3,12 @@ package de.thatsich.bachelor.javafx.business.model;
 import java.nio.file.Path;
 
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.collections.ObservableList;
-import javafx.scene.control.ChoiceBox;
+import javafx.collections.FXCollections;
 import de.thatsich.bachelor.javafx.business.model.entity.FeatureVector;
 import de.thatsich.core.opencv.IFeatureExtractor;
 
@@ -23,9 +24,9 @@ public class FeatureSpace {
 	// Properties
 	private final ObjectProperty<Path> featureVectorFolderPath = new SimpleObjectProperty<Path>();
 	private final IntegerProperty frameSize = new SimpleIntegerProperty();
-	private final ObjectProperty<ObservableList<IFeatureExtractor>> featureExtractors = new ChoiceBox<IFeatureExtractor>().itemsProperty();
+	private final ListProperty<IFeatureExtractor> featureExtractors = new SimpleListProperty<IFeatureExtractor>(FXCollections.<IFeatureExtractor>observableArrayList());
 	private final ObjectProperty<IFeatureExtractor> selectedFeatureExtractor = new SimpleObjectProperty<IFeatureExtractor>();
-	private final ObjectProperty<ObservableList<FeatureVector>> featureVectorList = new ChoiceBox<FeatureVector>().itemsProperty();
+	private final ListProperty<FeatureVector> featureVectorList = new SimpleListProperty<FeatureVector>(FXCollections.<FeatureVector>observableArrayList());
 	private final ObjectProperty<FeatureVector> selectedFeatureVector = new SimpleObjectProperty<FeatureVector>();
 	
 //	public void addFeatureVector(FeatureVector featureVector) {
@@ -44,8 +45,8 @@ public class FeatureSpace {
 	public IntegerProperty getFrameSizeProperty() { return this.frameSize; }
 	
 	// Feature Extractors
-	public ObjectProperty<ObservableList<IFeatureExtractor>> getFeatureExtractorsProperty() { return this.featureExtractors; }
+	public ListProperty<IFeatureExtractor> getFeatureExtractorsProperty() { return this.featureExtractors; }
 	public ObjectProperty<IFeatureExtractor> getSelectedFeatureExtractorProperty() { return this.selectedFeatureExtractor; }
-	public ObjectProperty<ObservableList<FeatureVector>> getFeatureVectorListProperty() { return this.featureVectorList; }
+	public ListProperty<FeatureVector> getFeatureVectorListProperty() { return this.featureVectorList; }
 	public ObjectProperty<FeatureVector> getSelectedFeatureVectorProperty() { return this.selectedFeatureVector; }
 }
