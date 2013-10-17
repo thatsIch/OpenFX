@@ -140,6 +140,12 @@ public class ImageInputPresenter extends AFXMLPresenter {
 	// ================================================== 
 	// Handler Implementation 
 	// ==================================================
+	/**
+	 * Handler for what should happen if the Command was successfull 
+	 * for selecting the last selected image entry
+	 * 
+	 * @author Minh
+	 */
 	private class InitSelectedImageEntrySucceededHandler implements EventHandler<WorkerStateEvent> {
 		@Override public void handle(WorkerStateEvent event) {
 			final int commandResult = (int) event.getSource().getValue();
@@ -151,6 +157,12 @@ public class ImageInputPresenter extends AFXMLPresenter {
 		
 	}
 	
+	/**
+	 * Handler for what should happen if the Command was successfull 
+	 * for initializing all images entries
+	 * 
+	 * @author Minh
+	 */
 	@SuppressWarnings("unchecked")
 	private class InitImageSucceededHandler implements EventHandler<WorkerStateEvent> {
 		@Override public void handle(WorkerStateEvent event) {
