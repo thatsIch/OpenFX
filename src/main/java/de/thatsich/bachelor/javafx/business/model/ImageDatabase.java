@@ -2,10 +2,11 @@ package de.thatsich.bachelor.javafx.business.model;
 
 import java.nio.file.Path;
 
+import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.collections.ObservableList;
-import javafx.scene.control.ChoiceBox;
+import javafx.collections.FXCollections;
 import de.thatsich.bachelor.javafx.business.model.entity.ImageEntry;
 
 /**
@@ -21,12 +22,12 @@ public class ImageDatabase {
 	// properties
 	final private ObjectProperty<Path> imageInputFolderPath = new SimpleObjectProperty<Path>();
 	final private ObjectProperty<ImageEntry> selectedImageEntry = new SimpleObjectProperty<ImageEntry>();
-	final private ObjectProperty<ObservableList<ImageEntry>> imageEntryList = new ChoiceBox<ImageEntry>().itemsProperty();
+	final private ListProperty<ImageEntry> imageEntryList = new SimpleListProperty<ImageEntry>(FXCollections.<ImageEntry>observableArrayList());
 
 	// ==================================================
 	// Property Implementation
 	// ==================================================
-	public ObjectProperty<ObservableList<ImageEntry>> getImageEntryListProperty() { return this.imageEntryList; }
+	public ListProperty<ImageEntry> getImageEntryListProperty() { return this.imageEntryList; }
 	public ObjectProperty<ImageEntry> getSelectedImageEntryProperty() { return this.selectedImageEntry; }	
 	public ObjectProperty<Path> getImageInputFolderPathProperty() { return this.imageInputFolderPath; }
 }
