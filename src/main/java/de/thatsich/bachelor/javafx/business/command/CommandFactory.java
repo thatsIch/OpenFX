@@ -26,6 +26,7 @@ public interface CommandFactory {
 	public InitErrorGeneratorListCommand createInitErrorGeneratorListCommand(EventHandler<WorkerStateEvent> handler); 
 	public GetLastErrorGeneratorIndexCommand createGetLastErrorGeneratorIndexCommand(EventHandler<WorkerStateEvent> handler);
 	public GetLastErrorEntryIndexCommand createGetLastErrorEntryIndexCommand(EventHandler<WorkerStateEvent> handler);
+	public SetLastErrorEntryIndexCommand createSetLastErrorEntryIndexCommand(EventHandler<WorkerStateEvent> handler, int lastErrorEntryIndex);
 	public ApplyErrorCommand createApplyErrorCommand(EventHandler<WorkerStateEvent> handler, Mat imageMat, Path imagePath, IErrorGenerator generator);
 	public DeleteErrorEntryCommand createDeleteErrorEntryCommand(EventHandler<WorkerStateEvent> handler, ErrorEntry entry);
 	public CreateErrorImageCommand createCreateErrorImageCommand(EventHandler<WorkerStateEvent> handler, ErrorEntry entry);

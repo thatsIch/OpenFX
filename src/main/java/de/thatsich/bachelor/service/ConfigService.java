@@ -113,7 +113,7 @@ public class ConfigService extends AConfiguration {
 	/**
 	 * 
 	 */
-	public void setLastErrorIndexInt(int lastErrorIndex) {
+	public void setLastErrorEntryIndexInt(int lastErrorIndex) {
 		super.set(LAST_ERROR, lastErrorIndex);
 	}
 

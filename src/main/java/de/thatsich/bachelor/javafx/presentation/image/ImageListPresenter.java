@@ -75,7 +75,7 @@ public class ImageListPresenter extends AFXMLPresenter {
 	}
 	
 	/**
-	 * Initialize all ImageEntries
+	 * Initialize all ImageEntries and Preselection of the last selected ImageEntry
 	 */
 	private void initTableViewImageEntryList() {
 		final Path imageInputPath = Paths.get("input");
@@ -112,11 +112,11 @@ public class ImageListPresenter extends AFXMLPresenter {
 	@SuppressWarnings("unchecked")
 	private class InitImageEntryListSucceededHandler implements EventHandler<WorkerStateEvent> {
 		@Override public void handle(WorkerStateEvent event) {
-			
 			final List<ImageEntry> commandResult = (List<ImageEntry>) event.getSource().getValue();
-			log.info("Retrieved ImageEntr List");
+			log.info("Retrieved ImageEntryList.");
 			
 			images.getImageEntryListProperty().get().addAll(commandResult);
+			log.info("Added ImageEntryList to Model.");
 		}
 	}
 	
