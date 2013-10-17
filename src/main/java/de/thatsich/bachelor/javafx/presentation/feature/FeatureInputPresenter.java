@@ -3,6 +3,7 @@ package de.thatsich.bachelor.javafx.presentation.feature;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.InvalidParameterException;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
@@ -148,6 +149,10 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 		final ErrorEntry errorEntry = this.errorDatabase.getSelectedErrorEntryProperty().get();
 		final int frameSize = this.featureSpace.getFrameSizeProperty().get();
 		this.log.info("Extracted all necessary information for a FeatureVector.");
+		
+		if (extractor == null) throw new InvalidParameterException("Extractor is null.");
+		if (errorEntry == null) throw new InvalidParameterException("ErrorEntry is null.");
+		if (frameSize == 0) throw new InvalidParameterException("FrameSize is 0.");
 		
 		this.commander.createExtractFeatureVectorCommand(new ExtractSucceededHandler(), errorEntry, extractor, frameSize).start();
 		this.log.info("FeatureVector deleted and removed from FeatureVectorList.");

@@ -21,7 +21,6 @@ import com.google.inject.assistedinject.Assisted;
 
 import de.thatsich.bachelor.javafx.business.model.entity.ErrorEntry;
 import de.thatsich.bachelor.javafx.business.model.entity.FeatureVector;
-import de.thatsich.bachelor.service.CSVService;
 import de.thatsich.core.javafx.Command;
 import de.thatsich.core.opencv.IFeatureExtractor;
 import de.thatsich.core.opencv.Images;
@@ -41,57 +40,64 @@ public class ExtractFeatureVectorFromErrorEntryCommand extends Command<List<Feat
 		this.frameSize.set(frameSize);
 	}
 	
-	// TODO responsibility vllt in die beans schieben. ist einfacher fürs erste: kann wahrscheinlich gar nicht, weil eine datei != ein FeatureVector sondern gleich ein Set von FVs
 	@Override
 	protected Task<List<FeatureVector>> createTask() {
 		return new Task<List<FeatureVector>>() {
-
-			// TODO wahrscheinlich Randfälle weglassen, weil nicht gut
 			
 			@Override
 			protected List<FeatureVector> call() throws Exception {
 				final String className = errorEntry.get().getErrorClassProperty().get();
+				final IFeatureExtractor extractor = featureExtractor.get();
 				final String extractorName = featureExtractor.get().getName();
 				final int size = frameSize.get();
 				final String id = UUID.randomUUID().toString();
 				log.info("Prepared all necessary information.");
 				
 				final List<FeatureVector> result = FXCollections.observableArrayList();
+//				final List<List<Float>> csvResult = FXCollections.observableArrayList();
 				final Mat[][] originalErrorSplit = Images.split(errorEntry.get().getOriginalWithErrorMat(), size, size);
 				final Mat[][] errorSplit = Images.split(errorEntry.get().getErrorMat(), size, size);
 				
-				log.info("" + originalErrorSplit.length);
+//				log.info("" + originalErrorSplit.length);
 				
 				for (int col = 0; col < originalErrorSplit.length; col++) {
-					log.info("Col: " + col);
 					for (int row = 0; row < originalErrorSplit[col].length; row++) {
-						log.info("Row: " + row);
-						final MatOfFloat featureVector = featureExtractor.get().extractFeature(originalErrorSplit[col][row]);
-
+						final MatOfFloat featureVector = extractor.extractFeature(originalErrorSplit[col][row]);
+//						System.out.println(featureVector.toString());
+//						float[] first = featureVector.toArray();
+//						float[] test = Arrays.copyOf(first, first.length + 1); 
+						
+						
 						// if contain an error classify it as positive match
 						if (Core.sumElems(errorSplit[col][row]).val[0] != 0) {
 							result.add(new FeatureVector(className, extractorName, size, id, featureVector, new MatOfFloat(1)));
+//							test[test.length - 1] = 1; 
 //							positiveFeatureMat.push_back(featureVector.t());
+//							List<Float> featureVectorAsList = featureVector.toList();
+//							featureVectorAsList.add(1F);
+//							csvResult.add(featureVectorAsList);
+//							Arrays.
 						}
 						
 						// else its a negative match
 						else {
 							result.add(new FeatureVector(className, extractorName, size, id, featureVector, new MatOfFloat(0)));
+//							test[test.length - 1] = 0;
 //							negativeFeatureMat.push_back(featureVector.t());
+//							List<Float> featureVectorAsList = featureVector.toList();
+//							featureVectorAsList.add(0F);
+//							csvResult.add(featureVectorAsList);
 						}
 					}
 				}
 				
 				StringBuffer buffer = new StringBuffer();
-				buffer.append(className);
-				buffer.append("_");
-				buffer.append(extractorName);
-				buffer.append("_");
-				buffer.append(size);
-				buffer.append("_");
+				buffer.append(className + "_");
+				buffer.append(extractorName + "_");
+				buffer.append(size + "_"); 	
 				buffer.append(id);
 				
-				CSVService.write(null, null);
+//				CSVService.write(Paths.get(buffer.toString()), csvResult);
 				
 				log.info("Extracted FeatureVectors: " + result.size());
 				return result;

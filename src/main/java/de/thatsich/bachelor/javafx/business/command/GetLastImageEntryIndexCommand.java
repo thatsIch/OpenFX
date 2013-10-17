@@ -10,12 +10,13 @@ import com.google.inject.assistedinject.Assisted;
 import de.thatsich.bachelor.service.ConfigService;
 import de.thatsich.core.javafx.Command;
 
-public class InitSelectedImageEntryCommand extends Command<Integer> {
+public class GetLastImageEntryIndexCommand extends Command<Integer> {
 
-	@Inject ConfigService config;
+	// Injects
+	@Inject private ConfigService config;
 	
 	@Inject
-	protected InitSelectedImageEntryCommand(@Assisted EventHandler<WorkerStateEvent> handler) {
+	protected GetLastImageEntryIndexCommand(@Assisted EventHandler<WorkerStateEvent> handler) {
 		super(handler);
 	}
 

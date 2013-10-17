@@ -108,8 +108,8 @@ public class Images {
 		if (frameHeight == 0) throw new IllegalArgumentException("FrameHeight is 0.");
 		if (frameWidth == 0) throw new IllegalArgumentException("FrameHeight is 0.");
 		
-		final int frameCountX = (int) Math.round((image.width() / frameWidth) + 0.5) ;
-		final int frameCountY = (int) Math.round((image.height() / frameHeight) + 0.5) ;
+		final int frameCountX = (int) Math.floor(image.width() / frameWidth) ;
+		final int frameCountY = (int) Math.floor(image.height() / frameHeight) ;
 
 		Mat result[][] = new Mat[frameCountX][frameCountY];
 		

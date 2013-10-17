@@ -3,7 +3,6 @@ package de.thatsich.bachelor.javafx.presentation.image;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
@@ -38,34 +37,15 @@ public class ImageInputPresenter extends AFXMLPresenter {
 	@Inject private CommandFactory commander;	
 	@Inject private ImageDatabase images;
 	@Inject private ImageFileChooser chooser;
-	
+
 	// ================================================== 
-	// Initializable Implementation 
+	// Initialization Implementation 
 	// ==================================================
 	@Override
-	public void initialize(URL url, ResourceBundle bundle) {
-		this.initImageEntryList();
+	public void initialize(URL location, ResourceBundle resource) {
+		
 	}
 	
-	/**
-	 * Initialize all ImageEntries
-	 */
-	private void initImageEntryList() {
-		final Path imageInputPath = Paths.get("input");
-		final EventHandler<WorkerStateEvent> handler = new InitImageSucceededHandler();
-		
-		this.images.getImageInputFolderPathProperty().set(imageInputPath);
-		this.commander.createInitImageEntryCommand(handler, imageInputPath).start();
-		this.log.info("Inialized ImageEntrie Retrieval.");
-	}
-	
-	private void initSelectedImageEntry() {
-		final EventHandler<WorkerStateEvent> handler = new InitSelectedImageEntrySucceededHandler();
-		
-		this.commander.createInitSelectedImageEntryCommand(handler).start();
-		this.log.info("Inialized last selected image entry Retrieval.");
-	}
-
 	// ================================================== 
 	// View Implementation 
 	// ==================================================
@@ -140,42 +120,7 @@ public class ImageInputPresenter extends AFXMLPresenter {
 	// ================================================== 
 	// Handler Implementation 
 	// ==================================================
-	/**
-	 * Handler for what should happen if the Command was successfull 
-	 * for selecting the last selected image entry
-	 * 
-	 * @author Minh
-	 */
-	private class InitSelectedImageEntrySucceededHandler implements EventHandler<WorkerStateEvent> {
-		@Override public void handle(WorkerStateEvent event) {
-			final int commandResult = (int) event.getSource().getValue();
-			log.info("Retrieved last selected image entry index.");
-			
-			final ImageEntry selectedImageEntry = images.getImageEntryListProperty().get().get(commandResult);
-			images.getSelectedImageEntryProperty().set(selectedImageEntry);
-		}
-		
-	}
 	
-	/**
-	 * Handler for what should happen if the Command was successfull 
-	 * for initializing all images entries
-	 * 
-	 * @author Minh
-	 */
-	@SuppressWarnings("unchecked")
-	private class InitImageSucceededHandler implements EventHandler<WorkerStateEvent> {
-		@Override public void handle(WorkerStateEvent event) {
-			
-			final List<ImageEntry> commandResult = (List<ImageEntry>) event.getSource().getValue();
-			log.info("Retrieved ImageEntr List");
-			
-			images.getImageEntryListProperty().get().addAll(commandResult);
-			
-			initSelectedImageEntry();
-		}
-		
-	}
 	
 	/**
 	 * Handler for what should happen if the Command was successfull 

@@ -27,7 +27,7 @@ public abstract class CSVService {
 	 * 
 	 * @throws IOException when writing is not possible
 	 */
-	public static void write(Path csvPath, List<float[]> values) throws IOException {
+	public static void write(Path csvPath, List<List<Float>> values) throws IOException {
 		if (csvPath == null) throw new InvalidParameterException("Path is null.");
 		if (values == null) throw new InvalidParameterException("Values is null.");
 		if (values.size() == 0) throw new InvalidParameterException("Values are empty.");
@@ -35,10 +35,10 @@ public abstract class CSVService {
 		final BufferedWriter writer = Files.newBufferedWriter(csvPath, StandardCharsets.US_ASCII);
 
 		for (int row = 0; row < values.size(); row++) {
-			for (int col = 0; col < values.get(row).length; col++) {
-				writer.write(String.valueOf(values.get(row)[col]));
+			for (int col = 0; col < values.get(row).size(); col++) {
+				writer.write(String.valueOf(values.get(row).get(col)).toString());
 				
-				if (col < values.get(row).length - 1) writer.write(",");
+				if (col < values.get(row).size() - 1) writer.write(",");
 			}
 			
 			if (row < values.size() - 1) writer.write("\n");

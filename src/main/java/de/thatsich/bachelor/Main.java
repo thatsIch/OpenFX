@@ -22,6 +22,8 @@ import de.thatsich.bachelor.javafx.presentation.DisplayView;
 import de.thatsich.core.guice.LoggerModule;
 import de.thatsich.core.guice.PostInitModule;
 
+// TODO nochmal alles durchgehen und schaun ob etwas selected ist
+// TODO wichtig besoners in den DAtenbanken
 
 /**
  * Main Execution Class
@@ -40,6 +42,7 @@ public class Main extends GuiceApplication {
 	 * @param args
 	 */
     public static void main(String[] args) {
+    	// Loading OpenCV Bindings
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         
         Main.launch(args);

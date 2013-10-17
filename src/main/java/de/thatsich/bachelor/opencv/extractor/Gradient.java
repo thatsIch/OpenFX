@@ -25,7 +25,7 @@ public class Gradient extends AFeatureExtractor {
 		if (image.empty()) throw new IllegalArgumentException("Image is empty.");
 		
 		MatOfFloat result = new MatOfFloat();
-		
+
 		Imgproc.Sobel(image, result, image.depth(), 1, 1);
 		
 		return result;
