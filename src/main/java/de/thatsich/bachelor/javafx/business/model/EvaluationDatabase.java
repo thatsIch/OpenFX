@@ -1,11 +1,12 @@
 package de.thatsich.bachelor.javafx.business.model;
 
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.collections.ObservableList;
-import javafx.scene.control.ChoiceBox;
+import javafx.collections.FXCollections;
 
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
@@ -28,15 +29,15 @@ public class EvaluationDatabase {
 	private final IntegerProperty frameSize = new SimpleIntegerProperty();
 	
 	// Feature Extractor
-	private final ObjectProperty<ObservableList<IFeatureExtractor>> featureExtractors = new ChoiceBox<IFeatureExtractor>().itemsProperty();
+	private final ListProperty<IFeatureExtractor> featureExtractors = new SimpleListProperty<IFeatureExtractor>(FXCollections.<IFeatureExtractor>observableArrayList());
 	private final ObjectProperty<IFeatureExtractor> selectedFeatureExtractor = new SimpleObjectProperty<IFeatureExtractor>();
 	
 	// Binary Classifier
-	private final ObjectProperty<ObservableList<IBinaryClassifier>> binaryClassifiers = new ChoiceBox<IBinaryClassifier>().itemsProperty();
+	private final ListProperty<IBinaryClassifier> binaryClassifiers = new SimpleListProperty<IBinaryClassifier>(FXCollections.<IBinaryClassifier>observableArrayList());
 	private final ObjectProperty<IBinaryClassifier> selectedBinaryClassifier = new SimpleObjectProperty<IBinaryClassifier>();
 	
 	// ErrorEntry
-	private final ObjectProperty<ObservableList<ErrorEntry>> errorEntries = new ChoiceBox<ErrorEntry>().itemsProperty();
+	private final ListProperty<ErrorEntry> errorEntries = new SimpleListProperty<ErrorEntry>(FXCollections.<ErrorEntry>observableArrayList());
 	private final ObjectProperty<ErrorEntry> selectedErrorEntry = new SimpleObjectProperty<ErrorEntry>();
 	
 	
@@ -183,15 +184,15 @@ public class EvaluationDatabase {
 	// Property Implementation
 	// ==================================================
 	// Feature Extractors
-	public ObjectProperty<ObservableList<IFeatureExtractor>> getFeatureExtractorsProperty() { return this.featureExtractors; }
+	public ListProperty<IFeatureExtractor> getFeatureExtractorsProperty() { return this.featureExtractors; }
 	public ObjectProperty<IFeatureExtractor> getSelectedFeatureExtractorProperty() { return this.selectedFeatureExtractor; }
 	
 	// Binary Classifiers
-	public ObjectProperty<ObservableList<IBinaryClassifier>> getBinaryClassifiersProperty() { return this.binaryClassifiers; }
+	public ListProperty<IBinaryClassifier> getBinaryClassifiersProperty() { return this.binaryClassifiers; }
 	public ObjectProperty<IBinaryClassifier> getSelectedBinaryClassifierProperty() { return this.selectedBinaryClassifier; }
 	
 	// Error Entries
-	public ObjectProperty<ObservableList<ErrorEntry>> getErrorEntriesProperty() { return this.errorEntries; }
+	public ListProperty<ErrorEntry> getErrorEntriesProperty() { return this.errorEntries; }
 	public ObjectProperty<ErrorEntry> getSelectedErrorEntryProperty() { return this.selectedErrorEntry; }
 }
 
