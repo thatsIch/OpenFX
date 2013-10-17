@@ -11,8 +11,6 @@ import java.util.List;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.concurrent.Task;
-import javafx.concurrent.WorkerStateEvent;
-import javafx.event.EventHandler;
 
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
@@ -25,8 +23,7 @@ public class InitErrorEntryListCommand extends Command<List<ErrorEntry>> {
 	private final ObjectProperty<Path> errorInputFolderPath = new SimpleObjectProperty<Path>();
 	
 	@Inject
-	protected InitErrorEntryListCommand(@Assisted EventHandler<WorkerStateEvent> handler, @Assisted Path errorInputFolderPath) {
-		super(handler);
+	protected InitErrorEntryListCommand(@Assisted Path errorInputFolderPath) {
 		this.errorInputFolderPath.set(errorInputFolderPath);
 	}
 

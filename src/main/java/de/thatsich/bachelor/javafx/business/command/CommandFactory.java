@@ -2,9 +2,6 @@ package de.thatsich.bachelor.javafx.business.command;
 
 import java.nio.file.Path;
 
-import javafx.concurrent.WorkerStateEvent;
-import javafx.event.EventHandler;
-
 import org.opencv.core.Mat;
 
 import com.google.inject.assistedinject.Assisted;
@@ -16,24 +13,25 @@ import de.thatsich.core.opencv.IErrorGenerator;
 import de.thatsich.core.opencv.IFeatureExtractor;
 
 public interface CommandFactory {
-	public InitImageEntryListCommand createInitImageEntryListCommand(EventHandler<WorkerStateEvent> handler, Path imageInputFolderPath);
-	public SetLastImageEntryIndexCommand createSetLastImageEntryIndexCommand(EventHandler<WorkerStateEvent> handler, int lastImageEntryIndex);
-	public GetLastImageEntryIndexCommand createGetLastImageEntryIndexCommand(EventHandler<WorkerStateEvent> handler);
-	public CopyFileCommand createCopyFileCommand(EventHandler<WorkerStateEvent> handler, @Assisted("origin") Path originPath, @Assisted("copy") Path copyPath);
-	public DeleteImageEntryCommand createDeleteImageEntryCommand(EventHandler<WorkerStateEvent> handler, ImageEntry entry);
+	public InitImageEntryListCommand createInitImageEntryListCommand(Path imageInputFolderPath);
+	public SetLastImageEntryIndexCommand createSetLastImageEntryIndexCommand(int lastImageEntryIndex);
+	public GetLastImageEntryIndexCommand createGetLastImageEntryIndexCommand();
+	public CopyFileCommand createCopyFileCommand(@Assisted("origin") Path originPath, @Assisted("copy") Path copyPath);
+	public DeleteImageEntryCommand createDeleteImageEntryCommand(ImageEntry entry);
 	
-	public InitErrorEntryListCommand createInitErrorEntryListCommand(EventHandler<WorkerStateEvent> handler, Path errorInputFolderPath);
-	public InitErrorGeneratorListCommand createInitErrorGeneratorListCommand(EventHandler<WorkerStateEvent> handler); 
-	public GetLastErrorGeneratorIndexCommand createGetLastErrorGeneratorIndexCommand(EventHandler<WorkerStateEvent> handler);
-	public GetLastErrorEntryIndexCommand createGetLastErrorEntryIndexCommand(EventHandler<WorkerStateEvent> handler);
-	public SetLastErrorEntryIndexCommand createSetLastErrorEntryIndexCommand(EventHandler<WorkerStateEvent> handler, int lastErrorEntryIndex);
-	public ApplyErrorCommand createApplyErrorCommand(EventHandler<WorkerStateEvent> handler, Mat imageMat, Path imagePath, IErrorGenerator generator);
-	public DeleteErrorEntryCommand createDeleteErrorEntryCommand(EventHandler<WorkerStateEvent> handler, ErrorEntry entry);
-	public CreateErrorImageCommand createCreateErrorImageCommand(EventHandler<WorkerStateEvent> handler, ErrorEntry entry);
+	public InitErrorEntryListCommand createInitErrorEntryListCommand(Path errorInputFolderPath);
+	public InitErrorGeneratorListCommand createInitErrorGeneratorListCommand(); 
+	public GetLastErrorGeneratorIndexCommand createGetLastErrorGeneratorIndexCommand();
+	public GetLastErrorEntryIndexCommand createGetLastErrorEntryIndexCommand();
+	public SetLastErrorEntryIndexCommand createSetLastErrorEntryIndexCommand(int lastErrorEntryIndex);
+	public ApplyErrorCommand createApplyErrorCommand(Mat imageMat, Path imagePath, IErrorGenerator generator);
+	public DeleteErrorEntryCommand createDeleteErrorEntryCommand(ErrorEntry entry);
+	public CreateErrorImageCommand createCreateErrorImageCommand(ErrorEntry entry);
 	
-	public InitFeatureExtractorListCommand createInitFeatureExtractorListCommand(EventHandler<WorkerStateEvent> handler);
-	public InitFeatureVectorListCommand createInitFeatureVectorListCommand(EventHandler<WorkerStateEvent> handler, Path folderPath);
-	public GetLastFeatureExtractorIndexCommand createGetLastFeatureExtractorIndexCommand(EventHandler<WorkerStateEvent> handler);
-	public ExtractFeatureVectorFromErrorEntryCommand createExtractFeatureVectorCommand(EventHandler<WorkerStateEvent> handler, ErrorEntry errorEntry, IFeatureExtractor extractor, int frameSize);
-	public DeleteFeatureVectorCommand createRemoveFeatureVectorCommand(EventHandler<WorkerStateEvent> handler, FeatureVector featureVector);
+	public InitFeatureExtractorListCommand createInitFeatureExtractorListCommand();
+	public InitFeatureVectorListCommand createInitFeatureVectorListCommand(Path folderPath);
+	public GetLastFeatureExtractorIndexCommand createGetLastFeatureExtractorIndexCommand();
+	public SetLastFeatureExtractorIndexCommand createSetLastFeatureExtractorIndexCommand(int lastFeatureExtractorIndex);
+	public ExtractFeatureVectorFromErrorEntryCommand createExtractFeatureVectorCommand(ErrorEntry errorEntry, IFeatureExtractor extractor, int frameSize);
+	public DeleteFeatureVectorCommand createRemoveFeatureVectorCommand(FeatureVector featureVector);
 }

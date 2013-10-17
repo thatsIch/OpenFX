@@ -5,8 +5,6 @@ import java.nio.file.Path;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.concurrent.Task;
-import javafx.concurrent.WorkerStateEvent;
-import javafx.event.EventHandler;
 
 import org.opencv.core.Mat;
 
@@ -23,8 +21,7 @@ public class CreateErrorImageCommand extends Command<ErrorEntry> {
 	final private ObjectProperty<ErrorEntry> entry = new SimpleObjectProperty<ErrorEntry>();
 	
 	@Inject
-	public CreateErrorImageCommand(@Assisted EventHandler<WorkerStateEvent> handler, @Assisted ErrorEntry entry) {
-		super(handler);
+	public CreateErrorImageCommand(@Assisted ErrorEntry entry) {
 		this.entry.set(entry);
 	}
 	

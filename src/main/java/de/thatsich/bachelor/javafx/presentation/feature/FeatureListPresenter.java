@@ -21,6 +21,7 @@ import javafx.util.Callback;
 import com.google.inject.Inject;
 
 import de.thatsich.bachelor.javafx.business.command.CommandFactory;
+import de.thatsich.bachelor.javafx.business.command.InitFeatureVectorListCommand;
 import de.thatsich.bachelor.javafx.business.model.FeatureSpace;
 import de.thatsich.bachelor.javafx.business.model.entity.FeatureVector;
 import de.thatsich.bachelor.service.ConfigService;
@@ -90,7 +91,9 @@ public class FeatureListPresenter extends AFXMLPresenter {
 		final Path folderPath = Paths.get("featurevectors");
 		final InitFeatureVectorListSucceededHandler handler = new InitFeatureVectorListSucceededHandler();
 		
-		this.commander.createInitFeatureVectorListCommand(handler, folderPath).start();
+		final InitFeatureVectorListCommand command = this.commander.createInitFeatureVectorListCommand(folderPath);
+		command.setOnSucceeded(handler);
+		command.start();
 		this.log.info("Initialized FeatureVectorList Creation.");
 	}
 

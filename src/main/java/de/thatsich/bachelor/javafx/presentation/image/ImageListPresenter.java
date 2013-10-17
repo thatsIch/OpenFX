@@ -23,6 +23,7 @@ import com.google.inject.Inject;
 import de.thatsich.bachelor.javafx.business.command.CommandFactory;
 import de.thatsich.bachelor.javafx.business.command.GetLastImageEntryIndexCommand;
 import de.thatsich.bachelor.javafx.business.command.InitImageEntryListCommand;
+import de.thatsich.bachelor.javafx.business.command.SetLastImageEntryIndexCommand;
 import de.thatsich.bachelor.javafx.business.model.ImageDatabase;
 import de.thatsich.bachelor.javafx.business.model.entity.ImageEntry;
 import de.thatsich.core.javafx.AFXMLPresenter;
@@ -67,7 +68,10 @@ public class ImageListPresenter extends AFXMLPresenter {
 				images.getSelectedImageEntryProperty().set(newValue);
 				
 				final int index = nodeTableViewImageList.getSelectionModel().getSelectedIndex();
-				commander.createSetLastImageEntryIndexCommand(new SetLastImageEntryIndexSucceededHandler(), index).start();
+				final SetLastImageEntryIndexSucceededHandler handler = new SetLastImageEntryIndexSucceededHandler();
+				final SetLastImageEntryIndexCommand command = commander.createSetLastImageEntryIndexCommand(index);
+				command.setOnSucceeded(handler);
+				command.start();
 				log.info("Seleced index " + index);
 			}
 		});
@@ -86,12 +90,14 @@ public class ImageListPresenter extends AFXMLPresenter {
 		this.images.getImageInputFolderPathProperty().set(imageInputPath);
 		this.log.info("Set ImageInputFolderPath to Model.");
 		
-		final InitImageEntryListCommand initCommand = this.commander.createInitImageEntryListCommand(initHandler, imageInputPath);
+		final InitImageEntryListCommand initCommand = this.commander.createInitImageEntryListCommand(imageInputPath);
+		initCommand.setOnSucceeded(initHandler);
 		initCommand.setExecutor(executor);
 		initCommand.start();
 		this.log.info("Initialized ImageEntryList Retrieval.");
 		
-		final GetLastImageEntryIndexCommand lastCommand = this.commander.createGetLastImageEntryIndexCommand(lastHandler);
+		final GetLastImageEntryIndexCommand lastCommand = this.commander.createGetLastImageEntryIndexCommand();
+		lastCommand.setOnSucceeded(lastHandler);
 		lastCommand.setExecutor(executor);
 		lastCommand.start();
 		this.log.info("Initialized LastImageEntryIndex Retrieval.");

@@ -9,8 +9,6 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.concurrent.Task;
-import javafx.concurrent.WorkerStateEvent;
-import javafx.event.EventHandler;
 
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
@@ -33,8 +31,7 @@ public class ExtractFeatureVectorFromErrorEntryCommand extends Command<List<Feat
 	private final IntegerProperty frameSize = new SimpleIntegerProperty();
 	
 	@Inject
-	public ExtractFeatureVectorFromErrorEntryCommand(@Assisted EventHandler<WorkerStateEvent> handler, @Assisted ErrorEntry errorEntry, @Assisted IFeatureExtractor extractor, @Assisted int frameSize) {
-		super(handler);
+	public ExtractFeatureVectorFromErrorEntryCommand(@Assisted ErrorEntry errorEntry, @Assisted IFeatureExtractor extractor, @Assisted int frameSize) {
 		this.errorEntry.set(errorEntry);
 		this.featureExtractor.set(extractor);
 		this.frameSize.set(frameSize);

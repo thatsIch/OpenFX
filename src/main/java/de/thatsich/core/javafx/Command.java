@@ -11,8 +11,4 @@ import de.thatsich.core.Log;
 public abstract class Command<T> extends Service<T> {
 	// Injects
 	@Inject protected Log log;
-	
-	protected Command(EventHandler<WorkerStateEvent> handler) {
-		this.setOnSucceeded(handler);
-	}
 }

@@ -14,6 +14,7 @@ import javafx.fxml.FXML;
 import com.google.inject.Inject;
 
 import de.thatsich.bachelor.javafx.business.command.CommandFactory;
+import de.thatsich.bachelor.javafx.business.command.CopyFileCommand;
 import de.thatsich.bachelor.javafx.business.command.DeleteImageEntryCommand;
 import de.thatsich.bachelor.javafx.business.model.ImageDatabase;
 import de.thatsich.bachelor.javafx.business.model.entity.ImageEntry;
@@ -64,7 +65,10 @@ public class ImageInputPresenter extends AFXMLPresenter {
 		Path copyPath = this.images.getImageInputFolderPathProperty().get().resolve(filePath.getFileName());
 		this.log.info("Created new Path: " + copyPath);
 		
-		this.commander.createCopyFileCommand(new AddImageSucceededHandler(), filePath, copyPath).start();
+		final AddImageSucceededHandler handler = new AddImageSucceededHandler();
+		final CopyFileCommand command = this.commander.createCopyFileCommand(filePath, copyPath);
+		command.setOnSucceeded(handler);
+		command.start();
 		this.log.info("File copied and inserted into EntryList.");
 	}
 	
@@ -82,7 +86,10 @@ public class ImageInputPresenter extends AFXMLPresenter {
 			return;
 		}
 		
-		this.commander.createDeleteImageEntryCommand(new DeleteSucceededHandler(), choice).start();
+		final DeleteSucceededHandler handler = new DeleteSucceededHandler();
+		final DeleteImageEntryCommand command = this.commander.createDeleteImageEntryCommand(choice);
+		command.setOnSucceeded(handler);
+		command.start();
 		this.log.info("File deleted and removed from EntryList.");
 	}
 	
@@ -97,7 +104,9 @@ public class ImageInputPresenter extends AFXMLPresenter {
 		this.log.info("Initialized Executor for resetting all Errors.");
 		
 		for (ImageEntry entry : imageEntryList) {
-			DeleteImageEntryCommand command = this.commander.createDeleteImageEntryCommand(new DeleteSucceededHandler(), entry);
+			final DeleteSucceededHandler handler = new DeleteSucceededHandler();
+			final DeleteImageEntryCommand command = this.commander.createDeleteImageEntryCommand(entry);
+			command.setOnSucceeded(handler);
 			command.setExecutor(executor);
 			command.start();
 		}

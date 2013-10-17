@@ -3,8 +3,6 @@ package de.thatsich.bachelor.javafx.business.command;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.concurrent.Task;
-import javafx.concurrent.WorkerStateEvent;
-import javafx.event.EventHandler;
 
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
@@ -21,8 +19,7 @@ public class SetLastErrorEntryIndexCommand extends Command<Void> {
 	@Inject ConfigService config;
 	
 	@Inject
-	protected SetLastErrorEntryIndexCommand(@Assisted EventHandler<WorkerStateEvent> handler, @Assisted int lastErrorEntryIndex) {
-		super(handler);
+	protected SetLastErrorEntryIndexCommand(@Assisted int lastErrorEntryIndex) {
 		this.lastErrorEntryIndex.set(lastErrorEntryIndex);
 	}
 

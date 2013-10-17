@@ -11,8 +11,6 @@ import java.util.List;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.concurrent.Task;
-import javafx.concurrent.WorkerStateEvent;
-import javafx.event.EventHandler;
 
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
@@ -25,8 +23,7 @@ public class InitImageEntryListCommand extends Command<List<ImageEntry>> {
 	private final ObjectProperty<Path> imageInputPath = new SimpleObjectProperty<Path>();
 	
 	@Inject
-	protected InitImageEntryListCommand(@Assisted EventHandler<WorkerStateEvent> handler, @Assisted Path imageInputPath) {
-		super(handler);
+	protected InitImageEntryListCommand(@Assisted Path imageInputPath) {
 		this.imageInputPath.set(imageInputPath);
 	}
 

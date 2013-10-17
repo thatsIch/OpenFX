@@ -19,8 +19,10 @@ import com.google.inject.Inject;
 
 import de.thatsich.bachelor.javafx.business.command.CommandFactory;
 import de.thatsich.bachelor.javafx.business.command.DeleteFeatureVectorCommand;
+import de.thatsich.bachelor.javafx.business.command.ExtractFeatureVectorFromErrorEntryCommand;
 import de.thatsich.bachelor.javafx.business.command.GetLastFeatureExtractorIndexCommand;
 import de.thatsich.bachelor.javafx.business.command.InitFeatureExtractorListCommand;
+import de.thatsich.bachelor.javafx.business.command.SetLastFeatureExtractorIndexCommand;
 import de.thatsich.bachelor.javafx.business.model.ErrorDatabase;
 import de.thatsich.bachelor.javafx.business.model.FeatureSpace;
 import de.thatsich.bachelor.javafx.business.model.entity.ErrorEntry;
@@ -59,12 +61,14 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 		final GetLastFeatureExtractorIndexSucceededHandler lastHandler = new GetLastFeatureExtractorIndexSucceededHandler(); 
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(1);
 		
-		final InitFeatureExtractorListCommand initCommand =	this.commander.createInitFeatureExtractorListCommand(initHandler);
+		final InitFeatureExtractorListCommand initCommand =	this.commander.createInitFeatureExtractorListCommand();
+		initCommand.setOnSucceeded(initHandler);
 		initCommand.setExecutor(executor);
 		initCommand.start();
 		this.log.info("Initialized FeatureExtractorList Retrieval.");
 		
-		final GetLastFeatureExtractorIndexCommand lastCommand = this.commander.createGetLastFeatureExtractorIndexCommand(lastHandler);
+		final GetLastFeatureExtractorIndexCommand lastCommand = this.commander.createGetLastFeatureExtractorIndexCommand();
+		lastCommand.setOnSucceeded(lastHandler);
 		lastCommand.setExecutor(executor);
 		lastCommand.start();
 		this.log.info("Initialized LastFeatureExtractorIndex Retrieval.");
@@ -89,13 +93,11 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 		
 		this.nodeChoiceBoxFeatureExtractor.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
 			@Override public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-				config.setLastFeatureExtractorIndexInt(newValue.intValue());
+				final SetLastFeatureExtractorIndexCommand lastCommand = commander.createSetLastFeatureExtractorIndexCommand(newValue.intValue());
+				lastCommand.start();
 			}
 		});
 		this.log.info("Bound ChoiceBoxFeatureExtractor to Config.");
-		
-		this.nodeChoiceBoxFeatureExtractor.getSelectionModel().select(this.config.getLastFeatureExtractorIndexInt());
-		this.log.info("Initialized ChoiceBoxFeatureExtractor from Config.");
 	}	
 	
 	/**
@@ -160,7 +162,11 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 		if (errorEntry == null) throw new InvalidParameterException("ErrorEntry is null.");
 		if (frameSize == 0) throw new InvalidParameterException("FrameSize is 0.");
 		
-		this.commander.createExtractFeatureVectorCommand(new ExtractSucceededHandler(), errorEntry, extractor, frameSize).start();
+		final ExtractSucceededHandler handler = new ExtractSucceededHandler();
+		final ExtractFeatureVectorFromErrorEntryCommand extractCommand = this.commander.createExtractFeatureVectorCommand(errorEntry, extractor, frameSize);
+		extractCommand.setOnSucceeded(handler);
+		extractCommand.start();
+		
 		this.log.info("FeatureVector deleted and removed from FeatureVectorList.");
 	}
 	
@@ -173,7 +179,10 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 			return;
 		}
 		
-		this.commander.createRemoveFeatureVectorCommand(new RemoveSucceededHandler(), fv).start();
+		final RemoveSucceededHandler handler = new RemoveSucceededHandler();
+		final DeleteFeatureVectorCommand command = this.commander.createRemoveFeatureVectorCommand(fv);
+		command.setOnSucceeded(handler);
+		command.start();
 		this.log.info("FeatureVector deleted and removed from FeatureVectorList.");
 	}
 	
@@ -182,7 +191,9 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 		this.log.info("Initialized Executor for resetting all FeatureVectors.");
 		
 		for (FeatureVector fv : this.featureSpace.getFeatureVectorListProperty().get()) {
-			DeleteFeatureVectorCommand command = this.commander.createRemoveFeatureVectorCommand(new RemoveSucceededHandler(), fv);
+			final RemoveSucceededHandler handler = new RemoveSucceededHandler();
+			final DeleteFeatureVectorCommand command = this.commander.createRemoveFeatureVectorCommand(fv);
+			command.setOnSucceeded(handler);
 			command.setExecutor(executor);
 			command.start();
 			this.log.info("FeatureVector Deletion executed.");

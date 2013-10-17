@@ -3,8 +3,6 @@ package de.thatsich.bachelor.javafx.business.command;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.concurrent.Task;
-import javafx.concurrent.WorkerStateEvent;
-import javafx.event.EventHandler;
 
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
@@ -20,8 +18,7 @@ public class DeleteFeatureVectorCommand extends Command<FeatureVector> {
 	// Injections
 	
 	@Inject
-	public DeleteFeatureVectorCommand(@Assisted EventHandler<WorkerStateEvent> handler, @Assisted FeatureVector featureVector) {
-		super(handler);
+	public DeleteFeatureVectorCommand(@Assisted FeatureVector featureVector) {
 		this.featureVector.set(featureVector);
 	}
 	

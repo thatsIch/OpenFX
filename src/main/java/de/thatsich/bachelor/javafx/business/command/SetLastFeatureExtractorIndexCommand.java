@@ -10,24 +10,24 @@ import com.google.inject.assistedinject.Assisted;
 import de.thatsich.bachelor.service.ConfigService;
 import de.thatsich.core.javafx.Command;
 
-public class SetLastImageEntryIndexCommand extends Command<Void> {
+public class SetLastFeatureExtractorIndexCommand extends Command<Void> {
 
 	// Properties
-	private final IntegerProperty lastImageEntryIndex = new SimpleIntegerProperty();
+	private final IntegerProperty lastFeatureExtractorIndex = new SimpleIntegerProperty();
 	
 	// Injects
 	@Inject ConfigService config;
 	
 	@Inject
-	protected SetLastImageEntryIndexCommand(@Assisted int lastImageEntryIndex) {
-		this.lastImageEntryIndex.set(lastImageEntryIndex);
+	protected SetLastFeatureExtractorIndexCommand(@Assisted int lastFeatureExtractorIndex) {
+		this.lastFeatureExtractorIndex.set(lastFeatureExtractorIndex);
 	}
 
 	@Override
 	protected Task<Void> createTask() {
 		return new Task<Void>() {
 			@Override protected Void call() throws Exception {
-				config.setLastImageIndexInt(lastImageEntryIndex.get());
+				config.setLastFeatureExtractorIndexInt(lastFeatureExtractorIndex.get());
 				
 				return null;
 			}

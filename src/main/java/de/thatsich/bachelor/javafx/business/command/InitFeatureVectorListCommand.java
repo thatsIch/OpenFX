@@ -9,13 +9,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.opencv.core.MatOfFloat;
-
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.concurrent.Task;
-import javafx.concurrent.WorkerStateEvent;
-import javafx.event.EventHandler;
+
+import org.opencv.core.MatOfFloat;
 
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
@@ -30,8 +28,7 @@ public class InitFeatureVectorListCommand extends Command<List<FeatureVector>> {
 	private final ObjectProperty<Path> featureVectorFolderPath = new SimpleObjectProperty<Path>();
 	
 	@Inject
-	protected InitFeatureVectorListCommand(@Assisted EventHandler<WorkerStateEvent> handler, @Assisted Path featureVectorFolderPath) {
-		super(handler);
+	protected InitFeatureVectorListCommand(@Assisted Path featureVectorFolderPath) {
 		this.featureVectorFolderPath.set(featureVectorFolderPath);
 	}
 

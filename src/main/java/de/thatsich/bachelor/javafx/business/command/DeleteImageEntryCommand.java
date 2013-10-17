@@ -7,8 +7,6 @@ import java.util.concurrent.CancellationException;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.concurrent.Task;
-import javafx.concurrent.WorkerStateEvent;
-import javafx.event.EventHandler;
 
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
@@ -21,8 +19,7 @@ public class DeleteImageEntryCommand extends Command<ImageEntry> {
 	final private ObjectProperty<ImageEntry> entry = new SimpleObjectProperty<ImageEntry>();
 	
 	@Inject
-	public DeleteImageEntryCommand(@Assisted EventHandler<WorkerStateEvent> handler, @Assisted ImageEntry entry) {
-		super(handler);
+	public DeleteImageEntryCommand(@Assisted ImageEntry entry) {
 		this.entry.set(entry);
 	}
 	

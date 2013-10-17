@@ -4,12 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.concurrent.Task;
-import javafx.concurrent.WorkerStateEvent;
-import javafx.event.EventHandler;
-
-import com.google.inject.Inject;
-import com.google.inject.assistedinject.Assisted;
-
 import de.thatsich.bachelor.opencv.extractor.Gradient;
 import de.thatsich.bachelor.opencv.extractor.GrayLevelCooccurenceHistogram;
 import de.thatsich.bachelor.opencv.extractor.HuMoments;
@@ -20,11 +14,6 @@ import de.thatsich.core.javafx.Command;
 import de.thatsich.core.opencv.IFeatureExtractor;
 
 public class InitFeatureExtractorListCommand extends Command<List<IFeatureExtractor>> {
-
-	@Inject
-	protected InitFeatureExtractorListCommand(@Assisted EventHandler<WorkerStateEvent> handler) {
-		super(handler);
-	}
 
 	@Override
 	protected Task<List<IFeatureExtractor>> createTask() {

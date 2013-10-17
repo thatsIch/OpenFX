@@ -5,8 +5,6 @@ import java.nio.file.Path;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.concurrent.Task;
-import javafx.concurrent.WorkerStateEvent;
-import javafx.event.EventHandler;
 
 import org.opencv.core.Mat;
 
@@ -25,8 +23,7 @@ public class ApplyErrorCommand extends Command<ErrorEntry> {
 	final private ObjectProperty<IErrorGenerator> generator = new SimpleObjectProperty<IErrorGenerator>();
 	
 	@Inject
-	public ApplyErrorCommand(@Assisted EventHandler<WorkerStateEvent> handler, @Assisted Mat imageMat, @Assisted Path imagePath, @Assisted IErrorGenerator generator) {
-		super(handler);
+	public ApplyErrorCommand(@Assisted Mat imageMat, @Assisted Path imagePath, @Assisted IErrorGenerator generator) {
 		this.imageMat.set(imageMat);
 		this.imagePath.set(imagePath);
 		this.generator.set(generator);
