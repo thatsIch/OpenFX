@@ -24,7 +24,7 @@ import de.thatsich.bachelor.javafx.business.command.GetLastFeatureExtractorIndex
 import de.thatsich.bachelor.javafx.business.command.GetLastFrameSizeCommand;
 import de.thatsich.bachelor.javafx.business.command.InitFeatureExtractorListCommand;
 import de.thatsich.bachelor.javafx.business.command.SetLastFeatureExtractorIndexCommand;
-import de.thatsich.bachelor.javafx.business.model.ErrorDatabase;
+import de.thatsich.bachelor.javafx.business.model.ErrorEntryList;
 import de.thatsich.bachelor.javafx.business.model.FeatureSpace;
 import de.thatsich.bachelor.javafx.business.model.entity.ErrorEntry;
 import de.thatsich.bachelor.javafx.business.model.entity.FeatureVector;
@@ -41,7 +41,7 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 	// Injects
 //	@Inject private ConfigService config;
 	@Inject private CommandFactory commander;
-	@Inject private ErrorDatabase errorDatabase;
+	@Inject private ErrorEntryList errorEntryList;
 	@Inject private FeatureSpace featureSpace;
 	
 	@Override
@@ -161,7 +161,7 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 	// ==================================================
 	@FXML private void onExtractAction() {
 		final IFeatureExtractor extractor = this.featureSpace.getSelectedFeatureExtractorProperty().get();
-		final ErrorEntry errorEntry = this.errorDatabase.getSelectedErrorEntryProperty().get();
+		final ErrorEntry errorEntry = this.errorEntryList.getSelectedErrorEntryProperty().get();
 		final int frameSize = this.featureSpace.getFrameSizeProperty().get();
 		this.log.info("Extracted all necessary information for a FeatureVector.");
 		

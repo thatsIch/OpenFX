@@ -10,7 +10,7 @@ import javafx.util.StringConverter;
 
 import com.google.inject.Inject;
 
-import de.thatsich.bachelor.javafx.business.model.ErrorDatabase;
+import de.thatsich.bachelor.javafx.business.model.ErrorEntryList;
 import de.thatsich.bachelor.javafx.business.model.EvaluationDatabase;
 import de.thatsich.bachelor.javafx.business.model.entity.ErrorEntry;
 import de.thatsich.core.Log;
@@ -24,7 +24,7 @@ public class ClassificationInputPresenter implements Initializable {
 
 	// Injects
 	@Inject private Log log;
-	@Inject private ErrorDatabase errorDatabase;
+	@Inject private ErrorEntryList errorEntryList;
 	@Inject private EvaluationDatabase evalDatabase;
 	
 	@Override
@@ -72,7 +72,7 @@ public class ClassificationInputPresenter implements Initializable {
 		this.nodeChoiceBoxSample.valueProperty().bindBidirectional(this.evalDatabase.getSelectedErrorEntryProperty());
 		this.log.info("Bound ChoiceBoxDisplayedError to Model.");
 		
-		this.evalDatabase.getErrorEntriesProperty().bind(this.errorDatabase.getErrorEntryListProperty());
+		this.evalDatabase.getErrorEntriesProperty().bind(this.errorEntryList.getErrorEntryListProperty());
 		this.log.info("Bound both ErrorEntryLists in Models together.");
 	}
 	

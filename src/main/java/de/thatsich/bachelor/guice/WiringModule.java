@@ -3,7 +3,6 @@ package de.thatsich.bachelor.guice;
 import com.google.inject.AbstractModule;
 import com.google.inject.Scopes;
 
-import de.thatsich.bachelor.javafx.business.model.ErrorDatabase;
 import de.thatsich.bachelor.javafx.business.model.EvaluationDatabase;
 import de.thatsich.bachelor.javafx.business.model.FeatureSpace;
 import de.thatsich.bachelor.javafx.business.model.ImageDatabase;
@@ -69,7 +68,6 @@ public class WiringModule extends AbstractModule {
 	
 	private void mapModels() {
 		super.bind(ImageDatabase.class).in(Scopes.SINGLETON);
-		super.bind(ErrorDatabase.class).in(Scopes.SINGLETON);
 		super.bind(FeatureSpace.class).in(Scopes.SINGLETON);
 		super.bind(EvaluationDatabase.class).in(Scopes.SINGLETON);
 	}
