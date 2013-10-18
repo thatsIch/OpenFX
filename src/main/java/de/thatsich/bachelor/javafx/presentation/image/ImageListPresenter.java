@@ -137,7 +137,7 @@ public class ImageListPresenter extends AFXMLPresenter {
 			final Integer commandResult = (Integer) event.getSource().getValue();
 			log.info("Retrieved last selected image entry index.");
 			
-			if (commandResult != null && commandResult > 0 && imageEntries.getImageEntryListProperty().size() > commandResult) {
+			if (commandResult != null && commandResult >= 0 && imageEntries.getImageEntryListProperty().size() > commandResult) {
 				final ImageEntry selectedImageEntry = imageEntries.getImageEntryListProperty().get(commandResult); 
 				imageEntries.getSelectedImageEntryProperty().set(selectedImageEntry);
 				log.info("Set last selected image entry index in Model.");
