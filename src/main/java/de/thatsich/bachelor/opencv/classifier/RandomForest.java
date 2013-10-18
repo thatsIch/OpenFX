@@ -7,7 +7,6 @@ import org.opencv.core.TermCriteria;
 import org.opencv.ml.CvRTParams;
 import org.opencv.ml.CvRTrees;
 
-import de.thatsich.core.Log;
 import de.thatsich.core.opencv.ABinaryClassifier;
 
 public class RandomForest extends ABinaryClassifier {
@@ -16,15 +15,11 @@ public class RandomForest extends ABinaryClassifier {
 	private final CvRTParams params;
 	private boolean isTrained;
 	
-	// Injections
-	private final Log log;
-	
 	/**
 	 * 
 	 * @param log
 	 */
-	public RandomForest(Log log) {
-		this.log = log;
+	public RandomForest() {
 		this.trees = new CvRTrees();
 		
 		this.params = new CvRTParams();

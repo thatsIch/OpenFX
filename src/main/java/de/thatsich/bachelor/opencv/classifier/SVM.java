@@ -5,29 +5,16 @@ import org.opencv.core.Mat;
 import org.opencv.core.MatOfFloat;
 import org.opencv.ml.CvSVM;
 
-import com.google.inject.Inject;
-
-import de.thatsich.core.Log;
 import de.thatsich.core.opencv.ABinaryClassifier;
 
 public class SVM extends ABinaryClassifier {
 
-	final CvSVM svm;
-	boolean isTrained;
-	
-	// Injects
-	private final Log log; 
-	
-	@Inject
-	public SVM(Log log) {
-		this.log = log;
-		this.svm = new CvSVM();
-		this.isTrained = false;
-	}
-	
+	private final CvSVM svm = new CvSVM();
+	private boolean isTrained = false;
+
 	@Override
 	public void train(MatOfFloat positiveTrainData, MatOfFloat negativeTrainData) {
-		
+
 		// Labels
 		final Mat positiveLabels = Mat.ones(positiveTrainData.rows(), 1, CvType.CV_8U);
 		final Mat negativeLabels = Mat.zeros(negativeTrainData.rows(), 1, CvType.CV_8U);

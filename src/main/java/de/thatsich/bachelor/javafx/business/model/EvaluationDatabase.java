@@ -59,7 +59,6 @@ public class EvaluationDatabase {
 		this.initBinaryClassifiers();
 	}
 	
-	
 	/**
 	 * Initialize Binary Classifiers
 	 * - adding all known to the list
@@ -67,8 +66,8 @@ public class EvaluationDatabase {
 	 */
 	private void initBinaryClassifiers() {
 		this.binaryClassifiers.get().addAll(
-			new RandomForest(this.log),
-			new SVM(this.log)
+			new RandomForest(),
+			new SVM()
 		);
 		this.log.info("Initialized Binary Classifiers.");
 		

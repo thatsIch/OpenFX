@@ -1,11 +1,18 @@
 package de.thatsich.core.opencv;
 
+import com.google.inject.Inject;
+
+import de.thatsich.core.Log;
 import javafx.util.StringConverter;
 
 
 public abstract class ABinaryClassifier implements IBinaryClassifier {
 	
+	// Constants
 	public static Converter CONVERTER = new Converter();
+	
+	// Injects
+	@Inject protected Log log; 
 	
 	@Override
 	public String getName() {

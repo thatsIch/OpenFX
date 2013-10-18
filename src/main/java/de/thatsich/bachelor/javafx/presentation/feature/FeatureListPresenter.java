@@ -86,7 +86,6 @@ public class FeatureListPresenter extends AFXMLPresenter {
 		this.nodeTableViewFeatureVectorList.getSelectionModel().select(index);		
 	}
 	
-	
 	private void initFeatureVectorList() {
 		final Path folderPath = Paths.get("featurevectors");
 		final InitFeatureVectorListSucceededHandler handler = new InitFeatureVectorListSucceededHandler();
