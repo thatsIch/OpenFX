@@ -21,6 +21,7 @@ public class ConfigService extends AConfiguration {
 	private static final String LAST_FRAME_SIZE = "last_frame_size";
 	private static final String LAST_FEATURE_EXTRACTOR_INDEX = "last_feature_extractor";
 	private static final String LAST_FEATURE_VECTOR_INDEX = "last_feature_vector_index";
+	private static final String LAST_BINARY_CLASSIFIER_INDEX = "last_binary_classifier_index";
 	
 	/**
 	 * 
@@ -33,6 +34,7 @@ public class ConfigService extends AConfiguration {
 	private static final int DEFAULT_LAST_FRAME_SIZE = 2;
 	private static final int DEFAULT_LAST_FEATURE_EXTRACTOR_INDEX = 0;
 	private static final int DEFAULT_LAST_FEATURE_VECTOR_INDEX = 0;
+	private static final int DEFAULT_LAST_BINARY_CLASSIFIER_INDEX = 0;
 	
 	// ================================================== 
 	// Getter Implementation 
@@ -93,6 +95,13 @@ public class ConfigService extends AConfiguration {
 		return super.get(LAST_FEATURE_VECTOR_INDEX, DEFAULT_LAST_FEATURE_VECTOR_INDEX);
 	}
 	
+	/**
+	 * 
+	 */
+	public int getLastBinaryClassifierIndexInt() {
+		return super.get(LAST_BINARY_CLASSIFIER_INDEX, DEFAULT_LAST_BINARY_CLASSIFIER_INDEX);
+	}
+	
 	// ================================================== 
 	// Setter Implementation 
 	// ==================================================
@@ -150,5 +159,12 @@ public class ConfigService extends AConfiguration {
 	 */
 	public void setLastFeatureVectorIndexInt(int lastFeatureVectorIndex) {
 		super.set(LAST_FEATURE_VECTOR_INDEX, lastFeatureVectorIndex);
+	}
+	
+	/**
+	 * 
+	 */
+	public void setLastBinaryClassifierIndexInt(int lastBinaryClassifierIndex) {
+		super.set(LAST_BINARY_CLASSIFIER_INDEX, lastBinaryClassifierIndex);
 	}
 }

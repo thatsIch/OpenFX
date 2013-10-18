@@ -37,4 +37,8 @@ public interface CommandFactory {
 	public SetLastFrameSizeCommand createSetLastFrameSizeCommand(int lastFrameSize);
 	public ExtractFeatureVectorFromErrorEntryCommand createExtractFeatureVectorCommand(Path folderPath, ErrorEntry errorEntry, IFeatureExtractor extractor, int frameSize);
 	public DeleteFeatureVectorCommand createRemoveFeatureVectorCommand(FeatureVector featureVector);
+	
+	public InitBinaryClassifierListCommand createInitBinaryClassifierListCommand();
+	public GetLastBinaryClassifierIndexCommand createGetLastBinaryClassifierIndexCommand();
+	public SetLastBinaryClassifierIndexCommand createSetLastBinaryClassifierIndexCommand(int lastBinaryClassifierIndex);
 }

@@ -42,7 +42,6 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 	@FXML private Slider nodeSliderFrameSize;
 
 	// Injects
-//	@Inject private ConfigService config;
 	@Inject private CommandFactory commander;
 	@Inject private ErrorEntries errorEntryList;
 	@Inject private FeatureExtractors featureExtractors;

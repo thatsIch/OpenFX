@@ -3,10 +3,10 @@ package de.thatsich.bachelor.guice;
 import com.google.inject.AbstractModule;
 import com.google.inject.Scopes;
 
+import de.thatsich.bachelor.javafx.business.model.BinaryClassifiers;
 import de.thatsich.bachelor.javafx.business.model.ErrorEntries;
 import de.thatsich.bachelor.javafx.business.model.ErrorGenerators;
 import de.thatsich.bachelor.javafx.business.model.ErrorState;
-import de.thatsich.bachelor.javafx.business.model.EvaluationDatabase;
 import de.thatsich.bachelor.javafx.business.model.FeatureExtractors;
 import de.thatsich.bachelor.javafx.business.model.FeatureState;
 import de.thatsich.bachelor.javafx.business.model.FeatureVectors;
@@ -22,15 +22,12 @@ import de.thatsich.bachelor.javafx.presentation.b_error.ErrorListView;
 import de.thatsich.bachelor.javafx.presentation.c_feature.FeatureDisplayView;
 import de.thatsich.bachelor.javafx.presentation.c_feature.FeatureInputView;
 import de.thatsich.bachelor.javafx.presentation.c_feature.FeatureListView;
-import de.thatsich.bachelor.javafx.presentation.classification.ClassificationDisplayView;
-import de.thatsich.bachelor.javafx.presentation.classification.ClassificationInputView;
 import de.thatsich.bachelor.javafx.presentation.d_train.TrainDisplayView;
 import de.thatsich.bachelor.javafx.presentation.d_train.TrainInputView;
 import de.thatsich.bachelor.javafx.presentation.d_train.TrainListView;
 import de.thatsich.bachelor.javafx.presentation.e_test.TestDisplayView;
 import de.thatsich.bachelor.javafx.presentation.e_test.TestInputView;
 import de.thatsich.bachelor.javafx.presentation.e_test.TestListView;
-import de.thatsich.bachelor.service.CSVService;
 import de.thatsich.bachelor.service.ConfigService;
 
 
@@ -85,9 +82,6 @@ public class WiringModule extends AbstractModule {
 		super.bind(TestDisplayView.class).in(Scopes.SINGLETON);
 		super.bind(TestInputView.class).in(Scopes.SINGLETON);
 		super.bind(TestListView.class).in(Scopes.SINGLETON);
-		
-		super.bind(ClassificationDisplayView.class).in(Scopes.SINGLETON);
-		super.bind(ClassificationInputView.class).in(Scopes.SINGLETON);
 	}
 	
 	private void mapServices() {
@@ -110,6 +104,6 @@ public class WiringModule extends AbstractModule {
 		super.bind(FeatureVectors.class).in(Scopes.SINGLETON);
 		super.bind(FeatureExtractors.class).in(Scopes.SINGLETON);
 		
-		super.bind(EvaluationDatabase.class).in(Scopes.SINGLETON);
+		super.bind(BinaryClassifiers.class).in(Scopes.SINGLETON);
 	}
 }
