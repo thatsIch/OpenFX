@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.text.*?>
 
-<GridPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="de.thatsich.bachelor.javafx.presentation.image.ImageInputPresenter">
+<GridPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="de.thatsich.bachelor.javafx.presentation.a_image.ImageInputPresenter">
   <children>
     <Button fx:id="nodeButtonResetDatabase" mnemonicParsing="false" onAction="#onResetDatabaseAction" prefWidth="125.0" text="Reset Database" GridPane.columnIndex="1" GridPane.rowIndex="3">
       <font>
