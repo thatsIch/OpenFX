@@ -12,17 +12,17 @@ import javafx.scene.layout.GridPane;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
+import de.thatsich.bachelor.javafx.presentation.a_image.ImageDisplayView;
+import de.thatsich.bachelor.javafx.presentation.a_image.ImageInputView;
+import de.thatsich.bachelor.javafx.presentation.a_image.ImageListView;
+import de.thatsich.bachelor.javafx.presentation.b_error.ErrorDisplayView;
+import de.thatsich.bachelor.javafx.presentation.b_error.ErrorInputView;
+import de.thatsich.bachelor.javafx.presentation.b_error.ErrorListView;
+import de.thatsich.bachelor.javafx.presentation.c_feature.FeatureDisplayView;
+import de.thatsich.bachelor.javafx.presentation.c_feature.FeatureInputView;
+import de.thatsich.bachelor.javafx.presentation.c_feature.FeatureListView;
 import de.thatsich.bachelor.javafx.presentation.classification.ClassificationDisplayView;
 import de.thatsich.bachelor.javafx.presentation.classification.ClassificationInputView;
-import de.thatsich.bachelor.javafx.presentation.error.ErrorDisplayView;
-import de.thatsich.bachelor.javafx.presentation.error.ErrorInputView;
-import de.thatsich.bachelor.javafx.presentation.error.ErrorListView;
-import de.thatsich.bachelor.javafx.presentation.feature.FeatureDisplayView;
-import de.thatsich.bachelor.javafx.presentation.feature.FeatureInputView;
-import de.thatsich.bachelor.javafx.presentation.feature.FeatureListView;
-import de.thatsich.bachelor.javafx.presentation.image.ImageDisplayView;
-import de.thatsich.bachelor.javafx.presentation.image.ImageInputView;
-import de.thatsich.bachelor.javafx.presentation.image.ImageListView;
 
 /**
  * Facilitat the communication between
