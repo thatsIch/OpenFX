@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
+import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 
 import com.google.inject.Inject;
@@ -21,10 +22,12 @@ import de.thatsich.bachelor.javafx.presentation.b_error.ErrorListView;
 import de.thatsich.bachelor.javafx.presentation.c_feature.FeatureDisplayView;
 import de.thatsich.bachelor.javafx.presentation.c_feature.FeatureInputView;
 import de.thatsich.bachelor.javafx.presentation.c_feature.FeatureListView;
-import de.thatsich.bachelor.javafx.presentation.classification.ClassificationDisplayView;
-import de.thatsich.bachelor.javafx.presentation.classification.ClassificationInputView;
 import de.thatsich.bachelor.javafx.presentation.d_train.TrainDisplayView;
 import de.thatsich.bachelor.javafx.presentation.d_train.TrainInputView;
+import de.thatsich.bachelor.javafx.presentation.d_train.TrainListView;
+import de.thatsich.bachelor.javafx.presentation.e_test.TestDisplayView;
+import de.thatsich.bachelor.javafx.presentation.e_test.TestInputView;
+import de.thatsich.bachelor.javafx.presentation.e_test.TestListView;
 
 /**
  * Facilitat the communication between
@@ -55,10 +58,11 @@ public class DisplayPresenter implements Initializable {
 	
 	@Inject private TrainInputView trainInputView;
 	@Inject private TrainDisplayView trainDisplayView;
+	@Inject private TrainListView trainListView;
 	
-	@Inject private ClassificationDisplayView classificationDisplayView;
-	@Inject private ClassificationInputView classificationInputView;
-//	@Inject private 
+	@Inject private TestInputView testInputView;
+	@Inject private TestDisplayView testDisplayView;
+	@Inject private TestListView testListView;
 	
 	// ================================================== 
 	// Initializable Implementation 
@@ -66,46 +70,29 @@ public class DisplayPresenter implements Initializable {
 	@Override public void initialize(URL url, ResourceBundle resourceBundle) {
 		
 		this.nodeRoot.add(this.imageInputView.getRoot(), 0, 1);
-		GridPane.setValignment(this.imageInputView.getRoot(), VPos.TOP);
-		GridPane.setHalignment(this.imageInputView.getRoot(), HPos.CENTER);
 		this.nodeRoot.add(this.imageDisplayView.getRoot(), 0, 2);
-		GridPane.setValignment(this.imageDisplayView.getRoot(), VPos.TOP);
-		GridPane.setHalignment(this.imageDisplayView.getRoot(), HPos.CENTER);
 		this.nodeRoot.add(this.imageListView.getRoot(), 0, 3);
-		GridPane.setValignment(this.imageListView.getRoot(), VPos.TOP);
-		GridPane.setHalignment(this.imageListView.getRoot(), HPos.CENTER);
 		
 		this.nodeRoot.add(this.errorInputView.getRoot(), 1, 1);
-		GridPane.setValignment(this.errorInputView.getRoot(), VPos.TOP);
-		GridPane.setHalignment(this.errorInputView.getRoot(), HPos.CENTER);
 		this.nodeRoot.add(this.errorDisplayView.getRoot(), 1, 2);
-		GridPane.setValignment(this.errorDisplayView.getRoot(), VPos.TOP);
-		GridPane.setHalignment(this.errorDisplayView.getRoot(), HPos.CENTER);
 		this.nodeRoot.add(this.errorListView.getRoot(), 1, 3);
-		GridPane.setValignment(this.errorListView.getRoot(), VPos.TOP);
-		GridPane.setHalignment(this.errorListView.getRoot(), HPos.CENTER);
 		
 		this.nodeRoot.add(this.featureInputView.getRoot(), 2, 1);
-		GridPane.setValignment(this.featureInputView.getRoot(), VPos.TOP);
-		GridPane.setHalignment(this.featureInputView.getRoot(), HPos.CENTER);
 		this.nodeRoot.add(this.featureDisplayView.getRoot(), 2, 2);
-		GridPane.setValignment(this.featureDisplayView.getRoot(), VPos.TOP);
-		GridPane.setHalignment(this.featureDisplayView.getRoot(), HPos.CENTER);
 		this.nodeRoot.add(this.featureListView.getRoot(), 2, 3);
-		GridPane.setValignment(this.featureListView.getRoot(), VPos.TOP);
-		GridPane.setHalignment(this.featureListView.getRoot(), HPos.CENTER);
 		
 		this.nodeRoot.add(this.trainInputView.getRoot(), 3, 1);
-		GridPane.setValignment(this.trainInputView.getRoot(), VPos.TOP);
-		GridPane.setHalignment(this.trainInputView.getRoot(), HPos.CENTER);
 		this.nodeRoot.add(this.trainDisplayView.getRoot(), 3, 2);
-		GridPane.setValignment(this.trainDisplayView.getRoot(), VPos.TOP);
-		GridPane.setHalignment(this.trainDisplayView.getRoot(), HPos.CENTER);
-//		this.nodeRoot.add(this.classificationInputView.getRoot(), 3, 1);
-//		GridPane.setValignment(this.classificationInputView.getRoot(), VPos.TOP);
-//		GridPane.setHalignment(this.classificationInputView.getRoot(), HPos.CENTER);
-//		this.nodeRoot.add(this.classificationDisplayView.getRoot(), 3, 2);
-//		GridPane.setValignment(this.classificationDisplayView.getRoot(), VPos.TOP);
-//		GridPane.setHalignment(this.classificationDisplayView.getRoot(), HPos.CENTER);
+		this.nodeRoot.add(this.trainListView.getRoot(), 3, 3);
+		
+		this.nodeRoot.add(this.testInputView.getRoot(), 4, 1);
+		this.nodeRoot.add(this.testDisplayView.getRoot(), 4, 2);
+		this.nodeRoot.add(this.testListView.getRoot(), 4, 3);
+		
+		// Set alignment for all children
+		for (Node child : this.nodeRoot.getChildren()) {
+			GridPane.setValignment(child, VPos.TOP);
+			GridPane.setHalignment(child, HPos.CENTER);
+		}
 	}
 }

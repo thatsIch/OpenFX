@@ -7,9 +7,18 @@ import de.thatsich.core.javafx.AFXMLPresenter;
 
 public class TrainListPresenter extends AFXMLPresenter {
 
-	@Override
-	public void initialize(URL location, ResourceBundle resource) {
+	// ================================================== 
+	// Initialization Implementation 
+	// ==================================================
+	@Override public void initialize(URL location, ResourceBundle resource) {
 		
 	}
-
+	
+	// ================================================== 
+	// Bindings Implementation 
+	// ==================================================
+	
+	// ================================================== 
+	// GUI Implementation 
+	// ==================================================
 }

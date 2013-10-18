@@ -16,8 +16,7 @@ public class TrainInputPresenter extends AFXMLPresenter {
 	// ================================================== 
 	// Initialization Implementation 
 	// ==================================================
-	@Override
-	public void initialize(URL location, ResourceBundle resource) {
+	@Override public void initialize(URL location, ResourceBundle resource) {
 		
 	}
 
