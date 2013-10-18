@@ -37,6 +37,11 @@ public class FeatureDisplayPresenter extends AFXMLPresenter {
 
 			@Override public void changed(ObservableValue<? extends FeatureVector> observable, FeatureVector oldValue, FeatureVector newValue) {
 				nodeLabelClassName.setText(newValue.getClassNameProperty().get());
+				nodeLabelExtractorName.setText(newValue.getExtractorNameProperty().get());
+				nodeLabelFrameSize.setText(newValue.getFrameSizeProperty().getValue().toString());
+				nodeLabelID.setText(newValue.getIdProperty().get());
+				nodeLabelFeatureVector.setText(newValue.getFeatureVectorProperty().get().dump());
+				nodeLabelFeatureLabel.setText(newValue.getFeatureLabelProperty().get().dump());
 			}
 		});
 	}
