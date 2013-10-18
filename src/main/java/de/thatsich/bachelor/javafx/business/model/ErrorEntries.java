@@ -7,7 +7,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import de.thatsich.bachelor.javafx.business.model.entity.ErrorEntry;
 
-public class ErrorEntryList {
+public class ErrorEntries {
 
 	// Properties
 	final private ListProperty<ErrorEntry> errorEntries = new SimpleListProperty<ErrorEntry>(FXCollections.<ErrorEntry>observableArrayList());

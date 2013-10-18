@@ -24,7 +24,8 @@ import de.thatsich.bachelor.javafx.business.command.CommandFactory;
 import de.thatsich.bachelor.javafx.business.command.GetLastImageEntryIndexCommand;
 import de.thatsich.bachelor.javafx.business.command.InitImageEntryListCommand;
 import de.thatsich.bachelor.javafx.business.command.SetLastImageEntryIndexCommand;
-import de.thatsich.bachelor.javafx.business.model.ImageDatabase;
+import de.thatsich.bachelor.javafx.business.model.ImageEntries;
+import de.thatsich.bachelor.javafx.business.model.ImageState;
 import de.thatsich.bachelor.javafx.business.model.entity.ImageEntry;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.javafx.CommandExecutor;
@@ -36,7 +37,8 @@ public class ImageListPresenter extends AFXMLPresenter {
 	@FXML TableColumn<ImageEntry, String> nodeTableColumnImageList;
 	
 	// Injects
-	@Inject private ImageDatabase images;
+	@Inject private ImageEntries imageEntries;
+	@Inject private ImageState imageState;
 	@Inject private CommandFactory commander;
 	
 	@Override
@@ -49,7 +51,7 @@ public class ImageListPresenter extends AFXMLPresenter {
 	}
 	
 	private void initTableViewBoundary() {
-		this.nodeTableViewImageList.itemsProperty().bind(this.images.getImageEntryListProperty());
+		this.nodeTableViewImageList.itemsProperty().bind(this.imageEntries.getImageEntryListProperty());
 		this.log.info("Bound nodeTableViewImageList to ImageDatabase.");
 	}
 	
@@ -65,7 +67,7 @@ public class ImageListPresenter extends AFXMLPresenter {
 	private void initTableViewSelectionModel() {
 		this.nodeTableViewImageList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<ImageEntry>() {
 			@Override public void changed(ObservableValue<? extends ImageEntry> paramObservableValue, ImageEntry oldValue, ImageEntry newValue) {
-				images.getSelectedImageEntryProperty().set(newValue);
+				imageEntries.getSelectedImageEntryProperty().set(newValue);
 				
 				final int index = nodeTableViewImageList.getSelectionModel().getSelectedIndex();
 				final SetLastImageEntryIndexCommand command = commander.createSetLastImageEntryIndexCommand(index);
@@ -85,7 +87,7 @@ public class ImageListPresenter extends AFXMLPresenter {
 		final EventHandler<WorkerStateEvent> lastHandler = new GetLastImageEntryIndexSucceededHandler();
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(1);
 		
-		this.images.getImageInputFolderPathProperty().set(imageInputPath);
+		this.imageState.getImageInputFolderPathProperty().set(imageInputPath);
 		this.log.info("Set ImageInputFolderPath to Model.");
 		
 		final InitImageEntryListCommand initCommand = this.commander.createInitImageEntryListCommand(imageInputPath);
@@ -119,7 +121,7 @@ public class ImageListPresenter extends AFXMLPresenter {
 			final List<ImageEntry> commandResult = (List<ImageEntry>) event.getSource().getValue();
 			log.info("Retrieved ImageEntryList.");
 			
-			images.getImageEntryListProperty().get().addAll(commandResult);
+			imageEntries.getImageEntryListProperty().get().addAll(commandResult);
 			log.info("Added ImageEntryList to Model.");
 		}
 	}
@@ -135,9 +137,9 @@ public class ImageListPresenter extends AFXMLPresenter {
 			final Integer commandResult = (Integer) event.getSource().getValue();
 			log.info("Retrieved last selected image entry index.");
 			
-			if (commandResult != null && commandResult > 0 && images.getImageEntryListProperty().size() > commandResult) {
-				final ImageEntry selectedImageEntry = images.getImageEntryListProperty().get(commandResult); 
-				images.getSelectedImageEntryProperty().set(selectedImageEntry);
+			if (commandResult != null && commandResult > 0 && imageEntries.getImageEntryListProperty().size() > commandResult) {
+				final ImageEntry selectedImageEntry = imageEntries.getImageEntryListProperty().get(commandResult); 
+				imageEntries.getSelectedImageEntryProperty().set(selectedImageEntry);
 				log.info("Set last selected image entry index in Model.");
 				
 				nodeTableViewImageList.getSelectionModel().select(commandResult);

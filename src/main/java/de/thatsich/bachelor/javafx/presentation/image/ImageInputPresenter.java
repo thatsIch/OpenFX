@@ -16,7 +16,8 @@ import com.google.inject.Inject;
 import de.thatsich.bachelor.javafx.business.command.CommandFactory;
 import de.thatsich.bachelor.javafx.business.command.CopyFileCommand;
 import de.thatsich.bachelor.javafx.business.command.DeleteImageEntryCommand;
-import de.thatsich.bachelor.javafx.business.model.ImageDatabase;
+import de.thatsich.bachelor.javafx.business.model.ImageEntries;
+import de.thatsich.bachelor.javafx.business.model.ImageState;
 import de.thatsich.bachelor.javafx.business.model.entity.ImageEntry;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.javafx.CommandExecutor;
@@ -36,7 +37,8 @@ public class ImageInputPresenter extends AFXMLPresenter {
 
 	// Injects
 	@Inject private CommandFactory commander;	
-	@Inject private ImageDatabase images;
+	@Inject private ImageEntries imageEntries;
+	@Inject private ImageState imageState;
 	@Inject private ImageFileChooser chooser;
 
 	// ================================================== 
@@ -62,7 +64,7 @@ public class ImageInputPresenter extends AFXMLPresenter {
 		if (filePath == null) return;
 		this.log.info("Fetched Path from chosen Image.");
 		
-		Path copyPath = this.images.getImageInputFolderPathProperty().get().resolve(filePath.getFileName());
+		Path copyPath = this.imageState.getImageInputFolderPathProperty().get().resolve(filePath.getFileName());
 		this.log.info("Created new Path: " + copyPath);
 		
 		final AddImageSucceededHandler handler = new AddImageSucceededHandler();
@@ -78,7 +80,7 @@ public class ImageInputPresenter extends AFXMLPresenter {
 	 * @throws IOException
 	 */
 	@FXML private void onRemoveImageAction() throws IOException {
-		final ImageEntry choice = this.images.getSelectedImageEntryProperty().get();
+		final ImageEntry choice = this.imageEntries.getSelectedImageEntryProperty().get();
 		this.log.info("Fetched selected ImageEntry.");
 		
 		if (choice == null) {
@@ -99,7 +101,7 @@ public class ImageInputPresenter extends AFXMLPresenter {
 	 * @throws IOException 
 	 */
 	@FXML private void onResetDatabaseAction() throws IOException {
-		final List<ImageEntry> imageEntryList = this.images.getImageEntryListProperty().get();
+		final List<ImageEntry> imageEntryList = this.imageEntries.getImageEntryListProperty().get();
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(imageEntryList.size());
 		this.log.info("Initialized Executor for resetting all Errors.");
 		
@@ -141,10 +143,10 @@ public class ImageInputPresenter extends AFXMLPresenter {
 		@Override public void handle(WorkerStateEvent event) {
 			Path copiedPath = (Path) event.getSource().getValue();
 			ImageEntry copy = new ImageEntry(copiedPath);
-			images.getImageEntryListProperty().get().add(copy);
+			imageEntries.getImageEntryListProperty().get().add(copy);
 			log.info("Added copy to ChoiceBoxDisplayImage: " + copiedPath.toString());
 			
-			images.getSelectedImageEntryProperty().set(copy);
+			imageEntries.getSelectedImageEntryProperty().set(copy);
 			log.info("Set currently selected Image to " + copiedPath);
 		}
 	}
@@ -157,15 +159,15 @@ public class ImageInputPresenter extends AFXMLPresenter {
 	 */
 	private class DeleteSucceededHandler implements EventHandler<WorkerStateEvent> {
 		@Override public void handle(WorkerStateEvent event) {
-			final ImageEntry deletion = images.getSelectedImageEntryProperty().get();
-			final List<ImageEntry> imageEntryList = images.getImageEntryListProperty().get();
+			final ImageEntry deletion = imageEntries.getSelectedImageEntryProperty().get();
+			final List<ImageEntry> imageEntryList = imageEntries.getImageEntryListProperty().get();
 			
 			imageEntryList.remove(deletion);
 			log.info("Removed ImageEntry from Database.");
 			
 			if (imageEntryList.size() > 0) {
-				final ImageEntry first = images.getImageEntryListProperty().get().get(0);
-				images.getSelectedImageEntryProperty().set(first);
+				final ImageEntry first = imageEntries.getImageEntryListProperty().get().get(0);
+				imageEntries.getSelectedImageEntryProperty().set(first);
 				log.info("Reset Selection to the first.");
 			}
 		}

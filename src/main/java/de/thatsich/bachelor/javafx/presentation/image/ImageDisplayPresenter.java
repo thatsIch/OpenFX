@@ -10,7 +10,7 @@ import javafx.scene.image.ImageView;
 
 import com.google.inject.Inject;
 
-import de.thatsich.bachelor.javafx.business.model.ImageDatabase;
+import de.thatsich.bachelor.javafx.business.model.ImageEntries;
 import de.thatsich.bachelor.javafx.business.model.entity.ImageEntry;
 import de.thatsich.core.javafx.AFXMLPresenter;
 
@@ -20,11 +20,11 @@ public class ImageDisplayPresenter extends AFXMLPresenter {
 	@FXML private ImageView nodeImageViewInput;
 	
 	// Injects
-	@Inject private ImageDatabase images;
+	@Inject private ImageEntries imageEntries;
 	
 	@Override
 	public void initialize(URL url, ResourceBundle bundle) {
-		this.images.getSelectedImageEntryProperty().addListener(new ChangeListener<ImageEntry>() {
+		this.imageEntries.getSelectedImageEntryProperty().addListener(new ChangeListener<ImageEntry>() {
 			@Override
 			public void changed(ObservableValue<? extends ImageEntry> observable, ImageEntry oldValue, ImageEntry newValue) {
 				if (newValue != null) {
@@ -34,7 +34,7 @@ public class ImageDisplayPresenter extends AFXMLPresenter {
 		});
 		this.log.info("Bound ImageView to Model.");
 		
-		ImageEntry entry = this.images.getSelectedImageEntryProperty().get();
+		ImageEntry entry = this.imageEntries.getSelectedImageEntryProperty().get();
 		if (entry != null) {
 			this.nodeImageViewInput.imageProperty().setValue(entry.getImage());
 			this.log.info("Initialized nodeImageViewInput.");

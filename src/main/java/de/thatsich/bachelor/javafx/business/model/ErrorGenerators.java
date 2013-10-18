@@ -7,7 +7,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import de.thatsich.core.opencv.IErrorGenerator;
 
-public class ErrorGeneratorList {
+public class ErrorGenerators {
 
 	// Properties
 	final private ListProperty<IErrorGenerator> errorGeneratorList = new SimpleListProperty<IErrorGenerator>(FXCollections.<IErrorGenerator>observableArrayList());

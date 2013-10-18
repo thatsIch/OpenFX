@@ -3,12 +3,13 @@ package de.thatsich.bachelor.guice;
 import com.google.inject.AbstractModule;
 import com.google.inject.Scopes;
 
-import de.thatsich.bachelor.javafx.business.model.ErrorEntryList;
-import de.thatsich.bachelor.javafx.business.model.ErrorGeneratorList;
+import de.thatsich.bachelor.javafx.business.model.ErrorEntries;
+import de.thatsich.bachelor.javafx.business.model.ErrorGenerators;
 import de.thatsich.bachelor.javafx.business.model.ErrorState;
 import de.thatsich.bachelor.javafx.business.model.EvaluationDatabase;
 import de.thatsich.bachelor.javafx.business.model.FeatureSpace;
-import de.thatsich.bachelor.javafx.business.model.ImageDatabase;
+import de.thatsich.bachelor.javafx.business.model.ImageEntries;
+import de.thatsich.bachelor.javafx.business.model.ImageState;
 import de.thatsich.bachelor.javafx.presentation.DisplayView;
 import de.thatsich.bachelor.javafx.presentation.classification.ClassificationDisplayView;
 import de.thatsich.bachelor.javafx.presentation.classification.ClassificationInputView;
@@ -70,11 +71,12 @@ public class WiringModule extends AbstractModule {
 	}
 	
 	private void mapModels() {
-		super.bind(ImageDatabase.class).in(Scopes.SINGLETON);
+		super.bind(ImageState.class).in(Scopes.SINGLETON);
+		super.bind(ImageEntries.class).in(Scopes.SINGLETON);
 		
 		super.bind(ErrorState.class).in(Scopes.SINGLETON);
-		super.bind(ErrorEntryList.class).in(Scopes.SINGLETON);
-		super.bind(ErrorGeneratorList.class).in(Scopes.SINGLETON);
+		super.bind(ErrorEntries.class).in(Scopes.SINGLETON);
+		super.bind(ErrorGenerators.class).in(Scopes.SINGLETON);
 		
 		super.bind(FeatureSpace.class).in(Scopes.SINGLETON);
 		super.bind(EvaluationDatabase.class).in(Scopes.SINGLETON);

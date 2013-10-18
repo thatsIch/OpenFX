@@ -24,7 +24,7 @@ import de.thatsich.bachelor.javafx.business.command.GetLastFeatureExtractorIndex
 import de.thatsich.bachelor.javafx.business.command.GetLastFrameSizeCommand;
 import de.thatsich.bachelor.javafx.business.command.InitFeatureExtractorListCommand;
 import de.thatsich.bachelor.javafx.business.command.SetLastFeatureExtractorIndexCommand;
-import de.thatsich.bachelor.javafx.business.model.ErrorEntryList;
+import de.thatsich.bachelor.javafx.business.model.ErrorEntries;
 import de.thatsich.bachelor.javafx.business.model.FeatureSpace;
 import de.thatsich.bachelor.javafx.business.model.entity.ErrorEntry;
 import de.thatsich.bachelor.javafx.business.model.entity.FeatureVector;
@@ -41,7 +41,7 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 	// Injects
 //	@Inject private ConfigService config;
 	@Inject private CommandFactory commander;
-	@Inject private ErrorEntryList errorEntryList;
+	@Inject private ErrorEntries errorEntryList;
 	@Inject private FeatureSpace featureSpace;
 	
 	@Override

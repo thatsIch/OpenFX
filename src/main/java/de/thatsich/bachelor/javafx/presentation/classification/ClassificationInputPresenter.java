@@ -10,7 +10,7 @@ import javafx.util.StringConverter;
 
 import com.google.inject.Inject;
 
-import de.thatsich.bachelor.javafx.business.model.ErrorEntryList;
+import de.thatsich.bachelor.javafx.business.model.ErrorEntries;
 import de.thatsich.bachelor.javafx.business.model.EvaluationDatabase;
 import de.thatsich.bachelor.javafx.business.model.entity.ErrorEntry;
 import de.thatsich.core.Log;
@@ -24,7 +24,7 @@ public class ClassificationInputPresenter implements Initializable {
 
 	// Injects
 	@Inject private Log log;
-	@Inject private ErrorEntryList errorEntryList;
+	@Inject private ErrorEntries errorEntryList;
 	@Inject private EvaluationDatabase evalDatabase;
 	
 	@Override
