@@ -25,7 +25,7 @@ public class HuMoments extends AFeatureExtractor implements IFeatureExtractor {
 		if (image.type() != CvType.CV_8U) throw new IllegalArgumentException("Image is not grayscale.");
 		if (image.empty()) throw new IllegalArgumentException("Image is empty.");
 		
-		Mat hu = new Mat();;
+		Mat hu = new Mat();
 		Moments moments = Imgproc.moments(image);
 		Imgproc.HuMoments(moments, hu);
 		hu.convertTo(hu, CvType.CV_32F);
