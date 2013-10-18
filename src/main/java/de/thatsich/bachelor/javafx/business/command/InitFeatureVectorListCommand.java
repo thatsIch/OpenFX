@@ -50,7 +50,7 @@ public class InitFeatureVectorListCommand extends Command<List<FeatureVector>> {
 						
 						if (fileNameSplit.length != 4) throw new WrongNumberArgsException("Expected 4 encoded information but found " + fileNameSplit.length);
 						List<float[]> floatValues = CSVService.read(child);
-						
+
 						final String className = fileNameSplit[0];
 						final String extractorName = fileNameSplit[1];
 						final int frameSize = Integer.parseInt(fileNameSplit[2]);
@@ -59,7 +59,8 @@ public class InitFeatureVectorListCommand extends Command<List<FeatureVector>> {
 						for (float[] floatArray : floatValues) {
 							final int length = floatArray.length;
 							
-							final MatOfFloat featureVector = new MatOfFloat(Arrays.copyOfRange(floatArray, 0, length - 2));
+							final float[] copy = Arrays.copyOfRange(floatArray, 0, length - 1);
+							final MatOfFloat featureVector = new MatOfFloat(copy);
 							final MatOfFloat featureLabel = new MatOfFloat(floatArray[length - 1]);
 							featureVectorList.add(new FeatureVector(className, extractorName, frameSize, id, featureVector, featureLabel));
 						}
