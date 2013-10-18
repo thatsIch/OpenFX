@@ -24,10 +24,11 @@ public class Gradient extends AFeatureExtractor {
 		if (image.type() != CvType.CV_8U) throw new IllegalArgumentException("Image is not grayscale.");
 		if (image.empty()) throw new IllegalArgumentException("Image is empty.");
 		
-		MatOfFloat result = new MatOfFloat();
-
-		Imgproc.Sobel(image, result, image.depth(), 1, 1);
+		Mat gradient = new Mat();
+		Imgproc.Sobel(image, gradient, image.depth(), 1, 1);
+		gradient = gradient.reshape(1, 1);
+		gradient.convertTo(gradient, CvType.CV_32F);
 		
-		return result;
+		return new MatOfFloat(gradient);
 	}
 }
