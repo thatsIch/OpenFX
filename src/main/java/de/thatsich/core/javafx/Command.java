@@ -1,8 +1,6 @@
 package de.thatsich.core.javafx;
 
 import javafx.concurrent.Service;
-import javafx.concurrent.WorkerStateEvent;
-import javafx.event.EventHandler;
 
 import com.google.inject.Inject;
 

@@ -30,7 +30,6 @@ import de.thatsich.bachelor.javafx.business.model.entity.ErrorEntry;
 import de.thatsich.bachelor.javafx.business.model.entity.FeatureVector;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.javafx.CommandExecutor;
-import de.thatsich.core.javafx.StringFeatureExtractorConverter;
 import de.thatsich.core.opencv.IFeatureExtractor;
 
 public class FeatureInputPresenter extends AFXMLPresenter {
@@ -93,7 +92,10 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 	 * Bind ChoiceBoxFeatureExtractor to the Model.
 	 */
 	private void bindChoiceBoxFeatureExtractor() {
-		this.nodeChoiceBoxFeatureExtractor.setConverter(new StringFeatureExtractorConverter());
+		this.nodeChoiceBoxFeatureExtractor.setConverter(new StringConverter<IFeatureExtractor>() {
+			@Override public IFeatureExtractor fromString(String arg0) { return null; }
+			@Override public String toString(IFeatureExtractor featureGenerator) { return featureGenerator.getName(); }
+		});
 		this.log.info("Set up ChoiceBoxFeatureExtractor for proper name display.");
 		
 		this.nodeChoiceBoxFeatureExtractor.itemsProperty().bindBidirectional(this.featureSpace.getFeatureExtractorsProperty());

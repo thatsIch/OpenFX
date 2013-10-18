@@ -14,7 +14,6 @@ import de.thatsich.bachelor.javafx.business.model.ErrorDatabase;
 import de.thatsich.bachelor.javafx.business.model.EvaluationDatabase;
 import de.thatsich.bachelor.javafx.business.model.entity.ErrorEntry;
 import de.thatsich.core.Log;
-import de.thatsich.core.opencv.ABinaryClassifier;
 import de.thatsich.core.opencv.IBinaryClassifier;
 
 public class ClassificationInputPresenter implements Initializable {
@@ -41,7 +40,10 @@ public class ClassificationInputPresenter implements Initializable {
 	 * Bind ChoiceBoxBinaryClassifier to the Model.
 	 */
 	private void bindChoiceBoxBinaryClassifiers() {
-		this.nodeChoiceBoxBinaryClassifier.setConverter(ABinaryClassifier.CONVERTER);
+		this.nodeChoiceBoxBinaryClassifier.setConverter(new StringConverter<IBinaryClassifier>() {
+			@Override public String toString(IBinaryClassifier bc) { return bc.getName(); }
+			@Override public IBinaryClassifier fromString(String string) { return null; }
+		});
 		this.log.info("Set up ChoiceBoxBinaryClassifiers for proper name display.");
 		
 		this.nodeChoiceBoxBinaryClassifier.itemsProperty().bindBidirectional(this.evalDatabase.getBinaryClassifiersProperty());

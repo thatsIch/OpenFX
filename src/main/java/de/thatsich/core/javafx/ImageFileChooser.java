@@ -109,7 +109,6 @@ public class ImageFileChooser {
 	 * @return all OpenCV-supported Image-extensions
 	 */
 	private ExtensionFilter getExtensions() {	
-		
 		String[] extensions = {
 			"*.jpeg",
 			"*.jpg",

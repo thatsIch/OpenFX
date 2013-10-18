@@ -3,7 +3,6 @@ package de.thatsich.core.opencv;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.security.InvalidParameterException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javafx.collections.FXCollections;
