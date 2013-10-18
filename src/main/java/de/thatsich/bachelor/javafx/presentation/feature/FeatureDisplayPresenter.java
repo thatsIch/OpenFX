@@ -7,6 +7,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 
 import com.google.inject.Inject;
 
@@ -27,22 +28,34 @@ public class FeatureDisplayPresenter extends AFXMLPresenter {
 	// Injects
 	@Inject private FeatureVectors featureVectors;
 	
+	// ================================================== 
+	// Initialization Implementation 
+	// ==================================================
 	@Override
 	public void initialize(URL url, ResourceBundle bundle) {
 		this.initLabels();
 	}
 
+	/**
+	 * Binds all labels to the changing FeatureVector
+	 */
 	private void initLabels() {
+		this.nodeLabelFeatureVector.setTooltip(new Tooltip());
+		this.log.info("Initialized Tooltip of LabelFeatureVector.");
+		
 		this.featureVectors.getSelectedFeatureVectorProperty().addListener(new ChangeListener<FeatureVector>() {
-
 			@Override public void changed(ObservableValue<? extends FeatureVector> observable, FeatureVector oldValue, FeatureVector newValue) {
-				nodeLabelClassName.setText(newValue.getClassNameProperty().get());
-				nodeLabelExtractorName.setText(newValue.getExtractorNameProperty().get());
-				nodeLabelFrameSize.setText(newValue.getFrameSizeProperty().getValue().toString());
-				nodeLabelID.setText(newValue.getIdProperty().get());
-				nodeLabelFeatureVector.setText(newValue.getFeatureVectorProperty().get().dump());
-				nodeLabelFeatureLabel.setText(newValue.getFeatureLabelProperty().get().dump());
+				if (newValue != null) {
+					nodeLabelClassName.setText(newValue.getClassNameProperty().get());
+					nodeLabelExtractorName.setText(newValue.getExtractorNameProperty().get());
+					nodeLabelFrameSize.setText(newValue.getFrameSizeProperty().getValue().toString());
+					nodeLabelID.setText(newValue.getIdProperty().get());
+					nodeLabelFeatureVector.setText(newValue.getFeatureVectorProperty().get().dump());
+					nodeLabelFeatureVector.getTooltip().setText(newValue.getFeatureVectorProperty().get().dump());
+					nodeLabelFeatureLabel.setText(newValue.getFeatureLabelProperty().get().dump());			
+				}
 			}
 		});
+		this.log.info("Bound Labels to changing FeatureVector");
 	}
 }

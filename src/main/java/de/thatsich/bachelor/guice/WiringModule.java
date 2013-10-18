@@ -18,6 +18,9 @@ import de.thatsich.bachelor.javafx.presentation.classification.ClassificationInp
 import de.thatsich.bachelor.javafx.presentation.error.ErrorDisplayView;
 import de.thatsich.bachelor.javafx.presentation.error.ErrorInputView;
 import de.thatsich.bachelor.javafx.presentation.error.ErrorListView;
+import de.thatsich.bachelor.javafx.presentation.feature.FeatureDisplayView;
+import de.thatsich.bachelor.javafx.presentation.feature.FeatureInputView;
+import de.thatsich.bachelor.javafx.presentation.feature.FeatureListView;
 import de.thatsich.bachelor.javafx.presentation.image.ImageDisplayView;
 import de.thatsich.bachelor.javafx.presentation.image.ImageInputView;
 import de.thatsich.bachelor.javafx.presentation.image.ImageListView;
@@ -63,6 +66,10 @@ public class WiringModule extends AbstractModule {
 		super.bind(ErrorDisplayView.class).in(Scopes.SINGLETON);
 		super.bind(ErrorInputView.class).in(Scopes.SINGLETON);
 		super.bind(ErrorListView.class).in(Scopes.SINGLETON);
+		
+		super.bind(FeatureDisplayView.class).in(Scopes.SINGLETON);
+		super.bind(FeatureInputView.class).in(Scopes.SINGLETON);
+		super.bind(FeatureListView.class).in(Scopes.SINGLETON);
 		
 		super.bind(ClassificationDisplayView.class).in(Scopes.SINGLETON);
 		super.bind(ClassificationInputView.class).in(Scopes.SINGLETON);

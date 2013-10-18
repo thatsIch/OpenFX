@@ -60,24 +60,30 @@ public class ExtractFeatureVectorFromErrorEntryCommand extends Command<List<Feat
 				final List<List<Float>> csvResult = FXCollections.observableArrayList();
 				final Mat[][] originalErrorSplit = Images.split(errorEntry.get().getOriginalWithErrorMat(), size, size);
 				final Mat[][] errorSplit = Images.split(errorEntry.get().getErrorMat(), size, size);
+				log.info("Prepared split images.");
 				
 				for (int col = 0; col < originalErrorSplit.length; col++) {
 					for (int row = 0; row < originalErrorSplit[col].length; row++) {
-						final MatOfFloat featureVector = extractor.extractFeature(originalErrorSplit[col][row]);
-						List<Float> featureVectorAsList = new ArrayList<Float>(featureVector.toList());
+						try {
+							final MatOfFloat featureVector = extractor.extractFeature(originalErrorSplit[col][row]);
+							featureVector.reshape(1, 1);
+							List<Float> featureVectorAsList = new ArrayList<Float>(featureVector.toList());
 
-						// if contain an error classify it as positive match
-						if (Core.sumElems(errorSplit[col][row]).val[0] != 0) {
-							result.add(new FeatureVector(className, extractorName, size, id, featureVector, new MatOfFloat(1)));
-							featureVectorAsList.add(1F);						}
-						
-						// else its a negative match
-						else {
-							result.add(new FeatureVector(className, extractorName, size, id, featureVector, new MatOfFloat(0)));
-							featureVectorAsList.add(0F);
+							// if contain an error classify it as positive match
+							if (Core.sumElems(errorSplit[col][row]).val[0] != 0) {
+								result.add(new FeatureVector(className, extractorName, size, id, featureVector, new MatOfFloat(1)));
+								featureVectorAsList.add(1F);						}
+							
+							// else its a negative match
+							else {
+								result.add(new FeatureVector(className, extractorName, size, id, featureVector, new MatOfFloat(0)));
+								featureVectorAsList.add(0F);
+							}
+							
+							csvResult.add(featureVectorAsList);
+						} catch (Exception e) {
+							e.printStackTrace();
 						}
-						
-						csvResult.add(featureVectorAsList);
 					}
 				}
 				
