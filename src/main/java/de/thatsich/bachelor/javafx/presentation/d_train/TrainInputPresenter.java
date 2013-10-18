@@ -1,6 +1,7 @@
 package de.thatsich.bachelor.javafx.presentation.d_train;
 
 import java.net.URL;
+import java.security.InvalidParameterException;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
@@ -19,7 +20,11 @@ import de.thatsich.bachelor.javafx.business.command.CommandFactory;
 import de.thatsich.bachelor.javafx.business.command.GetLastBinaryClassifierIndexCommand;
 import de.thatsich.bachelor.javafx.business.command.InitBinaryClassifierListCommand;
 import de.thatsich.bachelor.javafx.business.command.SetLastBinaryClassifierIndexCommand;
+import de.thatsich.bachelor.javafx.business.command.TrainBinaryClassifierCommand;
 import de.thatsich.bachelor.javafx.business.model.BinaryClassifiers;
+import de.thatsich.bachelor.javafx.business.model.FeatureVectors;
+import de.thatsich.bachelor.javafx.business.model.entity.BinaryClassifier;
+import de.thatsich.bachelor.javafx.business.model.entity.FeatureVector;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.javafx.CommandExecutor;
 import de.thatsich.core.opencv.IBinaryClassifier;
@@ -32,6 +37,7 @@ public class TrainInputPresenter extends AFXMLPresenter {
 	// Injects
 	@Inject private CommandFactory commander;
 	@Inject private BinaryClassifiers binaryClassifiers;
+	@Inject private FeatureVectors featureVectors;
 
 	// ================================================== 
 	// Initialization Implementation 
@@ -42,6 +48,9 @@ public class TrainInputPresenter extends AFXMLPresenter {
 		this.initBinaryClassifierList();
 	}
 	
+	/**
+	 * Initialize the List of BinaryClassifiers and preselects the last selected one.
+	 */
 	private void initBinaryClassifierList() {
 		final InitBinaryClassifierListSucceededHandler initHandler = new InitBinaryClassifierListSucceededHandler();
 		final GetLastBinaryClassifierIndexSucceededHandler lastHandler = new GetLastBinaryClassifierIndexSucceededHandler(); 
@@ -132,6 +141,35 @@ public class TrainInputPresenter extends AFXMLPresenter {
 	// GUI Implementation 
 	// ==================================================	
 	@FXML private void onTrainBinaryClassifierAction() {
+		final IBinaryClassifier selectedBinaryClassfier = this.binaryClassifiers.getSelectedBinaryClassifierProperty().get();
+		final List<FeatureVector> featureVectorList = this.featureVectors.getFeatureVectorListProperty().get();
+		final FeatureVector selectedFeatureVector = this.featureVectors.getSelectedFeatureVectorProperty().get();
 		
+		if (selectedFeatureVector == null) throw new InvalidParameterException("SelectedFeatureVector is null.");
+		if (featureVectorList == null) throw new InvalidParameterException("FeatureVectorList is null.");
+		if (selectedBinaryClassfier == null) throw new InvalidParameterException("SelectedBinaryClassifier is null.");
+		
+		final TrainBinaryClassifierSucceededHandler handler = new TrainBinaryClassifierSucceededHandler();
+		final TrainBinaryClassifierCommand command = this.commander.createTrainBinaryClassifierCommand(selectedBinaryClassfier, selectedFeatureVector, featureVectorList);
+		command.setOnSucceeded(handler);
+		command.start();
+	}
+	
+	// ================================================== 
+	// Handler Implementation 
+	// ==================================================
+	/**
+	 * Handler for what should happen if the Command was successfull 
+	 * for training BinaryClassifier
+	 * 
+	 * @author Minh
+	 */
+	private class TrainBinaryClassifierSucceededHandler implements EventHandler<WorkerStateEvent> {
+		@Override public void handle(WorkerStateEvent event) {
+			final BinaryClassifier classifier = (BinaryClassifier) event.getSource().getValue();
+//			
+//			featureVectors.getFeatureVectorListProperty().get().addAll(fv);
+//			log.info("Added FeatureVector to Database.");
+		}
 	}
 }

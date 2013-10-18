@@ -1,6 +1,7 @@
 package de.thatsich.bachelor.javafx.business.command;
 
 import java.nio.file.Path;
+import java.util.List;
 
 import org.opencv.core.Mat;
 
@@ -9,6 +10,7 @@ import com.google.inject.assistedinject.Assisted;
 import de.thatsich.bachelor.javafx.business.model.entity.ErrorEntry;
 import de.thatsich.bachelor.javafx.business.model.entity.FeatureVector;
 import de.thatsich.bachelor.javafx.business.model.entity.ImageEntry;
+import de.thatsich.core.opencv.IBinaryClassifier;
 import de.thatsich.core.opencv.IErrorGenerator;
 import de.thatsich.core.opencv.IFeatureExtractor;
 
@@ -41,4 +43,5 @@ public interface CommandFactory {
 	public InitBinaryClassifierListCommand createInitBinaryClassifierListCommand();
 	public GetLastBinaryClassifierIndexCommand createGetLastBinaryClassifierIndexCommand();
 	public SetLastBinaryClassifierIndexCommand createSetLastBinaryClassifierIndexCommand(int lastBinaryClassifierIndex);
+	public TrainBinaryClassifierCommand createTrainBinaryClassifierCommand(IBinaryClassifier classifier, FeatureVector selected, List<FeatureVector> all);
 }
