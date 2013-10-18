@@ -7,7 +7,9 @@ import de.thatsich.bachelor.javafx.business.model.ErrorEntries;
 import de.thatsich.bachelor.javafx.business.model.ErrorGenerators;
 import de.thatsich.bachelor.javafx.business.model.ErrorState;
 import de.thatsich.bachelor.javafx.business.model.EvaluationDatabase;
-import de.thatsich.bachelor.javafx.business.model.FeatureSpace;
+import de.thatsich.bachelor.javafx.business.model.FeatureExtractors;
+import de.thatsich.bachelor.javafx.business.model.FeatureState;
+import de.thatsich.bachelor.javafx.business.model.FeatureVectors;
 import de.thatsich.bachelor.javafx.business.model.ImageEntries;
 import de.thatsich.bachelor.javafx.business.model.ImageState;
 import de.thatsich.bachelor.javafx.presentation.DisplayView;
@@ -78,7 +80,14 @@ public class WiringModule extends AbstractModule {
 		super.bind(ErrorEntries.class).in(Scopes.SINGLETON);
 		super.bind(ErrorGenerators.class).in(Scopes.SINGLETON);
 		
-		super.bind(FeatureSpace.class).in(Scopes.SINGLETON);
+		super.bind(FeatureState.class).in(Scopes.SINGLETON);
+		super.bind(FeatureVectors.class).in(Scopes.SINGLETON);
+		super.bind(FeatureExtractors.class).in(Scopes.SINGLETON);
+		
+		super.bind(FeatureState.class).in(Scopes.SINGLETON);
+		super.bind(FeatureVectors.class).in(Scopes.SINGLETON);
+		super.bind(FeatureExtractors.class).in(Scopes.SINGLETON);
+		
 		super.bind(EvaluationDatabase.class).in(Scopes.SINGLETON);
 	}
 }

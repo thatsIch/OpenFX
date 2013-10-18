@@ -25,7 +25,9 @@ import de.thatsich.bachelor.javafx.business.command.GetLastFrameSizeCommand;
 import de.thatsich.bachelor.javafx.business.command.InitFeatureExtractorListCommand;
 import de.thatsich.bachelor.javafx.business.command.SetLastFeatureExtractorIndexCommand;
 import de.thatsich.bachelor.javafx.business.model.ErrorEntries;
-import de.thatsich.bachelor.javafx.business.model.FeatureSpace;
+import de.thatsich.bachelor.javafx.business.model.FeatureExtractors;
+import de.thatsich.bachelor.javafx.business.model.FeatureState;
+import de.thatsich.bachelor.javafx.business.model.FeatureVectors;
 import de.thatsich.bachelor.javafx.business.model.entity.ErrorEntry;
 import de.thatsich.bachelor.javafx.business.model.entity.FeatureVector;
 import de.thatsich.core.javafx.AFXMLPresenter;
@@ -42,7 +44,9 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 //	@Inject private ConfigService config;
 	@Inject private CommandFactory commander;
 	@Inject private ErrorEntries errorEntryList;
-	@Inject private FeatureSpace featureSpace;
+	@Inject private FeatureExtractors featureExtractors;
+	@Inject private FeatureState featureState;
+	@Inject private FeatureVectors featureVectors;
 	
 	@Override
 	public void initialize(URL url, ResourceBundle bundle) {
@@ -98,8 +102,8 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 		});
 		this.log.info("Set up ChoiceBoxFeatureExtractor for proper name display.");
 		
-		this.nodeChoiceBoxFeatureExtractor.itemsProperty().bindBidirectional(this.featureSpace.getFeatureExtractorsProperty());
-		this.nodeChoiceBoxFeatureExtractor.valueProperty().bindBidirectional(this.featureSpace.getSelectedFeatureExtractorProperty());
+		this.nodeChoiceBoxFeatureExtractor.itemsProperty().bindBidirectional(this.featureExtractors.getFeatureExtractorsProperty());
+		this.nodeChoiceBoxFeatureExtractor.valueProperty().bindBidirectional(this.featureExtractors.getSelectedFeatureExtractorProperty());
 		this.log.info("Bound ChoiceBoxFeatureExtractor to Model.");
 		
 		this.nodeChoiceBoxFeatureExtractor.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
@@ -140,7 +144,7 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 							throw new IllegalStateException("Expected numbers out of range");
 					}
 					
-					featureSpace.getFrameSizeProperty().set(result);
+					featureState.getFrameSizeProperty().set(result);
 					commander.createSetLastFrameSizeCommand(value).start();
 				}
 			}
@@ -160,9 +164,9 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 	// GUI Implementation 
 	// ==================================================
 	@FXML private void onExtractAction() {
-		final IFeatureExtractor extractor = this.featureSpace.getSelectedFeatureExtractorProperty().get();
+		final IFeatureExtractor extractor = this.featureExtractors.getSelectedFeatureExtractorProperty().get();
 		final ErrorEntry errorEntry = this.errorEntryList.getSelectedErrorEntryProperty().get();
-		final int frameSize = this.featureSpace.getFrameSizeProperty().get();
+		final int frameSize = this.featureState.getFrameSizeProperty().get();
 		this.log.info("Extracted all necessary information for a FeatureVector.");
 		
 		if (extractor == null) throw new InvalidParameterException("Extractor is null.");
@@ -178,7 +182,7 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 	}
 	
 	@FXML private void onRemoveAction() {
-		final FeatureVector fv = this.featureSpace.getSelectedFeatureVectorProperty().get();
+		final FeatureVector fv = this.featureVectors.getSelectedFeatureVectorProperty().get();
 		this.log.info("Fetched selected FeatureVector.");
 		
 		if (fv == null) {
@@ -194,10 +198,10 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 	}
 	
 	@FXML private void onResetAction() {
-		final ExecutorService executor = CommandExecutor.newFixedThreadPool(this.featureSpace.getFeatureVectorListProperty().get().size());
+		final ExecutorService executor = CommandExecutor.newFixedThreadPool(this.featureVectors.getFeatureVectorListProperty().get().size());
 		this.log.info("Initialized Executor for resetting all FeatureVectors.");
 		
-		for (FeatureVector fv : this.featureSpace.getFeatureVectorListProperty().get()) {
+		for (FeatureVector fv : this.featureVectors.getFeatureVectorListProperty().get()) {
 			final RemoveSucceededHandler handler = new RemoveSucceededHandler();
 			final DeleteFeatureVectorCommand command = this.commander.createRemoveFeatureVectorCommand(fv);
 			command.setOnSucceeded(handler);
@@ -233,7 +237,7 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 		@Override public void handle(WorkerStateEvent event) {
 			final List<IFeatureExtractor> extractorList = (List<IFeatureExtractor>) event.getSource().getValue();
 			
-			featureSpace.getFeatureExtractorsProperty().get().addAll(extractorList);
+			featureExtractors.getFeatureExtractorsProperty().get().addAll(extractorList);
 			log.info("Added FeatureExtractor to Database.");
 		}
 	}
@@ -249,7 +253,7 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 		@Override public void handle(WorkerStateEvent event) {
 			final List<FeatureVector> fv = (List<FeatureVector>) event.getSource().getValue();
 			
-			featureSpace.getFeatureVectorListProperty().get().addAll(fv);
+			featureVectors.getFeatureVectorListProperty().get().addAll(fv);
 			log.info("Added FeatureVector to Database.");
 		}
 	}
@@ -264,7 +268,7 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 		@Override public void handle(WorkerStateEvent event) {
 			final FeatureVector fv = (FeatureVector) event.getSource().getValue();
 			
-			featureSpace.getFeatureVectorListProperty().get().remove(fv);
+			featureVectors.getFeatureVectorListProperty().get().remove(fv);
 			log.info("Removed FeatureVector from Database.");
 		}
 	}
@@ -283,8 +287,8 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 			log.info("Retrieved LastFeatureExtractorIndex.");
 			
 			if (commandResult != null) {
-				final IFeatureExtractor selectedFeatureExtractor = featureSpace.getFeatureExtractorsProperty().get(commandResult);
-				featureSpace.getSelectedFeatureExtractorProperty().set(selectedFeatureExtractor);
+				final IFeatureExtractor selectedFeatureExtractor = featureExtractors.getFeatureExtractorsProperty().get(commandResult);
+				featureExtractors.getSelectedFeatureExtractorProperty().set(selectedFeatureExtractor);
 				log.info("Set LastSelectedFeatureExtractor in Model.");
 			}
 		}

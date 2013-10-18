@@ -22,7 +22,7 @@ import com.google.inject.Inject;
 
 import de.thatsich.bachelor.javafx.business.command.CommandFactory;
 import de.thatsich.bachelor.javafx.business.command.InitFeatureVectorListCommand;
-import de.thatsich.bachelor.javafx.business.model.FeatureSpace;
+import de.thatsich.bachelor.javafx.business.model.FeatureVectors;
 import de.thatsich.bachelor.javafx.business.model.entity.FeatureVector;
 import de.thatsich.bachelor.service.ConfigService;
 import de.thatsich.core.javafx.AFXMLPresenter;
@@ -39,7 +39,7 @@ public class FeatureListPresenter extends AFXMLPresenter {
 	@FXML TableColumn<FeatureVector, String> nodeTableColumnFeatureVector;
 	
 	// Injects
-	@Inject private FeatureSpace featureSpace;
+	@Inject private FeatureVectors featureVectors;
 	@Inject private CommandFactory commander;
 	@Inject private ConfigService config;
 	
@@ -69,13 +69,13 @@ public class FeatureListPresenter extends AFXMLPresenter {
 	}
 	
 	private void initTableView() {
-		this.nodeTableViewFeatureVectorList.itemsProperty().bind(this.featureSpace.getFeatureVectorListProperty());
+		this.nodeTableViewFeatureVectorList.itemsProperty().bind(this.featureVectors.getFeatureVectorListProperty());
 		this.log.info("Bound List to FeatureSpace.");
 		
 		this.nodeTableViewFeatureVectorList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<FeatureVector>() {
 			@Override
 			public void changed(ObservableValue<? extends FeatureVector> observable, FeatureVector oldValue, FeatureVector newValue) {
-				featureSpace.getSelectedFeatureVectorProperty().set(newValue);
+				featureVectors.getSelectedFeatureVectorProperty().set(newValue);
 				
 				final int index = nodeTableViewFeatureVectorList.getSelectionModel().getSelectedIndex();
 				config.setLastFeatureVectorIndexInt(index);
@@ -110,7 +110,7 @@ public class FeatureListPresenter extends AFXMLPresenter {
 		@Override public void handle(WorkerStateEvent event) {
 			final List<FeatureVector> featureVectorList = (List<FeatureVector>) event.getSource().getValue();
 			
-			featureSpace.getFeatureVectorListProperty().get().addAll(featureVectorList);
+			featureVectors.getFeatureVectorListProperty().get().addAll(featureVectorList);
 			log.info("Added FeatureExtractor to Database.");
 		}
 	}
