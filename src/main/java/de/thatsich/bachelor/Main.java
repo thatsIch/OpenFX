@@ -23,7 +23,7 @@ import de.thatsich.core.guice.LoggerModule;
 import de.thatsich.core.guice.PostInitModule;
 
 // TODO nochmal alles durchgehen und schaun ob etwas selected ist wichtig besoners in den Datenbanken
-
+// TODO bindings einfügen für buttons damit du nur funzen wenn bestimmte conditionen eintreffen
 /**
  * Main Execution Class
  * @author Tran Minh Do

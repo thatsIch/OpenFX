@@ -22,6 +22,7 @@ import com.google.inject.Inject;
 
 import de.thatsich.bachelor.javafx.business.command.CommandFactory;
 import de.thatsich.bachelor.javafx.business.command.InitFeatureVectorListCommand;
+import de.thatsich.bachelor.javafx.business.model.FeatureState;
 import de.thatsich.bachelor.javafx.business.model.FeatureVectors;
 import de.thatsich.bachelor.javafx.business.model.entity.FeatureVector;
 import de.thatsich.bachelor.service.ConfigService;
@@ -39,6 +40,7 @@ public class FeatureListPresenter extends AFXMLPresenter {
 	@FXML TableColumn<FeatureVector, String> nodeTableColumnFeatureVector;
 	
 	// Injects
+	@Inject private FeatureState featureState;
 	@Inject private FeatureVectors featureVectors;
 	@Inject private CommandFactory commander;
 	@Inject private ConfigService config;
@@ -89,6 +91,9 @@ public class FeatureListPresenter extends AFXMLPresenter {
 	private void initFeatureVectorList() {
 		final Path folderPath = Paths.get("featurevectors");
 		final InitFeatureVectorListSucceededHandler handler = new InitFeatureVectorListSucceededHandler();
+		
+		this.featureState.getFeatureVectorFolderPathProperty().set(folderPath);
+		this.log.info("Set FeatureVectorInputFolderPath to Model.");
 		
 		final InitFeatureVectorListCommand command = this.commander.createInitFeatureVectorListCommand(folderPath);
 		command.setOnSucceeded(handler);
