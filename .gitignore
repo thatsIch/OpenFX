@@ -1,6 +1,5 @@
+.settings/
 bin/
-
-.settings/
-input/
-output/
 error/
+featurevectors/
+input/
