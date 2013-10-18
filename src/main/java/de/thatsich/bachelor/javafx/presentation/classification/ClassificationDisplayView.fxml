@@ -7,8 +7,5 @@
 
 <HBox xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="de.thatsich.bachelor.javafx.presentation.classification.ClassificationDisplayPresenter">
   <ImageView id="ImageViewMatrix" fx:id="nodeImageViewResult" fitHeight="250.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true">
-    <image>
-      <Image url="@error.jpg" />
-    </image>
   </ImageView>
 </HBox>

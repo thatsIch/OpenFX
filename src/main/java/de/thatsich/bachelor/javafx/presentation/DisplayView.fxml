@@ -17,10 +17,12 @@
       </font>
     </Label>
     <Label font="$x3" text="Error" textOverrun="ELLIPSIS" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-    <Label font="$x3" text="Train &amp; Test" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+    <Label font="$x3" text="Test" GridPane.columnIndex="4" GridPane.rowIndex="0" />
     <Label font="$x3" text="FeatureVector" textOverrun="ELLIPSIS" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+    <Label font="$x3" text="Train" GridPane.columnIndex="3" GridPane.rowIndex="0" />
   </children>
   <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="250.0" minWidth="10.0" prefWidth="250.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="250.0" minWidth="10.0" prefWidth="250.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="250.0" minWidth="10.0" prefWidth="250.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="250.0" minWidth="10.0" prefWidth="250.0" />

@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutorService;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
@@ -21,12 +22,14 @@ import javafx.util.Callback;
 import com.google.inject.Inject;
 
 import de.thatsich.bachelor.javafx.business.command.CommandFactory;
+import de.thatsich.bachelor.javafx.business.command.GetLastFeatureVectorIndexCommand;
 import de.thatsich.bachelor.javafx.business.command.InitFeatureVectorListCommand;
 import de.thatsich.bachelor.javafx.business.model.FeatureState;
 import de.thatsich.bachelor.javafx.business.model.FeatureVectors;
 import de.thatsich.bachelor.javafx.business.model.entity.FeatureVector;
 import de.thatsich.bachelor.service.ConfigService;
 import de.thatsich.core.javafx.AFXMLPresenter;
+import de.thatsich.core.javafx.CommandExecutor;
 
 public class FeatureListPresenter extends AFXMLPresenter {
 
@@ -90,15 +93,27 @@ public class FeatureListPresenter extends AFXMLPresenter {
 	
 	private void initFeatureVectorList() {
 		final Path folderPath = Paths.get("featurevectors");
-		final InitFeatureVectorListSucceededHandler handler = new InitFeatureVectorListSucceededHandler();
+		final InitFeatureVectorListSucceededHandler initHandler = new InitFeatureVectorListSucceededHandler();
+		final GetLastFeatureVectorIndexSucceededHandler lastHandler = new GetLastFeatureVectorIndexSucceededHandler();
+		final ExecutorService executor = CommandExecutor.newFixedThreadPool(1);
 		
 		this.featureState.getFeatureVectorFolderPathProperty().set(folderPath);
 		this.log.info("Set FeatureVectorInputFolderPath to Model.");
 		
-		final InitFeatureVectorListCommand command = this.commander.createInitFeatureVectorListCommand(folderPath);
-		command.setOnSucceeded(handler);
-		command.start();
-		this.log.info("Initialized FeatureVectorList Creation.");
+		final InitFeatureVectorListCommand initCommand = this.commander.createInitFeatureVectorListCommand(folderPath);
+		initCommand.setOnSucceeded(initHandler);
+		initCommand.setExecutor(executor);
+		initCommand.start();
+		this.log.info("Initialized InitFeatureVectorList Retrieval.");
+		
+		final GetLastFeatureVectorIndexCommand lastCommand = this.commander.createGetLastFeatureVectorIndexCommand();
+		lastCommand.setExecutor(executor);
+		lastCommand.setOnSucceeded(lastHandler);
+		lastCommand.start();
+		this.log.info("Initialized GetLastFeatureVectorIndex Retrieval.");
+		
+		executor.shutdown();
+		this.log.info("Shutting down Executor.");
 	}
 
 	// ================================================== 
@@ -117,6 +132,28 @@ public class FeatureListPresenter extends AFXMLPresenter {
 			
 			featureVectors.getFeatureVectorListProperty().get().addAll(featureVectorList);
 			log.info("Added FeatureExtractor to Database.");
+		}
+	}
+	
+	/**
+	 * Handler for what should happen if the Command was successfull 
+	 * for getting the LastFeatureVectorIndex
+	 * 
+	 * @author Minh
+	 */
+	private class GetLastFeatureVectorIndexSucceededHandler implements EventHandler<WorkerStateEvent> {
+		@Override public void handle(WorkerStateEvent event) {
+			final Integer commandResult = (Integer) event.getSource().getValue();
+			log.info("Retrieved LastFeatureVectorIndex.");
+			
+			if (commandResult != null && commandResult >= 0 && featureVectors.getFeatureVectorListProperty().size() > commandResult) {
+				final FeatureVector selectedFeatureVector = featureVectors.getFeatureVectorListProperty().get(commandResult); 
+				featureVectors.getSelectedFeatureVectorProperty().set(selectedFeatureVector);
+				log.info("Set LastFeatureVectorIndex in Model.");
+				
+				nodeTableViewFeatureVectorList.getSelectionModel().select(commandResult);
+				log.info("Set LastFeatureVectorIndex in TableView.");
+			}
 		}
 	}
 }

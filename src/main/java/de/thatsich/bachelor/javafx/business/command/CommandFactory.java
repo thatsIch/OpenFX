@@ -31,6 +31,7 @@ public interface CommandFactory {
 	public InitFeatureExtractorListCommand createInitFeatureExtractorListCommand();
 	public InitFeatureVectorListCommand createInitFeatureVectorListCommand(Path folderPath);
 	public GetLastFeatureExtractorIndexCommand createGetLastFeatureExtractorIndexCommand();
+	public GetLastFeatureVectorIndexCommand createGetLastFeatureVectorIndexCommand();
 	public GetLastFrameSizeCommand createGetLastFrameSizeCommand();
 	public SetLastFeatureExtractorIndexCommand createSetLastFeatureExtractorIndexCommand(int lastFeatureExtractorIndex);
 	public SetLastFrameSizeCommand createSetLastFrameSizeCommand(int lastFrameSize);
