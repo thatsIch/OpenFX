@@ -29,6 +29,8 @@ public class ImageDisplayPresenter extends AFXMLPresenter {
 			public void changed(ObservableValue<? extends ImageEntry> observable, ImageEntry oldValue, ImageEntry newValue) {
 				if (newValue != null) {
 					nodeImageViewInput.imageProperty().setValue(newValue.getImage());
+				} else {
+					nodeImageViewInput.imageProperty().set(null);
 				}
 			}
 		});

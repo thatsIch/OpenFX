@@ -10,6 +10,7 @@ import java.util.concurrent.ExecutorService;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 
 import com.google.inject.Inject;
 
@@ -35,6 +36,10 @@ import de.thatsich.core.javafx.ImageFileChooser;
  */
 public class ImageInputPresenter extends AFXMLPresenter {
 
+	// Nodes
+	@FXML private Button nodeButtonRemoveImage;
+	@FXML private Button nodeButtonResetDatabase;
+	
 	// Injects
 	@Inject private CommandFactory commander;	
 	@Inject private ImageEntries imageEntries;
@@ -46,7 +51,15 @@ public class ImageInputPresenter extends AFXMLPresenter {
 	// ==================================================
 	@Override
 	public void initialize(URL location, ResourceBundle resource) {
-		
+		this.bindButtons();
+	}
+
+	// ================================================== 
+	// Binding Implementation 
+	// ==================================================
+	private void bindButtons() {
+		this.nodeButtonRemoveImage.disableProperty().bind(this.imageEntries.getSelectedImageEntryProperty().isNull());
+		this.nodeButtonResetDatabase.disableProperty().bind(this.imageEntries.getImageEntryListProperty().emptyProperty());
 	}
 	
 	// ================================================== 
@@ -169,6 +182,9 @@ public class ImageInputPresenter extends AFXMLPresenter {
 				final ImageEntry first = imageEntries.getImageEntryListProperty().get().get(0);
 				imageEntries.getSelectedImageEntryProperty().set(first);
 				log.info("Reset Selection to the first.");
+			}
+			else {
+				imageEntries.getSelectedImageEntryProperty().set(null);
 			}
 		}
 	}
