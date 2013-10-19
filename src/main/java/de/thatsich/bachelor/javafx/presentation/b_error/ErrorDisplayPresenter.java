@@ -29,6 +29,9 @@ public class ErrorDisplayPresenter extends AFXMLPresenter {
 				if (newValue != null) {
 					nodeImageViewError.imageProperty().setValue(newValue.getImage());
 					log.info("Selected new ErrorEntry.");
+				} else {
+					nodeImageViewError.imageProperty().set(null);
+					log.info("Set Image to null.");
 				}
 			}
 		});

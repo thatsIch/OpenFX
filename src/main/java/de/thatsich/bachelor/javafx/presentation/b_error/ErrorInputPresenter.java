@@ -15,6 +15,7 @@ import javafx.collections.ObservableList;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.util.StringConverter;
@@ -54,6 +55,11 @@ public class ErrorInputPresenter extends AFXMLPresenter {
 	@FXML private ChoiceBox<IErrorGenerator> nodeChoiceBoxErrorGenerator;
 	@FXML private TextField nodeTextFieldErrorCount;
 	
+	@FXML private Button nodeButtonGenerateErrors;
+	@FXML private Button nodeButtonPermutateErrors;
+	@FXML private Button nodeButtonRemoveError;
+	@FXML private Button nodeButtonResetErrors;
+	
 	// Injects
 	@Inject private ImageEntries imageEntryList;
 	@Inject private ErrorState errorState;
@@ -69,6 +75,7 @@ public class ErrorInputPresenter extends AFXMLPresenter {
 	public void initialize(URL location, ResourceBundle resoure) {
 		this.bindChoiceBoxErrorGenerator();
 		this.bindTextFieldErrorCount();
+		this.bindButton();
 		
 		this.initErrorGeneratorList();
 	}
@@ -146,6 +153,13 @@ public class ErrorInputPresenter extends AFXMLPresenter {
 		final int lastErrorLoopCount = this.config.getLastErrorCountInt();
 		this.nodeTextFieldErrorCount.textProperty().set(Integer.toString(lastErrorLoopCount));
 		this.errorState.getErrorLoopCountProperty().set(lastErrorLoopCount);
+	}
+	
+	private void bindButton() {
+		this.nodeButtonGenerateErrors.disableProperty().bind(this.imageEntryList.getSelectedImageEntryProperty().isNull().or(this.nodeChoiceBoxErrorGenerator.valueProperty().isNull()).or(this.nodeTextFieldErrorCount.textProperty().isNull()));
+		this.nodeButtonPermutateErrors.disableProperty().bind(this.imageEntryList.getImageEntryListProperty().emptyProperty().or(this.nodeChoiceBoxErrorGenerator.valueProperty().isNull()).or(this.nodeTextFieldErrorCount.textProperty().isNull()));
+		this.nodeButtonRemoveError.disableProperty().bind(this.errorEntryList.getSelectedErrorEntryProperty().isNull());
+		this.nodeButtonResetErrors.disableProperty().bind(this.errorEntryList.getErrorEntryListProperty().emptyProperty());
 	}
 	
 	// ================================================== 
@@ -338,6 +352,9 @@ public class ErrorInputPresenter extends AFXMLPresenter {
 				final ErrorEntry first = entryList.get(0);
 				errorEntryList.getSelectedErrorEntryProperty().set(first);
 				log.info("Reset Selection to first ErrorEntry.");
+			} else {
+				errorEntryList.getSelectedErrorEntryProperty().set(null);
+				log.info("Reset Selection to null.");
 			}
 		}
 	}
