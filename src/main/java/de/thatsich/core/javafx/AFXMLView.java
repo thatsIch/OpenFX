@@ -14,7 +14,7 @@ import com.google.inject.Inject;
  * fetches the name from its own child-name
  * @author Tran Minh Do
  */
-public abstract class AFXMLView implements IFXMLView {
+public abstract class AFXMLView {
 
 	/**
 	 * Parent Object of the FXML
@@ -95,7 +95,6 @@ public abstract class AFXMLView implements IFXMLView {
 	 * Getter Implementation
 	 * ==================================================
 	 */
-	@Override
 	public Parent getRoot() {
 		
 		// lazy loading
