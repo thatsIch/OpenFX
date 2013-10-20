@@ -3,11 +3,26 @@
 	<classpathentry kind="src" path="src/main/java"/>
 	<classpathentry kind="src" path="src/main/resources"/>
 	<classpathentry kind="src" path="src/test/java"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/OpenCV-2.4.6-64x"/>
 	<classpathentry kind="con" path="org.eclipse.fx.ide.jdt.core.JAVAFX_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/GuiceFX 2.1.2"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Guice 3.0"/>
+	<classpathentry kind="lib" path="src/main/resources/de/thatsich/bachelor/libs/Guice 3.0/AOPAlliance.jar"/>
+	<classpathentry kind="lib" path="src/main/resources/de/thatsich/bachelor/libs/Guice 3.0/Guice-3.0-AssistedInject.jar"/>
+	<classpathentry kind="lib" path="src/main/resources/de/thatsich/bachelor/libs/Guice 3.0/Guice-3.0.jar" sourcepath="src/main/resources/de/thatsich/bachelor/libs/Guice 3.0/Guice-3.0-Sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/BachelorOpenCV/src/main/resources/de/thatsich/bachelor/libs/Guice%203.0/Guice-3.0-JavaDoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="src/main/resources/de/thatsich/bachelor/libs/Guice 3.0/javax.inject.jar"/>
+	<classpathentry kind="lib" path="src/main/resources/de/thatsich/bachelor/libs/GuiceFX 2.1.2/fx-guice-2.1.2.jar" sourcepath="src/main/resources/de/thatsich/bachelor/libs/GuiceFX 2.1.2/fx-guice-2.1.2-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/BachelorOpenCV/src/main/resources/de/thatsich/bachelor/libs/GuiceFX%202.1.2/fx-guice-2.1.2-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="src/main/resources/de/thatsich/bachelor/libs/OpenCV 2.4.6/opencv-246.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="BachelorOpenCV/src/main/resources/de/thatsich/bachelor/libs/OpenCV 2.4.6/x64"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
