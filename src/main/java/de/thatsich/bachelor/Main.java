@@ -31,6 +31,7 @@ import de.thatsich.bachelor.imageprocessing.api.core.ImageCommandModule;
 import de.thatsich.bachelor.imageprocessing.api.core.ImageWiringModule;
 import de.thatsich.core.guice.LoggerModule;
 import de.thatsich.core.guice.PostInitModule;
+import de.thatsich.core.opencv.OpenCVLoader;
 
 // TODO Tree View nutzen mit einem RootElement
 /**
@@ -52,6 +53,7 @@ public class Main extends GuiceApplication {
     public static void main(String[] args) {
     	// Loading OpenCV Bindings
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+        OpenCVLoader.loadLibrary();
         
         Main.launch(args);
     }
