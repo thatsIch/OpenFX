@@ -9,6 +9,7 @@ import de.thatsich.bachelor.errorgeneration.api.entities.IErrorGenerator;
 import de.thatsich.bachelor.errorgeneration.restricted.controller.commands.ApplyErrorCommand;
 import de.thatsich.bachelor.errorgeneration.restricted.controller.commands.CreateErrorImageCommand;
 import de.thatsich.bachelor.errorgeneration.restricted.controller.commands.DeleteErrorEntryCommand;
+import de.thatsich.bachelor.errorgeneration.restricted.controller.commands.GetLastErrorCountCommand;
 import de.thatsich.bachelor.errorgeneration.restricted.controller.commands.GetLastErrorEntryIndexCommand;
 import de.thatsich.bachelor.errorgeneration.restricted.controller.commands.GetLastErrorGeneratorIndexCommand;
 import de.thatsich.bachelor.errorgeneration.restricted.controller.commands.InitErrorEntryListCommand;
@@ -23,6 +24,7 @@ public interface ErrorCommandService {
 	
 	public GetLastErrorGeneratorIndexCommand createGetLastErrorGeneratorIndexCommand();
 	public GetLastErrorEntryIndexCommand createGetLastErrorEntryIndexCommand();
+	public GetLastErrorCountCommand createGetLastErrorCountCommand();
 	
 	public SetLastErrorEntryIndexCommand createSetLastErrorEntryIndexCommand(int lastErrorEntryIndex);
 	public SetLastErrorGeneratorIndexCommand createSetLastErrorGeneratorIndexCommand(int lastErrorGeneratorIndex);

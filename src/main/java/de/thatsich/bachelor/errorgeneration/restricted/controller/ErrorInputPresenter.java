@@ -29,6 +29,7 @@ import de.thatsich.bachelor.errorgeneration.api.entities.IErrorGenerator;
 import de.thatsich.bachelor.errorgeneration.restricted.controller.commands.ApplyErrorCommand;
 import de.thatsich.bachelor.errorgeneration.restricted.controller.commands.CreateErrorImageCommand;
 import de.thatsich.bachelor.errorgeneration.restricted.controller.commands.DeleteErrorEntryCommand;
+import de.thatsich.bachelor.errorgeneration.restricted.controller.commands.GetLastErrorCountCommand;
 import de.thatsich.bachelor.errorgeneration.restricted.controller.commands.GetLastErrorGeneratorIndexCommand;
 import de.thatsich.bachelor.errorgeneration.restricted.controller.commands.InitErrorGeneratorListCommand;
 import de.thatsich.bachelor.errorgeneration.restricted.controller.commands.SetLastErrorCountCommand;
@@ -78,6 +79,7 @@ public class ErrorInputPresenter extends AFXMLPresenter {
 		this.bindButton();
 		
 		this.initErrorGeneratorList();
+		this.initErrorLoopCount();
 	}
 	
 	/**
@@ -102,6 +104,15 @@ public class ErrorInputPresenter extends AFXMLPresenter {
 		
 		executor.shutdown();
 		this.log.info("Shutting down Executor.");
+	}
+	
+	/**
+	 * Fetches the last ErrorLoopCount
+	 */
+	private void initErrorLoopCount() {
+		final GetLastErrorCountCommand command = this.commander.createGetLastErrorCountCommand();
+		command.setOnSucceeded(new GetLastErrorLoopCountSucceededHandler());
+		command.start();
 	}
 	
 	// ================================================== 
@@ -325,6 +336,29 @@ public class ErrorInputPresenter extends AFXMLPresenter {
 				final IErrorGenerator selectedErrorGenerator = errorGeneratorList.getErrorGeneratorListProperty().get(commandResult);
 				errorGeneratorList.getSelectedErrorGeneratorProperty().set(selectedErrorGenerator);
 				log.info("Set last selected error generator index in Model.");
+			}
+		}
+	}
+	
+	/**
+	 * Handler for what should happen if the Command was successfull 
+	 * for getting LastErrorLoopCount
+	 * 
+	 * @author Minh
+	 */
+	private class GetLastErrorLoopCountSucceededHandler implements EventHandler<WorkerStateEvent> {
+
+		@Override
+		public void handle(WorkerStateEvent event) {
+			final Integer commandResult = (Integer) event.getSource().getValue();
+			log.info("Retrieved LastErrorLoopCount.");
+			
+			if (commandResult != null) {
+				nodeTextFieldErrorCount.textProperty().set(commandResult.toString());
+				log.info("Set LastErrorLoopCount in View.");
+				
+				errorState.getErrorLoopCountProperty().set(commandResult.intValue());
+				log.info("Set LastErrorLoopCount in Model.");
 			}
 		}
 	}
