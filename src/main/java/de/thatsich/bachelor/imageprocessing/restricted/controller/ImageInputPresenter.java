@@ -19,10 +19,10 @@ import de.thatsich.bachelor.imageprocessing.restricted.controller.commands.CopyF
 import de.thatsich.bachelor.imageprocessing.restricted.controller.commands.DeleteImageEntryCommand;
 import de.thatsich.bachelor.imageprocessing.restricted.model.ImageEntries;
 import de.thatsich.bachelor.imageprocessing.restricted.model.ImageState;
-import de.thatsich.bachelor.javafx.business.command.CommandFactory;
+import de.thatsich.bachelor.imageprocessing.restricted.services.ImageCommandService;
+import de.thatsich.bachelor.imageprocessing.restricted.views.ImageFileChooser;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.javafx.CommandExecutor;
-import de.thatsich.core.javafx.ImageFileChooser;
 
 /**
  * Presenter
@@ -41,7 +41,7 @@ public class ImageInputPresenter extends AFXMLPresenter {
 	@FXML private Button nodeButtonResetDatabase;
 	
 	// Injects
-	@Inject private CommandFactory commander;	
+	@Inject private ImageCommandService commander;	
 	@Inject private ImageEntries imageEntries;
 	@Inject private ImageState imageState;
 	@Inject private ImageFileChooser chooser;

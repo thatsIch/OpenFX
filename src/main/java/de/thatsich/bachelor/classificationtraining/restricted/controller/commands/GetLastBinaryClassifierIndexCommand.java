@@ -4,13 +4,13 @@ import javafx.concurrent.Task;
 
 import com.google.inject.Inject;
 
-import de.thatsich.bachelor.service.ConfigService;
+import de.thatsich.bachelor.classificationtraining.restricted.services.TrainConfigService;
 import de.thatsich.core.javafx.Command;
 
 public class GetLastBinaryClassifierIndexCommand extends Command<Integer> {
 
 	// Injections
-	@Inject private ConfigService config;
+	@Inject private TrainConfigService config;
 
 	@Override
 	protected Task<Integer> createTask() {

@@ -7,8 +7,6 @@ import org.opencv.core.TermCriteria;
 import org.opencv.ml.CvRTParams;
 import org.opencv.ml.CvRTrees;
 
-import de.thatsich.core.opencv.ABinaryClassifier;
-
 public class RandomForest extends ABinaryClassifier {
 
 	private final CvRTrees trees;

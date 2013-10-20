@@ -14,9 +14,7 @@ public class DeleteFeatureVectorCommand extends Command<FeatureVector> {
 
 	// Properties
 	private final ObjectProperty<FeatureVector> featureVector = new SimpleObjectProperty<FeatureVector>();
-	
-	// Injections
-	
+
 	@Inject
 	public DeleteFeatureVectorCommand(@Assisted FeatureVector featureVector) {
 		this.featureVector.set(featureVector);

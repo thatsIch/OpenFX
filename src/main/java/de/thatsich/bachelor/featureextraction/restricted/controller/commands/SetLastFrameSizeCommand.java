@@ -7,7 +7,7 @@ import javafx.concurrent.Task;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
-import de.thatsich.bachelor.service.ConfigService;
+import de.thatsich.bachelor.featureextraction.restricted.services.FeatureConfigService;
 import de.thatsich.core.javafx.Command;
 
 public class SetLastFrameSizeCommand extends Command<Void> {
@@ -16,7 +16,7 @@ public class SetLastFrameSizeCommand extends Command<Void> {
 	private final IntegerProperty lastFrameSize = new SimpleIntegerProperty();
 	
 	// Injects
-	@Inject ConfigService config;
+	@Inject private FeatureConfigService config;
 	
 	@Inject
 	protected SetLastFrameSizeCommand(@Assisted int lastFrameSize) {

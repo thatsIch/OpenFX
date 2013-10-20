@@ -6,9 +6,6 @@ import org.opencv.core.Mat;
 import org.opencv.core.MatOfFloat;
 import org.opencv.core.Scalar;
 
-import de.thatsich.core.opencv.AFeatureExtractor;
-import de.thatsich.core.opencv.IFeatureExtractor;
-
 /**
  * Calculates the mean of an Image.
  * Mostly Wrapper for OpenCV Core.mean

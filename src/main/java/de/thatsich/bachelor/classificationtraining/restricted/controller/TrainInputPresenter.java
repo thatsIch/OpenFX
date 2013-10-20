@@ -16,17 +16,17 @@ import javafx.util.StringConverter;
 
 import com.google.inject.Inject;
 
+import de.thatsich.bachelor.classificationtraining.api.entities.IBinaryClassifier;
 import de.thatsich.bachelor.classificationtraining.restricted.controller.commands.GetLastBinaryClassifierIndexCommand;
 import de.thatsich.bachelor.classificationtraining.restricted.controller.commands.InitBinaryClassifierListCommand;
 import de.thatsich.bachelor.classificationtraining.restricted.controller.commands.SetLastBinaryClassifierIndexCommand;
 import de.thatsich.bachelor.classificationtraining.restricted.controller.commands.TrainBinaryClassifierCommand;
 import de.thatsich.bachelor.classificationtraining.restricted.models.BinaryClassifiers;
+import de.thatsich.bachelor.classificationtraining.restricted.services.TrainCommandService;
 import de.thatsich.bachelor.featureextraction.api.entities.FeatureVector;
 import de.thatsich.bachelor.featureextraction.restricted.models.FeatureVectors;
-import de.thatsich.bachelor.javafx.business.command.CommandFactory;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.javafx.CommandExecutor;
-import de.thatsich.core.opencv.IBinaryClassifier;
 
 public class TrainInputPresenter extends AFXMLPresenter {
 
@@ -34,7 +34,7 @@ public class TrainInputPresenter extends AFXMLPresenter {
 	@FXML ChoiceBox<IBinaryClassifier> nodeChoiceBoxBinaryClassifier;
 	
 	// Injects
-	@Inject private CommandFactory commander;
+	@Inject private TrainCommandService commander;
 	@Inject private BinaryClassifiers binaryClassifiers;
 	@Inject private FeatureVectors featureVectors;
 

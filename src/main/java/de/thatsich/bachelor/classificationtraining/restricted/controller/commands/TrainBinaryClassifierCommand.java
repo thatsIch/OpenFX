@@ -12,9 +12,9 @@ import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
 import de.thatsich.bachelor.classificationtraining.api.entities.BinaryClassifier;
+import de.thatsich.bachelor.classificationtraining.api.entities.IBinaryClassifier;
 import de.thatsich.bachelor.featureextraction.api.entities.FeatureVector;
 import de.thatsich.core.javafx.Command;
-import de.thatsich.core.opencv.IBinaryClassifier;
 
 public class TrainBinaryClassifierCommand extends Command<BinaryClassifier> {
 

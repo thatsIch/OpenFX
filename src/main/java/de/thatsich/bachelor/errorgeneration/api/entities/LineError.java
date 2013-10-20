@@ -5,8 +5,6 @@ import org.opencv.core.Mat;
 import org.opencv.core.Point;
 import org.opencv.core.Scalar;
 
-import de.thatsich.core.opencv.AErrorGenerator;
-
 public class LineError extends AErrorGenerator {
 
 	private final int MEAN_LENGTH = 100;

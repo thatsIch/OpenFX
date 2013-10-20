@@ -26,7 +26,7 @@ import de.thatsich.bachelor.imageprocessing.restricted.controller.commands.InitI
 import de.thatsich.bachelor.imageprocessing.restricted.controller.commands.SetLastImageEntryIndexCommand;
 import de.thatsich.bachelor.imageprocessing.restricted.model.ImageEntries;
 import de.thatsich.bachelor.imageprocessing.restricted.model.ImageState;
-import de.thatsich.bachelor.javafx.business.command.CommandFactory;
+import de.thatsich.bachelor.imageprocessing.restricted.services.ImageCommandService;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.javafx.CommandExecutor;
 
@@ -37,9 +37,9 @@ public class ImageListPresenter extends AFXMLPresenter {
 	@FXML TableColumn<ImageEntry, String> nodeTableColumnImageList;
 	
 	// Injects
+	@Inject private ImageCommandService commander;
 	@Inject private ImageEntries imageEntries;
 	@Inject private ImageState imageState;
-	@Inject private CommandFactory commander;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {

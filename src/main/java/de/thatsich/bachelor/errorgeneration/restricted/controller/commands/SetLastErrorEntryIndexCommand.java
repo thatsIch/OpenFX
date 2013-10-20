@@ -7,7 +7,7 @@ import javafx.concurrent.Task;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
-import de.thatsich.bachelor.service.ConfigService;
+import de.thatsich.bachelor.errorgeneration.restricted.services.ErrorConfigService;
 import de.thatsich.core.javafx.Command;
 
 public class SetLastErrorEntryIndexCommand extends Command<Void> {
@@ -16,7 +16,7 @@ public class SetLastErrorEntryIndexCommand extends Command<Void> {
 	private final IntegerProperty lastErrorEntryIndex = new SimpleIntegerProperty();
 	
 	// Injects
-	@Inject ConfigService config;
+	@Inject ErrorConfigService config;
 	
 	@Inject
 	protected SetLastErrorEntryIndexCommand(@Assisted int lastErrorEntryIndex) {

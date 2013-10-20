@@ -4,13 +4,13 @@ import javafx.concurrent.Task;
 
 import com.google.inject.Inject;
 
-import de.thatsich.bachelor.service.ConfigService;
+import de.thatsich.bachelor.featureextraction.restricted.services.FeatureConfigService;
 import de.thatsich.core.javafx.Command;
 
 public class GetLastFrameSizeCommand extends Command<Integer> {
 
 	// Injects
-	@Inject private ConfigService config;
+	@Inject private FeatureConfigService config;
 
 	@Override
 	protected Task<Integer> createTask() {

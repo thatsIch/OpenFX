@@ -25,7 +25,7 @@ import de.thatsich.bachelor.errorgeneration.restricted.controller.commands.InitE
 import de.thatsich.bachelor.errorgeneration.restricted.controller.commands.SetLastErrorEntryIndexCommand;
 import de.thatsich.bachelor.errorgeneration.restricted.models.ErrorEntries;
 import de.thatsich.bachelor.errorgeneration.restricted.models.ErrorState;
-import de.thatsich.bachelor.javafx.business.command.CommandFactory;
+import de.thatsich.bachelor.errorgeneration.restricted.services.ErrorCommandService;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.javafx.CommandExecutor;
 
@@ -39,7 +39,7 @@ public class ErrorListPresenter extends AFXMLPresenter {
 	// Injects
 	@Inject private ErrorState errorState;
 	@Inject private ErrorEntries errorEntryList;
-	@Inject private CommandFactory commander;
+	@Inject private ErrorCommandService commander;
 	
 	// ==================================================
 	// Initializable Implementation

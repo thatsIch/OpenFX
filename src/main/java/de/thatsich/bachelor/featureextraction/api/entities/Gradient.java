@@ -5,8 +5,6 @@ import org.opencv.core.Mat;
 import org.opencv.core.MatOfFloat;
 import org.opencv.imgproc.Imgproc;
 
-import de.thatsich.core.opencv.AFeatureExtractor;
-
 
 /**
  * Applies <a href="http://en.wikipedia.org/wiki/Sobel_operator">Sobel Operator</a> 

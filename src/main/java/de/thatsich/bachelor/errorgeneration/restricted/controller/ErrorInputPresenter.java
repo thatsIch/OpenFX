@@ -25,21 +25,22 @@ import org.opencv.core.Mat;
 import com.google.inject.Inject;
 
 import de.thatsich.bachelor.errorgeneration.api.entities.ErrorEntry;
+import de.thatsich.bachelor.errorgeneration.api.entities.IErrorGenerator;
 import de.thatsich.bachelor.errorgeneration.restricted.controller.commands.ApplyErrorCommand;
 import de.thatsich.bachelor.errorgeneration.restricted.controller.commands.CreateErrorImageCommand;
 import de.thatsich.bachelor.errorgeneration.restricted.controller.commands.DeleteErrorEntryCommand;
 import de.thatsich.bachelor.errorgeneration.restricted.controller.commands.GetLastErrorGeneratorIndexCommand;
 import de.thatsich.bachelor.errorgeneration.restricted.controller.commands.InitErrorGeneratorListCommand;
+import de.thatsich.bachelor.errorgeneration.restricted.controller.commands.SetLastErrorCountCommand;
+import de.thatsich.bachelor.errorgeneration.restricted.controller.commands.SetLastErrorGeneratorIndexCommand;
 import de.thatsich.bachelor.errorgeneration.restricted.models.ErrorEntries;
 import de.thatsich.bachelor.errorgeneration.restricted.models.ErrorGenerators;
 import de.thatsich.bachelor.errorgeneration.restricted.models.ErrorState;
+import de.thatsich.bachelor.errorgeneration.restricted.services.ErrorCommandService;
 import de.thatsich.bachelor.imageprocessing.api.entities.ImageEntry;
 import de.thatsich.bachelor.imageprocessing.restricted.model.ImageEntries;
-import de.thatsich.bachelor.javafx.business.command.CommandFactory;
-import de.thatsich.bachelor.service.ConfigService;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.javafx.CommandExecutor;
-import de.thatsich.core.opencv.IErrorGenerator;
 
 /**
  * Presenter
@@ -65,8 +66,7 @@ public class ErrorInputPresenter extends AFXMLPresenter {
 	@Inject private ErrorState errorState;
 	@Inject private ErrorEntries errorEntryList;
 	@Inject private ErrorGenerators errorGeneratorList;
-	@Inject private ConfigService config;
-	@Inject private CommandFactory commander;
+	@Inject private ErrorCommandService commander;
 	
 	// ================================================== 
 	// Initializable Implementation 
@@ -123,13 +123,11 @@ public class ErrorInputPresenter extends AFXMLPresenter {
 		
 		this.nodeChoiceBoxErrorGenerator.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
 			@Override public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-				config.setLastErrorGeneratorIndexInt(newValue.intValue());
+				SetLastErrorGeneratorIndexCommand command = commander.createSetLastErrorGeneratorIndexCommand(newValue.intValue());
+				command.start();
 			}
 		});
 		this.log.info("Bound ChoiceBoxErrorGenerator to Config.");
-		
-		this.nodeChoiceBoxErrorGenerator.getSelectionModel().select(this.config.getLastErrorGeneratorIndexInt());
-		this.log.info("Initialized ChoiceBoxErrorGenerator from Config.");
 	}
 	
 	/**
@@ -143,16 +141,13 @@ public class ErrorInputPresenter extends AFXMLPresenter {
 				if (newValue.matches("\\d+")) {
 					final int count = Integer.parseInt(newValue);
 					errorState.getErrorLoopCountProperty().set(count);
-					config.setLastErrorCountInt(count);
+					SetLastErrorCountCommand command = commander.createSetLastErrorCountCommand(count);
+					command.start();
 				} else {
 					nodeTextFieldErrorCount.setText(oldValue);
 				}
 			}
 		});
-		
-		final int lastErrorLoopCount = this.config.getLastErrorCountInt();
-		this.nodeTextFieldErrorCount.textProperty().set(Integer.toString(lastErrorLoopCount));
-		this.errorState.getErrorLoopCountProperty().set(lastErrorLoopCount);
 	}
 	
 	private void bindButton() {

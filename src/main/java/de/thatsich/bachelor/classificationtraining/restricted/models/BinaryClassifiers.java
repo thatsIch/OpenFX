@@ -5,7 +5,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
-import de.thatsich.core.opencv.IBinaryClassifier;
+import de.thatsich.bachelor.classificationtraining.api.entities.IBinaryClassifier;
 
 public class BinaryClassifiers {
 	

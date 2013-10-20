@@ -12,8 +12,8 @@ import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
 import de.thatsich.bachelor.errorgeneration.api.entities.ErrorEntry;
+import de.thatsich.bachelor.errorgeneration.api.entities.IErrorGenerator;
 import de.thatsich.core.javafx.Command;
-import de.thatsich.core.opencv.IErrorGenerator;
 
 public class ApplyErrorCommand extends Command<ErrorEntry> {
 

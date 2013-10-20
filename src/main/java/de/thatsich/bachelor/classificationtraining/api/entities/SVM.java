@@ -5,8 +5,6 @@ import org.opencv.core.Mat;
 import org.opencv.core.MatOfFloat;
 import org.opencv.ml.CvSVM;
 
-import de.thatsich.core.opencv.ABinaryClassifier;
-
 public class SVM extends ABinaryClassifier {
 
 	private final CvSVM svm = new CvSVM();

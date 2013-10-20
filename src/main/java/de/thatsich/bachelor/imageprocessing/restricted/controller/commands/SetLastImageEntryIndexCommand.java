@@ -7,7 +7,7 @@ import javafx.concurrent.Task;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
-import de.thatsich.bachelor.service.ConfigService;
+import de.thatsich.bachelor.imageprocessing.restricted.services.ImageConfigService;
 import de.thatsich.core.javafx.Command;
 
 public class SetLastImageEntryIndexCommand extends Command<Void> {
@@ -16,7 +16,7 @@ public class SetLastImageEntryIndexCommand extends Command<Void> {
 	private final IntegerProperty lastImageEntryIndex = new SimpleIntegerProperty();
 	
 	// Injects
-	@Inject ConfigService config;
+	@Inject ImageConfigService config;
 	
 	@Inject
 	protected SetLastImageEntryIndexCommand(@Assisted int lastImageEntryIndex) {

@@ -7,11 +7,11 @@ import javafx.concurrent.Task;
 import de.thatsich.bachelor.featureextraction.api.entities.Gradient;
 import de.thatsich.bachelor.featureextraction.api.entities.GrayLevelCooccurenceHistogram;
 import de.thatsich.bachelor.featureextraction.api.entities.HuMoments;
+import de.thatsich.bachelor.featureextraction.api.entities.IFeatureExtractor;
 import de.thatsich.bachelor.featureextraction.api.entities.LocalBinaryPatternHistogram;
 import de.thatsich.bachelor.featureextraction.api.entities.Mean;
 import de.thatsich.bachelor.featureextraction.api.entities.Variance;
 import de.thatsich.core.javafx.Command;
-import de.thatsich.core.opencv.IFeatureExtractor;
 
 public class InitFeatureExtractorListCommand extends Command<List<IFeatureExtractor>> {
 

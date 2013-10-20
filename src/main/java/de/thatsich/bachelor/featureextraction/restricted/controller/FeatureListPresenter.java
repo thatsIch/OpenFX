@@ -24,10 +24,10 @@ import com.google.inject.Inject;
 import de.thatsich.bachelor.featureextraction.api.entities.FeatureVector;
 import de.thatsich.bachelor.featureextraction.restricted.controller.commands.GetLastFeatureVectorIndexCommand;
 import de.thatsich.bachelor.featureextraction.restricted.controller.commands.InitFeatureVectorListCommand;
+import de.thatsich.bachelor.featureextraction.restricted.controller.commands.SetLastFeatureVectorIndexCommand;
 import de.thatsich.bachelor.featureextraction.restricted.models.FeatureState;
 import de.thatsich.bachelor.featureextraction.restricted.models.FeatureVectors;
-import de.thatsich.bachelor.javafx.business.command.CommandFactory;
-import de.thatsich.bachelor.service.ConfigService;
+import de.thatsich.bachelor.featureextraction.restricted.services.FeatureCommandService;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.javafx.CommandExecutor;
 
@@ -45,8 +45,7 @@ public class FeatureListPresenter extends AFXMLPresenter {
 	// Injects
 	@Inject private FeatureState featureState;
 	@Inject private FeatureVectors featureVectors;
-	@Inject private CommandFactory commander;
-	@Inject private ConfigService config;
+	@Inject private FeatureCommandService commander;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -83,12 +82,10 @@ public class FeatureListPresenter extends AFXMLPresenter {
 				featureVectors.getSelectedFeatureVectorProperty().set(newValue);
 				
 				final int index = nodeTableViewFeatureVectorList.getSelectionModel().getSelectedIndex();
-				config.setLastFeatureVectorIndexInt(index);
+				SetLastFeatureVectorIndexCommand command = commander.createSetLastFeatureVectorIndexCommand(index);
+				command.start();
 			}
-		});
-		
-		final int index = this.config.getLastFeatureVectorIndexInt();
-		this.nodeTableViewFeatureVectorList.getSelectionModel().select(index);		
+		});	
 	}
 	
 	private void initFeatureVectorList() {
