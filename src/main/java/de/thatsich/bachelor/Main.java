@@ -10,8 +10,6 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageBuilder;
 
-import org.opencv.core.Core;
-
 import com.cathive.fx.guice.GuiceApplication;
 import com.google.inject.Inject;
 import com.google.inject.Module;
@@ -52,7 +50,6 @@ public class Main extends GuiceApplication {
 	 */
     public static void main(String[] args) {
     	// Loading OpenCV Bindings
-        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         OpenCVLoader.loadLibrary();
         
         Main.launch(args);

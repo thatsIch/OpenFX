@@ -1,42 +1,63 @@
 package de.thatsich.core.opencv;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+
+import org.opencv.core.Core;
 
 public class OpenCVLoader {
 
 	public static void loadLibrary() {
-		System.out.println(Paths.get("").toAbsolutePath());
+		final String libName = getBitness() + "_" + Core.NATIVE_LIBRARY_NAME;
+//		loadFromJar(libName);
 		try {
-			Path fileIn = null;
-			Path fileOut = null;
-			String osName = System.getProperty("os.name");
-			System.out.println(osName);
-			if(osName.startsWith("Windows")){
-				int bitness = Integer.parseInt(System.getProperty("sun.arch.data.model"));
-				if(bitness == 32){
-					System.out.println("32 bit detected");
-//					fileIn = Paths.get("/opencv/x86/opencv_java245.dll");
-//					fileOut = Files.createTempFile("lib", ".dll");
-				}
-				else if (bitness == 64){
-					System.out.println("64 bit detected");
-//					fileIn = Paths.get("/opencv/x64/opencv_java245.dll");
-//					fileOut = Files.createTempFile("lib", ".dll");
-				}
-				else{
-					System.out.println("Unknown bit detected - trying with 32 bit");
-//					fileIn = Paths.get("/opencv/x86/opencv_java245.dll");
-//					fileOut = Files.createTempFile("lib", ".dll");
-				}
-//
-//				fileOut.toFile().deleteOnExit();
-//				Files.copy(fileIn, fileOut);
-//				System.loadLibrary(fileOut.toString());
-			}
+			loadFromFileSystem(libName);	
 		} catch (Exception e) {
-			throw new RuntimeException("Failed to load opencv native library", e);
+			loadFromJar(libName);
+		}
+	}
+	
+	private static String getBitness() {
+		final int bitness = Integer.parseInt(System.getProperty("sun.arch.data.model"));
+		switch (bitness) {
+			case 64: return "x64";
+			case 32:
+			default: return "x86";
+		}
+	}
+	
+	private static void loadFromFileSystem(String libName) {
+		System.out.println("Try loading CV-Lib from FileSystem.");
+		try {
+			System.loadLibrary(libName);
+		} catch (Exception e) {
+			
+		}
+		System.out.println("Loaded OpenCV-Lib from FileSystem.");
+	}
+	
+	private static void loadFromJar(String libName) {
+		try {
+			System.out.println("Try loading CV-Lib from JAR.");
+			final InputStream is = OpenCVLoader.class.getClass().getResourceAsStream("/de/thatsich/core/opencv/" + libName + ".dll");
+			final byte[] buffer = new byte[1024];
+			int read = -1;
+			final File temp = File.createTempFile(libName, ".dll");
+			temp.deleteOnExit();
+			final FileOutputStream fos = new FileOutputStream(temp);
+			
+			while ((read = is.read(buffer)) != -1) {
+				fos.write(buffer, 0, read);
+			}
+			
+			fos.close();
+			is.close();
+			
+			System.load(temp.getAbsolutePath());
+			System.out.println("Loaded OpenCV-Lib from JAR.");
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 }

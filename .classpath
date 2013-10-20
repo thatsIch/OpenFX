@@ -21,7 +21,7 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="src/main/resources/de/thatsich/core/libs/OpenCV 2.4.6/opencv-246.jar">
 		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="BachelorOpenCV/src/main/resources/de/thatsich/core/libs/OpenCV 2.4.6/x64"/>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="BachelorOpenCV/src/main/resources/de/thatsich/core/opencv"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
