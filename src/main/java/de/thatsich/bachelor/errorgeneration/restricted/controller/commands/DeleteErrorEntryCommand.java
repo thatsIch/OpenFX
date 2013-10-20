@@ -11,7 +11,7 @@ import javafx.concurrent.Task;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
-import de.thatsich.bachelor.javafx.business.model.entity.ErrorEntry;
+import de.thatsich.bachelor.errorgeneration.api.entities.ErrorEntry;
 import de.thatsich.core.javafx.Command;
 
 public class DeleteErrorEntryCommand extends Command<ErrorEntry> {

@@ -11,6 +11,7 @@ import de.thatsich.bachelor.classificationtraining.restricted.controller.command
 import de.thatsich.bachelor.classificationtraining.restricted.controller.commands.InitBinaryClassifierListCommand;
 import de.thatsich.bachelor.classificationtraining.restricted.controller.commands.SetLastBinaryClassifierIndexCommand;
 import de.thatsich.bachelor.classificationtraining.restricted.controller.commands.TrainBinaryClassifierCommand;
+import de.thatsich.bachelor.errorgeneration.api.entities.ErrorEntry;
 import de.thatsich.bachelor.errorgeneration.restricted.controller.commands.ApplyErrorCommand;
 import de.thatsich.bachelor.errorgeneration.restricted.controller.commands.CreateErrorImageCommand;
 import de.thatsich.bachelor.errorgeneration.restricted.controller.commands.DeleteErrorEntryCommand;
@@ -19,6 +20,7 @@ import de.thatsich.bachelor.errorgeneration.restricted.controller.commands.GetLa
 import de.thatsich.bachelor.errorgeneration.restricted.controller.commands.InitErrorEntryListCommand;
 import de.thatsich.bachelor.errorgeneration.restricted.controller.commands.InitErrorGeneratorListCommand;
 import de.thatsich.bachelor.errorgeneration.restricted.controller.commands.SetLastErrorEntryIndexCommand;
+import de.thatsich.bachelor.featureextraction.api.entities.FeatureVector;
 import de.thatsich.bachelor.featureextraction.restricted.controller.commands.DeleteFeatureVectorCommand;
 import de.thatsich.bachelor.featureextraction.restricted.controller.commands.ExtractFeatureVectorFromErrorEntryCommand;
 import de.thatsich.bachelor.featureextraction.restricted.controller.commands.GetLastFeatureExtractorIndexCommand;
@@ -34,8 +36,6 @@ import de.thatsich.bachelor.imageprocessing.restricted.controller.commands.Delet
 import de.thatsich.bachelor.imageprocessing.restricted.controller.commands.GetLastImageEntryIndexCommand;
 import de.thatsich.bachelor.imageprocessing.restricted.controller.commands.InitImageEntryListCommand;
 import de.thatsich.bachelor.imageprocessing.restricted.controller.commands.SetLastImageEntryIndexCommand;
-import de.thatsich.bachelor.javafx.business.model.entity.ErrorEntry;
-import de.thatsich.bachelor.javafx.business.model.entity.FeatureVector;
 import de.thatsich.core.opencv.IBinaryClassifier;
 import de.thatsich.core.opencv.IErrorGenerator;
 import de.thatsich.core.opencv.IFeatureExtractor;

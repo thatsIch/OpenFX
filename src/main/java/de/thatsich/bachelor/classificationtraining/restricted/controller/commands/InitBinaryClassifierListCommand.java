@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.concurrent.Task;
-import de.thatsich.bachelor.opencv.classifier.RandomForest;
-import de.thatsich.bachelor.opencv.classifier.SVM;
+import de.thatsich.bachelor.classificationtraining.api.entities.RandomForest;
+import de.thatsich.bachelor.classificationtraining.api.entities.SVM;
 import de.thatsich.core.javafx.Command;
 import de.thatsich.core.opencv.IBinaryClassifier;
 

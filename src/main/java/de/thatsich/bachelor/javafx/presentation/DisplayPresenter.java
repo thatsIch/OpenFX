@@ -13,12 +13,12 @@ import javafx.scene.layout.GridPane;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
+import de.thatsich.bachelor.errorgeneration.restricted.views.ErrorDisplayView;
+import de.thatsich.bachelor.errorgeneration.restricted.views.ErrorInputView;
+import de.thatsich.bachelor.errorgeneration.restricted.views.ErrorListView;
 import de.thatsich.bachelor.imageprocessing.restricted.view.ImageDisplayView;
 import de.thatsich.bachelor.imageprocessing.restricted.view.ImageInputView;
 import de.thatsich.bachelor.imageprocessing.restricted.view.ImageListView;
-import de.thatsich.bachelor.javafx.presentation.b_error.ErrorDisplayView;
-import de.thatsich.bachelor.javafx.presentation.b_error.ErrorInputView;
-import de.thatsich.bachelor.javafx.presentation.b_error.ErrorListView;
 import de.thatsich.bachelor.javafx.presentation.c_feature.FeatureDisplayView;
 import de.thatsich.bachelor.javafx.presentation.c_feature.FeatureInputView;
 import de.thatsich.bachelor.javafx.presentation.c_feature.FeatureListView;

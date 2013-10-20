@@ -11,8 +11,8 @@ import javafx.concurrent.Task;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
-import de.thatsich.bachelor.javafx.business.model.entity.BinaryClassifier;
-import de.thatsich.bachelor.javafx.business.model.entity.FeatureVector;
+import de.thatsich.bachelor.classificationtraining.api.entities.BinaryClassifier;
+import de.thatsich.bachelor.featureextraction.api.entities.FeatureVector;
 import de.thatsich.core.javafx.Command;
 import de.thatsich.core.opencv.IBinaryClassifier;
 

@@ -7,7 +7,7 @@ import javafx.concurrent.Task;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
-import de.thatsich.bachelor.javafx.business.model.entity.FeatureVector;
+import de.thatsich.bachelor.featureextraction.api.entities.FeatureVector;
 import de.thatsich.core.javafx.Command;
 
 public class DeleteFeatureVectorCommand extends Command<FeatureVector> {

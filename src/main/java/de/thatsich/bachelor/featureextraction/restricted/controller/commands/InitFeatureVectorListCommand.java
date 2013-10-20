@@ -19,8 +19,8 @@ import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import com.sun.org.apache.xpath.internal.functions.WrongNumberArgsException;
 
-import de.thatsich.bachelor.javafx.business.model.entity.FeatureVector;
-import de.thatsich.bachelor.service.CSVService;
+import de.thatsich.bachelor.featureextraction.api.entities.FeatureVector;
+import de.thatsich.bachelor.featureextraction.restricted.services.CSVService;
 import de.thatsich.core.javafx.Command;
 
 public class InitFeatureVectorListCommand extends Command<List<FeatureVector>> {

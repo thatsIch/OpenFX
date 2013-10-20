@@ -19,19 +19,19 @@ import javafx.util.StringConverter;
 
 import com.google.inject.Inject;
 
+import de.thatsich.bachelor.errorgeneration.api.entities.ErrorEntry;
+import de.thatsich.bachelor.errorgeneration.restricted.models.ErrorEntries;
+import de.thatsich.bachelor.featureextraction.api.entities.FeatureVector;
 import de.thatsich.bachelor.featureextraction.restricted.controller.commands.DeleteFeatureVectorCommand;
 import de.thatsich.bachelor.featureextraction.restricted.controller.commands.ExtractFeatureVectorFromErrorEntryCommand;
 import de.thatsich.bachelor.featureextraction.restricted.controller.commands.GetLastFeatureExtractorIndexCommand;
 import de.thatsich.bachelor.featureextraction.restricted.controller.commands.GetLastFrameSizeCommand;
 import de.thatsich.bachelor.featureextraction.restricted.controller.commands.InitFeatureExtractorListCommand;
 import de.thatsich.bachelor.featureextraction.restricted.controller.commands.SetLastFeatureExtractorIndexCommand;
+import de.thatsich.bachelor.featureextraction.restricted.models.FeatureExtractors;
+import de.thatsich.bachelor.featureextraction.restricted.models.FeatureState;
+import de.thatsich.bachelor.featureextraction.restricted.models.FeatureVectors;
 import de.thatsich.bachelor.javafx.business.command.CommandFactory;
-import de.thatsich.bachelor.javafx.business.model.ErrorEntries;
-import de.thatsich.bachelor.javafx.business.model.FeatureExtractors;
-import de.thatsich.bachelor.javafx.business.model.FeatureState;
-import de.thatsich.bachelor.javafx.business.model.FeatureVectors;
-import de.thatsich.bachelor.javafx.business.model.entity.ErrorEntry;
-import de.thatsich.bachelor.javafx.business.model.entity.FeatureVector;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.javafx.CommandExecutor;
 import de.thatsich.core.opencv.IFeatureExtractor;

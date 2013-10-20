@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.concurrent.Task;
-import de.thatsich.bachelor.opencv.error.LineError;
+import de.thatsich.bachelor.errorgeneration.api.entities.LineError;
 import de.thatsich.core.javafx.Command;
 import de.thatsich.core.opencv.IErrorGenerator;
 

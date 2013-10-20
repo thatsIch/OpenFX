@@ -11,7 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import de.thatsich.bachelor.service.CSVService;
+import de.thatsich.bachelor.featureextraction.restricted.services.CSVService;
 
 @RunWith(JUnit4.class)
 public class CSVTest {

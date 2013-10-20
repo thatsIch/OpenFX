@@ -21,12 +21,12 @@ import javafx.util.Callback;
 
 import com.google.inject.Inject;
 
+import de.thatsich.bachelor.featureextraction.api.entities.FeatureVector;
 import de.thatsich.bachelor.featureextraction.restricted.controller.commands.GetLastFeatureVectorIndexCommand;
 import de.thatsich.bachelor.featureextraction.restricted.controller.commands.InitFeatureVectorListCommand;
+import de.thatsich.bachelor.featureextraction.restricted.models.FeatureState;
+import de.thatsich.bachelor.featureextraction.restricted.models.FeatureVectors;
 import de.thatsich.bachelor.javafx.business.command.CommandFactory;
-import de.thatsich.bachelor.javafx.business.model.FeatureState;
-import de.thatsich.bachelor.javafx.business.model.FeatureVectors;
-import de.thatsich.bachelor.javafx.business.model.entity.FeatureVector;
 import de.thatsich.bachelor.service.ConfigService;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.javafx.CommandExecutor;

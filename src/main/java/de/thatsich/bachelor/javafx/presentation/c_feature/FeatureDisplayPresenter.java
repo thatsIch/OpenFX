@@ -11,8 +11,8 @@ import javafx.scene.control.Tooltip;
 
 import com.google.inject.Inject;
 
-import de.thatsich.bachelor.javafx.business.model.FeatureVectors;
-import de.thatsich.bachelor.javafx.business.model.entity.FeatureVector;
+import de.thatsich.bachelor.featureextraction.api.entities.FeatureVector;
+import de.thatsich.bachelor.featureextraction.restricted.models.FeatureVectors;
 import de.thatsich.core.javafx.AFXMLPresenter;
 
 public class FeatureDisplayPresenter extends AFXMLPresenter {

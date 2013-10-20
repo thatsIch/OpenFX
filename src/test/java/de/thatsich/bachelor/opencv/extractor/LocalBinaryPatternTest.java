@@ -8,6 +8,8 @@ import org.junit.runners.JUnit4;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfInt;
 
+import de.thatsich.bachelor.featureextraction.api.entities.LocalBinaryPatternHistogram;
+
 @RunWith(JUnit4.class)
 public class LocalBinaryPatternTest extends AFeatureExtractorTest {
 

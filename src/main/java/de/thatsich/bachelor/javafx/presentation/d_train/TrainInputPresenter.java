@@ -20,10 +20,10 @@ import de.thatsich.bachelor.classificationtraining.restricted.controller.command
 import de.thatsich.bachelor.classificationtraining.restricted.controller.commands.InitBinaryClassifierListCommand;
 import de.thatsich.bachelor.classificationtraining.restricted.controller.commands.SetLastBinaryClassifierIndexCommand;
 import de.thatsich.bachelor.classificationtraining.restricted.controller.commands.TrainBinaryClassifierCommand;
+import de.thatsich.bachelor.classificationtraining.restricted.models.BinaryClassifiers;
+import de.thatsich.bachelor.featureextraction.api.entities.FeatureVector;
+import de.thatsich.bachelor.featureextraction.restricted.models.FeatureVectors;
 import de.thatsich.bachelor.javafx.business.command.CommandFactory;
-import de.thatsich.bachelor.javafx.business.model.BinaryClassifiers;
-import de.thatsich.bachelor.javafx.business.model.FeatureVectors;
-import de.thatsich.bachelor.javafx.business.model.entity.FeatureVector;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.javafx.CommandExecutor;
 import de.thatsich.core.opencv.IBinaryClassifier;

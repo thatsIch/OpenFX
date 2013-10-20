@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.concurrent.Task;
-import de.thatsich.bachelor.opencv.extractor.Gradient;
-import de.thatsich.bachelor.opencv.extractor.GrayLevelCooccurenceHistogram;
-import de.thatsich.bachelor.opencv.extractor.HuMoments;
-import de.thatsich.bachelor.opencv.extractor.LocalBinaryPatternHistogram;
-import de.thatsich.bachelor.opencv.extractor.Mean;
-import de.thatsich.bachelor.opencv.extractor.Variance;
+import de.thatsich.bachelor.featureextraction.api.entities.Gradient;
+import de.thatsich.bachelor.featureextraction.api.entities.GrayLevelCooccurenceHistogram;
+import de.thatsich.bachelor.featureextraction.api.entities.HuMoments;
+import de.thatsich.bachelor.featureextraction.api.entities.LocalBinaryPatternHistogram;
+import de.thatsich.bachelor.featureextraction.api.entities.Mean;
+import de.thatsich.bachelor.featureextraction.api.entities.Variance;
 import de.thatsich.core.javafx.Command;
 import de.thatsich.core.opencv.IFeatureExtractor;
 
