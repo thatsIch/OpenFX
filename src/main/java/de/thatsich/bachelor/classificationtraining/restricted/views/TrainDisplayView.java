@@ -1,4 +1,4 @@
-package de.thatsich.bachelor.javafx.presentation.d_train;
+package de.thatsich.bachelor.classificationtraining.restricted.views;
 
 import de.thatsich.core.javafx.AFXMLView;
 

@@ -1,4 +1,4 @@
-package de.thatsich.bachelor.javafx.presentation.d_train;
+package de.thatsich.bachelor.classificationtraining.restricted.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
