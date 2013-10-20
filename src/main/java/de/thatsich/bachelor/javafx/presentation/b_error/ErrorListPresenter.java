@@ -12,16 +12,17 @@ import javafx.beans.value.ObservableValue;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import com.google.inject.Inject;
 
+import de.thatsich.bachelor.errorgeneration.restricted.controller.commands.GetLastErrorEntryIndexCommand;
+import de.thatsich.bachelor.errorgeneration.restricted.controller.commands.InitErrorEntryListCommand;
+import de.thatsich.bachelor.errorgeneration.restricted.controller.commands.SetLastErrorEntryIndexCommand;
 import de.thatsich.bachelor.javafx.business.command.CommandFactory;
-import de.thatsich.bachelor.javafx.business.command.GetLastErrorEntryIndexCommand;
-import de.thatsich.bachelor.javafx.business.command.InitErrorEntryListCommand;
-import de.thatsich.bachelor.javafx.business.command.SetLastErrorEntryIndexCommand;
 import de.thatsich.bachelor.javafx.business.model.ErrorEntries;
 import de.thatsich.bachelor.javafx.business.model.ErrorState;
 import de.thatsich.bachelor.javafx.business.model.entity.ErrorEntry;
@@ -64,6 +65,7 @@ public class ErrorListPresenter extends AFXMLPresenter {
 	private void initTableView() {
 		this.nodeTableViewErrorList.itemsProperty().bind(this.errorEntryList.getErrorEntryListProperty());
 		
+		this.nodeTableViewErrorList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		this.nodeTableViewErrorList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<ErrorEntry>() {
 			@Override public void changed(ObservableValue<? extends ErrorEntry> paramObservableValue, ErrorEntry oldvalue, ErrorEntry newValue) {
 				errorEntryList.getSelectedErrorEntryProperty().set(newValue);

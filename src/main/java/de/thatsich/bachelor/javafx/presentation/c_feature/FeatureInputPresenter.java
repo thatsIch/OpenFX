@@ -12,19 +12,20 @@ import javafx.beans.value.ObservableValue;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Slider;
 import javafx.util.StringConverter;
 
 import com.google.inject.Inject;
 
+import de.thatsich.bachelor.featureextraction.restricted.controller.commands.DeleteFeatureVectorCommand;
+import de.thatsich.bachelor.featureextraction.restricted.controller.commands.ExtractFeatureVectorFromErrorEntryCommand;
+import de.thatsich.bachelor.featureextraction.restricted.controller.commands.GetLastFeatureExtractorIndexCommand;
+import de.thatsich.bachelor.featureextraction.restricted.controller.commands.GetLastFrameSizeCommand;
+import de.thatsich.bachelor.featureextraction.restricted.controller.commands.InitFeatureExtractorListCommand;
+import de.thatsich.bachelor.featureextraction.restricted.controller.commands.SetLastFeatureExtractorIndexCommand;
 import de.thatsich.bachelor.javafx.business.command.CommandFactory;
-import de.thatsich.bachelor.javafx.business.command.DeleteFeatureVectorCommand;
-import de.thatsich.bachelor.javafx.business.command.ExtractFeatureVectorFromErrorEntryCommand;
-import de.thatsich.bachelor.javafx.business.command.GetLastFeatureExtractorIndexCommand;
-import de.thatsich.bachelor.javafx.business.command.GetLastFrameSizeCommand;
-import de.thatsich.bachelor.javafx.business.command.InitFeatureExtractorListCommand;
-import de.thatsich.bachelor.javafx.business.command.SetLastFeatureExtractorIndexCommand;
 import de.thatsich.bachelor.javafx.business.model.ErrorEntries;
 import de.thatsich.bachelor.javafx.business.model.FeatureExtractors;
 import de.thatsich.bachelor.javafx.business.model.FeatureState;
@@ -40,6 +41,10 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 	// Nodes
 	@FXML private ChoiceBox<IFeatureExtractor> nodeChoiceBoxFeatureExtractor;
 	@FXML private Slider nodeSliderFrameSize;
+	
+	@FXML private Button nodeButtonExtractFeatureVector;
+	@FXML private Button nodeButtonRemoveFeatureVector;
+	@FXML private Button nodeButtonResetFeatureVectorList;
 
 	// Injects
 	@Inject private CommandFactory commander;
@@ -52,6 +57,7 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 	public void initialize(URL url, ResourceBundle bundle) {
 		this.bindChoiceBoxFeatureExtractor();
 		this.bindSliderFrameSize();
+		this.bindButtons();
 		
 		this.initFeatureExtractorList();
 		this.initFrameSize();
@@ -158,6 +164,15 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 			@Override public Double fromString(String paramString) { return 0.0; }
 		});
 		this.log.info("Formatted FrameSize.");
+	}
+	
+	/**
+	 * Simple Validator Binding for Buttons
+	 */
+	private void bindButtons() {
+		this.nodeButtonExtractFeatureVector.disableProperty().bind(this.errorEntryList.getSelectedErrorEntryProperty().isNull().or(this.nodeChoiceBoxFeatureExtractor.valueProperty().isNull()));
+		this.nodeButtonRemoveFeatureVector.disableProperty().bind(this.featureVectors.getSelectedFeatureVectorProperty().isNull());
+		this.nodeButtonResetFeatureVectorList.disableProperty().bind(this.featureVectors.getFeatureVectorListProperty().emptyProperty());
 	}
 	
 	// ================================================== 

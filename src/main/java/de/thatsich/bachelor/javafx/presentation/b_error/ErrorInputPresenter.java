@@ -24,18 +24,18 @@ import org.opencv.core.Mat;
 
 import com.google.inject.Inject;
 
-import de.thatsich.bachelor.javafx.business.command.ApplyErrorCommand;
+import de.thatsich.bachelor.errorgeneration.restricted.controller.commands.ApplyErrorCommand;
+import de.thatsich.bachelor.errorgeneration.restricted.controller.commands.CreateErrorImageCommand;
+import de.thatsich.bachelor.errorgeneration.restricted.controller.commands.DeleteErrorEntryCommand;
+import de.thatsich.bachelor.errorgeneration.restricted.controller.commands.GetLastErrorGeneratorIndexCommand;
+import de.thatsich.bachelor.errorgeneration.restricted.controller.commands.InitErrorGeneratorListCommand;
+import de.thatsich.bachelor.imageprocessing.api.entities.ImageEntry;
+import de.thatsich.bachelor.imageprocessing.restricted.model.ImageEntries;
 import de.thatsich.bachelor.javafx.business.command.CommandFactory;
-import de.thatsich.bachelor.javafx.business.command.CreateErrorImageCommand;
-import de.thatsich.bachelor.javafx.business.command.DeleteErrorEntryCommand;
-import de.thatsich.bachelor.javafx.business.command.GetLastErrorGeneratorIndexCommand;
-import de.thatsich.bachelor.javafx.business.command.InitErrorGeneratorListCommand;
 import de.thatsich.bachelor.javafx.business.model.ErrorEntries;
 import de.thatsich.bachelor.javafx.business.model.ErrorGenerators;
 import de.thatsich.bachelor.javafx.business.model.ErrorState;
-import de.thatsich.bachelor.javafx.business.model.ImageEntries;
 import de.thatsich.bachelor.javafx.business.model.entity.ErrorEntry;
-import de.thatsich.bachelor.javafx.business.model.entity.ImageEntry;
 import de.thatsich.bachelor.service.ConfigService;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.javafx.CommandExecutor;

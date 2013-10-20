@@ -16,9 +16,9 @@
       </labelFor>
     </Label>
     <fx:reference source="nodeChoiceBoxFeatureExtractor" />
-    <Button id="nodeButtonTest" mnemonicParsing="false" onAction="#onRemoveAction" prefWidth="125.00009999999747" text="Remove" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-    <Button id="nodeButtonTest" mnemonicParsing="false" onAction="#onExtractAction" prefWidth="125.00009999999747" text="Extract" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-    <Button id="nodeButtonTest" mnemonicParsing="false" onAction="#onResetAction" prefWidth="125.00009999999747" text="Reset" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+    <Button id="nodeButtonTest" fx:id="nodeButtonRemoveFeatureVector" mnemonicParsing="false" onAction="#onRemoveAction" prefWidth="125.00009999999747" text="Remove" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+    <Button id="nodeButtonTest" fx:id="nodeButtonExtractFeatureVector" mnemonicParsing="false" onAction="#onExtractAction" prefWidth="125.00009999999747" text="Extract" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+    <Button id="nodeButtonTest" fx:id="nodeButtonResetFeatureVectorList" mnemonicParsing="false" onAction="#onResetAction" prefWidth="125.00009999999747" text="Reset" GridPane.columnIndex="1" GridPane.rowIndex="4" />
   </children>
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

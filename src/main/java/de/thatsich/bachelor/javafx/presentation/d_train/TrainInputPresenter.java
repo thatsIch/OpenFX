@@ -16,14 +16,13 @@ import javafx.util.StringConverter;
 
 import com.google.inject.Inject;
 
+import de.thatsich.bachelor.classificationtraining.restricted.controller.commands.GetLastBinaryClassifierIndexCommand;
+import de.thatsich.bachelor.classificationtraining.restricted.controller.commands.InitBinaryClassifierListCommand;
+import de.thatsich.bachelor.classificationtraining.restricted.controller.commands.SetLastBinaryClassifierIndexCommand;
+import de.thatsich.bachelor.classificationtraining.restricted.controller.commands.TrainBinaryClassifierCommand;
 import de.thatsich.bachelor.javafx.business.command.CommandFactory;
-import de.thatsich.bachelor.javafx.business.command.GetLastBinaryClassifierIndexCommand;
-import de.thatsich.bachelor.javafx.business.command.InitBinaryClassifierListCommand;
-import de.thatsich.bachelor.javafx.business.command.SetLastBinaryClassifierIndexCommand;
-import de.thatsich.bachelor.javafx.business.command.TrainBinaryClassifierCommand;
 import de.thatsich.bachelor.javafx.business.model.BinaryClassifiers;
 import de.thatsich.bachelor.javafx.business.model.FeatureVectors;
-import de.thatsich.bachelor.javafx.business.model.entity.BinaryClassifier;
 import de.thatsich.bachelor.javafx.business.model.entity.FeatureVector;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.javafx.CommandExecutor;
@@ -166,7 +165,7 @@ public class TrainInputPresenter extends AFXMLPresenter {
 	 */
 	private class TrainBinaryClassifierSucceededHandler implements EventHandler<WorkerStateEvent> {
 		@Override public void handle(WorkerStateEvent event) {
-			final BinaryClassifier classifier = (BinaryClassifier) event.getSource().getValue();
+//			final BinaryClassifier classifier = (BinaryClassifier) event.getSource().getValue();
 //			
 //			featureVectors.getFeatureVectorListProperty().get().addAll(fv);
 //			log.info("Added FeatureVector to Database.");

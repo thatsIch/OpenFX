@@ -13,9 +13,9 @@ import javafx.scene.layout.GridPane;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
-import de.thatsich.bachelor.javafx.presentation.a_image.ImageDisplayView;
-import de.thatsich.bachelor.javafx.presentation.a_image.ImageInputView;
-import de.thatsich.bachelor.javafx.presentation.a_image.ImageListView;
+import de.thatsich.bachelor.imageprocessing.restricted.view.ImageDisplayView;
+import de.thatsich.bachelor.imageprocessing.restricted.view.ImageInputView;
+import de.thatsich.bachelor.imageprocessing.restricted.view.ImageListView;
 import de.thatsich.bachelor.javafx.presentation.b_error.ErrorDisplayView;
 import de.thatsich.bachelor.javafx.presentation.b_error.ErrorInputView;
 import de.thatsich.bachelor.javafx.presentation.b_error.ErrorListView;

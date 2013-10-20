@@ -53,6 +53,14 @@ public class FeatureDisplayPresenter extends AFXMLPresenter {
 					nodeLabelFeatureVector.setText(newValue.getFeatureVectorProperty().get().dump());
 					nodeLabelFeatureVector.getTooltip().setText(newValue.getFeatureVectorProperty().get().dump());
 					nodeLabelFeatureLabel.setText(newValue.getFeatureLabelProperty().get().dump());			
+				} else {
+					nodeLabelClassName.setText(null);
+					nodeLabelExtractorName.setText(null);
+					nodeLabelFrameSize.setText(null);
+					nodeLabelID.setText(null);
+					nodeLabelFeatureVector.setText(null);
+					nodeLabelFeatureVector.getTooltip().setText(null);
+					nodeLabelFeatureLabel.setText(null);
 				}
 			}
 		});
