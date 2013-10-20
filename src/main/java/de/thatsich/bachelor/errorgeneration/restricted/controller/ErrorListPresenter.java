@@ -12,7 +12,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -45,27 +44,26 @@ public class ErrorListPresenter extends AFXMLPresenter {
 	// Initializable Implementation
 	// ==================================================
 	@Override public void initialize(URL location, ResourceBundle resource) {
-		this.initTableColumns();
-		this.initTableView();
+		this.bindTableView();		
 		
 		this.initErrorEntryList();
 	}
 	
 	/**
-	 * Set up CellFactories for Columns
-	 */
-	private void initTableColumns() {
-		this.nodeTableColumnErrorClass.setCellValueFactory(new PropertyValueFactory<ErrorEntry, String>("getErrorClass"));
-		this.nodeTableColumnErrorName.setCellValueFactory(new PropertyValueFactory<ErrorEntry, String>("getErrorName"));
-	}
-	
-	/**
 	 * Set up ListBinding and SelectionBinding for TableView
 	 */
-	private void initTableView() {
+	private void bindTableView() {
+		this.bindTableViewContent();
+		this.bindTableViewSelectionModel();
+		this.bindTableViewCellValue();
+	}
+	
+	private void bindTableViewContent() {
 		this.nodeTableViewErrorList.itemsProperty().bind(this.errorEntryList.getErrorEntryListProperty());
-		
-		this.nodeTableViewErrorList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+		this.log.info("Bound Content to Model.");
+	}
+	
+	private void bindTableViewSelectionModel() {
 		this.nodeTableViewErrorList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<ErrorEntry>() {
 			@Override public void changed(ObservableValue<? extends ErrorEntry> paramObservableValue, ErrorEntry oldvalue, ErrorEntry newValue) {
 				errorEntryList.getSelectedErrorEntryProperty().set(newValue);
@@ -75,6 +73,22 @@ public class ErrorListPresenter extends AFXMLPresenter {
 				command.start();
 			}
 		});
+		this.log.info("Bound Selection to Model.");
+		
+		this.errorEntryList.getSelectedErrorEntryProperty().addListener(new ChangeListener<ErrorEntry>() {
+			@Override public void changed(ObservableValue<? extends ErrorEntry> observable, ErrorEntry oldValue, ErrorEntry newValue) {
+				nodeTableViewErrorList.getSelectionModel().select(newValue);
+			}
+		});
+		this.log.info("Bound Model to Selection.");
+	}
+	
+	/**
+	 * Set up CellFactories for Columns
+	 */
+	private void bindTableViewCellValue() {
+		this.nodeTableColumnErrorClass.setCellValueFactory(new PropertyValueFactory<ErrorEntry, String>("getErrorClass"));
+		this.nodeTableColumnErrorName.setCellValueFactory(new PropertyValueFactory<ErrorEntry, String>("getErrorName"));
 	}
 	
 	/**

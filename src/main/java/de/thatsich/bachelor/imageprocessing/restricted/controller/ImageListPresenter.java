@@ -43,28 +43,27 @@ public class ImageListPresenter extends AFXMLPresenter {
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		this.initTableViewBoundary();
-		this.initTableViewCellValueFactory();
-		this.initTableViewSelectionModel();
+		this.bindTableView();
 		
 		this.initTableViewImageEntryList();
 	}
 	
-	private void initTableViewBoundary() {
+	// ================================================== 
+	// Binding Implementation 
+	// ==================================================
+	private void bindTableView() {
+		this.bindTableViewContent();
+		this.bindTableViewSelectionModel();
+		this.bindTableViewCellValue();
+	}
+	
+	private void bindTableViewContent() {
 		this.nodeTableViewImageList.itemsProperty().bind(this.imageEntries.getImageEntryListProperty());
 		this.log.info("Bound nodeTableViewImageList to ImageDatabase.");
 	}
 	
-	private void initTableViewCellValueFactory() {
-		this.nodeTableColumnImageList.setCellValueFactory(new Callback<CellDataFeatures<ImageEntry, String>, ObservableValue<String>>() {
-			@Override public ObservableValue<String> call(CellDataFeatures<ImageEntry, String> feature) {
-				return new ReadOnlyObjectWrapper<String>(feature.getValue().getName());
-			}
-		});
-		this.log.info("Setup CellValueFactory for nodeTableColumnImageList.");
-	}
-	
-	private void initTableViewSelectionModel() {
+	private void bindTableViewSelectionModel() {
+		// change selection > change model
 		this.nodeTableViewImageList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<ImageEntry>() {
 			@Override public void changed(ObservableValue<? extends ImageEntry> paramObservableValue, ImageEntry oldValue, ImageEntry newValue) {
 				imageEntries.getSelectedImageEntryProperty().set(newValue);
@@ -75,7 +74,24 @@ public class ImageListPresenter extends AFXMLPresenter {
 				log.info("Seleced index " + index);
 			}
 		});
-		this.log.info("Bound ImageDatabase to selection of nodeTableViewImageList.");
+		this.log.info("Bound Model to TableView.");
+		
+		// change model > select
+		this.imageEntries.getSelectedImageEntryProperty().addListener(new ChangeListener<ImageEntry>() {
+			@Override public void changed(ObservableValue<? extends ImageEntry> observable, ImageEntry oldValue, ImageEntry newValue) {
+				nodeTableViewImageList.getSelectionModel().select(newValue);
+			}
+		});
+		this.log.info("Bound TableView to Model.");
+	}
+	
+	private void bindTableViewCellValue() {
+		this.nodeTableColumnImageList.setCellValueFactory(new Callback<CellDataFeatures<ImageEntry, String>, ObservableValue<String>>() {
+			@Override public ObservableValue<String> call(CellDataFeatures<ImageEntry, String> feature) {
+				return new ReadOnlyObjectWrapper<String>(feature.getValue().getName());
+			}
+		});
+		this.log.info("Setup CellValueFactory for nodeTableColumnImageList.");
 	}
 	
 	/**

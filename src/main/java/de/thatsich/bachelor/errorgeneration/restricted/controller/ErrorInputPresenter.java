@@ -196,11 +196,7 @@ public class ErrorInputPresenter extends AFXMLPresenter {
 		this.log.info("File created and added to ErrorList.");
 		
 		executor.execute(new Runnable() {
-			
-			@Override
-			public void run() {
-				System.gc();
-			}
+			@Override public void run() { System.gc(); }
 		});
 		this.log.info("Running Garbage Collector.");
 		
@@ -255,11 +251,7 @@ public class ErrorInputPresenter extends AFXMLPresenter {
 		this.log.info("Files created and added to ErrorList.");
 		
 		executor.execute(new Runnable() {
-			
-			@Override
-			public void run() {
-				System.gc();
-			}
+			@Override public void run() { System.gc(); }
 		});
 		this.log.info("Running Garbage Collector.");
 		
@@ -285,11 +277,7 @@ public class ErrorInputPresenter extends AFXMLPresenter {
 		}
 		
 		executor.execute(new Runnable() {
-			
-			@Override
-			public void run() {
-				System.gc();
-			}
+			@Override public void run() { System.gc(); }
 		});
 		this.log.info("Running Garbage Collector.");
 		
