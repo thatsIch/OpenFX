@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.HBox?>
 
-<HBox xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="de.thatsich.bachelor.javafx.presentation.c_feature.FeatureListPresenter">
+<HBox xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="de.thatsich.bachelor.featureextraction.restricted.controller.FeatureListPresenter">
   <TableView id="node" fx:id="nodeTableViewFeatureVectorList" prefHeight="-1.0" prefWidth="-1.0">
     <columns>
       <TableColumn editable="false" prefWidth="100.0" sortable="false" text="Class" fx:id="nodeTableColumnClassName" />

@@ -1,4 +1,4 @@
-package de.thatsich.bachelor.javafx.presentation.c_feature;
+package de.thatsich.bachelor.featureextraction.restricted.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;

@@ -1,4 +1,4 @@
-package de.thatsich.bachelor.javafx.presentation.c_feature;
+package de.thatsich.bachelor.featureextraction.restricted.views;
 
 import de.thatsich.core.javafx.AFXMLView;
 
