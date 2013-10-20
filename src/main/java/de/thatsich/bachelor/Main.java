@@ -32,8 +32,7 @@ import de.thatsich.bachelor.imageprocessing.api.core.ImageWiringModule;
 import de.thatsich.core.guice.LoggerModule;
 import de.thatsich.core.guice.PostInitModule;
 
-// TODO nochmal alles durchgehen und schaun ob etwas selected ist wichtig besoners in den Datenbanken
-// TODO bindings einfügen für buttons damit du nur funzen wenn bestimmte conditionen eintreffen
+// TODO Tree View nutzen mit einem RootElement
 /**
  * Main Execution Class
  * @author Tran Minh Do

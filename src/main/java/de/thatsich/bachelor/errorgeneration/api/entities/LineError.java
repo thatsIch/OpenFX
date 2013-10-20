@@ -7,15 +7,15 @@ import org.opencv.core.Scalar;
 
 public class LineError extends AErrorGenerator {
 
-	private final int MEAN_LENGTH = 100;
-	private final int STDDEV_LENTH = 50;
-	private final int MIN_LINE_THICKNESS = 2;
-	private final int MAX_LINE_THICKNESS = 5;
+	private static final int LENGTH_MEAN = 100;
+	private static final int LENGTH_STDDEV = 50;
+	private static final int MIN_LINE_THICKNESS = 2;
+	private static final int MAX_LINE_THICKNESS = 5;
 	
 	@Override
 	public Mat generateError(Mat in) {
 		// Initialize a Radian and Length based on the Settings
-		final int length = (int) Math.round(Math.random() * this.STDDEV_LENTH + this.MEAN_LENGTH);
+		final int length = (int) Math.round(Math.random() * LineError.LENGTH_STDDEV + LineError.LENGTH_MEAN);
 		final double radian = (3 * Math.PI / 2) + (Math.random() * Math.PI);
 		
 		// Calculates the Bounding Box of the Error
@@ -34,13 +34,10 @@ public class LineError extends AErrorGenerator {
 		
 		// Randomize Color and Thickness
 		final Scalar color = new Scalar((int) Math.round(Math.random() * 255 + 1));
-		final int thickness = (int) Math.round(Math.random() * (this.MAX_LINE_THICKNESS - MIN_LINE_THICKNESS) + MIN_LINE_THICKNESS);
+		final int thickness = (int) Math.round(Math.random() * (LineError.MAX_LINE_THICKNESS - MIN_LINE_THICKNESS) + MIN_LINE_THICKNESS);
 		
 		Core.line(in, new Point(x1, y1), new Point(x2, y2), color, thickness);
-		// circle
-		// ellipse
-		// rectangle
-		// polylines
+		
 		return in;
 	}
 
