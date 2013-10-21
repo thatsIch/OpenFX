@@ -100,7 +100,25 @@ public class FeatureListPresenter extends AFXMLPresenter {
 	private void bindTreeViewSelection() {
 		this.nodeTreeViewFeatureVectorSetList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<TreeItem<IFeatureSpaceTreeItemAdapter>>() {
 			@Override public void changed(ObservableValue<? extends TreeItem<IFeatureSpaceTreeItemAdapter>> observable, TreeItem<IFeatureSpaceTreeItemAdapter> oldValue, TreeItem<IFeatureSpaceTreeItemAdapter> newValue) {
+				final IFeatureSpaceTreeItemAdapter item = newValue.getValue();
 				
+				if (item.isSet()) {
+					featureVectors.getSelectedFeatureVectorSetProperty().set(item.getSet());
+					featureVectors.getSelectedFeatureVectorProperty().set(null);
+				} 
+				else if (item.isVector()) {
+					final IFeatureSpaceTreeItemAdapter set = newValue.getParent().getValue();
+					if (!set.isSet()) throw new IllegalStateException("Superset of a FeatureVector should be a FeatureVectorSet.");
+					
+					featureVectors.getSelectedFeatureVectorSetProperty().set(set.getSet());
+					featureVectors.getSelectedFeatureVectorProperty().set(item.getVector());
+				}
+				
+				// is root or something else
+				else {
+					featureVectors.getSelectedFeatureVectorSetProperty().set(null);
+					featureVectors.getSelectedFeatureVectorProperty().set(null);
+				}
 			}
 		});
 	}
