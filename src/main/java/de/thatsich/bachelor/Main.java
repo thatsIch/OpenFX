@@ -14,19 +14,9 @@ import com.cathive.fx.guice.GuiceApplication;
 import com.google.inject.Inject;
 import com.google.inject.Module;
 
-import de.thatsich.bachelor.classificationtesting.api.core.TestCommandModule;
-import de.thatsich.bachelor.classificationtesting.api.core.TestWiringModule;
-import de.thatsich.bachelor.classificationtraining.api.core.TrainCommandModule;
-import de.thatsich.bachelor.classificationtraining.api.core.TrainWiringModule;
-import de.thatsich.bachelor.errorgeneration.api.core.ErrorCommandModule;
-import de.thatsich.bachelor.errorgeneration.api.core.ErrorWiringModule;
-import de.thatsich.bachelor.featureextraction.api.core.FeatureCommandModule;
-import de.thatsich.bachelor.featureextraction.api.core.FeatureWiringModule;
 import de.thatsich.bachelor.gridoverview.api.core.GridCommandModule;
 import de.thatsich.bachelor.gridoverview.api.core.GridWiringModule;
 import de.thatsich.bachelor.gridoverview.restricted.views.DisplayView;
-import de.thatsich.bachelor.imageprocessing.api.core.ImageCommandModule;
-import de.thatsich.bachelor.imageprocessing.api.core.ImageWiringModule;
 import de.thatsich.core.guice.LoggerModule;
 import de.thatsich.core.guice.PostInitModule;
 import de.thatsich.core.opencv.OpenCVLoader;
@@ -106,20 +96,5 @@ public class Main extends GuiceApplication {
 		
 		modules.add(new GridWiringModule());
 		modules.add(new GridCommandModule());
-		
-		modules.add(new TestCommandModule());
-		modules.add(new TestWiringModule());
-		
-		modules.add(new TrainCommandModule());
-		modules.add(new TrainWiringModule());
-		
-		modules.add(new ErrorCommandModule());
-		modules.add(new ErrorWiringModule());
-		
-		modules.add(new FeatureCommandModule());
-		modules.add(new FeatureWiringModule());
-		
-		modules.add(new ImageCommandModule());
-		modules.add(new ImageWiringModule());
 	}
 }
