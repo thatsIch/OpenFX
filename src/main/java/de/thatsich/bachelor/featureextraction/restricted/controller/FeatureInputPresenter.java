@@ -21,7 +21,6 @@ import com.google.inject.Inject;
 
 import de.thatsich.bachelor.errorgeneration.api.entities.ErrorEntry;
 import de.thatsich.bachelor.errorgeneration.restricted.models.ErrorEntries;
-import de.thatsich.bachelor.featureextraction.api.entities.FeatureVector;
 import de.thatsich.bachelor.featureextraction.api.entities.FeatureVectorSet;
 import de.thatsich.bachelor.featureextraction.api.entities.IFeatureExtractor;
 import de.thatsich.bachelor.featureextraction.restricted.controller.commands.DeleteFeatureVectorSetCommand;
@@ -202,16 +201,11 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 		final FeatureVectorSet set = this.featureVectors.getSelectedFeatureVectorSetProperty().get();
 		this.log.info("Fetched selected FeatureVector.");
 		
-		if (set == null) {
-			this.log.info("Selection was empty. Deleting nothing.");
-			return;
-		}
-		
 		final RemoveFeatureVectorSetSucceededHandler handler = new RemoveFeatureVectorSetSucceededHandler();
 		final DeleteFeatureVectorSetCommand command = this.commander.createRemoveFeatureVectorSetCommand(set);
 		command.setOnSucceeded(handler);
 		command.start();
-		this.log.info("FeatureVector deleted and removed from FeatureVectorList.");
+		this.log.info("FeatureVectorSet deletion instantiated.");
 	}
 	
 	@FXML private void onResetAction() {
@@ -265,12 +259,11 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 	 * 
 	 * @author Minh
 	 */
-	@SuppressWarnings("unchecked")
 	private class ExtractFeatureVectorSetSucceededHandler implements EventHandler<WorkerStateEvent> {
 		@Override public void handle(WorkerStateEvent event) {
-			final List<FeatureVectorSet> fv = (List<FeatureVectorSet>) event.getSource().getValue();
+			final FeatureVectorSet set = (FeatureVectorSet) event.getSource().getValue();
 			
-			featureVectors.getFeatureVectorSetListProperty().get().addAll(fv);
+			featureVectors.getFeatureVectorSetListProperty().get().addAll(set);
 			log.info("Added FeatureVector to Database.");
 		}
 	}
@@ -283,9 +276,9 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 	 */
 	private class RemoveFeatureVectorSetSucceededHandler implements EventHandler<WorkerStateEvent> {
 		@Override public void handle(WorkerStateEvent event) {
-			final FeatureVector fv = (FeatureVector) event.getSource().getValue();
+			final FeatureVectorSet fv = (FeatureVectorSet) event.getSource().getValue();
 			
-			featureVectors.getFeatureVectorSetListProperty().get().remove(fv);
+			featureVectors.getFeatureVectorSetListProperty().remove(fv);
 			log.info("Removed FeatureVector from Database.");
 		}
 	}

@@ -98,7 +98,7 @@ public class ImageListPresenter extends AFXMLPresenter {
 	 * Initialize all ImageEntries and Preselection of the last selected ImageEntry
 	 */
 	private void initTableViewImageEntryList() {
-		final Path imageInputPath = Paths.get("input");
+		final Path imageInputPath = Paths.get("io/input");
 		final EventHandler<WorkerStateEvent> initHandler = new InitImageEntryListSucceededHandler();
 		final EventHandler<WorkerStateEvent> lastHandler = new GetLastImageEntryIndexSucceededHandler();
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(1);

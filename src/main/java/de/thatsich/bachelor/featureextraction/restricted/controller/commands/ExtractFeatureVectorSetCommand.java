@@ -97,10 +97,11 @@ public class ExtractFeatureVectorSetCommand extends Command<FeatureVectorSet> {
 				buffer.append(size + "_"); 	
 				buffer.append(id + ".csv");
 				
-				CSVService.write(folderPath.resolve(buffer.toString()), csvResult);
+				final Path filePath = folderPath.resolve(buffer.toString());
+				CSVService.write(filePath, csvResult);
 				
 				log.info("Extracted FeatureVectors: " + featureVectorList.size());
-				return new FeatureVectorSet(folderPath, className, extractorName, size, id, featureVectorList);
+				return new FeatureVectorSet(filePath, className, extractorName, size, id, featureVectorList);
 			}
 		};
 	}

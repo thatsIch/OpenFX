@@ -95,7 +95,7 @@ public class ErrorListPresenter extends AFXMLPresenter {
 	 * Set up ErrorEntryList and preselects last selected one
 	 */
 	private void initErrorEntryList() {
-		final Path errorInputFolderPath = Paths.get("error");
+		final Path errorInputFolderPath = Paths.get("io/error");
 		final InitErrorEntryListSucceededHandler initHandler = new InitErrorEntryListSucceededHandler();
 		final GetLastErrorEntryIndexSucceededHandler lastHandler = new GetLastErrorEntryIndexSucceededHandler(); 
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(1);

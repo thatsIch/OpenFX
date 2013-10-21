@@ -80,6 +80,16 @@ public class FeatureListPresenter extends AFXMLPresenter {
 					}
 					else if (paramChange.wasRemoved()) {
 						log.info("Items were removed from TreeView.");
+						
+						final List<? extends FeatureVectorSet> removedSubList = paramChange.getRemoved();
+
+						for (TreeItem<IFeatureSpaceTreeItemAdapter> child : nodeTreeViewRoot.getChildren()) {
+							for (FeatureVectorSet set : removedSubList) {
+								if (set.equals(child.getValue().getSet())) {
+									nodeTreeViewRoot.getChildren().remove(child);
+								}
+							}
+						}
 					}
 					else if (paramChange.wasUpdated()) {
 						log.info("Updated?" + paramChange.wasUpdated());
@@ -89,6 +99,9 @@ public class FeatureListPresenter extends AFXMLPresenter {
 					}
 					else if (paramChange.wasReplaced()) {
 						log.info("Replaced?" + paramChange.wasReplaced());
+					}
+					else {
+						log.info("Huh?");
 					}
 				}
  			}
@@ -100,6 +113,8 @@ public class FeatureListPresenter extends AFXMLPresenter {
 	private void bindTreeViewSelection() {
 		this.nodeTreeViewFeatureVectorSetList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<TreeItem<IFeatureSpaceTreeItemAdapter>>() {
 			@Override public void changed(ObservableValue<? extends TreeItem<IFeatureSpaceTreeItemAdapter>> observable, TreeItem<IFeatureSpaceTreeItemAdapter> oldValue, TreeItem<IFeatureSpaceTreeItemAdapter> newValue) {
+				if (newValue == null) return;
+				
 				final IFeatureSpaceTreeItemAdapter item = newValue.getValue();
 				
 				if (item.isSet()) {
@@ -136,7 +151,7 @@ public class FeatureListPresenter extends AFXMLPresenter {
 	}
 	
 	private void initFeatureVectorList() {
-		final Path folderPath = Paths.get("featurevectors");
+		final Path folderPath = Paths.get("io/featurevectors");
 		final InitFeatureVectorListSucceededHandler initHandler = new InitFeatureVectorListSucceededHandler();
 		final GetLastFeatureSpaceIndexSucceededHandler lastHandler = new GetLastFeatureSpaceIndexSucceededHandler();
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(1);

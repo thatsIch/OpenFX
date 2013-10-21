@@ -34,7 +34,7 @@ public class InitErrorEntryListCommand extends Command<List<ErrorEntry>> {
 				final Path folderPath = errorInputFolderPath.get();
 				final List<ErrorEntry> errorEntryList = new ArrayList<ErrorEntry>();
 				
-				if (Files.notExists(folderPath) || !Files.isDirectory(folderPath)) Files.createDirectory(folderPath);
+				if (Files.notExists(folderPath) || !Files.isDirectory(folderPath)) Files.createDirectories(folderPath);
 				
 				final String GLOB_PATTERN = "*.{png,jpeg,jpg,jpe}";
 				

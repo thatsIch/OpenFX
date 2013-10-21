@@ -1,5 +1,6 @@
 package de.thatsich.bachelor.featureextraction.restricted.controller.commands;
 
+import java.io.IOException;
 import java.nio.file.Files;
 
 import javafx.beans.property.ObjectProperty;
@@ -25,11 +26,17 @@ public class DeleteFeatureVectorSetCommand extends Command<FeatureVectorSet> {
 	@Override
 	protected Task<FeatureVectorSet> createTask() {
 		return new Task<FeatureVectorSet>() {
-
-			@Override
-			protected FeatureVectorSet call() throws Exception {
-				Files.delete(featureVectorSet.get().getPathProperty().get());
-				
+			@Override protected FeatureVectorSet call() throws Exception {
+				try {
+					log.info(featureVectorSet.get().getPathProperty().get().toString());
+					Files.delete(featureVectorSet.get().getPathProperty().get());
+					
+					log.info("Deleted FeatureVectorSet from FileSystem.");
+				}
+				catch (IOException e) {
+					e.printStackTrace();
+					log.info("Exception from deleting FeatureVectorSet from FileSystem.");
+				}
 				return featureVectorSet.get();
 			}
 		};

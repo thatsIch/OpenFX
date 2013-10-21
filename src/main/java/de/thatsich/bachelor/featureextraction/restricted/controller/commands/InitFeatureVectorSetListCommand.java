@@ -38,7 +38,7 @@ public class InitFeatureVectorSetListCommand extends Command<List<FeatureVectorS
 				final Path folderPath = featureVectorFolderPath.get(); 
 				final List<FeatureVectorSet> featureVectorSetList = new ArrayList<FeatureVectorSet>();
 				
-				if (Files.notExists(folderPath) || !Files.isDirectory(folderPath)) Files.createDirectory(folderPath);
+				if (Files.notExists(folderPath) || !Files.isDirectory(folderPath)) Files.createDirectories(folderPath);
 				
 				final String GLOB_PATTERN = "*.{csv}";
 				

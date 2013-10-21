@@ -38,8 +38,8 @@ public class InitImageEntryListCommand extends Command<List<ImageEntry>> {
 				final List<ImageEntry> result = new ArrayList<ImageEntry>();
 				final String GLOB_PATTERN = "*.{png,jpeg,jpg,jpe}";
 				
-				if (Files.notExists(imageInputFolderPath) || !Files.isDirectory(imageInputFolderPath)) Files.createDirectory(imageInputFolderPath);
-				
+				if (Files.notExists(imageInputFolderPath) || !Files.isDirectory(imageInputFolderPath)) Files.createDirectories(imageInputFolderPath);
+
 				try (DirectoryStream<Path> stream = Files.newDirectoryStream(imageInputFolderPath, GLOB_PATTERN)) {
 					for (Path child : stream) {
 						result.add(new ImageEntry(child.toAbsolutePath()));
