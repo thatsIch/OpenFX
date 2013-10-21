@@ -1,6 +1,7 @@
 package de.thatsich.core.guice;
 
 import com.google.inject.AbstractModule;
+import com.google.inject.Scopes;
 
 import de.thatsich.core.Log;
 
@@ -14,21 +15,6 @@ import de.thatsich.core.Log;
 public class LoggerModule extends AbstractModule {
 
 	/**
-	 * the injected logger
-	 */
-	final private Log log;
-	
-	
-	/**
-	 * CTOR
-	 * 
-	 * instantiates the logger
-	 */
-	public LoggerModule() {
-		this.log = new Log();
-	}
-	
-	/**
 	 * AbstractModule Implementation
 	 * 
 	 * Used for bindings classes together
@@ -36,8 +22,8 @@ public class LoggerModule extends AbstractModule {
 	@Override
 	protected void configure() {
 		super.bind(LoggerModule.class).toInstance(this);
-		
-		super.bind(Log.class).toInstance(this.log);
+
+		super.bind(Log.class).in(Scopes.SINGLETON);
 	}
 
 }
