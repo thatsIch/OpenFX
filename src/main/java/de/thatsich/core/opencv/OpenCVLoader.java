@@ -27,12 +27,12 @@ public class OpenCVLoader {
 		}
 	}
 	
-	private static void loadFromFileSystem(String libName) {
+	private static void loadFromFileSystem(String libName) throws Exception {
 		System.out.println("Try loading CV-Lib from FileSystem.");
 		try {
 			System.loadLibrary(libName);
 		} catch (Exception e) {
-			
+			throw new Exception("Could not load from FileSystem.");
 		}
 		System.out.println("Loaded OpenCV-Lib from FileSystem.");
 	}

@@ -2,30 +2,29 @@ package de.thatsich.bachelor.featureextraction.api.entities;
 
 import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.beans.property.ReadOnlyIntegerWrapper;
-import javafx.beans.property.ReadOnlyObjectProperty;
-import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.property.ReadOnlyListProperty;
+import javafx.beans.property.ReadOnlyListWrapper;
 import javafx.beans.property.ReadOnlyStringProperty;
 import javafx.beans.property.ReadOnlyStringWrapper;
-
-import org.opencv.core.MatOfFloat;
+import javafx.collections.ObservableList;
 
 /**
- * Represents a FeatureVector with serveral information 
- * how it was created.
- * 
+ * Represents on set of FeatureVectors extracted in one swoop sharing the same information
+ * as frame size or which extractor was used. Helps to distinguish between sets 
+ * by comparing the source of the FeatureVectors and not the actual values.
+ *  
  * @author Minh
  *
  */
-public class FeatureVector {
+public class FeatureVectorSet {
 	
 	// Properties
 	private final ReadOnlyStringWrapper className = new ReadOnlyStringWrapper();
 	private final ReadOnlyStringWrapper extractorName = new ReadOnlyStringWrapper();
 	private final ReadOnlyIntegerWrapper frameSize = new ReadOnlyIntegerWrapper();
 	private final ReadOnlyStringWrapper id = new ReadOnlyStringWrapper();
-	private final ReadOnlyObjectWrapper<MatOfFloat> featureVector = new ReadOnlyObjectWrapper<MatOfFloat>();
-	private final ReadOnlyObjectWrapper<MatOfFloat> featureLabel = new ReadOnlyObjectWrapper<MatOfFloat>();
-	
+	private final ReadOnlyListWrapper<FeatureVector> featureVectorList = new ReadOnlyListWrapper<FeatureVector>();
+
 	/**
 	 * CTOR
 	 * 
@@ -33,16 +32,14 @@ public class FeatureVector {
 	 * @param extractorName Used FeatureExtractor to obain this vector
 	 * @param frameSize FrameSize of the sample
 	 * @param id Identifier to make the FeatureVector unique
-	 * @param featureVector FeatureVector
-	 * @param featureLabel Label of the FeatureVector
+	 * @param featureVectorList List of FeatureVectors
 	 */
-	public FeatureVector(String className, String extractorName, int frameSize, String id, MatOfFloat featureVector, MatOfFloat featureLabel) {
+	public FeatureVectorSet(String className, String extractorName, int frameSize, String id, ObservableList<FeatureVector> featureVectorList) {
 		this.className.set(className);
 		this.extractorName.set(extractorName);
 		this.frameSize.set(frameSize);
 		this.id.set(id);
-		this.featureVector.set(featureVector);
-		this.featureLabel.set(featureLabel);
+		this.featureVectorList.set(featureVectorList);
 	}
 
 	// Property Getter
@@ -50,6 +47,5 @@ public class FeatureVector {
 	public ReadOnlyStringProperty getExtractorNameProperty() { return this.extractorName.getReadOnlyProperty(); }
 	public ReadOnlyIntegerProperty getFrameSizeProperty() { return this.frameSize.getReadOnlyProperty(); }
 	public ReadOnlyStringProperty getIdProperty() { return this.id.getReadOnlyProperty(); }
-	public ReadOnlyObjectProperty<MatOfFloat> getFeatureVectorProperty() { return this.featureVector.getReadOnlyProperty(); }
-	public ReadOnlyObjectProperty<MatOfFloat> getFeatureLabelProperty() { return this.featureLabel.getReadOnlyProperty(); }
+	public ReadOnlyListProperty<FeatureVector> getFeatureVectorList() { return this.featureVectorList.getReadOnlyProperty(); }
 }
