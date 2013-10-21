@@ -84,7 +84,7 @@ public class DisplayPresenter implements Initializable {
 		this.nodeRoot.add(this.trainInputView.getRoot(), 3, 1);
 		this.nodeRoot.add(this.trainDisplayView.getRoot(), 3, 2);
 		this.nodeRoot.add(this.trainListView.getRoot(), 3, 3);
-		
+//		
 		this.nodeRoot.add(this.testInputView.getRoot(), 4, 1);
 		this.nodeRoot.add(this.testDisplayView.getRoot(), 4, 2);
 		this.nodeRoot.add(this.testListView.getRoot(), 4, 3);

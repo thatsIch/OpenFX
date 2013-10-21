@@ -5,7 +5,7 @@ import com.google.inject.Scopes;
 
 import de.thatsich.bachelor.featureextraction.restricted.models.FeatureExtractors;
 import de.thatsich.bachelor.featureextraction.restricted.models.FeatureState;
-import de.thatsich.bachelor.featureextraction.restricted.models.FeatureVectors;
+import de.thatsich.bachelor.featureextraction.restricted.models.FeatureVectorSets;
 import de.thatsich.bachelor.featureextraction.restricted.services.FeatureConfigService;
 import de.thatsich.bachelor.featureextraction.restricted.views.FeatureDisplayView;
 import de.thatsich.bachelor.featureextraction.restricted.views.FeatureInputView;
@@ -54,6 +54,6 @@ public class FeatureWiringModule extends AbstractModule {
 	private void mapModels() {
 		super.bind(FeatureExtractors.class).in(Scopes.SINGLETON);
 		super.bind(FeatureState.class).in(Scopes.SINGLETON);
-		super.bind(FeatureVectors.class).in(Scopes.SINGLETON);
+		super.bind(FeatureVectorSets.class).in(Scopes.SINGLETON);
 	}
 }

@@ -7,97 +7,126 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 
-import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ListChangeListener;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellDataFeatures;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.util.Callback;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeView;
 
 import com.google.inject.Inject;
 
 import de.thatsich.bachelor.featureextraction.api.entities.FeatureVector;
+import de.thatsich.bachelor.featureextraction.api.entities.FeatureVectorSet;
 import de.thatsich.bachelor.featureextraction.restricted.controller.commands.GetLastFeatureVectorIndexCommand;
-import de.thatsich.bachelor.featureextraction.restricted.controller.commands.InitFeatureVectorListCommand;
-import de.thatsich.bachelor.featureextraction.restricted.controller.commands.SetLastFeatureVectorIndexCommand;
+import de.thatsich.bachelor.featureextraction.restricted.controller.commands.InitFeatureVectorSetListCommand;
 import de.thatsich.bachelor.featureextraction.restricted.models.FeatureState;
-import de.thatsich.bachelor.featureextraction.restricted.models.FeatureVectors;
+import de.thatsich.bachelor.featureextraction.restricted.models.FeatureVectorSets;
 import de.thatsich.bachelor.featureextraction.restricted.services.FeatureCommandService;
+import de.thatsich.bachelor.featureextraction.restricted.views.tree.FeatureVectorSetTreeItemAdapter;
+import de.thatsich.bachelor.featureextraction.restricted.views.tree.FeatureVectorTreeItemAdapter;
+import de.thatsich.bachelor.featureextraction.restricted.views.tree.IFeatureSpaceTreeItemAdapter;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.javafx.CommandExecutor;
 
 public class FeatureListPresenter extends AFXMLPresenter {
 
 	// Nodes
-	@FXML TableView<FeatureVector> nodeTableViewFeatureVectorList;
-	@FXML TableColumn<FeatureVector, String> nodeTableColumnClassName;
-	@FXML TableColumn<FeatureVector, String> nodeTableColumnExtractorName;
-	@FXML TableColumn<FeatureVector, Integer> nodeTableColumnFrameSize;
-	@FXML TableColumn<FeatureVector, String> nodeTableColumnID;
-	@FXML TableColumn<FeatureVector, String> nodeTableColumnFeatureLabel;
-	@FXML TableColumn<FeatureVector, String> nodeTableColumnFeatureVector;
+	@FXML private TreeView<IFeatureSpaceTreeItemAdapter> nodeTreeViewFeatureVectorSetList;
+	private TreeItem<IFeatureSpaceTreeItemAdapter> nodeTreeViewRoot;
 	
 	// Injects
 	@Inject private FeatureState featureState;
-	@Inject private FeatureVectors featureVectors;
+	@Inject private FeatureVectorSets featureVectors;
 	@Inject private FeatureCommandService commander;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		this.initTableColums();
-		this.initTableView();
+		this.bindTreeView();
+		this.initTreeView();
 		
 		this.initFeatureVectorList();
 	}
+	
+	private void bindTreeView() {
+		this.bindTreeViewModel();
+		this.bindTreeViewSelection();
+	}
+	
+	private void bindTreeViewModel() {
+		this.featureVectors.getFeatureVectorSetListProperty().addListener(new ListChangeListener<FeatureVectorSet>() {
+			@Override public void onChanged(Change<? extends FeatureVectorSet> paramChange) {
+				while (paramChange.next()) {
+					if (paramChange.wasAdded()) {
+						log.info("Items were added to TreeView.");
+						
+						final List<? extends FeatureVectorSet> featureVectorSetList = paramChange.getAddedSubList();
+						log.info("List Size: " + featureVectorSetList.size());
+						
+						for (FeatureVectorSet set : featureVectorSetList) {
+							log.info(set.toString());
+							final List<FeatureVector> featureVectorList = set.getFeatureVectorList();
+							final TreeItem<IFeatureSpaceTreeItemAdapter> setTreeItem = new TreeItem<IFeatureSpaceTreeItemAdapter>(new FeatureVectorSetTreeItemAdapter(set));
+							setTreeItem.setExpanded(true);
+							
+							for (FeatureVector vector : featureVectorList) {
+								setTreeItem.getChildren().add(new TreeItem<IFeatureSpaceTreeItemAdapter>(new FeatureVectorTreeItemAdapter(vector)));
+							}
+				        	
+							nodeTreeViewRoot.getChildren().add(setTreeItem);
+						}
+					}
+					else if (paramChange.wasRemoved()) {
+						log.info("Items were removed from TreeView.");
+					}
+					else if (paramChange.wasUpdated()) {
+						log.info("Updated?" + paramChange.wasUpdated());
+					}
+					else if (paramChange.wasPermutated()) {
+						log.info("Permutated?" + paramChange.wasPermutated());
+					}
+					else if (paramChange.wasReplaced()) {
+						log.info("Replaced?" + paramChange.wasReplaced());
+					}
+				}
+ 			}
 
-	private void initTableColums() {
-		this.nodeTableColumnClassName.setCellValueFactory(new PropertyValueFactory<FeatureVector, String>("getClassName"));
-		this.nodeTableColumnExtractorName.setCellValueFactory(new PropertyValueFactory<FeatureVector, String>("getExtractorName"));
-		this.nodeTableColumnFrameSize.setCellValueFactory(new PropertyValueFactory<FeatureVector, Integer>("getFrameSize"));
-		this.nodeTableColumnID.setCellValueFactory(new PropertyValueFactory<FeatureVector, String>("getId"));
-		this.nodeTableColumnFeatureLabel.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<FeatureVector,String>, ObservableValue<String>>() {
-			@Override public ObservableValue<String> call(CellDataFeatures<FeatureVector, String> paramP) {
-				return new SimpleStringProperty(paramP.getValue().getFeatureLabelProperty().get().dump());
-			}
 		});
-		this.nodeTableColumnFeatureVector.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<FeatureVector,String>, ObservableValue<String>>() {
-			@Override public ObservableValue<String> call(CellDataFeatures<FeatureVector, String> paramP) {
-				return new SimpleStringProperty(paramP.getValue().getFeatureVectorProperty().get().dump());
+		this.log.info("Bound List to FeatureSpace.");
+	}
+	
+	private void bindTreeViewSelection() {
+		this.nodeTreeViewFeatureVectorSetList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<TreeItem<IFeatureSpaceTreeItemAdapter>>() {
+			@Override public void changed(ObservableValue<? extends TreeItem<IFeatureSpaceTreeItemAdapter>> observable, TreeItem<IFeatureSpaceTreeItemAdapter> oldValue, TreeItem<IFeatureSpaceTreeItemAdapter> newValue) {
+				
 			}
 		});
 	}
 	
-	private void initTableView() {
-		this.nodeTableViewFeatureVectorList.itemsProperty().bind(this.featureVectors.getFeatureVectorListProperty());
-		this.log.info("Bound List to FeatureSpace.");
-		
-		this.nodeTableViewFeatureVectorList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<FeatureVector>() {
-			@Override
-			public void changed(ObservableValue<? extends FeatureVector> observable, FeatureVector oldValue, FeatureVector newValue) {
-				featureVectors.getSelectedFeatureVectorProperty().set(newValue);
-				
-				final int index = nodeTableViewFeatureVectorList.getSelectionModel().getSelectedIndex();
-				SetLastFeatureVectorIndexCommand command = commander.createSetLastFeatureVectorIndexCommand(index);
-				command.start();
-			}
-		});	
+	private void initTreeView() {
+		this.nodeTreeViewRoot = new TreeItem<IFeatureSpaceTreeItemAdapter>(new IFeatureSpaceTreeItemAdapter() {
+			@Override public String toString() { return "FeatureVector Sets"; }
+			@Override public boolean isVector() { return false; }
+			@Override public boolean isSet() { return false; }
+			@Override public FeatureVector getVector() { return null; }
+			@Override public FeatureVectorSet getSet() { return null; }
+		});
+		this.nodeTreeViewRoot.setExpanded(true);
+		this.nodeTreeViewFeatureVectorSetList.setRoot(nodeTreeViewRoot);
 	}
 	
 	private void initFeatureVectorList() {
 		final Path folderPath = Paths.get("featurevectors");
 		final InitFeatureVectorListSucceededHandler initHandler = new InitFeatureVectorListSucceededHandler();
-		final GetLastFeatureVectorIndexSucceededHandler lastHandler = new GetLastFeatureVectorIndexSucceededHandler();
+		final GetLastFeatureSpaceIndexSucceededHandler lastHandler = new GetLastFeatureSpaceIndexSucceededHandler();
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(1);
 		
 		this.featureState.getFeatureVectorFolderPathProperty().set(folderPath);
 		this.log.info("Set FeatureVectorInputFolderPath to Model.");
 		
-		final InitFeatureVectorListCommand initCommand = this.commander.createInitFeatureVectorListCommand(folderPath);
+		final InitFeatureVectorSetListCommand initCommand = this.commander.createInitFeatureVectorListCommand(folderPath);
 		initCommand.setOnSucceeded(initHandler);
 		initCommand.setExecutor(executor);
 		initCommand.start();
@@ -106,7 +135,7 @@ public class FeatureListPresenter extends AFXMLPresenter {
 		final GetLastFeatureVectorIndexCommand lastCommand = this.commander.createGetLastFeatureVectorIndexCommand();
 		lastCommand.setExecutor(executor);
 		lastCommand.setOnSucceeded(lastHandler);
-		lastCommand.start();
+//		lastCommand.start();
 		this.log.info("Initialized GetLastFeatureVectorIndex Retrieval.");
 		
 		executor.shutdown();
@@ -125,9 +154,9 @@ public class FeatureListPresenter extends AFXMLPresenter {
 	@SuppressWarnings("unchecked")
 	private class InitFeatureVectorListSucceededHandler implements EventHandler<WorkerStateEvent> {
 		@Override public void handle(WorkerStateEvent event) {
-			final List<FeatureVector> featureVectorList = (List<FeatureVector>) event.getSource().getValue();
+			final List<FeatureVectorSet> featureVectorList = (List<FeatureVectorSet>) event.getSource().getValue();
 			
-			featureVectors.getFeatureVectorListProperty().get().addAll(featureVectorList);
+			featureVectors.getFeatureVectorSetListProperty().get().addAll(featureVectorList);
 			log.info("Added FeatureExtractor to Database.");
 		}
 	}
@@ -138,18 +167,24 @@ public class FeatureListPresenter extends AFXMLPresenter {
 	 * 
 	 * @author Minh
 	 */
-	private class GetLastFeatureVectorIndexSucceededHandler implements EventHandler<WorkerStateEvent> {
+	private class GetLastFeatureSpaceIndexSucceededHandler implements EventHandler<WorkerStateEvent> {
 		@Override public void handle(WorkerStateEvent event) {
 			final Integer commandResult = (Integer) event.getSource().getValue();
 			log.info("Retrieved LastFeatureVectorIndex.");
 			
-			if (commandResult != null && commandResult >= 0 && featureVectors.getFeatureVectorListProperty().size() > commandResult) {
-				final FeatureVector selectedFeatureVector = featureVectors.getFeatureVectorListProperty().get(commandResult); 
-				featureVectors.getSelectedFeatureVectorProperty().set(selectedFeatureVector);
-				log.info("Set LastFeatureVectorIndex in Model.");
+			if (commandResult != null && commandResult >= 0 && featureVectors.getFeatureVectorSetListProperty().size() > commandResult) {
+				nodeTreeViewFeatureVectorSetList.getSelectionModel().select(commandResult);
+				log.info("Set LastFeatureVectorIndex in TreeView.");
 				
-				nodeTableViewFeatureVectorList.getSelectionModel().select(commandResult);
-				log.info("Set LastFeatureVectorIndex in TableView.");
+				final TreeItem<IFeatureSpaceTreeItemAdapter> selectedItem = nodeTreeViewFeatureVectorSetList.getSelectionModel().selectedItemProperty().get();
+				final IFeatureSpaceTreeItemAdapter selectedFeatureSpaceItem = selectedItem.getValue();
+				if (selectedFeatureSpaceItem.isSet()) {
+					featureVectors.getSelectedFeatureVectorSetProperty();
+				}
+				else if (selectedFeatureSpaceItem.isVector()) {
+					
+				}
+				log.info("Set LastFeatureVectorIndex in Model.");
 			}
 		}
 	}

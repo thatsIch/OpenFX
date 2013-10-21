@@ -21,12 +21,13 @@ import com.google.inject.assistedinject.Assisted;
 
 import de.thatsich.bachelor.errorgeneration.api.entities.ErrorEntry;
 import de.thatsich.bachelor.featureextraction.api.entities.FeatureVector;
+import de.thatsich.bachelor.featureextraction.api.entities.FeatureVectorSet;
 import de.thatsich.bachelor.featureextraction.api.entities.IFeatureExtractor;
 import de.thatsich.bachelor.featureextraction.restricted.services.CSVService;
 import de.thatsich.core.javafx.Command;
 import de.thatsich.core.opencv.Images;
 
-public class ExtractFeatureVectorFromErrorEntryCommand extends Command<List<FeatureVector>> {
+public class ExtractFeatureVectorSetCommand extends Command<FeatureVectorSet> {
 
 	// Properties
 	private final ObjectProperty<Path> featureInputFolderPath = new SimpleObjectProperty<Path>();
@@ -35,7 +36,7 @@ public class ExtractFeatureVectorFromErrorEntryCommand extends Command<List<Feat
 	private final IntegerProperty frameSize = new SimpleIntegerProperty();
 	
 	@Inject
-	public ExtractFeatureVectorFromErrorEntryCommand(@Assisted Path folderPath, @Assisted ErrorEntry errorEntry, @Assisted IFeatureExtractor extractor, @Assisted int frameSize) {
+	public ExtractFeatureVectorSetCommand(@Assisted Path folderPath, @Assisted ErrorEntry errorEntry, @Assisted IFeatureExtractor extractor, @Assisted int frameSize) {
 		this.featureInputFolderPath.set(folderPath);
 		this.errorEntry.set(errorEntry);
 		this.featureExtractor.set(extractor);
@@ -43,11 +44,11 @@ public class ExtractFeatureVectorFromErrorEntryCommand extends Command<List<Feat
 	}
 	
 	@Override
-	protected Task<List<FeatureVector>> createTask() {
-		return new Task<List<FeatureVector>>() {
+	protected Task<FeatureVectorSet> createTask() {
+		return new Task<FeatureVectorSet>() {
 			
 			@Override
-			protected List<FeatureVector> call() throws Exception {
+			protected FeatureVectorSet call() throws Exception {
 				final Path folderPath = featureInputFolderPath.get();
 				final String className = errorEntry.get().getErrorClassProperty().get();
 				final IFeatureExtractor extractor = featureExtractor.get();
@@ -56,7 +57,7 @@ public class ExtractFeatureVectorFromErrorEntryCommand extends Command<List<Feat
 				final String id = UUID.randomUUID().toString();
 				log.info("Prepared all necessary information.");
 				
-				final List<FeatureVector> result = FXCollections.observableArrayList();
+				final List<FeatureVector> featureVectorList = FXCollections.observableArrayList();
 				final List<List<Float>> csvResult = FXCollections.observableArrayList();
 				final Mat[][] originalErrorSplit = Images.split(errorEntry.get().getOriginalWithErrorMat(), size, size);
 				final Mat[][] errorSplit = Images.split(errorEntry.get().getErrorMat(), size, size);
@@ -65,18 +66,21 @@ public class ExtractFeatureVectorFromErrorEntryCommand extends Command<List<Feat
 				for (int col = 0; col < originalErrorSplit.length; col++) {
 					for (int row = 0; row < originalErrorSplit[col].length; row++) {
 						try {
+							// extract feature vector
+							// and reshape them into a one row feature vector if its 2D mat and removes unecessary channels
 							final MatOfFloat featureVector = extractor.extractFeature(originalErrorSplit[col][row]);
 							featureVector.reshape(1, 1);
 							List<Float> featureVectorAsList = new ArrayList<Float>(featureVector.toList());
 
 							// if contain an error classify it as positive match
 							if (Core.sumElems(errorSplit[col][row]).val[0] != 0) {
-								result.add(new FeatureVector(className, extractorName, size, id, featureVector, new MatOfFloat(1)));
-								featureVectorAsList.add(1F);						}
+								featureVectorList.add(new FeatureVector(featureVectorAsList, 1));
+								featureVectorAsList.add(1F);						
+							}
 							
 							// else its a negative match
 							else {
-								result.add(new FeatureVector(className, extractorName, size, id, featureVector, new MatOfFloat(0)));
+								featureVectorList.add(new FeatureVector(featureVectorAsList, 0));
 								featureVectorAsList.add(0F);
 							}
 							
@@ -95,8 +99,8 @@ public class ExtractFeatureVectorFromErrorEntryCommand extends Command<List<Feat
 				
 				CSVService.write(folderPath.resolve(buffer.toString()), csvResult);
 				
-				log.info("Extracted FeatureVectors: " + result.size());
-				return result;
+				log.info("Extracted FeatureVectors: " + featureVectorList.size());
+				return new FeatureVectorSet(folderPath, className, extractorName, size, id, featureVectorList);
 			}
 		};
 	}

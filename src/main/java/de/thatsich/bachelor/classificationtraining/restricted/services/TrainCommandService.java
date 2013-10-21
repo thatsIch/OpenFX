@@ -7,11 +7,11 @@ import de.thatsich.bachelor.classificationtraining.restricted.controller.command
 import de.thatsich.bachelor.classificationtraining.restricted.controller.commands.InitBinaryClassifierListCommand;
 import de.thatsich.bachelor.classificationtraining.restricted.controller.commands.SetLastBinaryClassifierIndexCommand;
 import de.thatsich.bachelor.classificationtraining.restricted.controller.commands.TrainBinaryClassifierCommand;
-import de.thatsich.bachelor.featureextraction.api.entities.FeatureVector;
+import de.thatsich.bachelor.featureextraction.api.entities.FeatureVectorSet;
 
 public interface TrainCommandService {
 	public InitBinaryClassifierListCommand createInitBinaryClassifierListCommand();
 	public GetLastBinaryClassifierIndexCommand createGetLastBinaryClassifierIndexCommand();
 	public SetLastBinaryClassifierIndexCommand createSetLastBinaryClassifierIndexCommand(int lastBinaryClassifierIndex);
-	public TrainBinaryClassifierCommand createTrainBinaryClassifierCommand(IBinaryClassifier classifier, FeatureVector selected, List<FeatureVector> all);
+	public TrainBinaryClassifierCommand createTrainBinaryClassifierCommand(IBinaryClassifier classifier, FeatureVectorSet selected, List<FeatureVectorSet> all);
 }

@@ -57,18 +57,18 @@ public abstract class CSVService {
 	 * 
 	 * @throws IOException when reading was not possible
 	 */
-	public static List<float[]> read(Path csvPath) throws IOException {
+	public static List<Float[]> read(Path csvPath) throws IOException {
 		if (csvPath == null) throw new InvalidParameterException();
 		if (Files.notExists(csvPath)) throw new IOException("Path " + csvPath.toString() + " does not exist.");
 		
-		final List<float[]> result = new ArrayList<float[]>();
+		final List<Float[]> result = new ArrayList<Float[]>();
 		
 		final BufferedReader reader = Files.newBufferedReader(csvPath, StandardCharsets.US_ASCII);
 		
 		String stringRow;
 		while((stringRow = reader.readLine()) != null) {
 			final String[] stringFloats = stringRow.split(",");
-			float[] floats = new float[stringFloats.length];
+			Float[] floats = new Float[stringFloats.length];
 			
 			for (int col = 0; col < stringFloats.length; col++) {
 				floats[col] = Float.parseFloat(stringFloats[col]);

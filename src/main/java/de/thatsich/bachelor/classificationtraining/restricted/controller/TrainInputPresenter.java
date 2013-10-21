@@ -23,8 +23,8 @@ import de.thatsich.bachelor.classificationtraining.restricted.controller.command
 import de.thatsich.bachelor.classificationtraining.restricted.controller.commands.TrainBinaryClassifierCommand;
 import de.thatsich.bachelor.classificationtraining.restricted.models.BinaryClassifiers;
 import de.thatsich.bachelor.classificationtraining.restricted.services.TrainCommandService;
-import de.thatsich.bachelor.featureextraction.api.entities.FeatureVector;
-import de.thatsich.bachelor.featureextraction.restricted.models.FeatureVectors;
+import de.thatsich.bachelor.featureextraction.api.entities.FeatureVectorSet;
+import de.thatsich.bachelor.featureextraction.restricted.models.FeatureVectorSets;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.javafx.CommandExecutor;
 
@@ -36,7 +36,7 @@ public class TrainInputPresenter extends AFXMLPresenter {
 	// Injects
 	@Inject private TrainCommandService commander;
 	@Inject private BinaryClassifiers binaryClassifiers;
-	@Inject private FeatureVectors featureVectors;
+	@Inject private FeatureVectorSets featureVectors;
 
 	// ================================================== 
 	// Initialization Implementation 
@@ -141,15 +141,15 @@ public class TrainInputPresenter extends AFXMLPresenter {
 	// ==================================================	
 	@FXML private void onTrainBinaryClassifierAction() {
 		final IBinaryClassifier selectedBinaryClassfier = this.binaryClassifiers.getSelectedBinaryClassifierProperty().get();
-		final List<FeatureVector> featureVectorList = this.featureVectors.getFeatureVectorListProperty().get();
-		final FeatureVector selectedFeatureVector = this.featureVectors.getSelectedFeatureVectorProperty().get();
+		final List<FeatureVectorSet> featureVectorSetList = this.featureVectors.getFeatureVectorSetListProperty().get();
+		final FeatureVectorSet selectedFeatureVectorSet = this.featureVectors.getSelectedFeatureVectorSetProperty().get();
 		
-		if (selectedFeatureVector == null) throw new InvalidParameterException("SelectedFeatureVector is null.");
-		if (featureVectorList == null) throw new InvalidParameterException("FeatureVectorList is null.");
+		if (selectedFeatureVectorSet == null) throw new InvalidParameterException("SelectedFeatureVector is null.");
+		if (featureVectorSetList == null) throw new InvalidParameterException("FeatureVectorList is null.");
 		if (selectedBinaryClassfier == null) throw new InvalidParameterException("SelectedBinaryClassifier is null.");
 		
 		final TrainBinaryClassifierSucceededHandler handler = new TrainBinaryClassifierSucceededHandler();
-		final TrainBinaryClassifierCommand command = this.commander.createTrainBinaryClassifierCommand(selectedBinaryClassfier, selectedFeatureVector, featureVectorList);
+		final TrainBinaryClassifierCommand command = this.commander.createTrainBinaryClassifierCommand(selectedBinaryClassfier, selectedFeatureVectorSet, featureVectorSetList);
 		command.setOnSucceeded(handler);
 		command.start();
 	}

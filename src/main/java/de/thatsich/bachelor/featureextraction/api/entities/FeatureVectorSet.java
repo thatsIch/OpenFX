@@ -1,12 +1,17 @@
 package de.thatsich.bachelor.featureextraction.api.entities;
 
+import java.nio.file.Path;
+import java.util.List;
+
 import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.beans.property.ReadOnlyIntegerWrapper;
 import javafx.beans.property.ReadOnlyListProperty;
 import javafx.beans.property.ReadOnlyListWrapper;
+import javafx.beans.property.ReadOnlyObjectProperty;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringProperty;
 import javafx.beans.property.ReadOnlyStringWrapper;
-import javafx.collections.ObservableList;
+import javafx.collections.FXCollections;
 
 /**
  * Represents on set of FeatureVectors extracted in one swoop sharing the same information
@@ -19,11 +24,12 @@ import javafx.collections.ObservableList;
 public class FeatureVectorSet {
 	
 	// Properties
+	private final ReadOnlyObjectWrapper<Path> path = new ReadOnlyObjectWrapper<Path>();
 	private final ReadOnlyStringWrapper className = new ReadOnlyStringWrapper();
 	private final ReadOnlyStringWrapper extractorName = new ReadOnlyStringWrapper();
 	private final ReadOnlyIntegerWrapper frameSize = new ReadOnlyIntegerWrapper();
 	private final ReadOnlyStringWrapper id = new ReadOnlyStringWrapper();
-	private final ReadOnlyListWrapper<FeatureVector> featureVectorList = new ReadOnlyListWrapper<FeatureVector>();
+	private final ReadOnlyListWrapper<FeatureVector> featureVectorList = new ReadOnlyListWrapper<FeatureVector>(FXCollections.<FeatureVector>observableArrayList());
 
 	/**
 	 * CTOR
@@ -34,15 +40,17 @@ public class FeatureVectorSet {
 	 * @param id Identifier to make the FeatureVector unique
 	 * @param featureVectorList List of FeatureVectors
 	 */
-	public FeatureVectorSet(String className, String extractorName, int frameSize, String id, ObservableList<FeatureVector> featureVectorList) {
+	public FeatureVectorSet(Path path, String className, String extractorName, int frameSize, String id, List<FeatureVector> featureVectorList) {
+		this.path.set(path);
 		this.className.set(className);
 		this.extractorName.set(extractorName);
 		this.frameSize.set(frameSize);
 		this.id.set(id);
-		this.featureVectorList.set(featureVectorList);
+		this.featureVectorList.setAll(featureVectorList);
 	}
 
 	// Property Getter
+	public ReadOnlyObjectProperty<Path> getPathProperty() { return this.path.getReadOnlyProperty(); }
 	public ReadOnlyStringProperty getClassNameProperty() { return this.className.getReadOnlyProperty(); }
 	public ReadOnlyStringProperty getExtractorNameProperty() { return this.extractorName.getReadOnlyProperty(); }
 	public ReadOnlyIntegerProperty getFrameSizeProperty() { return this.frameSize.getReadOnlyProperty(); }
