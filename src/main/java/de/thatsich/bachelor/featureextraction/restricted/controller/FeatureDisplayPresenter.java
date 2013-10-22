@@ -47,10 +47,10 @@ public class FeatureDisplayPresenter extends AFXMLPresenter {
 		this.featureVectors.getSelectedFeatureVectorSetProperty().addListener(new ChangeListener<FeatureVectorSet>() {
 			@Override public void changed(ObservableValue<? extends FeatureVectorSet> observable, FeatureVectorSet oldValue, FeatureVectorSet newValue) {
 				if (newValue != null) {
-					nodeLabelClassName.setText(newValue.getClassNameProperty().get());
-					nodeLabelExtractorName.setText(newValue.getExtractorNameProperty().get());
+					nodeLabelClassName.setText(newValue.getClassNameProperty().getValue());
+					nodeLabelExtractorName.setText(newValue.getExtractorNameProperty().getValue());
 					nodeLabelFrameSize.setText(newValue.getFrameSizeProperty().getValue().toString());
-					nodeLabelID.setText(newValue.getIdProperty().get());	
+					nodeLabelID.setText(newValue.getIdProperty().getValue());	
 				} else {
 					nodeLabelClassName.setText(null);
 					nodeLabelExtractorName.setText(null);
@@ -64,8 +64,8 @@ public class FeatureDisplayPresenter extends AFXMLPresenter {
 		this.featureVectors.getSelectedFeatureVectorProperty().addListener(new ChangeListener<FeatureVector>() {
 			@Override public void changed(ObservableValue<? extends FeatureVector> observable, FeatureVector oldValue, FeatureVector newValue) {
 				if (newValue != null) {
-					nodeLabelFeatureVector.setText(newValue.getVectorProperty().toString());
-					nodeLabelFeatureVector.getTooltip().setText(newValue.getVectorProperty().toString());
+					nodeLabelFeatureVector.setText(newValue.getVectorProperty().getValue().toString());
+					nodeLabelFeatureVector.getTooltip().setText(newValue.getVectorProperty().getValue().toString());
 					nodeLabelFeatureLabel.setText(newValue.getLabelProperty().getValue().toString());			
 				} else {
 					nodeLabelFeatureVector.setText(null);
