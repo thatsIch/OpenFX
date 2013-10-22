@@ -11,6 +11,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.util.StringConverter;
 
@@ -32,6 +33,7 @@ public class TrainInputPresenter extends AFXMLPresenter {
 
 	// Nodes
 	@FXML ChoiceBox<IBinaryClassifier> nodeChoiceBoxBinaryClassifier;
+	@FXML Button nodeButtonTrainBinaryClassifier;
 	
 	// Injects
 	@Inject private TrainCommandService commander;
@@ -43,6 +45,7 @@ public class TrainInputPresenter extends AFXMLPresenter {
 	// ==================================================
 	@Override public void initialize(URL location, ResourceBundle resource) {
 		this.bindChoiceBoxBinaryClassifier();
+		this.bindButtons();
 		
 		this.initBinaryClassifierList();
 	}
@@ -134,6 +137,10 @@ public class TrainInputPresenter extends AFXMLPresenter {
 			}
 		});
 		this.log.info("Bound ChoiceBoxBinaryClassifier to Config.");
+	}
+	
+	private void bindButtons() {
+		this.nodeButtonTrainBinaryClassifier.disableProperty().bind(this.featureVectors.getSelectedFeatureVectorSetProperty().isNull());
 	}
 	
 	// ================================================== 

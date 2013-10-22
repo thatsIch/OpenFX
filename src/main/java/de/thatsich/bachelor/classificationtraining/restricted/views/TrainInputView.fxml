@@ -10,7 +10,7 @@
   <children>
     <ChoiceBox fx:id="nodeChoiceBoxBinaryClassifier" prefWidth="125.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
     <Label labelFor="$nodeChoiceBoxBinaryClassifier" text="Binary Classifier" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-    <Button mnemonicParsing="false" onAction="#onTrainBinaryClassifierAction" prefWidth="125.0" text="Train" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+    <Button fx:id="nodeButtonTrainBinaryClassifier" mnemonicParsing="false" onAction="#onTrainBinaryClassifierAction" prefWidth="125.0" text="Train" GridPane.columnIndex="1" GridPane.rowIndex="1" />
   </children>
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
