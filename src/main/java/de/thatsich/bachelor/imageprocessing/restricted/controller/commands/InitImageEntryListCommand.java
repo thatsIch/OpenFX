@@ -29,7 +29,6 @@ public class InitImageEntryListCommand extends Command<List<ImageEntry>> {
 
 	@Override
 	protected Task<List<ImageEntry>> createTask() {
-		// TODO Auto-generated method stub
 		return new Task<List<ImageEntry>>() {
 
 			@Override

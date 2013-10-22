@@ -19,7 +19,6 @@ public class InitErrorGeneratorListCommand extends Command<List<IErrorGenerator>
 	
 	@Override
 	protected Task<List<IErrorGenerator>> createTask() {
-		// TODO Auto-generated method stub
 		return new Task<List<IErrorGenerator>>() {
 
 			@Override
