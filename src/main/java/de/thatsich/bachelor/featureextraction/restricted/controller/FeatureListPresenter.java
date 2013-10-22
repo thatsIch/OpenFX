@@ -9,6 +9,7 @@ import java.util.concurrent.ExecutorService;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
@@ -82,13 +83,20 @@ public class FeatureListPresenter extends AFXMLPresenter {
 						log.info("Items were removed from TreeView.");
 						
 						final List<? extends FeatureVectorSet> removedSubList = paramChange.getRemoved();
-
+						final List<TreeItem<IFeatureSpaceTreeItemAdapter>> removing = FXCollections.observableArrayList();
+						
 						for (TreeItem<IFeatureSpaceTreeItemAdapter> child : nodeTreeViewRoot.getChildren()) {
 							for (FeatureVectorSet set : removedSubList) {
-								if (set.equals(child.getValue().getSet())) {
-									nodeTreeViewRoot.getChildren().remove(child);
+								final FeatureVectorSet childSet = child.getValue().getSet(); 
+								
+								if (set.equals(childSet)) {
+									removing.add(child);
 								}
 							}
+						}
+						
+						for (TreeItem<IFeatureSpaceTreeItemAdapter> removeChild : removing) {
+							nodeTreeViewRoot.getChildren().remove(removeChild);
 						}
 					}
 					else if (paramChange.wasUpdated()) {
