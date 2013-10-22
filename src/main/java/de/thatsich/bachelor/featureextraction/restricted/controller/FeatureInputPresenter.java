@@ -138,16 +138,11 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 					int value = newValue.intValue();
 					
 					switch(value) {
-						case 2:
-							result = 7; break;
-						case 3:
-							result = 9; break;
-						case 4:
-							result = 15; break;
-						case 5:
-							result = 31; break;
-						default:
-							throw new IllegalStateException("Expected numbers out of range");
+						case 2: result = 7; break;
+						case 3: result = 9; break;
+						case 4: result = 15; break;
+						case 5: result = 31; break;
+						default: throw new IllegalStateException("Expected numbers out of range");
 					}
 					
 					featureState.getFrameSizeProperty().set(result);
@@ -265,6 +260,9 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 			
 			featureVectors.getFeatureVectorSetListProperty().get().addAll(set);
 			log.info("Added FeatureVector to Database.");
+			
+			featureVectors.getSelectedFeatureVectorSetProperty().set(set);
+			log.info("Set current to selected FeatureVectorSet.");
 		}
 	}
 	
@@ -277,9 +275,19 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 	private class RemoveFeatureVectorSetSucceededHandler implements EventHandler<WorkerStateEvent> {
 		@Override public void handle(WorkerStateEvent event) {
 			final FeatureVectorSet fv = (FeatureVectorSet) event.getSource().getValue();
-			
-			featureVectors.getFeatureVectorSetListProperty().remove(fv);
+			final List<FeatureVectorSet> list = featureVectors.getFeatureVectorSetListProperty();
+			list.remove(fv);
 			log.info("Removed FeatureVector from Database.");
+			
+			if (list.size() > 0) {
+				final FeatureVectorSet first = list.get(0);
+				featureVectors.getSelectedFeatureVectorSetProperty().set(first);
+				log.info("Reset Selection to first FeatureVectorSet.");
+			}
+			else {
+				featureVectors.getSelectedFeatureVectorSetProperty().set(null);
+				log.info("Reset Selection to null.");
+			}
 		}
 	}
 	

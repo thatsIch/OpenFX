@@ -78,6 +78,7 @@ public class FeatureListPresenter extends AFXMLPresenter {
 							}
 				        	
 							nodeTreeViewRoot.getChildren().add(setTreeItem);
+							nodeTreeViewFeatureVectorSetList.getSelectionModel().select(setTreeItem);
 						}
 					}
 					else if (paramChange.wasRemoved()) {
@@ -99,6 +100,11 @@ public class FeatureListPresenter extends AFXMLPresenter {
 						for (TreeItem<IFeatureSpaceTreeItemAdapter> removeChild : removing) {
 							nodeTreeViewRoot.getChildren().remove(removeChild);
 						}
+						
+						for (TreeItem<IFeatureSpaceTreeItemAdapter> child : nodeTreeViewRoot.getChildren()) {
+							nodeTreeViewFeatureVectorSetList.getSelectionModel().select(child);
+							return;
+						}
 					}
 					else if (paramChange.wasUpdated()) {
 						log.info("Updated?" + paramChange.wasUpdated());
@@ -116,7 +122,7 @@ public class FeatureListPresenter extends AFXMLPresenter {
  			}
 
 		});
-		this.log.info("Bound List to FeatureSpace.");
+		this.log.info("Bound TreeView to FeatureSpace.");
 	}
 	
 	private void bindTreeViewSelection() {
