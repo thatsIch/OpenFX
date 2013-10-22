@@ -5,6 +5,7 @@ import com.google.inject.Scopes;
 
 import de.thatsich.bachelor.classificationtraining.restricted.models.BinaryClassifiers;
 import de.thatsich.bachelor.classificationtraining.restricted.models.TrainState;
+import de.thatsich.bachelor.classificationtraining.restricted.models.TrainedBinaryClassifiers;
 import de.thatsich.bachelor.classificationtraining.restricted.services.TrainConfigService;
 import de.thatsich.bachelor.classificationtraining.restricted.views.TrainDisplayView;
 import de.thatsich.bachelor.classificationtraining.restricted.views.TrainInputView;
@@ -52,6 +53,7 @@ public class TrainWiringModule extends AbstractModule {
 	
 	private void mapModels() {
 		super.bind(BinaryClassifiers.class).in(Scopes.SINGLETON);
+		super.bind(TrainedBinaryClassifiers.class).in(Scopes.SINGLETON);
 		super.bind(TrainState.class).in(Scopes.SINGLETON);
 	}
 }

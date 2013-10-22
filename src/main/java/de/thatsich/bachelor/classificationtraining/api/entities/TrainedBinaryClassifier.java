@@ -1,5 +1,5 @@
 package de.thatsich.bachelor.classificationtraining.api.entities;
 
-public class BinaryClassifier {
+public class TrainedBinaryClassifier {
 
 }

@@ -11,12 +11,12 @@ import javafx.concurrent.Task;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
-import de.thatsich.bachelor.classificationtraining.api.entities.BinaryClassifier;
 import de.thatsich.bachelor.classificationtraining.api.entities.IBinaryClassifier;
+import de.thatsich.bachelor.classificationtraining.api.entities.TrainedBinaryClassifier;
 import de.thatsich.bachelor.featureextraction.api.entities.FeatureVectorSet;
 import de.thatsich.core.javafx.Command;
 
-public class TrainBinaryClassifierCommand extends Command<BinaryClassifier> {
+public class TrainBinaryClassifierCommand extends Command<TrainedBinaryClassifier> {
 
 	// Properties
 	private final ObjectProperty<IBinaryClassifier> binaryClassifier = new SimpleObjectProperty<IBinaryClassifier>();
@@ -27,14 +27,14 @@ public class TrainBinaryClassifierCommand extends Command<BinaryClassifier> {
 	public TrainBinaryClassifierCommand(@Assisted IBinaryClassifier classifier, @Assisted FeatureVectorSet selected, @Assisted List<FeatureVectorSet> all) {
 		this.binaryClassifier.set(classifier);
 		this.selectedFeatureVector.set(selected);
-		this.featureVectorList.set(featureVectorList);
+		this.featureVectorList.setAll(all);
 	}
 	
 	@Override
-	protected Task<BinaryClassifier> createTask() {
-		return new Task<BinaryClassifier>() {
-			@Override protected BinaryClassifier call() throws Exception {
-				return null;
+	protected Task<TrainedBinaryClassifier> createTask() {
+		return new Task<TrainedBinaryClassifier>() {
+			@Override protected TrainedBinaryClassifier call() throws Exception {
+				return new TrainedBinaryClassifier();
 			}
 		};
 	}
