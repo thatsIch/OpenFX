@@ -18,11 +18,13 @@ import javafx.util.StringConverter;
 import com.google.inject.Inject;
 
 import de.thatsich.bachelor.classificationtraining.api.entities.IBinaryClassifier;
+import de.thatsich.bachelor.classificationtraining.api.entities.TrainedBinaryClassifier;
 import de.thatsich.bachelor.classificationtraining.restricted.controller.commands.GetLastBinaryClassifierIndexCommand;
 import de.thatsich.bachelor.classificationtraining.restricted.controller.commands.InitBinaryClassifierListCommand;
 import de.thatsich.bachelor.classificationtraining.restricted.controller.commands.SetLastBinaryClassifierIndexCommand;
 import de.thatsich.bachelor.classificationtraining.restricted.controller.commands.TrainBinaryClassifierCommand;
 import de.thatsich.bachelor.classificationtraining.restricted.models.BinaryClassifiers;
+import de.thatsich.bachelor.classificationtraining.restricted.models.TrainedBinaryClassifiers;
 import de.thatsich.bachelor.classificationtraining.restricted.services.TrainCommandService;
 import de.thatsich.bachelor.featureextraction.api.entities.FeatureVectorSet;
 import de.thatsich.bachelor.featureextraction.restricted.models.FeatureVectorSets;
@@ -38,6 +40,7 @@ public class TrainInputPresenter extends AFXMLPresenter {
 	// Injects
 	@Inject private TrainCommandService commander;
 	@Inject private BinaryClassifiers binaryClassifiers;
+	@Inject private TrainedBinaryClassifiers trainedBinaryClassifiers;
 	@Inject private FeatureVectorSets featureVectors;
 
 	// ================================================== 
@@ -172,10 +175,10 @@ public class TrainInputPresenter extends AFXMLPresenter {
 	 */
 	private class TrainBinaryClassifierSucceededHandler implements EventHandler<WorkerStateEvent> {
 		@Override public void handle(WorkerStateEvent event) {
-//			final BinaryClassifier classifier = (BinaryClassifier) event.getSource().getValue();
-//			
-//			featureVectors.getFeatureVectorListProperty().get().addAll(fv);
-//			log.info("Added FeatureVector to Database.");
+			final TrainedBinaryClassifier classifier = (TrainedBinaryClassifier) event.getSource().getValue();
+			
+			trainedBinaryClassifiers.getTrainedBinaryClassifierListProperty().add(classifier);
+			log.info("Added TrainedBinaryClassifier to Database.");
 		}
 	}
 }
