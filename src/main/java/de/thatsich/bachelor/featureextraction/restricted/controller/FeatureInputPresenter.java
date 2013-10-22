@@ -152,7 +152,7 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 		});
 		this.log.info("Bound FrameSize to Database.");
 		
-		// set labels to pwoer of 2
+		// set labels to power of 2
 		// Java 7 Bug
 		this.nodeSliderFrameSize.setLabelFormatter(new StringConverter<Double>() {
 			@Override public String toString(Double tick) { return String.format("%d", (int) Math.pow(2, tick)); }

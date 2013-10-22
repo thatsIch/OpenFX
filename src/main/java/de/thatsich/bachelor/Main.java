@@ -21,7 +21,6 @@ import de.thatsich.core.guice.LoggerModule;
 import de.thatsich.core.guice.PostInitModule;
 import de.thatsich.core.opencv.OpenCVLoader;
 
-// TODO Tree View nutzen mit einem RootElement
 /**
  * Main Execution Class
  * @author Tran Minh Do
