@@ -41,4 +41,14 @@ public class SVM extends ABinaryClassifier {
 		
 		return this.svm.predict(sample);
 	}
+
+	@Override
+	public void load(String fileName) {
+		this.svm.load(fileName);
+	}
+
+	@Override
+	public void save(String fileName) {
+		this.svm.save(fileName);
+	}
 }

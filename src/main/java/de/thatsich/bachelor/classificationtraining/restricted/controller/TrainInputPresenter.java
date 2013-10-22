@@ -1,6 +1,7 @@
 package de.thatsich.bachelor.classificationtraining.restricted.controller;
 
 import java.net.URL;
+import java.nio.file.Path;
 import java.security.InvalidParameterException;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -24,6 +25,7 @@ import de.thatsich.bachelor.classificationtraining.restricted.controller.command
 import de.thatsich.bachelor.classificationtraining.restricted.controller.commands.SetLastBinaryClassifierIndexCommand;
 import de.thatsich.bachelor.classificationtraining.restricted.controller.commands.TrainBinaryClassifierCommand;
 import de.thatsich.bachelor.classificationtraining.restricted.models.BinaryClassifiers;
+import de.thatsich.bachelor.classificationtraining.restricted.models.TrainState;
 import de.thatsich.bachelor.classificationtraining.restricted.models.TrainedBinaryClassifiers;
 import de.thatsich.bachelor.classificationtraining.restricted.services.TrainCommandService;
 import de.thatsich.bachelor.featureextraction.api.entities.FeatureVectorSet;
@@ -36,11 +38,14 @@ public class TrainInputPresenter extends AFXMLPresenter {
 	// Nodes
 	@FXML ChoiceBox<IBinaryClassifier> nodeChoiceBoxBinaryClassifier;
 	@FXML Button nodeButtonTrainBinaryClassifier;
+	@FXML Button nodeButtonRemoveBinaryClassifier;
+	@FXML Button nodeButtonResetBinaryClassifierList;
 	
 	// Injects
 	@Inject private TrainCommandService commander;
 	@Inject private BinaryClassifiers binaryClassifiers;
 	@Inject private TrainedBinaryClassifiers trainedBinaryClassifiers;
+	@Inject private TrainState trainState;
 	@Inject private FeatureVectorSets featureVectors;
 
 	// ================================================== 
@@ -150,6 +155,7 @@ public class TrainInputPresenter extends AFXMLPresenter {
 	// GUI Implementation 
 	// ==================================================	
 	@FXML private void onTrainBinaryClassifierAction() {
+		final Path binaryClassifierFolderPath = this.trainState.getBinaryClassifierFolderPathProperty().get();
 		final IBinaryClassifier selectedBinaryClassfier = this.binaryClassifiers.getSelectedBinaryClassifierProperty().get();
 		final List<FeatureVectorSet> featureVectorSetList = this.featureVectors.getFeatureVectorSetListProperty().get();
 		final FeatureVectorSet selectedFeatureVectorSet = this.featureVectors.getSelectedFeatureVectorSetProperty().get();
@@ -159,9 +165,17 @@ public class TrainInputPresenter extends AFXMLPresenter {
 		if (selectedBinaryClassfier == null) throw new InvalidParameterException("SelectedBinaryClassifier is null.");
 		
 		final TrainBinaryClassifierSucceededHandler handler = new TrainBinaryClassifierSucceededHandler();
-		final TrainBinaryClassifierCommand command = this.commander.createTrainBinaryClassifierCommand(selectedBinaryClassfier, selectedFeatureVectorSet, featureVectorSetList);
+		final TrainBinaryClassifierCommand command = this.commander.createTrainBinaryClassifierCommand(binaryClassifierFolderPath, selectedBinaryClassfier, selectedFeatureVectorSet, featureVectorSetList);
 		command.setOnSucceeded(handler);
 		command.start();
+	}
+	
+	@FXML private void onRemoveBinaryClassifierAction() {
+		
+	}
+	
+	@FXML private void onResetBinaryClassifierListAction() {
+		
 	}
 	
 	// ================================================== 

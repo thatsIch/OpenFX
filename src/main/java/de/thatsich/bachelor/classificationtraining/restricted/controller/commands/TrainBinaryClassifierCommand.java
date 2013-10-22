@@ -1,6 +1,8 @@
 package de.thatsich.bachelor.classificationtraining.restricted.controller.commands;
 
+import java.nio.file.Path;
 import java.util.List;
+import java.util.UUID;
 
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
@@ -23,12 +25,14 @@ import de.thatsich.core.javafx.Command;
 public class TrainBinaryClassifierCommand extends Command<TrainedBinaryClassifier> {
 
 	// Properties
+	private final ObjectProperty<Path> binaryClassifierFolderPath = new SimpleObjectProperty<Path>();
 	private final ObjectProperty<IBinaryClassifier> binaryClassifier = new SimpleObjectProperty<IBinaryClassifier>();
 	private final ObjectProperty<FeatureVectorSet> selectedFeatureVector = new SimpleObjectProperty<FeatureVectorSet>();
 	private final ListProperty<FeatureVectorSet> featureVectorList = new SimpleListProperty<FeatureVectorSet>(FXCollections.<FeatureVectorSet>observableArrayList());
 	
 	@Inject
-	public TrainBinaryClassifierCommand(@Assisted IBinaryClassifier classifier, @Assisted FeatureVectorSet selected, @Assisted List<FeatureVectorSet> all) {
+	public TrainBinaryClassifierCommand(@Assisted Path binaryClassifierFolderPath, @Assisted IBinaryClassifier classifier, @Assisted FeatureVectorSet selected, @Assisted List<FeatureVectorSet> all) {
+		this.binaryClassifierFolderPath.set(binaryClassifierFolderPath);
 		this.binaryClassifier.set(classifier);
 		this.selectedFeatureVector.set(selected);
 		this.featureVectorList.addAll(all);
@@ -41,6 +45,12 @@ public class TrainBinaryClassifierCommand extends Command<TrainedBinaryClassifie
 				final IBinaryClassifier bc = binaryClassifier.get();
 				final FeatureVectorSet selected = selectedFeatureVector.get();
 				final List<FeatureVectorSet> list = featureVectorList.get();
+				
+				final String binaryClassifierName = bc.getName();
+				final String featureExtractorName = selected.getExtractorNameProperty().get();
+				final int frameSize = selected.getFrameSizeProperty().get();
+				final String errorClassName = selected.getClassNameProperty().get();
+				final String id = UUID.randomUUID().toString();
 				
 				final MatOfFloat positive = new MatOfFloat();
 				final MatOfFloat negative = new MatOfFloat();
@@ -80,7 +90,17 @@ public class TrainBinaryClassifierCommand extends Command<TrainedBinaryClassifie
 					e.printStackTrace();
 				}
 				
-				return new TrainedBinaryClassifier();
+				StringBuffer buffer = new StringBuffer();
+				buffer.append(binaryClassifierName + "_");
+				buffer.append(featureExtractorName + "_");
+				buffer.append(frameSize + "_");
+				buffer.append(errorClassName + "_");
+				buffer.append(id + ".yaml");
+				
+				final Path filePath = binaryClassifierFolderPath.get().resolve(buffer.toString());
+				bc.save(filePath.toString());
+				
+				return new TrainedBinaryClassifier(filePath, bc, featureExtractorName, frameSize, errorClassName, id);
 			}
 		};
 	}

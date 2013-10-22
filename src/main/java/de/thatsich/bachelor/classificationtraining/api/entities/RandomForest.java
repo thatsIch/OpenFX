@@ -31,7 +31,7 @@ public class RandomForest extends ABinaryClassifier {
 		this.params.set_term_crit(
 			new TermCriteria(TermCriteria.MAX_ITER + TermCriteria.EPS, 100, 0.0F)
 		);
-		
+
 		this.isTrained = false;
 	}
 	
@@ -65,6 +65,16 @@ public class RandomForest extends ABinaryClassifier {
 //		Mat varType = Mat.zeros(trainData.cols(), 1, CvType.CV_8UC1);
 		this.trees.train(trainData, 1, trainLabels, new Mat(), new Mat(), new Mat(), new Mat(), this.params);
 		this.isTrained = true;
+	}
+
+	@Override
+	public void load(String fileName) {
+		this.trees.load(fileName);
+	}
+
+	@Override
+	public void save(String fileName) {
+		this.trees.save(fileName);
 	}
 
 }

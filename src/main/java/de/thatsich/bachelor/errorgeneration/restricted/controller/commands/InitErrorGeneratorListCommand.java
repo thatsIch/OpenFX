@@ -32,5 +32,4 @@ public class InitErrorGeneratorListCommand extends Command<List<IErrorGenerator>
 			}
 		};
 	}
-
 }

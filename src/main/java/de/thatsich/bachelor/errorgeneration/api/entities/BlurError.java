@@ -2,7 +2,7 @@ package de.thatsich.bachelor.errorgeneration.api.entities;
 
 import org.opencv.core.Mat;
 
-public class LuminationError extends AErrorGenerator {
+public class BlurError extends AErrorGenerator {
 
 	@Override
 	public Mat generateError(Mat in) {

@@ -14,11 +14,15 @@ public class TrainConfigService extends AConfiguration {
 	 * 
 	 */
 	private static final String LAST_BINARY_CLASSIFIER_INDEX = "last_binary_classifier_index";
+	private static final String LAST_TRAINED_BINARY_CLASSIFIER_INDEX = "last_trained_binary_classifier_index";
+	
 	
 	/**
 	 * 
 	 */
 	private static final int DEFAULT_LAST_BINARY_CLASSIFIER_INDEX = 0;
+	private static final int DEFAULT_LAST_TRAINED_BINARY_CLASSIFIER_INDEX = 0;
+	
 	
 	// ================================================== 
 	// Getter Implementation 
@@ -30,6 +34,10 @@ public class TrainConfigService extends AConfiguration {
 		return super.get(LAST_BINARY_CLASSIFIER_INDEX, DEFAULT_LAST_BINARY_CLASSIFIER_INDEX);
 	}
 	
+	public int getLastTrainedBinaryClassifierIndexInt() {
+		return super.get(LAST_TRAINED_BINARY_CLASSIFIER_INDEX, DEFAULT_LAST_TRAINED_BINARY_CLASSIFIER_INDEX);
+	}
+	
 	// ================================================== 
 	// Setter Implementation 
 	// ==================================================
@@ -38,5 +46,9 @@ public class TrainConfigService extends AConfiguration {
 	 */
 	public void setLastBinaryClassifierIndexInt(int lastBinaryClassifierIndex) {
 		super.set(LAST_BINARY_CLASSIFIER_INDEX, lastBinaryClassifierIndex);
+	}
+	
+	public void setLastTrainedBinaryClassifierIndexInt(int lastTrainedBinaryClassifierIndex) {
+		super.set(LAST_TRAINED_BINARY_CLASSIFIER_INDEX, lastTrainedBinaryClassifierIndex);
 	}
 }
