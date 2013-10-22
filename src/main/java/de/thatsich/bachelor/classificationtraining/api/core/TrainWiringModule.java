@@ -3,6 +3,8 @@ package de.thatsich.bachelor.classificationtraining.api.core;
 import com.google.inject.AbstractModule;
 import com.google.inject.Scopes;
 
+import de.thatsich.bachelor.classificationtraining.api.entities.RandomForest;
+import de.thatsich.bachelor.classificationtraining.api.entities.SVM;
 import de.thatsich.bachelor.classificationtraining.restricted.models.BinaryClassifiers;
 import de.thatsich.bachelor.classificationtraining.restricted.models.TrainState;
 import de.thatsich.bachelor.classificationtraining.restricted.models.TrainedBinaryClassifiers;
@@ -49,6 +51,9 @@ public class TrainWiringModule extends AbstractModule {
 	
 	private void mapServices() {
 		super.bind(TrainConfigService.class).in(Scopes.SINGLETON);
+
+		super.bind(SVM.class).in(Scopes.SINGLETON);
+		super.bind(RandomForest.class).in(Scopes.SINGLETON);
 	}
 	
 	private void mapModels() {

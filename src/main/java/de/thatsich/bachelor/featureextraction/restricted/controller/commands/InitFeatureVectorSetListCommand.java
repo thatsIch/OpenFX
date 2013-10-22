@@ -69,7 +69,8 @@ public class InitFeatureVectorSetListCommand extends Command<List<FeatureVectorS
 							final Float label = vector.get(vector.size() - 1);
 							vector.remove(vector.size() - 1);
 							
-							featureVectorList.add(new FeatureVector(vector, label));
+							final boolean boolLabel = (label > 0);
+							featureVectorList.add(new FeatureVector(vector, boolLabel));
 						}
 						
 						featureVectorSetList.add(new FeatureVectorSet(child, className, extractorName, frameSize, id, featureVectorList));

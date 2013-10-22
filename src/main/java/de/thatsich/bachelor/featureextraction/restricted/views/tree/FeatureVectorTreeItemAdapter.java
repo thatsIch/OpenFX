@@ -28,7 +28,7 @@ public class FeatureVectorTreeItemAdapter implements IFeatureSpaceTreeItemAdapte
 	}
 	
 	
-	@Override public String toString() { return this.featureVector.get().getLabelProperty().get() + " - " + this.featureVector.get().getVectorProperty().get(); }
+	@Override public String toString() { return this.featureVector.get().getIsPositiveProperty().get() + " - " + this.featureVector.get().getVectorProperty().get(); }
 	// IFeatureSpaceTreeItem Implementation
 	@Override public boolean isSet() { return false; }
 	@Override public boolean isVector() { return true; }

@@ -74,13 +74,13 @@ public class ExtractFeatureVectorSetCommand extends Command<FeatureVectorSet> {
 
 							// if contain an error classify it as positive match
 							if (Core.sumElems(errorSplit[col][row]).val[0] != 0) {
-								featureVectorList.add(new FeatureVector(featureVectorAsList, 1));
+								featureVectorList.add(new FeatureVector(featureVectorAsList, true));
 								featureVectorAsList.add(1F);						
 							}
 							
 							// else its a negative match
 							else {
-								featureVectorList.add(new FeatureVector(featureVectorAsList, 0));
+								featureVectorList.add(new FeatureVector(featureVectorAsList, false));
 								featureVectorAsList.add(0F);
 							}
 							

@@ -66,7 +66,7 @@ public class FeatureDisplayPresenter extends AFXMLPresenter {
 				if (newValue != null) {
 					nodeLabelFeatureVector.setText(newValue.getVectorProperty().getValue().toString());
 					nodeLabelFeatureVector.getTooltip().setText(newValue.getVectorProperty().getValue().toString());
-					nodeLabelFeatureLabel.setText(newValue.getLabelProperty().getValue().toString());			
+					nodeLabelFeatureLabel.setText(newValue.getIsPositiveProperty().getValue().toString());			
 				} else {
 					nodeLabelFeatureVector.setText(null);
 					nodeLabelFeatureVector.getTooltip().setText(null);
