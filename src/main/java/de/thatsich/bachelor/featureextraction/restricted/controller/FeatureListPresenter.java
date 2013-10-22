@@ -23,6 +23,7 @@ import de.thatsich.bachelor.featureextraction.api.entities.FeatureVector;
 import de.thatsich.bachelor.featureextraction.api.entities.FeatureVectorSet;
 import de.thatsich.bachelor.featureextraction.restricted.controller.commands.GetLastFeatureVectorIndexCommand;
 import de.thatsich.bachelor.featureextraction.restricted.controller.commands.InitFeatureVectorSetListCommand;
+import de.thatsich.bachelor.featureextraction.restricted.controller.commands.SetLastFeatureVectorIndexCommand;
 import de.thatsich.bachelor.featureextraction.restricted.models.FeatureState;
 import de.thatsich.bachelor.featureextraction.restricted.models.FeatureVectorSets;
 import de.thatsich.bachelor.featureextraction.restricted.services.FeatureCommandService;
@@ -142,6 +143,10 @@ public class FeatureListPresenter extends AFXMLPresenter {
 					featureVectors.getSelectedFeatureVectorSetProperty().set(null);
 					featureVectors.getSelectedFeatureVectorProperty().set(null);
 				}
+				
+				final int selectedIndex = nodeTreeViewFeatureVectorSetList.getSelectionModel().getSelectedIndex();
+				final SetLastFeatureVectorIndexCommand command = commander.createSetLastFeatureVectorIndexCommand(selectedIndex);
+				command.start();
 			}
 		});
 	}
@@ -176,7 +181,7 @@ public class FeatureListPresenter extends AFXMLPresenter {
 		final GetLastFeatureVectorIndexCommand lastCommand = this.commander.createGetLastFeatureVectorIndexCommand();
 		lastCommand.setExecutor(executor);
 		lastCommand.setOnSucceeded(lastHandler);
-//		lastCommand.start();
+		lastCommand.start();
 		this.log.info("Initialized GetLastFeatureVectorIndex Retrieval.");
 		
 		executor.shutdown();
@@ -213,19 +218,15 @@ public class FeatureListPresenter extends AFXMLPresenter {
 			final Integer commandResult = (Integer) event.getSource().getValue();
 			log.info("Retrieved LastFeatureVectorIndex.");
 			
-			if (commandResult != null && commandResult >= 0 && featureVectors.getFeatureVectorSetListProperty().size() > commandResult) {
+			if (commandResult != null && commandResult >= 0) {
 				nodeTreeViewFeatureVectorSetList.getSelectionModel().select(commandResult);
 				log.info("Set LastFeatureVectorIndex in TreeView.");
-				
-				final TreeItem<IFeatureSpaceTreeItemAdapter> selectedItem = nodeTreeViewFeatureVectorSetList.getSelectionModel().selectedItemProperty().get();
-				final IFeatureSpaceTreeItemAdapter selectedFeatureSpaceItem = selectedItem.getValue();
-				if (selectedFeatureSpaceItem.isSet()) {
-					featureVectors.getSelectedFeatureVectorSetProperty();
-				}
-				else if (selectedFeatureSpaceItem.isVector()) {
-					
-				}
-				log.info("Set LastFeatureVectorIndex in Model.");
+			} else {
+				log.info("commandResult != null: " + (commandResult != null));
+				log.info("commandResult >= 0: " + (commandResult >= 0));
+				log.info("size > commandResult: " + (nodeTreeViewFeatureVectorSetList.getChildrenUnmodifiable().size() > commandResult));
+				log.info("with size " + nodeTreeViewFeatureVectorSetList.getChildrenUnmodifiable().size());
+				log.info("with commandResult " + commandResult);
 			}
 		}
 	}
