@@ -180,7 +180,26 @@ public class TrainInputPresenter extends AFXMLPresenter {
 	}
 	
 	@FXML private void onResetBinaryClassifierListAction() {
+		final List<IBinaryClassification> binaryClassificationList = this.binaryClassifications.getBinaryClassificationListProperty();
+		final ExecutorService executor = CommandExecutor.newFixedThreadPool(binaryClassificationList.size());
+		this.log.info("Initialized Executor for resetting all Errors.");
 		
+		for (IBinaryClassification classification : binaryClassificationList) {
+			final RemoveBinaryClassificationSucceededHandler handler = new RemoveBinaryClassificationSucceededHandler();
+			final RemoveBinaryClassificationCommand command = this.commander.createRemoveBinaryClassificationCommand(classification);
+			command.setOnSucceeded(handler);
+			command.setExecutor(executor);
+			command.start();
+			this.log.info("File Deletion executed.");
+		}
+		
+		executor.execute(new Runnable() {
+			@Override public void run() { System.gc(); }
+		});
+		this.log.info("Running Garbage Collector.");
+		
+		executor.shutdown();
+		this.log.info("Shutting down Executor.");
 	}
 	
 	// ================================================== 
