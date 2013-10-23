@@ -7,8 +7,14 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import com.google.inject.Inject;
 
@@ -16,6 +22,7 @@ import de.thatsich.bachelor.classificationtraining.api.entities.IBinaryClassific
 import de.thatsich.bachelor.classificationtraining.restricted.application.guice.TrainCommandProvider;
 import de.thatsich.bachelor.classificationtraining.restricted.controller.commands.GetLastBinaryClassificationIndexCommand;
 import de.thatsich.bachelor.classificationtraining.restricted.controller.commands.InitBinaryClassificationListCommand;
+import de.thatsich.bachelor.classificationtraining.restricted.controller.commands.SetLastBinaryClassificationIndexCommand;
 import de.thatsich.bachelor.classificationtraining.restricted.model.state.BinaryClassifications;
 import de.thatsich.bachelor.classificationtraining.restricted.model.state.TrainState;
 import de.thatsich.core.javafx.AFXMLPresenter;
@@ -23,7 +30,16 @@ import de.thatsich.core.javafx.CommandExecutor;
 
 public class TrainListPresenter extends AFXMLPresenter {
 
-	@Inject private BinaryClassifications trainedBinaryClassifiers;
+	// Nodes
+	@FXML private TableView<IBinaryClassification> nodeTableViewBinaryClassificationList;
+	
+	@FXML private TableColumn<IBinaryClassification, String> nodeTableColumnClassifierName;
+	@FXML private TableColumn<IBinaryClassification, String> nodeTableColumnExtractorName;
+	@FXML private TableColumn<IBinaryClassification, Integer> nodeTableColumnFrameSize;
+	@FXML private TableColumn<IBinaryClassification, String> nodeTableErrorName;
+	@FXML private TableColumn<IBinaryClassification, String> nodeTableColumnID;
+	
+	@Inject private BinaryClassifications binaryClassifications;
 	@Inject private TrainState trainState;
 	@Inject private TrainCommandProvider commander;
 	
@@ -31,7 +47,49 @@ public class TrainListPresenter extends AFXMLPresenter {
 	// Initialization Implementation 
 	// ==================================================
 	@Override public void initialize(URL location, ResourceBundle resource) {
+		this.bindTableView();
+		
 		this.initTrainedBinaryClassifierList();
+	}
+	
+	private void bindTableView() {
+		this.bindTableViewContent();
+		this.bindTableViewSelectionModel();
+		this.bindTableViewCellValue();
+	}
+
+	private void bindTableViewContent() {
+		this.nodeTableViewBinaryClassificationList.itemsProperty().bind(this.binaryClassifications.getBinaryClassificationListProperty());
+		this.log.info("Bound Content to Model.");
+	}
+
+	private void bindTableViewSelectionModel() {
+		this.nodeTableViewBinaryClassificationList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<IBinaryClassification>() {
+			@Override public void changed(ObservableValue<? extends IBinaryClassification> paramObservableValue, IBinaryClassification oldvalue, IBinaryClassification newValue) {
+				binaryClassifications.getSelectedBinaryClassificationProperty().set(newValue);
+				log.info("Set Selected BinaryClassification in Model.");
+				
+				final int index = nodeTableViewBinaryClassificationList.getSelectionModel().getSelectedIndex();
+				final SetLastBinaryClassificationIndexCommand command = commander.createSetLastBinaryClassificationIndexCommand(index);
+				command.start();
+			}
+		});
+		this.log.info("Bound Selection to Model.");
+		
+		this.binaryClassifications.getSelectedBinaryClassificationProperty().addListener(new ChangeListener<IBinaryClassification>() {
+			@Override public void changed(ObservableValue<? extends IBinaryClassification> observable, IBinaryClassification oldValue, IBinaryClassification newValue) {
+				nodeTableViewBinaryClassificationList.getSelectionModel().select(newValue);
+			}
+		});
+		this.log.info("Bound Model to Selection.");
+	}
+
+	private void bindTableViewCellValue() {
+		this.nodeTableColumnClassifierName.setCellValueFactory(new PropertyValueFactory<IBinaryClassification, String>("getClassificationName"));
+		this.nodeTableColumnExtractorName.setCellValueFactory(new PropertyValueFactory<IBinaryClassification, String>("getExtractorName"));
+		this.nodeTableColumnFrameSize.setCellValueFactory(new PropertyValueFactory<IBinaryClassification, Integer>("getFrameSize"));
+		this.nodeTableErrorName.setCellValueFactory(new PropertyValueFactory<IBinaryClassification, String>("getErrorName"));
+		this.nodeTableColumnID.setCellValueFactory(new PropertyValueFactory<IBinaryClassification, String>("getId"));
 	}
 	
 	private void initTrainedBinaryClassifierList() {
@@ -81,7 +139,7 @@ public class TrainListPresenter extends AFXMLPresenter {
 		@Override public void handle(WorkerStateEvent event) {
 			final List<IBinaryClassification> trainedBinaryClassifierList = (List<IBinaryClassification>) event.getSource().getValue();
 			
-			trainedBinaryClassifiers.getBinaryClassificationListProperty().addAll(trainedBinaryClassifierList);
+			binaryClassifications.getBinaryClassificationListProperty().addAll(trainedBinaryClassifierList);
 			log.info("Added TrainedBinaryClassifierList to Database.");
 		}
 	}

@@ -17,12 +17,7 @@ public class SVMBinaryClassification extends ABinaryClassification {
 	@Inject
 	public SVMBinaryClassification(@Assisted CvSVM svm, @Assisted BinaryClassifierConfiguration config) {
 		super(config);
-		if (svm == null) {
-			this.svm.set(new CvSVM());
-		}
-		else {
-			this.svm.set(svm);
-		}
+		this.svm.set(svm);
 	}
 	
 	@Override

@@ -21,15 +21,13 @@ public abstract class ABinaryClassification implements IBinaryClassification {
 		this.config.set(config);
 	}
 	
-	@Override
-	public String getName() {
-		return this.getClass().getSimpleName();
-	}
+	// Getter
+	@Override public String getName() { return this.getClass().getSimpleName(); }
 	
 	// Property Getter
-	public ReadOnlyStringProperty getClassificationName() { return this.config.get().getClassificationName(); }
-	public ReadOnlyStringProperty getExtractorName() { return this.config.get().getExtractorName(); }
-	public ReadOnlyIntegerProperty getFrameSize() { return this.config.get().getFrameSize(); }
-	public ReadOnlyStringProperty getErrorName() { return this.config.get().getErrorName(); }
-	public ReadOnlyStringProperty getId() { return this.config.get().getId(); }
+	@Override public ReadOnlyStringProperty getClassificationNameProperty() { return this.config.get().getClassificationName(); }
+	@Override public ReadOnlyStringProperty getExtractorNameProperty() { return this.config.get().getExtractorName(); }
+	@Override public ReadOnlyIntegerProperty getFrameSizeProperty() { return this.config.get().getFrameSize(); }
+	@Override public ReadOnlyStringProperty getErrorNameProperty() { return this.config.get().getErrorName(); }
+	@Override public ReadOnlyStringProperty getIdProperty() { return this.config.get().getId(); }
 }

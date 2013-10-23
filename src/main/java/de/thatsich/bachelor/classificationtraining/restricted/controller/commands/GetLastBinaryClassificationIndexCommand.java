@@ -16,7 +16,7 @@ public class GetLastBinaryClassificationIndexCommand extends Command<Integer> {
 	protected Task<Integer> createTask() {
 		return new Task<Integer>() {
 			@Override protected Integer call() throws Exception {
-				return config.getLastTrainedBinaryClassifierIndexInt();
+				return config.getLastBinaryClassificationIndexInt();
 			}
 		};
 	}

@@ -7,6 +7,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
+import org.opencv.ml.CvRTrees;
+import org.opencv.ml.CvSVM;
+
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -48,7 +51,7 @@ public class InitBinaryClassificationListCommand extends Command<List<IBinaryCla
 				// and parse the correct classifier
 				try (DirectoryStream<Path> stream = Files.newDirectoryStream(folderPath, GLOB_PATTERN)) {
 					for (Path child : stream) {
-						
+						try {
 						// split the file name 
 						// and check if has 5 members
 						// and extract them
@@ -68,10 +71,10 @@ public class InitBinaryClassificationListCommand extends Command<List<IBinaryCla
 						IBinaryClassification classification;
 						switch(classificationName) {
 							case "RandomForestBinaryClassification":
-								classification = provider.createRandomForestBinaryClassification(null, config);
+								classification = provider.createRandomForestBinaryClassification(new CvRTrees(), config);
 								break;
 							case "SVMBinaryClassification":
-								classification = provider.createSVMBinaryClassification(null, config);
+								classification = provider.createSVMBinaryClassification(new CvSVM(), config);
 								break;
 							default:
 								throw new IllegalStateException("Unknown Classification");
@@ -83,11 +86,17 @@ public class InitBinaryClassificationListCommand extends Command<List<IBinaryCla
 
 						binaryClassificationList.add(classification);
 						log.info("Added " + child + " with Attribute " + Files.probeContentType(child));
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+						
 					}
 				} catch (IOException | DirectoryIteratorException e) {
 					e.printStackTrace();
 				}
 				log.info("All BinaryClassification added.");
+				
+				log.info("==============================" + binaryClassificationList.size());
 				
 				return binaryClassificationList;
 			}
