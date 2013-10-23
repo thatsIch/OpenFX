@@ -7,7 +7,7 @@ import com.google.inject.Inject;
 import de.thatsich.bachelor.classificationtraining.restricted.services.TrainConfigService;
 import de.thatsich.core.javafx.Command;
 
-public class GetLastTrainedBinaryClassifierIndexCommand extends Command<Integer> {
+public class GetLastBinaryClassificationIndexCommand extends Command<Integer> {
 	
 	// Injections
 	@Inject private TrainConfigService config;

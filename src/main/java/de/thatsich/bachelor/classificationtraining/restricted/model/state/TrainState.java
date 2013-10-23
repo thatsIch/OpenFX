@@ -1,4 +1,4 @@
-package de.thatsich.bachelor.classificationtraining.restricted.models;
+package de.thatsich.bachelor.classificationtraining.restricted.model.state;
 
 import java.nio.file.Path;
 

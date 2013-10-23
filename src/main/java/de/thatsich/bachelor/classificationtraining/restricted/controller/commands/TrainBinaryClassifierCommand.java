@@ -16,13 +16,13 @@ import org.opencv.core.MatOfFloat;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
+import de.thatsich.bachelor.classificationtraining.api.entities.IBinaryClassification;
 import de.thatsich.bachelor.classificationtraining.api.entities.IBinaryClassifier;
-import de.thatsich.bachelor.classificationtraining.api.entities.TrainedBinaryClassifier;
 import de.thatsich.bachelor.featureextraction.api.entities.FeatureVector;
 import de.thatsich.bachelor.featureextraction.api.entities.FeatureVectorSet;
 import de.thatsich.core.javafx.Command;
 
-public class TrainBinaryClassifierCommand extends Command<TrainedBinaryClassifier> {
+public class TrainBinaryClassifierCommand extends Command<IBinaryClassification> {
 
 	// Properties
 	private final ObjectProperty<Path> binaryClassifierFolderPath = new SimpleObjectProperty<Path>();
@@ -39,9 +39,9 @@ public class TrainBinaryClassifierCommand extends Command<TrainedBinaryClassifie
 	}
 	
 	@Override
-	protected Task<TrainedBinaryClassifier> createTask() {
-		return new Task<TrainedBinaryClassifier>() {
-			@Override protected TrainedBinaryClassifier call() throws Exception {
+	protected Task<IBinaryClassification> createTask() {
+		return new Task<IBinaryClassification>() {
+			@Override protected IBinaryClassification call() throws Exception {
 				final IBinaryClassifier bc = binaryClassifier.get();
 				final FeatureVectorSet selected = selectedFeatureVector.get();
 				final List<FeatureVectorSet> list = featureVectorList.get();
@@ -82,13 +82,8 @@ public class TrainBinaryClassifierCommand extends Command<TrainedBinaryClassifie
 				}
 				log.info("Prepared Negative and Positive DataSets.");
 				
-				try {
-					bc.train(positive, negative);	
-					log.info("Trained Binary Classifier.");
-				}
-				catch (Exception e) {
-					e.printStackTrace();
-				}
+				IBinaryClassification classification = bc.train(positive, negative);
+				log.info("Trained Binary Classifier.");
 				
 				StringBuffer buffer = new StringBuffer();
 				buffer.append(binaryClassifierName + "_");
@@ -98,9 +93,9 @@ public class TrainBinaryClassifierCommand extends Command<TrainedBinaryClassifie
 				buffer.append(id + ".yaml");
 				
 				final Path filePath = binaryClassifierFolderPath.get().resolve(buffer.toString());
-				bc.save(filePath.toString());
+				classification.save(filePath.toString());
 				
-				return new TrainedBinaryClassifier(filePath, bc, featureExtractorName, frameSize, errorClassName, id);
+				return classification;
 			}
 		};
 	}

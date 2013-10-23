@@ -1,7 +1,8 @@
-package de.thatsich.bachelor.classificationtraining.api.entities;
+package de.thatsich.bachelor.classificationtraining.restricted.model.logic;
 
 import com.google.inject.Inject;
 
+import de.thatsich.bachelor.classificationtraining.api.entities.IBinaryClassifier;
 import de.thatsich.core.Log;
 
 

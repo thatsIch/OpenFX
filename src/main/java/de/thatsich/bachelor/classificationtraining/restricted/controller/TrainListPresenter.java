@@ -12,20 +12,20 @@ import javafx.event.EventHandler;
 
 import com.google.inject.Inject;
 
-import de.thatsich.bachelor.classificationtraining.api.entities.TrainedBinaryClassifier;
-import de.thatsich.bachelor.classificationtraining.restricted.controller.commands.GetLastTrainedBinaryClassifierIndexCommand;
-import de.thatsich.bachelor.classificationtraining.restricted.controller.commands.InitTrainedBinaryClassifierListCommand;
-import de.thatsich.bachelor.classificationtraining.restricted.models.TrainState;
-import de.thatsich.bachelor.classificationtraining.restricted.models.TrainedBinaryClassifiers;
-import de.thatsich.bachelor.classificationtraining.restricted.services.TrainCommandService;
+import de.thatsich.bachelor.classificationtraining.api.entities.IBinaryClassification;
+import de.thatsich.bachelor.classificationtraining.restricted.application.guice.TrainCommandProvider;
+import de.thatsich.bachelor.classificationtraining.restricted.controller.commands.GetLastBinaryClassificationIndexCommand;
+import de.thatsich.bachelor.classificationtraining.restricted.controller.commands.InitBinaryClassificationListCommand;
+import de.thatsich.bachelor.classificationtraining.restricted.model.state.BinaryClassifications;
+import de.thatsich.bachelor.classificationtraining.restricted.model.state.TrainState;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.javafx.CommandExecutor;
 
 public class TrainListPresenter extends AFXMLPresenter {
 
-	@Inject private TrainedBinaryClassifiers trainedBinaryClassifiers;
+	@Inject private BinaryClassifications trainedBinaryClassifiers;
 	@Inject private TrainState trainState;
-	@Inject private TrainCommandService commander;
+	@Inject private TrainCommandProvider commander;
 	
 	// ================================================== 
 	// Initialization Implementation 
@@ -41,19 +41,19 @@ public class TrainListPresenter extends AFXMLPresenter {
 		this.trainState.getBinaryClassifierFolderPathProperty().set(folderPath);
 		this.log.info("Set FeatureVectorInputFolderPath to Model.");
 		
-		final InitTrainedBinaryClassifierListSucceededHandler initHandler = new InitTrainedBinaryClassifierListSucceededHandler();
-		final InitTrainedBinaryClassifierListCommand initCommand = this.commander.createInitTrainedBinaryClassifierListCommand(folderPath);
+		final InitBinaryClassificationListSucceededHandler initHandler = new InitBinaryClassificationListSucceededHandler();
+		final InitBinaryClassificationListCommand initCommand = this.commander.createInitBinaryClassificationListCommand(folderPath);
 		initCommand.setOnSucceeded(initHandler);
 		initCommand.setExecutor(executor);
 		initCommand.start();
-		this.log.info("Initialized InitTrainedBinaryClassifierList Retrieval.");
+		this.log.info("Initialized BinaryClassificationList Retrieval.");
 		
-		final GetLastTrainedBinaryClassifierIndexSucceededHandler lastHandler = new GetLastTrainedBinaryClassifierIndexSucceededHandler(); 
-		final GetLastTrainedBinaryClassifierIndexCommand lastCommand = this.commander.createGetLastTrainedBinaryClassifierIndexCommand();
+		final GetLastBinaryClassificationIndexSucceededHandler lastHandler = new GetLastBinaryClassificationIndexSucceededHandler(); 
+		final GetLastBinaryClassificationIndexCommand lastCommand = this.commander.createGetLastBinaryClassificationIndexCommand();
 		lastCommand.setExecutor(executor);
 		lastCommand.setOnSucceeded(lastHandler);
 		lastCommand.start();
-		this.log.info("Initialized GetLastTrainedBinaryClassifierIndex Retrieval.");
+		this.log.info("Initialized LastBinaryClassificationIndex Retrieval.");
 		
 		executor.shutdown();
 		this.log.info("Shutting down Executor.");
@@ -77,9 +77,9 @@ public class TrainListPresenter extends AFXMLPresenter {
 	 * @author Minh
 	 */
 	@SuppressWarnings("unchecked")
-	private class InitTrainedBinaryClassifierListSucceededHandler implements EventHandler<WorkerStateEvent> {
+	private class InitBinaryClassificationListSucceededHandler implements EventHandler<WorkerStateEvent> {
 		@Override public void handle(WorkerStateEvent event) {
-			final List<TrainedBinaryClassifier> trainedBinaryClassifierList = (List<TrainedBinaryClassifier>) event.getSource().getValue();
+			final List<IBinaryClassification> trainedBinaryClassifierList = (List<IBinaryClassification>) event.getSource().getValue();
 			
 			trainedBinaryClassifiers.getTrainedBinaryClassifierListProperty().addAll(trainedBinaryClassifierList);
 			log.info("Added TrainedBinaryClassifierList to Database.");
@@ -92,7 +92,7 @@ public class TrainListPresenter extends AFXMLPresenter {
 	 * 
 	 * @author Minh
 	 */
-	private class GetLastTrainedBinaryClassifierIndexSucceededHandler implements EventHandler<WorkerStateEvent> {
+	private class GetLastBinaryClassificationIndexSucceededHandler implements EventHandler<WorkerStateEvent> {
 		@Override public void handle(WorkerStateEvent event) {
 			final Integer commandResult = (Integer) event.getSource().getValue();
 			log.info("Retrieved LastTrainedBinaryClassifierIndex.");

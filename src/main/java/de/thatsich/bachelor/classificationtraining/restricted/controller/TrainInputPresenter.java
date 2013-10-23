@@ -18,16 +18,16 @@ import javafx.util.StringConverter;
 
 import com.google.inject.Inject;
 
+import de.thatsich.bachelor.classificationtraining.api.entities.IBinaryClassification;
 import de.thatsich.bachelor.classificationtraining.api.entities.IBinaryClassifier;
-import de.thatsich.bachelor.classificationtraining.api.entities.TrainedBinaryClassifier;
+import de.thatsich.bachelor.classificationtraining.restricted.application.guice.TrainCommandProvider;
 import de.thatsich.bachelor.classificationtraining.restricted.controller.commands.GetLastBinaryClassifierIndexCommand;
 import de.thatsich.bachelor.classificationtraining.restricted.controller.commands.InitBinaryClassifierListCommand;
 import de.thatsich.bachelor.classificationtraining.restricted.controller.commands.SetLastBinaryClassifierIndexCommand;
 import de.thatsich.bachelor.classificationtraining.restricted.controller.commands.TrainBinaryClassifierCommand;
-import de.thatsich.bachelor.classificationtraining.restricted.models.BinaryClassifiers;
-import de.thatsich.bachelor.classificationtraining.restricted.models.TrainState;
-import de.thatsich.bachelor.classificationtraining.restricted.models.TrainedBinaryClassifiers;
-import de.thatsich.bachelor.classificationtraining.restricted.services.TrainCommandService;
+import de.thatsich.bachelor.classificationtraining.restricted.model.state.BinaryClassifications;
+import de.thatsich.bachelor.classificationtraining.restricted.model.state.BinaryClassifiers;
+import de.thatsich.bachelor.classificationtraining.restricted.model.state.TrainState;
 import de.thatsich.bachelor.featureextraction.api.entities.FeatureVectorSet;
 import de.thatsich.bachelor.featureextraction.restricted.models.FeatureVectorSets;
 import de.thatsich.core.javafx.AFXMLPresenter;
@@ -42,9 +42,9 @@ public class TrainInputPresenter extends AFXMLPresenter {
 	@FXML Button nodeButtonResetBinaryClassifierList;
 	
 	// Injects
-	@Inject private TrainCommandService commander;
+	@Inject private TrainCommandProvider commander;
 	@Inject private BinaryClassifiers binaryClassifiers;
-	@Inject private TrainedBinaryClassifiers trainedBinaryClassifiers;
+	@Inject private BinaryClassifications trainedBinaryClassifiers;
 	@Inject private TrainState trainState;
 	@Inject private FeatureVectorSets featureVectors;
 
@@ -189,7 +189,7 @@ public class TrainInputPresenter extends AFXMLPresenter {
 	 */
 	private class TrainBinaryClassifierSucceededHandler implements EventHandler<WorkerStateEvent> {
 		@Override public void handle(WorkerStateEvent event) {
-			final TrainedBinaryClassifier classifier = (TrainedBinaryClassifier) event.getSource().getValue();
+			final IBinaryClassification classifier = (IBinaryClassification) event.getSource().getValue();
 			
 			trainedBinaryClassifiers.getTrainedBinaryClassifierListProperty().add(classifier);
 			log.info("Added TrainedBinaryClassifier to Database.");
