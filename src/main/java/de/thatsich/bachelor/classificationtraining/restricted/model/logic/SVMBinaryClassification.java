@@ -15,8 +15,14 @@ public class SVMBinaryClassification extends ABinaryClassification {
 	private final ObjectProperty<CvSVM> svm = new SimpleObjectProperty<>();
 	
 	@Inject
-	public SVMBinaryClassification(@Assisted CvSVM svm) {
-		this.svm.set(svm);
+	public SVMBinaryClassification(@Assisted CvSVM svm, @Assisted BinaryClassifierConfiguration config) {
+		super(config);
+		if (svm == null) {
+			this.svm.set(new CvSVM());
+		}
+		else {
+			this.svm.set(svm);
+		}
 	}
 	
 	@Override

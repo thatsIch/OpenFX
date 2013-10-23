@@ -18,6 +18,7 @@ import com.google.inject.assistedinject.Assisted;
 
 import de.thatsich.bachelor.classificationtraining.api.entities.IBinaryClassification;
 import de.thatsich.bachelor.classificationtraining.api.entities.IBinaryClassifier;
+import de.thatsich.bachelor.classificationtraining.restricted.model.logic.BinaryClassifierConfiguration;
 import de.thatsich.bachelor.featureextraction.api.entities.FeatureVector;
 import de.thatsich.bachelor.featureextraction.api.entities.FeatureVectorSet;
 import de.thatsich.core.javafx.Command;
@@ -81,7 +82,8 @@ public class TrainBinaryClassifierCommand extends Command<IBinaryClassification>
 				}
 				log.info("Prepared Negative and Positive DataSets.");
 				
-				final IBinaryClassification classification = bc.train(positive, negative);
+				final BinaryClassifierConfiguration config = new BinaryClassifierConfiguration(errorClassName, featureExtractorName, frameSize, featureExtractorName, id);
+				final IBinaryClassification classification = bc.train(positive, negative, config);
 				log.info("Trained Binary Classifier.");
 				
 				StringBuffer buffer = new StringBuffer();

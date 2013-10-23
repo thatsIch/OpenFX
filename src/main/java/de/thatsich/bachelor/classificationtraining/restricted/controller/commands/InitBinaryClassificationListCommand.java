@@ -17,15 +17,13 @@ import com.google.inject.assistedinject.Assisted;
 import com.sun.org.apache.xpath.internal.functions.WrongNumberArgsException;
 
 import de.thatsich.bachelor.classificationtraining.api.entities.IBinaryClassification;
-import de.thatsich.bachelor.classificationtraining.api.entities.IBinaryClassifier;
 import de.thatsich.bachelor.classificationtraining.restricted.application.guice.BinaryClassificationProvider;
-import de.thatsich.bachelor.classificationtraining.restricted.model.state.BinaryClassifiers;
+import de.thatsich.bachelor.classificationtraining.restricted.model.logic.BinaryClassifierConfiguration;
 import de.thatsich.core.javafx.Command;
 
 public class InitBinaryClassificationListCommand extends Command<List<IBinaryClassification>> {
 	
 	@Inject private BinaryClassificationProvider provider;
-	@Inject private BinaryClassifiers binaryClassifiers;
 	
 	private final ObjectProperty<Path> binaryClassificationFolderPath = new SimpleObjectProperty<Path>();
 	
@@ -57,28 +55,39 @@ public class InitBinaryClassificationListCommand extends Command<List<IBinaryCla
 						final String fileName = child.getFileName().toString();
 						final String[] fileNameSplit = fileName.split("_");
 						if (fileNameSplit.length != 5) throw new WrongNumberArgsException("Expected 5 encoded information but found " + fileNameSplit.length);
+						log.info("Split FileNmae.");
 						
-						final String classifierName = fileNameSplit[0];
+						final String classificationName = fileNameSplit[0];
 						final String extractorName = fileNameSplit[1];
 						final int frameSize = Integer.parseInt(fileNameSplit[2]);
 						final String errorName = fileNameSplit[3];
 						final String id = fileNameSplit[4];
+						log.info("Prepared SubInformation.");
 						
-						for (IBinaryClassifier classifier : binaryClassifiers.getBinaryClassifierListProperty()) {
-							if (classifierName.equals(classifier.getName())) {
-								
+						final BinaryClassifierConfiguration config = new BinaryClassifierConfiguration(classificationName, extractorName, frameSize, errorName, id);
+						IBinaryClassification classification;
+						switch(classificationName) {
+							case "RandomForestBinaryClassification":
+								classification = provider.createRandomForestBinaryClassification(null, config);
 								break;
-							}
+							case "SVMBinaryClassification":
+								classification = provider.createSVMBinaryClassification(null, config);
+								break;
+							default:
+								throw new IllegalStateException("Unknown Classification");
 						}
+						log.info("Resolved BinaryClassification.");
 						
-//						provider.c
-//						featureVectorSetList.add(new FeatureVectorSet(child, className, extractorName, frameSize, id, featureVectorList));
+						classification.load(fileName);
+						log.info("Loaded YAML into BinaryClassification.");
+
+						binaryClassificationList.add(classification);
 						log.info("Added " + child + " with Attribute " + Files.probeContentType(child));
 					}
 				} catch (IOException | DirectoryIteratorException e) {
 					e.printStackTrace();
 				}
-				log.info("All FeatureVectors added.");
+				log.info("All BinaryClassification added.");
 				
 				return binaryClassificationList;
 			}

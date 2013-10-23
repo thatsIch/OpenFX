@@ -12,11 +12,18 @@ import com.google.inject.assistedinject.Assisted;
 
 public class RandomForestBinaryClassification extends ABinaryClassification {
 
-	private final ObjectProperty<CvRTrees> trees = new SimpleObjectProperty<>();
+	private final ObjectProperty<CvRTrees> trees = new SimpleObjectProperty<>(new CvRTrees());
 	
 	@Inject
-	public RandomForestBinaryClassification(@Assisted CvRTrees trees) {
-		this.trees.set(trees);
+	public RandomForestBinaryClassification(@Assisted CvRTrees trees, @Assisted BinaryClassifierConfiguration config) {
+		super(config);
+		
+		if (trees == null) {
+			this.trees.set(new CvRTrees());
+		}
+		else {
+			this.trees.set(trees);
+		}
 	}
 	
 	@Override

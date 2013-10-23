@@ -13,6 +13,6 @@ public class BinaryClassifications {
 	private final ObjectProperty<IBinaryClassification> selectedTrainedBinaryClassifier = new SimpleObjectProperty<IBinaryClassification>();
 		
 	// Property Getter
-	public ListProperty<IBinaryClassification> getTrainedBinaryClassifierListProperty() { return this.trainedBinaryClassifierList; }
-	public ObjectProperty<IBinaryClassification> getSelectedTrainedBinaryClassifierProperty() { return this.selectedTrainedBinaryClassifier; }
+	public ListProperty<IBinaryClassification> getBinaryClassificationListProperty() { return this.trainedBinaryClassifierList; }
+	public ObjectProperty<IBinaryClassification> getSelectedBinaryClassificationProperty() { return this.selectedTrainedBinaryClassifier; }
 }

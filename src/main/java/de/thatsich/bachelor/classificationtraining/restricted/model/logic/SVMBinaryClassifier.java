@@ -5,12 +5,17 @@ import org.opencv.core.Mat;
 import org.opencv.core.MatOfFloat;
 import org.opencv.ml.CvSVM;
 
+import com.google.inject.Inject;
+
 import de.thatsich.bachelor.classificationtraining.api.entities.IBinaryClassification;
+import de.thatsich.bachelor.classificationtraining.restricted.application.guice.BinaryClassificationProvider;
 
 public class SVMBinaryClassifier extends ABinaryClassifier {
 
+	@Inject private BinaryClassificationProvider provider;
+	
 	@Override
-	public IBinaryClassification train(MatOfFloat positiveTrainData, MatOfFloat negativeTrainData) {
+	public IBinaryClassification train(MatOfFloat positiveTrainData, MatOfFloat negativeTrainData, BinaryClassifierConfiguration config) {
 		final CvSVM svm = new CvSVM();
 		
 		// Labels
@@ -32,6 +37,6 @@ public class SVMBinaryClassifier extends ABinaryClassifier {
 		
 		svm.train(trainData, trainLabels);
 
-		return null;
+		return this.provider.createSVMBinaryClassification(svm, config);
 	}
 }

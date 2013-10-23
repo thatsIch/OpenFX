@@ -81,7 +81,7 @@ public class TrainListPresenter extends AFXMLPresenter {
 		@Override public void handle(WorkerStateEvent event) {
 			final List<IBinaryClassification> trainedBinaryClassifierList = (List<IBinaryClassification>) event.getSource().getValue();
 			
-			trainedBinaryClassifiers.getTrainedBinaryClassifierListProperty().addAll(trainedBinaryClassifierList);
+			trainedBinaryClassifiers.getBinaryClassificationListProperty().addAll(trainedBinaryClassifierList);
 			log.info("Added TrainedBinaryClassifierList to Database.");
 		}
 	}

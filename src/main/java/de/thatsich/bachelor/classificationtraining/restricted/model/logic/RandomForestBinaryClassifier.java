@@ -17,7 +17,7 @@ public class RandomForestBinaryClassifier extends ABinaryClassifier {
 	@Inject private BinaryClassificationProvider provider;
 
 	@Override
-	public IBinaryClassification train(MatOfFloat positiveTrainData, MatOfFloat negativeTrainData) {
+	public IBinaryClassification train(MatOfFloat positiveTrainData, MatOfFloat negativeTrainData, BinaryClassifierConfiguration config) {
 
 		final CvRTrees trees = new CvRTrees();
 		final CvRTParams params = new CvRTParams();
@@ -52,6 +52,6 @@ public class RandomForestBinaryClassifier extends ABinaryClassifier {
 //		Mat varType = Mat.zeros(trainData.cols(), 1, CvType.CV_8UC1);
 		trees.train(trainData, 1, trainLabels, new Mat(), new Mat(), new Mat(), new Mat(), params);
 		
-		return this.provider.createRandomForestBinaryClassification(trees);
+		return this.provider.createRandomForestBinaryClassification(trees, config);
 	}
 }
