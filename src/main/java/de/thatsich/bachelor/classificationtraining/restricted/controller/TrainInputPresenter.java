@@ -44,7 +44,7 @@ public class TrainInputPresenter extends AFXMLPresenter {
 	// Injects
 	@Inject private TrainCommandProvider commander;
 	@Inject private BinaryClassifiers binaryClassifiers;
-	@Inject private BinaryClassifications trainedBinaryClassifiers;
+	@Inject private BinaryClassifications binaryClassifications;
 	@Inject private TrainState trainState;
 	@Inject private FeatureVectorSets featureVectors;
 
@@ -149,6 +149,8 @@ public class TrainInputPresenter extends AFXMLPresenter {
 	
 	private void bindButtons() {
 		this.nodeButtonTrainBinaryClassifier.disableProperty().bind(this.featureVectors.getSelectedFeatureVectorSetProperty().isNull());
+		this.nodeButtonRemoveBinaryClassifier.disableProperty().bind(this.binaryClassifications.getSelectedBinaryClassificationProperty().isNull());
+		this.nodeButtonResetBinaryClassifierList.disableProperty().bind(this.binaryClassifications.getBinaryClassificationListProperty().emptyProperty());
 	}
 	
 	// ================================================== 
@@ -191,7 +193,7 @@ public class TrainInputPresenter extends AFXMLPresenter {
 		@Override public void handle(WorkerStateEvent event) {
 			final IBinaryClassification classifier = (IBinaryClassification) event.getSource().getValue();
 			
-			trainedBinaryClassifiers.getTrainedBinaryClassifierListProperty().add(classifier);
+			binaryClassifications.getBinaryClassificationListProperty().add(classifier);
 			log.info("Added TrainedBinaryClassifier to Database.");
 		}
 	}
