@@ -96,8 +96,6 @@ public class InitBinaryClassificationListCommand extends Command<List<IBinaryCla
 				}
 				log.info("All BinaryClassification added.");
 				
-				log.info("==============================" + binaryClassificationList.size());
-				
 				return binaryClassificationList;
 			}
 		};
