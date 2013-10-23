@@ -46,7 +46,6 @@ public class TrainBinaryClassifierCommand extends Command<IBinaryClassification>
 				final FeatureVectorSet selected = selectedFeatureVector.get();
 				final List<FeatureVectorSet> list = featureVectorList.get();
 				
-				final String binaryClassifierName = bc.getName();
 				final String featureExtractorName = selected.getExtractorNameProperty().get();
 				final int frameSize = selected.getFrameSizeProperty().get();
 				final String errorClassName = selected.getClassNameProperty().get();
@@ -82,11 +81,11 @@ public class TrainBinaryClassifierCommand extends Command<IBinaryClassification>
 				}
 				log.info("Prepared Negative and Positive DataSets.");
 				
-				IBinaryClassification classification = bc.train(positive, negative);
+				final IBinaryClassification classification = bc.train(positive, negative);
 				log.info("Trained Binary Classifier.");
 				
 				StringBuffer buffer = new StringBuffer();
-				buffer.append(binaryClassifierName + "_");
+				buffer.append(classification.getName() + "_");
 				buffer.append(featureExtractorName + "_");
 				buffer.append(frameSize + "_");
 				buffer.append(errorClassName + "_");
