@@ -1,6 +1,9 @@
 package de.thatsich.bachelor.classificationtraining.restricted.model.logic;
 
+import java.nio.file.Path;
+
 import javafx.beans.property.ReadOnlyIntegerProperty;
+import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringProperty;
 
@@ -25,6 +28,7 @@ public abstract class ABinaryClassification implements IBinaryClassification {
 	@Override public String getName() { return this.getClass().getSimpleName(); }
 	
 	// Property Getter
+	@Override public ReadOnlyObjectProperty<Path> getFilePathProperty() { return this.config.get().getFilePath(); }
 	@Override public ReadOnlyStringProperty getClassificationNameProperty() { return this.config.get().getClassificationName(); }
 	@Override public ReadOnlyStringProperty getExtractorNameProperty() { return this.config.get().getExtractorName(); }
 	@Override public ReadOnlyIntegerProperty getFrameSizeProperty() { return this.config.get().getFrameSize(); }

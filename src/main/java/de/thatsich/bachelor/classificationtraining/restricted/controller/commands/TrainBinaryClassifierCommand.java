@@ -47,6 +47,7 @@ public class TrainBinaryClassifierCommand extends Command<IBinaryClassification>
 				final FeatureVectorSet selected = selectedFeatureVector.get();
 				final List<FeatureVectorSet> list = featureVectorList.get();
 				
+				final String binaryClassifierName = bc.getName();
 				final String featureExtractorName = selected.getExtractorNameProperty().get();
 				final int frameSize = selected.getFrameSizeProperty().get();
 				final String errorClassName = selected.getClassNameProperty().get();
@@ -82,19 +83,23 @@ public class TrainBinaryClassifierCommand extends Command<IBinaryClassification>
 				}
 				log.info("Prepared Negative and Positive DataSets.");
 				
-				final BinaryClassifierConfiguration config = new BinaryClassifierConfiguration(errorClassName, featureExtractorName, frameSize, featureExtractorName, id);
-				final IBinaryClassification classification = bc.train(positive, negative, config);
-				log.info("Trained Binary Classifier.");
-				
 				StringBuffer buffer = new StringBuffer();
-				buffer.append(classification.getName() + "_");
+				buffer.append(binaryClassifierName + "_");
 				buffer.append(featureExtractorName + "_");
 				buffer.append(frameSize + "_");
 				buffer.append(errorClassName + "_");
 				buffer.append(id + ".yaml");
-				
 				final Path filePath = binaryClassifierFolderPath.get().resolve(buffer.toString());
+				log.info("Created FilePath");
+				
+				final BinaryClassifierConfiguration config = new BinaryClassifierConfiguration(filePath, binaryClassifierName, featureExtractorName, frameSize, errorClassName, id);
+				log.info("Created BinaryClassifierConfiguration.");
+				
+				final IBinaryClassification classification = bc.train(positive, negative, config);
+				log.info("Trained Binary Classifier.");
+				
 				classification.save(filePath.toString());
+				log.info("Saved File to FileSystem.");
 				
 				return classification;
 			}

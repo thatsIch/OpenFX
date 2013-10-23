@@ -2,13 +2,13 @@ package de.thatsich.bachelor.classificationtraining.restricted.controller;
 
 import java.net.URL;
 import java.nio.file.Path;
-import java.security.InvalidParameterException;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -23,6 +23,7 @@ import de.thatsich.bachelor.classificationtraining.api.entities.IBinaryClassifie
 import de.thatsich.bachelor.classificationtraining.restricted.application.guice.TrainCommandProvider;
 import de.thatsich.bachelor.classificationtraining.restricted.controller.commands.GetLastBinaryClassifierIndexCommand;
 import de.thatsich.bachelor.classificationtraining.restricted.controller.commands.InitBinaryClassifierListCommand;
+import de.thatsich.bachelor.classificationtraining.restricted.controller.commands.RemoveBinaryClassificationCommand;
 import de.thatsich.bachelor.classificationtraining.restricted.controller.commands.SetLastBinaryClassifierIndexCommand;
 import de.thatsich.bachelor.classificationtraining.restricted.controller.commands.TrainBinaryClassifierCommand;
 import de.thatsich.bachelor.classificationtraining.restricted.model.state.BinaryClassifications;
@@ -161,11 +162,7 @@ public class TrainInputPresenter extends AFXMLPresenter {
 		final IBinaryClassifier selectedBinaryClassfier = this.binaryClassifiers.getSelectedBinaryClassifierProperty().get();
 		final List<FeatureVectorSet> featureVectorSetList = this.featureVectors.getFeatureVectorSetListProperty().get();
 		final FeatureVectorSet selectedFeatureVectorSet = this.featureVectors.getSelectedFeatureVectorSetProperty().get();
-		
-		if (selectedFeatureVectorSet == null) throw new InvalidParameterException("SelectedFeatureVector is null.");
-		if (featureVectorSetList == null) throw new InvalidParameterException("FeatureVectorList is null.");
-		if (selectedBinaryClassfier == null) throw new InvalidParameterException("SelectedBinaryClassifier is null.");
-		
+
 		final TrainBinaryClassifierSucceededHandler handler = new TrainBinaryClassifierSucceededHandler();
 		final TrainBinaryClassifierCommand command = this.commander.createTrainBinaryClassifierCommand(binaryClassifierFolderPath, selectedBinaryClassfier, selectedFeatureVectorSet, featureVectorSetList);
 		command.setOnSucceeded(handler);
@@ -173,7 +170,13 @@ public class TrainInputPresenter extends AFXMLPresenter {
 	}
 	
 	@FXML private void onRemoveBinaryClassifierAction() {
+		final IBinaryClassification selectedBinaryClassification = this.binaryClassifications.getSelectedBinaryClassificationProperty().get();
 		
+		final RemoveBinaryClassificationSucceededHandler handler = new RemoveBinaryClassificationSucceededHandler();
+		final RemoveBinaryClassificationCommand command = this.commander.createRemoveBinaryClassificationCommand(selectedBinaryClassification);
+		command.setOnSucceeded(handler);
+		command.start();
+		this.log.info("Commanded BinaryClassification Removal.");
 	}
 	
 	@FXML private void onResetBinaryClassifierListAction() {
@@ -194,7 +197,36 @@ public class TrainInputPresenter extends AFXMLPresenter {
 			final IBinaryClassification classifier = (IBinaryClassification) event.getSource().getValue();
 			
 			binaryClassifications.getBinaryClassificationListProperty().add(classifier);
-			log.info("Added TrainedBinaryClassifier to Database.");
+			log.info("Added BinaryClassification to Database.");
+			
+			binaryClassifications.getSelectedBinaryClassificationProperty().set(classifier);
+			log.info("Select BinaryClassifcation.");
+		}
+	}
+	
+
+	/**
+	 * Handler for what should happen if the Command was successfull 
+	 * for deleting the error
+	 * 
+	 * @author Minh
+	 */
+	private class RemoveBinaryClassificationSucceededHandler implements EventHandler<WorkerStateEvent> {
+		@Override public void handle(WorkerStateEvent event) {
+			final IBinaryClassification deletion = (IBinaryClassification) event.getSource().getValue();
+			final ObservableList<IBinaryClassification> binaryClassificationList = binaryClassifications.getBinaryClassificationListProperty();
+			
+			binaryClassificationList.remove(deletion);
+			log.info("Removed BinaryClassification from Database.");
+			
+			if (binaryClassificationList.size() > 0) {
+				final IBinaryClassification first = binaryClassificationList.get(0);
+				binaryClassifications.getSelectedBinaryClassificationProperty().set(first);
+				log.info("Reset Selection to first BinaryClassifcation.");
+			} else {
+				binaryClassifications.getSelectedBinaryClassificationProperty().set(null);
+				log.info("Reset Selection to null.");
+			}
 		}
 	}
 }

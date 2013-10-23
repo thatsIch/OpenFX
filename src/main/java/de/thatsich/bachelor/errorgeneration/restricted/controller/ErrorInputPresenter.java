@@ -211,11 +211,6 @@ public class ErrorInputPresenter extends AFXMLPresenter {
 		final ErrorEntry entry = this.errorEntryList.getSelectedErrorEntryProperty().get();
 		this.log.info("Fetched selected ErrorEntry.");
 		
-		if (entry == null) {
-			this.log.info("Selection was empty. Deleting nothing.");
-			return;
-		}
-		
 		final DeleteSucceededHandler handler = new DeleteSucceededHandler();
 		final DeleteErrorEntryCommand command = this.commander.createDeleteErrorEntryCommand(entry);
 		command.setOnSucceeded(handler);

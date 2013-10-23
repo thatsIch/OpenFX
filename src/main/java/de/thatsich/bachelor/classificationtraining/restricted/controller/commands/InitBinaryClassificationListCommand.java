@@ -67,13 +67,13 @@ public class InitBinaryClassificationListCommand extends Command<List<IBinaryCla
 						final String id = fileNameSplit[4];
 						log.info("Prepared SubInformation.");
 						
-						final BinaryClassifierConfiguration config = new BinaryClassifierConfiguration(classificationName, extractorName, frameSize, errorName, id);
+						final BinaryClassifierConfiguration config = new BinaryClassifierConfiguration(child, classificationName, extractorName, frameSize, errorName, id);
 						IBinaryClassification classification;
 						switch(classificationName) {
-							case "RandomForestBinaryClassification":
+							case "RandomForestBinaryClassifier":
 								classification = provider.createRandomForestBinaryClassification(new CvRTrees(), config);
 								break;
-							case "SVMBinaryClassification":
+							case "SVMBinaryClassifier":
 								classification = provider.createSVMBinaryClassification(new CvSVM(), config);
 								break;
 							default:
