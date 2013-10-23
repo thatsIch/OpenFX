@@ -49,7 +49,7 @@ public class TrainListPresenter extends AFXMLPresenter {
 	@Override public void initialize(URL location, ResourceBundle resource) {
 		this.bindTableView();
 		
-		this.initTrainedBinaryClassifierList();
+		this.initBinaryClassificationList();
 	}
 	
 	private void bindTableView() {
@@ -92,7 +92,7 @@ public class TrainListPresenter extends AFXMLPresenter {
 		this.nodeTableColumnID.setCellValueFactory(new PropertyValueFactory<IBinaryClassification, String>("getId"));
 	}
 	
-	private void initTrainedBinaryClassifierList() {
+	private void initBinaryClassificationList() {
 		final Path folderPath = Paths.get("io/binaryclassifier");
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(1);
 		
@@ -156,14 +156,8 @@ public class TrainListPresenter extends AFXMLPresenter {
 			log.info("Retrieved LastTrainedBinaryClassifierIndex.");
 			
 			if (commandResult != null && commandResult >= 0) {
-//				nodeTreeViewFeatureVectorSetList.getSelectionModel().select(commandResult);
-//				log.info("Set LastFeatureVectorIndex in TreeView.");
-//			} else {
-//				log.info("commandResult != null: " + (commandResult != null));
-//				log.info("commandResult >= 0: " + (commandResult >= 0));
-//				log.info("size > commandResult: " + (nodeTreeViewFeatureVectorSetList.getChildrenUnmodifiable().size() > commandResult));
-//				log.info("with size " + nodeTreeViewFeatureVectorSetList.getChildrenUnmodifiable().size());
-//				log.info("with commandResult " + commandResult);
+				nodeTableViewBinaryClassificationList.getSelectionModel().select(commandResult);
+				log.info("Set LastBinaryClassificationIndex in TableView.");
 			}
 		}
 	}

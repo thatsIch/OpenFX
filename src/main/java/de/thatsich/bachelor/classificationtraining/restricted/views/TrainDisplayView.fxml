@@ -18,7 +18,7 @@
     <Label font="$x1" text="FrameSize" GridPane.columnIndex="0" GridPane.rowIndex="2" />
     <Label font="$x1" text="Error" GridPane.columnIndex="0" GridPane.rowIndex="3" />
     <Label font="$x1" text="ID" GridPane.columnIndex="0" GridPane.rowIndex="4" />
-    <Label fx:id="nodeLabelClassifierName" text="" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+    <Label fx:id="nodeLabelClassificationName" text="" GridPane.columnIndex="1" GridPane.rowIndex="0" />
     <Label fx:id="nodeLabelExtractorName" text="" GridPane.columnIndex="1" GridPane.rowIndex="1" />
     <Label fx:id="nodeLabelFrameSize" text="" GridPane.columnIndex="1" GridPane.rowIndex="2" />
     <Label fx:id="nodeLabelErrorName" text="" GridPane.columnIndex="1" GridPane.rowIndex="3" />
