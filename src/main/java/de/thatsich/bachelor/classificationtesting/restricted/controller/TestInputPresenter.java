@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 
 import com.google.inject.Inject;
 
@@ -25,6 +26,9 @@ import de.thatsich.core.javafx.AFXMLPresenter;
 
 public class TestInputPresenter extends AFXMLPresenter {
 
+	// Nodes
+	@FXML private Button nodeButtonTestBinaryClassification;
+	
 	// Injects
 	@Inject private ImageEntries imageEntries;
 	@Inject private ErrorGenerators errorGenerators;
@@ -39,12 +43,15 @@ public class TestInputPresenter extends AFXMLPresenter {
 	// ==================================================
 	@Override
 	public void initialize(URL location, ResourceBundle resource) {
-		
+		this.bindButtons();
 	}
 
 	// ================================================== 
 	// Bindings Implementation 
 	// ==================================================
+	private void bindButtons() {
+		this.nodeButtonTestBinaryClassification.disableProperty().bind(this.imageEntries.getSelectedImageEntryProperty().isNull().or(this.binaryClassifications.getSelectedBinaryClassificationProperty().isNull()));
+	}
 	
 	// ================================================== 
 	// GUI Implementation 
@@ -69,9 +76,7 @@ public class TestInputPresenter extends AFXMLPresenter {
 		final TestBinaryClassificationCommand command = this.provider.createTestBinaryClassificationCommand(imageEntry, frameSize, errorGenerator, featureExtractor, binaryClassification);
 		command.setOnSucceeded(handler);
 		command.start();
-//		binaryClassification.
-		// muss 
-		this.log.info("");
+		this.log.info("Initiated testing the binary classification.");
 	}
 	
 	private IErrorGenerator getErrorGenerator(String errorGeneratorName) {
