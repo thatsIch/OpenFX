@@ -20,9 +20,9 @@ import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
 import de.thatsich.bachelor.errorgeneration.api.entities.ErrorEntry;
+import de.thatsich.bachelor.featureextraction.api.core.IFeatureExtractor;
 import de.thatsich.bachelor.featureextraction.api.entities.FeatureVector;
 import de.thatsich.bachelor.featureextraction.api.entities.FeatureVectorSet;
-import de.thatsich.bachelor.featureextraction.api.entities.IFeatureExtractor;
 import de.thatsich.bachelor.featureextraction.restricted.services.CSVService;
 import de.thatsich.core.javafx.Command;
 import de.thatsich.core.opencv.Images;

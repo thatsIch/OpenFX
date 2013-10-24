@@ -1,4 +1,4 @@
-package de.thatsich.bachelor.featureextraction.api.entities;
+package de.thatsich.bachelor.featureextraction.api.core;
 
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfFloat;

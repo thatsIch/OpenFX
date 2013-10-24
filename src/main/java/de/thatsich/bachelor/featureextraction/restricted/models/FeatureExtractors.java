@@ -5,7 +5,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
-import de.thatsich.bachelor.featureextraction.api.entities.IFeatureExtractor;
+import de.thatsich.bachelor.featureextraction.api.core.IFeatureExtractor;
 
 public class FeatureExtractors {
 

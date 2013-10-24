@@ -1,5 +1,6 @@
 package de.thatsich.bachelor.featureextraction.api.entities;
 
+import de.thatsich.bachelor.featureextraction.api.core.IFeatureExtractor;
 import de.thatsich.core.Log;
 
 

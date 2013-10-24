@@ -21,8 +21,8 @@ import com.google.inject.Inject;
 
 import de.thatsich.bachelor.errorgeneration.api.entities.ErrorEntry;
 import de.thatsich.bachelor.errorgeneration.restricted.models.ErrorEntries;
+import de.thatsich.bachelor.featureextraction.api.core.IFeatureExtractor;
 import de.thatsich.bachelor.featureextraction.api.entities.FeatureVectorSet;
-import de.thatsich.bachelor.featureextraction.api.entities.IFeatureExtractor;
 import de.thatsich.bachelor.featureextraction.restricted.controller.commands.DeleteFeatureVectorSetCommand;
 import de.thatsich.bachelor.featureextraction.restricted.controller.commands.ExtractFeatureVectorSetCommand;
 import de.thatsich.bachelor.featureextraction.restricted.controller.commands.GetLastFeatureExtractorIndexCommand;

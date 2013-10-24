@@ -7,10 +7,10 @@ import javafx.concurrent.Task;
 
 import com.google.inject.Inject;
 
+import de.thatsich.bachelor.featureextraction.api.core.IFeatureExtractor;
 import de.thatsich.bachelor.featureextraction.api.entities.Gradient;
 import de.thatsich.bachelor.featureextraction.api.entities.GrayLevelCooccurenceHistogram;
 import de.thatsich.bachelor.featureextraction.api.entities.HuMoments;
-import de.thatsich.bachelor.featureextraction.api.entities.IFeatureExtractor;
 import de.thatsich.bachelor.featureextraction.api.entities.LocalBinaryPatternHistogram;
 import de.thatsich.bachelor.featureextraction.api.entities.Mean;
 import de.thatsich.bachelor.featureextraction.api.entities.Variance;
