@@ -49,7 +49,6 @@ public class RandomForestBinaryClassifier extends ABinaryClassifier {
 		trainData.convertTo(trainData, CvType.CV_32FC1);
 		this.log.info("Data with Size (" + trainData.cols() + ", " + trainData.rows() + ") is " + trainData.type());
 		
-//		Mat varType = Mat.zeros(trainData.cols(), 1, CvType.CV_8UC1);
 		trees.train(trainData, 1, trainLabels, new Mat(), new Mat(), new Mat(), new Mat(), params);
 		
 		return this.provider.createRandomForestBinaryClassification(trees, config);

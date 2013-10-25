@@ -1,6 +1,7 @@
 package de.thatsich.bachelor.classificationtesting.restricted.controller;
 
 import java.net.URL;
+import java.nio.file.Path;
 import java.util.ResourceBundle;
 
 import javafx.concurrent.WorkerStateEvent;
@@ -14,6 +15,7 @@ import de.thatsich.bachelor.classificationtesting.api.entities.BinaryPrediction;
 import de.thatsich.bachelor.classificationtesting.restricted.app.guice.TestCommandProvider;
 import de.thatsich.bachelor.classificationtesting.restricted.controller.commands.TestBinaryClassificationCommand;
 import de.thatsich.bachelor.classificationtesting.restricted.models.state.BinaryPredictions;
+import de.thatsich.bachelor.classificationtesting.restricted.models.state.PredictionState;
 import de.thatsich.bachelor.classificationtraining.api.entities.IBinaryClassification;
 import de.thatsich.bachelor.classificationtraining.restricted.model.state.BinaryClassifications;
 import de.thatsich.bachelor.errorgeneration.api.entities.IErrorGenerator;
@@ -34,6 +36,7 @@ public class TestInputPresenter extends AFXMLPresenter {
 	@Inject private ErrorGenerators errorGenerators;
 	@Inject private FeatureExtractors featureExtractors;
 	@Inject private BinaryClassifications binaryClassifications;
+	@Inject private PredictionState predictionState;
 	@Inject private BinaryPredictions binaryPredictions;
 	
 	@Inject private TestCommandProvider provider;
@@ -61,6 +64,7 @@ public class TestInputPresenter extends AFXMLPresenter {
 	 * 
 	 */
 	@FXML private void onTestBinaryClassifierAction() {
+		final Path predictionFolderPath = this.predictionState.getPredictionFolderPathProperty().get();
 		final IBinaryClassification binaryClassification = this.binaryClassifications.getSelectedBinaryClassificationProperty().get();
 		final String errorGeneratorName = binaryClassification.getErrorNameProperty().get();
 		final String featureExtractorName = binaryClassification.getExtractorNameProperty().get();
@@ -73,7 +77,7 @@ public class TestInputPresenter extends AFXMLPresenter {
 		this.log.info("Prepared all Tools.");
 		
 		final TestBinaryClassificationSucceededHandler handler = new TestBinaryClassificationSucceededHandler(); 
-		final TestBinaryClassificationCommand command = this.provider.createTestBinaryClassificationCommand(imageEntry, frameSize, errorGenerator, featureExtractor, binaryClassification);
+		final TestBinaryClassificationCommand command = this.provider.createTestBinaryClassificationCommand(predictionFolderPath, imageEntry, frameSize, errorGenerator, featureExtractor, binaryClassification);
 		command.setOnSucceeded(handler);
 		command.start();
 		this.log.info("Initiated testing the binary classification.");

@@ -1,8 +1,9 @@
 package de.thatsich.bachelor.classificationtesting.restricted.controller.commands;
 
+import java.nio.file.Path;
 import java.security.InvalidParameterException;
+import java.util.UUID;
 
-import javafx.application.Platform;
 import javafx.concurrent.Task;
 
 import org.opencv.core.Core;
@@ -16,6 +17,7 @@ import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
 import de.thatsich.bachelor.classificationtesting.api.entities.BinaryPrediction;
+import de.thatsich.bachelor.classificationtesting.restricted.services.BinaryPredictionFileStorageService;
 import de.thatsich.bachelor.classificationtraining.api.entities.IBinaryClassification;
 import de.thatsich.bachelor.errorgeneration.api.entities.IErrorGenerator;
 import de.thatsich.bachelor.featureextraction.api.core.IFeatureExtractor;
@@ -26,19 +28,25 @@ import de.thatsich.core.opencv.Images;
 public class TestBinaryClassificationCommand extends Command<BinaryPrediction> {
 
 	// Properties
+	private final Path predictionFolderPath;
 	private final ImageEntry imageEntry;
 	private final int frameSize;
 	private final IErrorGenerator errorGenerator;
 	private final IFeatureExtractor featureExtractor;
 	private final IBinaryClassification binaryClassification;
 	
+	// Injections
+	@Inject private BinaryPredictionFileStorageService fileStorage;
+	
 	@Inject
 	private TestBinaryClassificationCommand(
+			@Assisted Path predictionFolderPath,
 			@Assisted ImageEntry imageEntry,
 			@Assisted int frameSize,
 			@Assisted IErrorGenerator errorGenerator,
 			@Assisted IFeatureExtractor featureExtractor,
 			@Assisted IBinaryClassification binaryClassification) {
+		this.predictionFolderPath = predictionFolderPath;
 		this.imageEntry = imageEntry;
 		this.frameSize = frameSize;
 		this.errorGenerator = errorGenerator;
@@ -69,35 +77,27 @@ public class TestBinaryClassificationCommand extends Command<BinaryPrediction> {
 				final Mat errorIndicationMat = assembleImage(errorIndicationSplit, onlyError.size());
 				final MatOfFloat[][] featureVectorSplit = getFeatureVectorSplit(withErrorSplit, featureExtractor);
 				final Mat[][] predictionMatSplit = predictError(featureVectorSplit, frameSize, binaryClassification);
-//				final Mat test = onlyErrorSplit[0][0];
-//				final Mat ind = getErrorIndicationMat(test);
-//				log.info("test");
-				try {
-					// yuck wrong thread
-					Platform.runLater(new Runnable() {
-						
-						@Override
-						public void run() {
-							Images.show(assembleImage(withErrorSplit, onlyError.size()));
-							Images.show(assembleImage(onlyErrorSplit, onlyError.size()));
-							Images.show(assembleImage(errorIndicationSplit, onlyError.size()));
-							Images.show(assembleImage(predictionMatSplit, onlyError.size()));
-							
-						}
-					});
+				final Mat predictionMat = assembleImage(predictionMatSplit, onlyError.size());
+				log.info("Prepared Image Content.");
 				
-				} catch ( Exception e) {
-					e.printStackTrace();
-				}
-//				final MatOfFloat feature = featureExtractor.extractFeature(image);
-				log.info("Create Error");
+				final StringBuffer fileName = new StringBuffer();
+				fileName.append(binaryClassification.getName() + "_");
+				fileName.append(featureExtractor.getName() + "_");
+				fileName.append(frameSize + "_");
+				fileName.append(errorGenerator.getName() + "_");
+				fileName.append(UUID.randomUUID().toString() + ".png");
+				log.info("Prepared Image FileName.");
 				
-				final Mat firstLayer = withError;
-				final Mat secondLayer = errorIndicationMat;
-//				final Mat thirdLayer = 
-//				withoutError.
+				final Path filePath = predictionFolderPath.resolve(fileName.toString());
+				log.info("Resolved FileName.");
 				
-				return null;
+				final BinaryPrediction prediction = new BinaryPrediction(filePath, withError, errorIndicationMat, predictionMat);
+				log.info("Created Binary Prediction.");
+				
+				fileStorage.save(prediction);
+				log.info("Stored Prediction to FileSystem.");
+				
+				return prediction;
 			}
 			
 			
