@@ -6,7 +6,7 @@ import com.google.inject.Scopes;
 import de.thatsich.bachelor.classificationtesting.restricted.models.state.BinaryPredictions;
 import de.thatsich.bachelor.classificationtesting.restricted.models.state.PredictionState;
 import de.thatsich.bachelor.classificationtesting.restricted.services.BinaryPredictionFileStorageService;
-import de.thatsich.bachelor.classificationtesting.restricted.services.TestConfigService;
+import de.thatsich.bachelor.classificationtesting.restricted.services.BinaryPredictionConfigService;
 import de.thatsich.bachelor.classificationtesting.restricted.views.TestDisplayView;
 import de.thatsich.bachelor.classificationtesting.restricted.views.TestInputView;
 import de.thatsich.bachelor.classificationtesting.restricted.views.TestListView;
@@ -49,7 +49,7 @@ public class TestWiringModule extends AbstractModule {
 	
 	private void mapServices() {
 		super.bind(BinaryPredictionFileStorageService.class).in(Scopes.SINGLETON);
-		super.bind(TestConfigService.class).in(Scopes.SINGLETON);
+		super.bind(BinaryPredictionConfigService.class).in(Scopes.SINGLETON);
 	}
 	
 	private void mapModels() {

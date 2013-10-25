@@ -3,7 +3,7 @@ package de.thatsich.bachelor.classificationtesting.api.core;
 import com.google.inject.AbstractModule;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
 
-import de.thatsich.bachelor.classificationtesting.restricted.app.guice.TestCommandProvider;
+import de.thatsich.bachelor.classificationtesting.restricted.app.guice.BinaryPredictionCommandProvider;
 
 public class TestCommandModule extends AbstractModule {
 
@@ -11,7 +11,7 @@ public class TestCommandModule extends AbstractModule {
 	public void configure() {
 		this.install(
 			new FactoryModuleBuilder()
-			.build(TestCommandProvider.class)
+			.build(BinaryPredictionCommandProvider.class)
 		);
 	}
 }

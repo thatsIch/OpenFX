@@ -12,7 +12,7 @@ import javafx.scene.control.Button;
 import com.google.inject.Inject;
 
 import de.thatsich.bachelor.classificationtesting.api.entities.BinaryPrediction;
-import de.thatsich.bachelor.classificationtesting.restricted.app.guice.TestCommandProvider;
+import de.thatsich.bachelor.classificationtesting.restricted.app.guice.BinaryPredictionCommandProvider;
 import de.thatsich.bachelor.classificationtesting.restricted.controller.commands.TestBinaryClassificationCommand;
 import de.thatsich.bachelor.classificationtesting.restricted.models.state.BinaryPredictions;
 import de.thatsich.bachelor.classificationtesting.restricted.models.state.PredictionState;
@@ -39,7 +39,7 @@ public class TestInputPresenter extends AFXMLPresenter {
 	@Inject private PredictionState predictionState;
 	@Inject private BinaryPredictions binaryPredictions;
 	
-	@Inject private TestCommandProvider provider;
+	@Inject private BinaryPredictionCommandProvider provider;
 	
 	// ================================================== 
 	// Initialization Implementation 

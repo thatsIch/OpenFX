@@ -15,7 +15,6 @@ public class TrainConfigService extends AConfiguration {
 	 */
 	private static final String LAST_BINARY_CLASSIFIER_INDEX = "last_binary_classifier_index";
 	private static final String LAST_BINARY_CLASSIFICATION_INDEX = "last_binary_classification_index";
-		
 	
 	/**
 	 * 
