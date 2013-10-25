@@ -18,6 +18,6 @@ public class SVMBinaryClassification extends ABinaryClassification {
 	}
 	
 	@Override public double predict(Mat image) { return this.svm.predict(image); }
-	@Override public void load(String fileName) { this.svm.load(fileName); }
-	@Override public void save(String fileName) { this.svm.save(fileName); }
+	@Override public void load(String fileName) { this.svm.load(fileName); this.log.info("SVM loaded from " + fileName); }
+	@Override public void save(String fileName) { this.svm.save(fileName); this.log.info("SVM saved to " + fileName);}
 }

@@ -81,7 +81,7 @@ public class InitBinaryClassificationListCommand extends Command<List<IBinaryCla
 						}
 						log.info("Resolved BinaryClassification.");
 						
-						classification.load(fileName);
+						classification.load(child.toAbsolutePath().toString());
 						log.info("Loaded YAML into BinaryClassification.");
 
 						binaryClassificationList.add(classification);
