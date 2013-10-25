@@ -22,8 +22,7 @@ import de.thatsich.core.guice.PostInitModule;
 import de.thatsich.core.opencv.OpenCVLoader;
 
 
-// TODO vllt via knopfdruck neue view öffnen mit allen 3 nebeneinander
-// TODO ned Threshold
+// TODO need Threshold
 // TODO fix loading of BinaryClassifier/Classification
 // TODO remove prediction
 // TODO reset prediction
