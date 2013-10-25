@@ -1,4 +1,4 @@
-package de.thatsich.bachelor.classificationtesting.api.core;
+package de.thatsich.bachelor.classificationtesting.restricted.app.guice;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Scopes;
@@ -7,6 +7,7 @@ import de.thatsich.bachelor.classificationtesting.restricted.models.state.Binary
 import de.thatsich.bachelor.classificationtesting.restricted.models.state.PredictionState;
 import de.thatsich.bachelor.classificationtesting.restricted.services.BinaryPredictionFileStorageService;
 import de.thatsich.bachelor.classificationtesting.restricted.services.BinaryPredictionConfigService;
+import de.thatsich.bachelor.classificationtesting.restricted.views.BinaryPredictionSplitChannelView;
 import de.thatsich.bachelor.classificationtesting.restricted.views.TestDisplayView;
 import de.thatsich.bachelor.classificationtesting.restricted.views.TestInputView;
 import de.thatsich.bachelor.classificationtesting.restricted.views.TestListView;
@@ -45,6 +46,7 @@ public class TestWiringModule extends AbstractModule {
 		super.bind(TestDisplayView.class).in(Scopes.SINGLETON);
 		super.bind(TestInputView.class).in(Scopes.SINGLETON);
 		super.bind(TestListView.class).in(Scopes.SINGLETON);
+		super.bind(BinaryPredictionSplitChannelView.class).in(Scopes.SINGLETON);
 	}
 	
 	private void mapServices() {

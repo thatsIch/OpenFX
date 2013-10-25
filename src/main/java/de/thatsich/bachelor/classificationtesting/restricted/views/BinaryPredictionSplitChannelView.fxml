@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.HBox?>
+
+<fx:root type="HBox" fx:id="nodeHBoxRoot" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="de.thatsich.bachelor.classificationtesting.restricted.controller.BinaryPredictionSplitChannelPresenter">
+  <ImageView id="ImageViewInput" fx:id="nodeImageViewWithError" fitHeight="250.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" />
+  <Separator orientation="VERTICAL" prefHeight="200.0" />
+  <ImageView id="ImageViewInput" fx:id="nodeImageViewErrorIndication" fitHeight="250.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" />
+  <Separator orientation="VERTICAL" prefHeight="200.0" />
+  <ImageView id="ImageViewInput" fx:id="nodeImageViewErrorPrediction" fitHeight="250.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" />
+</fx:root>

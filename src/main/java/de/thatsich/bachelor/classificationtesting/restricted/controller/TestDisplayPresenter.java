@@ -5,9 +5,14 @@ import java.util.ResourceBundle;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 import org.opencv.core.Mat;
 
@@ -15,6 +20,7 @@ import com.google.inject.Inject;
 
 import de.thatsich.bachelor.classificationtesting.api.entities.BinaryPrediction;
 import de.thatsich.bachelor.classificationtesting.restricted.models.state.BinaryPredictions;
+import de.thatsich.bachelor.classificationtesting.restricted.views.BinaryPredictionSplitChannelView;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.opencv.Images;
 
@@ -25,6 +31,7 @@ public class TestDisplayPresenter extends AFXMLPresenter {
 	
 	// Injects
 	@Inject private BinaryPredictions binaryPredictions;
+	@Inject private BinaryPredictionSplitChannelView binaryPredictionSplitChannelView;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resource) {
@@ -55,14 +62,20 @@ public class TestDisplayPresenter extends AFXMLPresenter {
 			}
 		});
 	}
-	
-	// TODO mouse handler
+
 	private void initImageViewListener() {
-//		this.nodeImageViewPrediction.addEventHandler(EventType<MouseEvent>, new EventHandler<MouseEvent>() {
-//
-//			@Override
-//			public void handle(MouseEvent arg0) {
-//			}
-//		});
+		this.nodeImageViewPrediction.setCursor(Cursor.HAND);
+		
+		final Stage stage = new Stage();
+		final Scene scene = new Scene(binaryPredictionSplitChannelView.getRoot());
+		stage.setScene(scene);
+		
+		this.nodeImageViewPrediction.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				stage.show();
+			}
+		});
+
 	}
 }

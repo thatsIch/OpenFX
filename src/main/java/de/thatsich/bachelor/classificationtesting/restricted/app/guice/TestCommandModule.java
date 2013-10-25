@@ -1,9 +1,7 @@
-package de.thatsich.bachelor.classificationtesting.api.core;
+package de.thatsich.bachelor.classificationtesting.restricted.app.guice;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
-
-import de.thatsich.bachelor.classificationtesting.restricted.app.guice.BinaryPredictionCommandProvider;
 
 public class TestCommandModule extends AbstractModule {
 

@@ -3,7 +3,7 @@ package de.thatsich.bachelor.gridoverview.api.core;
 import com.google.inject.AbstractModule;
 import com.google.inject.Scopes;
 
-import de.thatsich.bachelor.classificationtesting.api.core.TestWiringModule;
+import de.thatsich.bachelor.classificationtesting.restricted.app.guice.TestWiringModule;
 import de.thatsich.bachelor.classificationtraining.api.core.TrainWiringModule;
 import de.thatsich.bachelor.errorgeneration.api.core.ErrorWiringModule;
 import de.thatsich.bachelor.featureextraction.api.core.FeatureWiringModule;
