@@ -5,6 +5,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * Logger which is shared across the whole application.
+ * Examples are shown below:
+ * 
  * this.log.info("das ist eine info");
  * this.log.warning("das ist eine warnung");
  * this.log.severe("das ist weniger schön");

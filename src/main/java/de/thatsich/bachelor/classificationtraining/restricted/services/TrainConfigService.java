@@ -1,6 +1,6 @@
 package de.thatsich.bachelor.classificationtraining.restricted.services;
 
-import de.thatsich.core.AConfiguration;
+import de.thatsich.core.AConfigurationService;
 
 
 /**
@@ -8,7 +8,7 @@ import de.thatsich.core.AConfiguration;
  * @author Tran Minh Do
  *
  */
-public class TrainConfigService extends AConfiguration {
+public class TrainConfigService extends AConfigurationService {
 
 	/**
 	 * 

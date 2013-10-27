@@ -4,10 +4,24 @@ import java.util.Date;
 import java.util.logging.Formatter;
 import java.util.logging.LogRecord;
 
+/**
+ * Handles the formatting of the Logger
+ * Tries to pad the message
+ * 
+ * @author Minh
+ *
+ */
 public class LogFormatter extends Formatter {
 
 	final private String MESSAGE_PATTERN = "[%tT] [%-7s] %s%s > %s %s\n";
-	
+
+	/**
+	 * Displays simple message with
+	 * - timestamp
+	 * - message-type
+	 * - source
+	 * - message
+	 */
 	@Override
 	public String format(final LogRecord log) {
 		int classIndex = log.getSourceClassName().lastIndexOf(".") + 1;

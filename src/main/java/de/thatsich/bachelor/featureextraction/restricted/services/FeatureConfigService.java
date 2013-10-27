@@ -1,6 +1,6 @@
 package de.thatsich.bachelor.featureextraction.restricted.services;
 
-import de.thatsich.core.AConfiguration;
+import de.thatsich.core.AConfigurationService;
 
 
 /**
@@ -8,7 +8,7 @@ import de.thatsich.core.AConfiguration;
  * @author Tran Minh Do
  *
  */
-public class FeatureConfigService extends AConfiguration {
+public class FeatureConfigService extends AConfigurationService {
 
 	/**
 	 * 
