@@ -1,10 +1,8 @@
 package de.thatsich.bachelor.imageprocessing.restricted.controller;
 
 import java.io.IOException;
-import java.net.URL;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 
 import javafx.concurrent.WorkerStateEvent;
@@ -49,8 +47,13 @@ public class ImageInputPresenter extends AFXMLPresenter {
 	// ================================================== 
 	// Initialization Implementation 
 	// ==================================================
+
 	@Override
-	public void initialize(URL location, ResourceBundle resource) {
+	protected void initComponents() {
+	}
+
+	@Override
+	protected void bindComponents() {
 		this.bindButtons();
 	}
 

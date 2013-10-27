@@ -1,8 +1,5 @@
 package de.thatsich.bachelor.classificationtraining.restricted.controller;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -27,8 +24,12 @@ public class TrainDisplayPresenter extends AFXMLPresenter {
 	@Inject private BinaryClassifications binaryClassifications;
 	
 	@Override
-	public void initialize(URL location, ResourceBundle resource) {
+	protected void initComponents() {
 		this.initLabels();
+	}
+
+	@Override
+	protected void bindComponents() {
 	}
 
 	/**
@@ -54,4 +55,6 @@ public class TrainDisplayPresenter extends AFXMLPresenter {
 		});
 		this.log.info("Bound Labels to changing BinaryClassification.");
 	}
+
+
 }

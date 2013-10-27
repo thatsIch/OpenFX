@@ -1,10 +1,8 @@
 package de.thatsich.bachelor.errorgeneration.restricted.controller;
 
-import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 
 import javafx.beans.value.ChangeListener;
@@ -43,10 +41,14 @@ public class ErrorListPresenter extends AFXMLPresenter {
 	// ==================================================
 	// Initializable Implementation
 	// ==================================================
-	@Override public void initialize(URL location, ResourceBundle resource) {
-		this.bindTableView();		
-		
+	@Override
+	protected void initComponents() {
 		this.initErrorEntryList();
+	}
+
+	@Override
+	protected void bindComponents() {
+		this.bindTableView();
 	}
 	
 	/**

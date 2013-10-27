@@ -1,8 +1,6 @@
 package de.thatsich.bachelor.classificationtesting.restricted.controller;
 
-import java.net.URL;
 import java.nio.file.Path;
-import java.util.ResourceBundle;
 
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
@@ -45,7 +43,11 @@ public class TestInputPresenter extends AFXMLPresenter {
 	// Initialization Implementation 
 	// ==================================================
 	@Override
-	public void initialize(URL location, ResourceBundle resource) {
+	protected void initComponents() {
+	}
+
+	@Override
+	protected void bindComponents() {
 		this.bindButtons();
 	}
 

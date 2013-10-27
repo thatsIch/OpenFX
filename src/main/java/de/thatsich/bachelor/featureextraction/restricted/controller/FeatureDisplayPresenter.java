@@ -1,8 +1,5 @@
 package de.thatsich.bachelor.featureextraction.restricted.controller;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -33,8 +30,12 @@ public class FeatureDisplayPresenter extends AFXMLPresenter {
 	// Initialization Implementation 
 	// ==================================================
 	@Override
-	public void initialize(URL url, ResourceBundle bundle) {
+	protected void initComponents() {
 		this.initLabels();
+	}
+
+	@Override
+	protected void bindComponents() {
 	}
 
 	/**

@@ -4,8 +4,6 @@ import java.nio.file.Path;
 import java.security.InvalidParameterException;
 import java.util.UUID;
 
-import javafx.concurrent.Task;
-
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
@@ -22,10 +20,10 @@ import de.thatsich.bachelor.classificationtraining.api.entities.IBinaryClassific
 import de.thatsich.bachelor.errorgeneration.api.entities.IErrorGenerator;
 import de.thatsich.bachelor.featureextraction.api.core.IFeatureExtractor;
 import de.thatsich.bachelor.imageprocessing.api.entities.ImageEntry;
-import de.thatsich.core.javafx.Command;
+import de.thatsich.core.javafx.ACommand;
 import de.thatsich.core.opencv.Images;
 
-public class TestBinaryClassificationCommand extends Command<BinaryPrediction> {
+public class TestBinaryClassificationCommand extends ACommand<BinaryPrediction> {
 
 	// Properties
 	private final Path predictionFolderPath;
@@ -52,56 +50,6 @@ public class TestBinaryClassificationCommand extends Command<BinaryPrediction> {
 		this.errorGenerator = errorGenerator;
 		this.featureExtractor = featureExtractor;
 		this.binaryClassification = binaryClassification;
-	}
-	
-	@Override
-	protected Task<BinaryPrediction> createTask() {
-		return new Task<BinaryPrediction>() {
-
-			@Override
-			/*
-			 * Extracts error and determines if a frame has an Error 
-			 * which will be placed in the second layer.
-			 * You run through the prediction of the frame withError
-			 * and multiple the prediction value (between 0 and 1)
-			 * with 255 to get a decent color value. This will be placed
-			 * into the third image layer. 
-			 */
-			protected BinaryPrediction call() throws Exception {
-				final Mat withoutError = imageEntry.getMat();
-				final Mat withError = generateError(withoutError);
-				final Mat onlyError = onlyError(withoutError, withError);
-				final Mat[][] withErrorSplit = splitImage(withError, frameSize);
-				final Mat[][] onlyErrorSplit = splitImage(onlyError, frameSize);
-				final Mat[][] errorIndicationSplit = getErrorIndicationMat(onlyErrorSplit);
-				final Mat errorIndicationMat = assembleImage(errorIndicationSplit, onlyError.size());
-				final MatOfFloat[][] featureVectorSplit = getFeatureVectorSplit(withErrorSplit, featureExtractor);
-				final Mat[][] predictionMatSplit = predictError(featureVectorSplit, frameSize, binaryClassification);
-				final Mat predictionMat = assembleImage(predictionMatSplit, onlyError.size());
-				log.info("Prepared Image Content.");
-				
-				final StringBuffer fileName = new StringBuffer();
-				fileName.append(binaryClassification.getName() + "_");
-				fileName.append(featureExtractor.getName() + "_");
-				fileName.append(frameSize + "_");
-				fileName.append(errorGenerator.getName() + "_");
-				fileName.append(UUID.randomUUID().toString() + ".png");
-				log.info("Prepared Image FileName.");
-				
-				final Path filePath = predictionFolderPath.resolve(fileName.toString());
-				log.info("Resolved FileName.");
-				
-				final BinaryPrediction prediction = new BinaryPrediction(filePath, withError, errorIndicationMat, predictionMat);
-				log.info("Created Binary Prediction.");
-				
-				fileStorage.save(prediction);
-				log.info("Stored Prediction to FileSystem.");
-				
-				return prediction;
-			}
-			
-			
-		};
 	}
 
 	private Mat generateError(Mat image) {
@@ -205,5 +153,47 @@ public class TestBinaryClassificationCommand extends Command<BinaryPrediction> {
 		}
 		
 		return assembly;
+	}
+
+	/*
+	 * Extracts error and determines if a frame has an Error 
+	 * which will be placed in the second layer.
+	 * You run through the prediction of the frame withError
+	 * and multiple the prediction value (between 0 and 1)
+	 * with 255 to get a decent color value. This will be placed
+	 * into the third image layer. 
+	 */
+	@Override
+	protected BinaryPrediction call() throws Exception {
+		final Mat withoutError = imageEntry.getMat();
+		final Mat withError = generateError(withoutError);
+		final Mat onlyError = onlyError(withoutError, withError);
+		final Mat[][] withErrorSplit = splitImage(withError, frameSize);
+		final Mat[][] onlyErrorSplit = splitImage(onlyError, frameSize);
+		final Mat[][] errorIndicationSplit = getErrorIndicationMat(onlyErrorSplit);
+		final Mat errorIndicationMat = assembleImage(errorIndicationSplit, onlyError.size());
+		final MatOfFloat[][] featureVectorSplit = getFeatureVectorSplit(withErrorSplit, featureExtractor);
+		final Mat[][] predictionMatSplit = predictError(featureVectorSplit, frameSize, binaryClassification);
+		final Mat predictionMat = assembleImage(predictionMatSplit, onlyError.size());
+		log.info("Prepared Image Content.");
+		
+		final StringBuffer fileName = new StringBuffer();
+		fileName.append(binaryClassification.getName() + "_");
+		fileName.append(featureExtractor.getName() + "_");
+		fileName.append(frameSize + "_");
+		fileName.append(errorGenerator.getName() + "_");
+		fileName.append(UUID.randomUUID().toString() + ".png");
+		log.info("Prepared Image FileName.");
+		
+		final Path filePath = predictionFolderPath.resolve(fileName.toString());
+		log.info("Resolved FileName.");
+		
+		final BinaryPrediction prediction = new BinaryPrediction(filePath, withError, errorIndicationMat, predictionMat);
+		log.info("Created Binary Prediction.");
+		
+		fileStorage.save(prediction);
+		log.info("Stored Prediction to FileSystem.");
+		
+		return prediction;
 	}
 }

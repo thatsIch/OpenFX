@@ -1,11 +1,9 @@
 package de.thatsich.bachelor.errorgeneration.restricted.controller;
 
-import java.net.URL;
 import java.nio.file.Path;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 
@@ -73,13 +71,16 @@ public class ErrorInputPresenter extends AFXMLPresenter {
 	// Initializable Implementation 
 	// ==================================================
 	@Override
-	public void initialize(URL location, ResourceBundle resoure) {
+	protected void initComponents() {
+		this.initErrorGeneratorList();
+		this.initErrorLoopCount();
+	}
+
+	@Override
+	protected void bindComponents() {
 		this.bindChoiceBoxErrorGenerator();
 		this.bindTextFieldErrorCount();
 		this.bindButton();
-		
-		this.initErrorGeneratorList();
-		this.initErrorLoopCount();
 	}
 	
 	/**

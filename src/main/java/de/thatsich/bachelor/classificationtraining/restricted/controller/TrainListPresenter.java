@@ -1,10 +1,8 @@
 package de.thatsich.bachelor.classificationtraining.restricted.controller;
 
-import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 
 import javafx.beans.value.ChangeListener;
@@ -46,10 +44,14 @@ public class TrainListPresenter extends AFXMLPresenter {
 	// ================================================== 
 	// Initialization Implementation 
 	// ==================================================
-	@Override public void initialize(URL location, ResourceBundle resource) {
-		this.bindTableView();
-		
+	@Override
+	protected void initComponents() {
 		this.initBinaryClassificationList();
+	}
+
+	@Override
+	protected void bindComponents() {
+		this.bindTableView();
 	}
 	
 	private void bindTableView() {

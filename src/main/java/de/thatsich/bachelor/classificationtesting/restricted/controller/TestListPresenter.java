@@ -1,10 +1,8 @@
 package de.thatsich.bachelor.classificationtesting.restricted.controller;
 
-import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 
 import javafx.beans.value.ChangeListener;
@@ -39,10 +37,13 @@ public class TestListPresenter extends AFXMLPresenter {
 	@Inject private BinaryPredictionCommandProvider provider;
 	
 	@Override
-	public void initialize(URL location, ResourceBundle resource) {
-		this.bindTableView();
-
+	protected void initComponents() {
 		this.initBinaryPredictionList();
+	}
+
+	@Override
+	protected void bindComponents() {
+		this.bindTableView();
 	}
 	
 	private void bindTableView() {

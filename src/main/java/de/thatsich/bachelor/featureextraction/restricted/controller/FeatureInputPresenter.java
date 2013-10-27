@@ -1,10 +1,8 @@
 package de.thatsich.bachelor.featureextraction.restricted.controller;
 
-import java.net.URL;
 import java.nio.file.Path;
 import java.security.InvalidParameterException;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 
 import javafx.beans.value.ChangeListener;
@@ -54,13 +52,16 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 	@Inject private FeatureVectorSets featureVectors;
 	
 	@Override
-	public void initialize(URL url, ResourceBundle bundle) {
+	protected void initComponents() {
+		this.initFeatureExtractorList();
+		this.initFrameSize();
+	}
+
+	@Override
+	protected void bindComponents() {
 		this.bindChoiceBoxFeatureExtractor();
 		this.bindSliderFrameSize();
 		this.bindButtons();
-		
-		this.initFeatureExtractorList();
-		this.initFrameSize();
 	}
 	
 	/**

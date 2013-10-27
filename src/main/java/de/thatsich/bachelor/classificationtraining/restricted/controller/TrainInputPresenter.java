@@ -1,9 +1,7 @@
 package de.thatsich.bachelor.classificationtraining.restricted.controller;
 
-import java.net.URL;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 
 import javafx.beans.value.ChangeListener;
@@ -52,11 +50,15 @@ public class TrainInputPresenter extends AFXMLPresenter {
 	// ================================================== 
 	// Initialization Implementation 
 	// ==================================================
-	@Override public void initialize(URL location, ResourceBundle resource) {
+	@Override
+	protected void initComponents() {
+		this.initBinaryClassifierList();
+	}
+
+	@Override
+	protected void bindComponents() {
 		this.bindChoiceBoxBinaryClassifier();
 		this.bindButtons();
-		
-		this.initBinaryClassifierList();
 	}
 	
 	/**

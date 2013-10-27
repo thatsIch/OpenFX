@@ -1,14 +1,12 @@
 package de.thatsich.bachelor.classificationtesting.restricted.controller.commands;
 
-import javafx.concurrent.Task;
-
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
 import de.thatsich.bachelor.classificationtesting.restricted.services.BinaryPredictionConfigService;
-import de.thatsich.core.javafx.Command;
+import de.thatsich.core.javafx.ACommand;
 
-public class SetLastBinaryPredictionIndexCommand extends Command<Void> {
+public class SetLastBinaryPredictionIndexCommand extends ACommand<Void> {
 
 	// Properties
 	private final int lastBinaryPredictionIndex;
@@ -22,14 +20,10 @@ public class SetLastBinaryPredictionIndexCommand extends Command<Void> {
 	}
 
 	@Override
-	protected Task<Void> createTask() {
-		return new Task<Void>() {
-			@Override protected Void call() throws Exception {
-				config.setLastBinaryPredictionIndexInt(lastBinaryPredictionIndex);
-				
-				return null;
-			}
-		};
+	protected Void call() throws Exception {
+		config.setLastBinaryPredictionIndexInt(lastBinaryPredictionIndex);
+		
+		return null;
 	}
 }
 

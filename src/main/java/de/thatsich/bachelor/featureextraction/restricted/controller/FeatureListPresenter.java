@@ -1,10 +1,8 @@
 package de.thatsich.bachelor.featureextraction.restricted.controller;
 
-import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 
 import javafx.beans.value.ChangeListener;
@@ -45,11 +43,14 @@ public class FeatureListPresenter extends AFXMLPresenter {
 	@Inject private FeatureCommandService commander;
 	
 	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		this.bindTreeView();
+	protected void initComponents() {
 		this.initTreeView();
-		
 		this.initFeatureVectorList();
+	}
+
+	@Override
+	protected void bindComponents() {
+		this.bindTreeView();
 	}
 	
 	private void bindTreeView() {

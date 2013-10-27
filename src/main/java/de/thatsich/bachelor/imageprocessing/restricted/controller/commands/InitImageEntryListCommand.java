@@ -10,15 +10,14 @@ import java.util.List;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.concurrent.Task;
 
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
 import de.thatsich.bachelor.imageprocessing.api.entities.ImageEntry;
-import de.thatsich.core.javafx.Command;
+import de.thatsich.core.javafx.ACommand;
 
-public class InitImageEntryListCommand extends Command<List<ImageEntry>> {
+public class InitImageEntryListCommand extends ACommand<List<ImageEntry>> {
 
 	private final ObjectProperty<Path> imageInputPath = new SimpleObjectProperty<Path>();
 	
@@ -28,30 +27,24 @@ public class InitImageEntryListCommand extends Command<List<ImageEntry>> {
 	}
 
 	@Override
-	protected Task<List<ImageEntry>> createTask() {
-		return new Task<List<ImageEntry>>() {
+	protected List<ImageEntry> call() throws Exception {
+		final Path imageInputFolderPath = imageInputPath.get();
+		final List<ImageEntry> result = new ArrayList<ImageEntry>();
+		final String GLOB_PATTERN = "*.{png,jpeg,jpg,jpe}";
+		
+		if (Files.notExists(imageInputFolderPath) || !Files.isDirectory(imageInputFolderPath)) Files.createDirectories(imageInputFolderPath);
 
-			@Override
-			protected List<ImageEntry> call() throws Exception {
-				final Path imageInputFolderPath = imageInputPath.get();
-				final List<ImageEntry> result = new ArrayList<ImageEntry>();
-				final String GLOB_PATTERN = "*.{png,jpeg,jpg,jpe}";
-				
-				if (Files.notExists(imageInputFolderPath) || !Files.isDirectory(imageInputFolderPath)) Files.createDirectories(imageInputFolderPath);
-
-				try (DirectoryStream<Path> stream = Files.newDirectoryStream(imageInputFolderPath, GLOB_PATTERN)) {
-					for (Path child : stream) {
-						result.add(new ImageEntry(child.toAbsolutePath()));
-						log.info("Added " + child + " with Attribute " + Files.probeContentType(child));
-					}
-				} catch (IOException | DirectoryIteratorException e) {
-					e.printStackTrace();
-				}
-				log.info("All OpenCV Supported Images added: " + result.size() + ".");
-				
-				return result;
+		try (DirectoryStream<Path> stream = Files.newDirectoryStream(imageInputFolderPath, GLOB_PATTERN)) {
+			for (Path child : stream) {
+				result.add(new ImageEntry(child.toAbsolutePath()));
+				log.info("Added " + child + " with Attribute " + Files.probeContentType(child));
 			}
-		};
+		} catch (IOException | DirectoryIteratorException e) {
+			e.printStackTrace();
+		}
+		log.info("All OpenCV Supported Images added: " + result.size() + ".");
+		
+		return result;
 	}
 
 }

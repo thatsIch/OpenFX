@@ -4,7 +4,6 @@ import java.nio.file.Path;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.concurrent.Task;
 
 import org.opencv.core.Mat;
 
@@ -13,9 +12,9 @@ import com.google.inject.assistedinject.Assisted;
 
 import de.thatsich.bachelor.errorgeneration.api.entities.ErrorEntry;
 import de.thatsich.bachelor.errorgeneration.api.entities.IErrorGenerator;
-import de.thatsich.core.javafx.Command;
+import de.thatsich.core.javafx.ACommand;
 
-public class ApplyErrorCommand extends Command<ErrorEntry> {
+public class ApplyErrorCommand extends ACommand<ErrorEntry> {
 
 	// Properties
 	final private ObjectProperty<Mat> imageMat = new SimpleObjectProperty<Mat>();
@@ -28,22 +27,16 @@ public class ApplyErrorCommand extends Command<ErrorEntry> {
 		this.imagePath.set(imagePath);
 		this.generator.set(generator);
 	}
-	
+
 	@Override
-	protected Task<ErrorEntry> createTask() {
-		return new Task<ErrorEntry>() {
+	protected ErrorEntry call() throws Exception {
+		Mat copy = imageMat.get().clone();
+		copy = generator.get().generateError(copy);
+		log.info("Error generated.");
+		
+		final ErrorEntry entry = new ErrorEntry(imageMat.get(), copy, imagePath.get());
+		log.info("Instantiated ErrorEntry.");
 
-			@Override
-			protected ErrorEntry call() throws Exception {
-				Mat copy = imageMat.get().clone();
-				copy = generator.get().generateError(copy);
-				log.info("Error generated.");
-				
-				final ErrorEntry entry = new ErrorEntry(imageMat.get(), copy, imagePath.get());
-				log.info("Instantiated ErrorEntry.");
-
-				return entry;
-			}
-		};
+		return entry;
 	}
 }

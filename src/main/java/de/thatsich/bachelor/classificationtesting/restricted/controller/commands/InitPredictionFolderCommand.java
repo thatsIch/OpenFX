@@ -3,14 +3,12 @@ package de.thatsich.bachelor.classificationtesting.restricted.controller.command
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import javafx.concurrent.Task;
-
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
-import de.thatsich.core.javafx.Command;
+import de.thatsich.core.javafx.ACommand;
 
-public class InitPredictionFolderCommand extends Command<Path> {
+public class InitPredictionFolderCommand extends ACommand<Path> {
 
 	private final Path predictionFolder;
 	
@@ -18,18 +16,12 @@ public class InitPredictionFolderCommand extends Command<Path> {
 	public InitPredictionFolderCommand(@Assisted Path predictionFolder) {
 		this.predictionFolder = predictionFolder;
 	}
-	
-	@Override
-	protected Task<Path> createTask() {
-		return new Task<Path>() {
 
-			@Override
-			protected Path call() throws Exception {
-				if (Files.notExists(predictionFolder) || !Files.isDirectory(predictionFolder)) Files.createDirectories(predictionFolder);
-				
-				return predictionFolder;
-			}
-		};
+	@Override
+	protected Path call() throws Exception {
+		if (Files.notExists(predictionFolder) || !Files.isDirectory(predictionFolder)) Files.createDirectories(predictionFolder);
+		
+		return predictionFolder;
 	}
 
 }

@@ -1,10 +1,8 @@
 package de.thatsich.bachelor.imageprocessing.restricted.controller;
 
-import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -40,12 +38,15 @@ public class ImageListPresenter extends AFXMLPresenter {
 	@Inject private ImageCommandService commander;
 	@Inject private ImageEntries imageEntries;
 	@Inject private ImageState imageState;
-	
+
 	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		this.bindTableView();
-		
+	protected void initComponents() {
 		this.initTableViewImageEntryList();
+	}
+
+	@Override
+	protected void bindComponents() {
+		this.bindTableView();
 	}
 	
 	// ================================================== 

@@ -1,8 +1,5 @@
 package de.thatsich.bachelor.classificationtesting.restricted.controller;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
@@ -32,10 +29,14 @@ public class TestDisplayPresenter extends AFXMLPresenter {
 	// Injects
 	@Inject private BinaryPredictions binaryPredictions;
 	@Inject private BinaryPredictionSplitChannelView binaryPredictionSplitChannelView;
-	
+
 	@Override
-	public void initialize(URL location, ResourceBundle resource) {
+	protected void initComponents() {
 		this.initImageView();
+	}
+
+	@Override
+	protected void bindComponents() {
 	}
 
 	private void initImageView() {

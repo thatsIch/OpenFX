@@ -2,15 +2,14 @@ package de.thatsich.bachelor.featureextraction.restricted.controller.commands;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.concurrent.Task;
 
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
 import de.thatsich.bachelor.featureextraction.restricted.services.FeatureConfigService;
-import de.thatsich.core.javafx.Command;
+import de.thatsich.core.javafx.ACommand;
 
-public class SetLastFeatureExtractorIndexCommand extends Command<Void> {
+public class SetLastFeatureExtractorIndexCommand extends ACommand<Void> {
 
 	// Properties
 	private final IntegerProperty lastFeatureExtractorIndex = new SimpleIntegerProperty();
@@ -24,13 +23,9 @@ public class SetLastFeatureExtractorIndexCommand extends Command<Void> {
 	}
 
 	@Override
-	protected Task<Void> createTask() {
-		return new Task<Void>() {
-			@Override protected Void call() throws Exception {
-				config.setLastFeatureExtractorIndexInt(lastFeatureExtractorIndex.get());
-				
-				return null;
-			}
-		};
+	protected Void call() throws Exception {
+		this.config.setLastFeatureExtractorIndexInt(this.lastFeatureExtractorIndex.get());
+		
+		return null;
 	}
 }

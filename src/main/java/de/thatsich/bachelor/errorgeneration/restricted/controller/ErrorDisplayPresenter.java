@@ -1,8 +1,5 @@
 package de.thatsich.bachelor.errorgeneration.restricted.controller;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -21,9 +18,18 @@ public class ErrorDisplayPresenter extends AFXMLPresenter {
 	
 	// Injects
 	@Inject private ErrorEntries errorEntryList;
-	
+
 	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
+	protected void initComponents() {
+		ErrorEntry entry = this.errorEntryList.getSelectedErrorEntryProperty().get();
+		if (entry != null) {
+			this.nodeImageViewError.imageProperty().setValue(entry.getImage());
+			this.log.info("Initialized nodeImageViewError.");
+		}
+	}
+
+	@Override
+	protected void bindComponents() {
 		this.errorEntryList.getSelectedErrorEntryProperty().addListener(new ChangeListener<ErrorEntry>() {
 			@Override public void changed(ObservableValue<? extends ErrorEntry> observable, ErrorEntry oldValue, ErrorEntry newValue) {
 				if (newValue != null) {
@@ -36,12 +42,5 @@ public class ErrorDisplayPresenter extends AFXMLPresenter {
 			}
 		});
 		this.log.info("Bound nodeImageViewError to Model.");
-		
-		ErrorEntry entry = this.errorEntryList.getSelectedErrorEntryProperty().get();
-		if (entry != null) {
-			this.nodeImageViewError.imageProperty().setValue(entry.getImage());
-			this.log.info("Initialized nodeImageViewError.");
-		}
 	}
-
 }

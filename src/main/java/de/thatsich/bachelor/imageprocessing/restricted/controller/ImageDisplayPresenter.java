@@ -1,8 +1,5 @@
 package de.thatsich.bachelor.imageprocessing.restricted.controller;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -21,9 +18,18 @@ public class ImageDisplayPresenter extends AFXMLPresenter {
 	
 	// Injects
 	@Inject private ImageEntries imageEntries;
-	
+
 	@Override
-	public void initialize(URL url, ResourceBundle bundle) {
+	protected void initComponents() {
+		ImageEntry entry = this.imageEntries.getSelectedImageEntryProperty().get();
+		if (entry != null) {
+			this.nodeImageViewInput.imageProperty().setValue(entry.getImage());
+			this.log.info("Initialized nodeImageViewInput.");
+		}
+	}
+
+	@Override
+	protected void bindComponents() {
 		this.imageEntries.getSelectedImageEntryProperty().addListener(new ChangeListener<ImageEntry>() {
 			@Override
 			public void changed(ObservableValue<? extends ImageEntry> observable, ImageEntry oldValue, ImageEntry newValue) {
@@ -35,12 +41,6 @@ public class ImageDisplayPresenter extends AFXMLPresenter {
 			}
 		});
 		this.log.info("Bound ImageView to Model.");
-		
-		ImageEntry entry = this.imageEntries.getSelectedImageEntryProperty().get();
-		if (entry != null) {
-			this.nodeImageViewInput.imageProperty().setValue(entry.getImage());
-			this.log.info("Initialized nodeImageViewInput.");
-		}
 	}
 
 }

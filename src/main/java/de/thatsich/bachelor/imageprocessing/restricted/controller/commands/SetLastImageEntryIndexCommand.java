@@ -2,15 +2,14 @@ package de.thatsich.bachelor.imageprocessing.restricted.controller.commands;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.concurrent.Task;
 
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
 import de.thatsich.bachelor.imageprocessing.restricted.services.ImageConfigService;
-import de.thatsich.core.javafx.Command;
+import de.thatsich.core.javafx.ACommand;
 
-public class SetLastImageEntryIndexCommand extends Command<Void> {
+public class SetLastImageEntryIndexCommand extends ACommand<Void> {
 
 	// Properties
 	private final IntegerProperty lastImageEntryIndex = new SimpleIntegerProperty();
@@ -24,13 +23,9 @@ public class SetLastImageEntryIndexCommand extends Command<Void> {
 	}
 
 	@Override
-	protected Task<Void> createTask() {
-		return new Task<Void>() {
-			@Override protected Void call() throws Exception {
-				config.setLastImageIndexInt(lastImageEntryIndex.get());
-				
-				return null;
-			}
-		};
+	protected Void call() throws Exception {
+		config.setLastImageIndexInt(lastImageEntryIndex.get());
+		
+		return null;
 	}
 }
