@@ -1,18 +1,15 @@
 package de.thatsich.bachelor.imageprocessing.api.core;
 
-import com.google.inject.AbstractModule;
-import com.google.inject.assistedinject.FactoryModuleBuilder;
+import java.util.List;
 
-import de.thatsich.bachelor.imageprocessing.restricted.services.ImageCommandService;
+import de.thatsich.bachelor.imageprocessing.restricted.command.ImageCommandProvider;
+import de.thatsich.core.guice.ACommandModule;
+import de.thatsich.core.guice.ICommandProvider;
 
 
-public class ImageCommandModule extends AbstractModule {
-
+public class ImageCommandModule extends ACommandModule {
 	@Override
-	public void configure() {
-		this.install(
-			new FactoryModuleBuilder()
-			.build(ImageCommandService.class)
-		);
+	protected void bind(List<Class<? extends ICommandProvider>> providerList) {
+		providerList.add(ImageCommandProvider.class);
 	}
 }

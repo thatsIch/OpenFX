@@ -1,4 +1,4 @@
-package de.thatsich.bachelor.imageprocessing.restricted.controller.commands;
+package de.thatsich.bachelor.imageprocessing.restricted.command.commands;
 
 import com.google.inject.Inject;
 

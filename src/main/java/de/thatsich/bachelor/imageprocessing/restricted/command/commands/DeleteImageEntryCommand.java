@@ -1,4 +1,4 @@
-package de.thatsich.bachelor.imageprocessing.restricted.controller.commands;
+package de.thatsich.bachelor.imageprocessing.restricted.command.commands;
 
 import java.nio.file.Files;
 import java.nio.file.Path;

@@ -19,12 +19,12 @@ import javafx.util.Callback;
 import com.google.inject.Inject;
 
 import de.thatsich.bachelor.imageprocessing.api.entities.ImageEntry;
-import de.thatsich.bachelor.imageprocessing.restricted.controller.commands.GetLastImageEntryIndexCommand;
-import de.thatsich.bachelor.imageprocessing.restricted.controller.commands.InitImageEntryListCommand;
-import de.thatsich.bachelor.imageprocessing.restricted.controller.commands.SetLastImageEntryIndexCommand;
+import de.thatsich.bachelor.imageprocessing.restricted.command.ImageCommandProvider;
+import de.thatsich.bachelor.imageprocessing.restricted.command.commands.GetLastImageEntryIndexCommand;
+import de.thatsich.bachelor.imageprocessing.restricted.command.commands.InitImageEntryListCommand;
+import de.thatsich.bachelor.imageprocessing.restricted.command.commands.SetLastImageEntryIndexCommand;
 import de.thatsich.bachelor.imageprocessing.restricted.model.ImageEntries;
 import de.thatsich.bachelor.imageprocessing.restricted.model.ImageState;
-import de.thatsich.bachelor.imageprocessing.restricted.services.ImageCommandService;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.javafx.CommandExecutor;
 
@@ -35,7 +35,7 @@ public class ImageListPresenter extends AFXMLPresenter {
 	@FXML TableColumn<ImageEntry, String> nodeTableColumnImageList;
 	
 	// Injects
-	@Inject private ImageCommandService commander;
+	@Inject private ImageCommandProvider commander;
 	@Inject private ImageEntries imageEntries;
 	@Inject private ImageState imageState;
 

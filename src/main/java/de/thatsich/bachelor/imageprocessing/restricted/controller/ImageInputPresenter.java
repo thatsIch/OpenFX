@@ -13,11 +13,11 @@ import javafx.scene.control.Button;
 import com.google.inject.Inject;
 
 import de.thatsich.bachelor.imageprocessing.api.entities.ImageEntry;
-import de.thatsich.bachelor.imageprocessing.restricted.controller.commands.CopyFileCommand;
-import de.thatsich.bachelor.imageprocessing.restricted.controller.commands.DeleteImageEntryCommand;
+import de.thatsich.bachelor.imageprocessing.restricted.command.ImageCommandProvider;
+import de.thatsich.bachelor.imageprocessing.restricted.command.commands.CopyFileCommand;
+import de.thatsich.bachelor.imageprocessing.restricted.command.commands.DeleteImageEntryCommand;
 import de.thatsich.bachelor.imageprocessing.restricted.model.ImageEntries;
 import de.thatsich.bachelor.imageprocessing.restricted.model.ImageState;
-import de.thatsich.bachelor.imageprocessing.restricted.services.ImageCommandService;
 import de.thatsich.bachelor.imageprocessing.restricted.views.ImageFileChooser;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.javafx.CommandExecutor;
@@ -39,7 +39,7 @@ public class ImageInputPresenter extends AFXMLPresenter {
 	@FXML private Button nodeButtonResetDatabase;
 	
 	// Injects
-	@Inject private ImageCommandService commander;	
+	@Inject private ImageCommandProvider commander;	
 	@Inject private ImageEntries imageEntries;
 	@Inject private ImageState imageState;
 	@Inject private ImageFileChooser chooser;

@@ -1,4 +1,4 @@
-package de.thatsich.bachelor.imageprocessing.restricted.controller.commands;
+package de.thatsich.bachelor.imageprocessing.restricted.command.commands;
 
 import java.io.IOException;
 import java.nio.file.DirectoryIteratorException;
