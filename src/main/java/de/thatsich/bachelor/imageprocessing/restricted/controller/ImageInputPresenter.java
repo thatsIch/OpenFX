@@ -61,8 +61,8 @@ public class ImageInputPresenter extends AFXMLPresenter {
 	// Binding Implementation 
 	// ==================================================
 	private void bindButtons() {
-		this.nodeButtonRemoveImage.disableProperty().bind(this.imageEntries.getSelectedImageEntryProperty().isNull());
-		this.nodeButtonResetDatabase.disableProperty().bind(this.imageEntries.getImageEntryListProperty().emptyProperty());
+		this.nodeButtonRemoveImage.disableProperty().bind(this.imageEntries.selectedImageEntryProperty().isNull());
+		this.nodeButtonResetDatabase.disableProperty().bind(this.imageEntries.imageEntriesmageEntryListProperty().emptyProperty());
 	}
 	
 	// ================================================== 
@@ -96,7 +96,7 @@ public class ImageInputPresenter extends AFXMLPresenter {
 	 * @throws IOException
 	 */
 	@FXML private void onRemoveImageAction() throws IOException {
-		final ImageEntry choice = this.imageEntries.getSelectedImageEntryProperty().get();
+		final ImageEntry choice = this.imageEntries.selectedImageEntryProperty().get();
 		this.log.info("Fetched selected ImageEntry.");
 		
 		if (choice == null) {
@@ -117,7 +117,7 @@ public class ImageInputPresenter extends AFXMLPresenter {
 	 * @throws IOException 
 	 */
 	@FXML private void onResetDatabaseAction() throws IOException {
-		final List<ImageEntry> imageEntryList = this.imageEntries.getImageEntryListProperty().get();
+		final List<ImageEntry> imageEntryList = this.imageEntries.imageEntriesmageEntryListProperty().get();
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(imageEntryList.size());
 		this.log.info("Initialized Executor for resetting all Errors.");
 		
@@ -159,10 +159,10 @@ public class ImageInputPresenter extends AFXMLPresenter {
 		@Override public void handle(WorkerStateEvent event) {
 			Path copiedPath = (Path) event.getSource().getValue();
 			ImageEntry copy = new ImageEntry(copiedPath);
-			imageEntries.getImageEntryListProperty().get().add(copy);
+			imageEntries.imageEntriesmageEntryListProperty().get().add(copy);
 			log.info("Added copy to ChoiceBoxDisplayImage: " + copiedPath.toString());
 			
-			imageEntries.getSelectedImageEntryProperty().set(copy);
+			imageEntries.selectedImageEntryProperty().set(copy);
 			log.info("Set currently selected Image to " + copiedPath);
 		}
 	}
@@ -175,19 +175,19 @@ public class ImageInputPresenter extends AFXMLPresenter {
 	 */
 	private class DeleteSucceededHandler implements EventHandler<WorkerStateEvent> {
 		@Override public void handle(WorkerStateEvent event) {
-			final ImageEntry deletion = imageEntries.getSelectedImageEntryProperty().get();
-			final List<ImageEntry> imageEntryList = imageEntries.getImageEntryListProperty().get();
+			final ImageEntry deletion = imageEntries.selectedImageEntryProperty().get();
+			final List<ImageEntry> imageEntryList = imageEntries.imageEntriesmageEntryListProperty().get();
 			
 			imageEntryList.remove(deletion);
 			log.info("Removed ImageEntry from Database.");
 			
 			if (imageEntryList.size() > 0) {
-				final ImageEntry first = imageEntries.getImageEntryListProperty().get().get(0);
-				imageEntries.getSelectedImageEntryProperty().set(first);
+				final ImageEntry first = imageEntries.imageEntriesmageEntryListProperty().get().get(0);
+				imageEntries.selectedImageEntryProperty().set(first);
 				log.info("Reset Selection to the first.");
 			}
 			else {
-				imageEntries.getSelectedImageEntryProperty().set(null);
+				imageEntries.selectedImageEntryProperty().set(null);
 			}
 		}
 	}

@@ -59,7 +59,7 @@ public class ImageListPresenter extends AFXMLPresenter {
 	}
 	
 	private void bindTableViewContent() {
-		this.nodeTableViewImageList.itemsProperty().bind(this.imageEntries.getImageEntryListProperty());
+		this.nodeTableViewImageList.itemsProperty().bind(this.imageEntries.imageEntriesmageEntryListProperty());
 		this.log.info("Bound nodeTableViewImageList to ImageDatabase.");
 	}
 	
@@ -67,7 +67,7 @@ public class ImageListPresenter extends AFXMLPresenter {
 		// change selection > change model
 		this.nodeTableViewImageList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<ImageEntry>() {
 			@Override public void changed(ObservableValue<? extends ImageEntry> paramObservableValue, ImageEntry oldValue, ImageEntry newValue) {
-				imageEntries.getSelectedImageEntryProperty().set(newValue);
+				imageEntries.selectedImageEntryProperty().set(newValue);
 				
 				final int index = nodeTableViewImageList.getSelectionModel().getSelectedIndex();
 				final SetLastImageEntryIndexCommand command = commander.createSetLastImageEntryIndexCommand(index);
@@ -78,7 +78,7 @@ public class ImageListPresenter extends AFXMLPresenter {
 		this.log.info("Bound Model to TableView.");
 		
 		// change model > select
-		this.imageEntries.getSelectedImageEntryProperty().addListener(new ChangeListener<ImageEntry>() {
+		this.imageEntries.selectedImageEntryProperty().addListener(new ChangeListener<ImageEntry>() {
 			@Override public void changed(ObservableValue<? extends ImageEntry> observable, ImageEntry oldValue, ImageEntry newValue) {
 				nodeTableViewImageList.getSelectionModel().select(newValue);
 			}
@@ -138,7 +138,7 @@ public class ImageListPresenter extends AFXMLPresenter {
 			final List<ImageEntry> commandResult = (List<ImageEntry>) event.getSource().getValue();
 			log.info("Retrieved ImageEntryList.");
 			
-			imageEntries.getImageEntryListProperty().get().addAll(commandResult);
+			imageEntries.imageEntriesmageEntryListProperty().get().addAll(commandResult);
 			log.info("Added ImageEntryList to Model.");
 		}
 	}
@@ -154,9 +154,9 @@ public class ImageListPresenter extends AFXMLPresenter {
 			final Integer commandResult = (Integer) event.getSource().getValue();
 			log.info("Retrieved last selected image entry index.");
 			
-			if (commandResult != null && commandResult >= 0 && imageEntries.getImageEntryListProperty().size() > commandResult) {
-				final ImageEntry selectedImageEntry = imageEntries.getImageEntryListProperty().get(commandResult); 
-				imageEntries.getSelectedImageEntryProperty().set(selectedImageEntry);
+			if (commandResult != null && commandResult >= 0 && imageEntries.imageEntriesmageEntryListProperty().size() > commandResult) {
+				final ImageEntry selectedImageEntry = imageEntries.imageEntriesmageEntryListProperty().get(commandResult); 
+				imageEntries.selectedImageEntryProperty().set(selectedImageEntry);
 				log.info("Set last selected image entry index in Model.");
 				
 				nodeTableViewImageList.getSelectionModel().select(commandResult);

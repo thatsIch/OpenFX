@@ -163,8 +163,8 @@ public class ErrorInputPresenter extends AFXMLPresenter {
 	}
 	
 	private void bindButton() {
-		this.nodeButtonGenerateErrors.disableProperty().bind(this.imageEntryList.getSelectedImageEntryProperty().isNull().or(this.nodeChoiceBoxErrorGenerator.valueProperty().isNull()).or(this.nodeTextFieldErrorCount.textProperty().isNull()));
-		this.nodeButtonPermutateErrors.disableProperty().bind(this.imageEntryList.getImageEntryListProperty().emptyProperty().or(this.nodeChoiceBoxErrorGenerator.valueProperty().isNull()).or(this.nodeTextFieldErrorCount.textProperty().isNull()));
+		this.nodeButtonGenerateErrors.disableProperty().bind(this.imageEntryList.selectedImageEntryProperty().isNull().or(this.nodeChoiceBoxErrorGenerator.valueProperty().isNull()).or(this.nodeTextFieldErrorCount.textProperty().isNull()));
+		this.nodeButtonPermutateErrors.disableProperty().bind(this.imageEntryList.imageEntriesmageEntryListProperty().emptyProperty().or(this.nodeChoiceBoxErrorGenerator.valueProperty().isNull()).or(this.nodeTextFieldErrorCount.textProperty().isNull()));
 		this.nodeButtonRemoveError.disableProperty().bind(this.errorEntryList.getSelectedErrorEntryProperty().isNull());
 		this.nodeButtonResetErrors.disableProperty().bind(this.errorEntryList.getErrorEntryListProperty().emptyProperty());
 	}
@@ -176,7 +176,7 @@ public class ErrorInputPresenter extends AFXMLPresenter {
 	 * Generates a single error output depending on selected image, generator and amount
 	 */
 	@FXML private void onGenerateErrorsAction() {
-		final ImageEntry imageEntry = this.imageEntryList.getSelectedImageEntryProperty().get();
+		final ImageEntry imageEntry = this.imageEntryList.selectedImageEntryProperty().get();
 		final Mat image = imageEntry.getMat().clone();
 		final IErrorGenerator generator = this.errorGeneratorList.getSelectedErrorGeneratorProperty().get();
 		final int loops = this.errorState.getErrorLoopCountProperty().get();
@@ -223,7 +223,7 @@ public class ErrorInputPresenter extends AFXMLPresenter {
 	 * Cross-Set of all input images to selected error generator
 	 */
 	@FXML private void onPermutateErrorsAction() {
-		final ObservableList<ImageEntry> imageEntries = this.imageEntryList.getImageEntryListProperty().get();
+		final ObservableList<ImageEntry> imageEntries = this.imageEntryList.imageEntriesmageEntryListProperty().get();
 		final IErrorGenerator generator = this.errorGeneratorList.getSelectedErrorGeneratorProperty().get();
 		final int loops = this.errorState.getErrorLoopCountProperty().get();
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(imageEntries.size() * loops);

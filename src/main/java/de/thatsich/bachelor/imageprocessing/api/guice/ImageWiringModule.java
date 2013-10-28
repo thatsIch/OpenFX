@@ -2,6 +2,7 @@ package de.thatsich.bachelor.imageprocessing.api.guice;
 
 import com.google.inject.Scopes;
 
+import de.thatsich.bachelor.imageprocessing.api.core.IImageEntries;
 import de.thatsich.bachelor.imageprocessing.restricted.model.ImageEntries;
 import de.thatsich.bachelor.imageprocessing.restricted.model.ImageState;
 import de.thatsich.bachelor.imageprocessing.restricted.services.ImageConfigService;
@@ -49,7 +50,7 @@ public class ImageWiringModule extends AWiringModule {
 
 	@Override
 	protected void bindModel() {
-		super.bind(ImageEntries.class).in(Scopes.SINGLETON);
+		super.bind(IImageEntries.class).to(ImageEntries.class).in(Scopes.SINGLETON);
 		super.bind(ImageState.class).in(Scopes.SINGLETON);
 	}
 

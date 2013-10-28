@@ -55,7 +55,7 @@ public class TestInputPresenter extends AFXMLPresenter {
 	// Bindings Implementation 
 	// ==================================================
 	private void bindButtons() {
-		this.nodeButtonTestBinaryClassification.disableProperty().bind(this.imageEntries.getSelectedImageEntryProperty().isNull().or(this.binaryClassifications.getSelectedBinaryClassificationProperty().isNull()));
+		this.nodeButtonTestBinaryClassification.disableProperty().bind(this.imageEntries.selectedImageEntryProperty().isNull().or(this.binaryClassifications.getSelectedBinaryClassificationProperty().isNull()));
 	}
 	
 	// ================================================== 
@@ -72,7 +72,7 @@ public class TestInputPresenter extends AFXMLPresenter {
 		final String featureExtractorName = binaryClassification.getExtractorNameProperty().get();
 		this.log.info("Prepared all information.");
 		
-		final ImageEntry imageEntry = this.imageEntries.getSelectedImageEntryProperty().get();
+		final ImageEntry imageEntry = this.imageEntries.selectedImageEntryProperty().get();
 		final int frameSize = binaryClassification.getFrameSizeProperty().get();
 		final IErrorGenerator errorGenerator = this.getErrorGenerator(errorGeneratorName);
 		final IFeatureExtractor featureExtractor = this.getFeatureExtractor(featureExtractorName);
