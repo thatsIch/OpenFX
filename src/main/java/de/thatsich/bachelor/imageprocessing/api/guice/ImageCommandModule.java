@@ -1,4 +1,4 @@
-package de.thatsich.bachelor.imageprocessing.api.core;
+package de.thatsich.bachelor.imageprocessing.api.guice;
 
 import java.util.List;
 

@@ -8,7 +8,7 @@ import de.thatsich.bachelor.classificationtraining.api.core.TrainWiringModule;
 import de.thatsich.bachelor.errorgeneration.api.core.ErrorWiringModule;
 import de.thatsich.bachelor.featureextraction.api.core.FeatureWiringModule;
 import de.thatsich.bachelor.gridoverview.restricted.views.DisplayView;
-import de.thatsich.bachelor.imageprocessing.api.core.ImageWiringModule;
+import de.thatsich.bachelor.imageprocessing.api.guice.ImageWiringModule;
 
 
 /**

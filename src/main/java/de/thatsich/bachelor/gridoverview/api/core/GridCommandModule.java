@@ -8,7 +8,7 @@ import de.thatsich.bachelor.classificationtraining.api.core.TrainCommandModule;
 import de.thatsich.bachelor.errorgeneration.api.core.ErrorCommandModule;
 import de.thatsich.bachelor.featureextraction.api.core.FeatureCommandModule;
 import de.thatsich.bachelor.gridoverview.restricted.services.GridCommandService;
-import de.thatsich.bachelor.imageprocessing.api.core.ImageCommandModule;
+import de.thatsich.bachelor.imageprocessing.api.guice.ImageCommandModule;
 
 public class GridCommandModule extends AbstractModule {
 

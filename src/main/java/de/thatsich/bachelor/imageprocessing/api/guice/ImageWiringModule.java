@@ -1,6 +1,5 @@
-package de.thatsich.bachelor.imageprocessing.api.core;
+package de.thatsich.bachelor.imageprocessing.api.guice;
 
-import com.google.inject.AbstractModule;
 import com.google.inject.Scopes;
 
 import de.thatsich.bachelor.imageprocessing.restricted.model.ImageEntries;
@@ -10,6 +9,7 @@ import de.thatsich.bachelor.imageprocessing.restricted.views.ImageDisplayView;
 import de.thatsich.bachelor.imageprocessing.restricted.views.ImageFileChooser;
 import de.thatsich.bachelor.imageprocessing.restricted.views.ImageInputView;
 import de.thatsich.bachelor.imageprocessing.restricted.views.ImageListView;
+import de.thatsich.core.guice.AWiringModule;
 
 
 /**
@@ -18,22 +18,7 @@ import de.thatsich.bachelor.imageprocessing.restricted.views.ImageListView;
  * @author Minh
  *
  */
-public class ImageWiringModule extends AbstractModule {
-
-	/**
-	 * AbstractModule Implementation
-	 * 
-	 * Wires up all the interfaces to their representation 
-	 * or implementation.
-	 */
-	@Override
-	protected void configure() {
-		super.bind(ImageWiringModule.class).toInstance(this);
-
-		this.mapViews();
-		this.mapServices();
-		this.mapModels();
-	}
+public class ImageWiringModule extends AWiringModule {
 
 	/*
 	 * ==================================================
@@ -41,19 +26,35 @@ public class ImageWiringModule extends AbstractModule {
 	 * ==================================================
 	 * used to map interfaces to implementations
 	 */
-	private void mapViews() {
+	@Override
+	protected void bindModule() {
+		super.bind(ImageWiringModule.class).toInstance(this);
+	}
+	
+	@Override
+	protected void bindView() {
 		super.bind(ImageDisplayView.class).in(Scopes.SINGLETON);
 		super.bind(ImageInputView.class).in(Scopes.SINGLETON);
 		super.bind(ImageListView.class).in(Scopes.SINGLETON);
 		super.bind(ImageFileChooser.class).in(Scopes.SINGLETON);
 	}
-	
-	private void mapServices() {
-		super.bind(ImageConfigService.class).in(Scopes.SINGLETON);
+
+	@Override
+	protected void bindViewModel() {
 	}
-	
-	private void mapModels() {
+
+	@Override
+	protected void bindCommand() {
+	}
+
+	@Override
+	protected void bindModel() {
 		super.bind(ImageEntries.class).in(Scopes.SINGLETON);
 		super.bind(ImageState.class).in(Scopes.SINGLETON);
+	}
+
+	@Override
+	protected void bindService() {
+		super.bind(ImageConfigService.class).in(Scopes.SINGLETON);
 	}
 }
