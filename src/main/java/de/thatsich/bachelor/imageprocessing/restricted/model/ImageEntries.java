@@ -17,4 +17,10 @@ public class ImageEntries implements IImageEntries {
 	// Property Getter
 	public ListProperty<ImageEntry> imageEntriesmageEntryListProperty() { return this.imageEntryList; }
 	public ObjectProperty<ImageEntry> selectedImageEntryProperty() { return this.selectedImageEntry; }	
+	
+	// Getter
+	public ImageEntry getSelectedImageEntry() { return this.selectedImageEntry.get(); }
+	
+	// Setter
+	public void setSelctedImageEntry(ImageEntry selectedImageEntry) { this.selectedImageEntry.set(selectedImageEntry); }
 }

@@ -8,6 +8,9 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.opencv.core.Mat;
+import org.opencv.highgui.Highgui;
+
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
@@ -32,7 +35,10 @@ public class InitImageEntryListCommand extends ACommand<List<ImageEntry>> {
 
 		try (DirectoryStream<Path> stream = Files.newDirectoryStream(this.imageInputPath, GLOB_PATTERN)) {
 			for (Path child : stream) {
-				result.add(new ImageEntry(child.toAbsolutePath()));
+				final Path imagePath = child.toAbsolutePath();
+				final Mat imageMat = Highgui.imread(imagePath.toString(), 0);
+				
+				result.add(new ImageEntry(imagePath, imageMat));
 				this.log.info("Added " + child + " with Attribute " + Files.probeContentType(child));
 			}
 		} catch (IOException | DirectoryIteratorException e) {

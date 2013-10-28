@@ -1,4 +1,4 @@
-package de.thatsich.bachelor.imageprocessing.restricted.views;
+package de.thatsich.bachelor.imageprocessing.restricted.view;
 
 import de.thatsich.core.javafx.AFXMLView;
 

@@ -1,4 +1,4 @@
-package de.thatsich.bachelor.imageprocessing.restricted.services;
+package de.thatsich.bachelor.imageprocessing.restricted.service;
 
 import de.thatsich.core.AConfigurationService;
 

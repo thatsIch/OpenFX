@@ -165,7 +165,7 @@ public class TestBinaryClassificationCommand extends ACommand<BinaryPrediction> 
 	 */
 	@Override
 	protected BinaryPrediction call() throws Exception {
-		final Mat withoutError = imageEntry.getMat();
+		final Mat withoutError = imageEntry.getImageMat();
 		final Mat withError = generateError(withoutError);
 		final Mat onlyError = onlyError(withoutError, withError);
 		final Mat[][] withErrorSplit = splitImage(withError, frameSize);

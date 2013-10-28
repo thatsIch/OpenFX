@@ -177,7 +177,7 @@ public class ErrorInputPresenter extends AFXMLPresenter {
 	 */
 	@FXML private void onGenerateErrorsAction() {
 		final ImageEntry imageEntry = this.imageEntryList.selectedImageEntryProperty().get();
-		final Mat image = imageEntry.getMat().clone();
+		final Mat image = imageEntry.getImageMat().clone();
 		final IErrorGenerator generator = this.errorGeneratorList.getSelectedErrorGeneratorProperty().get();
 		final int loops = this.errorState.getErrorLoopCountProperty().get();
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(loops);
@@ -231,7 +231,7 @@ public class ErrorInputPresenter extends AFXMLPresenter {
 		this.log.info("Initialized Executor for permutating all Errors.");
 		
 		for (ImageEntry entry : imageEntries) {
-			final Mat image = entry.getMat().clone();
+			final Mat image = entry.getImageMat().clone();
 			for (int step = 0; step < loops; step++) {
 				final String dateTime = generator.getName() + "_" + new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-SSS").format(new Date()) + "_" + UUID.randomUUID().toString();
 				Path imagePath = errorEntryFolderPath.resolve(dateTime + ".png");

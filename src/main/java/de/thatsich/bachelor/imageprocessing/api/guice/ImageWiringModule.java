@@ -5,11 +5,11 @@ import com.google.inject.Scopes;
 import de.thatsich.bachelor.imageprocessing.api.core.IImageEntries;
 import de.thatsich.bachelor.imageprocessing.restricted.model.ImageEntries;
 import de.thatsich.bachelor.imageprocessing.restricted.model.ImageState;
-import de.thatsich.bachelor.imageprocessing.restricted.services.ImageConfigService;
-import de.thatsich.bachelor.imageprocessing.restricted.views.ImageDisplayView;
-import de.thatsich.bachelor.imageprocessing.restricted.views.ImageFileChooser;
-import de.thatsich.bachelor.imageprocessing.restricted.views.ImageInputView;
-import de.thatsich.bachelor.imageprocessing.restricted.views.ImageListView;
+import de.thatsich.bachelor.imageprocessing.restricted.service.ImageConfigService;
+import de.thatsich.bachelor.imageprocessing.restricted.view.ImageDisplayView;
+import de.thatsich.bachelor.imageprocessing.restricted.view.ImageFileChooser;
+import de.thatsich.bachelor.imageprocessing.restricted.view.ImageInputView;
+import de.thatsich.bachelor.imageprocessing.restricted.view.ImageListView;
 import de.thatsich.core.guice.AWiringModule;
 
 

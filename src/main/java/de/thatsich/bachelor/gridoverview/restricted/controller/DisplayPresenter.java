@@ -25,9 +25,9 @@ import de.thatsich.bachelor.errorgeneration.restricted.views.ErrorListView;
 import de.thatsich.bachelor.featureextraction.restricted.views.FeatureDisplayView;
 import de.thatsich.bachelor.featureextraction.restricted.views.FeatureInputView;
 import de.thatsich.bachelor.featureextraction.restricted.views.FeatureListView;
-import de.thatsich.bachelor.imageprocessing.restricted.views.ImageDisplayView;
-import de.thatsich.bachelor.imageprocessing.restricted.views.ImageInputView;
-import de.thatsich.bachelor.imageprocessing.restricted.views.ImageListView;
+import de.thatsich.bachelor.imageprocessing.restricted.view.ImageDisplayView;
+import de.thatsich.bachelor.imageprocessing.restricted.view.ImageInputView;
+import de.thatsich.bachelor.imageprocessing.restricted.view.ImageListView;
 
 /**
  * Facilitat the communication between

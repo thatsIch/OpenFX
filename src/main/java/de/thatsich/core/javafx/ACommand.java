@@ -11,7 +11,7 @@ public abstract class ACommand<T> extends Service<T> {
 	// Injects
 	@Inject protected Log log;
 	
-	public void setCommandHandler(ACommandHandler<T> handler) {
+	public void setOnSucceededCommandHandler(ACommandHandler<T> handler) {
 		super.setOnSucceeded(handler);
 	}
 	

@@ -1,4 +1,4 @@
-package de.thatsich.bachelor.imageprocessing.restricted.views;
+package de.thatsich.bachelor.imageprocessing.restricted.view;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -9,7 +9,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
-import de.thatsich.bachelor.imageprocessing.restricted.services.ImageConfigService;
+import de.thatsich.bachelor.imageprocessing.restricted.service.ImageConfigService;
 import de.thatsich.core.Log;
 
 /**

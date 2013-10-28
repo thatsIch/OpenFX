@@ -11,5 +11,11 @@ public class ImageState {
 	final private ObjectProperty<Path> imageInputFolderPath = new SimpleObjectProperty<Path>();
 	
 	// Property Getter
-	public ObjectProperty<Path> getImageInputFolderPathProperty() { return this.imageInputFolderPath; }
+	public ObjectProperty<Path> imageFolderPathProperty() { return this.imageInputFolderPath; }
+	
+	// Getter
+	public Path getImageFolderPath() { return this.imageInputFolderPath.get(); }
+	
+	// Setter
+	public void setImageFolderPath(Path imageFolderPath) { this.imageInputFolderPath.set(imageFolderPath); }
 }

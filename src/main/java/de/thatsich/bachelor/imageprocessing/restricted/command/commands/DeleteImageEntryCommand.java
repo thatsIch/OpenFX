@@ -23,7 +23,7 @@ public class DeleteImageEntryCommand extends ACommand<ImageEntry> {
 	protected ImageEntry call() throws Exception {
 		if (this.entry == null) throw new CancellationException("Command not initialized properly.");
 		
-		Path path = this.entry.getPath();
+		Path path = this.entry.getImagePath();
 		if (Files.exists(path)) {
 			Files.delete(path);
 			log.info("File deleted.");

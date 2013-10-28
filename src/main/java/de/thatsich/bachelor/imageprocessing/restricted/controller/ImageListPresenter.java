@@ -104,7 +104,7 @@ public class ImageListPresenter extends AFXMLPresenter {
 		final EventHandler<WorkerStateEvent> lastHandler = new GetLastImageEntryIndexSucceededHandler();
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(1);
 		
-		this.imageState.getImageInputFolderPathProperty().set(imageInputPath);
+		this.imageState.imageFolderPathProperty().set(imageInputPath);
 		this.log.info("Set ImageInputFolderPath to Model.");
 		
 		final InitImageEntryListCommand initCommand = this.commander.createInitImageEntryListCommand(imageInputPath);

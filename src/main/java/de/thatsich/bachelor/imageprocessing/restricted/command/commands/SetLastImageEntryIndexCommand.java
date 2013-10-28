@@ -3,7 +3,7 @@ package de.thatsich.bachelor.imageprocessing.restricted.command.commands;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
-import de.thatsich.bachelor.imageprocessing.restricted.services.ImageConfigService;
+import de.thatsich.bachelor.imageprocessing.restricted.service.ImageConfigService;
 import de.thatsich.core.javafx.ACommand;
 
 public class SetLastImageEntryIndexCommand extends ACommand<Void> {
