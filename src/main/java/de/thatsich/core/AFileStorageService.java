@@ -1,5 +1,12 @@
 package de.thatsich.core;
 
-public abstract class AFileStorageService {
+import java.nio.file.Path;
 
+/**
+ * Test
+ */
+public abstract class AFileStorageService {
+    public Path copyFilePath(Path filePath) {
+        return null;
+    }
 }
