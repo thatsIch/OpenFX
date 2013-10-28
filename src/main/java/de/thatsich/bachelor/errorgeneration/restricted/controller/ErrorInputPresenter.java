@@ -36,8 +36,8 @@ import de.thatsich.bachelor.errorgeneration.restricted.models.ErrorEntries;
 import de.thatsich.bachelor.errorgeneration.restricted.models.ErrorGenerators;
 import de.thatsich.bachelor.errorgeneration.restricted.models.ErrorState;
 import de.thatsich.bachelor.errorgeneration.restricted.services.ErrorCommandService;
+import de.thatsich.bachelor.imageprocessing.api.core.IImageEntries;
 import de.thatsich.bachelor.imageprocessing.api.entities.ImageEntry;
-import de.thatsich.bachelor.imageprocessing.restricted.model.ImageEntries;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.javafx.CommandExecutor;
 
@@ -61,7 +61,7 @@ public class ErrorInputPresenter extends AFXMLPresenter {
 	@FXML private Button nodeButtonResetErrors;
 	
 	// Injects
-	@Inject private ImageEntries imageEntryList;
+	@Inject private IImageEntries imageEntryList;
 	@Inject private ErrorState errorState;
 	@Inject private ErrorEntries errorEntryList;
 	@Inject private ErrorGenerators errorGeneratorList;
