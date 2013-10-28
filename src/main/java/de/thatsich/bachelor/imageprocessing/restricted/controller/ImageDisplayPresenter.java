@@ -7,8 +7,8 @@ import javafx.scene.image.ImageView;
 
 import com.google.inject.Inject;
 
+import de.thatsich.bachelor.imageprocessing.api.core.IImageEntries;
 import de.thatsich.bachelor.imageprocessing.api.entities.ImageEntry;
-import de.thatsich.bachelor.imageprocessing.restricted.model.ImageEntries;
 import de.thatsich.core.javafx.AFXMLPresenter;
 
 public class ImageDisplayPresenter extends AFXMLPresenter {
@@ -17,7 +17,7 @@ public class ImageDisplayPresenter extends AFXMLPresenter {
 	@FXML private ImageView nodeImageViewInput;
 	
 	// Injects
-	@Inject private ImageEntries imageEntries;
+	@Inject private IImageEntries imageEntries;
 
 	@Override
 	protected void initComponents() {
