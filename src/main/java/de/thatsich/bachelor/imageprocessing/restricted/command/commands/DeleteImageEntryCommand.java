@@ -4,9 +4,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.concurrent.CancellationException;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
@@ -15,23 +12,23 @@ import de.thatsich.core.javafx.ACommand;
 
 public class DeleteImageEntryCommand extends ACommand<ImageEntry> {
 
-	final private ObjectProperty<ImageEntry> entry = new SimpleObjectProperty<ImageEntry>();
+	final private ImageEntry entry;
 	
 	@Inject
 	public DeleteImageEntryCommand(@Assisted ImageEntry entry) {
-		this.entry.set(entry);
+		this.entry = entry;
 	}
 
 	@Override
 	protected ImageEntry call() throws Exception {
-		if (entry.get() == null) throw new CancellationException("Command not initialized properly.");
+		if (this.entry == null) throw new CancellationException("Command not initialized properly.");
 		
-		Path path = entry.get().getPath();
+		Path path = this.entry.getPath();
 		if (Files.exists(path)) {
 			Files.delete(path);
 			log.info("File deleted.");
 		}
 		
-		return entry.get();
+		return this.entry;
 	}
 }

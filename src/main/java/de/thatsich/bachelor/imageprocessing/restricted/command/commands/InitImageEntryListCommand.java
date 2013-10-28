@@ -8,9 +8,6 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
@@ -19,30 +16,29 @@ import de.thatsich.core.javafx.ACommand;
 
 public class InitImageEntryListCommand extends ACommand<List<ImageEntry>> {
 
-	private final ObjectProperty<Path> imageInputPath = new SimpleObjectProperty<Path>();
+	private final Path imageInputPath;
 	
 	@Inject
 	protected InitImageEntryListCommand(@Assisted Path imageInputPath) {
-		this.imageInputPath.set(imageInputPath);
+		this.imageInputPath = imageInputPath;
 	}
 
 	@Override
 	protected List<ImageEntry> call() throws Exception {
-		final Path imageInputFolderPath = imageInputPath.get();
 		final List<ImageEntry> result = new ArrayList<ImageEntry>();
 		final String GLOB_PATTERN = "*.{png,jpeg,jpg,jpe}";
 		
-		if (Files.notExists(imageInputFolderPath) || !Files.isDirectory(imageInputFolderPath)) Files.createDirectories(imageInputFolderPath);
+		if (Files.notExists(this.imageInputPath) || !Files.isDirectory(this.imageInputPath)) Files.createDirectories(this.imageInputPath);
 
-		try (DirectoryStream<Path> stream = Files.newDirectoryStream(imageInputFolderPath, GLOB_PATTERN)) {
+		try (DirectoryStream<Path> stream = Files.newDirectoryStream(this.imageInputPath, GLOB_PATTERN)) {
 			for (Path child : stream) {
 				result.add(new ImageEntry(child.toAbsolutePath()));
-				log.info("Added " + child + " with Attribute " + Files.probeContentType(child));
+				this.log.info("Added " + child + " with Attribute " + Files.probeContentType(child));
 			}
 		} catch (IOException | DirectoryIteratorException e) {
 			e.printStackTrace();
 		}
-		log.info("All OpenCV Supported Images added: " + result.size() + ".");
+		this.log.info("All OpenCV Supported Images added: " + result.size() + ".");
 		
 		return result;
 	}
