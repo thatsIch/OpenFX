@@ -2,7 +2,10 @@ package de.thatsich.bachelor.imageprocessing.api.guice;
 
 import com.google.inject.Scopes;
 
+import de.thatsich.bachelor.imageprocessing.api.core.IImageDisplayView;
 import de.thatsich.bachelor.imageprocessing.api.core.IImageEntries;
+import de.thatsich.bachelor.imageprocessing.api.core.IImageInputView;
+import de.thatsich.bachelor.imageprocessing.api.core.IImageListView;
 import de.thatsich.bachelor.imageprocessing.restricted.model.ImageEntries;
 import de.thatsich.bachelor.imageprocessing.restricted.model.ImageState;
 import de.thatsich.bachelor.imageprocessing.restricted.service.ImageConfigService;
@@ -34,14 +37,14 @@ public class ImageWiringModule extends AWiringModule {
 	
 	@Override
 	protected void bindView() {
-		super.bind(ImageDisplayView.class).in(Scopes.SINGLETON);
-		super.bind(ImageInputView.class).in(Scopes.SINGLETON);
-		super.bind(ImageListView.class).in(Scopes.SINGLETON);
+		super.bind(IImageDisplayView.class).to(ImageDisplayView.class).in(Scopes.SINGLETON);
+		super.bind(IImageInputView.class).to(ImageInputView.class).in(Scopes.SINGLETON);
+		super.bind(IImageListView.class).to(ImageListView.class).in(Scopes.SINGLETON);
 		super.bind(ImageFileChooser.class).in(Scopes.SINGLETON);
 	}
 
 	@Override
-	protected void bindViewModel() {
+	protected void bindController() {
 	}
 
 	@Override
