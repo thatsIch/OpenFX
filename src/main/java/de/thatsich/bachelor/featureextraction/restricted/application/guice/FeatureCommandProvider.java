@@ -1,4 +1,4 @@
-package de.thatsich.bachelor.featureextraction.restricted.services;
+package de.thatsich.bachelor.featureextraction.restricted.application.guice;
 
 import java.nio.file.Path;
 
@@ -16,7 +16,7 @@ import de.thatsich.bachelor.featureextraction.restricted.controller.commands.Set
 import de.thatsich.bachelor.featureextraction.restricted.controller.commands.SetLastFeatureVectorIndexCommand;
 import de.thatsich.bachelor.featureextraction.restricted.controller.commands.SetLastFrameSizeCommand;
 
-public interface FeatureCommandService {
+public interface FeatureCommandProvider {
 	public InitFeatureExtractorListCommand createInitFeatureExtractorListCommand();
 	public InitFeatureVectorSetListCommand createInitFeatureVectorListCommand(Path folderPath);
 	

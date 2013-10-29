@@ -1,9 +1,9 @@
-package de.thatsich.bachelor.featureextraction.api.core;
+package de.thatsich.bachelor.featureextraction.api.guice;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
 
-import de.thatsich.bachelor.featureextraction.restricted.services.FeatureCommandService;
+import de.thatsich.bachelor.featureextraction.restricted.application.guice.FeatureCommandProvider;
 
 
 public class FeatureCommandModule extends AbstractModule {
@@ -12,7 +12,7 @@ public class FeatureCommandModule extends AbstractModule {
 	public void configure() {
 		this.install(
 			new FactoryModuleBuilder()
-			.build(FeatureCommandService.class)
+			.build(FeatureCommandProvider.class)
 		);
 	}
 }

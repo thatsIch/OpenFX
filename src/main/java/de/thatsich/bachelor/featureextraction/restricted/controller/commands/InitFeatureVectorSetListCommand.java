@@ -23,7 +23,11 @@ import de.thatsich.core.javafx.ACommand;
 
 public class InitFeatureVectorSetListCommand extends ACommand<List<FeatureVectorSet>> {
 
+	// Fields
 	private final ObjectProperty<Path> featureVectorFolderPath = new SimpleObjectProperty<Path>();
+	
+	// Injects
+	@Inject private CSVService csv;
 	
 	@Inject
 	protected InitFeatureVectorSetListCommand(@Assisted Path featureVectorFolderPath) {
@@ -51,7 +55,7 @@ public class InitFeatureVectorSetListCommand extends ACommand<List<FeatureVector
 				final String fileName = child.getFileName().toString();
 				final String[] fileNameSplit = fileName.split("_");
 				if (fileNameSplit.length != 4) throw new WrongNumberArgsException("Expected 4 encoded information but found " + fileNameSplit.length);
-				List<Float[]> floatValues = CSVService.read(child);
+				List<Float[]> floatValues = csv.read(child);
 				final String className = fileNameSplit[0];
 				final String extractorName = fileNameSplit[1];
 				final int frameSize = Integer.parseInt(fileNameSplit[2]);

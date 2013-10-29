@@ -14,9 +14,9 @@ import com.cathive.fx.guice.GuiceApplication;
 import com.google.inject.Inject;
 import com.google.inject.Module;
 
-import de.thatsich.bachelor.gridoverview.api.core.GridCommandModule;
-import de.thatsich.bachelor.gridoverview.api.core.GridWiringModule;
-import de.thatsich.bachelor.gridoverview.restricted.views.DisplayView;
+import de.thatsich.bachelor.gridoverview.api.guice.GridCommandModule;
+import de.thatsich.bachelor.gridoverview.api.guice.GridWiringModule;
+import de.thatsich.bachelor.gridoverview.restricted.view.DisplayView;
 import de.thatsich.core.guice.LoggerModule;
 import de.thatsich.core.guice.PostInitModule;
 import de.thatsich.core.opencv.OpenCVLoader;

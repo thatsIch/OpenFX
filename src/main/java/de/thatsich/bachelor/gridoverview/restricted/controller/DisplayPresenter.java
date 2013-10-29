@@ -19,15 +19,15 @@ import de.thatsich.bachelor.classificationtesting.restricted.views.TestListView;
 import de.thatsich.bachelor.classificationtraining.restricted.views.TrainDisplayView;
 import de.thatsich.bachelor.classificationtraining.restricted.views.TrainInputView;
 import de.thatsich.bachelor.classificationtraining.restricted.views.TrainListView;
-import de.thatsich.bachelor.errorgeneration.restricted.views.ErrorDisplayView;
-import de.thatsich.bachelor.errorgeneration.restricted.views.ErrorInputView;
-import de.thatsich.bachelor.errorgeneration.restricted.views.ErrorListView;
+import de.thatsich.bachelor.errorgeneration.api.core.IErrorDisplayView;
+import de.thatsich.bachelor.errorgeneration.api.core.IErrorInputView;
+import de.thatsich.bachelor.errorgeneration.api.core.IErrorListView;
 import de.thatsich.bachelor.featureextraction.restricted.views.FeatureDisplayView;
 import de.thatsich.bachelor.featureextraction.restricted.views.FeatureInputView;
 import de.thatsich.bachelor.featureextraction.restricted.views.FeatureListView;
-import de.thatsich.bachelor.imageprocessing.restricted.view.ImageDisplayView;
-import de.thatsich.bachelor.imageprocessing.restricted.view.ImageInputView;
-import de.thatsich.bachelor.imageprocessing.restricted.view.ImageListView;
+import de.thatsich.bachelor.imageprocessing.api.core.IImageDisplayView;
+import de.thatsich.bachelor.imageprocessing.api.core.IImageInputView;
+import de.thatsich.bachelor.imageprocessing.api.core.IImageListView;
 
 /**
  * Facilitat the communication between
@@ -44,13 +44,13 @@ public class DisplayPresenter implements Initializable {
 	@FXML private GridPane nodeRoot;
 
 	// Views
-	@Inject private ImageInputView imageInputView;
-	@Inject private ImageDisplayView imageDisplayView;
-	@Inject private ImageListView imageListView;
+	@Inject private IImageInputView imageInputView;
+	@Inject private IImageDisplayView imageDisplayView;
+	@Inject private IImageListView imageListView;
 	
-	@Inject private ErrorInputView errorInputView;
-	@Inject private ErrorDisplayView errorDisplayView;
-	@Inject private ErrorListView errorListView;
+	@Inject private IErrorInputView errorInputView;
+	@Inject private IErrorDisplayView errorDisplayView;
+	@Inject private IErrorListView errorListView;
 	
 	@Inject private FeatureInputView featureInputView;
 	@Inject private FeatureDisplayView featureDisplayView;

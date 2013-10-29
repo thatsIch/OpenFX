@@ -19,12 +19,12 @@ import com.google.inject.Inject;
 
 import de.thatsich.bachelor.featureextraction.api.entities.FeatureVector;
 import de.thatsich.bachelor.featureextraction.api.entities.FeatureVectorSet;
+import de.thatsich.bachelor.featureextraction.restricted.application.guice.FeatureCommandProvider;
 import de.thatsich.bachelor.featureextraction.restricted.controller.commands.GetLastFeatureVectorIndexCommand;
 import de.thatsich.bachelor.featureextraction.restricted.controller.commands.InitFeatureVectorSetListCommand;
 import de.thatsich.bachelor.featureextraction.restricted.controller.commands.SetLastFeatureVectorIndexCommand;
 import de.thatsich.bachelor.featureextraction.restricted.models.FeatureState;
 import de.thatsich.bachelor.featureextraction.restricted.models.FeatureVectorSets;
-import de.thatsich.bachelor.featureextraction.restricted.services.FeatureCommandService;
 import de.thatsich.bachelor.featureextraction.restricted.views.tree.FeatureVectorSetTreeItemAdapter;
 import de.thatsich.bachelor.featureextraction.restricted.views.tree.FeatureVectorTreeItemAdapter;
 import de.thatsich.bachelor.featureextraction.restricted.views.tree.IFeatureSpaceTreeItemAdapter;
@@ -40,7 +40,7 @@ public class FeatureListPresenter extends AFXMLPresenter {
 	// Injects
 	@Inject private FeatureState featureState;
 	@Inject private FeatureVectorSets featureVectors;
-	@Inject private FeatureCommandService commander;
+	@Inject private FeatureCommandProvider commander;
 	
 	@Override
 	protected void initComponents() {

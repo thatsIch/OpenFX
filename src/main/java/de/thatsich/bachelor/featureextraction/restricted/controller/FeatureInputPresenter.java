@@ -18,9 +18,10 @@ import javafx.util.StringConverter;
 import com.google.inject.Inject;
 
 import de.thatsich.bachelor.errorgeneration.api.entities.ErrorEntry;
-import de.thatsich.bachelor.errorgeneration.restricted.models.ErrorEntries;
+import de.thatsich.bachelor.errorgeneration.restricted.model.ErrorEntries;
 import de.thatsich.bachelor.featureextraction.api.core.IFeatureExtractor;
 import de.thatsich.bachelor.featureextraction.api.entities.FeatureVectorSet;
+import de.thatsich.bachelor.featureextraction.restricted.application.guice.FeatureCommandProvider;
 import de.thatsich.bachelor.featureextraction.restricted.controller.commands.DeleteFeatureVectorSetCommand;
 import de.thatsich.bachelor.featureextraction.restricted.controller.commands.ExtractFeatureVectorSetCommand;
 import de.thatsich.bachelor.featureextraction.restricted.controller.commands.GetLastFeatureExtractorIndexCommand;
@@ -30,7 +31,6 @@ import de.thatsich.bachelor.featureextraction.restricted.controller.commands.Set
 import de.thatsich.bachelor.featureextraction.restricted.models.FeatureExtractors;
 import de.thatsich.bachelor.featureextraction.restricted.models.FeatureState;
 import de.thatsich.bachelor.featureextraction.restricted.models.FeatureVectorSets;
-import de.thatsich.bachelor.featureextraction.restricted.services.FeatureCommandService;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.javafx.CommandExecutor;
 
@@ -45,7 +45,7 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 	@FXML private Button nodeButtonResetFeatureVectorList;
 
 	// Injects
-	@Inject private FeatureCommandService commander;
+	@Inject private FeatureCommandProvider commander;
 	@Inject private ErrorEntries errorEntryList;
 	@Inject private FeatureExtractors featureExtractors;
 	@Inject private FeatureState featureState;

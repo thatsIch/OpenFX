@@ -34,6 +34,9 @@ public class ExtractFeatureVectorSetCommand extends ACommand<FeatureVectorSet> {
 	private final ObjectProperty<IFeatureExtractor> featureExtractor = new SimpleObjectProperty<IFeatureExtractor>();
 	private final IntegerProperty frameSize = new SimpleIntegerProperty();
 	
+	// Injects
+	@Inject private CSVService csvService;
+	
 	@Inject
 	public ExtractFeatureVectorSetCommand(@Assisted Path folderPath, @Assisted ErrorEntry errorEntry, @Assisted IFeatureExtractor extractor, @Assisted int frameSize) {
 		this.featureInputFolderPath.set(folderPath);
@@ -93,7 +96,7 @@ public class ExtractFeatureVectorSetCommand extends ACommand<FeatureVectorSet> {
 		buffer.append(id + ".csv");
 		
 		final Path filePath = folderPath.resolve(buffer.toString());
-		CSVService.write(filePath, csvResult);
+		csvService.write(filePath, csvResult);
 		
 		log.info("Extracted FeatureVectors: " + featureVectorList.size());
 		return new FeatureVectorSet(filePath, className, extractorName, size, id, featureVectorList);

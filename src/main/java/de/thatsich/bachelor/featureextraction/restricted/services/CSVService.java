@@ -16,7 +16,7 @@ import java.util.List;
  * @author Minh
  *
  */
-public abstract class CSVService {
+public class CSVService {
 	
 	
 	/**
@@ -27,7 +27,7 @@ public abstract class CSVService {
 	 * 
 	 * @throws IOException when writing is not possible
 	 */
-	public static void write(Path csvPath, List<List<Float>> values) throws IOException {
+	public void write(Path csvPath, List<List<Float>> values) throws IOException {
 		if (csvPath == null) throw new InvalidParameterException("Path is null.");
 		if (values == null) throw new InvalidParameterException("Values is null.");
 		if (values.size() == 0) throw new InvalidParameterException("Values are empty.");
@@ -57,7 +57,7 @@ public abstract class CSVService {
 	 * 
 	 * @throws IOException when reading was not possible
 	 */
-	public static List<Float[]> read(Path csvPath) throws IOException {
+	public List<Float[]> read(Path csvPath) throws IOException {
 		if (csvPath == null) throw new InvalidParameterException();
 		if (Files.notExists(csvPath)) throw new IOException("Path " + csvPath.toString() + " does not exist.");
 		
