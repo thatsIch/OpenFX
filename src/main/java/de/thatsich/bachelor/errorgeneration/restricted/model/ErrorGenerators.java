@@ -17,4 +17,10 @@ public class ErrorGenerators implements IErrorGenerators {
 	// Getter
 	public ListProperty<IErrorGenerator> getErrorGeneratorListProperty() { return this.errorGeneratorList; }
 	public ObjectProperty<IErrorGenerator> getSelectedErrorGeneratorProperty() { return this.selectedErrorGenerator; }
+	
+	// Getter
+	public IErrorGenerator getSelectedErrorGenerator() { return this.selectedErrorGenerator.get(); }
+	
+	// Setter
+	public void setSelectedErrorGenerator(IErrorGenerator generator) { this.selectedErrorGenerator.set(generator); }
 }

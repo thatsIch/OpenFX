@@ -15,6 +15,14 @@ public class ErrorState implements IErrorState {
 	final private IntegerProperty errorLoopCount = new SimpleIntegerProperty();
 	
 	// Property Getter
-	public ObjectProperty<Path> getErrorEntryFolderPath() { return this.errorEntryFolderPath; }
+	public ObjectProperty<Path> getErrorEntryFolderPathProperty() { return this.errorEntryFolderPath; }
 	public IntegerProperty getErrorLoopCountProperty() { return this.errorLoopCount; }
+	
+	// Getter
+	public Path getErrorEntryFolderPath() { return this.errorEntryFolderPath.get(); }
+	public int getErrorLoopCount() { return this.errorLoopCount.get(); }
+	
+	// Setter
+	public void setErrorEntryFolderPath(Path errorEntryFolderPath) { this.errorEntryFolderPath.set(errorEntryFolderPath); }
+	public void setErrorLoopCount(int errorLoopCount) { this.errorLoopCount.set(errorLoopCount); }
 }
