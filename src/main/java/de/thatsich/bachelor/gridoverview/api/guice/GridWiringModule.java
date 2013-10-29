@@ -3,12 +3,12 @@ package de.thatsich.bachelor.gridoverview.api.guice;
 import com.google.inject.Scopes;
 
 import de.thatsich.bachelor.classification.api.guice.TrainWiringModule;
-import de.thatsich.bachelor.classificationtesting.restricted.app.guice.TestWiringModule;
 import de.thatsich.bachelor.errorgeneration.api.guice.ErrorWiringModule;
 import de.thatsich.bachelor.featureextraction.api.guice.FeatureWiringModule;
 import de.thatsich.bachelor.gridoverview.api.core.IDisplayView;
 import de.thatsich.bachelor.gridoverview.restricted.view.DisplayView;
 import de.thatsich.bachelor.imageprocessing.api.guice.ImageWiringModule;
+import de.thatsich.bachelor.prediction.api.guice.TestWiringModule;
 import de.thatsich.core.guice.AWiringModule;
 
 

@@ -3,10 +3,10 @@ package de.thatsich.bachelor.gridoverview.api.guice;
 import java.util.List;
 
 import de.thatsich.bachelor.classification.api.guice.TrainCommandModule;
-import de.thatsich.bachelor.classificationtesting.restricted.app.guice.TestCommandModule;
 import de.thatsich.bachelor.errorgeneration.api.guice.ErrorCommandModule;
 import de.thatsich.bachelor.featureextraction.api.guice.FeatureCommandModule;
 import de.thatsich.bachelor.imageprocessing.api.guice.ImageCommandModule;
+import de.thatsich.bachelor.prediction.api.guice.TestCommandModule;
 import de.thatsich.core.guice.ACommandModule;
 import de.thatsich.core.guice.ICommandProvider;
 

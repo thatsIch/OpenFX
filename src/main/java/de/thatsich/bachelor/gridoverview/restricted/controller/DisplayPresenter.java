@@ -16,9 +16,6 @@ import com.google.inject.Singleton;
 import de.thatsich.bachelor.classification.intern.view.TrainDisplayView;
 import de.thatsich.bachelor.classification.intern.view.TrainInputView;
 import de.thatsich.bachelor.classification.intern.view.TrainListView;
-import de.thatsich.bachelor.classificationtesting.restricted.views.TestDisplayView;
-import de.thatsich.bachelor.classificationtesting.restricted.views.TestInputView;
-import de.thatsich.bachelor.classificationtesting.restricted.views.TestListView;
 import de.thatsich.bachelor.errorgeneration.api.core.IErrorDisplayView;
 import de.thatsich.bachelor.errorgeneration.api.core.IErrorInputView;
 import de.thatsich.bachelor.errorgeneration.api.core.IErrorListView;
@@ -28,6 +25,9 @@ import de.thatsich.bachelor.featureextraction.api.core.IFeatureListView;
 import de.thatsich.bachelor.imageprocessing.api.core.IImageDisplayView;
 import de.thatsich.bachelor.imageprocessing.api.core.IImageInputView;
 import de.thatsich.bachelor.imageprocessing.api.core.IImageListView;
+import de.thatsich.bachelor.prediction.intern.view.TestDisplayView;
+import de.thatsich.bachelor.prediction.intern.view.TestInputView;
+import de.thatsich.bachelor.prediction.intern.view.TestListView;
 
 /**
  * Facilitat the communication between
