@@ -176,16 +176,16 @@ public class ErrorInputPresenter extends AFXMLPresenter {
 	 * Generates a single error output depending on selected image, generator and amount
 	 */
 	@FXML private void onGenerateErrorsAction() {
-		final ImageEntry imageEntry = this.imageEntryList.selectedImageEntryProperty().get();
+		final ImageEntry imageEntry = this.imageEntryList.getSelectedImageEntry();
 		final Mat image = imageEntry.getImageMat().clone();
-		final IErrorGenerator generator = this.errorGeneratorList.getSelectedErrorGeneratorProperty().get();
-		final int loops = this.errorState.getErrorLoopCountProperty().get();
+		final IErrorGenerator generator = this.errorGeneratorList.getSelectedErrorGenerator();
+		final int loops = this.errorState.getErrorLoopCount();
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(loops);
 		this.log.info("Initialized Executor for generating all Errors.");
 		
 		for (int step = 0; step < loops; step++) {
 			final String dateTime = generator.getName() + "_" + new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-SSS").format(new Date()) + "_" + UUID.randomUUID().toString();
-			final Path imagePath = this.errorState.getErrorEntryFolderPath().get().resolve(dateTime + ".png");
+			final Path imagePath = this.errorState.getErrorEntryFolderPath().resolve(dateTime + ".png");
 			this.log.info("Path: " + imagePath);
 			
 			final ErrorApplicationSucceededHandler handler = new ErrorApplicationSucceededHandler();
@@ -209,7 +209,7 @@ public class ErrorInputPresenter extends AFXMLPresenter {
 	 * Delete and remove the selected ErrorEntry
 	 */
 	@FXML private void onRemoveErrorAction() {
-		final ErrorEntry entry = this.errorEntryList.getSelectedErrorEntryProperty().get();
+		final ErrorEntry entry = this.errorEntryList.getSelectedErrorEntry();
 		this.log.info("Fetched selected ErrorEntry.");
 		
 		final DeleteSucceededHandler handler = new DeleteSucceededHandler();
@@ -223,11 +223,11 @@ public class ErrorInputPresenter extends AFXMLPresenter {
 	 * Cross-Set of all input images to selected error generator
 	 */
 	@FXML private void onPermutateErrorsAction() {
-		final ObservableList<ImageEntry> imageEntries = this.imageEntryList.imageEntriesmageEntryListProperty().get();
-		final IErrorGenerator generator = this.errorGeneratorList.getSelectedErrorGeneratorProperty().get();
-		final int loops = this.errorState.getErrorLoopCountProperty().get();
+		final ObservableList<ImageEntry> imageEntries = this.imageEntryList.imageEntriesmageEntryListProperty();
+		final IErrorGenerator generator = this.errorGeneratorList.getSelectedErrorGenerator();
+		final int loops = this.errorState.getErrorLoopCount();
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(imageEntries.size() * loops);
-		final Path errorEntryFolderPath = this.errorState.getErrorEntryFolderPath().get();
+		final Path errorEntryFolderPath = this.errorState.getErrorEntryFolderPath();
 		this.log.info("Initialized Executor for permutating all Errors.");
 		
 		for (ImageEntry entry : imageEntries) {
@@ -259,7 +259,7 @@ public class ErrorInputPresenter extends AFXMLPresenter {
 	 * Deletes each file and remove each entry
 	 */
 	@FXML private void onResetErrorsAction() {
-		final List<ErrorEntry> errorEntryList = this.errorEntryList.getErrorEntryListProperty().get();
+		final List<ErrorEntry> errorEntryList = this.errorEntryList.getErrorEntryListProperty();
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(errorEntryList.size());
 		this.log.info("Initialized Executor for resetting all Errors.");
 		
@@ -298,7 +298,7 @@ public class ErrorInputPresenter extends AFXMLPresenter {
 		public void handle(WorkerStateEvent event) {
 			final List<IErrorGenerator> generatorList = (List<IErrorGenerator>) event.getSource().getValue();
 			
-			errorGeneratorList.getErrorGeneratorListProperty().get().addAll(generatorList);
+			errorGeneratorList.getErrorGeneratorListProperty().addAll(generatorList);
 			log.info("Added all ErrorGenerators.");
 		}
 	}
@@ -356,7 +356,7 @@ public class ErrorInputPresenter extends AFXMLPresenter {
 	private class DeleteSucceededHandler implements EventHandler<WorkerStateEvent> {
 		@Override public void handle(WorkerStateEvent event) {
 			final ErrorEntry deletion = (ErrorEntry) event.getSource().getValue();
-			final ObservableList<ErrorEntry> entryList = errorEntryList.getErrorEntryListProperty().get();
+			final ObservableList<ErrorEntry> entryList = errorEntryList.getErrorEntryListProperty();
 			
 			entryList.remove(deletion);
 			log.info("Removed ErrorEntry from Database.");
@@ -400,7 +400,7 @@ public class ErrorInputPresenter extends AFXMLPresenter {
 		@Override public void handle(WorkerStateEvent event) {
 			final ErrorEntry addition = (ErrorEntry) event.getSource().getValue();
 			
-			errorEntryList.getErrorEntryListProperty().get().add(addition);
+			errorEntryList.getErrorEntryListProperty().add(addition);
 			log.info("Added ErrorEntry to Database.");
 			
 			errorEntryList.getSelectedErrorEntryProperty().set(addition);

@@ -21,7 +21,7 @@ public class ErrorDisplayPresenter extends AFXMLPresenter {
 
 	@Override
 	protected void initComponents() {
-		ErrorEntry entry = this.errorEntryList.getSelectedErrorEntryProperty().get();
+		final ErrorEntry entry = this.errorEntryList.getSelectedErrorEntry();
 		if (entry != null) {
 			this.nodeImageViewError.imageProperty().setValue(entry.getImage());
 			this.log.info("Initialized nodeImageViewError.");

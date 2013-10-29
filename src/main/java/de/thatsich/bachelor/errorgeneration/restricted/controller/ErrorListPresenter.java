@@ -102,7 +102,7 @@ public class ErrorListPresenter extends AFXMLPresenter {
 		final GetLastErrorEntryIndexSucceededHandler lastHandler = new GetLastErrorEntryIndexSucceededHandler(); 
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(1);
 		
-		this.errorState.getErrorEntryFolderPath().set(errorInputFolderPath);
+		this.errorState.setErrorEntryFolderPath(errorInputFolderPath);
 		this.log.info("Set ErrorInputFolderPath to Model.");
 		
 		final InitErrorEntryListCommand initCommand = this.commander.createInitErrorEntryListCommand(errorInputFolderPath);
@@ -135,7 +135,7 @@ public class ErrorListPresenter extends AFXMLPresenter {
 		@Override public void handle(WorkerStateEvent event) {
 			final List<ErrorEntry> entryList = (List<ErrorEntry>) event.getSource().getValue();
 			
-			errorEntryList.getErrorEntryListProperty().get().addAll(entryList);
+			errorEntryList.getErrorEntryListProperty().addAll(entryList);
 			log.info("Initialized all ErrorEntries into Model.");
 		}
 	}
