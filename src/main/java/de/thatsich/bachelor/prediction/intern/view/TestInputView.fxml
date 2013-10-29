@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<fx:root type="GridPane" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="de.thatsich.bachelor.classificationtesting.restricted.controller.TestInputPresenter">
+<fx:root type="GridPane" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="de.thatsich.bachelor.prediction.intern.control.TestInputPresenter">
   <children>
     <Button fx:id="nodeButtonTestBinaryClassification" mnemonicParsing="false" onAction="#onTestBinaryClassifierAction" prefWidth="125.0" text="Test" GridPane.columnIndex="1" GridPane.rowIndex="0" />
   </children>
