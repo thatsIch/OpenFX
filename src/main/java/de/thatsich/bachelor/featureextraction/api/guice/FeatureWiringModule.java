@@ -2,7 +2,10 @@ package de.thatsich.bachelor.featureextraction.api.guice;
 
 import com.google.inject.Scopes;
 
+import de.thatsich.bachelor.featureextraction.api.core.IFeatureDisplayView;
 import de.thatsich.bachelor.featureextraction.api.core.IFeatureExtractors;
+import de.thatsich.bachelor.featureextraction.api.core.IFeatureInputView;
+import de.thatsich.bachelor.featureextraction.api.core.IFeatureListView;
 import de.thatsich.bachelor.featureextraction.api.core.IFeatureState;
 import de.thatsich.bachelor.featureextraction.api.core.IFeatureVectorSets;
 import de.thatsich.bachelor.featureextraction.restricted.models.FeatureExtractors;
@@ -30,9 +33,9 @@ public class FeatureWiringModule extends AWiringModule {
 
 	@Override
 	protected void bindView() {
-		super.bind(FeatureDisplayView.class).in(Scopes.SINGLETON);
-		super.bind(FeatureInputView.class).in(Scopes.SINGLETON);
-		super.bind(FeatureListView.class).in(Scopes.SINGLETON);
+		super.bind(IFeatureDisplayView.class).to(FeatureDisplayView.class).in(Scopes.SINGLETON);
+		super.bind(IFeatureInputView.class).to(FeatureInputView.class).in(Scopes.SINGLETON);
+		super.bind(IFeatureListView.class).to(FeatureListView.class).in(Scopes.SINGLETON);
 	}
 
 	@Override
