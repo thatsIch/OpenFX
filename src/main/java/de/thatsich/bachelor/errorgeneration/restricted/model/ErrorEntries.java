@@ -12,9 +12,15 @@ public class ErrorEntries implements IErrorEntries {
 
 	// Properties
 	final private ListProperty<ErrorEntry> errorEntries = new SimpleListProperty<ErrorEntry>(FXCollections.<ErrorEntry>observableArrayList());
-	final private ObjectProperty<ErrorEntry> errorEntry = new SimpleObjectProperty<ErrorEntry>();
+	final private ObjectProperty<ErrorEntry> selectedErrorEntry = new SimpleObjectProperty<ErrorEntry>();
 	
 	// Property Getter
 	public ListProperty<ErrorEntry> getErrorEntryListProperty() { return this.errorEntries; }
-	public ObjectProperty<ErrorEntry> getSelectedErrorEntryProperty() { return this.errorEntry; }
+	public ObjectProperty<ErrorEntry> getSelectedErrorEntryProperty() { return this.selectedErrorEntry; }
+	
+	// Getter
+	public ErrorEntry getSelectedErrorEntry() { return this.selectedErrorEntry.get(); }
+	
+	// Setter
+	public void setSelectedErrorEntry(ErrorEntry entry) { this.selectedErrorEntry.set(entry); }
 }
