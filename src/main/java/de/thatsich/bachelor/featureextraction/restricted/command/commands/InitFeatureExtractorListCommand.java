@@ -1,4 +1,4 @@
-package de.thatsich.bachelor.featureextraction.restricted.controller.commands;
+package de.thatsich.bachelor.featureextraction.restricted.command.commands;
 
 import java.util.ArrayList;
 import java.util.List;

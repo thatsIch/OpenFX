@@ -1,4 +1,4 @@
-package de.thatsich.bachelor.featureextraction.restricted.controller.commands;
+package de.thatsich.bachelor.featureextraction.restricted.command.commands;
 
 import java.nio.file.Path;
 import java.util.ArrayList;

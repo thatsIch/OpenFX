@@ -1,33 +1,36 @@
-package de.thatsich.core.opencv;
+package de.thatsich.bachelor.featureextraction.restricted.services;
 
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.security.InvalidParameterException;
-import java.util.List;
 
-import javafx.collections.FXCollections;
-
+import org.jukito.JukitoRunner;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
 
-import de.thatsich.bachelor.featureextraction.restricted.services.CSVService;
+@RunWith(JukitoRunner.class)
+public class CSVServiceTest {
 
-@RunWith(JUnit4.class)
-public class CSVTest {
-
+	// Injects
+//	@Inject private CSVService csvService;
+	
+	@Before
+	public void setupMocks() {
+		
+	}
+	
 	@Test(expected = InvalidParameterException.class)
 	public void testWrite_PathNull_ShouldThrowException() throws IOException {
 //		List mockedList = mock
-		Blockin
-		List<List<Float>> test = FXCollections.observableArrayList();
+//		Blockin
+//		List<List<Float>> test = FXCollections.observableArrayList();
 //		test.add(new float[]{1});
-		CSVService.write(null, test);
+//		csvService.write(null, test);
 	}
 
 	@Test(expected = InvalidParameterException.class)
 	public void testWrite_ValuesNull_ShouldThrowException() throws IOException {
-		CSVService.write(Paths.get("").resolve("Silly Path"), null);
+//		csvService.write(Paths.get("").resolve("Silly Path"), null);
 	}
 
 	@Test(expected = InvalidParameterException.class)
@@ -37,11 +40,11 @@ public class CSVTest {
 
 	@Test(expected = InvalidParameterException.class)
 	public void testRead_PathNull_ShouldThrowException() throws IOException {
-		CSVService.read(null);
+//		csvService.read(null);
 	}
 	
 	@Test(expected = IOException.class)
 	public void testRead_PathSilly_ShouldThrowException() throws IOException {
-		CSVService.read(Paths.get("").resolve("Silly Path"));
+//		csvService.read(Paths.get("").resolve("Silly Path"));
 	}
 }
