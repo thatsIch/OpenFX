@@ -22,9 +22,9 @@ import de.thatsich.bachelor.classificationtraining.restricted.views.TrainListVie
 import de.thatsich.bachelor.errorgeneration.api.core.IErrorDisplayView;
 import de.thatsich.bachelor.errorgeneration.api.core.IErrorInputView;
 import de.thatsich.bachelor.errorgeneration.api.core.IErrorListView;
-import de.thatsich.bachelor.featureextraction.restricted.views.FeatureDisplayView;
-import de.thatsich.bachelor.featureextraction.restricted.views.FeatureInputView;
-import de.thatsich.bachelor.featureextraction.restricted.views.FeatureListView;
+import de.thatsich.bachelor.featureextraction.api.core.IFeatureDisplayView;
+import de.thatsich.bachelor.featureextraction.api.core.IFeatureInputView;
+import de.thatsich.bachelor.featureextraction.api.core.IFeatureListView;
 import de.thatsich.bachelor.imageprocessing.api.core.IImageDisplayView;
 import de.thatsich.bachelor.imageprocessing.api.core.IImageInputView;
 import de.thatsich.bachelor.imageprocessing.api.core.IImageListView;
@@ -52,9 +52,9 @@ public class DisplayPresenter implements Initializable {
 	@Inject private IErrorDisplayView errorDisplayView;
 	@Inject private IErrorListView errorListView;
 	
-	@Inject private FeatureInputView featureInputView;
-	@Inject private FeatureDisplayView featureDisplayView;
-	@Inject private FeatureListView featureListView;
+	@Inject private IFeatureInputView featureInputView;
+	@Inject private IFeatureDisplayView featureDisplayView;
+	@Inject private IFeatureListView featureListView;
 	
 	@Inject private TrainInputView trainInputView;
 	@Inject private TrainDisplayView trainDisplayView;
