@@ -6,8 +6,6 @@ import org.opencv.core.Mat;
 import org.opencv.core.MatOfDouble;
 import org.opencv.core.MatOfFloat;
 
-import de.thatsich.bachelor.featureextraction.api.core.IFeatureExtractor;
-
 public class Variance extends AFeatureExtractor implements IFeatureExtractor {
 
 	@Override

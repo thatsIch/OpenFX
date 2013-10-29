@@ -8,8 +8,6 @@ import org.opencv.imgproc.Moments;
 
 import com.google.inject.Singleton;
 
-import de.thatsich.bachelor.featureextraction.api.core.IFeatureExtractor;
-
 /**
  * 
  * @author Minh

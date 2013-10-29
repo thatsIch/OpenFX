@@ -1,4 +1,4 @@
-package de.thatsich.bachelor.featureextraction.api.core;
+package de.thatsich.bachelor.featureextraction.restricted.command.extractor;
 
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfFloat;

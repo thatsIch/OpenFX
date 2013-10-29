@@ -18,7 +18,7 @@ import de.thatsich.bachelor.classificationtraining.api.entities.IBinaryClassific
 import de.thatsich.bachelor.classificationtraining.restricted.model.state.BinaryClassifications;
 import de.thatsich.bachelor.errorgeneration.api.entities.IErrorGenerator;
 import de.thatsich.bachelor.errorgeneration.restricted.model.ErrorGenerators;
-import de.thatsich.bachelor.featureextraction.api.core.IFeatureExtractor;
+import de.thatsich.bachelor.featureextraction.restricted.command.extractor.IFeatureExtractor;
 import de.thatsich.bachelor.featureextraction.restricted.models.FeatureExtractors;
 import de.thatsich.bachelor.imageprocessing.api.entities.ImageEntry;
 import de.thatsich.bachelor.imageprocessing.restricted.model.ImageEntries;

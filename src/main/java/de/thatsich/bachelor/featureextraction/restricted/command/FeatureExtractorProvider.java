@@ -3,7 +3,7 @@ package de.thatsich.bachelor.featureextraction.restricted.command;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 
-import de.thatsich.bachelor.featureextraction.api.core.IFeatureExtractor;
+import de.thatsich.bachelor.featureextraction.restricted.command.extractor.IFeatureExtractor;
 
 public class FeatureExtractorProvider {
 	@Inject private Injector injector;

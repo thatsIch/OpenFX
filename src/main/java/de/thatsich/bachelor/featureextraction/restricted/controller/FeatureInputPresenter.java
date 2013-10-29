@@ -19,7 +19,6 @@ import com.google.inject.Inject;
 
 import de.thatsich.bachelor.errorgeneration.api.entities.ErrorEntry;
 import de.thatsich.bachelor.errorgeneration.restricted.model.ErrorEntries;
-import de.thatsich.bachelor.featureextraction.api.core.IFeatureExtractor;
 import de.thatsich.bachelor.featureextraction.api.entities.FeatureVectorSet;
 import de.thatsich.bachelor.featureextraction.restricted.command.FeatureCommandProvider;
 import de.thatsich.bachelor.featureextraction.restricted.command.commands.DeleteFeatureVectorSetCommand;
@@ -28,6 +27,7 @@ import de.thatsich.bachelor.featureextraction.restricted.command.commands.GetLas
 import de.thatsich.bachelor.featureextraction.restricted.command.commands.GetLastFrameSizeCommand;
 import de.thatsich.bachelor.featureextraction.restricted.command.commands.InitFeatureExtractorListCommand;
 import de.thatsich.bachelor.featureextraction.restricted.command.commands.SetLastFeatureExtractorIndexCommand;
+import de.thatsich.bachelor.featureextraction.restricted.command.extractor.IFeatureExtractor;
 import de.thatsich.bachelor.featureextraction.restricted.models.FeatureExtractors;
 import de.thatsich.bachelor.featureextraction.restricted.models.FeatureState;
 import de.thatsich.bachelor.featureextraction.restricted.models.FeatureVectorSets;

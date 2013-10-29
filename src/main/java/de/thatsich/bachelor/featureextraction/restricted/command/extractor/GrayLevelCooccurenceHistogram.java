@@ -4,8 +4,6 @@ import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfFloat;
 
-import de.thatsich.bachelor.featureextraction.api.core.IFeatureExtractor;
-
 
 /**
  * Calculates the Co-occurence Histrogram for Gray-Levels
