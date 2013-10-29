@@ -13,12 +13,12 @@ import javafx.scene.layout.GridPane;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
+import de.thatsich.bachelor.classification.intern.view.TrainDisplayView;
+import de.thatsich.bachelor.classification.intern.view.TrainInputView;
+import de.thatsich.bachelor.classification.intern.view.TrainListView;
 import de.thatsich.bachelor.classificationtesting.restricted.views.TestDisplayView;
 import de.thatsich.bachelor.classificationtesting.restricted.views.TestInputView;
 import de.thatsich.bachelor.classificationtesting.restricted.views.TestListView;
-import de.thatsich.bachelor.classificationtraining.restricted.views.TrainDisplayView;
-import de.thatsich.bachelor.classificationtraining.restricted.views.TrainInputView;
-import de.thatsich.bachelor.classificationtraining.restricted.views.TrainListView;
 import de.thatsich.bachelor.errorgeneration.api.core.IErrorDisplayView;
 import de.thatsich.bachelor.errorgeneration.api.core.IErrorInputView;
 import de.thatsich.bachelor.errorgeneration.api.core.IErrorListView;

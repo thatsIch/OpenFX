@@ -9,13 +9,13 @@ import javafx.scene.control.Button;
 
 import com.google.inject.Inject;
 
+import de.thatsich.bachelor.classification.intern.command.classifier.IBinaryClassification;
+import de.thatsich.bachelor.classification.intern.model.BinaryClassifications;
 import de.thatsich.bachelor.classificationtesting.api.entities.BinaryPrediction;
 import de.thatsich.bachelor.classificationtesting.restricted.app.guice.BinaryPredictionCommandProvider;
 import de.thatsich.bachelor.classificationtesting.restricted.controller.commands.TestBinaryClassificationCommand;
 import de.thatsich.bachelor.classificationtesting.restricted.models.state.BinaryPredictions;
 import de.thatsich.bachelor.classificationtesting.restricted.models.state.PredictionState;
-import de.thatsich.bachelor.classificationtraining.api.entities.IBinaryClassification;
-import de.thatsich.bachelor.classificationtraining.restricted.model.state.BinaryClassifications;
 import de.thatsich.bachelor.errorgeneration.api.entities.IErrorGenerator;
 import de.thatsich.bachelor.errorgeneration.restricted.model.ErrorGenerators;
 import de.thatsich.bachelor.featureextraction.restricted.command.extractor.IFeatureExtractor;

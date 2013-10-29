@@ -2,8 +2,8 @@ package de.thatsich.bachelor.gridoverview.api.guice;
 
 import com.google.inject.Scopes;
 
+import de.thatsich.bachelor.classification.api.guice.TrainWiringModule;
 import de.thatsich.bachelor.classificationtesting.restricted.app.guice.TestWiringModule;
-import de.thatsich.bachelor.classificationtraining.api.core.TrainWiringModule;
 import de.thatsich.bachelor.errorgeneration.api.guice.ErrorWiringModule;
 import de.thatsich.bachelor.featureextraction.api.guice.FeatureWiringModule;
 import de.thatsich.bachelor.gridoverview.api.core.IDisplayView;
