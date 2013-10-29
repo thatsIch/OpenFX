@@ -1,8 +1,5 @@
 package de.thatsich.bachelor.errorgeneration.restricted.command.commands;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
@@ -12,19 +9,19 @@ import de.thatsich.core.javafx.ACommand;
 public class SetLastErrorGeneratorIndexCommand extends ACommand<Void> {
 
 	// Properties
-	private final IntegerProperty lastErrorGeneratorIndex = new SimpleIntegerProperty();
+	private final int lastErrorGeneratorIndex;
 	
 	// Injects
 	@Inject ErrorConfigService config;
 	
 	@Inject
 	protected SetLastErrorGeneratorIndexCommand(@Assisted int lastErrorGeneratorIndex) {
-		this.lastErrorGeneratorIndex.set(lastErrorGeneratorIndex);
+		this.lastErrorGeneratorIndex = lastErrorGeneratorIndex;
 	}
 
 	@Override
 	protected Void call() throws Exception {
-		config.setLastErrorGeneratorIndexInt(lastErrorGeneratorIndex.get());
+		this.config.setLastErrorGeneratorIndexInt(this.lastErrorGeneratorIndex);
 		
 		return null;
 	}
