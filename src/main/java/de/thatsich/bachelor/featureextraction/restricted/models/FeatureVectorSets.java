@@ -19,4 +19,12 @@ public class FeatureVectorSets {
 	public ListProperty<FeatureVectorSet> getFeatureVectorSetListProperty() { return this.featureVectorSetList; }
 	public ObjectProperty<FeatureVectorSet> getSelectedFeatureVectorSetProperty() { return this.selectedFeatureVectorSet; }
 	public ObjectProperty<FeatureVector> getSelectedFeatureVectorProperty() { return selectedFeatureVector; }
+	
+	// Getter
+	public FeatureVectorSet getSelectedFeatureVectorSet() { return this.selectedFeatureVectorSet.get(); }
+	public FeatureVector getSelectedFeatureVector() { return this.selectedFeatureVector.get(); }
+	
+	// Setter
+	public void setSelectedFeatureVectorSet(FeatureVectorSet featureVectorSet) { this.selectedFeatureVectorSet.set(featureVectorSet); }
+	public void setSelectedFeatureVector(FeatureVector featureVector) { this.selectedFeatureVector.set(featureVector); }
 }
