@@ -18,6 +18,8 @@ public class CSVTest {
 
 	@Test(expected = InvalidParameterException.class)
 	public void testWrite_PathNull_ShouldThrowException() throws IOException {
+//		List mockedList = mock
+		Blockin
 		List<List<Float>> test = FXCollections.observableArrayList();
 //		test.add(new float[]{1});
 		CSVService.write(null, test);
