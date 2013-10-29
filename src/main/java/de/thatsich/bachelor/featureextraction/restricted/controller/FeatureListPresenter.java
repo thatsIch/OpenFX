@@ -17,14 +17,14 @@ import javafx.scene.control.TreeView;
 
 import com.google.inject.Inject;
 
+import de.thatsich.bachelor.featureextraction.api.core.IFeatureState;
+import de.thatsich.bachelor.featureextraction.api.core.IFeatureVectorSets;
 import de.thatsich.bachelor.featureextraction.api.entities.FeatureVector;
 import de.thatsich.bachelor.featureextraction.api.entities.FeatureVectorSet;
 import de.thatsich.bachelor.featureextraction.restricted.command.FeatureCommandProvider;
 import de.thatsich.bachelor.featureextraction.restricted.command.commands.GetLastFeatureVectorIndexCommand;
 import de.thatsich.bachelor.featureextraction.restricted.command.commands.InitFeatureVectorSetListCommand;
 import de.thatsich.bachelor.featureextraction.restricted.command.commands.SetLastFeatureVectorIndexCommand;
-import de.thatsich.bachelor.featureextraction.restricted.models.FeatureState;
-import de.thatsich.bachelor.featureextraction.restricted.models.FeatureVectorSets;
 import de.thatsich.bachelor.featureextraction.restricted.views.tree.FeatureVectorSetTreeItemAdapter;
 import de.thatsich.bachelor.featureextraction.restricted.views.tree.FeatureVectorTreeItemAdapter;
 import de.thatsich.bachelor.featureextraction.restricted.views.tree.IFeatureSpaceTreeItemAdapter;
@@ -38,8 +38,8 @@ public class FeatureListPresenter extends AFXMLPresenter {
 	private TreeItem<IFeatureSpaceTreeItemAdapter> nodeTreeViewRoot;
 	
 	// Injects
-	@Inject private FeatureState featureState;
-	@Inject private FeatureVectorSets featureVectors;
+	@Inject private IFeatureState featureState;
+	@Inject private IFeatureVectorSets featureVectors;
 	@Inject private FeatureCommandProvider commander;
 	
 	@Override
@@ -209,7 +209,7 @@ public class FeatureListPresenter extends AFXMLPresenter {
 		@Override public void handle(WorkerStateEvent event) {
 			final List<FeatureVectorSet> featureVectorList = (List<FeatureVectorSet>) event.getSource().getValue();
 			
-			featureVectors.getFeatureVectorSetListProperty().get().addAll(featureVectorList);
+			featureVectors.getFeatureVectorSetListProperty().addAll(featureVectorList);
 			log.info("Added FeatureExtractor to Database.");
 		}
 	}

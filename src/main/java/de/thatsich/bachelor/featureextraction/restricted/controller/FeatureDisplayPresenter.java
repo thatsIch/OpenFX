@@ -8,9 +8,9 @@ import javafx.scene.control.Tooltip;
 
 import com.google.inject.Inject;
 
+import de.thatsich.bachelor.featureextraction.api.core.IFeatureVectorSets;
 import de.thatsich.bachelor.featureextraction.api.entities.FeatureVector;
 import de.thatsich.bachelor.featureextraction.api.entities.FeatureVectorSet;
-import de.thatsich.bachelor.featureextraction.restricted.models.FeatureVectorSets;
 import de.thatsich.core.javafx.AFXMLPresenter;
 
 public class FeatureDisplayPresenter extends AFXMLPresenter {
@@ -24,7 +24,7 @@ public class FeatureDisplayPresenter extends AFXMLPresenter {
 	@FXML private Label nodeLabelFeatureLabel;
 	
 	// Injects
-	@Inject private FeatureVectorSets featureVectors;
+	@Inject private IFeatureVectorSets featureVectors;
 	
 	// ================================================== 
 	// Initialization Implementation 

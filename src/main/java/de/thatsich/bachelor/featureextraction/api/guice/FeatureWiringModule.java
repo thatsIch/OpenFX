@@ -2,6 +2,9 @@ package de.thatsich.bachelor.featureextraction.api.guice;
 
 import com.google.inject.Scopes;
 
+import de.thatsich.bachelor.featureextraction.api.core.IFeatureExtractors;
+import de.thatsich.bachelor.featureextraction.api.core.IFeatureState;
+import de.thatsich.bachelor.featureextraction.api.core.IFeatureVectorSets;
 import de.thatsich.bachelor.featureextraction.restricted.models.FeatureExtractors;
 import de.thatsich.bachelor.featureextraction.restricted.models.FeatureState;
 import de.thatsich.bachelor.featureextraction.restricted.models.FeatureVectorSets;
@@ -42,9 +45,9 @@ public class FeatureWiringModule extends AWiringModule {
 
 	@Override
 	protected void bindModel() {
-		super.bind(FeatureExtractors.class).in(Scopes.SINGLETON);
-		super.bind(FeatureState.class).in(Scopes.SINGLETON);
-		super.bind(FeatureVectorSets.class).in(Scopes.SINGLETON);
+		super.bind(IFeatureExtractors.class).to(FeatureExtractors.class).in(Scopes.SINGLETON);
+		super.bind(IFeatureState.class).to(FeatureState.class).in(Scopes.SINGLETON);
+		super.bind(IFeatureVectorSets.class).to(FeatureVectorSets.class).in(Scopes.SINGLETON);
 	}
 
 	@Override

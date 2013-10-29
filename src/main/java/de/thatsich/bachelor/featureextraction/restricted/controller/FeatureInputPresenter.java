@@ -17,8 +17,11 @@ import javafx.util.StringConverter;
 
 import com.google.inject.Inject;
 
+import de.thatsich.bachelor.errorgeneration.api.core.IErrorEntries;
 import de.thatsich.bachelor.errorgeneration.api.entities.ErrorEntry;
-import de.thatsich.bachelor.errorgeneration.restricted.model.ErrorEntries;
+import de.thatsich.bachelor.featureextraction.api.core.IFeatureExtractors;
+import de.thatsich.bachelor.featureextraction.api.core.IFeatureState;
+import de.thatsich.bachelor.featureextraction.api.core.IFeatureVectorSets;
 import de.thatsich.bachelor.featureextraction.api.entities.FeatureVectorSet;
 import de.thatsich.bachelor.featureextraction.restricted.command.FeatureCommandProvider;
 import de.thatsich.bachelor.featureextraction.restricted.command.commands.DeleteFeatureVectorSetCommand;
@@ -28,9 +31,6 @@ import de.thatsich.bachelor.featureextraction.restricted.command.commands.GetLas
 import de.thatsich.bachelor.featureextraction.restricted.command.commands.InitFeatureExtractorListCommand;
 import de.thatsich.bachelor.featureextraction.restricted.command.commands.SetLastFeatureExtractorIndexCommand;
 import de.thatsich.bachelor.featureextraction.restricted.command.extractor.IFeatureExtractor;
-import de.thatsich.bachelor.featureextraction.restricted.models.FeatureExtractors;
-import de.thatsich.bachelor.featureextraction.restricted.models.FeatureState;
-import de.thatsich.bachelor.featureextraction.restricted.models.FeatureVectorSets;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.javafx.CommandExecutor;
 
@@ -46,10 +46,10 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 
 	// Injects
 	@Inject private FeatureCommandProvider commander;
-	@Inject private ErrorEntries errorEntryList;
-	@Inject private FeatureExtractors featureExtractors;
-	@Inject private FeatureState featureState;
-	@Inject private FeatureVectorSets featureVectors;
+	@Inject private IErrorEntries errorEntryList;
+	@Inject private IFeatureExtractors featureExtractors;
+	@Inject private IFeatureState featureState;
+	@Inject private IFeatureVectorSets featureVectors;
 	
 	@Override
 	protected void initComponents() {
@@ -175,10 +175,10 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 	// GUI Implementation 
 	// ==================================================
 	@FXML private void onExtractAction() {
-		final IFeatureExtractor extractor = this.featureExtractors.getSelectedFeatureExtractorProperty().get();
-		final ErrorEntry errorEntry = this.errorEntryList.getSelectedErrorEntryProperty().get();
-		final int frameSize = this.featureState.getFrameSizeProperty().get();
-		final Path folderPath = this.featureState.getFeatureVectorFolderPathProperty().get();
+		final IFeatureExtractor extractor = this.featureExtractors.getSelectedFeatureExtractor();
+		final ErrorEntry errorEntry = this.errorEntryList.getSelectedErrorEntry();
+		final int frameSize = this.featureState.getFrameSize();
+		final Path folderPath = this.featureState.getFeatureVectorFolderPath();
 		this.log.info("Extracted all necessary information for a FeatureVector.");
 		
 		if (extractor == null) throw new InvalidParameterException("Extractor is null.");
@@ -194,7 +194,7 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 	}
 	
 	@FXML private void onRemoveAction() {
-		final FeatureVectorSet set = this.featureVectors.getSelectedFeatureVectorSetProperty().get();
+		final FeatureVectorSet set = this.featureVectors.getSelectedFeatureVectorSet();
 		this.log.info("Fetched selected FeatureVector.");
 		
 		final RemoveFeatureVectorSetSucceededHandler handler = new RemoveFeatureVectorSetSucceededHandler();
@@ -205,10 +205,10 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 	}
 	
 	@FXML private void onResetAction() {
-		final ExecutorService executor = CommandExecutor.newFixedThreadPool(this.featureVectors.getFeatureVectorSetListProperty().get().size());
+		final ExecutorService executor = CommandExecutor.newFixedThreadPool(this.featureVectors.getFeatureVectorSetListProperty().size());
 		this.log.info("Initialized Executor for resetting all FeatureVectors.");
 		
-		for (FeatureVectorSet set : this.featureVectors.getFeatureVectorSetListProperty().get()) {
+		for (FeatureVectorSet set : this.featureVectors.getFeatureVectorSetListProperty()) {
 			final RemoveFeatureVectorSetSucceededHandler handler = new RemoveFeatureVectorSetSucceededHandler();
 			final DeleteFeatureVectorSetCommand command = this.commander.createRemoveFeatureVectorSetCommand(set);
 			command.setOnSucceeded(handler);
@@ -244,7 +244,7 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 		@Override public void handle(WorkerStateEvent event) {
 			final List<IFeatureExtractor> extractorList = (List<IFeatureExtractor>) event.getSource().getValue();
 			
-			featureExtractors.getFeatureExtractorsProperty().get().addAll(extractorList);
+			featureExtractors.getFeatureExtractorsProperty().addAll(extractorList);
 			log.info("Added FeatureExtractor to Database.");
 		}
 	}
@@ -259,7 +259,7 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 		@Override public void handle(WorkerStateEvent event) {
 			final FeatureVectorSet set = (FeatureVectorSet) event.getSource().getValue();
 			
-			featureVectors.getFeatureVectorSetListProperty().get().addAll(set);
+			featureVectors.getFeatureVectorSetListProperty().addAll(set);
 			log.info("Added FeatureVector to Database.");
 			
 			featureVectors.getSelectedFeatureVectorSetProperty().set(set);
