@@ -1,8 +1,5 @@
 package de.thatsich.bachelor.featureextraction.restricted.command.commands;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
@@ -12,19 +9,19 @@ import de.thatsich.core.javafx.ACommand;
 public class SetLastFeatureExtractorIndexCommand extends ACommand<Void> {
 
 	// Properties
-	private final IntegerProperty lastFeatureExtractorIndex = new SimpleIntegerProperty();
+	private final int lastFeatureExtractorIndex;
 	
 	// Injects
 	@Inject private FeatureConfigService config;
 	
 	@Inject
 	protected SetLastFeatureExtractorIndexCommand(@Assisted int lastFeatureExtractorIndex) {
-		this.lastFeatureExtractorIndex.set(lastFeatureExtractorIndex);
+		this.lastFeatureExtractorIndex = lastFeatureExtractorIndex;
 	}
 
 	@Override
 	protected Void call() throws Exception {
-		this.config.setLastFeatureExtractorIndexInt(this.lastFeatureExtractorIndex.get());
+		this.config.setLastFeatureExtractorIndexInt(this.lastFeatureExtractorIndex);
 		
 		return null;
 	}

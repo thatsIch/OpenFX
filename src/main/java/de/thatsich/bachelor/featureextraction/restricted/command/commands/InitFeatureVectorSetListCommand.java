@@ -8,8 +8,6 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 
 import com.google.inject.Inject;
@@ -24,29 +22,28 @@ import de.thatsich.core.javafx.ACommand;
 public class InitFeatureVectorSetListCommand extends ACommand<List<FeatureVectorSet>> {
 
 	// Fields
-	private final ObjectProperty<Path> featureVectorFolderPath = new SimpleObjectProperty<Path>();
+	private final Path featureVectorFolderPath;
 	
 	// Injects
 	@Inject private CSVService csv;
 	
 	@Inject
 	protected InitFeatureVectorSetListCommand(@Assisted Path featureVectorFolderPath) {
-		this.featureVectorFolderPath.set(featureVectorFolderPath);
+		this.featureVectorFolderPath = featureVectorFolderPath;
 	}
 
 	@Override
 	protected List<FeatureVectorSet> call() throws Exception {
-		final Path folderPath = featureVectorFolderPath.get(); 
 		final List<FeatureVectorSet> featureVectorSetList = new ArrayList<FeatureVectorSet>();
 		
-		if (Files.notExists(folderPath) || !Files.isDirectory(folderPath)) Files.createDirectories(folderPath);
+		if (Files.notExists(this.featureVectorFolderPath) || !Files.isDirectory(this.featureVectorFolderPath)) Files.createDirectories(this.featureVectorFolderPath);
 		
 		final String GLOB_PATTERN = "*.{csv}";
 		
 		// traverse whole directory and search for csv files
 		// try to open them
 		// and read each csv file
-		try (DirectoryStream<Path> stream = Files.newDirectoryStream(folderPath, GLOB_PATTERN)) {
+		try (DirectoryStream<Path> stream = Files.newDirectoryStream(this.featureVectorFolderPath, GLOB_PATTERN)) {
 			for (Path child : stream) {
 				
 				// split the file name 

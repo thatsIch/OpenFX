@@ -1,8 +1,5 @@
 package de.thatsich.bachelor.featureextraction.restricted.command.commands;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
@@ -12,19 +9,19 @@ import de.thatsich.core.javafx.ACommand;
 public class SetLastFrameSizeCommand extends ACommand<Void> {
 
 	// Properties
-	private final IntegerProperty lastFrameSize = new SimpleIntegerProperty();
+	private final int lastFrameSize;
 	
 	// Injects
 	@Inject private FeatureConfigService config;
 	
 	@Inject
 	protected SetLastFrameSizeCommand(@Assisted int lastFrameSize) {
-		this.lastFrameSize.set(lastFrameSize);
+		this.lastFrameSize = lastFrameSize;
 	}
 
 	@Override
 	protected Void call() throws Exception {
-		config.setLastFrameSizeInt(lastFrameSize.get());
+		config.setLastFrameSizeInt(this.lastFrameSize);
 		
 		return null;
 	}

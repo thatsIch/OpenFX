@@ -5,10 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 
 import org.opencv.core.Core;
@@ -29,36 +25,33 @@ import de.thatsich.core.opencv.Images;
 public class ExtractFeatureVectorSetCommand extends ACommand<FeatureVectorSet> {
 
 	// Properties
-	private final ObjectProperty<Path> featureInputFolderPath = new SimpleObjectProperty<Path>();
-	private final ObjectProperty<ErrorEntry> errorEntry = new SimpleObjectProperty<ErrorEntry>();
-	private final ObjectProperty<IFeatureExtractor> featureExtractor = new SimpleObjectProperty<IFeatureExtractor>();
-	private final IntegerProperty frameSize = new SimpleIntegerProperty();
+	private final Path featureInputFolderPath;
+	private final ErrorEntry errorEntry;
+	private final IFeatureExtractor featureExtractor;
+	private final int frameSize;
 	
 	// Injects
 	@Inject private CSVService csvService;
 	
 	@Inject
 	public ExtractFeatureVectorSetCommand(@Assisted Path folderPath, @Assisted ErrorEntry errorEntry, @Assisted IFeatureExtractor extractor, @Assisted int frameSize) {
-		this.featureInputFolderPath.set(folderPath);
-		this.errorEntry.set(errorEntry);
-		this.featureExtractor.set(extractor);
-		this.frameSize.set(frameSize);
+		this.featureInputFolderPath = folderPath;
+		this.errorEntry = errorEntry;
+		this.featureExtractor = extractor;
+		this.frameSize = frameSize;
 	}
 
 	@Override
 	protected FeatureVectorSet call() throws Exception {
-		final Path folderPath = featureInputFolderPath.get();
-		final String className = errorEntry.get().getErrorClassProperty().get();
-		final IFeatureExtractor extractor = featureExtractor.get();
-		final String extractorName = featureExtractor.get().getName();
-		final int size = frameSize.get();
+		final String className = this.errorEntry.getErrorClassProperty().get();
+		final String extractorName = this.featureExtractor.getName();
 		final String id = UUID.randomUUID().toString();
 		log.info("Prepared all necessary information.");
 		
 		final List<FeatureVector> featureVectorList = FXCollections.observableArrayList();
 		final List<List<Float>> csvResult = FXCollections.observableArrayList();
-		final Mat[][] originalErrorSplit = Images.split(errorEntry.get().getOriginalWithErrorMat(), size, size);
-		final Mat[][] errorSplit = Images.split(errorEntry.get().getErrorMat(), size, size);
+		final Mat[][] originalErrorSplit = Images.split(this.errorEntry.getOriginalWithErrorMat(), this.frameSize, this.frameSize);
+		final Mat[][] errorSplit = Images.split(this.errorEntry.getErrorMat(), this.frameSize, this.frameSize);
 		log.info("Prepared split images.");
 		
 		for (int col = 0; col < originalErrorSplit.length; col++) {
@@ -66,7 +59,7 @@ public class ExtractFeatureVectorSetCommand extends ACommand<FeatureVectorSet> {
 				try {
 					// extract feature vector
 					// and reshape them into a one row feature vector if its 2D mat and removes unecessary channels
-					final MatOfFloat featureVector = extractor.extractFeature(originalErrorSplit[col][row]);
+					final MatOfFloat featureVector = this.featureExtractor.extractFeature(originalErrorSplit[col][row]);
 					featureVector.reshape(1, 1);
 					List<Float> featureVectorAsList = new ArrayList<Float>(featureVector.toList());
 
@@ -92,13 +85,13 @@ public class ExtractFeatureVectorSetCommand extends ACommand<FeatureVectorSet> {
 		StringBuffer buffer = new StringBuffer();
 		buffer.append(className + "_");
 		buffer.append(extractorName + "_");
-		buffer.append(size + "_"); 	
+		buffer.append(this.frameSize + "_"); 	
 		buffer.append(id + ".csv");
 		
-		final Path filePath = folderPath.resolve(buffer.toString());
+		final Path filePath = this.featureInputFolderPath.resolve(buffer.toString());
 		csvService.write(filePath, csvResult);
 		
 		log.info("Extracted FeatureVectors: " + featureVectorList.size());
-		return new FeatureVectorSet(filePath, className, extractorName, size, id, featureVectorList);
+		return new FeatureVectorSet(filePath, className, extractorName, this.frameSize, id, featureVectorList);
 	}
 }
