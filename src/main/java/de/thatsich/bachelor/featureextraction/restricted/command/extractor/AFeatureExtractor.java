@@ -1,4 +1,4 @@
-package de.thatsich.bachelor.featureextraction.api.entities;
+package de.thatsich.bachelor.featureextraction.restricted.command.extractor;
 
 import de.thatsich.bachelor.featureextraction.api.core.IFeatureExtractor;
 import de.thatsich.core.Log;

@@ -6,13 +6,13 @@ import java.util.List;
 import com.google.inject.Inject;
 
 import de.thatsich.bachelor.featureextraction.api.core.IFeatureExtractor;
-import de.thatsich.bachelor.featureextraction.api.entities.Gradient;
-import de.thatsich.bachelor.featureextraction.api.entities.GrayLevelCooccurenceHistogram;
-import de.thatsich.bachelor.featureextraction.api.entities.HuMoments;
-import de.thatsich.bachelor.featureextraction.api.entities.LocalBinaryPatternHistogram;
-import de.thatsich.bachelor.featureextraction.api.entities.Mean;
-import de.thatsich.bachelor.featureextraction.api.entities.Variance;
 import de.thatsich.bachelor.featureextraction.restricted.command.FeatureExtractorProvider;
+import de.thatsich.bachelor.featureextraction.restricted.command.extractor.Gradient;
+import de.thatsich.bachelor.featureextraction.restricted.command.extractor.GrayLevelCooccurenceHistogram;
+import de.thatsich.bachelor.featureextraction.restricted.command.extractor.HuMoments;
+import de.thatsich.bachelor.featureextraction.restricted.command.extractor.LocalBinaryPatternHistogram;
+import de.thatsich.bachelor.featureextraction.restricted.command.extractor.Mean;
+import de.thatsich.bachelor.featureextraction.restricted.command.extractor.Variance;
 import de.thatsich.core.javafx.ACommand;
 
 public class InitFeatureExtractorListCommand extends ACommand<List<IFeatureExtractor>> {

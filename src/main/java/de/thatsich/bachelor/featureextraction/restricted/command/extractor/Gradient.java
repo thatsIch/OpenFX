@@ -1,4 +1,4 @@
-package de.thatsich.bachelor.featureextraction.api.entities;
+package de.thatsich.bachelor.featureextraction.restricted.command.extractor;
 
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;

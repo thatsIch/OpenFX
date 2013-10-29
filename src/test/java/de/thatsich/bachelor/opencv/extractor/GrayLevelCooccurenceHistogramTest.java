@@ -7,7 +7,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.opencv.core.MatOfInt;
 
-import de.thatsich.bachelor.featureextraction.api.entities.GrayLevelCooccurenceHistogram;
+import de.thatsich.bachelor.featureextraction.restricted.command.extractor.GrayLevelCooccurenceHistogram;
 
 @RunWith(JUnit4.class)
 public class GrayLevelCooccurenceHistogramTest extends AFeatureExtractorTest {
