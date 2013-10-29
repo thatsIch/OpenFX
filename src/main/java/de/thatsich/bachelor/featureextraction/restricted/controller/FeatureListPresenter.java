@@ -19,7 +19,7 @@ import com.google.inject.Inject;
 
 import de.thatsich.bachelor.featureextraction.api.entities.FeatureVector;
 import de.thatsich.bachelor.featureextraction.api.entities.FeatureVectorSet;
-import de.thatsich.bachelor.featureextraction.restricted.application.guice.FeatureCommandProvider;
+import de.thatsich.bachelor.featureextraction.restricted.command.FeatureCommandProvider;
 import de.thatsich.bachelor.featureextraction.restricted.command.commands.GetLastFeatureVectorIndexCommand;
 import de.thatsich.bachelor.featureextraction.restricted.command.commands.InitFeatureVectorSetListCommand;
 import de.thatsich.bachelor.featureextraction.restricted.command.commands.SetLastFeatureVectorIndexCommand;

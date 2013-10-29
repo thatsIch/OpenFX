@@ -12,7 +12,7 @@ import de.thatsich.bachelor.featureextraction.api.entities.HuMoments;
 import de.thatsich.bachelor.featureextraction.api.entities.LocalBinaryPatternHistogram;
 import de.thatsich.bachelor.featureextraction.api.entities.Mean;
 import de.thatsich.bachelor.featureextraction.api.entities.Variance;
-import de.thatsich.bachelor.featureextraction.restricted.application.guice.FeatureExtractorProvider;
+import de.thatsich.bachelor.featureextraction.restricted.command.FeatureExtractorProvider;
 import de.thatsich.core.javafx.ACommand;
 
 public class InitFeatureExtractorListCommand extends ACommand<List<IFeatureExtractor>> {

@@ -2,7 +2,7 @@ package de.thatsich.bachelor.featureextraction.api.guice;
 
 import java.util.List;
 
-import de.thatsich.bachelor.featureextraction.restricted.application.guice.FeatureCommandProvider;
+import de.thatsich.bachelor.featureextraction.restricted.command.FeatureCommandProvider;
 import de.thatsich.core.guice.ACommandModule;
 import de.thatsich.core.guice.ICommandProvider;
 

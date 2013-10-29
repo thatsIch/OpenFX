@@ -21,7 +21,7 @@ import de.thatsich.bachelor.errorgeneration.api.entities.ErrorEntry;
 import de.thatsich.bachelor.errorgeneration.restricted.model.ErrorEntries;
 import de.thatsich.bachelor.featureextraction.api.core.IFeatureExtractor;
 import de.thatsich.bachelor.featureextraction.api.entities.FeatureVectorSet;
-import de.thatsich.bachelor.featureextraction.restricted.application.guice.FeatureCommandProvider;
+import de.thatsich.bachelor.featureextraction.restricted.command.FeatureCommandProvider;
 import de.thatsich.bachelor.featureextraction.restricted.command.commands.DeleteFeatureVectorSetCommand;
 import de.thatsich.bachelor.featureextraction.restricted.command.commands.ExtractFeatureVectorSetCommand;
 import de.thatsich.bachelor.featureextraction.restricted.command.commands.GetLastFeatureExtractorIndexCommand;

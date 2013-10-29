@@ -1,4 +1,4 @@
-package de.thatsich.bachelor.featureextraction.restricted.application.guice;
+package de.thatsich.bachelor.featureextraction.restricted.command;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;
