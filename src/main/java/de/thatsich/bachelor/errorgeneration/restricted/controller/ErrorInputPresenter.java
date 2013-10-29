@@ -22,20 +22,20 @@ import org.opencv.core.Mat;
 
 import com.google.inject.Inject;
 
+import de.thatsich.bachelor.errorgeneration.api.core.IErrorEntries;
+import de.thatsich.bachelor.errorgeneration.api.core.IErrorGenerators;
+import de.thatsich.bachelor.errorgeneration.api.core.IErrorState;
 import de.thatsich.bachelor.errorgeneration.api.entities.ErrorEntry;
 import de.thatsich.bachelor.errorgeneration.api.entities.IErrorGenerator;
-import de.thatsich.bachelor.errorgeneration.restricted.controller.commands.ApplyErrorCommand;
-import de.thatsich.bachelor.errorgeneration.restricted.controller.commands.CreateErrorImageCommand;
-import de.thatsich.bachelor.errorgeneration.restricted.controller.commands.DeleteErrorEntryCommand;
-import de.thatsich.bachelor.errorgeneration.restricted.controller.commands.GetLastErrorCountCommand;
-import de.thatsich.bachelor.errorgeneration.restricted.controller.commands.GetLastErrorGeneratorIndexCommand;
-import de.thatsich.bachelor.errorgeneration.restricted.controller.commands.InitErrorGeneratorListCommand;
-import de.thatsich.bachelor.errorgeneration.restricted.controller.commands.SetLastErrorCountCommand;
-import de.thatsich.bachelor.errorgeneration.restricted.controller.commands.SetLastErrorGeneratorIndexCommand;
-import de.thatsich.bachelor.errorgeneration.restricted.models.ErrorEntries;
-import de.thatsich.bachelor.errorgeneration.restricted.models.ErrorGenerators;
-import de.thatsich.bachelor.errorgeneration.restricted.models.ErrorState;
-import de.thatsich.bachelor.errorgeneration.restricted.services.ErrorCommandService;
+import de.thatsich.bachelor.errorgeneration.restricted.command.ErrorCommandProvider;
+import de.thatsich.bachelor.errorgeneration.restricted.command.commands.ApplyErrorCommand;
+import de.thatsich.bachelor.errorgeneration.restricted.command.commands.CreateErrorImageCommand;
+import de.thatsich.bachelor.errorgeneration.restricted.command.commands.DeleteErrorEntryCommand;
+import de.thatsich.bachelor.errorgeneration.restricted.command.commands.GetLastErrorCountCommand;
+import de.thatsich.bachelor.errorgeneration.restricted.command.commands.GetLastErrorGeneratorIndexCommand;
+import de.thatsich.bachelor.errorgeneration.restricted.command.commands.InitErrorGeneratorListCommand;
+import de.thatsich.bachelor.errorgeneration.restricted.command.commands.SetLastErrorCountCommand;
+import de.thatsich.bachelor.errorgeneration.restricted.command.commands.SetLastErrorGeneratorIndexCommand;
 import de.thatsich.bachelor.imageprocessing.api.core.IImageEntries;
 import de.thatsich.bachelor.imageprocessing.api.entities.ImageEntry;
 import de.thatsich.core.javafx.AFXMLPresenter;
@@ -62,10 +62,10 @@ public class ErrorInputPresenter extends AFXMLPresenter {
 	
 	// Injects
 	@Inject private IImageEntries imageEntryList;
-	@Inject private ErrorState errorState;
-	@Inject private ErrorEntries errorEntryList;
-	@Inject private ErrorGenerators errorGeneratorList;
-	@Inject private ErrorCommandService commander;
+	@Inject private IErrorState errorState;
+	@Inject private IErrorEntries errorEntryList;
+	@Inject private IErrorGenerators errorGeneratorList;
+	@Inject private ErrorCommandProvider commander;
 	
 	// ================================================== 
 	// Initializable Implementation 

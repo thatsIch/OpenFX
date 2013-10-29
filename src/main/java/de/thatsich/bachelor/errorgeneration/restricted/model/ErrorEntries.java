@@ -1,13 +1,14 @@
-package de.thatsich.bachelor.errorgeneration.restricted.models;
+package de.thatsich.bachelor.errorgeneration.restricted.model;
 
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
+import de.thatsich.bachelor.errorgeneration.api.core.IErrorEntries;
 import de.thatsich.bachelor.errorgeneration.api.entities.ErrorEntry;
 
-public class ErrorEntries {
+public class ErrorEntries implements IErrorEntries {
 
 	// Properties
 	final private ListProperty<ErrorEntry> errorEntries = new SimpleListProperty<ErrorEntry>(FXCollections.<ErrorEntry>observableArrayList());

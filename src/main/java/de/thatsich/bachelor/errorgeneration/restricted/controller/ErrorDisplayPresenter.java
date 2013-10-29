@@ -7,8 +7,8 @@ import javafx.scene.image.ImageView;
 
 import com.google.inject.Inject;
 
+import de.thatsich.bachelor.errorgeneration.api.core.IErrorEntries;
 import de.thatsich.bachelor.errorgeneration.api.entities.ErrorEntry;
-import de.thatsich.bachelor.errorgeneration.restricted.models.ErrorEntries;
 import de.thatsich.core.javafx.AFXMLPresenter;
 
 public class ErrorDisplayPresenter extends AFXMLPresenter {
@@ -17,7 +17,7 @@ public class ErrorDisplayPresenter extends AFXMLPresenter {
 	@FXML private ImageView nodeImageViewError;
 	
 	// Injects
-	@Inject private ErrorEntries errorEntryList;
+	@Inject private IErrorEntries errorEntryList;
 
 	@Override
 	protected void initComponents() {

@@ -1,8 +1,8 @@
-package de.thatsich.bachelor.errorgeneration.restricted.controller.commands;
+package de.thatsich.bachelor.errorgeneration.restricted.command.commands;
 
 import com.google.inject.Inject;
 
-import de.thatsich.bachelor.errorgeneration.restricted.services.ErrorConfigService;
+import de.thatsich.bachelor.errorgeneration.restricted.service.ErrorConfigService;
 import de.thatsich.core.javafx.ACommand;
 
 public class GetLastErrorEntryIndexCommand extends ACommand<Integer> {

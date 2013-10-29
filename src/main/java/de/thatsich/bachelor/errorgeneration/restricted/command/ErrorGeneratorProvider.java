@@ -1,4 +1,4 @@
-package de.thatsich.bachelor.errorgeneration.restricted.application.guice;
+package de.thatsich.bachelor.errorgeneration.restricted.command;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;

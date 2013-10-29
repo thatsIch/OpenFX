@@ -1,36 +1,36 @@
-package de.thatsich.bachelor.errorgeneration.restricted.controller.commands;
+package de.thatsich.bachelor.errorgeneration.restricted.command.commands;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.concurrent.CancellationException;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-
-import org.opencv.core.Mat;
 
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
 import de.thatsich.bachelor.errorgeneration.api.entities.ErrorEntry;
 import de.thatsich.core.javafx.ACommand;
-import de.thatsich.core.opencv.Images;
 
-public class CreateErrorImageCommand extends ACommand<ErrorEntry> {
+public class DeleteErrorEntryCommand extends ACommand<ErrorEntry> {
 
-	// Properties
 	final private ObjectProperty<ErrorEntry> entry = new SimpleObjectProperty<ErrorEntry>();
 	
 	@Inject
-	public CreateErrorImageCommand(@Assisted ErrorEntry entry) {
+	public DeleteErrorEntryCommand(@Assisted ErrorEntry entry) {
 		this.entry.set(entry);
 	}
 
 	@Override
 	protected ErrorEntry call() throws Exception {
-		final Mat imageMat = entry.get().getMergedMat();
-		final Path imagePath = entry.get().getPath();
+		if (entry.get() == null) throw new CancellationException("Command not initialized properly.");
 		
-		Images.store(imageMat, imagePath);
-		log.info("Stored merged Mat into File.");
+		Path path = entry.get().getPath();
+		if (Files.exists(path)) {
+			Files.delete(path);
+			log.info("File deleted.");
+		}
 		
 		return entry.get();
 	}

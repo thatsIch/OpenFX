@@ -16,13 +16,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import com.google.inject.Inject;
 
+import de.thatsich.bachelor.errorgeneration.api.core.IErrorEntries;
+import de.thatsich.bachelor.errorgeneration.api.core.IErrorState;
 import de.thatsich.bachelor.errorgeneration.api.entities.ErrorEntry;
-import de.thatsich.bachelor.errorgeneration.restricted.controller.commands.GetLastErrorEntryIndexCommand;
-import de.thatsich.bachelor.errorgeneration.restricted.controller.commands.InitErrorEntryListCommand;
-import de.thatsich.bachelor.errorgeneration.restricted.controller.commands.SetLastErrorEntryIndexCommand;
-import de.thatsich.bachelor.errorgeneration.restricted.models.ErrorEntries;
-import de.thatsich.bachelor.errorgeneration.restricted.models.ErrorState;
-import de.thatsich.bachelor.errorgeneration.restricted.services.ErrorCommandService;
+import de.thatsich.bachelor.errorgeneration.restricted.command.ErrorCommandProvider;
+import de.thatsich.bachelor.errorgeneration.restricted.command.commands.GetLastErrorEntryIndexCommand;
+import de.thatsich.bachelor.errorgeneration.restricted.command.commands.InitErrorEntryListCommand;
+import de.thatsich.bachelor.errorgeneration.restricted.command.commands.SetLastErrorEntryIndexCommand;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.javafx.CommandExecutor;
 
@@ -34,9 +34,9 @@ public class ErrorListPresenter extends AFXMLPresenter {
 	@FXML TableColumn<ErrorEntry, String> nodeTableColumnErrorName;
 	
 	// Injects
-	@Inject private ErrorState errorState;
-	@Inject private ErrorEntries errorEntryList;
-	@Inject private ErrorCommandService commander;
+	@Inject private IErrorState errorState;
+	@Inject private IErrorEntries errorEntryList;
+	@Inject private ErrorCommandProvider commander;
 	
 	// ==================================================
 	// Initializable Implementation

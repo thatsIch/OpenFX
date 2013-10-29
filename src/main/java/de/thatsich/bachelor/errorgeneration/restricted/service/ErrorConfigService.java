@@ -1,4 +1,4 @@
-package de.thatsich.bachelor.errorgeneration.restricted.services;
+package de.thatsich.bachelor.errorgeneration.restricted.service;
 
 import de.thatsich.core.AConfigurationService;
 

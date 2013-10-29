@@ -1,4 +1,4 @@
-package de.thatsich.bachelor.errorgeneration.restricted.controller.commands;
+package de.thatsich.bachelor.errorgeneration.restricted.command.commands;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -6,7 +6,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
-import de.thatsich.bachelor.errorgeneration.restricted.services.ErrorConfigService;
+import de.thatsich.bachelor.errorgeneration.restricted.service.ErrorConfigService;
 import de.thatsich.core.javafx.ACommand;
 
 public class SetLastErrorCountCommand extends ACommand<Void> {
