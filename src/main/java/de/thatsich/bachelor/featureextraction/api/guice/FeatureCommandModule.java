@@ -1,18 +1,15 @@
 package de.thatsich.bachelor.featureextraction.api.guice;
 
-import com.google.inject.AbstractModule;
-import com.google.inject.assistedinject.FactoryModuleBuilder;
+import java.util.List;
 
 import de.thatsich.bachelor.featureextraction.restricted.application.guice.FeatureCommandProvider;
+import de.thatsich.core.guice.ACommandModule;
+import de.thatsich.core.guice.ICommandProvider;
 
 
-public class FeatureCommandModule extends AbstractModule {
-
+public class FeatureCommandModule extends ACommandModule {
 	@Override
-	public void configure() {
-		this.install(
-			new FactoryModuleBuilder()
-			.build(FeatureCommandProvider.class)
-		);
+	protected void buildProviderModule(List<Class<? extends ICommandProvider>> providerList) {
+		providerList.add(FeatureCommandProvider.class);
 	}
 }

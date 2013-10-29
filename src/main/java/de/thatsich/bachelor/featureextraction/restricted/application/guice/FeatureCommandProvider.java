@@ -15,8 +15,9 @@ import de.thatsich.bachelor.featureextraction.restricted.controller.commands.Ini
 import de.thatsich.bachelor.featureextraction.restricted.controller.commands.SetLastFeatureExtractorIndexCommand;
 import de.thatsich.bachelor.featureextraction.restricted.controller.commands.SetLastFeatureVectorIndexCommand;
 import de.thatsich.bachelor.featureextraction.restricted.controller.commands.SetLastFrameSizeCommand;
+import de.thatsich.core.guice.ICommandProvider;
 
-public interface FeatureCommandProvider {
+public interface FeatureCommandProvider extends ICommandProvider {
 	public InitFeatureExtractorListCommand createInitFeatureExtractorListCommand();
 	public InitFeatureVectorSetListCommand createInitFeatureVectorListCommand(Path folderPath);
 	
