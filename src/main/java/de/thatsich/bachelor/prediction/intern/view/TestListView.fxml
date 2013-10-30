@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.HBox?>
 
-<fx:root type="HBox" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="de.thatsich.bachelor.prediction.intern.control.TestListPresenter">
+<fx:root type="HBox" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="de.thatsich.bachelor.prediction.intern.control.PredictionListPresenter">
   <TableView id="node" fx:id="nodeTableViewBinaryPredictionList" prefHeight="-1.0" prefWidth="-1.0">
     <columns>
       <TableColumn editable="false" prefWidth="100.0" sortable="false" text="Class" fx:id="nodeTableColumnClassName" />

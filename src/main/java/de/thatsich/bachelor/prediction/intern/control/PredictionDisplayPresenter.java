@@ -21,7 +21,7 @@ import de.thatsich.bachelor.prediction.intern.view.BinaryPredictionSplitChannelV
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.opencv.Images;
 
-public class TestDisplayPresenter extends AFXMLPresenter {
+public class PredictionDisplayPresenter extends AFXMLPresenter {
 
 	// Nodes
 	@FXML private ImageView nodeImageViewPrediction;

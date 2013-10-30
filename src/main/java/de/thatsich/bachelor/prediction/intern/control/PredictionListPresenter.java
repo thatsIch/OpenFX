@@ -25,7 +25,7 @@ import de.thatsich.bachelor.prediction.intern.model.PredictionState;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.javafx.CommandExecutor;
 
-public class TestListPresenter extends AFXMLPresenter {
+public class PredictionListPresenter extends AFXMLPresenter {
 
 	// Nodes
 	@FXML private TableView<BinaryPrediction> nodeTableViewBinaryPredictionList;

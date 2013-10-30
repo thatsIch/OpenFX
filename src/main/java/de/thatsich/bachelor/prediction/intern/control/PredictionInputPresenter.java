@@ -24,7 +24,7 @@ import de.thatsich.bachelor.prediction.intern.model.BinaryPredictions;
 import de.thatsich.bachelor.prediction.intern.model.PredictionState;
 import de.thatsich.core.javafx.AFXMLPresenter;
 
-public class TestInputPresenter extends AFXMLPresenter {
+public class PredictionInputPresenter extends AFXMLPresenter {
 
 	// Nodes
 	@FXML private Button nodeButtonTestBinaryClassification;
