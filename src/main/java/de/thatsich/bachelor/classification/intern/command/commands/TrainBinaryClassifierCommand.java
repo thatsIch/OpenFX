@@ -4,12 +4,6 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.UUID;
 
-import javafx.beans.property.ListProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleListProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.collections.FXCollections;
-
 import org.opencv.core.MatOfFloat;
 
 import com.google.inject.Inject;
@@ -25,10 +19,10 @@ import de.thatsich.core.javafx.ACommand;
 public class TrainBinaryClassifierCommand extends ACommand<IBinaryClassification> {
 
 	// Properties
-	private final ObjectProperty<Path> binaryClassifierFolderPath = new SimpleObjectProperty<Path>();
-	private final ObjectProperty<IBinaryClassifier> binaryClassifier = new SimpleObjectProperty<IBinaryClassifier>();
-	private final ObjectProperty<FeatureVectorSet> selectedFeatureVector = new SimpleObjectProperty<FeatureVectorSet>();
-	private final ListProperty<FeatureVectorSet> featureVectorList = new SimpleListProperty<FeatureVectorSet>(FXCollections.<FeatureVectorSet> observableArrayList());
+	private final Path binaryClassifierFolderPath;
+	private final IBinaryClassifier binaryClassifier;
+	private final FeatureVectorSet selectedFeatureVector;
+	private final List<FeatureVectorSet> featureVectorList;
 
 	@Inject
 	public TrainBinaryClassifierCommand(
@@ -36,22 +30,18 @@ public class TrainBinaryClassifierCommand extends ACommand<IBinaryClassification
 			@Assisted IBinaryClassifier classifier,
 			@Assisted FeatureVectorSet selected,
 			@Assisted List<FeatureVectorSet> all) {
-		this.binaryClassifierFolderPath.set(binaryClassifierFolderPath);
-		this.binaryClassifier.set(classifier);
-		this.selectedFeatureVector.set(selected);
-		this.featureVectorList.addAll(all);
+		this.binaryClassifierFolderPath = binaryClassifierFolderPath;
+		this.binaryClassifier = classifier;
+		this.selectedFeatureVector = selected;
+		this.featureVectorList = all;
 	}
 
 	@Override
 	protected IBinaryClassification call() throws Exception {
-		final IBinaryClassifier bc = binaryClassifier.get();
-		final FeatureVectorSet selected = selectedFeatureVector.get();
-		final List<FeatureVectorSet> list = featureVectorList.get();
-
-		final String binaryClassifierName = bc.getName();
-		final String featureExtractorName = selected.getExtractorNameProperty().get();
-		final int frameSize = selected.getFrameSizeProperty().get();
-		final String errorClassName = selected.getClassNameProperty().get();
+		final String binaryClassifierName = this.binaryClassifier.getName();
+		final String featureExtractorName = this.selectedFeatureVector.getExtractorNameProperty().get();
+		final int frameSize = this.selectedFeatureVector.getFrameSizeProperty().get();
+		final String errorClassName = this.selectedFeatureVector.getClassNameProperty().get();
 		final String id = UUID.randomUUID().toString();
 
 		final MatOfFloat positive = new MatOfFloat();
@@ -64,7 +54,7 @@ public class TrainBinaryClassifierCommand extends ACommand<IBinaryClassification
 		// extract all float lists and transform them into MatOfFloats
 		// use .t() on them to transpose them
 		// TODO Matching of same category
-		for (FeatureVectorSet current : list) {
+		for (FeatureVectorSet current : this.featureVectorList) {
 			for (FeatureVector vector : current.getFeatureVectorList()) {
 
 				final float[] floatArray = new float[vector.getVectorProperty().size()];
@@ -89,13 +79,13 @@ public class TrainBinaryClassifierCommand extends ACommand<IBinaryClassification
 		buffer.append(frameSize + "_");
 		buffer.append(errorClassName + "_");
 		buffer.append(id + ".yaml");
-		final Path filePath = binaryClassifierFolderPath.get().resolve(buffer.toString());
+		final Path filePath = binaryClassifierFolderPath.resolve(buffer.toString());
 		log.info("Created FilePath");
 
 		final BinaryClassifierConfiguration config = new BinaryClassifierConfiguration(filePath, binaryClassifierName, featureExtractorName, frameSize, errorClassName, id);
 		log.info("Created BinaryClassifierConfiguration.");
 
-		final IBinaryClassification classification = bc.train(positive, negative, config);
+		final IBinaryClassification classification = this.binaryClassifier.train(positive, negative, config);
 		log.info("Trained Binary Classifier.");
 
 		classification.save(filePath.toString());

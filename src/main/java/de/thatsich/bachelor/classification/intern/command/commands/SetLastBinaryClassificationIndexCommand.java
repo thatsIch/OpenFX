@@ -1,8 +1,5 @@
 package de.thatsich.bachelor.classification.intern.command.commands;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
@@ -12,19 +9,19 @@ import de.thatsich.core.javafx.ACommand;
 public class SetLastBinaryClassificationIndexCommand extends ACommand<Void> {
 
 	// Properties
-	private final IntegerProperty lastBinaryClassificationIndex = new SimpleIntegerProperty();
+	private final int lastBinaryClassificationIndex;
 	
 	// Injects
-	@Inject ClassificationConfigService config;
+	@Inject private ClassificationConfigService config;
 	
 	@Inject
 	protected SetLastBinaryClassificationIndexCommand(@Assisted int lastBinaryClassificationIndex) {
-		this.lastBinaryClassificationIndex.set(lastBinaryClassificationIndex);
+		this.lastBinaryClassificationIndex = lastBinaryClassificationIndex;
 	}
 
 	@Override
 	protected Void call() throws Exception {
-		config.setLastBinaryClassificationIndexInt(lastBinaryClassificationIndex.get());
+		this.config.setLastBinaryClassificationIndexInt(this.lastBinaryClassificationIndex);
 		
 		return null;
 	}

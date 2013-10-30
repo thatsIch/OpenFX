@@ -7,8 +7,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 
 import org.opencv.ml.CvRTrees;
@@ -27,26 +25,25 @@ public class InitBinaryClassificationListCommand extends ACommand<List<IBinaryCl
 	
 	@Inject private BinaryClassificationProvider provider;
 	
-	private final ObjectProperty<Path> binaryClassificationFolderPath = new SimpleObjectProperty<Path>();
+	private final Path binaryClassificationFolderPath;
 	
 	@Inject
 	protected InitBinaryClassificationListCommand(@Assisted Path binaryClassificationFolderPath) {
-		this.binaryClassificationFolderPath.set(binaryClassificationFolderPath);
+		this.binaryClassificationFolderPath = binaryClassificationFolderPath;
 	}
 
 	@Override
 	protected List<IBinaryClassification> call() throws Exception {
-		final Path folderPath = binaryClassificationFolderPath.get(); 
 		final List<IBinaryClassification> binaryClassificationList = FXCollections.observableArrayList();
 		
-		if (Files.notExists(folderPath) || !Files.isDirectory(folderPath)) Files.createDirectories(folderPath);
+		if (Files.notExists(this.binaryClassificationFolderPath) || !Files.isDirectory(this.binaryClassificationFolderPath)) Files.createDirectories(this.binaryClassificationFolderPath);
 		
 		final String GLOB_PATTERN = "*.{yaml}";
 		
 		// traverse whole directory and search for yaml files
 		// try to open them
 		// and parse the correct classifier
-		try (DirectoryStream<Path> stream = Files.newDirectoryStream(folderPath, GLOB_PATTERN)) {
+		try (DirectoryStream<Path> stream = Files.newDirectoryStream(this.binaryClassificationFolderPath, GLOB_PATTERN)) {
 			for (Path child : stream) {
 				try {
 				// split the file name 
@@ -55,14 +52,14 @@ public class InitBinaryClassificationListCommand extends ACommand<List<IBinaryCl
 				final String fileName = child.getFileName().toString();
 				final String[] fileNameSplit = fileName.split("_");
 				if (fileNameSplit.length != 5) throw new WrongNumberArgsException("Expected 5 encoded information but found " + fileNameSplit.length);
-				log.info("Split FileNmae.");
+				this.log.info("Split FileNmae.");
 				
 				final String classificationName = fileNameSplit[0];
 				final String extractorName = fileNameSplit[1];
 				final int frameSize = Integer.parseInt(fileNameSplit[2]);
 				final String errorName = fileNameSplit[3];
 				final String id = fileNameSplit[4];
-				log.info("Prepared SubInformation.");
+				this.log.info("Prepared SubInformation.");
 				
 				final BinaryClassifierConfiguration config = new BinaryClassifierConfiguration(child, classificationName, extractorName, frameSize, errorName, id);
 				final IBinaryClassification classification;
@@ -76,13 +73,13 @@ public class InitBinaryClassificationListCommand extends ACommand<List<IBinaryCl
 					default:
 						throw new IllegalStateException("Unknown Classification");
 				}
-				log.info("Resolved BinaryClassification.");
+				this.log.info("Resolved BinaryClassification.");
 				
 				classification.load(child.toAbsolutePath().toString());
-				log.info("Loaded YAML into BinaryClassification.");
+				this.log.info("Loaded YAML into BinaryClassification.");
 
 				binaryClassificationList.add(classification);
-				log.info("Added " + child + " with Attribute " + Files.probeContentType(child));
+				this.log.info("Added " + child + " with Attribute " + Files.probeContentType(child));
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -91,7 +88,7 @@ public class InitBinaryClassificationListCommand extends ACommand<List<IBinaryCl
 		} catch (IOException | DirectoryIteratorException e) {
 			e.printStackTrace();
 		}
-		log.info("All BinaryClassification added.");
+		this.log.info("All BinaryClassification added.");
 		
 		return binaryClassificationList;
 	}

@@ -12,6 +12,6 @@ public class GetLastBinaryClassifierIndexCommand extends ACommand<Integer> {
 
 	@Override
 	protected Integer call() throws Exception {
-		return config.getLastBinaryClassifierIndexInt();
+		return this.config.getLastBinaryClassifierIndexInt();
 	}
 }

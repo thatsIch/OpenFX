@@ -13,14 +13,14 @@ import de.thatsich.core.javafx.ACommand;
 
 public class InitBinaryClassifierListCommand extends ACommand<List<IBinaryClassifier>> {
 
-	@Inject BinaryClassifierProvider provider;
+	@Inject private BinaryClassifierProvider provider;
 
 	@Override
 	protected List<IBinaryClassifier> call() throws Exception {
 		final List<IBinaryClassifier> binaryClassifierList = new ArrayList<IBinaryClassifier>();
 		
-		binaryClassifierList.add(provider.get(SVMBinaryClassifier.class));
-		binaryClassifierList.add(provider.get(RandomForestBinaryClassifier.class));
+		binaryClassifierList.add(this.provider.get(SVMBinaryClassifier.class));
+		binaryClassifierList.add(this.provider.get(RandomForestBinaryClassifier.class));
 		
 		return binaryClassifierList;
 	}
