@@ -16,23 +16,23 @@ import javafx.util.StringConverter;
 
 import com.google.inject.Inject;
 
-import de.thatsich.bachelor.classification.intern.command.TrainCommandProvider;
-import de.thatsich.bachelor.classification.intern.command.classifier.IBinaryClassification;
+import de.thatsich.bachelor.classification.api.core.IBinaryClassifications;
+import de.thatsich.bachelor.classification.api.core.IBinaryClassifiers;
+import de.thatsich.bachelor.classification.api.core.IClassificationState;
+import de.thatsich.bachelor.classification.api.entities.IBinaryClassification;
+import de.thatsich.bachelor.classification.intern.command.ClassificationCommandProvider;
 import de.thatsich.bachelor.classification.intern.command.classifier.IBinaryClassifier;
 import de.thatsich.bachelor.classification.intern.command.commands.GetLastBinaryClassifierIndexCommand;
 import de.thatsich.bachelor.classification.intern.command.commands.InitBinaryClassifierListCommand;
 import de.thatsich.bachelor.classification.intern.command.commands.RemoveBinaryClassificationCommand;
 import de.thatsich.bachelor.classification.intern.command.commands.SetLastBinaryClassifierIndexCommand;
 import de.thatsich.bachelor.classification.intern.command.commands.TrainBinaryClassifierCommand;
-import de.thatsich.bachelor.classification.intern.model.BinaryClassifications;
-import de.thatsich.bachelor.classification.intern.model.BinaryClassifiers;
-import de.thatsich.bachelor.classification.intern.model.TrainState;
+import de.thatsich.bachelor.featureextraction.api.core.IFeatureVectorSets;
 import de.thatsich.bachelor.featureextraction.api.entities.FeatureVectorSet;
-import de.thatsich.bachelor.featureextraction.restricted.models.FeatureVectorSets;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.javafx.CommandExecutor;
 
-public class TrainInputPresenter extends AFXMLPresenter {
+public class ClassificationInputPresenter extends AFXMLPresenter {
 
 	// Nodes
 	@FXML ChoiceBox<IBinaryClassifier> nodeChoiceBoxBinaryClassifier;
@@ -41,11 +41,12 @@ public class TrainInputPresenter extends AFXMLPresenter {
 	@FXML Button nodeButtonResetBinaryClassifierList;
 	
 	// Injects
-	@Inject private TrainCommandProvider commander;
-	@Inject private BinaryClassifiers binaryClassifiers;
-	@Inject private BinaryClassifications binaryClassifications;
-	@Inject private TrainState trainState;
-	@Inject private FeatureVectorSets featureVectors;
+	@Inject private ClassificationCommandProvider commander;
+	
+	@Inject private IBinaryClassifiers binaryClassifiers;
+	@Inject private IBinaryClassifications binaryClassifications;
+	@Inject private IClassificationState trainState;
+	@Inject private IFeatureVectorSets featureVectors;
 
 	// ================================================== 
 	// Initialization Implementation 
@@ -160,10 +161,10 @@ public class TrainInputPresenter extends AFXMLPresenter {
 	// GUI Implementation 
 	// ==================================================	
 	@FXML private void onTrainBinaryClassifierAction() {
-		final Path binaryClassifierFolderPath = this.trainState.getBinaryClassifierFolderPathProperty().get();
-		final IBinaryClassifier selectedBinaryClassfier = this.binaryClassifiers.getSelectedBinaryClassifierProperty().get();
-		final List<FeatureVectorSet> featureVectorSetList = this.featureVectors.getFeatureVectorSetListProperty().get();
-		final FeatureVectorSet selectedFeatureVectorSet = this.featureVectors.getSelectedFeatureVectorSetProperty().get();
+		final Path binaryClassifierFolderPath = this.trainState.getBinaryClassifierFolderPath();
+		final IBinaryClassifier selectedBinaryClassfier = this.binaryClassifiers.getSelectedBinaryClassifier();
+		final List<FeatureVectorSet> featureVectorSetList = this.featureVectors.getFeatureVectorSetListProperty();
+		final FeatureVectorSet selectedFeatureVectorSet = this.featureVectors.getSelectedFeatureVectorSet();
 
 		final TrainBinaryClassifierSucceededHandler handler = new TrainBinaryClassifierSucceededHandler();
 		final TrainBinaryClassifierCommand command = this.commander.createTrainBinaryClassifierCommand(binaryClassifierFolderPath, selectedBinaryClassfier, selectedFeatureVectorSet, featureVectorSetList);
@@ -172,7 +173,7 @@ public class TrainInputPresenter extends AFXMLPresenter {
 	}
 	
 	@FXML private void onRemoveBinaryClassifierAction() {
-		final IBinaryClassification selectedBinaryClassification = this.binaryClassifications.getSelectedBinaryClassificationProperty().get();
+		final IBinaryClassification selectedBinaryClassification = this.binaryClassifications.getSelectedBinaryClassification();
 		
 		final RemoveBinaryClassificationSucceededHandler handler = new RemoveBinaryClassificationSucceededHandler();
 		final RemoveBinaryClassificationCommand command = this.commander.createRemoveBinaryClassificationCommand(selectedBinaryClassification);

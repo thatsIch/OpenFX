@@ -9,7 +9,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
-import de.thatsich.bachelor.classification.intern.command.classifier.IBinaryClassification;
+import de.thatsich.bachelor.classification.api.entities.IBinaryClassification;
 import de.thatsich.core.javafx.ACommand;
 
 public class RemoveBinaryClassificationCommand extends ACommand<IBinaryClassification> {

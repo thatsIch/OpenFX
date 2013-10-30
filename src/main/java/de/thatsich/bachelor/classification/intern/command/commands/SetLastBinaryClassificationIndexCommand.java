@@ -6,7 +6,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
-import de.thatsich.bachelor.classification.intern.service.TrainConfigService;
+import de.thatsich.bachelor.classification.intern.service.ClassificationConfigService;
 import de.thatsich.core.javafx.ACommand;
 
 public class SetLastBinaryClassificationIndexCommand extends ACommand<Void> {
@@ -15,7 +15,7 @@ public class SetLastBinaryClassificationIndexCommand extends ACommand<Void> {
 	private final IntegerProperty lastBinaryClassificationIndex = new SimpleIntegerProperty();
 	
 	// Injects
-	@Inject TrainConfigService config;
+	@Inject ClassificationConfigService config;
 	
 	@Inject
 	protected SetLastBinaryClassificationIndexCommand(@Assisted int lastBinaryClassificationIndex) {

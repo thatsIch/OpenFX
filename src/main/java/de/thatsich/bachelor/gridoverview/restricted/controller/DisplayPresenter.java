@@ -13,9 +13,9 @@ import javafx.scene.layout.GridPane;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
-import de.thatsich.bachelor.classification.intern.view.TrainDisplayView;
-import de.thatsich.bachelor.classification.intern.view.TrainInputView;
-import de.thatsich.bachelor.classification.intern.view.TrainListView;
+import de.thatsich.bachelor.classification.intern.view.ClassificationDisplayView;
+import de.thatsich.bachelor.classification.intern.view.ClassificationInputView;
+import de.thatsich.bachelor.classification.intern.view.ClassificationListView;
 import de.thatsich.bachelor.errorgeneration.api.core.IErrorDisplayView;
 import de.thatsich.bachelor.errorgeneration.api.core.IErrorInputView;
 import de.thatsich.bachelor.errorgeneration.api.core.IErrorListView;
@@ -56,9 +56,9 @@ public class DisplayPresenter implements Initializable {
 	@Inject private IFeatureDisplayView featureDisplayView;
 	@Inject private IFeatureListView featureListView;
 	
-	@Inject private TrainInputView trainInputView;
-	@Inject private TrainDisplayView trainDisplayView;
-	@Inject private TrainListView trainListView;
+	@Inject private ClassificationInputView trainInputView;
+	@Inject private ClassificationDisplayView trainDisplayView;
+	@Inject private ClassificationListView trainListView;
 	
 	@Inject private TestInputView testInputView;
 	@Inject private TestDisplayView testDisplayView;

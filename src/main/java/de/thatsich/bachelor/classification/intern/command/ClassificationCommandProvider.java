@@ -3,7 +3,7 @@ package de.thatsich.bachelor.classification.intern.command;
 import java.nio.file.Path;
 import java.util.List;
 
-import de.thatsich.bachelor.classification.intern.command.classifier.IBinaryClassification;
+import de.thatsich.bachelor.classification.api.entities.IBinaryClassification;
 import de.thatsich.bachelor.classification.intern.command.classifier.IBinaryClassifier;
 import de.thatsich.bachelor.classification.intern.command.commands.GetLastBinaryClassificationIndexCommand;
 import de.thatsich.bachelor.classification.intern.command.commands.GetLastBinaryClassifierIndexCommand;
@@ -14,8 +14,9 @@ import de.thatsich.bachelor.classification.intern.command.commands.SetLastBinary
 import de.thatsich.bachelor.classification.intern.command.commands.SetLastBinaryClassifierIndexCommand;
 import de.thatsich.bachelor.classification.intern.command.commands.TrainBinaryClassifierCommand;
 import de.thatsich.bachelor.featureextraction.api.entities.FeatureVectorSet;
+import de.thatsich.core.guice.ICommandProvider;
 
-public interface TrainCommandProvider {
+public interface ClassificationCommandProvider extends ICommandProvider {
 	public InitBinaryClassifierListCommand createInitBinaryClassifierListCommand();
 	public InitBinaryClassificationListCommand createInitBinaryClassificationListCommand(Path trainedBinaryClassifierFolderPath);
 	

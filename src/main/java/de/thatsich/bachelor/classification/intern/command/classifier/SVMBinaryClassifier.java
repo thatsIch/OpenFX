@@ -7,6 +7,7 @@ import org.opencv.ml.CvSVM;
 
 import com.google.inject.Inject;
 
+import de.thatsich.bachelor.classification.api.entities.IBinaryClassification;
 import de.thatsich.bachelor.classification.intern.command.BinaryClassificationProvider;
 
 public class SVMBinaryClassifier extends ABinaryClassifier {

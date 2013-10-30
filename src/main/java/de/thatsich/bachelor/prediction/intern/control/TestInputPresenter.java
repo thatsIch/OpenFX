@@ -9,7 +9,7 @@ import javafx.scene.control.Button;
 
 import com.google.inject.Inject;
 
-import de.thatsich.bachelor.classification.intern.command.classifier.IBinaryClassification;
+import de.thatsich.bachelor.classification.api.entities.IBinaryClassification;
 import de.thatsich.bachelor.classification.intern.model.BinaryClassifications;
 import de.thatsich.bachelor.errorgeneration.api.entities.IErrorGenerator;
 import de.thatsich.bachelor.errorgeneration.restricted.model.ErrorGenerators;

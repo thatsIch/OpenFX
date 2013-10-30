@@ -16,17 +16,17 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import com.google.inject.Inject;
 
-import de.thatsich.bachelor.classification.intern.command.TrainCommandProvider;
-import de.thatsich.bachelor.classification.intern.command.classifier.IBinaryClassification;
+import de.thatsich.bachelor.classification.api.core.IBinaryClassifications;
+import de.thatsich.bachelor.classification.api.core.IClassificationState;
+import de.thatsich.bachelor.classification.api.entities.IBinaryClassification;
+import de.thatsich.bachelor.classification.intern.command.ClassificationCommandProvider;
 import de.thatsich.bachelor.classification.intern.command.commands.GetLastBinaryClassificationIndexCommand;
 import de.thatsich.bachelor.classification.intern.command.commands.InitBinaryClassificationListCommand;
 import de.thatsich.bachelor.classification.intern.command.commands.SetLastBinaryClassificationIndexCommand;
-import de.thatsich.bachelor.classification.intern.model.BinaryClassifications;
-import de.thatsich.bachelor.classification.intern.model.TrainState;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.javafx.CommandExecutor;
 
-public class TrainListPresenter extends AFXMLPresenter {
+public class ClassificationListPresenter extends AFXMLPresenter {
 
 	// Nodes
 	@FXML private TableView<IBinaryClassification> nodeTableViewBinaryClassificationList;
@@ -37,9 +37,11 @@ public class TrainListPresenter extends AFXMLPresenter {
 	@FXML private TableColumn<IBinaryClassification, String> nodeTableErrorName;
 	@FXML private TableColumn<IBinaryClassification, String> nodeTableColumnID;
 	
-	@Inject private BinaryClassifications binaryClassifications;
-	@Inject private TrainState trainState;
-	@Inject private TrainCommandProvider commander;
+	// Injects
+	@Inject private ClassificationCommandProvider commander;
+	
+	@Inject private IBinaryClassifications binaryClassifications;
+	@Inject private IClassificationState trainState;
 	
 	// ================================================== 
 	// Initialization Implementation 

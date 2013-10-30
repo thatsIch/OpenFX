@@ -15,8 +15,8 @@ import org.opencv.core.MatOfFloat;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
+import de.thatsich.bachelor.classification.api.entities.IBinaryClassification;
 import de.thatsich.bachelor.classification.intern.command.classifier.BinaryClassifierConfiguration;
-import de.thatsich.bachelor.classification.intern.command.classifier.IBinaryClassification;
 import de.thatsich.bachelor.classification.intern.command.classifier.IBinaryClassifier;
 import de.thatsich.bachelor.featureextraction.api.entities.FeatureVector;
 import de.thatsich.bachelor.featureextraction.api.entities.FeatureVectorSet;

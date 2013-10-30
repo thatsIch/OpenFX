@@ -1,17 +1,17 @@
 package de.thatsich.bachelor.classification.api.guice;
 
-import com.google.inject.AbstractModule;
-import com.google.inject.assistedinject.FactoryModuleBuilder;
+import java.util.List;
 
 import de.thatsich.bachelor.classification.intern.command.BinaryClassificationProvider;
-import de.thatsich.bachelor.classification.intern.command.TrainCommandProvider;
+import de.thatsich.bachelor.classification.intern.command.ClassificationCommandProvider;
+import de.thatsich.core.guice.ACommandModule;
+import de.thatsich.core.guice.ICommandProvider;
 
 
-public class TrainCommandModule extends AbstractModule {
-
+public class TrainCommandModule extends ACommandModule {
 	@Override
-	public void configure() {
-		this.install(new FactoryModuleBuilder().build(TrainCommandProvider.class));
-		this.install(new FactoryModuleBuilder().build(BinaryClassificationProvider.class));
+	protected void buildProviderModule(List<Class<? extends ICommandProvider>> providerList) {
+		providerList.add(ClassificationCommandProvider.class);
+		providerList.add(BinaryClassificationProvider.class);
 	}
 }

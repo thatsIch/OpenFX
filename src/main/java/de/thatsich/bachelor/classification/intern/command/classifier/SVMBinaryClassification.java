@@ -6,6 +6,8 @@ import org.opencv.ml.CvSVM;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
+import de.thatsich.bachelor.classification.api.entities.ABinaryClassification;
+
 
 public class SVMBinaryClassification extends ABinaryClassification {
 

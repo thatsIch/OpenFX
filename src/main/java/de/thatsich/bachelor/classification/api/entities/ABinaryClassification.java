@@ -1,4 +1,4 @@
-package de.thatsich.bachelor.classification.intern.command.classifier;
+package de.thatsich.bachelor.classification.api.entities;
 
 import java.nio.file.Path;
 
@@ -9,6 +9,7 @@ import javafx.beans.property.ReadOnlyStringProperty;
 
 import com.google.inject.Inject;
 
+import de.thatsich.bachelor.classification.intern.command.classifier.BinaryClassifierConfiguration;
 import de.thatsich.core.Log;
 
 public abstract class ABinaryClassification implements IBinaryClassification {

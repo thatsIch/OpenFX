@@ -7,11 +7,11 @@ import javafx.scene.control.Label;
 
 import com.google.inject.Inject;
 
-import de.thatsich.bachelor.classification.intern.command.classifier.IBinaryClassification;
-import de.thatsich.bachelor.classification.intern.model.BinaryClassifications;
+import de.thatsich.bachelor.classification.api.core.IBinaryClassifications;
+import de.thatsich.bachelor.classification.api.entities.IBinaryClassification;
 import de.thatsich.core.javafx.AFXMLPresenter;
 
-public class TrainDisplayPresenter extends AFXMLPresenter {
+public class ClassificationDisplayPresenter extends AFXMLPresenter {
 
 	// Nodes
 	@FXML private Label nodeLabelClassificationName;
@@ -21,7 +21,7 @@ public class TrainDisplayPresenter extends AFXMLPresenter {
 	@FXML private Label nodeLabelID;
 	
 	// Injects
-	@Inject private BinaryClassifications binaryClassifications;
+	@Inject private IBinaryClassifications binaryClassifications;
 	
 	@Override
 	protected void initComponents() {

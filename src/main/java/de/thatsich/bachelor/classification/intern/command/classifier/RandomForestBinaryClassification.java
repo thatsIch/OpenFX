@@ -9,6 +9,8 @@ import org.opencv.ml.CvRTrees;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
+import de.thatsich.bachelor.classification.api.entities.ABinaryClassification;
+
 
 public class RandomForestBinaryClassification extends ABinaryClassification {
 

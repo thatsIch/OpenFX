@@ -8,7 +8,7 @@ import de.thatsich.core.AConfigurationService;
  * @author Tran Minh Do
  *
  */
-public class TrainConfigService extends AConfigurationService {
+public class ClassificationConfigService extends AConfigurationService {
 
 	/**
 	 * 
