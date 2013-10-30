@@ -1,17 +1,14 @@
 package de.thatsich.bachelor.prediction.api.guice;
 
-import com.google.inject.AbstractModule;
-import com.google.inject.assistedinject.FactoryModuleBuilder;
+import java.util.List;
 
 import de.thatsich.bachelor.prediction.intern.command.BinaryPredictionCommandProvider;
+import de.thatsich.core.guice.ACommandModule;
+import de.thatsich.core.guice.ICommandProvider;
 
-public class TestCommandModule extends AbstractModule {
-
+public class TestCommandModule extends ACommandModule {
 	@Override
-	public void configure() {
-		this.install(
-			new FactoryModuleBuilder()
-			.build(BinaryPredictionCommandProvider.class)
-		);
+	protected void buildProviderModule(List<Class<? extends ICommandProvider>> providerList) {
+		providerList.add(BinaryPredictionCommandProvider.class);
 	}
 }

@@ -13,9 +13,10 @@ import de.thatsich.bachelor.prediction.intern.command.commands.InitBinaryPredict
 import de.thatsich.bachelor.prediction.intern.command.commands.InitPredictionFolderCommand;
 import de.thatsich.bachelor.prediction.intern.command.commands.SetLastBinaryPredictionIndexCommand;
 import de.thatsich.bachelor.prediction.intern.command.commands.TestBinaryClassificationCommand;
+import de.thatsich.core.guice.ICommandProvider;
 
 
-public interface BinaryPredictionCommandProvider {
+public interface BinaryPredictionCommandProvider extends ICommandProvider {
 	public TestBinaryClassificationCommand createTestBinaryClassificationCommand(@Assisted Path predictionFolderPath, @Assisted ImageEntry imageEntry, @Assisted int frameSize, @Assisted IErrorGenerator errorGenerator, @Assisted IFeatureExtractor featureExtractor, @Assisted IBinaryClassification binaryClassification);
 	public InitPredictionFolderCommand createInitPredictionFolderCommand(@Assisted Path predictionFolderPath);
 	public SetLastBinaryPredictionIndexCommand createSetLastBinaryPredictionIndexCommand(@Assisted int lastBinaryPredictionIndex);
