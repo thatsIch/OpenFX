@@ -9,14 +9,14 @@ import javafx.scene.control.Button;
 
 import com.google.inject.Inject;
 
+import de.thatsich.bachelor.classification.api.core.IBinaryClassifications;
 import de.thatsich.bachelor.classification.api.entities.IBinaryClassification;
-import de.thatsich.bachelor.classification.intern.model.BinaryClassifications;
+import de.thatsich.bachelor.errorgeneration.api.core.IErrorGenerators;
 import de.thatsich.bachelor.errorgeneration.api.entities.IErrorGenerator;
-import de.thatsich.bachelor.errorgeneration.restricted.model.ErrorGenerators;
+import de.thatsich.bachelor.featureextraction.api.core.IFeatureExtractors;
 import de.thatsich.bachelor.featureextraction.restricted.command.extractor.IFeatureExtractor;
-import de.thatsich.bachelor.featureextraction.restricted.models.FeatureExtractors;
+import de.thatsich.bachelor.imageprocessing.api.core.IImageEntries;
 import de.thatsich.bachelor.imageprocessing.api.entities.ImageEntry;
-import de.thatsich.bachelor.imageprocessing.restricted.model.ImageEntries;
 import de.thatsich.bachelor.prediction.api.entities.BinaryPrediction;
 import de.thatsich.bachelor.prediction.intern.command.BinaryPredictionCommandProvider;
 import de.thatsich.bachelor.prediction.intern.command.commands.TestBinaryClassificationCommand;
@@ -30,10 +30,10 @@ public class TestInputPresenter extends AFXMLPresenter {
 	@FXML private Button nodeButtonTestBinaryClassification;
 	
 	// Injects
-	@Inject private ImageEntries imageEntries;
-	@Inject private ErrorGenerators errorGenerators;
-	@Inject private FeatureExtractors featureExtractors;
-	@Inject private BinaryClassifications binaryClassifications;
+	@Inject private IImageEntries imageEntries;
+	@Inject private IErrorGenerators errorGenerators;
+	@Inject private IFeatureExtractors featureExtractors;
+	@Inject private IBinaryClassifications binaryClassifications;
 	@Inject private PredictionState predictionState;
 	@Inject private BinaryPredictions binaryPredictions;
 	

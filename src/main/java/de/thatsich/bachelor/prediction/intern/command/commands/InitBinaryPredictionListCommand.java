@@ -29,6 +29,7 @@ public class InitBinaryPredictionListCommand extends ACommand<List<BinaryPredict
 		this.binaryPredictionFolderPath = binaryPredictionFolderPath;
 	}
 
+	@SuppressWarnings("unused")
 	@Override
 	protected List<BinaryPrediction> call() throws Exception {
 		final List<BinaryPrediction> binaryPredictionList = FXCollections.observableArrayList();
