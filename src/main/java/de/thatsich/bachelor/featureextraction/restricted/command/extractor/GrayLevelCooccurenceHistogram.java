@@ -13,8 +13,7 @@ import org.opencv.core.MatOfFloat;
  * @author Minh
  *
  */
-
-// TODO check if GLCM to histrogram makes sense in only 1 direction
+//TODO fix GLCM
 public class GrayLevelCooccurenceHistogram extends AFeatureExtractor implements IFeatureExtractor {
 
 	/**

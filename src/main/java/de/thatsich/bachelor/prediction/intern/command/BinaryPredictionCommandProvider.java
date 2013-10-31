@@ -8,6 +8,8 @@ import de.thatsich.bachelor.classification.api.entities.IBinaryClassification;
 import de.thatsich.bachelor.errorgeneration.api.entities.IErrorGenerator;
 import de.thatsich.bachelor.featureextraction.restricted.command.extractor.IFeatureExtractor;
 import de.thatsich.bachelor.imageprocessing.api.entities.ImageEntry;
+import de.thatsich.bachelor.prediction.api.entities.BinaryPrediction;
+import de.thatsich.bachelor.prediction.intern.command.commands.DeleteBinaryPredictionCommand;
 import de.thatsich.bachelor.prediction.intern.command.commands.GetLastBinaryPredictionIndexCommand;
 import de.thatsich.bachelor.prediction.intern.command.commands.InitBinaryPredictionListCommand;
 import de.thatsich.bachelor.prediction.intern.command.commands.InitPredictionFolderCommand;
@@ -22,4 +24,5 @@ public interface BinaryPredictionCommandProvider extends ICommandProvider {
 	public SetLastBinaryPredictionIndexCommand createSetLastBinaryPredictionIndexCommand(@Assisted int lastBinaryPredictionIndex);
 	public InitBinaryPredictionListCommand createInitBinaryPredictionListCommand(@Assisted Path predictionFolderPath);
 	public GetLastBinaryPredictionIndexCommand createGetLastBinaryPredictionIndexCommand();
+	public DeleteBinaryPredictionCommand createDeleteBinaryPredictionCommand(BinaryPrediction toBeDeletedBinaryPrediction);	
 }

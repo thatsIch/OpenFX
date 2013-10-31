@@ -12,7 +12,7 @@ public class SetLastBinaryPredictionIndexCommand extends ACommand<Void> {
 	private final int lastBinaryPredictionIndex;
 	
 	// Injects
-	@Inject BinaryPredictionConfigService config;
+	@Inject private BinaryPredictionConfigService config;
 	
 	@Inject
 	protected SetLastBinaryPredictionIndexCommand(@Assisted int lastBinaryPredictionIndex) {
@@ -21,7 +21,7 @@ public class SetLastBinaryPredictionIndexCommand extends ACommand<Void> {
 
 	@Override
 	protected Void call() throws Exception {
-		config.setLastBinaryPredictionIndexInt(lastBinaryPredictionIndex);
+		this.config.setLastBinaryPredictionIndexInt(this.lastBinaryPredictionIndex);
 		
 		return null;
 	}

@@ -1,6 +1,7 @@
 package de.thatsich.bachelor.prediction.intern.control;
 
 import java.nio.file.Path;
+import java.util.List;
 
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
@@ -21,7 +22,9 @@ import de.thatsich.bachelor.prediction.api.core.IBinaryPredictions;
 import de.thatsich.bachelor.prediction.api.core.IPredictionState;
 import de.thatsich.bachelor.prediction.api.entities.BinaryPrediction;
 import de.thatsich.bachelor.prediction.intern.command.BinaryPredictionCommandProvider;
+import de.thatsich.bachelor.prediction.intern.command.commands.DeleteBinaryPredictionCommand;
 import de.thatsich.bachelor.prediction.intern.command.commands.TestBinaryClassificationCommand;
+import de.thatsich.core.javafx.ACommandHandler;
 import de.thatsich.core.javafx.AFXMLPresenter;
 
 public class PredictionInputPresenter extends AFXMLPresenter {
@@ -39,7 +42,7 @@ public class PredictionInputPresenter extends AFXMLPresenter {
 	@Inject private IPredictionState predictionState;
 	@Inject private IBinaryPredictions binaryPredictions;
 	
-	@Inject private BinaryPredictionCommandProvider provider;
+	@Inject private BinaryPredictionCommandProvider commander;
 	
 	// ================================================== 
 	// Initialization Implementation 
@@ -82,8 +85,8 @@ public class PredictionInputPresenter extends AFXMLPresenter {
 		final IFeatureExtractor featureExtractor = this.getFeatureExtractor(featureExtractorName);
 		this.log.info("Prepared all Tools.");
 		
-		final TestBinaryClassificationSucceededHandler handler = new TestBinaryClassificationSucceededHandler(); 
-		final TestBinaryClassificationCommand command = this.provider.createTestBinaryClassificationCommand(predictionFolderPath, imageEntry, frameSize, errorGenerator, featureExtractor, binaryClassification);
+		final PredictBinaryClassificationSucceededHandler handler = new PredictBinaryClassificationSucceededHandler(); 
+		final TestBinaryClassificationCommand command = this.commander.createTestBinaryClassificationCommand(predictionFolderPath, imageEntry, frameSize, errorGenerator, featureExtractor, binaryClassification);
 		command.setOnSucceeded(handler);
 		command.start();
 		this.log.info("Initiated testing the binary classification.");
@@ -110,9 +113,13 @@ public class PredictionInputPresenter extends AFXMLPresenter {
 		throw new IllegalStateException("FeatureExtractor not found: " + featureExtractorName);
 	}
 	
-	// TODO implement onDeleteBinaryPredictionAction
 	@FXML private void onDeleteBinaryPredictionAction() {
-		
+		final BinaryPrediction selected = this.binaryPredictions.getSelectedBinaryPrediction(); 
+		final DeleteBinaryPredictionSucceededHandler handler = new DeleteBinaryPredictionSucceededHandler();
+		final DeleteBinaryPredictionCommand command = this.commander.createDeleteBinaryPredictionCommand(selected);
+		command.setOnSucceededCommandHandler(handler);
+		command.start();
+		this.log.info("Initiated Delete of BinaryPrediction.");
 	}
 	
 	// TODO implement onResetBinaryPredictionAction
@@ -126,7 +133,7 @@ public class PredictionInputPresenter extends AFXMLPresenter {
 	 * 
 	 * @author Minh
 	 */
-	private class TestBinaryClassificationSucceededHandler implements EventHandler<WorkerStateEvent> {
+	private class PredictBinaryClassificationSucceededHandler implements EventHandler<WorkerStateEvent> {
 		@Override public void handle(WorkerStateEvent event) {
 			final BinaryPrediction prediction = (BinaryPrediction) event.getSource().getValue();
 			
@@ -135,6 +142,27 @@ public class PredictionInputPresenter extends AFXMLPresenter {
 			
 			binaryPredictions.getSelectedBinaryPredictionProperty().set(prediction);
 			log.info("Set current to selected BinaryPrediction.");
+		}
+	}
+	
+	/**
+	 * Handler for what should happen if the Command was successfull 
+	 * for testing the binary classification
+	 * 
+	 * @author Minh
+	 */
+	private class DeleteBinaryPredictionSucceededHandler extends ACommandHandler<BinaryPrediction> {
+		@Override public void handle(BinaryPrediction value) {
+			final List<BinaryPrediction> binaryPredictionList = binaryPredictions.getBinaryPredictionListProperty();
+			
+			binaryPredictionList.remove(value);
+			log.info("Removed BinaryPrediction from List.");
+			
+			if (binaryPredictionList.size() > 0) {
+				final BinaryPrediction first = binaryPredictionList.get(0);
+				binaryPredictions.setSelectedBinaryPrediction(first);
+				log.info("Reset to first BinaryPrediction.");
+			}
 		}
 	}
 }
