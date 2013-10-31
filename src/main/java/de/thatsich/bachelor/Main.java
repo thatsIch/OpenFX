@@ -21,13 +21,14 @@ import de.thatsich.core.guice.LoggerModule;
 import de.thatsich.core.guice.PostInitModule;
 import de.thatsich.core.opencv.OpenCVLoader;
 
-
 // TODO need Threshold
 // TODO fix loading of BinaryClassifier/Classification
 // TODO remove prediction
 // TODO reset prediction
 // TODO erfolgsrate precision recall
 // TODO prediction list anpassen
+// TODO Random Feature Extractor
+// TODO CNBC
 /**
  * Main Execution Class
  * @author Tran Minh Do
