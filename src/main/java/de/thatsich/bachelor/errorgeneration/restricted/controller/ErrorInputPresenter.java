@@ -15,7 +15,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TextField;
 import javafx.util.StringConverter;
 
 import org.opencv.core.Mat;
@@ -38,8 +37,10 @@ import de.thatsich.bachelor.errorgeneration.restricted.command.commands.SetLastE
 import de.thatsich.bachelor.errorgeneration.restricted.command.commands.SetLastErrorGeneratorIndexCommand;
 import de.thatsich.bachelor.imageprocessing.api.core.IImageEntries;
 import de.thatsich.bachelor.imageprocessing.api.entities.ImageEntry;
+import de.thatsich.core.javafx.ACommandHandler;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.javafx.CommandExecutor;
+import de.thatsich.core.javafx.component.IntegerField;
 
 /**
  * Presenter
@@ -53,7 +54,7 @@ public class ErrorInputPresenter extends AFXMLPresenter {
 
 	// Nodes
 	@FXML private ChoiceBox<IErrorGenerator> nodeChoiceBoxErrorGenerator;
-	@FXML private TextField nodeTextFieldErrorCount;
+	@FXML private IntegerField nodeIntegerFieldErrorCount;
 	
 	@FXML private Button nodeButtonGenerateErrors;
 	@FXML private Button nodeButtonPermutateErrors;
@@ -79,7 +80,7 @@ public class ErrorInputPresenter extends AFXMLPresenter {
 	@Override
 	protected void bindComponents() {
 		this.bindChoiceBoxErrorGenerator();
-		this.bindTextFieldErrorCount();
+		this.bindIntegerFieldErrorCount();
 		this.bindButton();
 	}
 	
@@ -146,25 +147,21 @@ public class ErrorInputPresenter extends AFXMLPresenter {
 	 * Bind TextFieldErrorCount to the Model and tries to validate the input to only non-negative inputs
 	 * and initialize the value for it
 	 */
-	private void bindTextFieldErrorCount() {
-		this.nodeTextFieldErrorCount.textProperty().addListener(new ChangeListener<String>() {
-			@Override
-			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				if (newValue.matches("\\d+")) {
-					final int count = Integer.parseInt(newValue);
-					errorState.getErrorLoopCountProperty().set(count);
-					SetLastErrorCountCommand command = commander.createSetLastErrorCountCommand(count);
-					command.start();
-				} else {
-					nodeTextFieldErrorCount.setText(oldValue);
-				}
+	private void bindIntegerFieldErrorCount() {
+		this.nodeIntegerFieldErrorCount.valueProperty().addListener(new ChangeListener<Number>() {
+			@Override public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				final int count = newValue.intValue();
+				errorState.getErrorLoopCountProperty().set(count);
+				final SetLastErrorCountCommand command = commander.createSetLastErrorCountCommand(count);
+				command.start();
+				log.info("Initiated SetLastErrorCountCommand with " + count + ".");
 			}
 		});
 	}
 	
 	private void bindButton() {
-		this.nodeButtonGenerateErrors.disableProperty().bind(this.imageEntryList.selectedImageEntryProperty().isNull().or(this.nodeChoiceBoxErrorGenerator.valueProperty().isNull()).or(this.nodeTextFieldErrorCount.textProperty().isNull()));
-		this.nodeButtonPermutateErrors.disableProperty().bind(this.imageEntryList.imageEntriesmageEntryListProperty().emptyProperty().or(this.nodeChoiceBoxErrorGenerator.valueProperty().isNull()).or(this.nodeTextFieldErrorCount.textProperty().isNull()));
+		this.nodeButtonGenerateErrors.disableProperty().bind(this.imageEntryList.selectedImageEntryProperty().isNull().or(this.nodeChoiceBoxErrorGenerator.valueProperty().isNull()).or(this.nodeIntegerFieldErrorCount.valueProperty().isEqualTo(0)));
+		this.nodeButtonPermutateErrors.disableProperty().bind(this.imageEntryList.imageEntriesmageEntryListProperty().emptyProperty().or(this.nodeChoiceBoxErrorGenerator.valueProperty().isNull()).or(this.nodeIntegerFieldErrorCount.valueProperty().isEqualTo(0)));
 		this.nodeButtonRemoveError.disableProperty().bind(this.errorEntryList.getSelectedErrorEntryProperty().isNull());
 		this.nodeButtonResetErrors.disableProperty().bind(this.errorEntryList.getErrorEntryListProperty().emptyProperty());
 	}
@@ -330,18 +327,14 @@ public class ErrorInputPresenter extends AFXMLPresenter {
 	 * 
 	 * @author Minh
 	 */
-	private class GetLastErrorLoopCountSucceededHandler implements EventHandler<WorkerStateEvent> {
-
+	private class GetLastErrorLoopCountSucceededHandler extends ACommandHandler<Integer> {
 		@Override
-		public void handle(WorkerStateEvent event) {
-			final Integer commandResult = (Integer) event.getSource().getValue();
-			log.info("Retrieved LastErrorLoopCount.");
-			
-			if (commandResult != null) {
-				nodeTextFieldErrorCount.textProperty().set(commandResult.toString());
+		public void handle(Integer value) {
+			if (value != null) {
+				nodeIntegerFieldErrorCount.setValue(value);
 				log.info("Set LastErrorLoopCount in View.");
 				
-				errorState.getErrorLoopCountProperty().set(commandResult.intValue());
+				errorState.setErrorLoopCount(value);
 				log.info("Set LastErrorLoopCount in Model.");
 			}
 		}

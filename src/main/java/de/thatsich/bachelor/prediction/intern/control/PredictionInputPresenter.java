@@ -93,8 +93,7 @@ public class PredictionInputPresenter extends AFXMLPresenter {
 		command.start();
 		this.log.info("Initiated testing the binary classification.");
 	}
-	
-	// TODO maybe put them into the model?
+
 	private IErrorGenerator getErrorGenerator(String errorGeneratorName) {
 		for (IErrorGenerator generator : this.errorGenerators.getErrorGeneratorListProperty()) {
 			if (errorGeneratorName.equals(generator.getName())) {

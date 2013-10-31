@@ -13,9 +13,9 @@ import javafx.scene.layout.GridPane;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
-import de.thatsich.bachelor.classification.intern.view.ClassificationDisplayView;
-import de.thatsich.bachelor.classification.intern.view.ClassificationInputView;
-import de.thatsich.bachelor.classification.intern.view.ClassificationListView;
+import de.thatsich.bachelor.classification.api.core.IClassificationDisplayView;
+import de.thatsich.bachelor.classification.api.core.IClassificationInputView;
+import de.thatsich.bachelor.classification.api.core.IClassificationListView;
 import de.thatsich.bachelor.errorgeneration.api.core.IErrorDisplayView;
 import de.thatsich.bachelor.errorgeneration.api.core.IErrorInputView;
 import de.thatsich.bachelor.errorgeneration.api.core.IErrorListView;
@@ -25,9 +25,9 @@ import de.thatsich.bachelor.featureextraction.api.core.IFeatureListView;
 import de.thatsich.bachelor.imageprocessing.api.core.IImageDisplayView;
 import de.thatsich.bachelor.imageprocessing.api.core.IImageInputView;
 import de.thatsich.bachelor.imageprocessing.api.core.IImageListView;
-import de.thatsich.bachelor.prediction.intern.view.PredictionDisplayView;
-import de.thatsich.bachelor.prediction.intern.view.PredictionInputView;
-import de.thatsich.bachelor.prediction.intern.view.PredictionListView;
+import de.thatsich.bachelor.prediction.api.core.IPredictionDisplayView;
+import de.thatsich.bachelor.prediction.api.core.IPredictionInputView;
+import de.thatsich.bachelor.prediction.api.core.IPredictionListView;
 
 /**
  * Facilitat the communication between
@@ -56,13 +56,13 @@ public class DisplayPresenter implements Initializable {
 	@Inject private IFeatureDisplayView featureDisplayView;
 	@Inject private IFeatureListView featureListView;
 	
-	@Inject private ClassificationInputView trainInputView;
-	@Inject private ClassificationDisplayView trainDisplayView;
-	@Inject private ClassificationListView trainListView;
+	@Inject private IClassificationInputView trainInputView;
+	@Inject private IClassificationDisplayView trainDisplayView;
+	@Inject private IClassificationListView trainListView;
 	
-	@Inject private PredictionInputView testInputView;
-	@Inject private PredictionDisplayView testDisplayView;
-	@Inject private PredictionListView testListView;
+	@Inject private IPredictionInputView testInputView;
+	@Inject private IPredictionDisplayView testDisplayView;
+	@Inject private IPredictionListView testListView;
 	
 	// ================================================== 
 	// Initializable Implementation 

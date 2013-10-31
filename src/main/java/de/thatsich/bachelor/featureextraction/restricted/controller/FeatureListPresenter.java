@@ -176,7 +176,7 @@ public class FeatureListPresenter extends AFXMLPresenter {
 		final GetLastFeatureSpaceIndexSucceededHandler lastHandler = new GetLastFeatureSpaceIndexSucceededHandler();
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(1);
 		
-		this.featureState.getFeatureVectorFolderPathProperty().set(folderPath);
+		this.featureState.setFeatureVectorFolderPath(folderPath);
 		this.log.info("Set FeatureVectorInputFolderPath to Model.");
 		
 		final InitFeatureVectorSetListCommand initCommand = this.commander.createInitFeatureVectorListCommand(folderPath);

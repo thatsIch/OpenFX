@@ -12,6 +12,6 @@ public class GetLastFrameSizeCommand extends ACommand<Integer> {
 
 	@Override
 	protected Integer call() throws Exception {
-		return config.getLastFrameSizeInt();
+		return this.config.getLastFrameSizeInt();
 	}
 }

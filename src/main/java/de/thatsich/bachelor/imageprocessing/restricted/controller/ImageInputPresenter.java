@@ -133,6 +133,9 @@ public class ImageInputPresenter extends AFXMLPresenter {
 		this.log.info("Shutting down Executor.");
 	}
 
+	// ==================================================
+	// Handler Implementation
+	// ==================================================
 	/**
 	 * Handler for what should happen if the Command was successfull 
 	 * for adding the image to the input directory.

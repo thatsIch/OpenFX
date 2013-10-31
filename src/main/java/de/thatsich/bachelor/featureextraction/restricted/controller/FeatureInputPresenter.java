@@ -7,12 +7,9 @@ import java.util.concurrent.ExecutorService;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.concurrent.WorkerStateEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Slider;
 import javafx.util.StringConverter;
 
 import com.google.inject.Inject;
@@ -30,15 +27,18 @@ import de.thatsich.bachelor.featureextraction.restricted.command.commands.GetLas
 import de.thatsich.bachelor.featureextraction.restricted.command.commands.GetLastFrameSizeCommand;
 import de.thatsich.bachelor.featureextraction.restricted.command.commands.InitFeatureExtractorListCommand;
 import de.thatsich.bachelor.featureextraction.restricted.command.commands.SetLastFeatureExtractorIndexCommand;
+import de.thatsich.bachelor.featureextraction.restricted.command.commands.SetLastFrameSizeCommand;
 import de.thatsich.bachelor.featureextraction.restricted.command.extractor.IFeatureExtractor;
+import de.thatsich.core.javafx.ACommandHandler;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.javafx.CommandExecutor;
+import de.thatsich.core.javafx.component.IntegerField;
 
 public class FeatureInputPresenter extends AFXMLPresenter {
 	
 	// Nodes
 	@FXML private ChoiceBox<IFeatureExtractor> nodeChoiceBoxFeatureExtractor;
-	@FXML private Slider nodeSliderFrameSize;
+	@FXML private IntegerField nodeIntegerFieldFrameSize;
 	
 	@FXML private Button nodeButtonExtractFeatureVector;
 	@FXML private Button nodeButtonRemoveFeatureVector;
@@ -60,7 +60,7 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 	@Override
 	protected void bindComponents() {
 		this.bindChoiceBoxFeatureExtractor();
-		this.bindSliderFrameSize();
+		this.bindIntegerFieldFrameSize();
 		this.bindButtons();
 	}
 	
@@ -88,10 +88,12 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 		this.log.info("Shutting down Executor.");
 	}
 	
-	private void initFrameSize() {
-		final GetLastFrameSizeSucceededHandler handler = new GetLastFrameSizeSucceededHandler(); 
+	/**
+	 * Fetches last FrameSize
+	 */
+	private void initFrameSize() { 
 		final GetLastFrameSizeCommand command = this.commander.createGetLastFrameSizeCommand();
-		command.setOnSucceeded(handler);
+		command.setOnSucceededCommandHandler(new GetLastFrameSizeSucceededHandler());
 		command.start();
 		this.log.info("Initialized LastFrameSize Retrieval.");
 	}
@@ -123,43 +125,22 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 	}	
 	
 	/**
-	 * Set the specific values of the frame size associated with each tick
-	 * and sets the labelformatter to fit the representation
 	 * 
-	 * Java 7 has a bug with the Labels
 	 */
-	private void bindSliderFrameSize() {
-		// write values in power of 2
-		// only if slider is let loose
-		this.nodeSliderFrameSize.valueProperty().addListener(new ChangeListener<Number>() {
+	private void bindIntegerFieldFrameSize() {
+		this.nodeIntegerFieldFrameSize.valueProperty().bindBidirectional(this.featureState.getFrameSizeProperty());
+		this.log.info("Bound FrameSize to DataBase");
 
+		this.nodeIntegerFieldFrameSize.valueProperty().addListener(new ChangeListener<Number>() {
 			@Override public void changed(ObservableValue<? extends Number> paramObservableValue, Number oldValue, Number newValue) {
-				if (nodeSliderFrameSize.valueChangingProperty().get() == false) {
-					int result = 0;
-					int value = newValue.intValue();
-					
-					switch(value) {
-						case 2: result = 7; break;
-						case 3: result = 9; break;
-						case 4: result = 15; break;
-						case 5: result = 31; break;
-						default: throw new IllegalStateException("Expected numbers out of range");
-					}
-					
-					featureState.getFrameSizeProperty().set(result);
-					commander.createSetLastFrameSizeCommand(value).start();
-				}
+				final int frameSize = newValue.intValue();
+				featureState.setFrameSize(frameSize);
+				final SetLastFrameSizeCommand command = commander.createSetLastFrameSizeCommand(frameSize);
+				command.start();
+				log.info("Initiated SetLastFrameSizeCommand with " + frameSize + ".");
 			}
 		});
-		this.log.info("Bound FrameSize to Database.");
-		
-		// set labels to power of 2
-		// Java 7 Bug
-		this.nodeSliderFrameSize.setLabelFormatter(new StringConverter<Double>() {
-			@Override public String toString(Double tick) { return String.format("%d", (int) Math.pow(2, tick)); }
-			@Override public Double fromString(String paramString) { return 0.0; }
-		});
-		this.log.info("Formatted FrameSize.");
+		this.log.info("Bound FrameSize to Config.");
 	}
 	
 	/**
@@ -239,12 +220,10 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 	 * 
 	 * @author Minh
 	 */
-	@SuppressWarnings("unchecked")
-	private class InitFeatureExtractorListSucceededHandler implements EventHandler<WorkerStateEvent> {
-		@Override public void handle(WorkerStateEvent event) {
-			final List<IFeatureExtractor> extractorList = (List<IFeatureExtractor>) event.getSource().getValue();
-			
-			featureExtractors.getFeatureExtractorsProperty().addAll(extractorList);
+	private class InitFeatureExtractorListSucceededHandler extends ACommandHandler<List<IFeatureExtractor>> {
+		@Override
+		public void handle(List<IFeatureExtractor> list) {
+			featureExtractors.getFeatureExtractorsProperty().addAll(list);
 			log.info("Added FeatureExtractor to Database.");
 		}
 	}
@@ -255,10 +234,9 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 	 * 
 	 * @author Minh
 	 */
-	private class ExtractFeatureVectorSetSucceededHandler implements EventHandler<WorkerStateEvent> {
-		@Override public void handle(WorkerStateEvent event) {
-			final FeatureVectorSet set = (FeatureVectorSet) event.getSource().getValue();
-			
+	private class ExtractFeatureVectorSetSucceededHandler extends ACommandHandler<FeatureVectorSet> {
+		@Override
+		public void handle(FeatureVectorSet set) {
 			featureVectors.getFeatureVectorSetListProperty().addAll(set);
 			log.info("Added FeatureVector to Database.");
 			
@@ -273,9 +251,9 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 	 * 
 	 * @author Minh
 	 */
-	private class RemoveFeatureVectorSetSucceededHandler implements EventHandler<WorkerStateEvent> {
-		@Override public void handle(WorkerStateEvent event) {
-			final FeatureVectorSet fv = (FeatureVectorSet) event.getSource().getValue();
+	private class RemoveFeatureVectorSetSucceededHandler extends ACommandHandler<FeatureVectorSet> {
+		@Override
+		public void handle(FeatureVectorSet fv) {
 			final List<FeatureVectorSet> list = featureVectors.getFeatureVectorSetListProperty();
 			list.remove(fv);
 			log.info("Removed FeatureVector from Database.");
@@ -298,15 +276,10 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 	 * 
 	 * @author Minh
 	 */
-	private class GetLastFeatureExtractorIndexSucceededHandler implements EventHandler<WorkerStateEvent> {
-
-		@Override
-		public void handle(WorkerStateEvent event) {
-			final Integer commandResult = (Integer) event.getSource().getValue();
-			log.info("Retrieved LastFeatureExtractorIndex.");
-			
-			if (commandResult != null) {
-				final IFeatureExtractor selectedFeatureExtractor = featureExtractors.getFeatureExtractorsProperty().get(commandResult);
+	private class GetLastFeatureExtractorIndexSucceededHandler extends ACommandHandler<Integer> {
+		@Override public void handle(Integer value) {
+			if (value != null) {
+				final IFeatureExtractor selectedFeatureExtractor = featureExtractors.getFeatureExtractorsProperty().get(value);
 				featureExtractors.getSelectedFeatureExtractorProperty().set(selectedFeatureExtractor);
 				log.info("Set LastSelectedFeatureExtractor in Model.");
 			}
@@ -319,16 +292,11 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 	 * 
 	 * @author Minh
 	 */
-	private class GetLastFrameSizeSucceededHandler implements EventHandler<WorkerStateEvent> {
-
-		@Override
-		public void handle(WorkerStateEvent event) {
-			final Integer commandResult = (Integer) event.getSource().getValue();
-			log.info("Retrieved LastFrameSize.");
-			
-			if (commandResult != null) {
-				nodeSliderFrameSize.setValue(commandResult);
-				log.info("Initialized FrameSize from Config.");
+	private class GetLastFrameSizeSucceededHandler extends ACommandHandler<Integer> {
+		@Override public void handle(Integer value) {
+			if (value != null) {
+				featureState.setFrameSize(value);
+				log.info("Set LastErrorLoopCount in Model.");
 			}
 		}
 	}

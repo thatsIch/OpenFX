@@ -5,6 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
+<?import de.thatsich.core.javafx.component.IntegerField?>
 
 <GridPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="de.thatsich.bachelor.errorgeneration.restricted.controller.ErrorInputPresenter">
   <children>
@@ -14,8 +15,8 @@
       </labelFor>
     </Label>
     <fx:reference source="nodeChoiceBoxErrorGenerator" />
-    <TextField fx:id="nodeTextFieldErrorCount" alignment="CENTER_RIGHT" prefWidth="200.0" text="1" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-    <Label labelFor="$nodeTextFieldErrorCount" text="Create Error Count" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+    <IntegerField fx:id="nodeIntegerFieldErrorCount" alignment="CENTER_RIGHT" prefWidth="200.0" text="1" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+    <Label labelFor="$nodeIntegerFieldErrorCount" text="Create Error Count" GridPane.columnIndex="0" GridPane.rowIndex="1" />
     <Button fx:id="nodeButtonPermutateErrors" mnemonicParsing="false" onAction="#onPermutateErrorsAction" prefWidth="125.0" text="Permutate Errors" GridPane.columnIndex="1" GridPane.rowIndex="3" />
     <Button fx:id="nodeButtonGenerateErrors" mnemonicParsing="false" onAction="#onGenerateErrorsAction" prefWidth="125.0" text="Generate Errors" GridPane.columnIndex="0" GridPane.rowIndex="3" />
     <Button fx:id="nodeButtonRemoveError" mnemonicParsing="false" onAction="#onRemoveErrorAction" prefWidth="125.0" text="Remove Error" GridPane.columnIndex="0" GridPane.rowIndex="4" />

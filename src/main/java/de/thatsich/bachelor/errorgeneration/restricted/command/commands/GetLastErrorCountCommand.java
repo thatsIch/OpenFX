@@ -12,6 +12,6 @@ public class GetLastErrorCountCommand extends ACommand<Integer> {
 
 	@Override
 	protected Integer call() throws Exception {
-		return config.getLastErrorCountInt();
+		return this.config.getLastErrorCountInt();
 	}
 }

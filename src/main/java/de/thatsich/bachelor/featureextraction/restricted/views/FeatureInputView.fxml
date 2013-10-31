@@ -5,20 +5,21 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
+<?import de.thatsich.core.javafx.component.IntegerField?>
 
 <GridPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="de.thatsich.bachelor.featureextraction.restricted.controller.FeatureInputPresenter">
   <children>
-    <Slider id="SliderFrameSize" fx:id="nodeSliderFrameSize" blockIncrement="1.0" majorTickUnit="1.0" max="5.0" min="2.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="2.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-    <Label labelFor="$nodeSliderFrameSize" text="Frame Size (PX x PX)" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+  	<IntegerField fx:id="nodeIntegerFieldFrameSize" alignment="CENTER_RIGHT" prefWidth="200.0" text="1" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+    <Label labelFor="$nodeIntegerFieldFrameSize" text="Frame Size (PX x PX)" GridPane.columnIndex="0" GridPane.rowIndex="0" />
     <Label text="Feature Extractor" GridPane.columnIndex="0" GridPane.rowIndex="1">
       <labelFor>
         <ChoiceBox id="ChoiceBoxFeatureExtractor" fx:id="nodeChoiceBoxFeatureExtractor" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
       </labelFor>
     </Label>
     <fx:reference source="nodeChoiceBoxFeatureExtractor" />
-    <Button id="nodeButtonTest" fx:id="nodeButtonRemoveFeatureVector" mnemonicParsing="false" onAction="#onRemoveAction" prefWidth="125.00009999999747" text="Remove" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-    <Button id="nodeButtonTest" fx:id="nodeButtonExtractFeatureVector" mnemonicParsing="false" onAction="#onExtractAction" prefWidth="125.00009999999747" text="Extract" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-    <Button id="nodeButtonTest" fx:id="nodeButtonResetFeatureVectorList" mnemonicParsing="false" onAction="#onResetAction" prefWidth="125.00009999999747" text="Reset" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+    <Button fx:id="nodeButtonRemoveFeatureVector" mnemonicParsing="false" onAction="#onRemoveAction" prefWidth="125.00009999999747" text="Remove" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+    <Button fx:id="nodeButtonExtractFeatureVector" mnemonicParsing="false" onAction="#onExtractAction" prefWidth="125.00009999999747" text="Extract" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+    <Button fx:id="nodeButtonResetFeatureVectorList" mnemonicParsing="false" onAction="#onResetAction" prefWidth="125.00009999999747" text="Reset" GridPane.columnIndex="1" GridPane.rowIndex="4" /> 
   </children>
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
