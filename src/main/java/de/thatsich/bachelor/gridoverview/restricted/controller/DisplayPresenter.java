@@ -25,9 +25,9 @@ import de.thatsich.bachelor.featureextraction.api.core.IFeatureListView;
 import de.thatsich.bachelor.imageprocessing.api.core.IImageDisplayView;
 import de.thatsich.bachelor.imageprocessing.api.core.IImageInputView;
 import de.thatsich.bachelor.imageprocessing.api.core.IImageListView;
-import de.thatsich.bachelor.prediction.intern.view.TestDisplayView;
-import de.thatsich.bachelor.prediction.intern.view.TestInputView;
-import de.thatsich.bachelor.prediction.intern.view.TestListView;
+import de.thatsich.bachelor.prediction.intern.view.PredictionDisplayView;
+import de.thatsich.bachelor.prediction.intern.view.PredictionInputView;
+import de.thatsich.bachelor.prediction.intern.view.PredictionListView;
 
 /**
  * Facilitat the communication between
@@ -60,9 +60,9 @@ public class DisplayPresenter implements Initializable {
 	@Inject private ClassificationDisplayView trainDisplayView;
 	@Inject private ClassificationListView trainListView;
 	
-	@Inject private TestInputView testInputView;
-	@Inject private TestDisplayView testDisplayView;
-	@Inject private TestListView testListView;
+	@Inject private PredictionInputView testInputView;
+	@Inject private PredictionDisplayView testDisplayView;
+	@Inject private PredictionListView testListView;
 	
 	// ================================================== 
 	// Initializable Implementation 

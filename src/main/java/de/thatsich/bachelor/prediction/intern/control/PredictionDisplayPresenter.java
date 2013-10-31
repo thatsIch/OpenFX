@@ -15,8 +15,8 @@ import org.opencv.core.Mat;
 
 import com.google.inject.Inject;
 
+import de.thatsich.bachelor.prediction.api.core.IBinaryPredictions;
 import de.thatsich.bachelor.prediction.api.entities.BinaryPrediction;
-import de.thatsich.bachelor.prediction.intern.model.BinaryPredictions;
 import de.thatsich.bachelor.prediction.intern.view.BinaryPredictionSplitChannelView;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.opencv.Images;
@@ -27,7 +27,7 @@ public class PredictionDisplayPresenter extends AFXMLPresenter {
 	@FXML private ImageView nodeImageViewPrediction;
 	
 	// Injects
-	@Inject private BinaryPredictions binaryPredictions;
+	@Inject private IBinaryPredictions binaryPredictions;
 	@Inject private BinaryPredictionSplitChannelView binaryPredictionSplitChannelView;
 
 	@Override

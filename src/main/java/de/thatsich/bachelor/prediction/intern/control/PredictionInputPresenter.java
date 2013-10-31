@@ -17,11 +17,11 @@ import de.thatsich.bachelor.featureextraction.api.core.IFeatureExtractors;
 import de.thatsich.bachelor.featureextraction.restricted.command.extractor.IFeatureExtractor;
 import de.thatsich.bachelor.imageprocessing.api.core.IImageEntries;
 import de.thatsich.bachelor.imageprocessing.api.entities.ImageEntry;
+import de.thatsich.bachelor.prediction.api.core.IBinaryPredictions;
+import de.thatsich.bachelor.prediction.api.core.IPredictionState;
 import de.thatsich.bachelor.prediction.api.entities.BinaryPrediction;
 import de.thatsich.bachelor.prediction.intern.command.BinaryPredictionCommandProvider;
 import de.thatsich.bachelor.prediction.intern.command.commands.TestBinaryClassificationCommand;
-import de.thatsich.bachelor.prediction.intern.model.BinaryPredictions;
-import de.thatsich.bachelor.prediction.intern.model.PredictionState;
 import de.thatsich.core.javafx.AFXMLPresenter;
 
 public class PredictionInputPresenter extends AFXMLPresenter {
@@ -34,8 +34,8 @@ public class PredictionInputPresenter extends AFXMLPresenter {
 	@Inject private IErrorGenerators errorGenerators;
 	@Inject private IFeatureExtractors featureExtractors;
 	@Inject private IBinaryClassifications binaryClassifications;
-	@Inject private PredictionState predictionState;
-	@Inject private BinaryPredictions binaryPredictions;
+	@Inject private IPredictionState predictionState;
+	@Inject private IBinaryPredictions binaryPredictions;
 	
 	@Inject private BinaryPredictionCommandProvider provider;
 	
@@ -67,12 +67,12 @@ public class PredictionInputPresenter extends AFXMLPresenter {
 	 */
 	@FXML private void onTestBinaryClassifierAction() {
 		final Path predictionFolderPath = this.predictionState.getPredictionFolderPathProperty().get();
-		final IBinaryClassification binaryClassification = this.binaryClassifications.getSelectedBinaryClassificationProperty().get();
+		final IBinaryClassification binaryClassification = this.binaryClassifications.getSelectedBinaryClassification();
 		final String errorGeneratorName = binaryClassification.getErrorNameProperty().get();
 		final String featureExtractorName = binaryClassification.getExtractorNameProperty().get();
 		this.log.info("Prepared all information.");
 		
-		final ImageEntry imageEntry = this.imageEntries.selectedImageEntryProperty().get();
+		final ImageEntry imageEntry = this.imageEntries.getSelectedImageEntry();
 		final int frameSize = binaryClassification.getFrameSizeProperty().get();
 		final IErrorGenerator errorGenerator = this.getErrorGenerator(errorGeneratorName);
 		final IFeatureExtractor featureExtractor = this.getFeatureExtractor(featureExtractorName);

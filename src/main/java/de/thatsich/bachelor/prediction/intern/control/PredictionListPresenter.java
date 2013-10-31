@@ -14,14 +14,14 @@ import javafx.scene.control.TableView;
 
 import com.google.inject.Inject;
 
+import de.thatsich.bachelor.prediction.api.core.IBinaryPredictions;
+import de.thatsich.bachelor.prediction.api.core.IPredictionState;
 import de.thatsich.bachelor.prediction.api.entities.BinaryPrediction;
 import de.thatsich.bachelor.prediction.intern.command.BinaryPredictionCommandProvider;
 import de.thatsich.bachelor.prediction.intern.command.commands.GetLastBinaryPredictionIndexCommand;
 import de.thatsich.bachelor.prediction.intern.command.commands.InitBinaryPredictionListCommand;
 import de.thatsich.bachelor.prediction.intern.command.commands.InitPredictionFolderCommand;
 import de.thatsich.bachelor.prediction.intern.command.commands.SetLastBinaryPredictionIndexCommand;
-import de.thatsich.bachelor.prediction.intern.model.BinaryPredictions;
-import de.thatsich.bachelor.prediction.intern.model.PredictionState;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.javafx.CommandExecutor;
 
@@ -31,8 +31,8 @@ public class PredictionListPresenter extends AFXMLPresenter {
 	@FXML private TableView<BinaryPrediction> nodeTableViewBinaryPredictionList;
 	
 	// Injects
-	@Inject private BinaryPredictions binaryPredictions;
-	@Inject private PredictionState predictionState;
+	@Inject private IBinaryPredictions binaryPredictions;
+	@Inject private IPredictionState predictionState;
 	
 	@Inject private BinaryPredictionCommandProvider provider;
 	
