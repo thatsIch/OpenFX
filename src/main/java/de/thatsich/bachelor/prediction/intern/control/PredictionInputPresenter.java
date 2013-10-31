@@ -28,8 +28,6 @@ public class PredictionInputPresenter extends AFXMLPresenter {
 
 	// Nodes
 	@FXML private Button nodeButtonPredictBinaryClassification;
-	
-	// TODO bind
 	@FXML private Button nodeButtonDeleteBinaryPrediction;
 	@FXML private Button nodeButtonResetBinaryPrediction;
 	
@@ -60,6 +58,8 @@ public class PredictionInputPresenter extends AFXMLPresenter {
 	// ==================================================
 	private void bindButtons() {
 		this.nodeButtonPredictBinaryClassification.disableProperty().bind(this.imageEntries.selectedImageEntryProperty().isNull().or(this.binaryClassifications.getSelectedBinaryClassificationProperty().isNull()));
+		this.nodeButtonDeleteBinaryPrediction.disableProperty().bind(this.binaryPredictions.getSelectedBinaryPredictionProperty().isNull());
+		this.nodeButtonResetBinaryPrediction.disableProperty().bind(this.binaryPredictions.getBinaryPredictionListProperty().emptyProperty());
 	}
 	
 	// ================================================== 
