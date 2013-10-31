@@ -27,7 +27,11 @@ import de.thatsich.core.javafx.AFXMLPresenter;
 public class PredictionInputPresenter extends AFXMLPresenter {
 
 	// Nodes
-	@FXML private Button nodeButtonTestBinaryClassification;
+	@FXML private Button nodeButtonPredictBinaryClassification;
+	
+	// TODO bind
+	@FXML private Button nodeButtonDeleteBinaryPrediction;
+	@FXML private Button nodeButtonResetBinaryPrediction;
 	
 	// Injects
 	@Inject private IImageEntries imageEntries;
@@ -55,7 +59,7 @@ public class PredictionInputPresenter extends AFXMLPresenter {
 	// Bindings Implementation 
 	// ==================================================
 	private void bindButtons() {
-		this.nodeButtonTestBinaryClassification.disableProperty().bind(this.imageEntries.selectedImageEntryProperty().isNull().or(this.binaryClassifications.getSelectedBinaryClassificationProperty().isNull()));
+		this.nodeButtonPredictBinaryClassification.disableProperty().bind(this.imageEntries.selectedImageEntryProperty().isNull().or(this.binaryClassifications.getSelectedBinaryClassificationProperty().isNull()));
 	}
 	
 	// ================================================== 
@@ -65,7 +69,7 @@ public class PredictionInputPresenter extends AFXMLPresenter {
 	/**
 	 * 
 	 */
-	@FXML private void onTestBinaryClassifierAction() {
+	@FXML private void onPredictBinaryPredictionAction() {
 		final Path predictionFolderPath = this.predictionState.getPredictionFolderPathProperty().get();
 		final IBinaryClassification binaryClassification = this.binaryClassifications.getSelectedBinaryClassification();
 		final String errorGeneratorName = binaryClassification.getErrorNameProperty().get();
@@ -85,6 +89,7 @@ public class PredictionInputPresenter extends AFXMLPresenter {
 		this.log.info("Initiated testing the binary classification.");
 	}
 	
+	// TODO maybe put them into the model?
 	private IErrorGenerator getErrorGenerator(String errorGeneratorName) {
 		for (IErrorGenerator generator : this.errorGenerators.getErrorGeneratorListProperty()) {
 			if (errorGeneratorName.equals(generator.getName())) {
@@ -105,7 +110,16 @@ public class PredictionInputPresenter extends AFXMLPresenter {
 		throw new IllegalStateException("FeatureExtractor not found: " + featureExtractorName);
 	}
 	
-
+	// TODO implement onDeleteBinaryPredictionAction
+	@FXML private void onDeleteBinaryPredictionAction() {
+		
+	}
+	
+	// TODO implement onResetBinaryPredictionAction
+	@FXML private void onResetBinaryPredictionAction() {
+		
+	}
+	
 	/**
 	 * Handler for what should happen if the Command was successfull 
 	 * for testing the binary classification
