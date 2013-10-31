@@ -2,6 +2,7 @@ package de.thatsich.bachelor.prediction.intern.control;
 
 import java.nio.file.Path;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
 
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
@@ -26,6 +27,7 @@ import de.thatsich.bachelor.prediction.intern.command.commands.DeleteBinaryPredi
 import de.thatsich.bachelor.prediction.intern.command.commands.TestBinaryClassificationCommand;
 import de.thatsich.core.javafx.ACommandHandler;
 import de.thatsich.core.javafx.AFXMLPresenter;
+import de.thatsich.core.javafx.CommandExecutor;
 
 public class PredictionInputPresenter extends AFXMLPresenter {
 
@@ -121,10 +123,26 @@ public class PredictionInputPresenter extends AFXMLPresenter {
 		command.start();
 		this.log.info("Initiated Delete of BinaryPrediction.");
 	}
-	
-	// TODO implement onResetBinaryPredictionAction
+
 	@FXML private void onResetBinaryPredictionAction() {
+		final List<BinaryPrediction> binaryPredictionList = this.binaryPredictions.getBinaryPredictionListProperty();
+		final ExecutorService executor = CommandExecutor.newFixedThreadPool(binaryPredictionList.size());
 		
+		for (final BinaryPrediction binaryPrediction : binaryPredictionList) {
+			final DeleteBinaryPredictionSucceededHandler handler = new DeleteBinaryPredictionSucceededHandler();
+			final DeleteBinaryPredictionCommand command = this.commander.createDeleteBinaryPredictionCommand(binaryPrediction);
+			command.setOnSucceededCommandHandler(handler);
+			command.setExecutor(executor);
+			command.start();
+		}
+		
+		executor.execute(new Runnable() {
+			@Override public void run() { System.gc(); }
+		});
+		this.log.info("Running Garbage Collector.");
+
+		executor.shutdown();
+		this.log.info("Shutting down Executor.");
 	}
 	
 	/**
