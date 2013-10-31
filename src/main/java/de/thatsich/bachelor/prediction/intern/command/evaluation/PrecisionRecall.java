@@ -21,85 +21,71 @@ package de.thatsich.bachelor.prediction.intern.command.evaluation;
  *
  */
 public class PrecisionRecall {
-	
 	/**
-	 * Correct Result
-	 */
-	private final int truePositive;
-	
-	/**
-	 * Unexpected Result
-	 */
-	private final int falsePositive;
-	
-	/**
-	 * Correct Absence of Result
-	 */
-	private final int trueNegative;
-	
-	/**
-	 * Missing Result
-	 */
-	private final int falseNegative;
-	
-	/**
-	 * CTOR
+	 * PPV (positive predictive value)
+	 * Precision is the probability that a (randomly selected) retrieved document is relevant.
 	 * 
 	 * @param truePositive Correct Result
 	 * @param falsePositive Unexpected Result
 	 * @param trueNegative Correct Absence of Result
 	 * @param falseNegative Missing Result
-	 */
-	public PrecisionRecall(
-			int truePositive, int falsePositive,
-			int trueNegative, int falseNegative) {
-		this.truePositive = truePositive;
-		this.falsePositive = falsePositive;
-		this.trueNegative = trueNegative;
-		this.falseNegative = falseNegative;
-	}
-	
-	/**
-	 * PPV (positive predictive value)
-	 * Precision is the probability that a (randomly selected) retrieved document is relevant.
+	 * 
 	 * @return precision
 	 */
-	public double precision() { 
+	public double precision(int truePositive, int falsePositive, int trueNegative, int falseNegative) { 
 		return 
-				this.truePositive / 
-				(this.truePositive + this.falsePositive);
+				truePositive / 
+				(truePositive + falsePositive);
 	}
 	
 	/**
 	 * NPV (negative predictive value)
 	 * Recall is the probability that a (randomly selected) relevant document is retrieved in a search.
+	 * 
+	 * @param truePositive Correct Result
+	 * @param falsePositive Unexpected Result
+	 * @param trueNegative Correct Absence of Result
+	 * @param falseNegative Missing Result
+	 * 
 	 * @return recall
 	 */
-	public double recall() { 
+	public double recall(int truePositive, int falsePositive, int trueNegative, int falseNegative) { 
 		return 
-				this.truePositive / 
-				(this.truePositive + this.falseNegative); 
+				truePositive / 
+				(truePositive + falseNegative); 
 	}
 	
 	/**
 	 * SPC (Specificity or TrueNegativeRate)
 	 * Specificity relates to the test's ability to identify negative results.
+	 * 
+	 * @param truePositive Correct Result
+	 * @param falsePositive Unexpected Result
+	 * @param trueNegative Correct Absence of Result
+	 * @param falseNegative Missing Result
+	 * 
 	 * @return specificity
 	 */
-	public double specificity() { 
+	public double specificity(int truePositive, int falsePositive, int trueNegative, int falseNegative) { 
 		return 
-				this.trueNegative / 
-				(this.trueNegative + this.falsePositive); 
+				trueNegative / 
+				(trueNegative + falsePositive); 
 	}
 	
 	/**
 	 * ACC (Accuracy)
 	 * An accuracy of 100% means that the measured values are exactly the same as the given values.
+	 * 
+	 * @param truePositive Correct Result
+	 * @param falsePositive Unexpected Result
+	 * @param trueNegative Correct Absence of Result
+	 * @param falseNegative Missing Result
+	 * 
 	 * @return accuracy
 	 */
-	public double accuracy() { 
+	public double accuracy(int truePositive, int falsePositive, int trueNegative, int falseNegative) { 
 		return 
-				(this.truePositive + this.trueNegative) / 
-				(this.truePositive + this.trueNegative + this.falsePositive + this.falseNegative);
+				(truePositive + trueNegative) / 
+				(truePositive + trueNegative + falsePositive + falseNegative);
 	}
 }
