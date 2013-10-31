@@ -10,6 +10,8 @@ import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.highgui.Highgui;
 
+import com.sun.org.apache.xpath.internal.functions.WrongNumberArgsException;
+
 import de.thatsich.bachelor.prediction.api.entities.BinaryPrediction;
 
 public class BinaryPredictionFileStorageService {
@@ -29,7 +31,7 @@ public class BinaryPredictionFileStorageService {
 		Highgui.imwrite(file, mergedMat);
 	}
 	
-	public BinaryPrediction load(Path filePath) {
+	public BinaryPrediction load(Path filePath) throws WrongNumberArgsException {
 		final Mat layeredImage = Highgui.imread(filePath.toAbsolutePath().toString());
 		
 		// split channels to extract GL and Error Mat
@@ -40,7 +42,18 @@ public class BinaryPredictionFileStorageService {
 		final Mat secondLayer = layeredImageChannelMats.get(1);
 		final Mat thirdLayer = layeredImageChannelMats.get(2);
 		
-		// TODO temp fix
-		return new BinaryPrediction(filePath, firstLayer, secondLayer, thirdLayer, "", "", 0, "", "");
+		// extract file information
+		final String fileName = filePath.getFileName().toString();
+		final String[] fileNameSplit = fileName.split("_");
+		if (fileNameSplit.length != 5) throw new WrongNumberArgsException("Expected 5 encoded information but found " + fileNameSplit.length);
+		
+		// prepare subinfo
+		final String classificationName = fileNameSplit[0];
+		final String extractorName = fileNameSplit[1];
+		final int frameSize = Integer.parseInt(fileNameSplit[2]);
+		final String errorName = fileNameSplit[3];
+		final String id = fileNameSplit[4];
+		
+		return new BinaryPrediction(filePath, firstLayer, secondLayer, thirdLayer, classificationName, extractorName, frameSize, errorName, id);
 	}
 }
