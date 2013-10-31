@@ -13,6 +13,7 @@ import org.opencv.core.Mat;
 
 public class BinaryPrediction {
 
+	// Properties
 	private final ReadOnlyObjectWrapper<Path> filePath = new ReadOnlyObjectWrapper<>();
 	private final ReadOnlyObjectWrapper<Mat> withError = new ReadOnlyObjectWrapper<>();
 	private final ReadOnlyObjectWrapper<Mat> errorIndication = new ReadOnlyObjectWrapper<>();
@@ -44,7 +45,7 @@ public class BinaryPrediction {
 		this.id.set(id);
 	}
 
-	// Getters
+	// Property Getters
 	public ReadOnlyObjectProperty<Path> getFilePathProperty() { return this.filePath.getReadOnlyProperty(); }
 	public ReadOnlyObjectProperty<Mat> getWithErrorProperty() { return this.withError.getReadOnlyProperty(); }
 	public ReadOnlyObjectProperty<Mat> getErrorIndicationProperty() { return this.errorIndication.getReadOnlyProperty(); }

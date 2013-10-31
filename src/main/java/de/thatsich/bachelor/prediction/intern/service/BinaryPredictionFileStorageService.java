@@ -40,6 +40,7 @@ public class BinaryPredictionFileStorageService {
 		final Mat secondLayer = layeredImageChannelMats.get(1);
 		final Mat thirdLayer = layeredImageChannelMats.get(2);
 		
-		return new BinaryPrediction(filePath, firstLayer, secondLayer, thirdLayer);
+		// TODO temp fix
+		return new BinaryPrediction(filePath, firstLayer, secondLayer, thirdLayer, "", "", 0, "", "");
 	}
 }

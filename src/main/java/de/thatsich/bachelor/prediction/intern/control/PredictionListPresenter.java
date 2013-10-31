@@ -10,7 +10,9 @@ import javafx.beans.value.ObservableValue;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import com.google.inject.Inject;
 
@@ -29,6 +31,11 @@ public class PredictionListPresenter extends AFXMLPresenter {
 
 	// Nodes
 	@FXML private TableView<BinaryPrediction> nodeTableViewBinaryPredictionList;
+	@FXML private TableColumn<BinaryPrediction, String> nodeTableColumnClassifierName;
+	@FXML private TableColumn<BinaryPrediction, String> nodeTableColumnExtractorName;
+	@FXML private TableColumn<BinaryPrediction, Integer> nodeTableColumnFrameSize;
+	@FXML private TableColumn<BinaryPrediction, String> nodeTableColumnErrorClassName;
+	@FXML private TableColumn<BinaryPrediction, String> nodeTableColumnID;
 	
 	// Injects
 	@Inject private IBinaryPredictions binaryPredictions;
@@ -86,11 +93,11 @@ public class PredictionListPresenter extends AFXMLPresenter {
 	}
 
 	private void bindTableViewCellValue() {
-//		this.nodeTableColumnClassifierName.setCellValueFactory(new PropertyValueFactory<IBinaryClassification, String>("getClassificationName"));
-//		this.nodeTableColumnExtractorName.setCellValueFactory(new PropertyValueFactory<IBinaryClassification, String>("getExtractorName"));
-//		this.nodeTableColumnFrameSize.setCellValueFactory(new PropertyValueFactory<IBinaryClassification, Integer>("getFrameSize"));
-//		this.nodeTableErrorName.setCellValueFactory(new PropertyValueFactory<IBinaryClassification, String>("getErrorName"));
-//		this.nodeTableColumnID.setCellValueFactory(new PropertyValueFactory<IBinaryClassification, String>("getId"));
+		this.nodeTableColumnClassifierName.setCellValueFactory(new PropertyValueFactory<BinaryPrediction, String>("getClassifierName"));
+		this.nodeTableColumnExtractorName.setCellValueFactory(new PropertyValueFactory<BinaryPrediction, String>("getExtractorName"));
+		this.nodeTableColumnFrameSize.setCellValueFactory(new PropertyValueFactory<BinaryPrediction, Integer>("getFrameSize"));
+		this.nodeTableColumnErrorClassName.setCellValueFactory(new PropertyValueFactory<BinaryPrediction, String>("getErrorClassName"));
+		this.nodeTableColumnID.setCellValueFactory(new PropertyValueFactory<BinaryPrediction, String>("getID"));
 	}
 		
 	private void initBinaryPredictionList() {

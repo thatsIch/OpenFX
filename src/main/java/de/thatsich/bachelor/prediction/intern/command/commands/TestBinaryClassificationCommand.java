@@ -177,18 +177,24 @@ public class TestBinaryClassificationCommand extends ACommand<BinaryPrediction> 
 		final Mat predictionMat = assembleImage(predictionMatSplit, onlyError.size());
 		log.info("Prepared Image Content.");
 		
+		final String strBinaryClassification = this.binaryClassification.getName();
+		final String strFeatureExtractor = this.featureExtractor.getName();
+		final int intFrameSize = this.frameSize;
+		final String strErrorGenerator = this.errorGenerator.getName();
+		final String strID = UUID.randomUUID().toString();
+		
 		final StringBuffer fileName = new StringBuffer();
-		fileName.append(binaryClassification.getName() + "_");
-		fileName.append(featureExtractor.getName() + "_");
-		fileName.append(frameSize + "_");
-		fileName.append(errorGenerator.getName() + "_");
-		fileName.append(UUID.randomUUID().toString() + ".png");
+		fileName.append(strBinaryClassification + "_");
+		fileName.append(strFeatureExtractor + "_");
+		fileName.append(intFrameSize + "_");
+		fileName.append(strErrorGenerator + "_");
+		fileName.append(strID + ".png");
 		log.info("Prepared Image FileName.");
 		
 		final Path filePath = predictionFolderPath.resolve(fileName.toString());
 		log.info("Resolved FileName.");
 		
-		final BinaryPrediction prediction = new BinaryPrediction(filePath, withError, errorIndicationMat, predictionMat);
+		final BinaryPrediction prediction = new BinaryPrediction(filePath, withError, errorIndicationMat, predictionMat, strBinaryClassification, strFeatureExtractor, intFrameSize, strErrorGenerator, strID);
 		log.info("Created Binary Prediction.");
 		
 		fileStorage.save(prediction);

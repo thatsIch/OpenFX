@@ -29,6 +29,7 @@ import de.thatsich.core.opencv.OpenCVLoader;
 // TODO prediction list anpassen
 // TODO Random Feature Extractor
 // TODO CNBC
+// TODO fix GLCM
 /**
  * Main Execution Class
  * @author Tran Minh Do
