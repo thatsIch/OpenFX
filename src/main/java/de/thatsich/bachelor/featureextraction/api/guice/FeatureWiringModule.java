@@ -44,6 +44,7 @@ public class FeatureWiringModule extends AWiringModule {
 
 	@Override
 	protected void bindCommand() {
+
 	}
 
 	@Override

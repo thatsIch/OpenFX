@@ -9,11 +9,11 @@
 
 <GridPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="de.thatsich.bachelor.featureextraction.restricted.controller.FeatureInputPresenter">
   <children>
-  	<IntegerField fx:id="nodeIntegerFieldFrameSize" alignment="CENTER_RIGHT" prefWidth="200.0" text="1" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-    <Label labelFor="$nodeIntegerFieldFrameSize" text="Frame Size (PX x PX)" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-    <Label text="Feature Extractor" GridPane.columnIndex="0" GridPane.rowIndex="1">
+  	<IntegerField fx:id="nodeIntegerFieldFrameSize" alignment="CENTER_RIGHT" prefWidth="200.0" text="1" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+    <Label labelFor="$nodeIntegerFieldFrameSize" text="TileSize (PX x PX)" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+    <Label text="Feature Extractor" GridPane.columnIndex="0" GridPane.rowIndex="0">
       <labelFor>
-        <ChoiceBox id="ChoiceBoxFeatureExtractor" fx:id="nodeChoiceBoxFeatureExtractor" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+        <ChoiceBox id="ChoiceBoxFeatureExtractor" fx:id="nodeChoiceBoxFeatureExtractor" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
       </labelFor>
     </Label>
     <fx:reference source="nodeChoiceBoxFeatureExtractor" />

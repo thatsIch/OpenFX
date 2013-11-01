@@ -11,6 +11,7 @@ import com.google.inject.Inject;
 import de.thatsich.bachelor.featureextraction.api.core.IFeatureVectorSets;
 import de.thatsich.bachelor.featureextraction.api.entities.FeatureVector;
 import de.thatsich.bachelor.featureextraction.api.entities.FeatureVectorSet;
+import de.thatsich.bachelor.featureextraction.restricted.command.FeatureInitCommander;
 import de.thatsich.core.javafx.AFXMLPresenter;
 
 public class FeatureDisplayPresenter extends AFXMLPresenter {
@@ -24,6 +25,7 @@ public class FeatureDisplayPresenter extends AFXMLPresenter {
 	@FXML private Label nodeLabelFeatureLabel;
 	
 	// Injects
+	@Inject private FeatureInitCommander initCommander;
 	@Inject private IFeatureVectorSets featureVectors;
 	
 	// ================================================== 
@@ -31,6 +33,8 @@ public class FeatureDisplayPresenter extends AFXMLPresenter {
 	// ==================================================
 	@Override
 	protected void initComponents() {
+		this.initCommander.dummy();
+		
 		this.initLabels();
 	}
 

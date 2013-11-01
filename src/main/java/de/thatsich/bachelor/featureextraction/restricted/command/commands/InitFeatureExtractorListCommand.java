@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.inject.Inject;
+import com.google.inject.Injector;
 
-import de.thatsich.bachelor.featureextraction.restricted.command.FeatureExtractorProvider;
 import de.thatsich.bachelor.featureextraction.restricted.command.extractor.Gradient;
 import de.thatsich.bachelor.featureextraction.restricted.command.extractor.GrayLevelCooccurenceHistogram;
 import de.thatsich.bachelor.featureextraction.restricted.command.extractor.HuMoments;
@@ -17,20 +17,23 @@ import de.thatsich.core.javafx.ACommand;
 
 public class InitFeatureExtractorListCommand extends ACommand<List<IFeatureExtractor>> {
 
-	@Inject FeatureExtractorProvider provider;
+	@Inject private Injector injector;
 
 	@Override
 	protected List<IFeatureExtractor> call() throws Exception {
 		final List<IFeatureExtractor> featureExtractorList = new ArrayList<IFeatureExtractor>();
 		
-		featureExtractorList.add(provider.get(Gradient.class));
-		featureExtractorList.add(provider.get(GrayLevelCooccurenceHistogram.class));
-		featureExtractorList.add(provider.get(HuMoments.class));
-		featureExtractorList.add(provider.get(LocalBinaryPatternHistogram.class));
-		featureExtractorList.add(provider.get(Mean.class));
-		featureExtractorList.add(provider.get(Variance.class));
+		featureExtractorList.add(this.get(Gradient.class));
+		featureExtractorList.add(this.get(GrayLevelCooccurenceHistogram.class));
+		featureExtractorList.add(this.get(HuMoments.class));
+		featureExtractorList.add(this.get(LocalBinaryPatternHistogram.class));
+		featureExtractorList.add(this.get(Mean.class));
+		featureExtractorList.add(this.get(Variance.class));
 		
 		return featureExtractorList;
 	}
 
+	private <T extends IFeatureExtractor> T get(Class<T> type) {
+        return injector.getInstance(type);
+    }
 }

@@ -1,7 +1,5 @@
 package de.thatsich.bachelor.featureextraction.restricted.controller;
 
-import java.nio.file.Path;
-import java.security.InvalidParameterException;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 
@@ -15,19 +13,14 @@ import javafx.util.StringConverter;
 import com.google.inject.Inject;
 
 import de.thatsich.bachelor.errorgeneration.api.core.IErrorEntries;
-import de.thatsich.bachelor.errorgeneration.api.entities.ErrorEntry;
 import de.thatsich.bachelor.featureextraction.api.core.IFeatureExtractors;
 import de.thatsich.bachelor.featureextraction.api.core.IFeatureState;
 import de.thatsich.bachelor.featureextraction.api.core.IFeatureVectorSets;
 import de.thatsich.bachelor.featureextraction.api.entities.FeatureVectorSet;
 import de.thatsich.bachelor.featureextraction.restricted.command.FeatureCommandProvider;
+import de.thatsich.bachelor.featureextraction.restricted.command.FeatureInitCommander;
 import de.thatsich.bachelor.featureextraction.restricted.command.commands.DeleteFeatureVectorSetCommand;
 import de.thatsich.bachelor.featureextraction.restricted.command.commands.ExtractFeatureVectorSetCommand;
-import de.thatsich.bachelor.featureextraction.restricted.command.commands.GetLastFeatureExtractorIndexCommand;
-import de.thatsich.bachelor.featureextraction.restricted.command.commands.GetLastFrameSizeCommand;
-import de.thatsich.bachelor.featureextraction.restricted.command.commands.InitFeatureExtractorListCommand;
-import de.thatsich.bachelor.featureextraction.restricted.command.commands.SetLastFeatureExtractorIndexCommand;
-import de.thatsich.bachelor.featureextraction.restricted.command.commands.SetLastFrameSizeCommand;
 import de.thatsich.bachelor.featureextraction.restricted.command.extractor.IFeatureExtractor;
 import de.thatsich.core.javafx.ACommandHandler;
 import de.thatsich.core.javafx.AFXMLPresenter;
@@ -45,6 +38,7 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 	@FXML private Button nodeButtonResetFeatureVectorList;
 
 	// Injects
+	@Inject private FeatureInitCommander initCommander;
 	@Inject private FeatureCommandProvider commander;
 	@Inject private IErrorEntries errorEntryList;
 	@Inject private IFeatureExtractors featureExtractors;
@@ -53,8 +47,7 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 	
 	@Override
 	protected void initComponents() {
-		this.initFeatureExtractorList();
-		this.initFrameSize();
+		this.initCommander.dummy();
 	}
 
 	@Override
@@ -62,40 +55,6 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 		this.bindChoiceBoxFeatureExtractor();
 		this.bindIntegerFieldFrameSize();
 		this.bindButtons();
-	}
-	
-	/**
-	 * Gets FeatureExtractorList and preselects last selected one.
-	 */
-	private void initFeatureExtractorList() {
-		final InitFeatureExtractorListSucceededHandler initHandler = new InitFeatureExtractorListSucceededHandler();
-		final GetLastFeatureExtractorIndexSucceededHandler lastHandler = new GetLastFeatureExtractorIndexSucceededHandler(); 
-		final ExecutorService executor = CommandExecutor.newFixedThreadPool(1);
-		
-		final InitFeatureExtractorListCommand initCommand =	this.commander.createInitFeatureExtractorListCommand();
-		initCommand.setOnSucceeded(initHandler);
-		initCommand.setExecutor(executor);
-		initCommand.start();
-		this.log.info("Initialized FeatureExtractorList Retrieval.");
-		
-		final GetLastFeatureExtractorIndexCommand lastCommand = this.commander.createGetLastFeatureExtractorIndexCommand();
-		lastCommand.setOnSucceeded(lastHandler);
-		lastCommand.setExecutor(executor);
-		lastCommand.start();
-		this.log.info("Initialized LastFeatureExtractorIndex Retrieval.");
-		
-		executor.shutdown();
-		this.log.info("Shutting down Executor.");
-	}
-	
-	/**
-	 * Fetches last FrameSize
-	 */
-	private void initFrameSize() { 
-		final GetLastFrameSizeCommand command = this.commander.createGetLastFrameSizeCommand();
-		command.setOnSucceededCommandHandler(new GetLastFrameSizeSucceededHandler());
-		command.start();
-		this.log.info("Initialized LastFrameSize Retrieval.");
 	}
 
 	// ================================================== 
@@ -117,8 +76,7 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 		
 		this.nodeChoiceBoxFeatureExtractor.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
 			@Override public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-				final SetLastFeatureExtractorIndexCommand lastCommand = commander.createSetLastFeatureExtractorIndexCommand(newValue.intValue());
-				lastCommand.start();
+				commander.createSetLastFeatureExtractorIndexCommand(newValue.intValue()).start();
 			}
 		});
 		this.log.info("Bound ChoiceBoxFeatureExtractor to Config.");
@@ -134,9 +92,9 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 		this.nodeIntegerFieldFrameSize.valueProperty().addListener(new ChangeListener<Number>() {
 			@Override public void changed(ObservableValue<? extends Number> paramObservableValue, Number oldValue, Number newValue) {
 				final int frameSize = newValue.intValue();
+				
 				featureState.setFrameSize(frameSize);
-				final SetLastFrameSizeCommand command = commander.createSetLastFrameSizeCommand(frameSize);
-				command.start();
+				commander.createSetLastFrameSizeCommand(frameSize).start();
 				log.info("Initiated SetLastFrameSizeCommand with " + frameSize + ".");
 			}
 		});
@@ -156,78 +114,43 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 	// GUI Implementation 
 	// ==================================================
 	@FXML private void onExtractAction() {
-		final IFeatureExtractor extractor = this.featureExtractors.getSelectedFeatureExtractor();
-		final ErrorEntry errorEntry = this.errorEntryList.getSelectedErrorEntry();
-		final int frameSize = this.featureState.getFrameSize();
-		final Path folderPath = this.featureState.getFeatureVectorFolderPath();
-		this.log.info("Extracted all necessary information for a FeatureVector.");
-		
-		if (extractor == null) throw new InvalidParameterException("Extractor is null.");
-		if (errorEntry == null) throw new InvalidParameterException("ErrorEntry is null.");
-		if (frameSize == 0) throw new InvalidParameterException("FrameSize is 0.");
-		if (folderPath == null) throw new InvalidParameterException("FolderPath is null.");
-		
-		final ExtractFeatureVectorSetSucceededHandler handler = new ExtractFeatureVectorSetSucceededHandler();
-		final ExtractFeatureVectorSetCommand extractCommand = this.commander.createExtractFeatureVectorCommand(folderPath, errorEntry, extractor, frameSize);
-		extractCommand.setOnSucceeded(handler);
+		final ExtractFeatureVectorSetCommand extractCommand = this.commander.createExtractFeatureVectorCommand(
+				this.featureState.getFeatureVectorFolderPath(), 
+				this.errorEntryList.getSelectedErrorEntry(), 
+				this.featureExtractors.getSelectedFeatureExtractor(), 
+				this.featureState.getFrameSize());
+		extractCommand.setOnSucceeded(new ExtractFeatureVectorSetSucceededHandler());
 		extractCommand.start();
 		this.log.info("FeatureVector deleted and removed from FeatureVectorList.");
 	}
 	
 	@FXML private void onRemoveAction() {
-		final FeatureVectorSet set = this.featureVectors.getSelectedFeatureVectorSet();
-		this.log.info("Fetched selected FeatureVector.");
-		
-		final RemoveFeatureVectorSetSucceededHandler handler = new RemoveFeatureVectorSetSucceededHandler();
-		final DeleteFeatureVectorSetCommand command = this.commander.createRemoveFeatureVectorSetCommand(set);
-		command.setOnSucceeded(handler);
+		final DeleteFeatureVectorSetCommand command = this.commander.createRemoveFeatureVectorSetCommand(this.featureVectors.getSelectedFeatureVectorSet());
+		command.setOnSucceeded(new RemoveFeatureVectorSetSucceededHandler());
 		command.start();
 		this.log.info("FeatureVectorSet deletion instantiated.");
 	}
 	
 	@FXML private void onResetAction() {
-		final ExecutorService executor = CommandExecutor.newFixedThreadPool(this.featureVectors.getFeatureVectorSetListProperty().size());
+		final List<FeatureVectorSet> list = this.featureVectors.getFeatureVectorSetListProperty();
+		final ExecutorService executor = CommandExecutor.newFixedThreadPool(list.size());
 		this.log.info("Initialized Executor for resetting all FeatureVectors.");
 		
-		for (FeatureVectorSet set : this.featureVectors.getFeatureVectorSetListProperty()) {
-			final RemoveFeatureVectorSetSucceededHandler handler = new RemoveFeatureVectorSetSucceededHandler();
+		for (FeatureVectorSet set : list) {
 			final DeleteFeatureVectorSetCommand command = this.commander.createRemoveFeatureVectorSetCommand(set);
-			command.setOnSucceeded(handler);
+			command.setOnSucceeded(new RemoveFeatureVectorSetSucceededHandler());
 			command.setExecutor(executor);
 			command.start();
 			this.log.info("FeatureVector Deletion executed.");
 		}
 		
-		executor.execute(new Runnable() {
-			
-			@Override
-			public void run() {
-				System.gc();
-			}
-		});
+		executor.execute(new Runnable() { @Override public void run() { System.gc(); } });
 		this.log.info("Running Garbage Collector.");
 		
 		executor.shutdown();
 		this.log.info("Shutting down Executor.");
 	}
-	
-	// ================================================== 
-	// Handler Implementation 
-	// ==================================================
-	/**
-	 * Handler for what should happen if the Command was successfull 
-	 * for initializing the feature extractor list
-	 * 
-	 * @author Minh
-	 */
-	private class InitFeatureExtractorListSucceededHandler extends ACommandHandler<List<IFeatureExtractor>> {
-		@Override
-		public void handle(List<IFeatureExtractor> list) {
-			featureExtractors.getFeatureExtractorsProperty().addAll(list);
-			log.info("Added FeatureExtractor to Database.");
-		}
-	}
-	
+
 	/**
 	 * Handler for what should happen if the Command was successfull 
 	 * for extracting the featurevector
@@ -266,37 +189,6 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 			else {
 				featureVectors.getSelectedFeatureVectorSetProperty().set(null);
 				log.info("Reset Selection to null.");
-			}
-		}
-	}
-	
-	/**
-	 * Handler for what should happen if the Command was successfull 
-	 * for getting LastFeatureExtractorIndex
-	 * 
-	 * @author Minh
-	 */
-	private class GetLastFeatureExtractorIndexSucceededHandler extends ACommandHandler<Integer> {
-		@Override public void handle(Integer value) {
-			if (value != null) {
-				final IFeatureExtractor selectedFeatureExtractor = featureExtractors.getFeatureExtractorsProperty().get(value);
-				featureExtractors.getSelectedFeatureExtractorProperty().set(selectedFeatureExtractor);
-				log.info("Set LastSelectedFeatureExtractor in Model.");
-			}
-		}
-	}
-	
-	/**
-	 * Handler for what should happen if the Command was successfull 
-	 * for getting LastFrameSize
-	 * 
-	 * @author Minh
-	 */
-	private class GetLastFrameSizeSucceededHandler extends ACommandHandler<Integer> {
-		@Override public void handle(Integer value) {
-			if (value != null) {
-				featureState.setFrameSize(value);
-				log.info("Set LastErrorLoopCount in Model.");
 			}
 		}
 	}
