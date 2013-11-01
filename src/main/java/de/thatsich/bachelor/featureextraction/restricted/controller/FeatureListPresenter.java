@@ -34,12 +34,10 @@ public class FeatureListPresenter extends AFXMLPresenter {
 	
 	// Command
 	@Inject private FeatureCommandProvider commander;
-	@Inject private FeatureInitCommander initCommander;
+	@Inject FeatureInitCommander initCommander;
 	
 	@Override
 	protected void initComponents() {
-		this.initCommander.dummy();
-		
 		this.initTreeView();
 	}
 
@@ -47,6 +45,18 @@ public class FeatureListPresenter extends AFXMLPresenter {
 	protected void bindComponents() {
 		this.bindTreeViewModel();
 		this.bindTreeViewSelection();
+	}
+	
+	private void initTreeView() {
+		this.nodeTreeViewRoot = new TreeItem<IFeatureSpaceTreeItemAdapter>(new IFeatureSpaceTreeItemAdapter() {
+			@Override public String toString() { return "FeatureVector Sets"; }
+			@Override public boolean isVector() { return false; }
+			@Override public boolean isSet() { return false; }
+			@Override public FeatureVector getVector() { return null; }
+			@Override public FeatureVectorSet getSet() { return null; }
+		});
+		this.nodeTreeViewRoot.setExpanded(true);
+		this.nodeTreeViewFeatureVectorSetList.setRoot(nodeTreeViewRoot);
 	}
 	
 	private void bindTreeViewModel() {
@@ -141,17 +151,5 @@ public class FeatureListPresenter extends AFXMLPresenter {
 				command.start();
 			}
 		});
-	}
-	
-	private void initTreeView() {
-		this.nodeTreeViewRoot = new TreeItem<IFeatureSpaceTreeItemAdapter>(new IFeatureSpaceTreeItemAdapter() {
-			@Override public String toString() { return "FeatureVector Sets"; }
-			@Override public boolean isVector() { return false; }
-			@Override public boolean isSet() { return false; }
-			@Override public FeatureVector getVector() { return null; }
-			@Override public FeatureVectorSet getSet() { return null; }
-		});
-		this.nodeTreeViewRoot.setExpanded(true);
-		this.nodeTreeViewFeatureVectorSetList.setRoot(nodeTreeViewRoot);
 	}
 }

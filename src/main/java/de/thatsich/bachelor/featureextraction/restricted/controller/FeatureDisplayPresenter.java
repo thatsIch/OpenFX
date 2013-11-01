@@ -25,16 +25,14 @@ public class FeatureDisplayPresenter extends AFXMLPresenter {
 	@FXML private Label nodeLabelFeatureLabel;
 	
 	// Injects
-	@Inject private FeatureInitCommander initCommander;
+	@Inject FeatureInitCommander initCommander;
 	@Inject private IFeatureVectorSets featureVectors;
 	
 	// ================================================== 
 	// Initialization Implementation 
 	// ==================================================
 	@Override
-	protected void initComponents() {
-		this.initCommander.dummy();
-		
+	protected void initComponents() {		
 		this.initLabels();
 	}
 

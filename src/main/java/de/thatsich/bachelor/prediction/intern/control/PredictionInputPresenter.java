@@ -116,9 +116,8 @@ public class PredictionInputPresenter extends AFXMLPresenter {
 	
 	@FXML private void onDeleteBinaryPredictionAction() {
 		final BinaryPrediction selected = this.binaryPredictions.getSelectedBinaryPrediction(); 
-		final DeleteBinaryPredictionSucceededHandler handler = new DeleteBinaryPredictionSucceededHandler();
 		final DeleteBinaryPredictionCommand command = this.commander.createDeleteBinaryPredictionCommand(selected);
-		command.setOnSucceededCommandHandler(handler);
+		command.setOnSucceededCommandHandler(DeleteBinaryPredictionSucceededHandler.class);
 		command.start();
 		this.log.info("Initiated Delete of BinaryPrediction.");
 	}
@@ -128,9 +127,8 @@ public class PredictionInputPresenter extends AFXMLPresenter {
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(binaryPredictionList.size());
 		
 		for (final BinaryPrediction binaryPrediction : binaryPredictionList) {
-			final DeleteBinaryPredictionSucceededHandler handler = new DeleteBinaryPredictionSucceededHandler();
 			final DeleteBinaryPredictionCommand command = this.commander.createDeleteBinaryPredictionCommand(binaryPrediction);
-			command.setOnSucceededCommandHandler(handler);
+			command.setOnSucceededCommandHandler(DeleteBinaryPredictionSucceededHandler.class);
 			command.setExecutor(executor);
 			command.start();
 		}

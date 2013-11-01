@@ -81,7 +81,7 @@ public class ImageInputPresenter extends AFXMLPresenter {
 		this.log.info("Created new Path: " + copyPath);
 
 		final CopyFileCommand command = this.commander.createCopyFileCommand(filePath, copyPath);
-		command.setOnSucceededCommandHandler(new AddImageEntrySucceededHandler());
+		command.setOnSucceededCommandHandler(AddImageEntrySucceededHandler.class);
 		command.start();
 		this.log.info("File copied and inserted into EntryList.");
 	}
@@ -101,7 +101,7 @@ public class ImageInputPresenter extends AFXMLPresenter {
 		}
 
 		final DeleteImageEntryCommand command = this.commander.createDeleteImageEntryCommand(choice);
-		command.setOnSucceededCommandHandler(new DeleteImageEntrySucceededHandler());
+		command.setOnSucceededCommandHandler(DeleteImageEntrySucceededHandler.class);
 		command.start();
 		this.log.info("File deleted and removed from EntryList.");
 	}
@@ -118,7 +118,7 @@ public class ImageInputPresenter extends AFXMLPresenter {
 
 		for (ImageEntry entry : imageEntryList) {
 			final DeleteImageEntryCommand command = this.commander.createDeleteImageEntryCommand(entry);
-			command.setOnSucceededCommandHandler(new DeleteImageEntrySucceededHandler());
+			command.setOnSucceededCommandHandler(DeleteImageEntrySucceededHandler.class);
 			command.setExecutor(executor);
 			command.start();
 		}

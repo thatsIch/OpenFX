@@ -22,7 +22,8 @@ import de.thatsich.bachelor.featureextraction.restricted.command.FeatureInitComm
 import de.thatsich.bachelor.featureextraction.restricted.command.commands.DeleteFeatureVectorSetCommand;
 import de.thatsich.bachelor.featureextraction.restricted.command.commands.ExtractFeatureVectorSetCommand;
 import de.thatsich.bachelor.featureextraction.restricted.command.extractor.IFeatureExtractor;
-import de.thatsich.core.javafx.ACommandHandler;
+import de.thatsich.bachelor.featureextraction.restricted.controller.handler.ExtractFeatureVectorSetSucceededHandler;
+import de.thatsich.bachelor.featureextraction.restricted.controller.handler.RemoveFeatureVectorSetSucceededHandler;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.javafx.CommandExecutor;
 import de.thatsich.core.javafx.component.IntegerField;
@@ -38,7 +39,7 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 	@FXML private Button nodeButtonResetFeatureVectorList;
 
 	// Injects
-	@Inject private FeatureInitCommander initCommander;
+	@Inject FeatureInitCommander initCommander;
 	@Inject private FeatureCommandProvider commander;
 	@Inject private IErrorEntries errorEntryList;
 	@Inject private IFeatureExtractors featureExtractors;
@@ -47,7 +48,6 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 	
 	@Override
 	protected void initComponents() {
-		this.initCommander.dummy();
 	}
 
 	@Override
@@ -119,6 +119,7 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 				this.errorEntryList.getSelectedErrorEntry(), 
 				this.featureExtractors.getSelectedFeatureExtractor(), 
 				this.featureState.getFrameSize());
+		extractCommand.setOnSucceededCommandHandler(ExtractFeatureVectorSetSucceededHandler.class);
 		extractCommand.setOnSucceeded(new ExtractFeatureVectorSetSucceededHandler());
 		extractCommand.start();
 		this.log.info("FeatureVector deleted and removed from FeatureVectorList.");
@@ -126,7 +127,7 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 	
 	@FXML private void onRemoveAction() {
 		final DeleteFeatureVectorSetCommand command = this.commander.createRemoveFeatureVectorSetCommand(this.featureVectors.getSelectedFeatureVectorSet());
-		command.setOnSucceeded(new RemoveFeatureVectorSetSucceededHandler());
+		command.setOnSucceededCommandHandler(RemoveFeatureVectorSetSucceededHandler.class);
 		command.start();
 		this.log.info("FeatureVectorSet deletion instantiated.");
 	}
@@ -138,7 +139,7 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 		
 		for (FeatureVectorSet set : list) {
 			final DeleteFeatureVectorSetCommand command = this.commander.createRemoveFeatureVectorSetCommand(set);
-			command.setOnSucceeded(new RemoveFeatureVectorSetSucceededHandler());
+			command.setOnSucceededCommandHandler(RemoveFeatureVectorSetSucceededHandler.class);
 			command.setExecutor(executor);
 			command.start();
 			this.log.info("FeatureVector Deletion executed.");
@@ -149,47 +150,5 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 		
 		executor.shutdown();
 		this.log.info("Shutting down Executor.");
-	}
-
-	/**
-	 * Handler for what should happen if the Command was successfull 
-	 * for extracting the featurevector
-	 * 
-	 * @author Minh
-	 */
-	private class ExtractFeatureVectorSetSucceededHandler extends ACommandHandler<FeatureVectorSet> {
-		@Override
-		public void handle(FeatureVectorSet set) {
-			featureVectors.getFeatureVectorSetListProperty().addAll(set);
-			log.info("Added FeatureVector to Database.");
-			
-			featureVectors.getSelectedFeatureVectorSetProperty().set(set);
-			log.info("Set current to selected FeatureVectorSet.");
-		}
-	}
-	
-	/**
-	 * Handler for what should happen if the Command was successfull 
-	 * for removing the featurevector
-	 * 
-	 * @author Minh
-	 */
-	private class RemoveFeatureVectorSetSucceededHandler extends ACommandHandler<FeatureVectorSet> {
-		@Override
-		public void handle(FeatureVectorSet fv) {
-			final List<FeatureVectorSet> list = featureVectors.getFeatureVectorSetListProperty();
-			list.remove(fv);
-			log.info("Removed FeatureVector from Database.");
-			
-			if (list.size() > 0) {
-				final FeatureVectorSet first = list.get(0);
-				featureVectors.getSelectedFeatureVectorSetProperty().set(first);
-				log.info("Reset Selection to first FeatureVectorSet.");
-			}
-			else {
-				featureVectors.getSelectedFeatureVectorSetProperty().set(null);
-				log.info("Reset Selection to null.");
-			}
-		}
 	}
 }
