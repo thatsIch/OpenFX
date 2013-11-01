@@ -17,7 +17,7 @@ import de.thatsich.bachelor.featureextraction.api.core.IFeatureExtractors;
 import de.thatsich.bachelor.featureextraction.api.core.IFeatureState;
 import de.thatsich.bachelor.featureextraction.api.core.IFeatureVectorSets;
 import de.thatsich.bachelor.featureextraction.api.entities.FeatureVectorSet;
-import de.thatsich.bachelor.featureextraction.restricted.command.FeatureCommandProvider;
+import de.thatsich.bachelor.featureextraction.restricted.command.IFeatureCommandProvider;
 import de.thatsich.bachelor.featureextraction.restricted.command.FeatureInitCommander;
 import de.thatsich.bachelor.featureextraction.restricted.command.commands.DeleteFeatureVectorSetCommand;
 import de.thatsich.bachelor.featureextraction.restricted.command.commands.ExtractFeatureVectorSetCommand;
@@ -40,7 +40,7 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 
 	// Injects
 	@Inject FeatureInitCommander initCommander;
-	@Inject private FeatureCommandProvider commander;
+	@Inject private IFeatureCommandProvider commander;
 	@Inject private IErrorEntries errorEntryList;
 	@Inject private IFeatureExtractors featureExtractors;
 	@Inject private IFeatureState featureState;

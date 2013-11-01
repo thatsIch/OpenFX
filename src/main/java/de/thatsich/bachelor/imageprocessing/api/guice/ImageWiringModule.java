@@ -6,6 +6,7 @@ import de.thatsich.bachelor.imageprocessing.api.core.IImageDisplayView;
 import de.thatsich.bachelor.imageprocessing.api.core.IImageEntries;
 import de.thatsich.bachelor.imageprocessing.api.core.IImageInputView;
 import de.thatsich.bachelor.imageprocessing.api.core.IImageListView;
+import de.thatsich.bachelor.imageprocessing.api.core.IImageState;
 import de.thatsich.bachelor.imageprocessing.restricted.model.ImageEntries;
 import de.thatsich.bachelor.imageprocessing.restricted.model.ImageState;
 import de.thatsich.bachelor.imageprocessing.restricted.service.ImageConfigService;
@@ -54,7 +55,7 @@ public class ImageWiringModule extends AWiringModule {
 	@Override
 	protected void bindModel() {
 		super.bind(IImageEntries.class).to(ImageEntries.class).in(Scopes.SINGLETON);
-		super.bind(ImageState.class).in(Scopes.SINGLETON);
+		super.bind(IImageState.class).to(ImageState.class).in(Scopes.SINGLETON);
 	}
 
 	@Override

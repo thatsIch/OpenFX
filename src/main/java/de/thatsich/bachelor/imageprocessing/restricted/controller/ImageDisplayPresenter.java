@@ -10,6 +10,7 @@ import com.google.inject.Inject;
 
 import de.thatsich.bachelor.imageprocessing.api.core.IImageEntries;
 import de.thatsich.bachelor.imageprocessing.api.entities.ImageEntry;
+import de.thatsich.bachelor.imageprocessing.restricted.command.ImageInitCommander;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.opencv.Images;
 
@@ -20,6 +21,8 @@ public class ImageDisplayPresenter extends AFXMLPresenter {
 	
 	// Injects
 	@Inject private IImageEntries imageEntries;
+	
+	@Inject ImageInitCommander initCommander;
 
 	@Override
 	protected void initComponents() {

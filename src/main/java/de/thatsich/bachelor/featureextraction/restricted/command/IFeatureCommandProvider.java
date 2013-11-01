@@ -12,7 +12,7 @@ import de.thatsich.bachelor.featureextraction.restricted.command.commands.SetLas
 import de.thatsich.bachelor.featureextraction.restricted.command.extractor.IFeatureExtractor;
 import de.thatsich.core.guice.ICommandProvider;
 
-public interface FeatureCommandProvider extends ICommandProvider {
+public interface IFeatureCommandProvider extends ICommandProvider {
 	public SetLastFrameSizeCommand createSetLastFrameSizeCommand(int lastFrameSize);
 	public SetLastFeatureVectorIndexCommand createSetLastFeatureVectorIndexCommand(int lastFeatureVectorIndex);
 	public SetLastFeatureExtractorIndexCommand createSetLastFeatureExtractorIndexCommand(int lastFeatureExtractorIndex);

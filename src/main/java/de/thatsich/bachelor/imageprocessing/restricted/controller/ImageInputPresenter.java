@@ -8,19 +8,18 @@ import java.util.concurrent.ExecutorService;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
-import org.opencv.core.Mat;
-import org.opencv.highgui.Highgui;
-
 import com.google.inject.Inject;
 
 import de.thatsich.bachelor.imageprocessing.api.core.IImageEntries;
+import de.thatsich.bachelor.imageprocessing.api.core.IImageState;
 import de.thatsich.bachelor.imageprocessing.api.entities.ImageEntry;
-import de.thatsich.bachelor.imageprocessing.restricted.command.ImageCommandProvider;
+import de.thatsich.bachelor.imageprocessing.restricted.command.IImageCommandProvider;
+import de.thatsich.bachelor.imageprocessing.restricted.command.ImageInitCommander;
 import de.thatsich.bachelor.imageprocessing.restricted.command.commands.CopyFileCommand;
 import de.thatsich.bachelor.imageprocessing.restricted.command.commands.DeleteImageEntryCommand;
-import de.thatsich.bachelor.imageprocessing.restricted.model.ImageState;
+import de.thatsich.bachelor.imageprocessing.restricted.controller.handler.AddImageEntrySucceededHandler;
+import de.thatsich.bachelor.imageprocessing.restricted.controller.handler.DeleteImageEntrySucceededHandler;
 import de.thatsich.bachelor.imageprocessing.restricted.view.ImageFileChooser;
-import de.thatsich.core.javafx.ACommandHandler;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.javafx.CommandExecutor;
 
@@ -41,19 +40,19 @@ public class ImageInputPresenter extends AFXMLPresenter {
 	@FXML private Button nodeButtonResetDatabase;
 
 	// Injects
-	@Inject private ImageCommandProvider commander;	
+	@Inject private IImageCommandProvider commander;	
 	@Inject private IImageEntries imageEntries;
-	@Inject private ImageState imageState;
+	@Inject private IImageState imageState;
 	@Inject private ImageFileChooser chooser;
+	
+	@Inject ImageInitCommander initCommander;
  
 	// Initialization Implementation 
-	@Override
-	protected void initComponents() {
+	@Override protected void initComponents() {
 	}
  
 	// Binding Implementation 
-	@Override
-	protected void bindComponents() {
+	@Override protected void bindComponents() {
 		this.bindButtons();
 	}
 
@@ -131,50 +130,5 @@ public class ImageInputPresenter extends AFXMLPresenter {
 
 		executor.shutdown();
 		this.log.info("Shutting down Executor.");
-	}
-
-	// ==================================================
-	// Handler Implementation
-	// ==================================================
-	/**
-	 * Handler for what should happen if the Command was successfull 
-	 * for adding the image to the input directory.
-	 * 
-	 * @author Minh
-	 */
-	private class AddImageEntrySucceededHandler extends ACommandHandler<Path> {
-		@Override public void handle(Path value) {
-			final Mat copiedMat = Highgui.imread(value.toString(), 0);
-			final ImageEntry copy = new ImageEntry(value, copiedMat);
-			imageEntries.imageEntriesmageEntryListProperty().get().add(copy);
-			log.info("Added copy to ChoiceBoxDisplayImage: " + value.toString());
-
-			imageEntries.selectedImageEntryProperty().set(copy);
-			log.info("Set currently selected Image to " + value);
-		}
-	}
-
-	/**
-	 * Handler for what should happen if the Command was successfull 
-	 * for deleting the image out of the input directory.
-	 * 
-	 * @author Minh
-	 */
-	private class DeleteImageEntrySucceededHandler extends ACommandHandler<ImageEntry> {
-		@Override public void handle(ImageEntry deletion) {
-			final List<ImageEntry> imageEntryList = imageEntries.imageEntriesmageEntryListProperty().get();
-
-			imageEntryList.remove(deletion);
-			log.info("Removed ImageEntry from Database.");
-
-			if (imageEntryList.size() > 0) {
-				final ImageEntry first = imageEntries.imageEntriesmageEntryListProperty().get().get(0);
-				imageEntries.selectedImageEntryProperty().set(first);
-				log.info("Reset Selection to the first.");
-			}
-			else {
-				imageEntries.selectedImageEntryProperty().set(null);
-			}
-		}
 	}
 }

@@ -1,15 +1,8 @@
 package de.thatsich.bachelor.imageprocessing.restricted.controller;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.List;
-import java.util.concurrent.ExecutorService;
-
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.concurrent.WorkerStateEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
@@ -20,13 +13,10 @@ import com.google.inject.Inject;
 
 import de.thatsich.bachelor.imageprocessing.api.core.IImageEntries;
 import de.thatsich.bachelor.imageprocessing.api.entities.ImageEntry;
-import de.thatsich.bachelor.imageprocessing.restricted.command.ImageCommandProvider;
-import de.thatsich.bachelor.imageprocessing.restricted.command.commands.GetLastImageEntryIndexCommand;
-import de.thatsich.bachelor.imageprocessing.restricted.command.commands.InitImageEntryListCommand;
+import de.thatsich.bachelor.imageprocessing.restricted.command.IImageCommandProvider;
+import de.thatsich.bachelor.imageprocessing.restricted.command.ImageInitCommander;
 import de.thatsich.bachelor.imageprocessing.restricted.command.commands.SetLastImageEntryIndexCommand;
-import de.thatsich.bachelor.imageprocessing.restricted.model.ImageState;
 import de.thatsich.core.javafx.AFXMLPresenter;
-import de.thatsich.core.javafx.CommandExecutor;
 
 public class ImageListPresenter extends AFXMLPresenter {
 
@@ -35,13 +25,14 @@ public class ImageListPresenter extends AFXMLPresenter {
 	@FXML TableColumn<ImageEntry, String> nodeTableColumnImageList;
 	
 	// Injects
-	@Inject private ImageCommandProvider commander;
+	@Inject private IImageCommandProvider commander;
 	@Inject private IImageEntries imageEntries;
-	@Inject private ImageState imageState;
 
+	@Inject ImageInitCommander initCommander;
+	
 	@Override
 	protected void initComponents() {
-		this.initTableViewImageEntryList();
+		
 	}
 
 	@Override
@@ -95,73 +86,12 @@ public class ImageListPresenter extends AFXMLPresenter {
 		this.log.info("Setup CellValueFactory for nodeTableColumnImageList.");
 	}
 	
-	/**
-	 * Initialize all ImageEntries and Preselection of the last selected ImageEntry
-	 */
-	private void initTableViewImageEntryList() {
-		final Path imageInputPath = Paths.get("io/input");
-		final EventHandler<WorkerStateEvent> initHandler = new InitImageEntryListSucceededHandler();
-		final EventHandler<WorkerStateEvent> lastHandler = new GetLastImageEntryIndexSucceededHandler();
-		final ExecutorService executor = CommandExecutor.newFixedThreadPool(1);
-		
-		this.imageState.imageFolderPathProperty().set(imageInputPath);
-		this.log.info("Set ImageInputFolderPath to Model.");
-		
-		final InitImageEntryListCommand initCommand = this.commander.createInitImageEntryListCommand(imageInputPath);
-		initCommand.setOnSucceeded(initHandler);
-		initCommand.setExecutor(executor);
-		initCommand.start();
-		this.log.info("Initialized ImageEntryList Retrieval.");
-		
-		final GetLastImageEntryIndexCommand lastCommand = this.commander.createGetLastImageEntryIndexCommand();
-		lastCommand.setOnSucceeded(lastHandler);
-		lastCommand.setExecutor(executor);
-		lastCommand.start();
-		this.log.info("Initialized LastImageEntryIndex Retrieval.");
-		
-		executor.shutdown();
-		this.log.info("Shutting down Executor.");
-	}
+	
 
 	// ================================================== 
 	// Handler Implementation 
 	// ==================================================
-	/**
-	 * Handler for what should happen if the Command was successfull 
-	 * for initializing all images entries
-	 * 
-	 * @author Minh
-	 */
-	@SuppressWarnings("unchecked")
-	private class InitImageEntryListSucceededHandler implements EventHandler<WorkerStateEvent> {
-		@Override public void handle(WorkerStateEvent event) {
-			final List<ImageEntry> commandResult = (List<ImageEntry>) event.getSource().getValue();
-			log.info("Retrieved ImageEntryList.");
-			
-			imageEntries.imageEntriesmageEntryListProperty().get().addAll(commandResult);
-			log.info("Added ImageEntryList to Model.");
-		}
-	}
 	
-	/**
-	 * Handler for what should happen if the Command was successfull 
-	 * for selecting the last selected image entry
-	 * 
-	 * @author Minh
-	 */
-	private class GetLastImageEntryIndexSucceededHandler implements EventHandler<WorkerStateEvent> {
-		@Override public void handle(WorkerStateEvent event) {
-			final Integer commandResult = (Integer) event.getSource().getValue();
-			log.info("Retrieved last selected image entry index.");
-			
-			if (commandResult != null && commandResult >= 0 && imageEntries.imageEntriesmageEntryListProperty().size() > commandResult) {
-				final ImageEntry selectedImageEntry = imageEntries.imageEntriesmageEntryListProperty().get(commandResult); 
-				imageEntries.selectedImageEntryProperty().set(selectedImageEntry);
-				log.info("Set last selected image entry index in Model.");
-				
-				nodeTableViewImageList.getSelectionModel().select(commandResult);
-				log.info("Set last selected image entry index in TableView.");
-			}
-		}
-	}
+	
+
 }

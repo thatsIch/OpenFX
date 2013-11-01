@@ -15,7 +15,7 @@ import com.google.inject.Inject;
 import de.thatsich.bachelor.featureextraction.api.core.IFeatureVectorSets;
 import de.thatsich.bachelor.featureextraction.api.entities.FeatureVector;
 import de.thatsich.bachelor.featureextraction.api.entities.FeatureVectorSet;
-import de.thatsich.bachelor.featureextraction.restricted.command.FeatureCommandProvider;
+import de.thatsich.bachelor.featureextraction.restricted.command.IFeatureCommandProvider;
 import de.thatsich.bachelor.featureextraction.restricted.command.FeatureInitCommander;
 import de.thatsich.bachelor.featureextraction.restricted.command.commands.SetLastFeatureVectorIndexCommand;
 import de.thatsich.bachelor.featureextraction.restricted.views.tree.FeatureVectorSetTreeItemAdapter;
@@ -33,7 +33,7 @@ public class FeatureListPresenter extends AFXMLPresenter {
 	@Inject private IFeatureVectorSets featureVectors;
 	
 	// Command
-	@Inject private FeatureCommandProvider commander;
+	@Inject private IFeatureCommandProvider commander;
 	@Inject FeatureInitCommander initCommander;
 	
 	@Override
