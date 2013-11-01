@@ -4,8 +4,6 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 
-import javafx.concurrent.WorkerStateEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
@@ -22,10 +20,12 @@ import de.thatsich.bachelor.imageprocessing.api.entities.ImageEntry;
 import de.thatsich.bachelor.prediction.api.core.IBinaryPredictions;
 import de.thatsich.bachelor.prediction.api.core.IPredictionState;
 import de.thatsich.bachelor.prediction.api.entities.BinaryPrediction;
-import de.thatsich.bachelor.prediction.intern.command.BinaryPredictionCommandProvider;
+import de.thatsich.bachelor.prediction.intern.command.PredictionInitCommander;
 import de.thatsich.bachelor.prediction.intern.command.commands.DeleteBinaryPredictionCommand;
 import de.thatsich.bachelor.prediction.intern.command.commands.TestBinaryClassificationCommand;
-import de.thatsich.core.javafx.ACommandHandler;
+import de.thatsich.bachelor.prediction.intern.command.provider.IPredictionCommandProvider;
+import de.thatsich.bachelor.prediction.intern.control.handler.DeleteBinaryPredictionSucceededHandler;
+import de.thatsich.bachelor.prediction.intern.control.handler.PredictBinaryClassificationSucceededHandler;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.javafx.CommandExecutor;
 
@@ -44,7 +44,9 @@ public class PredictionInputPresenter extends AFXMLPresenter {
 	@Inject private IPredictionState predictionState;
 	@Inject private IBinaryPredictions binaryPredictions;
 	
-	@Inject private BinaryPredictionCommandProvider commander;
+	@Inject private IPredictionCommandProvider commander;
+	
+	@Inject PredictionInitCommander initCommander;
 	
 	// ================================================== 
 	// Initialization Implementation 
@@ -72,7 +74,7 @@ public class PredictionInputPresenter extends AFXMLPresenter {
 	// ==================================================
 	
 	/**
-	 * 
+	 * predict
 	 */
 	@FXML private void onPredictBinaryPredictionAction() {
 		final Path predictionFolderPath = this.predictionState.getPredictionFolderPathProperty().get();
@@ -87,9 +89,8 @@ public class PredictionInputPresenter extends AFXMLPresenter {
 		final IFeatureExtractor featureExtractor = this.getFeatureExtractor(featureExtractorName);
 		this.log.info("Prepared all Tools.");
 		
-		final PredictBinaryClassificationSucceededHandler handler = new PredictBinaryClassificationSucceededHandler(); 
 		final TestBinaryClassificationCommand command = this.commander.createTestBinaryClassificationCommand(predictionFolderPath, imageEntry, frameSize, errorGenerator, featureExtractor, binaryClassification);
-		command.setOnSucceeded(handler);
+		command.setOnSucceededCommandHandler(PredictBinaryClassificationSucceededHandler.class);
 		command.start();
 		this.log.info("Initiated testing the binary classification.");
 	}
@@ -133,51 +134,10 @@ public class PredictionInputPresenter extends AFXMLPresenter {
 			command.start();
 		}
 		
-		executor.execute(new Runnable() {
-			@Override public void run() { System.gc(); }
-		});
+		executor.execute(new Runnable() { @Override public void run() { System.gc(); } });
 		this.log.info("Running Garbage Collector.");
 
 		executor.shutdown();
 		this.log.info("Shutting down Executor.");
-	}
-	
-	/**
-	 * Handler for what should happen if the Command was successfull 
-	 * for testing the binary classification
-	 * 
-	 * @author Minh
-	 */
-	private class PredictBinaryClassificationSucceededHandler implements EventHandler<WorkerStateEvent> {
-		@Override public void handle(WorkerStateEvent event) {
-			final BinaryPrediction prediction = (BinaryPrediction) event.getSource().getValue();
-			
-			binaryPredictions.getBinaryPredictionListProperty().add(prediction);
-			log.info("Added BinaryPrediction to Database.");
-			
-			binaryPredictions.getSelectedBinaryPredictionProperty().set(prediction);
-			log.info("Set current to selected BinaryPrediction.");
-		}
-	}
-	
-	/**
-	 * Handler for what should happen if the Command was successfull 
-	 * for testing the binary classification
-	 * 
-	 * @author Minh
-	 */
-	private class DeleteBinaryPredictionSucceededHandler extends ACommandHandler<BinaryPrediction> {
-		@Override public void handle(BinaryPrediction value) {
-			final List<BinaryPrediction> binaryPredictionList = binaryPredictions.getBinaryPredictionListProperty();
-			
-			binaryPredictionList.remove(value);
-			log.info("Removed BinaryPrediction from List.");
-			
-			if (binaryPredictionList.size() > 0) {
-				final BinaryPrediction first = binaryPredictionList.get(0);
-				binaryPredictions.setSelectedBinaryPrediction(first);
-				log.info("Reset to first BinaryPrediction.");
-			}
-		}
 	}
 }

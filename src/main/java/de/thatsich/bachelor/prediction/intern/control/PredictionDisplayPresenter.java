@@ -17,6 +17,7 @@ import com.google.inject.Inject;
 
 import de.thatsich.bachelor.prediction.api.core.IBinaryPredictions;
 import de.thatsich.bachelor.prediction.api.entities.BinaryPrediction;
+import de.thatsich.bachelor.prediction.intern.command.PredictionInitCommander;
 import de.thatsich.bachelor.prediction.intern.view.BinaryPredictionSplitChannelView;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.opencv.Images;
@@ -30,6 +31,8 @@ public class PredictionDisplayPresenter extends AFXMLPresenter {
 	@Inject private IBinaryPredictions binaryPredictions;
 	@Inject private BinaryPredictionSplitChannelView binaryPredictionSplitChannelView;
 
+	@Inject PredictionInitCommander initCommander;
+	
 	@Override
 	protected void initComponents() {
 		this.initImageView();
