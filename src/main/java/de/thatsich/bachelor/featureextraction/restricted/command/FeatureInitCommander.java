@@ -31,7 +31,8 @@ public class FeatureInitCommander {
 	@Inject private IFeatureState featureState;
 	
 	// Command
-	@Inject private FeatureCommandProvider commander;
+	@Inject private IFeatureInitCommandProvider commander;
+//	@Inject private FeatureCommandProvider commander;
 	
 	@Inject private void initialize() {
 		this.initFrameSize();
