@@ -10,7 +10,7 @@ import de.thatsich.bachelor.classification.intern.command.classifier.RandomFores
 import de.thatsich.bachelor.classification.intern.command.classifier.SVMBinaryClassification;
 import de.thatsich.core.guice.ICommandProvider;
 
-public interface BinaryClassificationProvider extends ICommandProvider {
+public interface IBinaryClassificationProvider extends ICommandProvider {
 	public SVMBinaryClassification createSVMBinaryClassification(@Assisted CvSVM svm, @Assisted BinaryClassifierConfiguration config);
 	public RandomForestBinaryClassification createRandomForestBinaryClassification(@Assisted CvRTrees tree, @Assisted BinaryClassifierConfiguration config);
 }

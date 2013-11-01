@@ -10,11 +10,11 @@ import org.opencv.ml.CvRTrees;
 import com.google.inject.Inject;
 
 import de.thatsich.bachelor.classification.api.entities.IBinaryClassification;
-import de.thatsich.bachelor.classification.intern.command.BinaryClassificationProvider;
+import de.thatsich.bachelor.classification.intern.command.IBinaryClassificationProvider;
 
 public class RandomForestBinaryClassifier extends ABinaryClassifier {
 
-	@Inject private BinaryClassificationProvider provider;
+	@Inject private IBinaryClassificationProvider provider;
 
 	@Override
 	public IBinaryClassification train(MatOfFloat positiveTrainData, MatOfFloat negativeTrainData, BinaryClassifierConfiguration config) {

@@ -1,14 +1,7 @@
 package de.thatsich.bachelor.classification.intern.control;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.List;
-import java.util.concurrent.ExecutorService;
-
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.concurrent.WorkerStateEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -17,14 +10,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import com.google.inject.Inject;
 
 import de.thatsich.bachelor.classification.api.core.IBinaryClassifications;
-import de.thatsich.bachelor.classification.api.core.IClassificationState;
 import de.thatsich.bachelor.classification.api.entities.IBinaryClassification;
-import de.thatsich.bachelor.classification.intern.command.ClassificationCommandProvider;
-import de.thatsich.bachelor.classification.intern.command.commands.GetLastBinaryClassificationIndexCommand;
-import de.thatsich.bachelor.classification.intern.command.commands.InitBinaryClassificationListCommand;
+import de.thatsich.bachelor.classification.intern.command.ClassificationInitCommander;
+import de.thatsich.bachelor.classification.intern.command.IClassificationCommandProvider;
 import de.thatsich.bachelor.classification.intern.command.commands.SetLastBinaryClassificationIndexCommand;
 import de.thatsich.core.javafx.AFXMLPresenter;
-import de.thatsich.core.javafx.CommandExecutor;
 
 public class ClassificationListPresenter extends AFXMLPresenter {
 
@@ -38,17 +28,18 @@ public class ClassificationListPresenter extends AFXMLPresenter {
 	@FXML private TableColumn<IBinaryClassification, String> nodeTableColumnID;
 	
 	// Injects
-	@Inject private ClassificationCommandProvider commander;
+	@Inject private IClassificationCommandProvider commander;
 	
 	@Inject private IBinaryClassifications binaryClassifications;
-	@Inject private IClassificationState trainState;
+	
+	@Inject ClassificationInitCommander initCommander;
 	
 	// ================================================== 
 	// Initialization Implementation 
 	// ==================================================
 	@Override
 	protected void initComponents() {
-		this.initBinaryClassificationList();
+		
 	}
 
 	@Override
@@ -94,75 +85,5 @@ public class ClassificationListPresenter extends AFXMLPresenter {
 		this.nodeTableColumnFrameSize.setCellValueFactory(new PropertyValueFactory<IBinaryClassification, Integer>("getFrameSize"));
 		this.nodeTableErrorName.setCellValueFactory(new PropertyValueFactory<IBinaryClassification, String>("getErrorName"));
 		this.nodeTableColumnID.setCellValueFactory(new PropertyValueFactory<IBinaryClassification, String>("getId"));
-	}
-	
-	private void initBinaryClassificationList() {
-		final Path folderPath = Paths.get("io/binaryclassifier");
-		final ExecutorService executor = CommandExecutor.newFixedThreadPool(1);
-		
-		this.trainState.getBinaryClassifierFolderPathProperty().set(folderPath);
-		this.log.info("Set FeatureVectorInputFolderPath to Model.");
-		
-		final InitBinaryClassificationListSucceededHandler initHandler = new InitBinaryClassificationListSucceededHandler();
-		final InitBinaryClassificationListCommand initCommand = this.commander.createInitBinaryClassificationListCommand(folderPath);
-		initCommand.setOnSucceeded(initHandler);
-		initCommand.setExecutor(executor);
-		initCommand.start();
-		this.log.info("Initialized BinaryClassificationList Retrieval.");
-		
-		final GetLastBinaryClassificationIndexSucceededHandler lastHandler = new GetLastBinaryClassificationIndexSucceededHandler(); 
-		final GetLastBinaryClassificationIndexCommand lastCommand = this.commander.createGetLastBinaryClassificationIndexCommand();
-		lastCommand.setExecutor(executor);
-		lastCommand.setOnSucceeded(lastHandler);
-		lastCommand.start();
-		this.log.info("Initialized LastBinaryClassificationIndex Retrieval.");
-		
-		executor.shutdown();
-		this.log.info("Shutting down Executor.");
-	}
-	
-	// ================================================== 
-	// Bindings Implementation 
-	// ==================================================
-	
-	// ================================================== 
-	// GUI Implementation 
-	// ==================================================
-	
-	// ================================================== 
-	// Handler Implementation 
-	// ==================================================	
-	/**
-	 * Handler for what should happen if the Command was successfull 
-	 * for initializing the feature vector list
-	 * 
-	 * @author Minh
-	 */
-	@SuppressWarnings("unchecked")
-	private class InitBinaryClassificationListSucceededHandler implements EventHandler<WorkerStateEvent> {
-		@Override public void handle(WorkerStateEvent event) {
-			final List<IBinaryClassification> trainedBinaryClassifierList = (List<IBinaryClassification>) event.getSource().getValue();
-			
-			binaryClassifications.getBinaryClassificationListProperty().addAll(trainedBinaryClassifierList);
-			log.info("Added TrainedBinaryClassifierList to Database.");
-		}
-	}
-	
-	/**
-	 * Handler for what should happen if the Command was successfull 
-	 * for getting the LastFeatureVectorIndex
-	 * 
-	 * @author Minh
-	 */
-	private class GetLastBinaryClassificationIndexSucceededHandler implements EventHandler<WorkerStateEvent> {
-		@Override public void handle(WorkerStateEvent event) {
-			final Integer commandResult = (Integer) event.getSource().getValue();
-			log.info("Retrieved LastTrainedBinaryClassifierIndex.");
-			
-			if (commandResult != null && commandResult >= 0) {
-				nodeTableViewBinaryClassificationList.getSelectionModel().select(commandResult);
-				log.info("Set LastBinaryClassificationIndex in TableView.");
-			}
-		}
 	}
 }

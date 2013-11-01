@@ -6,9 +6,6 @@ import java.util.concurrent.ExecutorService;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
-import javafx.concurrent.WorkerStateEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -20,13 +17,14 @@ import de.thatsich.bachelor.classification.api.core.IBinaryClassifications;
 import de.thatsich.bachelor.classification.api.core.IBinaryClassifiers;
 import de.thatsich.bachelor.classification.api.core.IClassificationState;
 import de.thatsich.bachelor.classification.api.entities.IBinaryClassification;
-import de.thatsich.bachelor.classification.intern.command.ClassificationCommandProvider;
+import de.thatsich.bachelor.classification.intern.command.ClassificationInitCommander;
+import de.thatsich.bachelor.classification.intern.command.IClassificationCommandProvider;
 import de.thatsich.bachelor.classification.intern.command.classifier.IBinaryClassifier;
-import de.thatsich.bachelor.classification.intern.command.commands.GetLastBinaryClassifierIndexCommand;
-import de.thatsich.bachelor.classification.intern.command.commands.InitBinaryClassifierListCommand;
 import de.thatsich.bachelor.classification.intern.command.commands.RemoveBinaryClassificationCommand;
 import de.thatsich.bachelor.classification.intern.command.commands.SetLastBinaryClassifierIndexCommand;
 import de.thatsich.bachelor.classification.intern.command.commands.TrainBinaryClassifierCommand;
+import de.thatsich.bachelor.classification.intern.control.handler.RemoveBinaryClassificationSucceededHandler;
+import de.thatsich.bachelor.classification.intern.control.handler.TrainBinaryClassifierSucceededHandler;
 import de.thatsich.bachelor.featureextraction.api.core.IFeatureVectorSets;
 import de.thatsich.bachelor.featureextraction.api.entities.FeatureVectorSet;
 import de.thatsich.core.javafx.AFXMLPresenter;
@@ -41,19 +39,21 @@ public class ClassificationInputPresenter extends AFXMLPresenter {
 	@FXML Button nodeButtonResetBinaryClassifierList;
 	
 	// Injects
-	@Inject private ClassificationCommandProvider commander;
+	@Inject private IClassificationCommandProvider commander;
 	
 	@Inject private IBinaryClassifiers binaryClassifiers;
 	@Inject private IBinaryClassifications binaryClassifications;
 	@Inject private IClassificationState trainState;
 	@Inject private IFeatureVectorSets featureVectors;
 
+	@Inject ClassificationInitCommander initCommander;
+	
 	// ================================================== 
 	// Initialization Implementation 
 	// ==================================================
 	@Override
 	protected void initComponents() {
-		this.initBinaryClassifierList();
+		
 	}
 
 	@Override
@@ -61,73 +61,7 @@ public class ClassificationInputPresenter extends AFXMLPresenter {
 		this.bindChoiceBoxBinaryClassifier();
 		this.bindButtons();
 	}
-	
-	/**
-	 * Initialize the List of BinaryClassifiers and preselects the last selected one.
-	 */
-	private void initBinaryClassifierList() {
-		final InitBinaryClassifierListSucceededHandler initHandler = new InitBinaryClassifierListSucceededHandler();
-		final GetLastBinaryClassifierIndexSucceededHandler lastHandler = new GetLastBinaryClassifierIndexSucceededHandler(); 
-		final ExecutorService executor = CommandExecutor.newFixedThreadPool(1);
 
-		final InitBinaryClassifierListCommand initCommand =	this.commander.createInitBinaryClassifierListCommand();
-		initCommand.setOnSucceeded(initHandler);
-		initCommand.setExecutor(executor);
-		initCommand.start();
-		this.log.info("Initialized BinaryClassifierList Retrieval.");
-		
-		final GetLastBinaryClassifierIndexCommand lastCommand = this.commander.createGetLastBinaryClassifierIndexCommand();
-		lastCommand.setOnSucceeded(lastHandler);
-		lastCommand.setExecutor(executor);
-		lastCommand.start();
-		this.log.info("Initialized LastBinaryClassifierIndex Retrieval.");
-		
-		executor.shutdown();
-		this.log.info("Shutting down Executor.");
-	}
-	
-	// ================================================== 
-	// Handler Implementation 
-	// ==================================================
-	/**
-	 * Handler for what should happen if the Command was successfull 
-	 * for initializing the BinaryClassifierList
-	 * 
-	 * @author Minh
-	 */
-	@SuppressWarnings("unchecked")
-	private class InitBinaryClassifierListSucceededHandler implements EventHandler<WorkerStateEvent> {
-		@Override public void handle(WorkerStateEvent event) {
-			final List<IBinaryClassifier> classifierList = (List<IBinaryClassifier>) event.getSource().getValue();
-			
-			binaryClassifiers.getBinaryClassifierListProperty().addAll(classifierList);
-			log.info("Added BinaryClassifier to Database.");
-		}
-	}	
-	
-	/**
-	 * Handler for what should happen if the Command was successfull 
-	 * for getting LastBinaryClassifierIndex
-	 * 
-	 * @author Minh
-	 */
-	private class GetLastBinaryClassifierIndexSucceededHandler implements EventHandler<WorkerStateEvent> {
-
-		@Override
-		public void handle(WorkerStateEvent event) {
-			final Integer commandResult = (Integer) event.getSource().getValue();
-			log.info("Retrieved LastBinaryClassifierIndex.");
-			
-			if (commandResult != null) {
-				final IBinaryClassifier selected = binaryClassifiers.getBinaryClassifierListProperty().get(commandResult);
-				binaryClassifiers.getSelectedBinaryClassifierProperty().set(selected);
-				log.info("Set LastBinaryClassifierIndex in Model.");
-			}
-		}
-	}
-	// ================================================== 
-	// Bindings Implementation 
-	// ==================================================
 	/**
 	 * Bind ChoiceBoxBinaryClassifier to the Model.
 	 */
@@ -166,18 +100,16 @@ public class ClassificationInputPresenter extends AFXMLPresenter {
 		final List<FeatureVectorSet> featureVectorSetList = this.featureVectors.getFeatureVectorSetListProperty();
 		final FeatureVectorSet selectedFeatureVectorSet = this.featureVectors.getSelectedFeatureVectorSet();
 
-		final TrainBinaryClassifierSucceededHandler handler = new TrainBinaryClassifierSucceededHandler();
 		final TrainBinaryClassifierCommand command = this.commander.createTrainBinaryClassifierCommand(binaryClassifierFolderPath, selectedBinaryClassfier, selectedFeatureVectorSet, featureVectorSetList);
-		command.setOnSucceeded(handler);
+		command.setOnSucceededCommandHandler(TrainBinaryClassifierSucceededHandler.class);
 		command.start();
 	}
 	
 	@FXML private void onRemoveBinaryClassifierAction() {
 		final IBinaryClassification selectedBinaryClassification = this.binaryClassifications.getSelectedBinaryClassification();
 		
-		final RemoveBinaryClassificationSucceededHandler handler = new RemoveBinaryClassificationSucceededHandler();
 		final RemoveBinaryClassificationCommand command = this.commander.createRemoveBinaryClassificationCommand(selectedBinaryClassification);
-		command.setOnSucceeded(handler);
+		command.setOnSucceededCommandHandler(RemoveBinaryClassificationSucceededHandler.class);
 		command.start();
 		this.log.info("Commanded BinaryClassification Removal.");
 	}
@@ -188,67 +120,17 @@ public class ClassificationInputPresenter extends AFXMLPresenter {
 		this.log.info("Initialized Executor for resetting all Errors.");
 		
 		for (IBinaryClassification classification : binaryClassificationList) {
-			final RemoveBinaryClassificationSucceededHandler handler = new RemoveBinaryClassificationSucceededHandler();
 			final RemoveBinaryClassificationCommand command = this.commander.createRemoveBinaryClassificationCommand(classification);
-			command.setOnSucceeded(handler);
+			command.setOnSucceededCommandHandler(RemoveBinaryClassificationSucceededHandler.class);
 			command.setExecutor(executor);
 			command.start();
 			this.log.info("File Deletion executed.");
 		}
 		
-		executor.execute(new Runnable() {
-			@Override public void run() { System.gc(); }
-		});
+		executor.execute(new Runnable() { @Override public void run() { System.gc(); } });
 		this.log.info("Running Garbage Collector.");
 		
 		executor.shutdown();
 		this.log.info("Shutting down Executor.");
-	}
-	
-	// ================================================== 
-	// Handler Implementation 
-	// ==================================================
-	/**
-	 * Handler for what should happen if the Command was successfull 
-	 * for training BinaryClassifier
-	 * 
-	 * @author Minh
-	 */
-	private class TrainBinaryClassifierSucceededHandler implements EventHandler<WorkerStateEvent> {
-		@Override public void handle(WorkerStateEvent event) {
-			final IBinaryClassification classifier = (IBinaryClassification) event.getSource().getValue();
-			
-			binaryClassifications.getBinaryClassificationListProperty().add(classifier);
-			log.info("Added BinaryClassification to Database.");
-			
-			binaryClassifications.getSelectedBinaryClassificationProperty().set(classifier);
-			log.info("Select BinaryClassifcation.");
-		}
-	}
-	
-
-	/**
-	 * Handler for what should happen if the Command was successfull 
-	 * for deleting the error
-	 * 
-	 * @author Minh
-	 */
-	private class RemoveBinaryClassificationSucceededHandler implements EventHandler<WorkerStateEvent> {
-		@Override public void handle(WorkerStateEvent event) {
-			final IBinaryClassification deletion = (IBinaryClassification) event.getSource().getValue();
-			final ObservableList<IBinaryClassification> binaryClassificationList = binaryClassifications.getBinaryClassificationListProperty();
-			
-			binaryClassificationList.remove(deletion);
-			log.info("Removed BinaryClassification from Database.");
-			
-			if (binaryClassificationList.size() > 0) {
-				final IBinaryClassification first = binaryClassificationList.get(0);
-				binaryClassifications.getSelectedBinaryClassificationProperty().set(first);
-				log.info("Reset Selection to first BinaryClassifcation.");
-			} else {
-				binaryClassifications.getSelectedBinaryClassificationProperty().set(null);
-				log.info("Reset Selection to null.");
-			}
-		}
 	}
 }
