@@ -8,7 +8,6 @@ import de.thatsich.bachelor.errorgeneration.api.core.IErrorGenerators;
 import de.thatsich.bachelor.errorgeneration.api.core.IErrorInputView;
 import de.thatsich.bachelor.errorgeneration.api.core.IErrorListView;
 import de.thatsich.bachelor.errorgeneration.api.core.IErrorState;
-import de.thatsich.bachelor.errorgeneration.restricted.command.ErrorGeneratorProvider;
 import de.thatsich.bachelor.errorgeneration.restricted.model.ErrorEntries;
 import de.thatsich.bachelor.errorgeneration.restricted.model.ErrorGenerators;
 import de.thatsich.bachelor.errorgeneration.restricted.model.ErrorState;
@@ -45,7 +44,7 @@ public class ErrorWiringModule extends AWiringModule {
 
 	@Override
 	protected void bindCommand() {
-		super.bind(ErrorGeneratorProvider.class).in(Scopes.SINGLETON);
+		
 	}
 
 	@Override

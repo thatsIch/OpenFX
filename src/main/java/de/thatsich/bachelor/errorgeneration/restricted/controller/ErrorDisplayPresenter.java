@@ -9,6 +9,7 @@ import com.google.inject.Inject;
 
 import de.thatsich.bachelor.errorgeneration.api.core.IErrorEntries;
 import de.thatsich.bachelor.errorgeneration.api.entities.ErrorEntry;
+import de.thatsich.bachelor.errorgeneration.restricted.command.ErrorInitCommander;
 import de.thatsich.core.javafx.AFXMLPresenter;
 
 public class ErrorDisplayPresenter extends AFXMLPresenter {
@@ -18,6 +19,8 @@ public class ErrorDisplayPresenter extends AFXMLPresenter {
 	
 	// Injects
 	@Inject private IErrorEntries errorEntryList;
+	
+	@Inject ErrorInitCommander initCommander;
 
 	@Override
 	protected void initComponents() {

@@ -10,8 +10,6 @@ import java.util.concurrent.ExecutorService;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
-import javafx.concurrent.WorkerStateEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -26,18 +24,16 @@ import de.thatsich.bachelor.errorgeneration.api.core.IErrorGenerators;
 import de.thatsich.bachelor.errorgeneration.api.core.IErrorState;
 import de.thatsich.bachelor.errorgeneration.api.entities.ErrorEntry;
 import de.thatsich.bachelor.errorgeneration.api.entities.IErrorGenerator;
-import de.thatsich.bachelor.errorgeneration.restricted.command.ErrorCommandProvider;
+import de.thatsich.bachelor.errorgeneration.restricted.command.ErrorInitCommander;
+import de.thatsich.bachelor.errorgeneration.restricted.command.IErrorCommandProvider;
 import de.thatsich.bachelor.errorgeneration.restricted.command.commands.ApplyErrorCommand;
-import de.thatsich.bachelor.errorgeneration.restricted.command.commands.CreateErrorImageCommand;
 import de.thatsich.bachelor.errorgeneration.restricted.command.commands.DeleteErrorEntryCommand;
-import de.thatsich.bachelor.errorgeneration.restricted.command.commands.GetLastErrorCountCommand;
-import de.thatsich.bachelor.errorgeneration.restricted.command.commands.GetLastErrorGeneratorIndexCommand;
-import de.thatsich.bachelor.errorgeneration.restricted.command.commands.InitErrorGeneratorListCommand;
 import de.thatsich.bachelor.errorgeneration.restricted.command.commands.SetLastErrorCountCommand;
 import de.thatsich.bachelor.errorgeneration.restricted.command.commands.SetLastErrorGeneratorIndexCommand;
+import de.thatsich.bachelor.errorgeneration.restricted.controller.handler.DeleteErrorEntrySucceededHandler;
+import de.thatsich.bachelor.errorgeneration.restricted.controller.handler.ErrorApplicationSucceededHandler;
 import de.thatsich.bachelor.imageprocessing.api.core.IImageEntries;
 import de.thatsich.bachelor.imageprocessing.api.entities.ImageEntry;
-import de.thatsich.core.javafx.ACommandHandler;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.javafx.CommandExecutor;
 import de.thatsich.core.javafx.component.IntegerField;
@@ -66,15 +62,16 @@ public class ErrorInputPresenter extends AFXMLPresenter {
 	@Inject private IErrorState errorState;
 	@Inject private IErrorEntries errorEntryList;
 	@Inject private IErrorGenerators errorGeneratorList;
-	@Inject private ErrorCommandProvider commander;
+	@Inject private IErrorCommandProvider commander;
+	
+	@Inject ErrorInitCommander initCommander;
 	
 	// ================================================== 
 	// Initializable Implementation 
 	// ==================================================
 	@Override
 	protected void initComponents() {
-		this.initErrorGeneratorList();
-		this.initErrorLoopCount();
+		
 	}
 
 	@Override
@@ -84,38 +81,9 @@ public class ErrorInputPresenter extends AFXMLPresenter {
 		this.bindButton();
 	}
 	
-	/**
-	 * Initialize the ErrorGeneratorList and preselects the last selected one
-	 */
-	private void initErrorGeneratorList() {
-		final InitErrorGeneratorListSucceededHandler initHandler = new InitErrorGeneratorListSucceededHandler();
-		final GetLastErrorGeneratorIndexSucceededHandler lastHandler = new GetLastErrorGeneratorIndexSucceededHandler(); 
-		final ExecutorService executor = CommandExecutor.newFixedThreadPool(1);
-		
-		final InitErrorGeneratorListCommand initCommand = this.commander.createInitErrorGeneratorListCommand();
-		initCommand.setOnSucceeded(initHandler);
-		initCommand.setExecutor(executor);
-		initCommand.start();
-		this.log.info("Initialized ErrorGeneratorList Retrieval.");
-		
-		final GetLastErrorGeneratorIndexCommand lastCommand = this.commander.createGetLastErrorGeneratorIndexCommand();
-		lastCommand.setOnSucceeded(lastHandler);
-		lastCommand.setExecutor(executor);
-		lastCommand.start();
-		this.log.info("Initialized LastErrorGeneratorIndex Retrieval.");
-		
-		executor.shutdown();
-		this.log.info("Shutting down Executor.");
-	}
 	
-	/**
-	 * Fetches the last ErrorLoopCount
-	 */
-	private void initErrorLoopCount() {
-		final GetLastErrorCountCommand command = this.commander.createGetLastErrorCountCommand();
-		command.setOnSucceeded(new GetLastErrorLoopCountSucceededHandler());
-		command.start();
-	}
+	
+
 	
 	// ================================================== 
 	// Bindings Implementation 
@@ -185,9 +153,8 @@ public class ErrorInputPresenter extends AFXMLPresenter {
 			final Path imagePath = this.errorState.getErrorEntryFolderPath().resolve(dateTime + ".png");
 			this.log.info("Path: " + imagePath);
 			
-			final ErrorApplicationSucceededHandler handler = new ErrorApplicationSucceededHandler();
 			final ApplyErrorCommand command = this.commander.createApplyErrorCommand(image, imagePath, generator);
-			command.setOnSucceeded(handler);
+			command.setOnSucceededCommandHandler(ErrorApplicationSucceededHandler.class);
 			command.setExecutor(executor);
 			command.start();
 		}
@@ -209,9 +176,8 @@ public class ErrorInputPresenter extends AFXMLPresenter {
 		final ErrorEntry entry = this.errorEntryList.getSelectedErrorEntry();
 		this.log.info("Fetched selected ErrorEntry.");
 		
-		final DeleteSucceededHandler handler = new DeleteSucceededHandler();
 		final DeleteErrorEntryCommand command = this.commander.createDeleteErrorEntryCommand(entry);
-		command.setOnSucceeded(handler);
+		command.setOnSucceededCommandHandler(DeleteErrorEntrySucceededHandler.class);
 		command.start();
 		this.log.info("File deleted and removed from ErrorList.");
 	}
@@ -234,9 +200,8 @@ public class ErrorInputPresenter extends AFXMLPresenter {
 				Path imagePath = errorEntryFolderPath.resolve(dateTime + ".png");
 				this.log.info("Path: " + imagePath);
 				
-				final ErrorApplicationSucceededHandler handler = new ErrorApplicationSucceededHandler();
 				final ApplyErrorCommand command = this.commander.createApplyErrorCommand(image, imagePath, generator);
-				command.setOnSucceeded(handler);
+				command.setOnSucceededCommandHandler(ErrorApplicationSucceededHandler.class);
 				command.setExecutor(executor);
 				command.start();
 			}
@@ -261,9 +226,8 @@ public class ErrorInputPresenter extends AFXMLPresenter {
 		this.log.info("Initialized Executor for resetting all Errors.");
 		
 		for (ErrorEntry entry : errorEntryList) {
-			final DeleteSucceededHandler handler = new DeleteSucceededHandler();
 			final DeleteErrorEntryCommand command = this.commander.createDeleteErrorEntryCommand(entry);
-			command.setOnSucceeded(handler);
+			command.setOnSucceededCommandHandler(DeleteErrorEntrySucceededHandler.class);
 			command.setExecutor(executor);
 			command.start();
 			this.log.info("File Deletion executed.");
@@ -276,128 +240,5 @@ public class ErrorInputPresenter extends AFXMLPresenter {
 		
 		executor.shutdown();
 		this.log.info("Shutting down Executor.");
-	}
-
-	// ================================================== 
-	// Handler Implementation 
-	// ==================================================
-	
-	/**
-	 * Handler for what should happen if the Command was successfull 
-	 * for initializing the Error Generator List
-	 * 
-	 * @author Minh
-	 */
-	@SuppressWarnings("unchecked")
-	private class InitErrorGeneratorListSucceededHandler implements EventHandler<WorkerStateEvent> {
-
-		@Override
-		public void handle(WorkerStateEvent event) {
-			final List<IErrorGenerator> generatorList = (List<IErrorGenerator>) event.getSource().getValue();
-			
-			errorGeneratorList.getErrorGeneratorListProperty().addAll(generatorList);
-			log.info("Added all ErrorGenerators.");
-		}
-	}
-	
-	/**
-	 * Handler for what should happen if the Command was successfull 
-	 * for getting LastErrorGeneratorIndex
-	 * 
-	 * @author Minh
-	 */
-	private class GetLastErrorGeneratorIndexSucceededHandler implements EventHandler<WorkerStateEvent> {
-
-		@Override
-		public void handle(WorkerStateEvent event) {
-			final Integer commandResult = (Integer) event.getSource().getValue();
-			log.info("Retrieved last selected error generator index.");
-			
-			if (commandResult != null) {
-				final IErrorGenerator selectedErrorGenerator = errorGeneratorList.getErrorGeneratorListProperty().get(commandResult);
-				errorGeneratorList.getSelectedErrorGeneratorProperty().set(selectedErrorGenerator);
-				log.info("Set last selected error generator index in Model.");
-			}
-		}
-	}
-	
-	/**
-	 * Handler for what should happen if the Command was successfull 
-	 * for getting LastErrorLoopCount
-	 * 
-	 * @author Minh
-	 */
-	private class GetLastErrorLoopCountSucceededHandler extends ACommandHandler<Integer> {
-		@Override
-		public void handle(Integer value) {
-			if (value != null) {
-				nodeIntegerFieldErrorCount.setValue(value);
-				log.info("Set LastErrorLoopCount in View.");
-				
-				errorState.setErrorLoopCount(value);
-				log.info("Set LastErrorLoopCount in Model.");
-			}
-		}
-	}
-
-	/**
-	 * Handler for what should happen if the Command was successfull 
-	 * for deleting the error
-	 * 
-	 * @author Minh
-	 */
-	private class DeleteSucceededHandler implements EventHandler<WorkerStateEvent> {
-		@Override public void handle(WorkerStateEvent event) {
-			final ErrorEntry deletion = (ErrorEntry) event.getSource().getValue();
-			final ObservableList<ErrorEntry> entryList = errorEntryList.getErrorEntryListProperty();
-			
-			entryList.remove(deletion);
-			log.info("Removed ErrorEntry from Database.");
-			
-			if (entryList.size() > 0) {
-				final ErrorEntry first = entryList.get(0);
-				errorEntryList.getSelectedErrorEntryProperty().set(first);
-				log.info("Reset Selection to first ErrorEntry.");
-			} else {
-				errorEntryList.getSelectedErrorEntryProperty().set(null);
-				log.info("Reset Selection to null.");
-			}
-		}
-	}
-	
-	/**
-	 * Handler for what should happen if the Command was successfull 
-	 * for applying the error
-	 * 
-	 * @author Minh
-	 */
-	private class ErrorApplicationSucceededHandler implements EventHandler<WorkerStateEvent> {
-		@Override public void handle(WorkerStateEvent event) {
-			final ErrorEntry error = (ErrorEntry) event.getSource().getValue();
-			log.info("Fetched ErrorEntry from Command.");
-
-			final CreateSucceededHandler handler = new CreateSucceededHandler();
-			final CreateErrorImageCommand command = commander.createCreateErrorImageCommand(error);
-			command.setOnSucceeded(handler);
-			command.start();
-		}
-	}
-
-	/**
-	 * Handler for what should happen if the Command was successfull 
-	 * for deleting the error
-	 * 
-	 * @author Minh
-	 */
-	private class CreateSucceededHandler implements EventHandler<WorkerStateEvent> {
-		@Override public void handle(WorkerStateEvent event) {
-			final ErrorEntry addition = (ErrorEntry) event.getSource().getValue();
-			
-			errorEntryList.getErrorEntryListProperty().add(addition);
-			log.info("Added ErrorEntry to Database.");
-			
-			errorEntryList.getSelectedErrorEntryProperty().set(addition);
-			log.info("Set current to selected ErrorEntry.");
-		}
 	}
 }

@@ -111,7 +111,7 @@ public class ImageInputPresenter extends AFXMLPresenter {
 	 * @throws IOException 
 	 */
 	@FXML private void onResetDatabaseAction() throws IOException {
-		final List<ImageEntry> imageEntryList = this.imageEntries.imageEntriesmageEntryListProperty().get();
+		final List<ImageEntry> imageEntryList = this.imageEntries.imageEntriesmageEntryListProperty();
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(imageEntryList.size());
 		this.log.info("Initialized Executor for resetting all Errors.");
 
