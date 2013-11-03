@@ -9,9 +9,12 @@ import com.google.inject.Singleton;
 
 import de.thatsich.bachelor.imageprocessing.api.core.IImageState;
 import de.thatsich.bachelor.imageprocessing.restricted.command.commands.GetLastImageEntryIndexCommand;
+import de.thatsich.bachelor.imageprocessing.restricted.command.commands.GetLastLocationCommand;
 import de.thatsich.bachelor.imageprocessing.restricted.command.commands.InitImageEntryListCommand;
-import de.thatsich.bachelor.imageprocessing.restricted.controller.handler.GetLastImageEntryIndexSucceededHandler;
-import de.thatsich.bachelor.imageprocessing.restricted.controller.handler.InitImageEntryListSucceededHandler;
+import de.thatsich.bachelor.imageprocessing.restricted.command.handler.GetLastImageEntryIndexSucceededHandler;
+import de.thatsich.bachelor.imageprocessing.restricted.command.handler.GetLastLocationSucceededHandler;
+import de.thatsich.bachelor.imageprocessing.restricted.command.handler.InitImageEntryListSucceededHandler;
+import de.thatsich.bachelor.imageprocessing.restricted.command.provider.IImageInitCommandProvider;
 import de.thatsich.core.Log;
 import de.thatsich.core.javafx.CommandExecutor;
 
@@ -48,5 +51,12 @@ public class ImageInitCommander {
 		
 		executor.shutdown();
 		this.log.info("Shutting down Executor.");
+	}
+	
+	@Inject private void initImageFileChooserLastLocation() {
+		final GetLastLocationCommand command = this.commander.createGetLastLocationCommand();
+		command.setOnSucceededCommandHandler(GetLastLocationSucceededHandler.class);
+		command.start();
+		this.log.info("Initialized LastLocation Retrieval.");
 	}
 }

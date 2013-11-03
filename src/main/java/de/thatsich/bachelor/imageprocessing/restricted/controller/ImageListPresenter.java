@@ -13,9 +13,9 @@ import com.google.inject.Inject;
 
 import de.thatsich.bachelor.imageprocessing.api.core.IImageEntries;
 import de.thatsich.bachelor.imageprocessing.api.entities.ImageEntry;
-import de.thatsich.bachelor.imageprocessing.restricted.command.IImageCommandProvider;
 import de.thatsich.bachelor.imageprocessing.restricted.command.ImageInitCommander;
 import de.thatsich.bachelor.imageprocessing.restricted.command.commands.SetLastImageEntryIndexCommand;
+import de.thatsich.bachelor.imageprocessing.restricted.command.provider.IImageCommandProvider;
 import de.thatsich.core.javafx.AFXMLPresenter;
 
 public class ImageListPresenter extends AFXMLPresenter {

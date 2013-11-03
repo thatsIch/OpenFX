@@ -1,4 +1,4 @@
-package de.thatsich.bachelor.classification.intern.command;
+package de.thatsich.bachelor.classification.intern.command.provider;
 
 import java.nio.file.Path;
 import java.util.List;

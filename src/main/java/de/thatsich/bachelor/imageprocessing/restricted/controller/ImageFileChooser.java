@@ -1,15 +1,19 @@
-package de.thatsich.bachelor.imageprocessing.restricted.view;
+package de.thatsich.bachelor.imageprocessing.restricted.controller;
 
 import java.io.File;
 import java.nio.file.Path;
+import java.util.List;
 
+import javafx.collections.FXCollections;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
-import de.thatsich.bachelor.imageprocessing.restricted.service.ImageConfigService;
+import de.thatsich.bachelor.imageprocessing.api.core.IImageState;
+import de.thatsich.bachelor.imageprocessing.restricted.command.commands.SetLastLocationCommand;
+import de.thatsich.bachelor.imageprocessing.restricted.command.provider.IImageCommandProvider;
 import de.thatsich.core.Log;
 
 /**
@@ -28,7 +32,7 @@ public class ImageFileChooser {
 	/**
 	 * JavaFX FileChooser
 	 */
-	private FileChooser chooser;
+	private final FileChooser chooser = new FileChooser();
 	
 	/**
 	 * Title of ImageFileChooser.
@@ -38,58 +42,35 @@ public class ImageFileChooser {
 	/**
 	 * Injected Config to retrieve last location.
 	 */
-	private final ImageConfigService config;
+	@Inject private IImageCommandProvider commander;
 	
 	/**
 	 * Injected Logger
 	 */
-	private final Log log;
+	@Inject private Log log;
 	
 	/**
-	 * Guice Injected Constructor
-	 * 
-	 * @param Log log Injecting Logger
-	 * @param IConfigService config Access to preferences
+	 * Injected Model to retrieve the last Location
 	 */
-	@Inject
-	public ImageFileChooser(Log log, ImageConfigService config) {
-		this.chooser = new FileChooser();
-		this.log = log;
-		this.config = config;
-		
+	@Inject private IImageState imageState;
+	
+	@Inject private void init() {
 		this.chooser.getExtensionFilters().addAll(this.getExtensions());
 		this.log.info("Set up OpenCV-supported extensions.");
 		
 		this.chooser.setTitle(TITLE);
 		this.log.info("Set up Title: " + TITLE);
-		
-		File lastLocation = new File(this.config.getLastLocationString());
-		if (!lastLocation.isDirectory()) {
-			this.log.warning("Last Location is invalid, loading user dir.");
-			lastLocation = new File(System.getProperty("user.home"));
-		}
-		
-		this.chooser.setInitialDirectory(lastLocation);
-		this.log.info("Set up initial directory: " + lastLocation.getAbsolutePath());
 	}
-
 	
 	/**
 	 * Show the Open Dialog
 	 * 
 	 * @return null if no file selected else the selected File converted to Path
 	 */
-	public Path show() {
-		File lastLocation = new File(this.config.getLastLocationString());
-		if (!lastLocation.isDirectory()) {
-			this.log.warning("Last Location is invalid, loading user dir.");
-			lastLocation = new File(System.getProperty("user.home"));
-		}
+	public List<Path> show() {
+		this.chooser.setInitialDirectory(this.imageState.getLastLocation().toFile());
 		
-		this.chooser.setInitialDirectory(lastLocation);
-		this.log.info("Set up initial directory: " + lastLocation.getAbsolutePath());
-		
-		File result = this.chooser.showOpenDialog(null);
+		List<File> result = this.chooser.showOpenMultipleDialog(null);
 		this.log.info("Showing Open Dialog.");
 
 		if (result == null) {
@@ -97,10 +78,24 @@ public class ImageFileChooser {
 			return null;
 		}
 		
-		this.config.setLastLocationString(result.getParent());
-		this.log.info("Stored last DirectoryPath: " + result.getParent());
-		
-		return result.toPath();
+		if (result.isEmpty()) {
+			this.log.warning("No valid File selected.");
+			return null;
+		}
+		else {
+			final List<Path> pathList = FXCollections.observableArrayList();
+			final String parent = result.get(0).getParent();
+			
+			for (final File file : result) {
+				pathList.add(file.toPath());
+			}
+			
+			final SetLastLocationCommand command = this.commander.createSetLastLocationCommand(parent);
+			command.start();
+			this.log.info("Stored last DirectoryPath: " + parent);
+			
+			return pathList;	
+		}
 	}
 	
 	/**

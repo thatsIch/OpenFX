@@ -1,4 +1,4 @@
-package de.thatsich.bachelor.classification.intern.command;
+package de.thatsich.bachelor.classification.intern.command.provider;
 
 import org.opencv.ml.CvRTrees;
 import org.opencv.ml.CvSVM;

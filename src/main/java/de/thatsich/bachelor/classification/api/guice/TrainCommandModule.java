@@ -2,9 +2,9 @@ package de.thatsich.bachelor.classification.api.guice;
 
 import java.util.List;
 
-import de.thatsich.bachelor.classification.intern.command.IBinaryClassificationProvider;
-import de.thatsich.bachelor.classification.intern.command.IClassificationCommandProvider;
-import de.thatsich.bachelor.classification.intern.command.IClassificationInitCommandProvider;
+import de.thatsich.bachelor.classification.intern.command.provider.IBinaryClassificationProvider;
+import de.thatsich.bachelor.classification.intern.command.provider.IClassificationCommandProvider;
+import de.thatsich.bachelor.classification.intern.command.provider.IClassificationInitCommandProvider;
 import de.thatsich.core.guice.ACommandModule;
 import de.thatsich.core.guice.ICommandProvider;
 

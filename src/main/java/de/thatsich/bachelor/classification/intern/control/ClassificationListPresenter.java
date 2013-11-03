@@ -12,8 +12,8 @@ import com.google.inject.Inject;
 import de.thatsich.bachelor.classification.api.core.IBinaryClassifications;
 import de.thatsich.bachelor.classification.api.entities.IBinaryClassification;
 import de.thatsich.bachelor.classification.intern.command.ClassificationInitCommander;
-import de.thatsich.bachelor.classification.intern.command.IClassificationCommandProvider;
 import de.thatsich.bachelor.classification.intern.command.commands.SetLastBinaryClassificationIndexCommand;
+import de.thatsich.bachelor.classification.intern.command.provider.IClassificationCommandProvider;
 import de.thatsich.core.javafx.AFXMLPresenter;
 
 /**

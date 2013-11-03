@@ -1,4 +1,4 @@
-package de.thatsich.bachelor.imageprocessing.restricted.controller.handler;
+package de.thatsich.bachelor.imageprocessing.restricted.command.handler;
 
 import java.util.List;
 

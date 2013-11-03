@@ -18,8 +18,10 @@ public class GetLastBinaryClassificationIndexSucceededHandler extends ACommandHa
 	
 	@Override
 	public void handle(Integer value) {
-		final IBinaryClassification selectedBinaryClassification = this.binaryClassifications.getBinaryClassificationListProperty().get(value);
-		this.binaryClassifications.setSelectedBinaryClassification(selectedBinaryClassification);
-		log.info("Set last selected BinaryClassification in Model.");
+		if (value >= 0) {
+			final IBinaryClassification selectedBinaryClassification = this.binaryClassifications.getBinaryClassificationListProperty().get(value);
+			this.binaryClassifications.setSelectedBinaryClassification(selectedBinaryClassification);
+			log.info("Set last selected BinaryClassification in Model.");	
+		}
 	}
 }

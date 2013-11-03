@@ -13,13 +13,12 @@ import com.google.inject.Inject;
 import de.thatsich.bachelor.imageprocessing.api.core.IImageEntries;
 import de.thatsich.bachelor.imageprocessing.api.core.IImageState;
 import de.thatsich.bachelor.imageprocessing.api.entities.ImageEntry;
-import de.thatsich.bachelor.imageprocessing.restricted.command.IImageCommandProvider;
 import de.thatsich.bachelor.imageprocessing.restricted.command.ImageInitCommander;
 import de.thatsich.bachelor.imageprocessing.restricted.command.commands.CopyFileCommand;
 import de.thatsich.bachelor.imageprocessing.restricted.command.commands.DeleteImageEntryCommand;
+import de.thatsich.bachelor.imageprocessing.restricted.command.provider.IImageCommandProvider;
 import de.thatsich.bachelor.imageprocessing.restricted.controller.handler.AddImageEntrySucceededHandler;
 import de.thatsich.bachelor.imageprocessing.restricted.controller.handler.DeleteImageEntrySucceededHandler;
-import de.thatsich.bachelor.imageprocessing.restricted.view.ImageFileChooser;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.javafx.CommandExecutor;
 
@@ -72,17 +71,26 @@ public class ImageInputPresenter extends AFXMLPresenter {
 	 */
 	@FXML private void onAddImageAction() throws IOException {
 
-		Path filePath = this.chooser.show();
-		if (filePath == null) return;
+		final List<Path> imagePathList = this.chooser.show();
+		if (imagePathList == null) return;
 		this.log.info("Fetched Path from chosen Image.");
 
-		Path copyPath = this.imageState.getImageFolderPath().resolve(filePath.getFileName());
-		this.log.info("Created new Path: " + copyPath);
+		final ExecutorService executor = CommandExecutor.newFixedThreadPool(imagePathList.size());
+		this.log.info("Created Executor.");
+		
+		for (final Path imagePath : imagePathList) {
+			Path copyPath = this.imageState.getImageFolderPath().resolve(imagePath.getFileName());
+			this.log.info("Created new Path: " + copyPath);
 
-		final CopyFileCommand command = this.commander.createCopyFileCommand(filePath, copyPath);
-		command.setOnSucceededCommandHandler(AddImageEntrySucceededHandler.class);
-		command.start();
-		this.log.info("File copied and inserted into EntryList.");
+			final CopyFileCommand command = this.commander.createCopyFileCommand(imagePath, copyPath);
+			command.setOnSucceededCommandHandler(AddImageEntrySucceededHandler.class);
+			command.setExecutor(executor);
+			command.start();
+			this.log.info("File copied and inserted into EntryList.");
+		}
+		
+		executor.shutdown();
+		this.log.info("Shutting down Executor.");
 	}
 
 	/**

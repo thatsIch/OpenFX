@@ -16,6 +16,7 @@ import de.thatsich.bachelor.classification.intern.command.handler.GetLastBinaryC
 import de.thatsich.bachelor.classification.intern.command.handler.GetLastBinaryClassifierIndexSucceededHandler;
 import de.thatsich.bachelor.classification.intern.command.handler.InitBinaryClassificationListSucceededHandler;
 import de.thatsich.bachelor.classification.intern.command.handler.InitBinaryClassifierListSucceededHandler;
+import de.thatsich.bachelor.classification.intern.command.provider.IClassificationInitCommandProvider;
 import de.thatsich.core.Log;
 import de.thatsich.core.javafx.CommandExecutor;
 
