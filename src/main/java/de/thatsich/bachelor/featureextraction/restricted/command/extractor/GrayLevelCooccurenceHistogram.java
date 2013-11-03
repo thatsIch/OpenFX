@@ -8,10 +8,7 @@ import org.opencv.core.MatOfFloat;
 /**
  * Calculates the Co-occurence Histrogram for Gray-Levels
  * 
- * 
- * 
  * @author Minh
- *
  */
 //TODO fix GLCM
 public class GrayLevelCooccurenceHistogram extends AFeatureExtractor implements IFeatureExtractor {

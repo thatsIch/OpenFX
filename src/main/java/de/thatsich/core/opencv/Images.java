@@ -55,17 +55,7 @@ public class Images {
 	 * @param image Mat to be shown.
 	 */
 	public static void show(Mat image) {
-		final ImageView view = new ImageView();
-		final Pane layout = new HBox();
-		final Scene scene = new Scene(layout);
-		final Stage stage = new Stage();
-		final Image img = toImage(image);
-		
-		view.setImage(img);
-		layout.getChildren().add(view);
-		stage.setScene(scene);
-		
-		stage.show();
+		Images.show(Images.toImage(image));
 	}
 	
 	/**

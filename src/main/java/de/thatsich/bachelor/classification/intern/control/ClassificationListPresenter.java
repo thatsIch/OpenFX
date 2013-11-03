@@ -16,6 +16,12 @@ import de.thatsich.bachelor.classification.intern.command.IClassificationCommand
 import de.thatsich.bachelor.classification.intern.command.commands.SetLastBinaryClassificationIndexCommand;
 import de.thatsich.core.javafx.AFXMLPresenter;
 
+/**
+ * Code representation of ClassificationListView.
+ * Displays the ClassificationList inside of a TableView
+ * 
+ * @author thatsIch
+ */
 public class ClassificationListPresenter extends AFXMLPresenter {
 
 	// Nodes
@@ -37,31 +43,38 @@ public class ClassificationListPresenter extends AFXMLPresenter {
 	// ================================================== 
 	// Initialization Implementation 
 	// ==================================================
-	@Override
-	protected void initComponents() {
+	@Override protected void initComponents() {
 		
 	}
 
-	@Override
-	protected void bindComponents() {
+	@Override protected void bindComponents() {
 		this.bindTableView();
 	}
 	
+	/**
+	 * TableView Bindings
+	 */
 	private void bindTableView() {
 		this.bindTableViewContent();
 		this.bindTableViewSelectionModel();
 		this.bindTableViewCellValue();
 	}
 
+	/**
+	 * Bind Content to TableView
+	 */
 	private void bindTableViewContent() {
 		this.nodeTableViewBinaryClassificationList.itemsProperty().bind(this.binaryClassifications.getBinaryClassificationListProperty());
 		this.log.info("Bound Content to Model.");
 	}
 
+	/**
+	 * Bind Selection to Model and vice versa
+	 */
 	private void bindTableViewSelectionModel() {
 		this.nodeTableViewBinaryClassificationList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<IBinaryClassification>() {
 			@Override public void changed(ObservableValue<? extends IBinaryClassification> paramObservableValue, IBinaryClassification oldvalue, IBinaryClassification newValue) {
-				binaryClassifications.getSelectedBinaryClassificationProperty().set(newValue);
+				binaryClassifications.setSelectedBinaryClassification(newValue);
 				log.info("Set Selected BinaryClassification in Model.");
 				
 				final int index = nodeTableViewBinaryClassificationList.getSelectionModel().getSelectedIndex();
@@ -79,7 +92,10 @@ public class ClassificationListPresenter extends AFXMLPresenter {
 		this.log.info("Bound Model to Selection.");
 	}
 
-	private void bindTableViewCellValue() {
+	/**
+	 * Bind Properties to TableColums
+	 */
+	private void bindTableViewCellValue() {		
 		this.nodeTableColumnClassifierName.setCellValueFactory(new PropertyValueFactory<IBinaryClassification, String>("getClassificationName"));
 		this.nodeTableColumnExtractorName.setCellValueFactory(new PropertyValueFactory<IBinaryClassification, String>("getExtractorName"));
 		this.nodeTableColumnFrameSize.setCellValueFactory(new PropertyValueFactory<IBinaryClassification, Integer>("getFrameSize"));
