@@ -81,7 +81,7 @@ public class ImageInputPresenter extends AFXMLPresenter {
 		for (final Path imagePath : imagePathList) {
 			final Path copyPath = this.imageState.getImageFolderPath().resolve(imagePath.getFileName());
 			this.log.info("Created new Path: " + copyPath);
-
+			
 			final CopyFileCommand command = this.commander.createCopyFileCommand(imagePath, copyPath);
 			command.setOnSucceededCommandHandler(AddImageEntrySucceededHandler.class);
 			command.setExecutor(executor);

@@ -12,7 +12,6 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 import de.thatsich.bachelor.imageprocessing.api.core.IImageState;
-import de.thatsich.bachelor.imageprocessing.restricted.command.commands.SetLastLocationCommand;
 import de.thatsich.bachelor.imageprocessing.restricted.command.provider.IImageCommandProvider;
 import de.thatsich.core.Log;
 
@@ -73,13 +72,8 @@ public class ImageFileChooser {
 		List<File> result = this.chooser.showOpenMultipleDialog(null);
 		this.log.info("Showing Open Dialog.");
 
-		if (result == null) {
+		if (result == null || result.isEmpty()) {
 			this.log.warning("No File selected.");
-			return null;
-		}
-		
-		if (result.isEmpty()) {
-			this.log.warning("No valid File selected.");
 			return null;
 		}
 		else {
@@ -90,8 +84,7 @@ public class ImageFileChooser {
 				pathList.add(file.toPath());
 			}
 			
-			final SetLastLocationCommand command = this.commander.createSetLastLocationCommand(parent);
-			command.start();
+			this.commander.createSetLastLocationCommand(parent).start();
 			this.log.info("Stored last DirectoryPath: " + parent);
 			
 			return pathList;	

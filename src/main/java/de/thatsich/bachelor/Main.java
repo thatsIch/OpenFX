@@ -26,6 +26,7 @@ import de.thatsich.core.opencv.OpenCVLoader;
 // TODO Random Feature Extractor
 // TODO CNBC
 // TODO AANN
+// TODO evtl in Commander Klassen aufteilen sodass Handler alle am selben Platz sind und dass die Controller weniger Responsibility haben
 /**
  * Main Execution Class
  * @author Tran Minh Do
