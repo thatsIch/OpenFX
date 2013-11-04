@@ -14,60 +14,60 @@ package de.thatsich.bachelor.featureextraction.restricted.command.preprocessing;
 
 class DatasetElement
 {
-    /** the size of the input vector */
-    private int inputSize_;
+	/** the size of the input vector */
+	private final int inputSize_;
 
-    /** the size of the output vector */
-    private int outputSize_;
+	/** the size of the output vector */
+	private final int outputSize_;
 
-    /** the input vector */
-    private double[] inputVector_;
+	/** the input vector */
+	private final double[] inputVector_;
 
-    /** the output vector */
-    private double[] outputVector_;
+	/** the output vector */
+	private double[] outputVector_;
 
-    // --------------------------------------------------------------
-    // Public Constructors
-    // --------------------------------------------------------------
+	// --------------------------------------------------------------
+	// Public Constructors
+	// --------------------------------------------------------------
 
-    /**
-     * Creates a new <code>DatasetElement</code> instance.
-     *
-     * @param inputSize The size of the input vector
-     * @param outputSize The size of the output vector
-     */
-    public DatasetElement(int inputSize, int outputSize)
-    {
-        inputSize_ = inputSize;
-        outputSize_ = outputSize;
+	/**
+	 * Creates a new <code>DatasetElement</code> instance.
+	 *
+	 * @param inputSize The size of the input vector
+	 * @param outputSize The size of the output vector
+	 */
+	DatasetElement(int inputSize, int outputSize)
+	{
+		this.inputSize_ = inputSize;
+		this.outputSize_ = outputSize;
 
-        inputVector_ = new double[inputSize_];
-        if (outputSize > 0){
-            outputVector_ = new double[outputSize_]; 
-        }
-    }
+		this.inputVector_ = new double[this.inputSize_];
+		if (outputSize > 0){
+			this.outputVector_ = new double[this.outputSize_]; 
+		}
+	}
 
-    // --------------------------------------------------------------
-    // Public Methods
-    // --------------------------------------------------------------
+	// --------------------------------------------------------------
+	// Public Methods
+	// --------------------------------------------------------------
 
-    /**
-     * Gets the input vector.
-     *
-     * @return The input vector
-     */
-    public double[] getInputVector()
-    {
-        return inputVector_;
-    }
+	/**
+	 * Gets the input vector.
+	 *
+	 * @return The input vector
+	 */
+	public double[] getInputVector()
+	{
+		return this.inputVector_;
+	}
 
-    /**
-     * Gets the output vector.
-     *
-     * @return The output vector
-     */
-    public double[] getOutputVector()
-    {
-        return outputVector_;
-    }
+	/**
+	 * Gets the output vector.
+	 *
+	 * @return The output vector
+	 */
+	public double[] getOutputVector()
+	{
+		return this.outputVector_;
+	}
 }

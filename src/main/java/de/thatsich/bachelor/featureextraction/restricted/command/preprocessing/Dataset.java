@@ -26,107 +26,107 @@ import java.util.StringTokenizer;
 
 public class Dataset
 {
-    /** number of elements */
-    private int numberOfElements_;
+	/** number of elements */
+	private int numberOfElements_;
 
-    /** the size of the input vectors */
-    private int inputSize_;
+	/** the size of the input vectors */
+	private int inputSize_;
 
-    /** the size of the output vectors */
-    private int outputSize_;
+	/** the size of the output vectors */
+	private int outputSize_;
 
-    /** the data */
-    private DatasetElement[] elements_;
+	/** the data */
+	private DatasetElement[] elements_;
 
-    // --------------------------------------------------------------
-    // Public Constructors
-    // --------------------------------------------------------------
-    
-    /**
-     * Creates a new <code>Dataset</code> instance.
-     *
-     * @param numberOfElements The number of elements in the dataset
-     * @param inputSize The size of the input vectors
-     * @param outputSize The size of the output vectors
-     */
-    public Dataset(int numberOfElements, int inputSize, int outputSize)
-    {
-        numberOfElements_ = numberOfElements;
-        inputSize_ = inputSize;
-        outputSize_ = outputSize;
+	// --------------------------------------------------------------
+	// Public Constructors
+	// --------------------------------------------------------------
 
-        elements_ = new DatasetElement[numberOfElements_];
-        for (int i = 0; i < numberOfElements_; i++){
-            elements_[i] = new DatasetElement(inputSize, outputSize);
-        }
-    }
+	/**
+	 * Creates a new <code>Dataset</code> instance.
+	 *
+	 * @param numberOfElements The number of elements in the dataset
+	 * @param inputSize The size of the input vectors
+	 * @param outputSize The size of the output vectors
+	 */
+	public Dataset(int numberOfElements, int inputSize, int outputSize)
+	{
+		numberOfElements_ = numberOfElements;
+		inputSize_ = inputSize;
+		outputSize_ = outputSize;
 
-    // --------------------------------------------------------------
-    // Public Methods
-    // --------------------------------------------------------------
+		elements_ = new DatasetElement[numberOfElements_];
+		for (int i = 0; i < numberOfElements_; i++){
+			elements_[i] = new DatasetElement(inputSize, outputSize);
+		}
+	}
 
-    /**
-     * Gets the size of the dataset.
-     *
-     * @return The number of elements of data
-     */
-    public int getSize()
-    {
-        return numberOfElements_;
-    }
+	// --------------------------------------------------------------
+	// Public Methods
+	// --------------------------------------------------------------
 
-    /**
-     * Gets the element of data at the specified index.
-     *
-     * @param whichElement The index
-     *
-     * @return The element of data
-     */
-    public DatasetElement getElement(int whichElement)
-    {
-        return elements_[whichElement];
-    }
+	/**
+	 * Gets the size of the dataset.
+	 *
+	 * @return The number of elements of data
+	 */
+	public int getSize()
+	{
+		return numberOfElements_;
+	}
 
-    /**
-     * Reads in data from a flat file.
-     *
-     * @param fileName The name of the file (full or relative path)
-     */
-    public void readFile(String fileName)
-    {    	
-        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+	/**
+	 * Gets the element of data at the specified index.
+	 *
+	 * @param whichElement The index
+	 *
+	 * @return The element of data
+	 */
+	public DatasetElement getElement(int whichElement)
+	{
+		return elements_[whichElement];
+	}
 
-            // read each line of data from the file
-            // each line contains data of the form:
-            //
-            // input_1 input_2 ... input_m output_1 output_2 ... output_n
+	/**
+	 * Reads in data from a flat file.
+	 *
+	 * @param fileName The name of the file (full or relative path)
+	 */
+	public void readFile(String fileName)
+	{    	
+		try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
 
-            for (int line = 0; line < numberOfElements_; line++){
-                String data = reader.readLine();
-                StringTokenizer tokenizer = new StringTokenizer(data);
+			// read each line of data from the file
+			// each line contains data of the form:
+			//
+			// input_1 input_2 ... input_m output_1 output_2 ... output_n
 
-                // read in the input vector
-                for (int i = 0; i < inputSize_; i++){
-                    elements_[line].getInputVector()[i] =
-                      (new Double(tokenizer.nextToken())).doubleValue();
-                }
+			for (int line = 0; line < numberOfElements_; line++){
+				String data = reader.readLine();
+				StringTokenizer tokenizer = new StringTokenizer(data);
 
-                // read in the output vector (if any)
-                for (int i = 0; i < outputSize_; i++){
-                    elements_[line].getOutputVector()[i] =
-                      (new Double(tokenizer.nextToken())).doubleValue();
-                }
-            }
-        }
-        catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-    }
+				// read in the input vector
+				for (int i = 0; i < inputSize_; i++){
+					elements_[line].getInputVector()[i] =
+							(new Double(tokenizer.nextToken())).doubleValue();
+				}
 
-    /**
-     * Shuffles the order of the lines of data.
-     */
-    public void shuffle()
-    {
-    }
+				// read in the output vector (if any)
+				for (int i = 0; i < outputSize_; i++){
+					elements_[line].getOutputVector()[i] =
+							(new Double(tokenizer.nextToken())).doubleValue();
+				}
+			}
+		}
+		catch (IOException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
+	/**
+	 * Shuffles the order of the lines of data.
+	 */
+	public void shuffle()
+	{
+	}
 }
