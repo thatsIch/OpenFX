@@ -1,5 +1,7 @@
 package de.thatsich.bachelor.featureextraction.restricted.command.preprocessing;
 
+import de.thatsich.bachelor.featureextraction.restricted.command.preprocessing.Neuron.ActivationFunction;
+
 class NeuralLayer {
 	/** the number of neurons in the layer */
 	private int size_ = 0;
@@ -54,7 +56,7 @@ class NeuralLayer {
 	 * @param activationFunction The type of activation function
 	 * @see class Neuron for valid activation function types
 	 */
-	public void setActivationFunctions(int activationFunction)
+	public void setActivationFunctions(ActivationFunction activationFunction)
 	{
 		for (int i = 0; i < this.size_; i++){
 			this.neurons_[i].setActivationFunction(activationFunction);

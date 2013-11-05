@@ -48,7 +48,7 @@ public class GrayLevelCooccurenceHistogram extends AFeatureExtractor implements 
 		if (image.empty()) throw new IllegalArgumentException("Image is empty.");
 		
 		float[] histogram = new float[256];
-		System.out.println(image.size());
+
 		// Runtime Variables
 		int rows = image.rows();
 		int cols = image.cols();

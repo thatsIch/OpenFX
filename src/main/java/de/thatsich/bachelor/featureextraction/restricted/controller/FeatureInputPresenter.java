@@ -120,7 +120,6 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 				this.featureExtractors.getSelectedFeatureExtractor(), 
 				this.featureState.getFrameSize());
 		extractCommand.setOnSucceededCommandHandler(ExtractFeatureVectorSetSucceededHandler.class);
-		extractCommand.setOnSucceeded(new ExtractFeatureVectorSetSucceededHandler());
 		extractCommand.start();
 		this.log.info("FeatureVector deleted and removed from FeatureVectorList.");
 	}

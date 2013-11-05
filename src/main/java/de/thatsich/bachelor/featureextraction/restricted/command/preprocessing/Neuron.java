@@ -17,14 +17,11 @@ public class Neuron
 	// Public Constants
 	// --------------------------------------------------------------
 
-	/** flag designating sigmoidal activation function */
-	static final int SIGMOID = 0;
-
-	/** flag designating step activation function */
-	static final int STEP = 1;
-
-	/** flag designating bipolar step activation function */
-	static final int BIPOLAR_STEP = 2;
+	enum ActivationFunction {
+		SIGMOID,
+		STEP,
+		BIPOLAR_STEP
+	}
 
 	// --------------------------------------------------------------
 	// Private Members
@@ -40,7 +37,7 @@ public class Neuron
 	private double bias_;
 
 	/** designates which activation function we are using */
-	private int activationFunction_;
+	private ActivationFunction activationFunction_;
 
 	// --------------------------------------------------------------
 	// Constructors
@@ -54,7 +51,7 @@ public class Neuron
 		this.activation_ = 0.0;
 		this.gain_ = 1.0;
 		this.bias_ = 0.0;
-		this.activationFunction_ = SIGMOID;
+		this.activationFunction_ = ActivationFunction.SIGMOID;
 	}
 
 	/**
@@ -65,7 +62,7 @@ public class Neuron
 	 * @param bias The bias
 	 * @param activationFunction The activation function to use
 	 */
-	Neuron(double activation, double gain, double bias, int activationFunction)
+	Neuron(double activation, double gain, double bias, ActivationFunction activationFunction)
 	{
 		this.activation_ = activation;
 		this.gain_ = gain;
@@ -90,7 +87,7 @@ public class Neuron
 	 *     (valid values are listed in the Public Constants section of this
 	 *     class)
 	 */
-	public void setActivationFunction(int activationFunction)
+	public void setActivationFunction(ActivationFunction activationFunction)
 	{
 		this.activationFunction_ = activationFunction;
 	}
