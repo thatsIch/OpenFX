@@ -18,7 +18,7 @@ public class GrayLevelCooccurenceMatrix extends AFeatureExtractor {
 		final int rows = image.rows();
 		final int cols = image.cols();
 		for (int row = 0; row < rows; row++) {
-			final boolean hasTop = this.hasTop(row, cols, rows, cols);
+			final boolean hasTop = this.hasTop(row, 0, rows, cols);
 			
 			for (int col = 0; col < cols; col++) {
 				final boolean hasLeft = this.hasLeft(row, col, rows, cols);

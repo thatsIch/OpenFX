@@ -25,6 +25,9 @@ public class HuMoments extends AFeatureExtractor implements IFeatureExtractor {
 		Mat hu = new Mat();
 		Moments moments = Imgproc.moments(image);
 		Imgproc.HuMoments(moments, hu);
+		// TODO hu momente irgendwie normalisieren
+		// -np.sign(a)*np.log10(np.abs(a))
+//		Core.normalize(hu, hu);
 		hu.convertTo(hu, CvType.CV_32F);
 		
 		return new MatOfFloat(hu);

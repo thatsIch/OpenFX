@@ -12,8 +12,8 @@ import javafx.scene.layout.HBox;
 
 import com.google.inject.Inject;
 
+import de.thatsich.bachelor.prediction.api.core.IBinaryPredictions;
 import de.thatsich.bachelor.prediction.api.entities.BinaryPrediction;
-import de.thatsich.bachelor.prediction.intern.model.BinaryPredictions;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.opencv.Images;
 
@@ -26,7 +26,7 @@ public class BinaryPredictionSplitChannelPresenter extends AFXMLPresenter {
 	@FXML private ImageView nodeImageViewErrorPrediction;
 	
 	// Injects
-	@Inject private BinaryPredictions binaryPredictions;
+	@Inject private IBinaryPredictions binaryPredictions;
 	
 	@Override
 	protected void initComponents() {
