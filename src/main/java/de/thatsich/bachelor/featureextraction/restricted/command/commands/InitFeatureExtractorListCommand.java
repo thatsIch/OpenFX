@@ -8,6 +8,7 @@ import com.google.inject.Injector;
 
 import de.thatsich.bachelor.featureextraction.restricted.command.extractor.Gradient;
 import de.thatsich.bachelor.featureextraction.restricted.command.extractor.GrayLevelCooccurenceHistogram;
+import de.thatsich.bachelor.featureextraction.restricted.command.extractor.GrayLevelCooccurenceMatrix;
 import de.thatsich.bachelor.featureextraction.restricted.command.extractor.HuMoments;
 import de.thatsich.bachelor.featureextraction.restricted.command.extractor.IFeatureExtractor;
 import de.thatsich.bachelor.featureextraction.restricted.command.extractor.LocalBinaryPatternHistogram;
@@ -29,6 +30,7 @@ public class InitFeatureExtractorListCommand extends ACommand<List<IFeatureExtra
 		featureExtractorList.add(this.get(LocalBinaryPatternHistogram.class));
 		featureExtractorList.add(this.get(Mean.class));
 		featureExtractorList.add(this.get(Variance.class));
+		featureExtractorList.add(this.get(GrayLevelCooccurenceMatrix.class));
 		
 		return featureExtractorList;
 	}

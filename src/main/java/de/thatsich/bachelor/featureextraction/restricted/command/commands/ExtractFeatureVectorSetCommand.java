@@ -60,7 +60,6 @@ public class ExtractFeatureVectorSetCommand extends ACommand<FeatureVectorSet> {
 					// extract feature vector
 					// and reshape them into a one row feature vector if its 2D mat and removes unecessary channels
 					final MatOfFloat featureVector = this.featureExtractor.extractFeature(originalErrorSplit[col][row]);
-					featureVector.reshape(1, 1);
 					List<Float> featureVectorAsList = new ArrayList<Float>(featureVector.toList());
 
 					// if contain an error classify it as positive match
