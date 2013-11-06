@@ -1,4 +1,4 @@
-package de.thatsich.bachelor.classification.intern.command.classifier;
+package de.thatsich.bachelor.classification.intern.command.classification;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -10,6 +10,7 @@ import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
 import de.thatsich.bachelor.classification.api.entities.ABinaryClassification;
+import de.thatsich.bachelor.classification.intern.command.classifier.BinaryClassifierConfiguration;
 
 
 public class RandomForestBinaryClassification extends ABinaryClassification {

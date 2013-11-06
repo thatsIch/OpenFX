@@ -5,9 +5,9 @@ import org.opencv.ml.CvSVM;
 
 import com.google.inject.assistedinject.Assisted;
 
+import de.thatsich.bachelor.classification.intern.command.classification.RandomForestBinaryClassification;
+import de.thatsich.bachelor.classification.intern.command.classification.SVMBinaryClassification;
 import de.thatsich.bachelor.classification.intern.command.classifier.BinaryClassifierConfiguration;
-import de.thatsich.bachelor.classification.intern.command.classifier.RandomForestBinaryClassification;
-import de.thatsich.bachelor.classification.intern.command.classifier.SVMBinaryClassification;
 import de.thatsich.core.guice.ICommandProvider;
 
 public interface IBinaryClassificationProvider extends ICommandProvider {

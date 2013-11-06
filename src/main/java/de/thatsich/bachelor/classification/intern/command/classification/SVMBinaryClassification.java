@@ -1,4 +1,4 @@
-package de.thatsich.bachelor.classification.intern.command.classifier;
+package de.thatsich.bachelor.classification.intern.command.classification;
 
 import org.opencv.core.Mat;
 import org.opencv.ml.CvSVM;
@@ -7,6 +7,7 @@ import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
 import de.thatsich.bachelor.classification.api.entities.ABinaryClassification;
+import de.thatsich.bachelor.classification.intern.command.classifier.BinaryClassifierConfiguration;
 
 
 public class SVMBinaryClassification extends ABinaryClassification {
