@@ -53,21 +53,26 @@ public class TrainBinaryClassifierCommand extends ACommand<IBinaryClassification
 		// which is not the selected one and their data to train
 		// extract all float lists and transform them into MatOfFloats
 		// use .t() on them to transpose them
-		// TODO Matching of same category
-		for (FeatureVectorSet current : this.featureVectorList) {
-			for (FeatureVector vector : current.getFeatureVectorList()) {
+		for (FeatureVectorSet set : this.featureVectorList) {
+			
+			// select only with same FeatureExtractor and FrameSize
+			if (set.getExtractorNameProperty().get().equals(featureExtractorName) &&
+				set.getFrameSizeProperty().get() == frameSize) 
+			{
+				for (FeatureVector vector : set.getFeatureVectorList()) {
+					
+					final float[] floatArray = new float[vector.getVectorProperty().size()];
+					int index = 0;
+					for (Float f : vector.getVectorProperty()) {
+						floatArray[index] = f;
+						index++;
+					}
 
-				final float[] floatArray = new float[vector.getVectorProperty().size()];
-				int index = 0;
-				for (Float f : vector.getVectorProperty()) {
-					floatArray[index] = f;
-					index++;
-				}
-
-				if (vector.getIsPositiveProperty().get()) {
-					positive.push_back(new MatOfFloat(floatArray).t());
-				} else {
-					negative.push_back(new MatOfFloat(floatArray).t());
+					if (vector.getIsPositiveProperty().get()) {
+						positive.push_back(new MatOfFloat(floatArray).t());
+					} else {
+						negative.push_back(new MatOfFloat(floatArray).t());
+					}
 				}
 			}
 		}
@@ -86,7 +91,7 @@ public class TrainBinaryClassifierCommand extends ACommand<IBinaryClassification
 		log.info("Created BinaryClassifierConfiguration.");
 
 		final IBinaryClassification classification = this.binaryClassifier.train(positive, negative, config);
-		log.info("Trained Binary Classifier.");
+		log.info("Trained Binary Classifier with " + positive + " positive and " + negative + " negative samples.");
 
 		classification.save(filePath.toString());
 		log.info("Saved File to FileSystem.");
