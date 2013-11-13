@@ -1,5 +1,7 @@
 package de.thatsich.bachelor.imageprocessing.restricted.model;
 
+import com.google.inject.Singleton;
+
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleListProperty;
@@ -8,6 +10,7 @@ import javafx.collections.FXCollections;
 import de.thatsich.bachelor.imageprocessing.api.core.IImageEntries;
 import de.thatsich.bachelor.imageprocessing.api.entities.ImageEntry;
 
+@Singleton
 public class ImageEntries implements IImageEntries {
 	
 	// Properties

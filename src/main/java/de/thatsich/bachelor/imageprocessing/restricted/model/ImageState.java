@@ -15,7 +15,7 @@ public class ImageState implements IImageState {
 	// Property Getter
 	public ObjectProperty<Path> imageFolderPathProperty() { return this.imageInputFolderPath; }
 	public ObjectProperty<Path> getLastLocationProperty() { return this.lastLocation; }
-	
+
 	// Getter
 	public Path getImageFolderPath() { return this.imageInputFolderPath.get(); }
 	public Path getLastLocation() { return this.lastLocation.get(); }

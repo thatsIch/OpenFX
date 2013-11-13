@@ -43,7 +43,6 @@ public class ImageInputPresenter extends AFXMLPresenter {
 	@Inject private IImageEntries imageEntries;
 	@Inject private IImageState imageState;
 	@Inject private ImageFileChooser chooser;
-	
 	@Inject ImageInitCommander initCommander;
  
 	// Initialization Implementation 

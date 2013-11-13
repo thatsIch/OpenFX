@@ -34,5 +34,6 @@
 			<attribute name="javadoc_location" value="jar:platform:/resource/BachelorOpenCV/src/main/resources/de/thatsich/core/libs/Mockito%201.9.5/mockito-javadoc-1.9.5.zip!/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="src/main/resources/de/thatsich/core/libs/Lombok 1.12.2/lombok.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -24,7 +24,7 @@ public class Log extends Logger {
 		super("", null);
 		ConsoleHandler handler = new ConsoleHandler();
 		LogFormatter formatter = new LogFormatter();
-
+		
 		// set log level
 		this.setLevel(this.level);
 		handler.setLevel(this.level);
