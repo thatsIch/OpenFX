@@ -10,6 +10,7 @@ import com.google.inject.assistedinject.Assisted;
 import de.thatsich.bachelor.errorgeneration.api.entities.ErrorEntry;
 import de.thatsich.bachelor.errorgeneration.api.entities.IErrorGenerator;
 import de.thatsich.bachelor.errorgeneration.restricted.service.ErrorFactoryService;
+import de.thatsich.bachelor.errorgeneration.restricted.service.ErrorStorageService;
 import de.thatsich.core.javafx.ACommand;
 
 public class CreateErrorEntryCommand extends ACommand<ErrorEntry> {
@@ -21,6 +22,7 @@ public class CreateErrorEntryCommand extends ACommand<ErrorEntry> {
 	
 	// Injections
 	@Inject private ErrorFactoryService factory;
+	@Inject private ErrorStorageService storage;
 	
 	@Inject
 	public CreateErrorEntryCommand(@Assisted Mat imageMat, @Assisted Path imagePath, @Assisted IErrorGenerator generator) {
@@ -35,6 +37,11 @@ public class CreateErrorEntryCommand extends ACommand<ErrorEntry> {
 		copy = this.generator.generateError(copy);
 		this.log.info("Error generated.");
 		
-		return this.factory.getErrorEntryFromMat( this.imagePath, this.imageMat, copy );
+		final ErrorEntry entry = this.factory.getErrorEntryFromMat( this.imagePath, this.imageMat, copy );
+		
+		// store created error
+		this.storage.store( entry );
+		
+		return entry;
 	}
 }
