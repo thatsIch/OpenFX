@@ -63,45 +63,6 @@ public class ErrorEntry
 		this.errorName.set( errorName );
 	}
 
-	// /**
-	// * Reading ErrorEntry CTOR
-	// *
-	// * @param storagePath
-	// */
-	// public ErrorEntry(Path storagePath) {
-	// this.storagePath = storagePath;
-	// this.initClassAndName(storagePath);
-	//
-	// Mat encodedImage = Images.toMat(storagePath);
-	//
-	// // split channels to extract GL and Error Mat
-	// List<Mat> encodedImageChannelMats = new ArrayList<Mat>();
-	// Core.split(encodedImage, encodedImageChannelMats);
-	//
-	// this.originalMat = encodedImageChannelMats.get(0);
-	// this.originalWithError = encodedImageChannelMats.get(1);
-	// this.errorMat = encodedImageChannelMats.get(2);
-	// this.mergedMat.set(encodedImage);
-	// }
-
-	// /**
-	// * Handle common code between the constructors
-	// */
-	// private void initClassAndName(Path storagePath) {
-	// // Defining Pattern and Matcher
-	// final Pattern errorClassPattern = Pattern.compile("[a-zA-Z]+");
-	// final String classAndName = storagePath.getFileName().toString();
-	// final Matcher m = errorClassPattern.matcher(classAndName);
-	//
-	// // Searching first instance
-	// m.find();
-	// String clazz = m.group();
-	//
-	// // Store
-	// this.errorClass.set(clazz);
-	// this.errorName.set(classAndName.replace(clazz, ""));
-	// }
-
 	// ==================================================
 	// Getter Implementation
 	// ==================================================
