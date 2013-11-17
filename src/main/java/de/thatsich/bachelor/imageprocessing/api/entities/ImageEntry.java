@@ -6,7 +6,9 @@ import lombok.Getter;
 
 import org.opencv.core.Mat;
 
-public class ImageEntry {
+import de.thatsich.core.javafx.IEntity;
+
+public class ImageEntry implements IEntity {
 	
 	@Getter
 	private final Mat imageMat;
@@ -14,11 +16,13 @@ public class ImageEntry {
 	@Getter
 	private final Path imagePath;
 	
-	public ImageEntry(Path imagePath, Mat imageMat) {
+	public ImageEntry( Path imagePath, Mat imageMat )
+	{
 		this.imageMat = imageMat;
 		this.imagePath = imagePath;
 	}
 	
+	@Override
 	public String getName() {
 		return this.imagePath.getFileName().toString();
 	}
