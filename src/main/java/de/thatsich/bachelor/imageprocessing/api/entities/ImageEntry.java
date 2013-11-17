@@ -2,23 +2,21 @@ package de.thatsich.bachelor.imageprocessing.api.entities;
 
 import java.nio.file.Path;
 
+import lombok.Getter;
+
 import org.opencv.core.Mat;
 
 public class ImageEntry {
+	
+	@Getter
 	private final Mat imageMat;
+	
+	@Getter
 	private final Path imagePath;
 	
 	public ImageEntry(Path imagePath, Mat imageMat) {
 		this.imageMat = imageMat;
 		this.imagePath = imagePath;
-	}
-	
-	public Mat getImageMat() {
-		return this.imageMat;
-	}
-	
-	public Path getImagePath() {
-		return this.imagePath;
 	}
 	
 	public String getName() {
