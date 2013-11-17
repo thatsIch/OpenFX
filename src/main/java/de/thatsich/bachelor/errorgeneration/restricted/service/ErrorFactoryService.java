@@ -14,10 +14,12 @@ import com.google.inject.Singleton;
 import de.thatsich.bachelor.errorgeneration.api.entities.ErrorEntry;
 import de.thatsich.core.opencv.Images;
 
+
 @Singleton
 public class ErrorFactoryService
 {
-	public ErrorEntry getErrorEntryFromPath(Path filePath) {
+	public ErrorEntry getErrorEntryFromPath( Path filePath )
+	{
 		final String unparsedString = filePath.getFileName().toString();
 		final String className = this.parseClassName( unparsedString );
 		final String errorName = unparsedString.replace( className, "" );
@@ -31,11 +33,22 @@ public class ErrorFactoryService
 		final Mat originalMat = encodedImageChannelMats.get( 0 );
 		final Mat originalWithError = encodedImageChannelMats.get( 1 );
 		final Mat errorMat = encodedImageChannelMats.get( 2 );
-		
+
 		return new ErrorEntry( filePath, originalMat, originalWithError, errorMat, className, errorName );
 	}
-	
-	
+
+	public ErrorEntry getErrorEntryFromMat( Path filePath, Mat originalMat, Mat originalWithErrorMat )
+	{
+		final String unparsedString = filePath.getFileName().toString();
+		final String className = this.parseClassName( unparsedString );
+		final String errorName = unparsedString.replace( className, "" );
+		
+		final Mat onlyErrorMat = new Mat();
+		Core.absdiff( originalMat, originalWithErrorMat, onlyErrorMat );
+
+		return new ErrorEntry( filePath, originalMat, originalWithErrorMat, onlyErrorMat, className, errorName );
+	}
+
 	/**
 	 * Extracts classname
 	 * 
