@@ -26,12 +26,12 @@ import de.thatsich.bachelor.errorgeneration.api.entities.ErrorEntry;
 import de.thatsich.bachelor.errorgeneration.api.entities.IErrorGenerator;
 import de.thatsich.bachelor.errorgeneration.restricted.command.ErrorInitCommander;
 import de.thatsich.bachelor.errorgeneration.restricted.command.IErrorCommandProvider;
-import de.thatsich.bachelor.errorgeneration.restricted.command.commands.ApplyErrorCommand;
+import de.thatsich.bachelor.errorgeneration.restricted.command.commands.CreateErrorEntryCommand;
 import de.thatsich.bachelor.errorgeneration.restricted.command.commands.DeleteErrorEntryCommand;
 import de.thatsich.bachelor.errorgeneration.restricted.command.commands.SetLastErrorCountCommand;
 import de.thatsich.bachelor.errorgeneration.restricted.command.commands.SetLastErrorGeneratorIndexCommand;
+import de.thatsich.bachelor.errorgeneration.restricted.controller.handler.CreateErrorEntrySucceededHandler;
 import de.thatsich.bachelor.errorgeneration.restricted.controller.handler.DeleteErrorEntrySucceededHandler;
-import de.thatsich.bachelor.errorgeneration.restricted.controller.handler.ErrorApplicationSucceededHandler;
 import de.thatsich.bachelor.imageprocessing.api.core.IImageEntries;
 import de.thatsich.bachelor.imageprocessing.api.entities.ImageEntry;
 import de.thatsich.core.javafx.AFXMLPresenter;
@@ -153,8 +153,8 @@ public class ErrorInputPresenter extends AFXMLPresenter {
 			final Path imagePath = this.errorState.getErrorEntryFolderPath().resolve(dateTime + ".png");
 			this.log.info("Path: " + imagePath);
 			
-			final ApplyErrorCommand command = this.commander.createApplyErrorCommand(image, imagePath, generator);
-			command.setOnSucceededCommandHandler(ErrorApplicationSucceededHandler.class);
+			final CreateErrorEntryCommand command = this.commander.createApplyErrorCommand(image, imagePath, generator);
+			command.setOnSucceededCommandHandler(CreateErrorEntrySucceededHandler.class);
 			command.setExecutor(executor);
 			command.start();
 		}
@@ -200,8 +200,8 @@ public class ErrorInputPresenter extends AFXMLPresenter {
 				Path imagePath = errorEntryFolderPath.resolve(dateTime + ".png");
 				this.log.info("Path: " + imagePath);
 				
-				final ApplyErrorCommand command = this.commander.createApplyErrorCommand(image, imagePath, generator);
-				command.setOnSucceededCommandHandler(ErrorApplicationSucceededHandler.class);
+				final CreateErrorEntryCommand command = this.commander.createApplyErrorCommand(image, imagePath, generator);
+				command.setOnSucceededCommandHandler(CreateErrorEntrySucceededHandler.class);
 				command.setExecutor(executor);
 				command.start();
 			}

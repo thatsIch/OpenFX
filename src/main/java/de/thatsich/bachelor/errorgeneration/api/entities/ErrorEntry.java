@@ -12,18 +12,18 @@ import org.opencv.core.Mat;
 public class ErrorEntry
 {
 	@Getter
-	private final Mat							originalMat;
-	
-	@Getter
-	private final Mat							errorMat;
-	
-	@Getter
-	private final Mat							originalWithError;
-	private final ReadOnlyStringWrapper			errorClass		= new ReadOnlyStringWrapper();
-	private final ReadOnlyStringWrapper			errorName		= new ReadOnlyStringWrapper();
+	private final Mat					originalMat;
 
 	@Getter
-	private final Path							storagePath;
+	private final Mat					errorMat;
+
+	@Getter
+	private final Mat					originalWithErrorMat;
+	private final ReadOnlyStringWrapper	errorClass	= new ReadOnlyStringWrapper();
+	private final ReadOnlyStringWrapper	errorName	= new ReadOnlyStringWrapper();
+
+	@Getter
+	private final Path					storagePath;
 
 	// /**
 	// * Generating ErrorEntry CTOR
@@ -57,7 +57,7 @@ public class ErrorEntry
 
 		this.originalMat = originalMat;
 		this.errorMat = errorMat;
-		this.originalWithError = originalWithErrorMat;
+		this.originalWithErrorMat = originalWithErrorMat;
 
 		this.errorClass.set( errorClass );
 		this.errorName.set( errorName );

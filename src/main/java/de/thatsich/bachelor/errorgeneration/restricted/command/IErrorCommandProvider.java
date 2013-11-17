@@ -6,8 +6,7 @@ import org.opencv.core.Mat;
 
 import de.thatsich.bachelor.errorgeneration.api.entities.ErrorEntry;
 import de.thatsich.bachelor.errorgeneration.api.entities.IErrorGenerator;
-import de.thatsich.bachelor.errorgeneration.restricted.command.commands.ApplyErrorCommand;
-import de.thatsich.bachelor.errorgeneration.restricted.command.commands.CreateErrorImageCommand;
+import de.thatsich.bachelor.errorgeneration.restricted.command.commands.CreateErrorEntryCommand;
 import de.thatsich.bachelor.errorgeneration.restricted.command.commands.DeleteErrorEntryCommand;
 import de.thatsich.bachelor.errorgeneration.restricted.command.commands.SetLastErrorCountCommand;
 import de.thatsich.bachelor.errorgeneration.restricted.command.commands.SetLastErrorEntryIndexCommand;
@@ -19,7 +18,6 @@ public interface IErrorCommandProvider extends ICommandProvider {
 	public SetLastErrorGeneratorIndexCommand createSetLastErrorGeneratorIndexCommand(int lastErrorGeneratorIndex);
 	public SetLastErrorCountCommand createSetLastErrorCountCommand(int lastErrorLoopCount);
 	
-	public ApplyErrorCommand createApplyErrorCommand(Mat imageMat, Path imagePath, IErrorGenerator generator);
+	public CreateErrorEntryCommand createApplyErrorCommand(Mat imageMat, Path imagePath, IErrorGenerator generator);
 	public DeleteErrorEntryCommand createDeleteErrorEntryCommand(ErrorEntry entry);
-	public CreateErrorImageCommand createCreateErrorImageCommand(ErrorEntry entry);
 }
