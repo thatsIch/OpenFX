@@ -20,7 +20,7 @@ public class DeleteErrorEntryCommand extends ACommand<ErrorEntry> {
 
 	@Override
 	protected ErrorEntry call() throws Exception {		
-		Path path = this.entry.getPath();
+		Path path = this.entry.getStoragePath();
 		if (Files.exists(path)) {
 			Files.delete(path);
 			log.info("File deleted.");
