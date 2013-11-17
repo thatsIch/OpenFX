@@ -1,17 +1,13 @@
 package de.thatsich.bachelor.errorgeneration.restricted.controller;
 
-import java.util.Arrays;
-import java.util.List;
-
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-import org.opencv.core.Core;
-import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.imgproc.Imgproc;
 
 import com.google.inject.Inject;
 
@@ -74,10 +70,31 @@ public class ErrorDisplayPresenter extends AFXMLPresenter
 
 	private Image errorEntryToImage( ErrorEntry entry )
 	{
-		final List<Mat> listMat = Arrays.asList( entry.getOriginalMat(), entry.getOriginalWithErrorMat(), entry.getErrorMat() );
-		Mat mergedMat = new Mat( entry.getOriginalMat().size(), CvType.CV_8UC3 );
-		Core.merge( listMat, mergedMat );
+		final Mat originalMat = entry.getOriginalMat().clone();
+		final Mat onlyErrorMat = entry.getErrorMat();
 
-		return Images.toImage( mergedMat );
+		if ( !originalMat.size().equals( onlyErrorMat.size() ) ) throw new IllegalStateException( "Original Size: " + originalMat.size() + ", ErrorSize: " + onlyErrorMat.size() );
+
+		// convert originalMat into RGB
+		Imgproc.cvtColor( originalMat, originalMat, Imgproc.COLOR_GRAY2RGB );
+
+		// overwrite error pixel in red layer
+		for ( int row = 0; row < originalMat.rows(); row++ )
+		{
+			for ( int col = 0; col < originalMat.cols(); col++ )
+			{
+				final int value = ( int ) onlyErrorMat.get( row, col )[0];
+
+				// if is error pixel overwrite tuple in original mat
+				if ( value > 0 )
+				{
+					final double[] buffer = originalMat.get( row, col );
+					buffer[2] = 255;
+					originalMat.put( row, col, buffer );
+				}
+			}
+		}
+
+		return Images.toImage( originalMat );
 	}
 }
