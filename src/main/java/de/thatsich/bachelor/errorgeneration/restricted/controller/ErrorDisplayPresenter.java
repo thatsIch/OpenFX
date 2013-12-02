@@ -88,8 +88,7 @@ public class ErrorDisplayPresenter extends AFXMLPresenter
 				// if is error pixel overwrite tuple in original mat
 				if ( value > 0 )
 				{
-					final double[] buffer = originalMat.get( row, col );
-					buffer[2] = 255;
+					final double[] buffer = { 0, 0, 255};
 					originalMat.put( row, col, buffer );
 				}
 			}
