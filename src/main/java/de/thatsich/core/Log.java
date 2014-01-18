@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  */
 public class Log extends Logger {
 
-	final private Level level = Level.ALL;
+	final private static Level level = Level.ALL;
 	
 	public Log() {
 		super("", null);
@@ -26,8 +26,8 @@ public class Log extends Logger {
 		LogFormatter formatter = new LogFormatter();
 		
 		// set log level
-		this.setLevel(this.level);
-		handler.setLevel(this.level);
+		this.setLevel(Log.level);
+		handler.setLevel(Log.level);
 		
 		// remove default handler
 		this.setUseParentHandlers(false);

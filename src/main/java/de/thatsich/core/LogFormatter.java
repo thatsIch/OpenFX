@@ -13,7 +13,7 @@ import java.util.logging.LogRecord;
  */
 public class LogFormatter extends Formatter {
 
-	final private String MESSAGE_PATTERN = "[%tT] [%-7s] %s%s > %s %s\n";
+	final private static String MESSAGE_PATTERN = "[%tT] [%-7s] %s%s > %s %s\n";
 
 	/**
 	 * Displays simple message with
@@ -28,7 +28,7 @@ public class LogFormatter extends Formatter {
 		String className = log.getSourceClassName().substring(classIndex) + ".";
 
 		return String.format(
-			this.MESSAGE_PATTERN, 
+			LogFormatter.MESSAGE_PATTERN, 
 			new Date(log.getMillis()),
 			log.getThrown() == null ? log.getLevel() : "THROW",
 			className,
