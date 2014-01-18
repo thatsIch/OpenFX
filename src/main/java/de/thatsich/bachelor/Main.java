@@ -5,10 +5,8 @@ import java.util.List;
 
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.SceneBuilder;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import javafx.stage.StageBuilder;
 
 import com.cathive.fx.guice.GuiceApplication;
 import com.google.inject.Inject;
@@ -23,10 +21,10 @@ import de.thatsich.core.opencv.OpenCVLoader;
 
 // TODO need Threshold
 // TODO bind erfolgsrate precision recall
-// TODO Random Feature Extractor
+// ODO low priority - Random Feature Extractor
 // TODO CNBC
-// TODO AANN
-// TODO evtl in Commander Klassen aufteilen sodass Handler alle am selben Platz sind und dass die Controller weniger Responsibility haben
+// ODO halted - AANN
+// ODO halted - evtl in Commander Klassen aufteilen sodass Handler alle am selben Platz sind und dass die Controller weniger Responsibility haben
 /**
  * Main Execution Class
  * @author Tran Minh Do
@@ -62,30 +60,23 @@ public class Main extends GuiceApplication {
 	 * @param primaryStage Main Stage to be drawn on
 	 */
     @Override public void start(Stage primaryStage) throws IOException {
-
-		if (this.view == null) throw new IllegalStateException("View not instantiated."); 
+		if (this.view == null) throw new NullPointerException("View not instantiated."); 
 		
 		final Parent root = this.view.getRoot();
-		if (root == null) throw new IllegalStateException("Root damaged.");
+		if (root == null) throw new NullPointerException("Root damaged.");
 		
 		final URL url = this.getClass().getResource("opencv.png");
-		if (url == null) throw new IllegalStateException("Icon not found."); 
+		if (url == null) throw new NullPointerException("Icon not found."); 
 		final Image icon = new Image(url.toString());
-		if (icon.isError()) throw new IllegalStateException();
+		if (icon.isError()) throw new IllegalStateException("Icon could not be loaded");
 		
 		 // Put the loaded user interface onto the primary stage.
-		Scene scene = SceneBuilder
-			.create()
-			.root(root)
-			.build();
+		final Scene scene = new Scene(root);
+		primaryStage.setTitle( "Sample" );
+		primaryStage.getIcons().add( icon );
+		primaryStage.setScene( scene );
+		primaryStage.setResizable( false );
 		
-        StageBuilder.create()
-        	.title("Sample")
-        	.icons(icon)
-        	.scene(scene)
-        	.resizable(false)
-            .applyTo(primaryStage);
-
         // Show the primary stage
         primaryStage.show();
 	}
