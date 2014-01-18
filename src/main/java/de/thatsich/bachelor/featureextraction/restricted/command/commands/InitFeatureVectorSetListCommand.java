@@ -52,7 +52,7 @@ public class InitFeatureVectorSetListCommand extends ACommand<List<FeatureVector
 				final String fileName = child.getFileName().toString();
 				final String[] fileNameSplit = fileName.split("_");
 				if (fileNameSplit.length != 4) throw new WrongNumberArgsException("Expected 4 encoded information but found " + fileNameSplit.length);
-				List<Float[]> floatValues = csv.read(child);
+				final List<List<Float>> floatValues = csv.read(child);
 				final String className = fileNameSplit[0];
 				final String extractorName = fileNameSplit[1];
 				final int frameSize = Integer.parseInt(fileNameSplit[2]);
@@ -62,14 +62,15 @@ public class InitFeatureVectorSetListCommand extends ACommand<List<FeatureVector
 				// and store them as a single FeatureVector
 				// in the end write all information into the FeatureVectorSet
 				final List<FeatureVector> featureVectorList = FXCollections.observableArrayList();
-				for (Float[] floatArray : floatValues) {
-					final List<Float> vector = FXCollections.<Float>observableArrayList(floatArray);
+				for (List<Float> vector : floatValues) {
 					final Float label = vector.get(vector.size() - 1);
 					vector.remove(vector.size() - 1);
 					
 					final boolean boolLabel = (label > 0);
 					featureVectorList.add(new FeatureVector(vector, boolLabel));
 				}
+				
+				floatValues.clear();
 				
 				featureVectorSetList.add(new FeatureVectorSet(child, className, extractorName, frameSize, id, featureVectorList));
 				log.info("Added " + child + " with Attribute " + Files.probeContentType(child));

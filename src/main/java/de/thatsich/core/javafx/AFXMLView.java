@@ -18,7 +18,6 @@ import com.google.inject.Inject;
  */
 public abstract class AFXMLView implements IFXMLView
 {
-
 	/**
 	 * Parent Object of the FXML
 	 */
