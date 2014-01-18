@@ -56,13 +56,13 @@ public class DisplayPresenter implements Initializable {
 	@Inject private IFeatureDisplayView featureDisplayView;
 	@Inject private IFeatureListView featureListView;
 	
-	@Inject private IClassificationInputView trainInputView;
-	@Inject private IClassificationDisplayView trainDisplayView;
-	@Inject private IClassificationListView trainListView;
+	@Inject private IClassificationInputView classificationInputView;
+	@Inject private IClassificationDisplayView classificationDisplayView;
+	@Inject private IClassificationListView classificationListView;
 	
-	@Inject private IPredictionInputView testInputView;
-	@Inject private IPredictionDisplayView testDisplayView;
-	@Inject private IPredictionListView testListView;
+	@Inject private IPredictionInputView predictionInputView;
+	@Inject private IPredictionDisplayView predictionDisplayView;
+	@Inject private IPredictionListView predictionListView;
 	
 	// ================================================== 
 	// Initializable Implementation 
@@ -81,13 +81,13 @@ public class DisplayPresenter implements Initializable {
 		this.nodeRoot.add(this.featureDisplayView.getRoot(), 2, 2);
 		this.nodeRoot.add(this.featureListView.getRoot(), 2, 3);
 		
-		this.nodeRoot.add(this.trainInputView.getRoot(), 3, 1);
-		this.nodeRoot.add(this.trainDisplayView.getRoot(), 3, 2);
-		this.nodeRoot.add(this.trainListView.getRoot(), 3, 3);
+		this.nodeRoot.add(this.classificationInputView.getRoot(), 3, 1);
+		this.nodeRoot.add(this.classificationDisplayView.getRoot(), 3, 2);
+		this.nodeRoot.add(this.classificationListView.getRoot(), 3, 3);
 
-		this.nodeRoot.add(this.testInputView.getRoot(), 4, 1);
-		this.nodeRoot.add(this.testDisplayView.getRoot(), 4, 2);
-		this.nodeRoot.add(this.testListView.getRoot(), 4, 3);
+		this.nodeRoot.add(this.predictionInputView.getRoot(), 4, 1);
+		this.nodeRoot.add(this.predictionDisplayView.getRoot(), 4, 2);
+		this.nodeRoot.add(this.predictionListView.getRoot(), 4, 3);
 
 		// Set alignment for all children
 		for (Node child : this.nodeRoot.getChildren()) {
