@@ -72,7 +72,7 @@ public class Main extends GuiceApplication {
 		
 		 // Put the loaded user interface onto the primary stage.
 		final Scene scene = new Scene(root);
-	
+		
         // Show the primary stage
 		primaryStage.setTitle( "Sample" );
 		primaryStage.getIcons().add( icon );

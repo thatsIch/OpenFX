@@ -35,5 +35,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="src/main/resources/de/thatsich/core/libs/Lombok 1.12.2/lombok.jar"/>
+	<classpathentry kind="lib" path="src/main/resources/de/thatsich/core/libs/Weka 3.6/weka.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
