@@ -6,6 +6,7 @@ import java.net.URL;
 import javafx.scene.Parent;
 
 import com.cathive.fx.guice.GuiceFXMLLoader;
+import com.cathive.fx.guice.GuiceFXMLLoader.Result;
 import com.google.inject.Inject;
 
 
@@ -105,11 +106,14 @@ public abstract class AFXMLView implements IFXMLView {
 			if (urlFXML == null) throw new IllegalStateException("Could not find " + urlFXML);
 			
 			// load FXML
+			Result res = null;
 			try {
-				this.pane = this.loader.load(urlFXML).getRoot();
+				res = this.loader.load( urlFXML );
 			} catch (IOException e) {
 				throw new IllegalStateException("Could not load " + urlFXML, e);
 			}
+			
+			this.pane = res.getRoot();  
 			
 			// apply CSS if found
 			this.applyCSSIfPossible(this.pane);

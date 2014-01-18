@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<fx:root type="GridPane" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="de.thatsich.bachelor.prediction.intern.control.PredictionInputPresenter">
+<GridPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="de.thatsich.bachelor.prediction.intern.control.PredictionInputPresenter">
   <children>
     <Button fx:id="nodeButtonPredictBinaryClassification" mnemonicParsing="false" onAction="#onPredictBinaryPredictionAction" prefWidth="125.0" text="Predict" GridPane.columnIndex="1" GridPane.rowIndex="0" />
     <Button fx:id="nodeButtonDeleteBinaryPrediction" mnemonicParsing="false" onAction="#onDeleteBinaryPredictionAction" prefWidth="125.0" text="Delete" GridPane.columnIndex="1" GridPane.rowIndex="1" />
@@ -22,4 +22,4 @@
     <RowConstraints maxHeight="25.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
     <RowConstraints maxHeight="25.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
   </rowConstraints>
-</fx:root>
+</GridPane>
