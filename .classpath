@@ -24,17 +24,6 @@
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="BachelorOpenCV/src/main/resources/de/thatsich/core/opencv"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="src/main/resources/de/thatsich/core/libs/Jukito 1.2/jukito-1.2.jar" sourcepath="src/main/resources/de/thatsich/core/libs/Jukito 1.2/jukito-1.2-sources.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/BachelorOpenCV/src/main/resources/de/thatsich/core/libs/Jukito%201.2/jukito-1.2-javadoc.jar!/"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="src/main/resources/de/thatsich/core/libs/Mockito 1.9.5/mockito-all-1.9.5.jar" sourcepath="src/main/resources/de/thatsich/core/libs/Mockito 1.9.5/mockito-all-1.9.5.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/BachelorOpenCV/src/main/resources/de/thatsich/core/libs/Mockito%201.9.5/mockito-javadoc-1.9.5.zip!/"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="src/main/resources/de/thatsich/core/libs/Weka 3.6/weka.jar"/>
 	<classpathentry kind="lib" path="src/main/resources/de/thatsich/core/libs/Lombok 1.12.4/lombok.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
