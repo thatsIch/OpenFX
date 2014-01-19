@@ -19,7 +19,6 @@ import java.util.List;
  */
 public class CSVService
 {
-
 	/**
 	 * writes a csv filled with a list of float-arrays to a specified path
 	 * 
