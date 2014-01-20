@@ -4,9 +4,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
-import org.apache.hama.ml.perception.MultiLayerPerceptron;
-import org.apache.hama.ml.perception.SmallMultiLayerPerceptron;
-
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -51,27 +48,10 @@ public class Main extends GuiceApplication
 	 */
 	public static void main( String[] args )
 	{
-		String modelPath = "/tmp/sampleModel-testWriteReadMLP.data";
-		double learningRate = 0.3;
-		double regularization = 0.0; // no regularization
-		double momentum = 0; // no momentum
-		String squashingFunctionName = "Sigmoid";
-		String costFunctionName = "SquaredError";
-
-		int[] layerSizeArray = new int[] { 3, 2, 2, 3 };
-
-		MultiLayerPerceptron mlp = new SmallMultiLayerPerceptron(learningRate,
-	        regularization, momentum, squashingFunctionName, costFunctionName,
-	        layerSizeArray);
-		
-//		mlp.train( null, null )
-		
-		System.out.println("Finished");
-		
 		// Loading OpenCV Bindings
-//		OpenCVLoader.loadLibrary();
+		OpenCVLoader.loadLibrary();
 
-//		Main.launch( args );
+		Main.launch( args );
 	}
 
 	/*
