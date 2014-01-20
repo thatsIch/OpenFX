@@ -350,8 +350,7 @@ public class TestSmallMultiLayerPerceptron
 				mlp.updateWeightMatrices( weightUpdates );
 			}
 
-			// System.out.printf("Weight matrices: %s\n",
-			// mlp.weightsToString(mlp.getWeightMatrices()));
+			System.out.printf( "Weight matrices: %s\n", SmallMultiLayerPerceptron.weightsToString( mlp.getWeightMatrices() ) );
 			for ( int i = 0; i < trainingData.length; ++i )
 			{
 				DenseDoubleVector testVec = ( DenseDoubleVector ) trainingData[i].slice( 2 );
@@ -447,7 +446,7 @@ public class TestSmallMultiLayerPerceptron
 				double actual = mlp.output( testVec ).toArray()[0];
 				if ( expected < 0.5 && actual >= 0.5 || expected >= 0.5 && actual < 0.5 )
 				{
-					System.out.println( "Neural network failes to lear the XOR." );
+					System.out.println( "Neural network failes to learn the XOR." );
 				}
 			}
 			catch ( Exception e )
