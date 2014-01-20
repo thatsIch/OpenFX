@@ -4,14 +4,43 @@ import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
 import de.thatsich.bachelor.classification.api.entities.IBinaryClassification;
 
-public interface IBinaryClassifications {
-	// Property Getter
+
+/**
+ * Interface for BinaryClassifcations Model.
+ * 
+ * Enables access to the Binary Classification List Property and
+ * has Getter, Setter and Property for the currently selected one
+ * 
+ * @author thatsIch
+ */
+public interface IBinaryClassifications
+{
+	/**
+	 * PropertyGetter of Binary Classification List
+	 * 
+	 * @return ListProperty of Binary Classifications
+	 */
 	public ListProperty<IBinaryClassification> getBinaryClassificationListProperty();
+
+	/**
+	 * PropertyGetter of selected Binary Classification
+	 * 
+	 * @return Property of selected Binary Classification
+	 */
 	public ObjectProperty<IBinaryClassification> getSelectedBinaryClassificationProperty();
-	
-	// Getter
+
+	/**
+	 * Getter of selected Binary Classification
+	 * 
+	 * @return Selected Binary Classification
+	 */
 	public IBinaryClassification getSelectedBinaryClassification();
-	
-	// Setter
-	public void setSelectedBinaryClassification(IBinaryClassification bc);
+
+	/**
+	 * Setter of selected Binary Classification
+	 * 
+	 * @param bc
+	 *            Selected Binary Classification
+	 */
+	public void setSelectedBinaryClassification( IBinaryClassification bc );
 }
