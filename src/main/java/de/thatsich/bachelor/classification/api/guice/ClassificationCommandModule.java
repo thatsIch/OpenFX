@@ -9,7 +9,7 @@ import de.thatsich.core.guice.ACommandModule;
 import de.thatsich.core.guice.ICommandProvider;
 
 
-public class TrainCommandModule extends ACommandModule {
+public class ClassificationCommandModule extends ACommandModule {
 	@Override
 	protected void buildProviderModule(List<Class<? extends ICommandProvider>> providerList) {
 		providerList.add(IClassificationCommandProvider.class);

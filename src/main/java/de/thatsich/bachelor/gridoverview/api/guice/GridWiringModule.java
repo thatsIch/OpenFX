@@ -2,7 +2,7 @@ package de.thatsich.bachelor.gridoverview.api.guice;
 
 import com.google.inject.Scopes;
 
-import de.thatsich.bachelor.classification.api.guice.TrainWiringModule;
+import de.thatsich.bachelor.classification.api.guice.ClassificationWiringModule;
 import de.thatsich.bachelor.errorgeneration.api.guice.ErrorWiringModule;
 import de.thatsich.bachelor.featureextraction.api.guice.FeatureWiringModule;
 import de.thatsich.bachelor.gridoverview.api.core.IDisplayView;
@@ -24,7 +24,7 @@ public class GridWiringModule extends AWiringModule {
 		super.bind(GridWiringModule.class).toInstance(this);
 		
 		this.install(new TestWiringModule());
-		this.install(new TrainWiringModule());
+		this.install(new ClassificationWiringModule());
 		this.install(new ErrorWiringModule());
 		this.install(new FeatureWiringModule());
 		this.install(new ImageWiringModule());
