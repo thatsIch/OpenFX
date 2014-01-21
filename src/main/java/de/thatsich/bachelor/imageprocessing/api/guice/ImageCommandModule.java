@@ -8,10 +8,19 @@ import de.thatsich.core.guice.ACommandModule;
 import de.thatsich.core.guice.ICommandProvider;
 
 
-public class ImageCommandModule extends ACommandModule {
+/**
+ * Guice Module
+ * 
+ * @see ACommandModule
+ * 
+ * @author thatsIch
+ */
+public class ImageCommandModule extends ACommandModule
+{
 	@Override
-	protected void buildProviderModule(List<Class<? extends ICommandProvider>> providerList) {
-		providerList.add(IImageCommandProvider.class);
-		providerList.add(IImageInitCommandProvider.class);
+	protected void buildProviderModule( List<Class<? extends ICommandProvider>> providerList )
+	{
+		providerList.add( IImageCommandProvider.class );
+		providerList.add( IImageInitCommandProvider.class );
 	}
 }

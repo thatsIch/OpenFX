@@ -8,10 +8,19 @@ import de.thatsich.core.guice.ACommandModule;
 import de.thatsich.core.guice.ICommandProvider;
 
 
-public class FeatureCommandModule extends ACommandModule {
+/**
+ * Guice Module
+ * 
+ * @see ACommandModule
+ * 
+ * @author thatsIch
+ */
+public class FeatureCommandModule extends ACommandModule
+{
 	@Override
-	protected void buildProviderModule(List<Class<? extends ICommandProvider>> providerList) {
-		providerList.add(IFeatureCommandProvider.class);
-		providerList.add(IFeatureInitCommandProvider.class);
+	protected void buildProviderModule( List<Class<? extends ICommandProvider>> providerList )
+	{
+		providerList.add( IFeatureCommandProvider.class );
+		providerList.add( IFeatureInitCommandProvider.class );
 	}
 }
