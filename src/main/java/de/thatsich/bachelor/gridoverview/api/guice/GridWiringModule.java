@@ -8,7 +8,7 @@ import de.thatsich.bachelor.featureextraction.api.guice.FeatureWiringModule;
 import de.thatsich.bachelor.gridoverview.api.core.IDisplayView;
 import de.thatsich.bachelor.gridoverview.restricted.view.DisplayView;
 import de.thatsich.bachelor.imageprocessing.api.guice.ImageWiringModule;
-import de.thatsich.bachelor.prediction.api.guice.TestWiringModule;
+import de.thatsich.bachelor.prediction.api.guice.PredictionWiringModule;
 import de.thatsich.core.guice.AWiringModule;
 
 
@@ -23,7 +23,7 @@ public class GridWiringModule extends AWiringModule {
 	protected void bindModule() {
 		super.bind(GridWiringModule.class).toInstance(this);
 		
-		this.install(new TestWiringModule());
+		this.install(new PredictionWiringModule());
 		this.install(new ClassificationWiringModule());
 		this.install(new ErrorWiringModule());
 		this.install(new FeatureWiringModule());

@@ -25,7 +25,7 @@ import de.thatsich.core.opencv.OpenCVLoader;
 // TODO bind erfolgsrate precision recall
 // ODO low priority - Random Feature Extractor
 // TODO CNBC
-// ODO halted - AANN
+// TODO halted - AANN
 // ODO halted - evtl in Commander Klassen aufteilen sodass Handler alle am
 // selben Platz sind und dass die Controller weniger Responsibility haben
 /**

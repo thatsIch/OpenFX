@@ -24,10 +24,10 @@ import de.thatsich.core.guice.AWiringModule;
  * @author Minh
  *
  */
-public class TestWiringModule extends AWiringModule {
+public class PredictionWiringModule extends AWiringModule {
 	@Override
 	protected void bindModule() {
-		super.bind(TestWiringModule.class).toInstance(this);
+		super.bind(PredictionWiringModule.class).toInstance(this);
 	}
 
 	@Override

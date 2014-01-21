@@ -14,7 +14,7 @@ import de.thatsich.core.guice.ICommandProvider;
  * 
  * @author thatsIch
  */
-public class TestCommandModule extends ACommandModule
+public class PredictionCommandModule extends ACommandModule
 {
 	@Override
 	protected void buildProviderModule( List<Class<? extends ICommandProvider>> providerList )
