@@ -28,30 +28,33 @@ public interface IBinaryClassification
 	 * @return Name of BinaryClassification
 	 */
 	String getName();
-	
+
 	/**
 	 * Uses an image (in Mat form) to predict
 	 * 
-	 * @param image predicted image
+	 * @param image
+	 *            predicted image
 	 * 
 	 * @return probability of image prediction
 	 */
 	double predict( Mat image );
-	
+
 	/**
 	 * Loads a BinaryClassification saved as file
 	 * 
-	 * @param fileName Name of BinaryClassification File
+	 * @param fileName
+	 *            Name of BinaryClassification File
 	 */
 	void load( String fileName );
-	
+
 	/**
 	 * Saves a BinaryClassification to file
 	 * 
-	 * @param fileName Name of BinaryClassification File
+	 * @param fileName
+	 *            Name of BinaryClassification File
 	 */
 	void save( String fileName );
-	
+
 	/**
 	 * Gets Property of FilePath
 	 * 
@@ -79,7 +82,6 @@ public interface IBinaryClassification
 	 * @return Property of FrameSize
 	 */
 	ReadOnlyIntegerProperty getFrameSizeProperty();
-	
 
 	/**
 	 * Gets Property of ErrorName
@@ -87,7 +89,6 @@ public interface IBinaryClassification
 	 * @return Property of ErrorName
 	 */
 	ReadOnlyStringProperty getErrorNameProperty();
-	
 
 	/**
 	 * Gets Property of ID

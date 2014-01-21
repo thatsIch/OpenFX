@@ -15,7 +15,6 @@ import de.thatsich.core.Log;
 
 public abstract class ABinaryClassification implements IBinaryClassification
 {
-
 	// Properties
 	private final ReadOnlyObjectWrapper<BinaryClassifierConfiguration>	config	= new ReadOnlyObjectWrapper<>();
 
