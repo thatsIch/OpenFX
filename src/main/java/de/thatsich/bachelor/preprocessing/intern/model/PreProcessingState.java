@@ -2,6 +2,7 @@ package de.thatsich.bachelor.preprocessing.intern.model;
 
 import java.nio.file.Path;
 
+import de.thatsich.bachelor.preprocessing.api.core.IPreProcessingState;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
@@ -13,7 +14,7 @@ import javafx.beans.property.SimpleObjectProperty;
  * 
  * @author thatsIch
  */
-public class PreProcessingState
+public class PreProcessingState implements IPreProcessingState
 {
 	/**
 	 * Property for the PreProcessor Folder-Path
