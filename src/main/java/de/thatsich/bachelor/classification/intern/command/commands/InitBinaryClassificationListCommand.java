@@ -17,7 +17,7 @@ import com.google.inject.assistedinject.Assisted;
 import com.sun.org.apache.xpath.internal.functions.WrongNumberArgsException;
 
 import de.thatsich.bachelor.classification.api.entities.IBinaryClassification;
-import de.thatsich.bachelor.classification.intern.command.classifier.BinaryClassifierConfiguration;
+import de.thatsich.bachelor.classification.intern.command.classifier.core.BinaryClassifierConfiguration;
 import de.thatsich.bachelor.classification.intern.command.provider.IBinaryClassificationProvider;
 import de.thatsich.core.javafx.ACommand;
 

@@ -18,7 +18,7 @@ import de.thatsich.bachelor.classification.api.core.IBinaryClassifiers;
 import de.thatsich.bachelor.classification.api.core.IClassificationState;
 import de.thatsich.bachelor.classification.api.entities.IBinaryClassification;
 import de.thatsich.bachelor.classification.intern.command.ClassificationInitCommander;
-import de.thatsich.bachelor.classification.intern.command.classifier.IBinaryClassifier;
+import de.thatsich.bachelor.classification.intern.command.classifier.core.IBinaryClassifier;
 import de.thatsich.bachelor.classification.intern.command.commands.RemoveBinaryClassificationCommand;
 import de.thatsich.bachelor.classification.intern.command.commands.SetLastBinaryClassifierIndexCommand;
 import de.thatsich.bachelor.classification.intern.command.commands.TrainBinaryClassifierCommand;

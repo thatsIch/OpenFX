@@ -6,7 +6,7 @@ import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import de.thatsich.bachelor.classification.api.core.IBinaryClassifiers;
-import de.thatsich.bachelor.classification.intern.command.classifier.IBinaryClassifier;
+import de.thatsich.bachelor.classification.intern.command.classifier.core.IBinaryClassifier;
 
 public class BinaryClassifiers implements IBinaryClassifiers {
 	

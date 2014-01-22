@@ -9,7 +9,7 @@ import javafx.beans.property.ReadOnlyStringProperty;
 
 import com.google.inject.Inject;
 
-import de.thatsich.bachelor.classification.intern.command.classifier.BinaryClassifierConfiguration;
+import de.thatsich.bachelor.classification.intern.command.classifier.core.BinaryClassifierConfiguration;
 import de.thatsich.core.Log;
 
 

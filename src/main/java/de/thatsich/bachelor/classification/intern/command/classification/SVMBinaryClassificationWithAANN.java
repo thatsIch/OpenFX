@@ -2,7 +2,7 @@ package de.thatsich.bachelor.classification.intern.command.classification;
 
 import org.opencv.core.Mat;
 
-import de.thatsich.bachelor.classification.intern.command.classifier.BinaryClassifierConfiguration;
+import de.thatsich.bachelor.classification.intern.command.classifier.core.BinaryClassifierConfiguration;
 
 public class SVMBinaryClassificationWithAANN extends SVMBinaryClassification
 {

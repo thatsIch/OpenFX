@@ -6,9 +6,9 @@ import java.util.List;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 
-import de.thatsich.bachelor.classification.intern.command.classifier.IBinaryClassifier;
 import de.thatsich.bachelor.classification.intern.command.classifier.RandomForestBinaryClassifier;
 import de.thatsich.bachelor.classification.intern.command.classifier.SVMBinaryClassifier;
+import de.thatsich.bachelor.classification.intern.command.classifier.core.IBinaryClassifier;
 import de.thatsich.core.javafx.ACommand;
 
 public class InitBinaryClassifierListCommand extends ACommand<List<IBinaryClassifier>> {

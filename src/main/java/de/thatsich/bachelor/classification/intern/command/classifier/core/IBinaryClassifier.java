@@ -1,4 +1,4 @@
-package de.thatsich.bachelor.classification.intern.command.classifier;
+package de.thatsich.bachelor.classification.intern.command.classifier.core;
 
 import org.opencv.core.MatOfFloat;
 

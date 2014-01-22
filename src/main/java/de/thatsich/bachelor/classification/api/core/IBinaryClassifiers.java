@@ -2,7 +2,7 @@ package de.thatsich.bachelor.classification.api.core;
 
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
-import de.thatsich.bachelor.classification.intern.command.classifier.IBinaryClassifier;
+import de.thatsich.bachelor.classification.intern.command.classifier.core.IBinaryClassifier;
 
 
 /**

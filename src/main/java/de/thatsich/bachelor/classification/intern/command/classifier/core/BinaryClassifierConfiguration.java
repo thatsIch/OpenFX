@@ -1,4 +1,4 @@
-package de.thatsich.bachelor.preprocessing.intern.command.preprocessor;
+package de.thatsich.bachelor.classification.intern.command.classifier.core;
 
 import java.nio.file.Path;
 
@@ -9,7 +9,7 @@ import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringProperty;
 import javafx.beans.property.ReadOnlyStringWrapper;
 
-public class PreProcesserConfiguration {
+public class BinaryClassifierConfiguration {
 	// Properties
 	private final ReadOnlyObjectWrapper<Path> filePath = new ReadOnlyObjectWrapper<>();
 	private final ReadOnlyStringWrapper classificationName = new ReadOnlyStringWrapper();
@@ -19,7 +19,7 @@ public class PreProcesserConfiguration {
 	private final ReadOnlyStringWrapper id = new ReadOnlyStringWrapper();
 
 	// CTOR
-	public PreProcesserConfiguration(Path filePath, String classificationName, String extractorName, int frameSize, String errorName, String id) {
+	public BinaryClassifierConfiguration(Path filePath, String classificationName, String extractorName, int frameSize, String errorName, String id) {
 		this.filePath.set(filePath);
 		this.classificationName.set(classificationName);
 		this.extractorName.set(extractorName);

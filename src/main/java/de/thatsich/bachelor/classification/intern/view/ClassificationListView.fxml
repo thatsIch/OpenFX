@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.HBox?>
 
-<HBox xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="de.thatsich.bachelor.classification.intern.control.PreProcessingListPresenter">
+<HBox xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="de.thatsich.bachelor.classification.intern.control.ClassificationListPresenter">
   <TableView id="node" fx:id="nodeTableViewBinaryClassificationList" prefHeight="-1.0" prefWidth="-1.0">
     <columns>
       <TableColumn editable="false" prefWidth="100.0" sortable="false" text="Classifier" fx:id="nodeTableColumnClassifierName" />

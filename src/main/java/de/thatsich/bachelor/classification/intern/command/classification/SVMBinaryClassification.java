@@ -7,7 +7,7 @@ import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
 import de.thatsich.bachelor.classification.api.entities.ABinaryClassification;
-import de.thatsich.bachelor.classification.intern.command.classifier.BinaryClassifierConfiguration;
+import de.thatsich.bachelor.classification.intern.command.classifier.core.BinaryClassifierConfiguration;
 
 
 public class SVMBinaryClassification extends ABinaryClassification

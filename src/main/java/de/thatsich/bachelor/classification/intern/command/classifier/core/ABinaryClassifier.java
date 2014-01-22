@@ -1,11 +1,11 @@
-package de.thatsich.bachelor.preprocessing.intern.command.preprocessor;
+package de.thatsich.bachelor.classification.intern.command.classifier.core;
 
 import com.google.inject.Inject;
 
 import de.thatsich.core.Log;
 
 
-public abstract class APreProcessor implements IPreProcessor {
+public abstract class ABinaryClassifier implements IBinaryClassifier {
 	// Injects
 	@Inject protected Log log; 
 	

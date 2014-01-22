@@ -4,7 +4,7 @@ import java.nio.file.Path;
 import java.util.List;
 
 import de.thatsich.bachelor.classification.api.entities.IBinaryClassification;
-import de.thatsich.bachelor.classification.intern.command.classifier.IBinaryClassifier;
+import de.thatsich.bachelor.classification.intern.command.classifier.core.IBinaryClassifier;
 import de.thatsich.bachelor.classification.intern.command.commands.RemoveBinaryClassificationCommand;
 import de.thatsich.bachelor.classification.intern.command.commands.SetLastBinaryClassificationIndexCommand;
 import de.thatsich.bachelor.classification.intern.command.commands.SetLastBinaryClassifierIndexCommand;
