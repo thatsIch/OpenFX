@@ -29,9 +29,7 @@ public class PreProcessors implements IPreProcessors
 	final private ListProperty<IPreProcessor>	preProcessorList		= new SimpleListProperty<>( FXCollections.<IPreProcessor >observableArrayList() );
 
 	/**
-	 * Property Getter of PreProcessor List
-	 * 
-	 * @return List of PreProcessor
+	 * @see IPreProcessors
 	 */
 	public ListProperty<IPreProcessor> getPreProcessorListProperty()
 	{
@@ -39,9 +37,7 @@ public class PreProcessors implements IPreProcessors
 	}
 
 	/**
-	 * Property Getter of selected PreProcessor
-	 * 
-	 * @return Property of selected PreProcessor
+	 * @see IPreProcessors
 	 */
 	public ObjectProperty<IPreProcessor> getSelectedPreProcessorProperty()
 	{
@@ -49,9 +45,7 @@ public class PreProcessors implements IPreProcessors
 	}
 
 	/**
-	 * Getter of selected PreProcessor
-	 * 
-	 * @return selected PreProcessor
+	 * @see IPreProcessors
 	 */
 	public IPreProcessor getSelectedPreProcessor()
 	{
@@ -59,9 +53,7 @@ public class PreProcessors implements IPreProcessors
 	}
 
 	/**
-	 * Setter of selected PreProcessor
-	 * 
-	 * @param preprocessor selected PreProcessor
+	 * @see IPreProcessors
 	 */
 	public void setSelectedPreProcessor( IPreProcessor preprocessor )
 	{
