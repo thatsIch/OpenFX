@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="de.thatsich.bachelor.classification.intern.control.ClassificationInputPresenter">
+<GridPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="de.thatsich.bachelor.classification.intern.control.PreProcessingInputPresenter">
   <children>
     <ChoiceBox fx:id="nodeChoiceBoxBinaryClassifier" prefWidth="125.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
     <Label labelFor="$nodeChoiceBoxBinaryClassifier" text="Binary Classifier" GridPane.columnIndex="0" GridPane.rowIndex="0" />
