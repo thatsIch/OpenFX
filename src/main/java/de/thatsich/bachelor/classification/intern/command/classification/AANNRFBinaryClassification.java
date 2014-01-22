@@ -4,9 +4,9 @@ import org.opencv.core.Mat;
 
 import de.thatsich.bachelor.classification.intern.command.classifier.core.BinaryClassifierConfiguration;
 
-public class RFBinaryClassificationWithAANN extends RandomForestBinaryClassification
+public class AANNRFBinaryClassification extends RandomForestBinaryClassification
 {
-	protected RFBinaryClassificationWithAANN( BinaryClassifierConfiguration config )
+	protected AANNRFBinaryClassification( BinaryClassifierConfiguration config )
 	{
 		super( null, config );
 	}

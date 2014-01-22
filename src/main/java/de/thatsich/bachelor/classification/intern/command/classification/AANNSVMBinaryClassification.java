@@ -4,10 +4,10 @@ import org.opencv.core.Mat;
 
 import de.thatsich.bachelor.classification.intern.command.classifier.core.BinaryClassifierConfiguration;
 
-public class SVMBinaryClassificationWithAANN extends SVMBinaryClassification
+public class AANNSVMBinaryClassification extends SVMBinaryClassification
 {
 
-	protected SVMBinaryClassificationWithAANN( BinaryClassifierConfiguration config )
+	protected AANNSVMBinaryClassification( BinaryClassifierConfiguration config )
 	{
 		super( null, config );
 	}
