@@ -28,6 +28,7 @@ import de.thatsich.core.opencv.OpenCVLoader;
 // TODO halted - AANN
 // ODO halted - evtl in Commander Klassen aufteilen sodass Handler alle am
 // selben Platz sind und dass die Controller weniger Responsibility haben
+// TODO Anstatt eigener PreProcessing Abteilung einfach BC mit AANN machen 
 /**
  * Main Execution Class
  * 

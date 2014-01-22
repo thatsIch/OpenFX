@@ -22,7 +22,6 @@ import de.thatsich.core.guice.AWiringModule;
  * Guice Graph of the whole MVP structure
  * 
  * @author Minh
- *
  */
 public class PredictionWiringModule extends AWiringModule {
 	@Override
