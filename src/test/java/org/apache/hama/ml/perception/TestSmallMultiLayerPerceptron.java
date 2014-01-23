@@ -42,6 +42,8 @@ public class TestSmallMultiLayerPerceptron
 		String costFunctionName = "SquaredError";
 		int[] layerSizeArray = new int[] { 3, 2, 2, 3 };
 		MultiLayerPerceptron mlp = new SmallMultiLayerPerceptron( learningRate, regularization, momentum, squashingFunctionName, costFunctionName, layerSizeArray );
+		
+		System.out.println( "Writing Model to File. ");
 		try
 		{
 			mlp.writeModelToFile( modelPath );
@@ -51,13 +53,13 @@ public class TestSmallMultiLayerPerceptron
 			e.printStackTrace();
 		}
 
+		System.out.println( "Reading Meta-Data. ");
 		try
 		{
 			// read the meta-data
 			Configuration conf = new Configuration();
 			FileSystem fs = FileSystem.get( conf );
 			mlp = new SmallMultiLayerPerceptron( modelPath );
-			assertEquals( mlp.getClass().getName(), mlp.getMLPType() );
 			assertEquals( learningRate, mlp.getLearningRate(), 0.001 );
 			assertEquals( regularization, mlp.isRegularization(), 0.001 );
 			assertEquals( layerSizeArray.length, mlp.getNumberOfLayers() );
@@ -197,8 +199,7 @@ public class TestSmallMultiLayerPerceptron
 				mlp.updateWeightMatrices( weightUpdates );
 			}
 
-			// System.out.printf("Weight matrices: %s\n",
-			// mlp.weightsToString(mlp.getWeightMatrices()));
+			System.out.printf( "Weight matrices: %s\n", SmallMultiLayerPerceptron.weightsToString( mlp.getWeightMatrices() ) );
 			for ( int i = 0; i < trainingData.length; ++i )
 			{
 				DenseDoubleVector testVec = ( DenseDoubleVector ) trainingData[i].slice( 2 );
@@ -248,8 +249,7 @@ public class TestSmallMultiLayerPerceptron
 				mlp.updateWeightMatrices( weightUpdates );
 			}
 
-			// System.out.printf("Weight matrices: %s\n",
-			// mlp.weightsToString(mlp.getWeightMatrices()));
+			System.out.printf( "Weight matrices: %s\n", SmallMultiLayerPerceptron.weightsToString( mlp.getWeightMatrices() ) );
 			for ( int i = 0; i < trainingData.length; ++i )
 			{
 				DenseDoubleVector testVec = ( DenseDoubleVector ) trainingData[i].slice( 2 );
@@ -299,8 +299,7 @@ public class TestSmallMultiLayerPerceptron
 				mlp.updateWeightMatrices( weightUpdates );
 			}
 
-			// System.out.printf("Weight matrices: %s\n",
-			// mlp.weightsToString(mlp.getWeightMatrices()));
+			System.out.printf( "Weight matrices: %s\n", SmallMultiLayerPerceptron.weightsToString( mlp.getWeightMatrices() ) );
 			for ( int i = 0; i < trainingData.length; ++i )
 			{
 				DenseDoubleVector testVec = ( DenseDoubleVector ) trainingData[i].slice( 2 );

@@ -1,6 +1,6 @@
 package de.thatsich.bachelor.featureextraction.restricted.command.preprocessing;
 
-public class AutoAssociativeNeuralNetwork {
+public class AutoAssociativeNeuralNetwork
+{
 
-	
 }
