@@ -29,6 +29,9 @@ import de.thatsich.core.opencv.OpenCVLoader;
 // ODO halted - evtl in Commander Klassen aufteilen sodass Handler alle am
 // selben Platz sind und dass die Controller weniger Responsibility haben
 // TODO Anstatt eigener PreProcessing Abteilung einfach BC mit AANN machen 
+// TODO Denoising http://docs.opencv.org/trunk/modules/photo/doc/denoising.html
+// TODO CvtColor, CvSmooth, CvThreshold
+// TODO private static double sigmoid(double x) { return 1 / (1 + Math.exp(-x)); }
 /**
  * Main Execution Class
  * 
