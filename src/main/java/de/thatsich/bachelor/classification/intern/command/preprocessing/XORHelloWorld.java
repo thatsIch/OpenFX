@@ -8,6 +8,7 @@ import org.encog.ml.data.MLDataSet;
 import org.encog.ml.data.basic.BasicMLDataSet;
 import org.encog.neural.networks.BasicNetwork;
 import org.encog.neural.networks.layers.BasicLayer;
+import org.encog.neural.networks.training.propagation.resilient.RPROPType;
 import org.encog.neural.networks.training.propagation.resilient.ResilientPropagation;
 
 
@@ -44,7 +45,7 @@ public class XORHelloWorld
 		// create a neural network, without using a factory
 		BasicNetwork network = new BasicNetwork();
 		network.addLayer( new BasicLayer( null, true, 2 ) );
-		network.addLayer( new BasicLayer( new ActivationSigmoid(), true, 10 ) );
+		network.addLayer( new BasicLayer( new ActivationSigmoid(), true, 3 ) );
 		network.addLayer( new BasicLayer( new ActivationSigmoid(), false, 1 ) );
 		network.getStructure().finalizeStructure();
 		network.reset();
@@ -54,7 +55,7 @@ public class XORHelloWorld
 
 		// train the neural network
 		final ResilientPropagation train = new ResilientPropagation( network, trainingSet );
-
+		train.setRPROPType( RPROPType.iRPROPp );
 		int epoch = 1;
 
 		do
