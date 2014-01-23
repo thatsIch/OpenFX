@@ -25,13 +25,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="src/main/resources/de/thatsich/core/libs/Lombok 1.12.4/lombok.jar"/>
-	<classpathentry kind="lib" path="src/main/resources/de/thatsich/core/libs/Hama 0.6.3/hama-ml-0.6.3.jar"/>
-	<classpathentry kind="lib" path="src/main/resources/de/thatsich/core/libs/Hadoop 1.2.0/hadoop-core-1.2.0.jar"/>
-	<classpathentry kind="lib" path="src/main/resources/de/thatsich/core/libs/Hama 0.6.3/hama-core-0.6.3.jar"/>
 	<classpathentry kind="lib" path="src/main/resources/de/thatsich/core/libs/Guava 16/guava-16.0.jar"/>
-	<classpathentry kind="lib" path="src/main/resources/de/thatsich/core/libs/Apache Commons/commons-lang-2.6.jar"/>
-	<classpathentry kind="lib" path="src/main/resources/de/thatsich/core/libs/Apache Commons/commons-configuration-1.7.jar"/>
-	<classpathentry kind="lib" path="src/main/resources/de/thatsich/core/libs/Apache Commons/commons-logging-1.1.1.jar"/>
 	<classpathentry kind="lib" path="src/main/resources/de/thatsich/core/libs/Encog 3.2/commons-math3-3.0.jar"/>
 	<classpathentry kind="lib" path="src/main/resources/de/thatsich/core/libs/Encog 3.2/encog-core-3.2.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
