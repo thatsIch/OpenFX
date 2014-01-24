@@ -7,9 +7,10 @@ import org.encog.ml.data.MLData;
 import org.encog.ml.data.MLDataPair;
 import org.encog.ml.data.MLDataSet;
 import org.encog.ml.data.basic.BasicMLDataSet;
+import org.encog.ml.train.strategy.end.EarlyStoppingStrategy;
 import org.encog.neural.networks.BasicNetwork;
 import org.encog.neural.networks.layers.BasicLayer;
-import org.encog.neural.networks.training.propagation.resilient.ResilientPropagation;
+import org.encog.neural.networks.training.lma.LevenbergMarquardtTraining;
 
 
 public class AANNPreProcessor
@@ -42,40 +43,77 @@ public class AANNPreProcessor
 
 		// finalize network
 		network.getStructure().finalizeStructure();
+		network.reset();
 
 		return network;
 	}
 
 	public void train( double[][] input, double[][] ideal )
 	{
-
 		// create training data
 		final MLDataSet trainingSet = new BasicMLDataSet( input, ideal );
 
 		// train neural network
-		final ResilientPropagation train = new ResilientPropagation( this.network, trainingSet );
+		// final Backpropagation train = new Backpropagation( network,
+		// trainingSet );
+		final LevenbergMarquardtTraining train = new LevenbergMarquardtTraining( network, trainingSet );
+		// final ResilientPropagation train = new ResilientPropagation( network,
+		// trainingSet );
+		// final LevenbergMarquardtTraining train = new
+		// LevenbergMarquardtTraining( this.network, trainingSet );
+		// train.setRPROPType( RPROPType.iRPROPp );
+		final EarlyStoppingStrategy strategy = new EarlyStoppingStrategy( trainingSet, trainingSet );
+		// final EndMaxErrorStrategy strategy = new EndMaxErrorStrategy( 0.01 );
+		train.addStrategy( strategy );
 
 		int epoch = 1;
-
 		do
 		{
 			train.iteration();
 			System.out.println( "Epoch #" + epoch + " Error:" + train.getError() );
 			epoch++;
+
+			if ( strategy.shouldStop() )
+			{
+				System.out.println( "Converged" );
+				return;
+			}
+			if ( epoch > 1000 )
+			{
+				System.out.println( "too many epochs" );
+				return;
+			}
 		}
 		while ( train.getError() > 0.01 );
+
 		train.finishTraining();
 	}
 
-	public void test()
+	public void test( double[][] input, double[][] ideal )
 	{
-//		// test the neural network
-//		System.out.println( "Neural Network Results:" );
-//		for ( MLDataPair pair : trainingSet )
-//		{
-//			final MLData output = this.network.compute( pair.getInput() );
-//			System.out.println( pair.getInput().getData( 0 ) + "," + pair.getInput().getData( 1 ) + ", actual=" + output.getData( 0 ) + ",ideal=" + pair.getIdeal().getData( 0 ) );
-//		}
+		// create training data
+		final MLDataSet trainingSet = new BasicMLDataSet( input, ideal );
+
+		System.out.println( "Neural Network Results:" );
+		for ( MLDataPair pair : trainingSet )
+		{
+			final MLData output = network.compute( pair.getInput() );
+			System.out.println( pair.getInput().getData( 0 ) + "," + pair.getInput().getData( 1 ) + ", actual=" + output.getData( 0 ) + ",ideal=" + pair.getIdeal().getData( 0 ) );
+		}
+
+		for ( int layer = 0; layer < network.getLayerCount() - 1; layer++ )
+		{
+			System.out.println( "Layer " + layer );
+			for ( int neuron = 0; neuron < network.getLayerNeuronCount( layer ); neuron++ )
+			{
+				for ( int next = 0; next < network.getLayerNeuronCount( layer + 1 ); next++ )
+				{
+					System.out.println( "From " + neuron + " to " + next + ": " + network.getWeight( layer, neuron, next ) );
+				}
+			}
+		}
+
+		Encog.getInstance().shutdown();
 
 		Encog.getInstance().shutdown();
 	}
