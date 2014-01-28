@@ -8,14 +8,18 @@ import org.encog.ml.data.MLDataPair;
 import org.encog.ml.data.MLDataSet;
 import org.encog.ml.data.basic.BasicMLDataSet;
 import org.encog.ml.train.strategy.end.EarlyStoppingStrategy;
+import org.encog.ml.train.strategy.end.EndIterationsStrategy;
+import org.encog.ml.train.strategy.end.EndMaxErrorStrategy;
 import org.encog.neural.networks.BasicNetwork;
 import org.encog.neural.networks.layers.BasicLayer;
 import org.encog.neural.networks.training.lma.LevenbergMarquardtTraining;
+import org.opencv.core.MatOfFloat;
 
-import de.thatsich.bachelor.classification.intern.command.classifier.core.ABinaryClassifier;
+import de.thatsich.bachelor.classification.intern.command.preprocessing.core.APreProcessor;
+import de.thatsich.bachelor.classification.intern.command.preprocessing.core.IPreProcessing;
 
 
-public class AANNPreProcessor
+public class AANNPreProcessor extends APreProcessor
 {
 	private final BasicNetwork	network;
 
@@ -50,47 +54,48 @@ public class AANNPreProcessor
 		return network;
 	}
 
-	public void train( double[][] input, double[][] ideal )
+	public void train( double[][] input )
 	{
 		// create training data
-		final MLDataSet trainingSet = new BasicMLDataSet( input, ideal );
+		final MLDataSet trainingSet = new BasicMLDataSet( input, input );
 
 		// train neural network
-		// final Backpropagation train = new Backpropagation( network,
-		// trainingSet );
 		final LevenbergMarquardtTraining train = new LevenbergMarquardtTraining( network, trainingSet );
-		// final ResilientPropagation train = new ResilientPropagation( network,
-		// trainingSet );
-		// final LevenbergMarquardtTraining train = new
-		// LevenbergMarquardtTraining( this.network, trainingSet );
-		// train.setRPROPType( RPROPType.iRPROPp );
-		final EarlyStoppingStrategy strategy = new EarlyStoppingStrategy( trainingSet, trainingSet );
-		// final EndMaxErrorStrategy strategy = new EndMaxErrorStrategy( 0.01 );
-		train.addStrategy( strategy );
 
-		int epoch = 1;
-		do
+		final EarlyStoppingStrategy earlyStopStrategy = new EarlyStoppingStrategy( trainingSet, trainingSet );
+		final EndMaxErrorStrategy endMaxErrorstrategy = new EndMaxErrorStrategy( 0.01 );
+		final EndIterationsStrategy endIterationStrategy = new EndIterationsStrategy( 1000 );
+
+		train.addStrategy( earlyStopStrategy );
+		train.addStrategy( endMaxErrorstrategy );
+		train.addStrategy( endIterationStrategy );
+
+		while ( true )
 		{
 			train.iteration();
-			System.out.println( "Epoch #" + epoch + " Error:" + train.getError() );
-			epoch++;
+			System.out.println( "Epoch #" + train.getIteration() + " Error:" + train.getError() );
 
-			if ( strategy.shouldStop() )
+			if ( earlyStopStrategy.shouldStop() )
 			{
 				System.out.println( "Converged" );
-				return;
+				break;
 			}
-			if ( epoch > 1000 )
+
+			if ( endMaxErrorstrategy.shouldStop() )
 			{
-				System.out.println( "too many epochs" );
-				return;
+				System.out.println( "MaxError reached: " + train.getError() );
+				break;
+			}
+
+			if ( endIterationStrategy.shouldStop() )
+			{
+				System.out.println( "Max Iteration reached: " + train.getIteration() );
+				break;
 			}
 		}
-		while ( train.getError() > 0.01 );
 
 		train.finishTraining();
 	}
-
 	public void test( double[][] input, double[][] ideal )
 	{
 		// create training data
@@ -116,5 +121,17 @@ public class AANNPreProcessor
 		}
 
 		Encog.getInstance().shutdown();
+	}
+
+	@Override
+	public IPreProcessing train( MatOfFloat trainData, MatOfFloat testData )
+	{
+		return null;
+	}
+
+	@Override
+	public String getName()
+	{
+		return null;
 	}
 }

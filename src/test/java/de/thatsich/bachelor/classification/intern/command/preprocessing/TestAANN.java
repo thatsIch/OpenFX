@@ -31,7 +31,7 @@ public class TestAANN
 			{ 0.33, 0.33, 0.0 },
 			{ 0.33, 0.33, 0.33 } };
 
-		aann.train( XOR_INPUT, XOR_IDEAL );
+		aann.train( XOR_INPUT );
 		aann.test( XOR_INPUT, XOR_IDEAL );
 
 		fail( "Not yet implemented" );
