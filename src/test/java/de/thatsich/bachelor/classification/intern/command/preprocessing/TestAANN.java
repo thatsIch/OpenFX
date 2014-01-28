@@ -1,6 +1,6 @@
 package de.thatsich.bachelor.classification.intern.command.preprocessing;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
 
 import org.junit.Test;
 

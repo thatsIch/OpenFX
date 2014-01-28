@@ -12,6 +12,8 @@ import org.encog.neural.networks.BasicNetwork;
 import org.encog.neural.networks.layers.BasicLayer;
 import org.encog.neural.networks.training.lma.LevenbergMarquardtTraining;
 
+import de.thatsich.bachelor.classification.intern.command.classifier.core.ABinaryClassifier;
+
 
 public class AANNPreProcessor
 {
@@ -112,8 +114,6 @@ public class AANNPreProcessor
 				}
 			}
 		}
-
-		Encog.getInstance().shutdown();
 
 		Encog.getInstance().shutdown();
 	}
