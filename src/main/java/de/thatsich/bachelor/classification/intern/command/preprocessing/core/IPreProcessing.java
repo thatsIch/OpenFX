@@ -1,6 +1,5 @@
 package de.thatsich.bachelor.classification.intern.command.preprocessing.core;
 
-import org.opencv.core.MatOfFloat;
 
 
 /**
@@ -19,7 +18,7 @@ public interface IPreProcessing
 	 * 
 	 * @return Preprocessed FeatureVector
 	 */
-	MatOfFloat preprocess( MatOfFloat featureVector );
+	double[] preprocess( double[] featureVector );
 
 	/**
 	 * Gets the name of the PreProcessing
