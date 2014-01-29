@@ -1,6 +1,6 @@
 package de.thatsich.bachelor.classification.intern.command.preprocessing;
 
-import org.opencv.core.MatOfFloat;
+import org.encog.neural.networks.BasicNetwork;
 
 import de.thatsich.bachelor.classification.intern.command.preprocessing.core.APreProcessing;
 
@@ -11,10 +11,21 @@ import de.thatsich.bachelor.classification.intern.command.preprocessing.core.APr
  */
 public class AANNPreProcessing extends APreProcessing
 {
+	private final BasicNetwork network;
+	private final int outputSize;
+	
+	public AANNPreProcessing(BasicNetwork network) {
+		this.network = network;
+		this.outputSize = 0; // TODO
+	}
+	
 	@Override
-	public MatOfFloat preprocess( MatOfFloat featureVector )
+	public double[] preprocess( double[] featureVector )
 	{
-		return null;
+		final double[] output = new double[this.outputSize];
+		this.network.compute( featureVector, output );
+		
+		return output;
 	}
 
 	@Override

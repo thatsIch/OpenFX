@@ -1,7 +1,5 @@
 package de.thatsich.bachelor.classification.intern.command.preprocessing;
 
-import static org.junit.Assert.fail;
-
 import org.jukito.JukitoRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,23 +22,10 @@ public class TestAANN
 			{ 0.33, 0.0, 0.0 },
 			{ 0.33, 0.0, 0.33 },
 			{ 0.33, 0.33, 0.0 },
-			{ 0.33, 0.33, 0.33 },
 			{ 0.33, 0.33, 0.33 } };
 
-		final double XOR_IDEAL[][] = {
-			{ 0.0, 0.0, 0.33 },
-			{ 0.0, 0.33, 0.0 },
-			{ 0.0, 0.33, 0.33 },
-			{ 0.33, 0.0, 0.0 },
-			{ 0.33, 0.0, 0.33 },
-			{ 0.33, 0.33, 0.0 },
-			{ 0.33, 0.33, 0.33 },
-			{ 0.33, 0.33, 0.33 } };
-
-		this.aann.train( XOR_INPUT, XOR_IDEAL );
+		this.aann.train( XOR_INPUT, XOR_INPUT );
 //		aann.test( XOR_INPUT, XOR_IDEAL );
-
-		fail( "Not yet implemented" );
 	}
 
 }

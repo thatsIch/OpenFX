@@ -10,13 +10,10 @@ import org.encog.ml.data.MLDataSet;
 import org.encog.ml.data.basic.BasicMLDataSet;
 import org.encog.ml.data.folded.FoldedDataSet;
 import org.encog.ml.train.MLTrain;
-import org.encog.ml.train.strategy.end.EarlyStoppingStrategy;
-import org.encog.ml.train.strategy.end.EndIterationsStrategy;
-import org.encog.ml.train.strategy.end.EndMaxErrorStrategy;
 import org.encog.neural.networks.BasicNetwork;
 import org.encog.neural.networks.layers.BasicLayer;
 import org.encog.neural.networks.training.cross.CrossValidationKFold;
-import org.encog.neural.networks.training.lma.LevenbergMarquardtTraining;
+import org.encog.neural.networks.training.propagation.resilient.ResilientPropagation;
 
 import de.thatsich.bachelor.classification.intern.command.preprocessing.core.APreProcessor;
 import de.thatsich.bachelor.classification.intern.command.preprocessing.core.IPreProcessing;
@@ -25,7 +22,6 @@ import de.thatsich.bachelor.classification.intern.command.preprocessing.core.IPr
 public class AANNPreProcessor extends APreProcessor
 {
 	private final static int	AVERAGE_ITERATION_COUNT	= 10;
-	private final static int	FOLD_COUNT				= 2;
 	private final static double	MAX_ERROR				= 0.01;
 	private final static int	MAX_ITERATION			= 1000;
 
@@ -77,7 +73,7 @@ public class AANNPreProcessor extends APreProcessor
 		final int minHiddenLayerSize = featureVectorLength + 1;
 		final int maxHiddenLayerSize = featureVectorLength * 2;
 		final int minBottleLayerSize = 1;
-		final int maxBottleLayerSize = featureVectorLength - 1;
+		final int maxBottleLayerSize = featureVectorLength;
 
 		// validate
 		if ( featureVectorCount < 2 ) throw new InvalidParameterException( "Not enough FeatureVectors to Cross-Validate the input data." );
@@ -90,7 +86,7 @@ public class AANNPreProcessor extends APreProcessor
 		final FoldedDataSet foldedSet = new FoldedDataSet( trainingSet );
 
 		// save best setup
-		Pair<CrossValidationKFold, Double> bestSetup = new Pair<>( null, 0.0 );
+		Pair<BasicNetwork, Double> bestSetup = new Pair<>( null, Double.MAX_VALUE );
 
 		// try out every possible hidden and bottleneck combination
 		for ( int hiddenLayerSize = minHiddenLayerSize; hiddenLayerSize < maxHiddenLayerSize; hiddenLayerSize++ )
@@ -101,26 +97,42 @@ public class AANNPreProcessor extends APreProcessor
 				{
 					// create network
 					final BasicNetwork network = this.setupNetwork( featureVectorLength, hiddenLayerSize, bottleLayerSize );
-					final MLTrain trainer = new LevenbergMarquardtTraining( network, foldedSet );
-					final CrossValidationKFold trainFolded = new CrossValidationKFold( trainer, FOLD_COUNT );
-					final double trainedError = this.trainFold( trainFolded, foldedSet );
-					this.log.info( "Trained Error:" + trainedError );
+					// final MLTrain trainer = new LevenbergMarquardtTraining(
+					// network, foldedSet );
+					final MLTrain trainer = new ResilientPropagation( network, foldedSet );
+					final CrossValidationKFold trainFolded = new CrossValidationKFold( trainer, foldedSet.getIdealSize() );
+					final double trainedError = this.trainFold( trainFolded );
 
 					if ( trainedError < bestSetup.getValue() )
 					{
-						bestSetup = new Pair<>( trainFolded, trainedError );
+						bestSetup = new Pair<>( network, trainedError );
 					}
-					// trainFolded.ad
 				}
 			}
 		}
 
-		return null;
+		this.log.info( "Best Network " + bestSetup.getKey().getLayerTotalNeuronCount( 1 ) + "," + bestSetup.getKey().getLayerTotalNeuronCount( 2 ) + " with Error " + bestSetup.getValue() );
+
+		// build a new network based on the trained one with only 3 Layers to
+		// reduce the dimension
+		final BasicNetwork rebuildNetwork = this.rebuildNetworkForDimensionReduction( bestSetup.getKey() );
+
+		return new AANNPreProcessing( rebuildNetwork );
 	}
 
-	private BasicNetwork setupNetwork( int inputSize, int hiddenSize, int bottleneckSize )
+	/**
+	 * TODO 
+	 * @param network
+	 * @return
+	 */
+	BasicNetwork rebuildNetworkForDimensionReduction( BasicNetwork network )
 	{
-		this.log.info( "Setting up Network: " + inputSize + ", " + hiddenSize + ", " + bottleneckSize );
+		return network;
+	}
+
+	BasicNetwork setupNetwork( int inputSize, int hiddenSize, int bottleneckSize )
+	{
+
 		final BasicNetwork network = new BasicNetwork();
 
 		// InputLayer
@@ -142,45 +154,21 @@ public class AANNPreProcessor extends APreProcessor
 		network.getStructure().finalizeStructure();
 		network.reset();
 
-		this.log.info( "Network setup." );
-		
+		this.log.info( "Network setup: " + inputSize + ", " + hiddenSize + ", " + bottleneckSize );
+
 		return network;
 	}
 
-	private double trainFold( CrossValidationKFold trainFolded, FoldedDataSet folded )
+	double trainFold( CrossValidationKFold trainFolded )
 	{
-		// add Strategies
-		final EarlyStoppingStrategy earlyStopStrategy = new EarlyStoppingStrategy( folded, folded );
-		final EndMaxErrorStrategy endMaxErrorstrategy = new EndMaxErrorStrategy( MAX_ERROR );
-		final EndIterationsStrategy endIterationStrategy = new EndIterationsStrategy( MAX_ITERATION );
-
-		trainFolded.addStrategy( earlyStopStrategy );
-		trainFolded.addStrategy( endMaxErrorstrategy );
-		trainFolded.addStrategy( endIterationStrategy );
-
-		while ( true )
+		do
 		{
+			trainFolded.preIteration();
 			trainFolded.iteration();
-			this.log.info( "Epoch #" + trainFolded.getIteration() + " Error:" + trainFolded.getError() );
-
-			if ( earlyStopStrategy.shouldStop() )
-			{
-				this.log.info( "Stopped Early." );
-				break;
-			}
-
-			if ( endMaxErrorstrategy.shouldStop() )
-			{
-				this.log.info( "MaxError reached: " + trainFolded.getError() );
-				break;
-			}
-
-			if ( endIterationStrategy.shouldStop() )
-			{
-				this.log.info( "Max Iteration reached: " + trainFolded.getIteration() );
-				break;
-			}
 		}
+		while ( trainFolded.getError() > MAX_ERROR && trainFolded.getIteration() < MAX_ITERATION );
+
+		this.log.info( "Epoch #" + trainFolded.getIteration() + " Error:" + trainFolded.getError() );
 
 		trainFolded.finishTraining();
 
