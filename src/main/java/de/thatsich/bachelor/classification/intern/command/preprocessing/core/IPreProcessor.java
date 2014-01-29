@@ -1,6 +1,5 @@
 package de.thatsich.bachelor.classification.intern.command.preprocessing.core;
 
-import org.opencv.core.MatOfFloat;
 
 
 /**
@@ -15,11 +14,11 @@ public interface IPreProcessor
 	 * 
 	 * @param trainData
 	 *            Train Data
-	 * @param testData
+	 * @param idealData
 	 *            Ideal Result Data
 	 * @return Trained PreProcessing
 	 */
-	IPreProcessing train( MatOfFloat trainData, MatOfFloat testData );
+	IPreProcessing train( double[][] trainData, double[][] idealData );
 
 	/**
 	 * Gets the Name of the PreProcessor
