@@ -69,7 +69,7 @@ public class AANNPreProcessor extends APreProcessor
 		train.addStrategy( earlyStopStrategy );
 		train.addStrategy( endMaxErrorstrategy );
 		train.addStrategy( endIterationStrategy );
-
+		
 		while ( true )
 		{
 			train.iteration();
