@@ -18,6 +18,7 @@ import org.encog.neural.networks.training.propagation.resilient.ResilientPropaga
 import de.thatsich.bachelor.classification.intern.command.preprocessing.core.APreProcessor;
 import de.thatsich.bachelor.classification.intern.command.preprocessing.core.IPreProcessing;
 
+
 /**
  * Auto Associative Neural Network
  * PreProcessor
@@ -107,13 +108,12 @@ public class AANNPreProcessor extends APreProcessor
 				{
 					// create network
 					final BasicNetwork network = this.setupNetwork( featureVectorLength, hiddenLayerSize, bottleLayerSize );
-					// final MLTrain trainer = new LevenbergMarquardtTraining(
-					// network, foldedSet );
 					final ResilientPropagation trainer = new ResilientPropagation( network, foldedSet );
 					trainer.setRPROPType( RPROPType.iRPROPp );
 					final CrossValidationKFold trainFolded = new CrossValidationKFold( trainer, foldedSet.getIdealSize() );
 					final double trainedError = this.trainFold( trainFolded );
 
+					// store network if error was better
 					if ( trainedError < bestSetup.getValue() )
 					{
 						bestSetup = new Pair<>( network, trainedError );
@@ -122,7 +122,7 @@ public class AANNPreProcessor extends APreProcessor
 			}
 		}
 
-		this.log.info( "Best Network " + bestSetup.getKey().getLayerTotalNeuronCount( 1 ) + "," + bestSetup.getKey().getLayerTotalNeuronCount( 2 ) + " with Error " + bestSetup.getValue() );
+		this.log.info( "Best Network with Error " + bestSetup.getValue() );
 
 		// build a new network based on the trained one with only 3 Layers to
 		// reduce the dimension
@@ -143,6 +143,7 @@ public class AANNPreProcessor extends APreProcessor
 	 */
 	BasicNetwork rebuildNetworkForDimensionReduction( BasicNetwork network )
 	{
+		// get Layer count
 		final int inputSize = network.getLayerNeuronCount( 0 );
 		final int hiddenSize = network.getLayerNeuronCount( 1 );
 		final int bottleSize = network.getLayerNeuronCount( 2 );
@@ -180,6 +181,17 @@ public class AANNPreProcessor extends APreProcessor
 
 		return network;
 	}
+
+	/**
+	 * Creates an AANN based on Size of the input vector, size of the hidden
+	 * layer and size of the bottleneck layer
+	 * 
+	 * @param inputSize Size of the InputLayer
+	 * @param hiddenSize Size of the HiddenLayer
+	 * @param bottleneckSize Size of the BottleNeckLayer
+	 * 
+	 * @return AANN
+	 */
 	BasicNetwork setupNetwork( int inputSize, int hiddenSize, int bottleneckSize )
 	{
 
@@ -209,6 +221,13 @@ public class AANNPreProcessor extends APreProcessor
 		return network;
 	}
 
+	/**
+	 * Trains the CrossValidation KFold for MAX_ERROR and MAX_ITERATION
+	 * 
+	 * @param trainFolded To be trained Fold
+	 * 
+	 * @return The trained Error
+	 */
 	double trainFold( CrossValidationKFold trainFolded )
 	{
 		do
