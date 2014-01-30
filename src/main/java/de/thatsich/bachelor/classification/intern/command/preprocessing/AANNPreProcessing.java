@@ -16,6 +16,9 @@ public class AANNPreProcessing extends APreProcessing
 	
 	public AANNPreProcessing(BasicNetwork network) {
 		this.network = network;
+		
+//		network.getLayerTotalNeuronCount( outputSize )
+		
 		this.outputSize = 0; // TODO
 	}
 	

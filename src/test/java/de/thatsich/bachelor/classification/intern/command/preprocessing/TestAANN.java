@@ -6,6 +6,8 @@ import org.junit.runner.RunWith;
 
 import com.google.inject.Inject;
 
+import de.thatsich.bachelor.classification.intern.command.preprocessing.core.IPreProcessing;
+
 @RunWith(JukitoRunner.class)
 public class TestAANN
 {
@@ -24,7 +26,7 @@ public class TestAANN
 			{ 0.33, 0.33, 0.0 },
 			{ 0.33, 0.33, 0.33 } };
 
-		this.aann.train( XOR_INPUT, XOR_INPUT );
+		IPreProcessing pre = this.aann.train( XOR_INPUT, XOR_INPUT );
 //		aann.test( XOR_INPUT, XOR_IDEAL );
 	}
 

@@ -121,15 +121,54 @@ public class AANNPreProcessor extends APreProcessor
 	}
 
 	/**
-	 * TODO 
+	 * extracts the values from the learned AANN
+	 * and uses the Compression Network to reduce
+	 * dimensionality
+	 * 
 	 * @param network
-	 * @return
+	 *            To be extractec Network
+	 * 
+	 * @return Compression Network
 	 */
 	BasicNetwork rebuildNetworkForDimensionReduction( BasicNetwork network )
 	{
+		final int inputSize = network.getLayerNeuronCount( 0 );
+		final int hiddenSize = network.getLayerNeuronCount( 1 );
+		final int bottleSize = network.getLayerNeuronCount( 2 );
+
+		this.log.info( "Resulting Structure: " + inputSize + ", " + hiddenSize + ", " + bottleSize );
+
+		// build AANN result network
+		final BasicNetwork rebuild = new BasicNetwork();
+		rebuild.addLayer( new BasicLayer( null, false, inputSize ) );
+		rebuild.addLayer( new BasicLayer( new ActivationSigmoid(), true, hiddenSize ) );
+		rebuild.addLayer( new BasicLayer( new ActivationLinear(), true, bottleSize ) );
+
+		rebuild.getStructure().finalizeStructure();
+		rebuild.reset();
+
+		// copy weights from Input to Hidden Layer
+		for ( int input = 0; input < inputSize; input++ )
+		{
+			for ( int hidden = 0; hidden < hiddenSize; hidden++ )
+			{
+				final double weight = network.getWeight( 0, input, hidden );
+				rebuild.setWeight( 0, input, hidden, weight );
+			}
+		}
+
+		// copy weights from Hidden to Bottle Layer
+		for ( int hidden = 0; hidden < hiddenSize; hidden++ )
+		{
+			for ( int bottle = 0; bottle < bottleSize; bottle++ )
+			{
+				final double weight = network.getWeight( 1, hidden, bottle );
+				rebuild.setWeight( 1, hidden, bottle, weight );
+			}
+		}
+
 		return network;
 	}
-
 	BasicNetwork setupNetwork( int inputSize, int hiddenSize, int bottleneckSize )
 	{
 
@@ -142,7 +181,7 @@ public class AANNPreProcessor extends APreProcessor
 		network.addLayer( new BasicLayer( new ActivationSigmoid(), true, hiddenSize ) );
 
 		// BottleneckLayer
-		network.addLayer( new BasicLayer( new ActivationLinear(), true, hiddenSize ) );
+		network.addLayer( new BasicLayer( new ActivationLinear(), true, bottleneckSize ) );
 
 		// DecompressionLayer
 		network.addLayer( new BasicLayer( new ActivationSigmoid(), true, hiddenSize ) );
