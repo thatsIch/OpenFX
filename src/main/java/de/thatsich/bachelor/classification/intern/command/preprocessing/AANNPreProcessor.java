@@ -9,16 +9,26 @@ import org.encog.engine.network.activation.ActivationSigmoid;
 import org.encog.ml.data.MLDataSet;
 import org.encog.ml.data.basic.BasicMLDataSet;
 import org.encog.ml.data.folded.FoldedDataSet;
-import org.encog.ml.train.MLTrain;
 import org.encog.neural.networks.BasicNetwork;
 import org.encog.neural.networks.layers.BasicLayer;
 import org.encog.neural.networks.training.cross.CrossValidationKFold;
+import org.encog.neural.networks.training.propagation.resilient.RPROPType;
 import org.encog.neural.networks.training.propagation.resilient.ResilientPropagation;
 
 import de.thatsich.bachelor.classification.intern.command.preprocessing.core.APreProcessor;
 import de.thatsich.bachelor.classification.intern.command.preprocessing.core.IPreProcessing;
 
-
+/**
+ * Auto Associative Neural Network
+ * PreProcessor
+ * 
+ * Using a AANN to reduce dimensionality of TestData.
+ * Using iRPROP+ to train the network.
+ * 
+ * Automatic detection for KFoldCrossValidation.
+ * 
+ * @author thatsIch
+ */
 public class AANNPreProcessor extends APreProcessor
 {
 	private final static int	AVERAGE_ITERATION_COUNT	= 10;
@@ -99,7 +109,8 @@ public class AANNPreProcessor extends APreProcessor
 					final BasicNetwork network = this.setupNetwork( featureVectorLength, hiddenLayerSize, bottleLayerSize );
 					// final MLTrain trainer = new LevenbergMarquardtTraining(
 					// network, foldedSet );
-					final MLTrain trainer = new ResilientPropagation( network, foldedSet );
+					final ResilientPropagation trainer = new ResilientPropagation( network, foldedSet );
+					trainer.setRPROPType( RPROPType.iRPROPp );
 					final CrossValidationKFold trainFolded = new CrossValidationKFold( trainer, foldedSet.getIdealSize() );
 					final double trainedError = this.trainFold( trainFolded );
 
