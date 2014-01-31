@@ -1,26 +1,20 @@
 package de.thatsich.bachelor.classification.intern.command.preprocessing;
 
-import java.util.Arrays;
-
 import org.jukito.JukitoRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import com.google.inject.Inject;
 
-import de.thatsich.bachelor.classification.intern.command.preprocessing.core.IPreProcessing;
-
 
 @RunWith( JukitoRunner.class )
 public class TestAANN
 {
-	@Inject
-	AANNPreProcessor	aann;
-
 	@Test
-	public void test()
+	@Inject
+	public void testTraining( AANNPreProcessor aann )
 	{
-		final double XOR_INPUT[][] = {
+		final double xorInput3D[][] = {
 			{ 0.0, 0.0, 0.33 },
 			{ 0.0, 0.33, 0.0 },
 			{ 0.0, 0.33, 0.33 },
@@ -29,12 +23,6 @@ public class TestAANN
 			{ 0.33, 0.33, 0.0 },
 			{ 0.33, 0.33, 0.33 } };
 
-		IPreProcessing pre = this.aann.train( XOR_INPUT, XOR_INPUT );
-
-		System.out.println( Arrays.toString( pre.preprocess( XOR_INPUT[2] ) ) );
-		
-		// [0.15667940529897997, 0.18082645153532378, 0.18082645153532378]
-
+		aann.train( xorInput3D, xorInput3D );
 	}
-
 }
