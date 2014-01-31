@@ -32,47 +32,9 @@ import de.thatsich.bachelor.classification.intern.command.preprocessing.core.IPr
  */
 public class AANNPreProcessor extends APreProcessor
 {
-	private final static int	AVERAGE_ITERATION_COUNT	= 10;
+	private final static int	AVERAGE_ITERATION_COUNT	= 1;
 	private final static double	MAX_ERROR				= 0.01;
 	private final static int	MAX_ITERATION			= 1000;
-
-	// public void test( double[][] input, double[][] ideal )
-	// {
-	// // create training data
-	// final MLDataSet trainingSet = new BasicMLDataSet( input, ideal );
-	//
-	// System.out.println( "Neural Network Results:" );
-	// for ( MLDataPair pair : trainingSet )
-	// {
-	// final MLData output = network.compute( pair.getInput() );
-	// System.out.println( pair.getInput().getData( 0 ) + "," +
-	// pair.getInput().getData( 1 ) + ", actual=" + output.getData( 0 ) +
-	// ",ideal=" + pair.getIdeal().getData( 0 ) );
-	// }
-	//
-	// for ( int layer = 0; layer < network.getLayerCount() - 1; layer++ )
-	// {
-	// System.out.println( "Layer " + layer );
-	// for ( int neuron = 0; neuron < network.getLayerNeuronCount( layer );
-	// neuron++ )
-	// {
-	// for ( int next = 0; next < network.getLayerNeuronCount( layer + 1 );
-	// next++ )
-	// {
-	// System.out.println( "From " + neuron + " to " + next + ": " +
-	// network.getWeight( layer, neuron, next ) );
-	// }
-	// }
-	// }
-	//
-	// Encog.getInstance().shutdown();
-	// }
-
-	@Override
-	public String getName()
-	{
-		return null;
-	}
 
 	@Override
 	public IPreProcessing train( double[][] trainData, double[][] labelData )
@@ -179,16 +141,19 @@ public class AANNPreProcessor extends APreProcessor
 			}
 		}
 
-		return network;
+		return rebuild;
 	}
 
 	/**
 	 * Creates an AANN based on Size of the input vector, size of the hidden
 	 * layer and size of the bottleneck layer
 	 * 
-	 * @param inputSize Size of the InputLayer
-	 * @param hiddenSize Size of the HiddenLayer
-	 * @param bottleneckSize Size of the BottleNeckLayer
+	 * @param inputSize
+	 *            Size of the InputLayer
+	 * @param hiddenSize
+	 *            Size of the HiddenLayer
+	 * @param bottleneckSize
+	 *            Size of the BottleNeckLayer
 	 * 
 	 * @return AANN
 	 */
@@ -224,7 +189,8 @@ public class AANNPreProcessor extends APreProcessor
 	/**
 	 * Trains the CrossValidation KFold for MAX_ERROR and MAX_ITERATION
 	 * 
-	 * @param trainFolded To be trained Fold
+	 * @param trainFolded
+	 *            To be trained Fold
 	 * 
 	 * @return The trained Error
 	 */

@@ -1,8 +1,11 @@
 package de.thatsich.bachelor.classification.intern.command.preprocessing;
 
+import org.encog.ml.data.MLData;
+import org.encog.ml.data.basic.BasicMLData;
 import org.encog.neural.networks.BasicNetwork;
 
 import de.thatsich.bachelor.classification.intern.command.preprocessing.core.APreProcessing;
+
 
 /**
  * Result of a AANNPreProcessor
@@ -11,24 +14,20 @@ import de.thatsich.bachelor.classification.intern.command.preprocessing.core.APr
  */
 public class AANNPreProcessing extends APreProcessing
 {
-	private final BasicNetwork network;
-	private final int outputSize;
-	
-	public AANNPreProcessing(BasicNetwork network) {
+	private final BasicNetwork	network;
+
+	public AANNPreProcessing( BasicNetwork network )
+	{
 		this.network = network;
-		
-//		network.getLayerTotalNeuronCount( outputSize )
-		
-		this.outputSize = 0; // TODO
 	}
-	
+
 	@Override
 	public double[] preprocess( double[] featureVector )
 	{
-		final double[] output = new double[this.outputSize];
-		this.network.compute( featureVector, output );
-		
-		return output;
+		final MLData inputData = new BasicMLData( featureVector );
+		final MLData outputData = this.network.compute( inputData );
+
+		return outputData.getData();
 	}
 
 	@Override
