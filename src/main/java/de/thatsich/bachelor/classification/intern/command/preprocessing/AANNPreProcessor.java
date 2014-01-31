@@ -32,7 +32,7 @@ import de.thatsich.bachelor.classification.intern.command.preprocessing.core.IPr
  */
 public class AANNPreProcessor extends APreProcessor
 {
-	private final static int	AVERAGE_ITERATION_COUNT	= 1;
+	private final static int	AVERAGE_ITERATION_COUNT	= 10;
 	private final static double	MAX_ERROR				= 0.01;
 	private final static int	MAX_ITERATION			= 1000;
 

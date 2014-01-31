@@ -31,7 +31,7 @@ public class TestAANN
 
 		IPreProcessing pre = this.aann.train( XOR_INPUT, XOR_INPUT );
 
-		System.out.println( Arrays.toString( pre.preprocess( XOR_INPUT[0] ) ) );
+		System.out.println( Arrays.toString( pre.preprocess( XOR_INPUT[2] ) ) );
 		
 		// [0.15667940529897997, 0.18082645153532378, 0.18082645153532378]
 
