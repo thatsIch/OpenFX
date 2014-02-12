@@ -13,9 +13,9 @@ import com.cathive.fx.guice.GuiceApplication;
 import com.google.inject.Inject;
 import com.google.inject.Module;
 
-import de.thatsich.bachelor.gridoverview.api.guice.GridCommandModule;
-import de.thatsich.bachelor.gridoverview.api.guice.GridWiringModule;
-import de.thatsich.bachelor.gridoverview.restricted.view.DisplayView;
+import de.thatsich.bachelor.taboverview.api.core.ITabOverviewView;
+import de.thatsich.bachelor.taboverview.api.guice.TabOverviewCommandModule;
+import de.thatsich.bachelor.taboverview.api.guice.TabOverviewWiringModule;
 import de.thatsich.core.guice.LoggerModule;
 import de.thatsich.core.guice.PostInitModule;
 import de.thatsich.core.opencv.OpenCVLoader;
@@ -28,10 +28,10 @@ import de.thatsich.core.opencv.OpenCVLoader;
 // TODO halted - AANN
 // ODO halted - evtl in Commander Klassen aufteilen sodass Handler alle am
 // selben Platz sind und dass die Controller weniger Responsibility haben
-// TODO Anstatt eigener PreProcessing Abteilung einfach BC mit AANN machen 
 // TODO Denoising http://docs.opencv.org/trunk/modules/photo/doc/denoising.html
 // TODO CvtColor, CvSmooth, CvThreshold
-// TODO private static double sigmoid(double x) { return 1 / (1 + Math.exp(-x)); }
+// TODO private static double sigmoid(double x) { return 1 / (1 + Math.exp(-x));
+// }
 /**
  * Main Execution Class
  * 
@@ -39,12 +39,11 @@ import de.thatsich.core.opencv.OpenCVLoader;
  */
 public class Main extends GuiceApplication
 {
-
 	/**
 	 * First instantiated view.
 	 */
 	@Inject
-	private DisplayView	view;
+	private ITabOverviewView	view;
 
 	/**
 	 * 
@@ -107,7 +106,7 @@ public class Main extends GuiceApplication
 		modules.add( new LoggerModule() );
 		modules.add( new PostInitModule() );
 
-		modules.add( new GridWiringModule() );
-		modules.add( new GridCommandModule() );
+		modules.add( new TabOverviewWiringModule() );
+		modules.add( new TabOverviewCommandModule() );
 	}
 }

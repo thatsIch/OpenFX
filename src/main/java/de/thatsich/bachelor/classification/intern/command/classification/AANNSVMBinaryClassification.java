@@ -21,6 +21,7 @@ public class AANNSVMBinaryClassification extends SVMBinaryClassification
 	@Override
 	public void load( String fileName )
 	{
+		
 	}
 
 	@Override

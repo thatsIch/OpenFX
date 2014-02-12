@@ -5,6 +5,7 @@ import java.util.List;
 import de.thatsich.bachelor.classification.intern.command.provider.IBinaryClassificationProvider;
 import de.thatsich.bachelor.classification.intern.command.provider.IClassificationCommandProvider;
 import de.thatsich.bachelor.classification.intern.command.provider.IClassificationInitCommandProvider;
+import de.thatsich.bachelor.classification.intern.command.provider.IPreProcessingProvider;
 import de.thatsich.core.guice.ACommandModule;
 import de.thatsich.core.guice.ICommandProvider;
 
@@ -23,5 +24,6 @@ public class ClassificationCommandModule extends ACommandModule
 		providerList.add( IClassificationCommandProvider.class );
 		providerList.add( IBinaryClassificationProvider.class );
 		providerList.add( IClassificationInitCommandProvider.class );
+		providerList.add( IPreProcessingProvider.class );
 	}
 }
