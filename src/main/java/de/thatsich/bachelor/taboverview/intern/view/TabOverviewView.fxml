@@ -50,36 +50,76 @@
     </Tab>
     <Tab closable="false" text="Feature Extraction">
       <content>
-        <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0">
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0">
           <children>
-            <VBox fx:id="vBoxFeatureExtraction" prefHeight="-1.0" prefWidth="-1.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <SplitPane dividerPositions="0.3313253012048193" focusTraversable="false" prefHeight="-1.0" prefWidth="-1.0" visible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <items>
+                <SplitPane dividerPositions="0.5" focusTraversable="false" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" visible="true">
+                  <items>
+                    <AnchorPane fx:id="paneFeatureExtractionControl" minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0" />
+                    <AnchorPane fx:id="paneFeatureExtractionList" minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0" />
+                  </items>
+                </SplitPane>
+                <AnchorPane fx:id="paneFeatureExtractionDisplay" minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0" />
+              </items>
+            </SplitPane>
           </children>
         </AnchorPane>
       </content>
     </Tab>
     <Tab closable="false" text="PreProcessing">
       <content>
-        <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0">
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0">
           <children>
-            <VBox fx:id="vBoxPreProcessing" prefHeight="-1.0" prefWidth="-1.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <SplitPane dividerPositions="0.3313253012048193" focusTraversable="false" prefHeight="-1.0" prefWidth="-1.0" visible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <items>
+                <SplitPane dividerPositions="0.5" focusTraversable="false" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" visible="true">
+                  <items>
+                    <AnchorPane fx:id="panePreProcessingControl" minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0" />
+                    <AnchorPane fx:id="panePreProcessingList" minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0" />
+                  </items>
+                </SplitPane>
+                <AnchorPane fx:id="panePreProcessingDisplay" minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0" />
+              </items>
+            </SplitPane>
           </children>
         </AnchorPane>
       </content>
     </Tab>
     <Tab closable="false" text="Classification">
       <content>
-        <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0">
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0">
           <children>
-            <VBox fx:id="vBoxClassification" prefHeight="-1.0" prefWidth="-1.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <SplitPane dividerPositions="0.3313253012048193" focusTraversable="false" prefHeight="-1.0" prefWidth="-1.0" visible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <items>
+                <SplitPane dividerPositions="0.5" focusTraversable="false" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" visible="true">
+                  <items>
+                    <AnchorPane fx:id="paneClassificationControl" minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0" />
+                    <AnchorPane fx:id="paneClassificationList" minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0" />
+                  </items>
+                </SplitPane>
+                <AnchorPane fx:id="paneClassificationDisplay" minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0" />
+              </items>
+            </SplitPane>
           </children>
         </AnchorPane>
       </content>
     </Tab>
     <Tab closable="false" text="Prediction">
       <content>
-        <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0">
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0">
           <children>
-            <VBox fx:id="vBoxPrediction" prefHeight="-1.0" prefWidth="-1.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <SplitPane dividerPositions="0.3313253012048193" focusTraversable="false" prefHeight="-1.0" prefWidth="-1.0" visible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <items>
+                <SplitPane dividerPositions="0.5" focusTraversable="false" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" visible="true">
+                  <items>
+                    <AnchorPane fx:id="panePredictionControl" minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0" />
+                    <AnchorPane fx:id="panePredictionList" minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0" />
+                  </items>
+                </SplitPane>
+                <AnchorPane fx:id="panePredictionDisplay" minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0" />
+              </items>
+            </SplitPane>
           </children>
         </AnchorPane>
       </content>

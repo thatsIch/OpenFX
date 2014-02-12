@@ -6,7 +6,6 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -55,13 +54,32 @@ public class TabOverviewPresenter implements Initializable
 	private AnchorPane					paneErrorGenerationDisplay;
 
 	@FXML
-	private VBox						vBoxFeatureExtraction;
+	private AnchorPane					paneFeatureExtractionControl;
 	@FXML
-	private VBox						vBoxPreProcessing;
+	private AnchorPane					paneFeatureExtractionList;
 	@FXML
-	private VBox						vBoxClassification;
+	private AnchorPane					paneFeatureExtractionDisplay;
+
 	@FXML
-	private VBox						vBoxPrediction;
+	private AnchorPane					panePreProcessingControl;
+	@FXML
+	private AnchorPane					panePreProcessingList;
+	@FXML
+	private AnchorPane					panePreProcessingDisplay;
+
+	@FXML
+	private AnchorPane					paneClassificationControl;
+	@FXML
+	private AnchorPane					paneClassificationList;
+	@FXML
+	private AnchorPane					paneClassificationDisplay;
+
+	@FXML
+	private AnchorPane					panePredictionControl;
+	@FXML
+	private AnchorPane					panePredictionList;
+	@FXML
+	private AnchorPane					panePredictionDisplay;
 
 	// Views
 	@Inject
@@ -113,9 +131,9 @@ public class TabOverviewPresenter implements Initializable
 		this.paneErrorGenerationDisplay.getChildren().add( this.errorDisplayView.getRoot() );
 		this.paneErrorGenerationList.getChildren().add( this.errorListView.getRoot() );
 
-		this.vBoxFeatureExtraction.getChildren().add( this.featureInputView.getRoot() );
-		this.vBoxFeatureExtraction.getChildren().add( this.featureDisplayView.getRoot() );
-		this.vBoxFeatureExtraction.getChildren().add( this.featureListView.getRoot() );
+		this.paneFeatureExtractionControl.getChildren().add( this.featureInputView.getRoot() );
+		this.paneFeatureExtractionDisplay.getChildren().add( this.featureDisplayView.getRoot() );
+		this.paneFeatureExtractionList.getChildren().add( this.featureListView.getRoot() );
 
 		// this.vBoxPreProcessing.getChildren().add(
 		// this.classificationInputView.getRoot() );
@@ -124,12 +142,13 @@ public class TabOverviewPresenter implements Initializable
 		// this.vBoxPreProcessing.getChildren().add(
 		// this.classificationListView.getRoot() );
 		//
-		this.vBoxClassification.getChildren().add( this.classificationInputView.getRoot() );
-		this.vBoxClassification.getChildren().add( this.classificationDisplayView.getRoot() );
-		this.vBoxClassification.getChildren().add( this.classificationListView.getRoot() );
+				
+		this.paneClassificationControl.getChildren().add( this.classificationInputView.getRoot() );
+		this.paneClassificationDisplay.getChildren().add( this.classificationDisplayView.getRoot() );
+		this.paneClassificationList.getChildren().add( this.classificationListView.getRoot() );
 
-		this.vBoxPrediction.getChildren().add( this.predictionInputView.getRoot() );
-		this.vBoxPrediction.getChildren().add( this.predictionDisplayView.getRoot() );
-		this.vBoxPrediction.getChildren().add( this.predictionListView.getRoot() );
+		this.panePredictionControl.getChildren().add( this.predictionInputView.getRoot() );
+		this.panePredictionDisplay.getChildren().add( this.predictionDisplayView.getRoot() );
+		this.panePredictionList.getChildren().add( this.predictionListView.getRoot() );
 	}
 }
