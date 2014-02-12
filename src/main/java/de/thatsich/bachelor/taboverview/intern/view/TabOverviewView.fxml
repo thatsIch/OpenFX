@@ -12,18 +12,38 @@
   <tabs>
     <Tab closable="false" text="Image Processing">
       <content>
-        <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0">
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0">
           <children>
-            <VBox fx:id="vBoxImageProcessing" prefHeight="-1.0" prefWidth="-1.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <SplitPane dividerPositions="0.3313253012048193" focusTraversable="false" prefHeight="-1.0" prefWidth="-1.0" visible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <items>
+                <SplitPane dividerPositions="0.5" focusTraversable="false" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" visible="true">
+                  <items>
+                    <AnchorPane fx:id="paneImageProcessingControl" minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0" />
+                    <AnchorPane fx:id="paneImageProcessingList" minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0" />
+                  </items>
+                </SplitPane>
+                <AnchorPane fx:id="paneImageProcessingDisplay" minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0" />
+              </items>
+            </SplitPane>
           </children>
         </AnchorPane>
       </content>
     </Tab>
     <Tab closable="false" text="Error Generation">
       <content>
-        <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0">
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0">
           <children>
-            <VBox fx:id="vBoxErrorGeneration" prefHeight="-1.0" prefWidth="-1.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <SplitPane dividerPositions="0.3313253012048193" focusTraversable="false" prefHeight="-1.0" prefWidth="-1.0" visible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <items>
+                <SplitPane dividerPositions="0.5" focusTraversable="false" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" visible="true">
+                  <items>
+                    <AnchorPane fx:id="paneErrorGenerationControl" minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0" />
+                    <AnchorPane fx:id="paneErrorGenerationList" minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0" />
+                  </items>
+                </SplitPane>
+                <AnchorPane fx:id="paneErrorGenerationDisplay" minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0" />
+              </items>
+            </SplitPane>
           </children>
         </AnchorPane>
       </content>

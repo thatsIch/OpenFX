@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
 import com.google.inject.Inject;
@@ -40,9 +41,19 @@ public class TabOverviewPresenter implements Initializable
 {
 	// TabContents
 	@FXML
-	private VBox						vBoxImageProcessing;
+	private AnchorPane					paneImageProcessingControl;
 	@FXML
-	private VBox						vBoxErrorGeneration;
+	private AnchorPane					paneImageProcessingList;
+	@FXML
+	private AnchorPane					paneImageProcessingDisplay;
+
+	@FXML
+	private AnchorPane					paneErrorGenerationControl;
+	@FXML
+	private AnchorPane					paneErrorGenerationList;
+	@FXML
+	private AnchorPane					paneErrorGenerationDisplay;
+
 	@FXML
 	private VBox						vBoxFeatureExtraction;
 	@FXML
@@ -94,22 +105,25 @@ public class TabOverviewPresenter implements Initializable
 	@Override
 	public void initialize( URL url, ResourceBundle resourceBundle )
 	{
-		this.vBoxImageProcessing.getChildren().add( this.imageInputView.getRoot() );
-		this.vBoxImageProcessing.getChildren().add( this.imageDisplayView.getRoot() );
-		this.vBoxImageProcessing.getChildren().add( this.imageListView.getRoot() );
+		this.paneImageProcessingControl.getChildren().add( this.imageInputView.getRoot() );
+		this.paneImageProcessingList.getChildren().add( this.imageListView.getRoot() );
+		this.paneImageProcessingDisplay.getChildren().add( this.imageDisplayView.getRoot() );
 
-		this.vBoxErrorGeneration.getChildren().add( this.errorInputView.getRoot() );
-		this.vBoxErrorGeneration.getChildren().add( this.errorDisplayView.getRoot() );
-		this.vBoxErrorGeneration.getChildren().add( this.errorListView.getRoot() );
+		this.paneErrorGenerationControl.getChildren().add( this.errorInputView.getRoot() );
+		this.paneErrorGenerationDisplay.getChildren().add( this.errorDisplayView.getRoot() );
+		this.paneErrorGenerationList.getChildren().add( this.errorListView.getRoot() );
 
 		this.vBoxFeatureExtraction.getChildren().add( this.featureInputView.getRoot() );
 		this.vBoxFeatureExtraction.getChildren().add( this.featureDisplayView.getRoot() );
 		this.vBoxFeatureExtraction.getChildren().add( this.featureListView.getRoot() );
 
-//		this.vBoxPreProcessing.getChildren().add( this.classificationInputView.getRoot() );
-//		this.vBoxPreProcessing.getChildren().add( this.classificationDisplayView.getRoot() );
-//		this.vBoxPreProcessing.getChildren().add( this.classificationListView.getRoot() );
-//		
+		// this.vBoxPreProcessing.getChildren().add(
+		// this.classificationInputView.getRoot() );
+		// this.vBoxPreProcessing.getChildren().add(
+		// this.classificationDisplayView.getRoot() );
+		// this.vBoxPreProcessing.getChildren().add(
+		// this.classificationListView.getRoot() );
+		//
 		this.vBoxClassification.getChildren().add( this.classificationInputView.getRoot() );
 		this.vBoxClassification.getChildren().add( this.classificationDisplayView.getRoot() );
 		this.vBoxClassification.getChildren().add( this.classificationListView.getRoot() );
