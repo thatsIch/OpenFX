@@ -2,7 +2,7 @@ package de.thatsich.bachelor.featureextraction.api.core;
 
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
-import de.thatsich.bachelor.featureextraction.restricted.command.extractor.IFeatureExtractor;
+import de.thatsich.bachelor.featureextraction.intern.command.extractor.IFeatureExtractor;
 
 public interface IFeatureExtractors {
 	public ListProperty<IFeatureExtractor> getFeatureExtractorsProperty();

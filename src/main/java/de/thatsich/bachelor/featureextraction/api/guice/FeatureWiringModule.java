@@ -8,14 +8,14 @@ import de.thatsich.bachelor.featureextraction.api.core.IFeatureInputView;
 import de.thatsich.bachelor.featureextraction.api.core.IFeatureListView;
 import de.thatsich.bachelor.featureextraction.api.core.IFeatureState;
 import de.thatsich.bachelor.featureextraction.api.core.IFeatureVectorSets;
-import de.thatsich.bachelor.featureextraction.restricted.models.FeatureExtractors;
-import de.thatsich.bachelor.featureextraction.restricted.models.FeatureState;
-import de.thatsich.bachelor.featureextraction.restricted.models.FeatureVectorSets;
-import de.thatsich.bachelor.featureextraction.restricted.services.CSVService;
-import de.thatsich.bachelor.featureextraction.restricted.services.FeatureConfigService;
-import de.thatsich.bachelor.featureextraction.restricted.views.FeatureDisplayView;
-import de.thatsich.bachelor.featureextraction.restricted.views.FeatureInputView;
-import de.thatsich.bachelor.featureextraction.restricted.views.FeatureListView;
+import de.thatsich.bachelor.featureextraction.intern.models.FeatureExtractors;
+import de.thatsich.bachelor.featureextraction.intern.models.FeatureState;
+import de.thatsich.bachelor.featureextraction.intern.models.FeatureVectorSets;
+import de.thatsich.bachelor.featureextraction.intern.services.CSVService;
+import de.thatsich.bachelor.featureextraction.intern.services.FeatureConfigService;
+import de.thatsich.bachelor.featureextraction.intern.views.FeatureDisplayView;
+import de.thatsich.bachelor.featureextraction.intern.views.FeatureInputView;
+import de.thatsich.bachelor.featureextraction.intern.views.FeatureListView;
 import de.thatsich.core.guice.AWiringModule;
 
 

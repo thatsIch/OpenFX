@@ -6,7 +6,7 @@ import com.google.inject.assistedinject.Assisted;
 
 import de.thatsich.bachelor.classification.api.entities.IBinaryClassification;
 import de.thatsich.bachelor.errorgeneration.api.entities.IErrorGenerator;
-import de.thatsich.bachelor.featureextraction.restricted.command.extractor.IFeatureExtractor;
+import de.thatsich.bachelor.featureextraction.intern.command.extractor.IFeatureExtractor;
 import de.thatsich.bachelor.imageprocessing.api.entities.ImageEntry;
 import de.thatsich.bachelor.prediction.api.entities.BinaryPrediction;
 import de.thatsich.bachelor.prediction.intern.command.commands.DeleteBinaryPredictionCommand;

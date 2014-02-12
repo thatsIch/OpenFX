@@ -14,7 +14,7 @@ import de.thatsich.bachelor.classification.api.entities.IBinaryClassification;
 import de.thatsich.bachelor.errorgeneration.api.core.IErrorGenerators;
 import de.thatsich.bachelor.errorgeneration.api.entities.IErrorGenerator;
 import de.thatsich.bachelor.featureextraction.api.core.IFeatureExtractors;
-import de.thatsich.bachelor.featureextraction.restricted.command.extractor.IFeatureExtractor;
+import de.thatsich.bachelor.featureextraction.intern.command.extractor.IFeatureExtractor;
 import de.thatsich.bachelor.imageprocessing.api.core.IImageEntries;
 import de.thatsich.bachelor.imageprocessing.api.entities.ImageEntry;
 import de.thatsich.bachelor.prediction.api.core.IBinaryPredictions;

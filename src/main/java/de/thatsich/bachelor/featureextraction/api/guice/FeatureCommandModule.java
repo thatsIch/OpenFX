@@ -2,8 +2,8 @@ package de.thatsich.bachelor.featureextraction.api.guice;
 
 import java.util.List;
 
-import de.thatsich.bachelor.featureextraction.restricted.command.IFeatureCommandProvider;
-import de.thatsich.bachelor.featureextraction.restricted.command.IFeatureInitCommandProvider;
+import de.thatsich.bachelor.featureextraction.intern.command.IFeatureCommandProvider;
+import de.thatsich.bachelor.featureextraction.intern.command.IFeatureInitCommandProvider;
 import de.thatsich.core.guice.ACommandModule;
 import de.thatsich.core.guice.ICommandProvider;
 
