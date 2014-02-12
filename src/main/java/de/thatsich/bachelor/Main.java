@@ -89,7 +89,7 @@ public class Main extends GuiceApplication
 		primaryStage.setTitle( "Sample" );
 		primaryStage.getIcons().add( icon );
 		primaryStage.setScene( scene );
-		primaryStage.setResizable( false );
+		primaryStage.setMaximized( true );
 		primaryStage.show();
 	}
 
