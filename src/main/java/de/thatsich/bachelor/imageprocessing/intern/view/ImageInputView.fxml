@@ -15,7 +15,7 @@
 			<graphic>
 				<ImageView>
 					<image>
-						<Image url="@add-icon.png" />
+						<Image url="@add.png" />
 					</image>
 				</ImageView>
 			</graphic>
@@ -28,7 +28,7 @@
 			<graphic>
 				<ImageView>
 					<image>
-						<Image url="@remove-icon.png" />
+						<Image url="@remove.png" />
 					</image>
 				</ImageView>
 			</graphic>
@@ -41,7 +41,7 @@
 			<graphic>
 				<ImageView>
 					<image>
-						<Image url="@reset-icon.png" />
+						<Image url="@delete.png" />
 					</image>
 				</ImageView>
 			</graphic>
