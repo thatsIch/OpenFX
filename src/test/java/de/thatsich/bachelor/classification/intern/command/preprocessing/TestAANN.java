@@ -6,6 +6,8 @@ import org.junit.runner.RunWith;
 
 import com.google.inject.Inject;
 
+import de.thatsich.bachelor.preprocessing.intern.command.preprocessor.AANNPreProcessor;
+
 
 @RunWith( JukitoRunner.class )
 public class TestAANN
