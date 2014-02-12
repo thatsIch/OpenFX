@@ -4,13 +4,12 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.layout.HBox?>
 
-<HBox xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="de.thatsich.bachelor.errorgeneration.intern.controller.ErrorListPresenter">
-  <TableView id="node" fx:id="nodeTableViewErrorList" prefHeight="-1.0" prefWidth="-1.0">
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="de.thatsich.bachelor.errorgeneration.intern.controller.ErrorListPresenter">
+  <TableView fx:id="nodeTableViewErrorList" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
     <columns>
       <TableColumn editable="false" prefWidth="100.0" sortable="false" text="Class" fx:id="nodeTableColumnErrorClass" />
       <TableColumn editable="false" prefWidth="100.0" sortable="false" text="Name" fx:id="nodeTableColumnErrorName" />
     </columns>
   </TableView>
-</HBox>
+</AnchorPane>
