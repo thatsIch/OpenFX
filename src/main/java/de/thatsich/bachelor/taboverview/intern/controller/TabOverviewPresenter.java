@@ -5,7 +5,7 @@ import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -39,83 +39,33 @@ import de.thatsich.bachelor.prediction.api.core.IPredictionListView;
 public class TabOverviewPresenter implements Initializable
 {
 	// TabContents
-	@FXML
-	private AnchorPane					paneImageProcessingControl;
-	@FXML
-	private AnchorPane					paneImageProcessingList;
-	@FXML
-	private AnchorPane					paneImageProcessingDisplay;
-
-	@FXML
-	private AnchorPane					paneErrorGenerationControl;
-	@FXML
-	private AnchorPane					paneErrorGenerationList;
-	@FXML
-	private AnchorPane					paneErrorGenerationDisplay;
-
-	@FXML
-	private AnchorPane					paneFeatureExtractionControl;
-	@FXML
-	private AnchorPane					paneFeatureExtractionList;
-	@FXML
-	private AnchorPane					paneFeatureExtractionDisplay;
-
-	@FXML
-	private AnchorPane					panePreProcessingControl;
-	@FXML
-	private AnchorPane					panePreProcessingList;
-	@FXML
-	private AnchorPane					panePreProcessingDisplay;
-
-	@FXML
-	private AnchorPane					paneClassificationControl;
-	@FXML
-	private AnchorPane					paneClassificationList;
-	@FXML
-	private AnchorPane					paneClassificationDisplay;
-
-	@FXML
-	private AnchorPane					panePredictionControl;
-	@FXML
-	private AnchorPane					panePredictionList;
-	@FXML
-	private AnchorPane					panePredictionDisplay;
+	@FXML private BorderPane					paneImageProcessing;
+	@FXML private BorderPane					paneErrorGeneration;
+	@FXML private BorderPane					paneFeatureExtraction;
+	@FXML private BorderPane					panePreProcessing;
+	@FXML private BorderPane					paneClassification;
+	@FXML private BorderPane					panePrediction;
 
 	// Views
-	@Inject
-	private IImageInputView				imageInputView;
-	@Inject
-	private IImageDisplayView			imageDisplayView;
-	@Inject
-	private IImageListView				imageListView;
+	@Inject private IImageInputView				imageInputView;
+	@Inject private IImageDisplayView			imageDisplayView;
+	@Inject private IImageListView				imageListView;
 
-	@Inject
-	private IErrorInputView				errorInputView;
-	@Inject
-	private IErrorDisplayView			errorDisplayView;
-	@Inject
-	private IErrorListView				errorListView;
+	@Inject private IErrorInputView				errorInputView;
+	@Inject private IErrorDisplayView			errorDisplayView;
+	@Inject private IErrorListView				errorListView;
 
-	@Inject
-	private IFeatureInputView			featureInputView;
-	@Inject
-	private IFeatureDisplayView			featureDisplayView;
-	@Inject
-	private IFeatureListView			featureListView;
+	@Inject private IFeatureInputView			featureInputView;
+	@Inject private IFeatureDisplayView			featureDisplayView;
+	@Inject private IFeatureListView			featureListView;
 
-	@Inject
-	private IClassificationInputView	classificationInputView;
-	@Inject
-	private IClassificationDisplayView	classificationDisplayView;
-	@Inject
-	private IClassificationListView		classificationListView;
+	@Inject private IClassificationInputView	classificationInputView;
+	@Inject private IClassificationDisplayView	classificationDisplayView;
+	@Inject private IClassificationListView		classificationListView;
 
-	@Inject
-	private IPredictionInputView		predictionInputView;
-	@Inject
-	private IPredictionDisplayView		predictionDisplayView;
-	@Inject
-	private IPredictionListView			predictionListView;
+	@Inject private IPredictionInputView		predictionInputView;
+	@Inject private IPredictionDisplayView		predictionDisplayView;
+	@Inject private IPredictionListView			predictionListView;
 
 	// ==================================================
 	// Initializable Implementation
@@ -123,17 +73,17 @@ public class TabOverviewPresenter implements Initializable
 	@Override
 	public void initialize( URL url, ResourceBundle resourceBundle )
 	{
-		this.paneImageProcessingControl.getChildren().add( this.imageInputView.getRoot() );
-		this.paneImageProcessingList.getChildren().add( this.imageListView.getRoot() );
-		this.paneImageProcessingDisplay.getChildren().add( this.imageDisplayView.getRoot() );
+		this.paneImageProcessing.setTop( this.imageInputView.getRoot() );
+		this.paneImageProcessing.setLeft( this.imageListView.getRoot() );
+		this.paneImageProcessing.setCenter( this.imageDisplayView.getRoot() );
 
-		this.paneErrorGenerationControl.getChildren().add( this.errorInputView.getRoot() );
-		this.paneErrorGenerationDisplay.getChildren().add( this.errorDisplayView.getRoot() );
-		this.paneErrorGenerationList.getChildren().add( this.errorListView.getRoot() );
+		this.paneErrorGeneration.setTop( this.errorInputView.getRoot() );
+		this.paneErrorGeneration.setLeft( this.errorListView.getRoot() );
+		this.paneErrorGeneration.setCenter( this.errorDisplayView.getRoot() );
 
-		this.paneFeatureExtractionControl.getChildren().add( this.featureInputView.getRoot() );
-		this.paneFeatureExtractionDisplay.getChildren().add( this.featureDisplayView.getRoot() );
-		this.paneFeatureExtractionList.getChildren().add( this.featureListView.getRoot() );
+		this.paneFeatureExtraction.setTop( this.featureInputView.getRoot() );
+		this.paneFeatureExtraction.setLeft( this.featureListView.getRoot() );
+		this.paneFeatureExtraction.setCenter( this.featureDisplayView.getRoot() );
 
 		// this.vBoxPreProcessing.getChildren().add(
 		// this.classificationInputView.getRoot() );
@@ -142,13 +92,13 @@ public class TabOverviewPresenter implements Initializable
 		// this.vBoxPreProcessing.getChildren().add(
 		// this.classificationListView.getRoot() );
 		//
-				
-		this.paneClassificationControl.getChildren().add( this.classificationInputView.getRoot() );
-		this.paneClassificationDisplay.getChildren().add( this.classificationDisplayView.getRoot() );
-		this.paneClassificationList.getChildren().add( this.classificationListView.getRoot() );
 
-		this.panePredictionControl.getChildren().add( this.predictionInputView.getRoot() );
-		this.panePredictionDisplay.getChildren().add( this.predictionDisplayView.getRoot() );
-		this.panePredictionList.getChildren().add( this.predictionListView.getRoot() );
+		this.paneClassification.setTop( this.classificationInputView.getRoot() );
+		this.paneClassification.setLeft( this.classificationListView.getRoot() );
+		this.paneClassification.setCenter( this.classificationDisplayView.getRoot() );
+
+		this.panePrediction.setTop( this.predictionInputView.getRoot() );
+		this.panePrediction.setLeft( this.predictionListView.getRoot() );
+		this.panePrediction.setCenter( this.predictionDisplayView.getRoot() );
 	}
 }

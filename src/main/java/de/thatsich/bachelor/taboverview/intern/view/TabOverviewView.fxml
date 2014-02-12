@@ -12,116 +12,56 @@
   <tabs>
     <Tab closable="false" text="Image Processing">
       <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0">
-          <children>
-            <SplitPane dividerPositions="0.3313253012048193" focusTraversable="false" prefHeight="-1.0" prefWidth="-1.0" visible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-              <items>
-                <SplitPane dividerPositions="0.5" focusTraversable="false" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" visible="true">
-                  <items>
-                    <AnchorPane fx:id="paneImageProcessingControl" minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0" />
-                    <AnchorPane fx:id="paneImageProcessingList" minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0" />
-                  </items>
-                </SplitPane>
-                <AnchorPane fx:id="paneImageProcessingDisplay" minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0" />
-              </items>
-            </SplitPane>
-          </children>
-        </AnchorPane>
+        <BorderPane fx:id="paneImageProcessing" prefHeight="-1.0" prefWidth="-1.0">
+          <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+          </padding>
+        </BorderPane>
       </content>
     </Tab>
     <Tab closable="false" text="Error Generation">
       <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0">
-          <children>
-            <SplitPane dividerPositions="0.3313253012048193" focusTraversable="false" prefHeight="-1.0" prefWidth="-1.0" visible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-              <items>
-                <SplitPane dividerPositions="0.5" focusTraversable="false" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" visible="true">
-                  <items>
-                    <AnchorPane fx:id="paneErrorGenerationControl" minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0" />
-                    <AnchorPane fx:id="paneErrorGenerationList" minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0" />
-                  </items>
-                </SplitPane>
-                <AnchorPane fx:id="paneErrorGenerationDisplay" minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0" />
-              </items>
-            </SplitPane>
-          </children>
-        </AnchorPane>
+        <BorderPane fx:id="paneErrorGeneration" prefHeight="-1.0" prefWidth="-1.0">
+          <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+          </padding>
+        </BorderPane>
       </content>
     </Tab>
     <Tab closable="false" text="Feature Extraction">
       <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0">
-          <children>
-            <SplitPane dividerPositions="0.3313253012048193" focusTraversable="false" prefHeight="-1.0" prefWidth="-1.0" visible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-              <items>
-                <SplitPane dividerPositions="0.5" focusTraversable="false" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" visible="true">
-                  <items>
-                    <AnchorPane fx:id="paneFeatureExtractionControl" minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0" />
-                    <AnchorPane fx:id="paneFeatureExtractionList" minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0" />
-                  </items>
-                </SplitPane>
-                <AnchorPane fx:id="paneFeatureExtractionDisplay" minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0" />
-              </items>
-            </SplitPane>
-          </children>
-        </AnchorPane>
+        <BorderPane fx:id="paneFeatureExtraction" prefHeight="-1.0" prefWidth="-1.0">
+          <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+          </padding>
+        </BorderPane>
       </content>
     </Tab>
     <Tab closable="false" text="PreProcessing">
       <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0">
-          <children>
-            <SplitPane dividerPositions="0.3313253012048193" focusTraversable="false" prefHeight="-1.0" prefWidth="-1.0" visible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-              <items>
-                <SplitPane dividerPositions="0.5" focusTraversable="false" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" visible="true">
-                  <items>
-                    <AnchorPane fx:id="panePreProcessingControl" minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0" />
-                    <AnchorPane fx:id="panePreProcessingList" minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0" />
-                  </items>
-                </SplitPane>
-                <AnchorPane fx:id="panePreProcessingDisplay" minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0" />
-              </items>
-            </SplitPane>
-          </children>
-        </AnchorPane>
+        <BorderPane fx:id="panePreProcessing" prefHeight="-1.0" prefWidth="-1.0">
+          <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+          </padding>
+        </BorderPane>
       </content>
     </Tab>
     <Tab closable="false" text="Classification">
       <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0">
-          <children>
-            <SplitPane dividerPositions="0.3313253012048193" focusTraversable="false" prefHeight="-1.0" prefWidth="-1.0" visible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-              <items>
-                <SplitPane dividerPositions="0.5" focusTraversable="false" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" visible="true">
-                  <items>
-                    <AnchorPane fx:id="paneClassificationControl" minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0" />
-                    <AnchorPane fx:id="paneClassificationList" minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0" />
-                  </items>
-                </SplitPane>
-                <AnchorPane fx:id="paneClassificationDisplay" minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0" />
-              </items>
-            </SplitPane>
-          </children>
-        </AnchorPane>
+        <BorderPane fx:id="paneClassification" prefHeight="-1.0" prefWidth="-1.0">
+          <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+          </padding>
+        </BorderPane>
       </content>
     </Tab>
     <Tab closable="false" text="Prediction">
       <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0">
-          <children>
-            <SplitPane dividerPositions="0.3313253012048193" focusTraversable="false" prefHeight="-1.0" prefWidth="-1.0" visible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-              <items>
-                <SplitPane dividerPositions="0.5" focusTraversable="false" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" visible="true">
-                  <items>
-                    <AnchorPane fx:id="panePredictionControl" minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0" />
-                    <AnchorPane fx:id="panePredictionList" minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0" />
-                  </items>
-                </SplitPane>
-                <AnchorPane fx:id="panePredictionDisplay" minHeight="0.0" minWidth="0.0" prefHeight="-1.0" prefWidth="-1.0" />
-              </items>
-            </SplitPane>
-          </children>
-        </AnchorPane>
+        <BorderPane fx:id="panePrediction" prefHeight="-1.0" prefWidth="-1.0">
+          <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+          </padding>
+        </BorderPane>
       </content>
     </Tab>
   </tabs>
