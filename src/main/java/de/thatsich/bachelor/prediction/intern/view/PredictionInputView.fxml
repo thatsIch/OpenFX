@@ -3,23 +3,51 @@
 <?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 
-<GridPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="de.thatsich.bachelor.prediction.intern.control.PredictionInputPresenter">
-  <children>
-    <Button fx:id="nodeButtonPredictBinaryClassification" mnemonicParsing="false" onAction="#onPredictBinaryPredictionAction" prefWidth="125.0" text="Predict" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-    <Button fx:id="nodeButtonDeleteBinaryPrediction" mnemonicParsing="false" onAction="#onDeleteBinaryPredictionAction" prefWidth="125.0" text="Delete" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-    <Button fx:id="nodeButtonResetBinaryPrediction" mnemonicParsing="false" onAction="#onResetBinaryPredictionAction" prefWidth="125.0" text="Reset" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-  </children>
-  <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-  </columnConstraints>
-  <rowConstraints>
-    <RowConstraints maxHeight="25.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="25.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="25.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="25.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
-  </rowConstraints>
-</GridPane>
+<FlowPane hgap="5.0" prefWidth="-1.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.thatsich.bachelor.prediction.intern.control.PredictionInputPresenter">
+
+	<children>
+		<Button fx:id="nodeButtonPredictBinaryClassification" onAction="#onPredictBinaryPredictionAction">
+			<graphic>
+				<ImageView>
+					<image>
+						<Image url="@add.png" />
+					</image>
+				</ImageView>
+			</graphic>
+			<tooltip>
+				<Tooltip text="Predicts an Input and adds the Prediction to the List." />
+			</tooltip>
+		</Button>
+		<Button fx:id="nodeButtonDeleteBinaryPrediction" onAction="#onDeleteBinaryPredictionAction">
+			<graphic>
+				<ImageView>
+					<image>
+						<Image url="@remove.png" />
+					</image>
+				</ImageView>
+			</graphic>
+			<tooltip>
+				<Tooltip text="Deletes a Prediction from the List." />
+			</tooltip>
+		</Button>
+		<Button fx:id="nodeButtonResetBinaryPrediction" onAction="#onResetBinaryPredictionAction">
+			<graphic>
+				<ImageView>
+					<image>
+						<Image url="@delete.png" />
+					</image>
+				</ImageView>
+			</graphic>
+			<tooltip>
+				<Tooltip text="Resets the whole Prediction List physically. CAUTION!" />
+			</tooltip>
+		</Button>
+	</children>
+	<padding>
+		<Insets bottom="10.0" />
+	</padding>
+
+</FlowPane>
