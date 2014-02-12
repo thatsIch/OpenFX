@@ -9,7 +9,7 @@ import org.opencv.ml.CvRTrees;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
-import de.thatsich.bachelor.classification.api.entities.ABinaryClassification;
+import de.thatsich.bachelor.classification.intern.command.classification.core.ABinaryClassification;
 import de.thatsich.bachelor.classification.intern.command.classifier.core.BinaryClassifierConfiguration;
 
 
