@@ -7,13 +7,13 @@ import de.thatsich.bachelor.imageprocessing.api.core.IImageEntries;
 import de.thatsich.bachelor.imageprocessing.api.core.IImageInputView;
 import de.thatsich.bachelor.imageprocessing.api.core.IImageListView;
 import de.thatsich.bachelor.imageprocessing.api.core.IImageState;
-import de.thatsich.bachelor.imageprocessing.restricted.controller.ImageFileChooser;
-import de.thatsich.bachelor.imageprocessing.restricted.model.ImageEntries;
-import de.thatsich.bachelor.imageprocessing.restricted.model.ImageState;
-import de.thatsich.bachelor.imageprocessing.restricted.service.ImageConfigService;
-import de.thatsich.bachelor.imageprocessing.restricted.view.ImageDisplayView;
-import de.thatsich.bachelor.imageprocessing.restricted.view.ImageInputView;
-import de.thatsich.bachelor.imageprocessing.restricted.view.ImageListView;
+import de.thatsich.bachelor.imageprocessing.intern.controller.ImageFileChooser;
+import de.thatsich.bachelor.imageprocessing.intern.model.ImageEntries;
+import de.thatsich.bachelor.imageprocessing.intern.model.ImageState;
+import de.thatsich.bachelor.imageprocessing.intern.service.ImageConfigService;
+import de.thatsich.bachelor.imageprocessing.intern.view.ImageDisplayView;
+import de.thatsich.bachelor.imageprocessing.intern.view.ImageInputView;
+import de.thatsich.bachelor.imageprocessing.intern.view.ImageListView;
 import de.thatsich.core.guice.AWiringModule;
 
 
