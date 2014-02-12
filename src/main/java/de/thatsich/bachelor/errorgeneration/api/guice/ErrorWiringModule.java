@@ -8,13 +8,13 @@ import de.thatsich.bachelor.errorgeneration.api.core.IErrorGenerators;
 import de.thatsich.bachelor.errorgeneration.api.core.IErrorInputView;
 import de.thatsich.bachelor.errorgeneration.api.core.IErrorListView;
 import de.thatsich.bachelor.errorgeneration.api.core.IErrorState;
-import de.thatsich.bachelor.errorgeneration.restricted.model.ErrorEntries;
-import de.thatsich.bachelor.errorgeneration.restricted.model.ErrorGenerators;
-import de.thatsich.bachelor.errorgeneration.restricted.model.ErrorState;
-import de.thatsich.bachelor.errorgeneration.restricted.service.ErrorConfigService;
-import de.thatsich.bachelor.errorgeneration.restricted.view.ErrorDisplayView;
-import de.thatsich.bachelor.errorgeneration.restricted.view.ErrorInputView;
-import de.thatsich.bachelor.errorgeneration.restricted.view.ErrorListView;
+import de.thatsich.bachelor.errorgeneration.intern.model.ErrorEntries;
+import de.thatsich.bachelor.errorgeneration.intern.model.ErrorGenerators;
+import de.thatsich.bachelor.errorgeneration.intern.model.ErrorState;
+import de.thatsich.bachelor.errorgeneration.intern.service.ErrorConfigService;
+import de.thatsich.bachelor.errorgeneration.intern.view.ErrorDisplayView;
+import de.thatsich.bachelor.errorgeneration.intern.view.ErrorInputView;
+import de.thatsich.bachelor.errorgeneration.intern.view.ErrorListView;
 import de.thatsich.core.guice.AWiringModule;
 
 
