@@ -6,14 +6,15 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2"
-	fx:controller="de.thatsich.bachelor.classification.intern.control.ClassificationListPresenter">
+	fx:controller="de.thatsich.bachelor.preprocessing.intern.control.PreProcessingListPresenter">
 	<children>
 
-		<TableView fx:id="nodeTableViewBinaryClassificationList"
+		<TableView fx:id="nodeTableViewPreProcessingList"
 			AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
 			AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 
 			<columns>
+			<!-- 
 				<TableColumn editable="false" prefWidth="100.0"
 					sortable="false" text="Classifier" fx:id="nodeTableColumnClassifierName" />
 				<TableColumn editable="false" prefWidth="100.0"
@@ -24,6 +25,7 @@
 					sortable="false" text="Error" fx:id="nodeTableErrorName" />
 				<TableColumn editable="false" prefWidth="100.0"
 					sortable="false" text="ID" fx:id="nodeTableColumnID" />
+					 -->
 			</columns>
 
 			<columnResizePolicy>
