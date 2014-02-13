@@ -7,6 +7,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
+import org.encog.neural.networks.BasicNetwork;
+
 import javafx.collections.FXCollections;
 
 import com.google.inject.Inject;
@@ -73,7 +75,7 @@ public class InitPreProcessingListCommand extends ACommand<List<IPreProcessing>>
 					switch ( preProcessingName )
 					{
 						case "AANNPreProcessor" :
-							preProcessing = this.provider.createAANNPreProcessing( config );
+							preProcessing = this.provider.createAANNPreProcessing( new BasicNetwork(), config );
 							break;
 
 						default :

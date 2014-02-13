@@ -23,7 +23,7 @@ public class RemovePreProcessingCommand extends ACommand<IPreProcessing>
 	@Override
 	protected IPreProcessing call() throws Exception
 	{
-		final Path path = preProcessing.getFilePath();
+		final Path path = preProcessing.getFilePathProperty().get();
 		if ( Files.exists( path ) )
 		{
 			Files.delete( path );

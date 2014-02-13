@@ -15,9 +15,12 @@ import org.encog.neural.networks.training.cross.CrossValidationKFold;
 import org.encog.neural.networks.training.propagation.resilient.RPROPType;
 import org.encog.neural.networks.training.propagation.resilient.ResilientPropagation;
 
+import com.google.inject.Inject;
+
 import de.thatsich.bachelor.preprocessing.api.entities.IPreProcessing;
-import de.thatsich.bachelor.preprocessing.intern.command.preprocessing.AANNPreProcessing;
 import de.thatsich.bachelor.preprocessing.intern.command.preprocessor.core.APreProcessor;
+import de.thatsich.bachelor.preprocessing.intern.command.preprocessor.core.PreProcessorConfiguration;
+import de.thatsich.bachelor.preprocessing.intern.command.provider.IPreProcessingProvider;
 
 
 /**
@@ -33,12 +36,16 @@ import de.thatsich.bachelor.preprocessing.intern.command.preprocessor.core.APreP
  */
 public class AANNPreProcessor extends APreProcessor
 {
+	// Injects
+	@Inject private IPreProcessingProvider provider;
+	
+	// Consts
 	private final static int	AVERAGE_ITERATION_COUNT	= 10;
 	private final static double	MAX_ERROR				= 0.01;
 	private final static int	MAX_ITERATION			= 1000;
 
 	@Override
-	public IPreProcessing train( double[][] trainData, double[][] labelData )
+	public IPreProcessing train( double[][] trainData, double[][] labelData, PreProcessorConfiguration config )
 	{
 		// extract important informations
 		final int featureVectorCount = trainData.length;
@@ -91,7 +98,7 @@ public class AANNPreProcessor extends APreProcessor
 		// reduce the dimension
 		final BasicNetwork rebuildNetwork = this.rebuildNetworkForDimensionReduction( bestSetup.getKey() );
 
-		return new AANNPreProcessing( rebuildNetwork );
+		return this.provider.createAANNPreProcessing( rebuildNetwork, config );
 	}
 
 	/**

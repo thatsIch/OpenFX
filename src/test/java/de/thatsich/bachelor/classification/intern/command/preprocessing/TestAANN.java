@@ -25,6 +25,6 @@ public class TestAANN
 			{ 0.33, 0.33, 0.0 },
 			{ 0.33, 0.33, 0.33 } };
 
-		aann.train( xorInput3D, xorInput3D );
+		aann.train( xorInput3D, xorInput3D, null );
 	}
 }

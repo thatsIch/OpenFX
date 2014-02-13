@@ -3,6 +3,7 @@ package de.thatsich.bachelor.preprocessing.api.entities;
 import java.nio.file.Path;
 
 import javafx.beans.property.ReadOnlyIntegerProperty;
+import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyStringProperty;
 
 
@@ -47,13 +48,7 @@ public interface IPreProcessing
 	 */
 	void save( String fileName );
 
-	/**
-	 * Gets FilePath
-	 * 
-	 * @return FilePath
-	 */
-	Path getFilePath();
-
+	ReadOnlyObjectProperty<Path> getFilePathProperty();
 	ReadOnlyStringProperty getPreProcessingNameProperty();
 	ReadOnlyIntegerProperty getInputSizeProperty();
 	ReadOnlyIntegerProperty getOutputSizeProperty();

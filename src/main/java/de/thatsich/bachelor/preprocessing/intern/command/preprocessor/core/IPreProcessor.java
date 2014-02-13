@@ -20,7 +20,7 @@ public interface IPreProcessor
 	 *            Ideal Result Data
 	 * @return Trained PreProcessing
 	 */
-	IPreProcessing train( double[][] trainData, double[][] idealData );
+	IPreProcessing train( double[][] trainData, double[][] idealData, PreProcessorConfiguration config );
 
 	/**
 	 * Gets the Name of the PreProcessor
