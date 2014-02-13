@@ -10,10 +10,10 @@
 
 <FlowPane hgap="5.0" prefWidth="-1.0" xmlns="http://javafx.com/javafx/8"
 	xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="de.thatsich.bachelor.classification.intern.control.ClassificationInputPresenter">
+	fx:controller="de.thatsich.bachelor.preprocessing.intern.control.PreProcessingInputPresenter">
 
 	<children>
-		<Button fx:id="nodeButtonTrainBinaryClassifier" onAction="#onTrainBinaryClassifierAction">
+		<Button fx:id="nodeButtonTrainPreProcessor" onAction="#onTrainPreProcessorAction">
 			<graphic>
 				<ImageView>
 					<image>
@@ -22,10 +22,10 @@
 				</ImageView>
 			</graphic>
 			<tooltip>
-				<Tooltip text="Train BinaryClassifier and add the BinaryClassification to the List." />
+				<Tooltip text="Train PreProcessor and add the PreProcession to the List." />
 			</tooltip>
 		</Button>
-		<Button fx:id="nodeButtonRemoveBinaryClassifier" onAction="#onRemoveBinaryClassifierAction">
+		<Button fx:id="nodeButtonRemovePreProcessing" onAction="#onRemovePreProcessingAction">
 			<graphic>
 				<ImageView>
 					<image>
@@ -34,10 +34,10 @@
 				</ImageView>
 			</graphic>
 			<tooltip>
-				<Tooltip text="Removes a BinaryClassification from the List." />
+				<Tooltip text="Removes a PreProcessing from the List." />
 			</tooltip>
 		</Button>
-		<Button fx:id="nodeButtonResetBinaryClassifierList" onAction="#onResetBinaryClassifierListAction">
+		<Button fx:id="nodeButtonResetPreProcessingList" onAction="#onResetPreProcessingAction">
 			<graphic>
 				<ImageView>
 					<image>
@@ -46,13 +46,13 @@
 				</ImageView>
 			</graphic>
 			<tooltip>
-				<Tooltip text="Resets the whole BinaryClassifications List physically. CAUTION!" />
+				<Tooltip text="Resets the whole PreProcessing List physically. CAUTION!" />
 			</tooltip>
 		</Button>
 
 		<Separator orientation="VERTICAL" />
 
-		<ChoiceBox fx:id="nodeChoiceBoxBinaryClassifier" prefWidth="200.0" />
+		<ChoiceBox fx:id="nodeChoiceBoxPreProcessor" prefWidth="200.0" />
 
 	</children>
 	<padding>
