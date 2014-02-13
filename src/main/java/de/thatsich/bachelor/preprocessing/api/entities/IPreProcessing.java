@@ -1,5 +1,7 @@
 package de.thatsich.bachelor.preprocessing.api.entities;
 
+import java.nio.file.Path;
+
 
 
 /**
@@ -42,4 +44,11 @@ public interface IPreProcessing
 	 *            Name of the PreProcessing File
 	 */
 	void save( String fileName );
+	
+	/**
+	 * Gets FilePath
+	 * 
+	 * @return FilePath
+	 */
+	Path getFilePath();
 }

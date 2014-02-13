@@ -1,6 +1,7 @@
 package de.thatsich.bachelor.preprocessing.intern.command.preprocessing;
 
 import java.io.File;
+import java.nio.file.Path;
 
 import javafx.beans.property.ObjectProperty;
 
@@ -45,5 +46,11 @@ public class AANNPreProcessing extends APreProcessing
 	public void save( String fileName )
 	{
 		EncogDirectoryPersistence.saveObject( new File( fileName ), this.networkProperty.get() );
+	}
+
+	@Override
+	public Path getFilePath()
+	{
+		return null;
 	}
 }
