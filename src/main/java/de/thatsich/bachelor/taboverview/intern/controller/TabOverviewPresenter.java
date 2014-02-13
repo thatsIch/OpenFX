@@ -25,6 +25,9 @@ import de.thatsich.bachelor.imageprocessing.api.core.IImageListView;
 import de.thatsich.bachelor.prediction.api.core.IPredictionDisplayView;
 import de.thatsich.bachelor.prediction.api.core.IPredictionInputView;
 import de.thatsich.bachelor.prediction.api.core.IPredictionListView;
+import de.thatsich.bachelor.preprocessing.api.views.IPreProcessingDisplayView;
+import de.thatsich.bachelor.preprocessing.api.views.IPreProcessingInputView;
+import de.thatsich.bachelor.preprocessing.api.views.IPreProcessingListView;
 
 
 /**
@@ -59,6 +62,10 @@ public class TabOverviewPresenter implements Initializable
 	@Inject private IFeatureDisplayView			featureDisplayView;
 	@Inject private IFeatureListView			featureListView;
 
+	@Inject private IPreProcessingInputView		preProcessingInputView;
+	@Inject private IPreProcessingDisplayView	preProcessingDisplayView;
+	@Inject private IPreProcessingListView		preProcessingListView;
+
 	@Inject private IClassificationInputView	classificationInputView;
 	@Inject private IClassificationDisplayView	classificationDisplayView;
 	@Inject private IClassificationListView		classificationListView;
@@ -85,6 +92,7 @@ public class TabOverviewPresenter implements Initializable
 		this.paneFeatureExtraction.setLeft( this.featureListView.getRoot() );
 		this.paneFeatureExtraction.setCenter( this.featureDisplayView.getRoot() );
 
+//		this.panePreProcessing.setTop( this. )
 		// this.vBoxPreProcessing.getChildren().add(
 		// this.classificationInputView.getRoot() );
 		// this.vBoxPreProcessing.getChildren().add(

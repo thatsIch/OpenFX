@@ -7,6 +7,7 @@ import de.thatsich.bachelor.errorgeneration.api.guice.ErrorWiringModule;
 import de.thatsich.bachelor.featureextraction.api.guice.FeatureWiringModule;
 import de.thatsich.bachelor.imageprocessing.api.guice.ImageWiringModule;
 import de.thatsich.bachelor.prediction.api.guice.PredictionWiringModule;
+import de.thatsich.bachelor.preprocessing.api.guice.PreProcessingWiringModule;
 import de.thatsich.bachelor.taboverview.api.core.ITabOverviewView;
 import de.thatsich.bachelor.taboverview.intern.view.TabOverviewView;
 import de.thatsich.core.guice.AWiringModule;
@@ -22,6 +23,7 @@ public class TabOverviewWiringModule extends AWiringModule
 		this.install( new PredictionWiringModule() );
 		this.install( new ClassificationWiringModule() );
 		this.install( new ErrorWiringModule() );
+		this.install( new PreProcessingWiringModule() );
 		this.install( new FeatureWiringModule() );
 		this.install( new ImageWiringModule() );
 	}
