@@ -1,6 +1,6 @@
 package de.thatsich.bachelor.preprocessing.api.views;
 
-public interface IPreProcessingState
+public interface IPreProcessingListView
 {
 
 }

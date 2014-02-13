@@ -1,6 +1,9 @@
 package de.thatsich.bachelor.preprocessing.intern.view;
 
-public class PreProcessingListView
+import de.thatsich.bachelor.preprocessing.api.views.IPreProcessingListView;
+import de.thatsich.core.javafx.AFXMLView;
+
+public class PreProcessingListView extends AFXMLView implements IPreProcessingListView
 {
 
 }
