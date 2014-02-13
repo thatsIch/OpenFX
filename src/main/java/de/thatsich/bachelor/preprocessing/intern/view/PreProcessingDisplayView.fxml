@@ -14,26 +14,47 @@
 			<children>
 				<Group>
 					<children>
-						<!-- <GridPane> <children> <Label text="Classifier" GridPane.columnIndex="0" 
-							GridPane.rowIndex="0"> <font> <Font name="System Bold" size="11.0" fx:id="x1" 
-							/> </font> </Label> <Label font="$x1" text="Extractor" GridPane.columnIndex="0" 
-							GridPane.rowIndex="1" /> <Label font="$x1" text="FrameSize" GridPane.columnIndex="0" 
-							GridPane.rowIndex="2" /> <Label font="$x1" text="Error" GridPane.columnIndex="0" 
-							GridPane.rowIndex="3" /> <Label font="$x1" text="ID" GridPane.columnIndex="0" 
-							GridPane.rowIndex="4" /> <Label fx:id="nodeLabelClassificationName" text="" 
-							GridPane.columnIndex="1" GridPane.rowIndex="0" /> <Label fx:id="nodeLabelExtractorName" 
-							text="" GridPane.columnIndex="1" GridPane.rowIndex="1" /> <Label fx:id="nodeLabelFrameSize" 
-							text="" GridPane.columnIndex="1" GridPane.rowIndex="2" /> <Label fx:id="nodeLabelErrorName" 
-							text="" GridPane.columnIndex="1" GridPane.rowIndex="3" /> <Label fx:id="nodeLabelID" 
-							text="" GridPane.columnIndex="1" GridPane.rowIndex="4" /> </children> <columnConstraints> 
-							<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" /> 
-							<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" /> 
-							</columnConstraints> <rowConstraints> <RowConstraints maxHeight="25.0" minHeight="10.0" 
-							prefHeight="25.0" vgrow="SOMETIMES" /> <RowConstraints maxHeight="25.0" minHeight="10.0" 
-							prefHeight="25.0" vgrow="SOMETIMES" /> <RowConstraints maxHeight="25.0" minHeight="10.0" 
-							prefHeight="25.0" vgrow="SOMETIMES" /> <RowConstraints maxHeight="25.0" minHeight="10.0" 
-							prefHeight="25.0" vgrow="SOMETIMES" /> <RowConstraints maxHeight="25.0" minHeight="10.0" 
-							prefHeight="25.0" vgrow="SOMETIMES" /> </rowConstraints> </GridPane> -->
+						<GridPane>
+							<children>
+								<Label text="PreProcessing" GridPane.columnIndex="0"
+									GridPane.rowIndex="0">
+									<font>
+										<Font name="System Bold" size="11.0" fx:id="x1" />
+									</font>
+								</Label>
+								<Label font="$x1" text="InputSize" GridPane.columnIndex="0"
+									GridPane.rowIndex="1" />
+								<Label font="$x1" text="OutputSize" GridPane.columnIndex="0"
+									GridPane.rowIndex="2" />
+								<Label font="$x1" text="ID" GridPane.columnIndex="0"
+									GridPane.rowIndex="3" />
+								<Label fx:id="nodeLabelPreProcessingName" text=""
+									GridPane.columnIndex="1" GridPane.rowIndex="0" />
+								<Label fx:id="nodeLabelInputSize" text=""
+									GridPane.columnIndex="1" GridPane.rowIndex="1" />
+								<Label fx:id="nodeLabelOutputSize" text=""
+									GridPane.columnIndex="1" GridPane.rowIndex="2" />
+								<Label fx:id="nodeLabelID" text="" GridPane.columnIndex="1"
+									GridPane.rowIndex="3" />
+							</children>
+							
+							<columnConstraints>
+								<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"
+									prefWidth="100.0" />
+								<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"
+									prefWidth="100.0" />
+							</columnConstraints>
+							<rowConstraints>
+								<RowConstraints maxHeight="25.0" minHeight="10.0"
+									prefHeight="25.0" vgrow="SOMETIMES" />
+								<RowConstraints maxHeight="25.0" minHeight="10.0"
+									prefHeight="25.0" vgrow="SOMETIMES" />
+								<RowConstraints maxHeight="25.0" minHeight="10.0"
+									prefHeight="25.0" vgrow="SOMETIMES" />
+								<RowConstraints maxHeight="25.0" minHeight="10.0"
+									prefHeight="25.0" vgrow="SOMETIMES" />
+							</rowConstraints>
+						</GridPane>
 					</children>
 				</Group>
 			</children>
