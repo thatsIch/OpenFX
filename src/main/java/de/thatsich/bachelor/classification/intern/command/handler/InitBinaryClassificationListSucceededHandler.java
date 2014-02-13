@@ -21,7 +21,6 @@ public class InitBinaryClassificationListSucceededHandler extends ACommandHandle
 	@Override
 	public void handle(List<IBinaryClassification> trainedBinaryClassifierList) {
 		this.binaryClassifications.getBinaryClassificationListProperty().addAll(trainedBinaryClassifierList);
-		System.out.println(trainedBinaryClassifierList.size());
 		this.log.info("Added TrainedBinaryClassifierList to Database.");
 	}
 }

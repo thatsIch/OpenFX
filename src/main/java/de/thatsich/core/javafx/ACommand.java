@@ -11,7 +11,7 @@ import de.thatsich.core.Log;
 public abstract class ACommand<T> extends Service<T> {
 	// Injects
 	@Inject protected Log log;
-	@Inject private Injector injector;
+	@Inject protected Injector injector;
 	
 	public void setOnSucceededCommandHandler(Class<? extends ACommandHandler<T>> handlerClass) {
 		final ACommandHandler<T> handler = this.injector.getInstance(handlerClass);

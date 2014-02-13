@@ -1,5 +1,7 @@
 package de.thatsich.bachelor.preprocessing.intern.model;
 
+import com.google.inject.Singleton;
+
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleListProperty;
@@ -8,7 +10,7 @@ import javafx.collections.FXCollections;
 import de.thatsich.bachelor.preprocessing.api.entities.IPreProcessing;
 import de.thatsich.bachelor.preprocessing.api.models.IPreProcessings;
 
-
+@Singleton
 public class PreProcessings implements IPreProcessings
 {
 	// Properties
