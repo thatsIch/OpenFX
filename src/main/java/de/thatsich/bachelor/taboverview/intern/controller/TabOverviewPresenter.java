@@ -10,9 +10,9 @@ import javafx.scene.layout.BorderPane;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
-import de.thatsich.bachelor.classification.api.core.IClassificationDisplayView;
-import de.thatsich.bachelor.classification.api.core.IClassificationInputView;
-import de.thatsich.bachelor.classification.api.core.IClassificationListView;
+import de.thatsich.bachelor.classification.api.views.IClassificationDisplayView;
+import de.thatsich.bachelor.classification.api.views.IClassificationInputView;
+import de.thatsich.bachelor.classification.api.views.IClassificationListView;
 import de.thatsich.bachelor.errorgeneration.api.core.IErrorDisplayView;
 import de.thatsich.bachelor.errorgeneration.api.core.IErrorInputView;
 import de.thatsich.bachelor.errorgeneration.api.core.IErrorListView;

@@ -9,8 +9,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import com.google.inject.Inject;
 
-import de.thatsich.bachelor.classification.api.core.IBinaryClassifications;
 import de.thatsich.bachelor.classification.api.entities.IBinaryClassification;
+import de.thatsich.bachelor.classification.api.models.IBinaryClassifications;
 import de.thatsich.bachelor.classification.intern.command.ClassificationInitCommander;
 import de.thatsich.bachelor.classification.intern.command.commands.SetLastBinaryClassificationIndexCommand;
 import de.thatsich.bachelor.classification.intern.command.provider.IClassificationCommandProvider;

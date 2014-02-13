@@ -4,8 +4,8 @@ import javafx.collections.ObservableList;
 
 import com.google.inject.Inject;
 
-import de.thatsich.bachelor.classification.api.core.IBinaryClassifications;
 import de.thatsich.bachelor.classification.api.entities.IBinaryClassification;
+import de.thatsich.bachelor.classification.api.models.IBinaryClassifications;
 import de.thatsich.core.javafx.ACommandHandler;
 
 /**

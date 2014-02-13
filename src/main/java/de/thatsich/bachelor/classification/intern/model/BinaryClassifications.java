@@ -5,8 +5,8 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
-import de.thatsich.bachelor.classification.api.core.IBinaryClassifications;
 import de.thatsich.bachelor.classification.api.entities.IBinaryClassification;
+import de.thatsich.bachelor.classification.api.models.IBinaryClassifications;
 
 public class BinaryClassifications implements IBinaryClassifications {
 	// Properties

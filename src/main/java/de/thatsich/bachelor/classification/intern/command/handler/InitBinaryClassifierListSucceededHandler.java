@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.google.inject.Inject;
 
-import de.thatsich.bachelor.classification.api.core.IBinaryClassifiers;
+import de.thatsich.bachelor.classification.api.models.IBinaryClassifiers;
 import de.thatsich.bachelor.classification.intern.command.classifier.core.IBinaryClassifier;
 import de.thatsich.core.javafx.ACommandHandler;
 

@@ -7,7 +7,7 @@ import java.util.concurrent.ExecutorService;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
-import de.thatsich.bachelor.classification.api.core.IClassificationState;
+import de.thatsich.bachelor.classification.api.models.IClassificationState;
 import de.thatsich.bachelor.classification.intern.command.commands.GetLastBinaryClassificationIndexCommand;
 import de.thatsich.bachelor.classification.intern.command.commands.GetLastBinaryClassifierIndexCommand;
 import de.thatsich.bachelor.classification.intern.command.commands.InitBinaryClassificationListCommand;

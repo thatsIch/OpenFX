@@ -2,7 +2,7 @@ package de.thatsich.bachelor.classification.intern.model;
 
 import java.nio.file.Path;
 
-import de.thatsich.bachelor.classification.api.core.IClassificationState;
+import de.thatsich.bachelor.classification.api.models.IClassificationState;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 

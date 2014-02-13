@@ -13,10 +13,10 @@ import javafx.util.StringConverter;
 
 import com.google.inject.Inject;
 
-import de.thatsich.bachelor.classification.api.core.IBinaryClassifications;
-import de.thatsich.bachelor.classification.api.core.IBinaryClassifiers;
-import de.thatsich.bachelor.classification.api.core.IClassificationState;
 import de.thatsich.bachelor.classification.api.entities.IBinaryClassification;
+import de.thatsich.bachelor.classification.api.models.IBinaryClassifications;
+import de.thatsich.bachelor.classification.api.models.IBinaryClassifiers;
+import de.thatsich.bachelor.classification.api.models.IClassificationState;
 import de.thatsich.bachelor.classification.intern.command.ClassificationInitCommander;
 import de.thatsich.bachelor.classification.intern.command.classifier.core.IBinaryClassifier;
 import de.thatsich.bachelor.classification.intern.command.commands.RemoveBinaryClassificationCommand;

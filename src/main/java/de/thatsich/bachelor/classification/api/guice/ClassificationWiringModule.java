@@ -2,12 +2,12 @@ package de.thatsich.bachelor.classification.api.guice;
 
 import com.google.inject.Scopes;
 
-import de.thatsich.bachelor.classification.api.core.IBinaryClassifications;
-import de.thatsich.bachelor.classification.api.core.IBinaryClassifiers;
-import de.thatsich.bachelor.classification.api.core.IClassificationDisplayView;
-import de.thatsich.bachelor.classification.api.core.IClassificationInputView;
-import de.thatsich.bachelor.classification.api.core.IClassificationListView;
-import de.thatsich.bachelor.classification.api.core.IClassificationState;
+import de.thatsich.bachelor.classification.api.models.IBinaryClassifications;
+import de.thatsich.bachelor.classification.api.models.IBinaryClassifiers;
+import de.thatsich.bachelor.classification.api.models.IClassificationState;
+import de.thatsich.bachelor.classification.api.views.IClassificationDisplayView;
+import de.thatsich.bachelor.classification.api.views.IClassificationInputView;
+import de.thatsich.bachelor.classification.api.views.IClassificationListView;
 import de.thatsich.bachelor.classification.intern.command.classifier.RandomForestBinaryClassifier;
 import de.thatsich.bachelor.classification.intern.command.classifier.SVMBinaryClassifier;
 import de.thatsich.bachelor.classification.intern.model.BinaryClassifications;
