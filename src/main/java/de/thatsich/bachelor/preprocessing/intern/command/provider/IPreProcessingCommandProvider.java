@@ -10,9 +10,10 @@ import de.thatsich.bachelor.preprocessing.intern.command.commands.SetLastPreProc
 import de.thatsich.bachelor.preprocessing.intern.command.commands.SetLastPreProcessorIndexCommand;
 import de.thatsich.bachelor.preprocessing.intern.command.commands.TrainPreProcessorCommand;
 import de.thatsich.bachelor.preprocessing.intern.command.preprocessor.core.IPreProcessor;
+import de.thatsich.core.guice.ICommandProvider;
 
 
-public interface IPreProcessingCommandProvider
+public interface IPreProcessingCommandProvider extends ICommandProvider
 {
 	TrainPreProcessorCommand createTrainPreProcessorCommand( Path preProcessingFolderPath, IPreProcessor selectedPreProcessor, FeatureVectorSet selectedFeatureVectorSet, List<FeatureVectorSet> featureVectorSetList );
 	RemovePreProcessingCommand createRemovePreProcessingCommand( IPreProcessing pp );

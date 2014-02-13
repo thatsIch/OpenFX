@@ -4,7 +4,7 @@ import de.thatsich.bachelor.preprocessing.api.entities.IPreProcessing;
 import de.thatsich.core.javafx.ACommand;
 
 /**
- * TODO
+ * TODO training of the preprocessor
  * 
  * 
  * @author thatsIch

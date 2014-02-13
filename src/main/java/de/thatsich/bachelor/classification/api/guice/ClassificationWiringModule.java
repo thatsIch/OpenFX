@@ -20,45 +20,46 @@ import de.thatsich.bachelor.classification.intern.view.ClassificationListView;
 import de.thatsich.core.guice.AWiringModule;
 
 
-/**
- * Guice Graph of the whole MVP structure
- * 
- * @author Minh
- *
- */
-public class ClassificationWiringModule extends AWiringModule {
+public class ClassificationWiringModule extends AWiringModule
+{
 	@Override
-	protected void bindModule() {
-		super.bind(ClassificationWiringModule.class).toInstance(this);
+	protected void bindModule()
+	{
+		super.bind( ClassificationWiringModule.class ).toInstance( this );
 	}
 
 	@Override
-	protected void bindView() {
-		super.bind(IClassificationDisplayView.class).to(ClassificationDisplayView.class).in(Scopes.SINGLETON);
-		super.bind(IClassificationInputView.class).to(ClassificationInputView.class).in(Scopes.SINGLETON);
-		super.bind(IClassificationListView.class).to(ClassificationListView.class).in(Scopes.SINGLETON);
+	protected void bindView()
+	{
+		super.bind( IClassificationDisplayView.class ).to( ClassificationDisplayView.class ).in( Scopes.SINGLETON );
+		super.bind( IClassificationInputView.class ).to( ClassificationInputView.class ).in( Scopes.SINGLETON );
+		super.bind( IClassificationListView.class ).to( ClassificationListView.class ).in( Scopes.SINGLETON );
 	}
 
 	@Override
-	protected void bindController() {
+	protected void bindController()
+	{
 	}
 
 	@Override
-	protected void bindCommand() {
+	protected void bindCommand()
+	{
 	}
 
 	@Override
-	protected void bindModel() {
-		super.bind(IBinaryClassifiers.class).to(BinaryClassifiers.class).in(Scopes.SINGLETON);
-		super.bind(IBinaryClassifications.class).to(BinaryClassifications.class).in(Scopes.SINGLETON);
-		super.bind(IClassificationState.class).to(ClassificationState.class).in(Scopes.SINGLETON);
+	protected void bindModel()
+	{
+		super.bind( IBinaryClassifiers.class ).to( BinaryClassifiers.class ).in( Scopes.SINGLETON );
+		super.bind( IBinaryClassifications.class ).to( BinaryClassifications.class ).in( Scopes.SINGLETON );
+		super.bind( IClassificationState.class ).to( ClassificationState.class ).in( Scopes.SINGLETON );
 	}
 
 	@Override
-	protected void bindService() {
-		super.bind(ClassificationConfigService.class).in(Scopes.SINGLETON);
-		
-		super.bind(SVMBinaryClassifier.class).in(Scopes.SINGLETON);
-		super.bind(RandomForestBinaryClassifier.class).in(Scopes.SINGLETON);
+	protected void bindService()
+	{
+		super.bind( ClassificationConfigService.class ).in( Scopes.SINGLETON );
+
+		super.bind( SVMBinaryClassifier.class ).in( Scopes.SINGLETON );
+		super.bind( RandomForestBinaryClassifier.class ).in( Scopes.SINGLETON );
 	}
 }

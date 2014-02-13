@@ -2,6 +2,12 @@ package de.thatsich.core.guice;
 
 import com.google.inject.AbstractModule;
 
+/**
+ * Guice Graph of the whole MVP structure
+ * 
+ * @author Minh
+ *
+ */
 public abstract class AWiringModule extends AbstractModule {
 	@Override
 	protected final void configure() {

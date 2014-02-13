@@ -1,6 +1,8 @@
 package de.thatsich.bachelor.preprocessing.api.views;
 
-public interface IPreProcessingDisplayView
+import de.thatsich.core.javafx.IFXMLView;
+ 
+public interface IPreProcessingDisplayView extends IFXMLView
 {
 
 }
