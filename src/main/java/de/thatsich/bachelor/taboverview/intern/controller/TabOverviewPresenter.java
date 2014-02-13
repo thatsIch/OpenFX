@@ -92,14 +92,9 @@ public class TabOverviewPresenter implements Initializable
 		this.paneFeatureExtraction.setLeft( this.featureListView.getRoot() );
 		this.paneFeatureExtraction.setCenter( this.featureDisplayView.getRoot() );
 
-//		this.panePreProcessing.setTop( this. )
-		// this.vBoxPreProcessing.getChildren().add(
-		// this.classificationInputView.getRoot() );
-		// this.vBoxPreProcessing.getChildren().add(
-		// this.classificationDisplayView.getRoot() );
-		// this.vBoxPreProcessing.getChildren().add(
-		// this.classificationListView.getRoot() );
-		//
+		this.panePreProcessing.setTop( this.preProcessingInputView.getRoot() );
+		this.panePreProcessing.setLeft( this.preProcessingListView.getRoot() );
+		this.panePreProcessing.setCenter( this.preProcessingDisplayView.getRoot() );
 
 		this.paneClassification.setTop( this.classificationInputView.getRoot() );
 		this.paneClassification.setLeft( this.classificationListView.getRoot() );
