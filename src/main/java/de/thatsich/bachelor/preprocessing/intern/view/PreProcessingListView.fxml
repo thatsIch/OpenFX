@@ -14,18 +14,14 @@
 			AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 
 			<columns>
-			<!-- 
 				<TableColumn editable="false" prefWidth="100.0"
-					sortable="false" text="Classifier" fx:id="nodeTableColumnClassifierName" />
+					sortable="false" text="PreProcessing" fx:id="nodeTableColumnPreProcessingName" />
 				<TableColumn editable="false" prefWidth="100.0"
-					sortable="false" text="Extractor" fx:id="nodeTableColumnExtractorName" />
+					sortable="false" text="InputSize" fx:id="nodeTableColumnInputSize" />
 				<TableColumn editable="false" prefWidth="100.0"
-					sortable="false" text="Frame Size" fx:id="nodeTableColumnFrameSize" />
-				<TableColumn editable="false" prefWidth="100.0"
-					sortable="false" text="Error" fx:id="nodeTableErrorName" />
+					sortable="false" text="OutputSize" fx:id="nodeTableColumnOutputSize" />
 				<TableColumn editable="false" prefWidth="100.0"
 					sortable="false" text="ID" fx:id="nodeTableColumnID" />
-					 -->
 			</columns>
 
 			<columnResizePolicy>
