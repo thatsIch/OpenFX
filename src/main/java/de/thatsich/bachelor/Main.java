@@ -22,8 +22,6 @@ import de.thatsich.core.opencv.OpenCVLoader;
 
 // ODO low priority - Random Feature Extractor
 // TODO CNBC
-// TODO Denoising http://docs.opencv.org/trunk/modules/photo/doc/denoising.html
-// TODO CvSmooth, CvThreshold
 // Converters.Mat_to_vector_float( positiveTrainData, null );
 /**
  * Main Execution Class

@@ -140,7 +140,8 @@ public class PredictionDisplayPresenter extends AFXMLPresenter
 		return Images.toImage( originalMat );
 	}
 
-	private double sigmoid( double x )
+	// TODO use sigmoid?
+	public static double sigmoid( double x )
 	{
 		return 1 / ( 1 + Math.exp( -x ) );
 	}

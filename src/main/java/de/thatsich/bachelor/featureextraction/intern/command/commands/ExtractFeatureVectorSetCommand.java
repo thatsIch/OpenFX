@@ -33,12 +33,12 @@ public class ExtractFeatureVectorSetCommand extends ACommand<FeatureVectorSet>
 	private final boolean			smooth;
 	private final boolean			threshold;
 	private final boolean			denoising;
-	
+
 	// Injects
 	@Inject private CSVService		csvService;
 
 	@Inject
-	public ExtractFeatureVectorSetCommand( @Assisted Path folderPath, @Assisted ErrorEntry errorEntry, @Assisted IFeatureExtractor extractor, @Assisted int frameSize, @Assisted boolean smooth, @Assisted boolean threshold, @Assisted boolean denoising )
+	public ExtractFeatureVectorSetCommand( @Assisted Path folderPath, @Assisted ErrorEntry errorEntry, @Assisted IFeatureExtractor extractor, @Assisted int frameSize, @Assisted( "smooth" ) boolean smooth, @Assisted( "threshold" ) boolean threshold, @Assisted( "denoising" ) boolean denoising )
 	{
 		this.featureInputFolderPath = folderPath;
 		this.errorEntry = errorEntry;
@@ -56,7 +56,15 @@ public class ExtractFeatureVectorSetCommand extends ACommand<FeatureVectorSet>
 		final String extractorName = this.featureExtractor.getName();
 		final String id = UUID.randomUUID().toString();
 		log.info( "Prepared all necessary information." );
-//		Imgproc.threshold
+
+		// TODO Implement Smooth, Denoising and Threshold somehow Denoising
+		// http://docs.opencv.org/trunk/modules/photo/doc/denoising.html
+		// CvSmooth, CvThreshold
+		if ( this.smooth == this.threshold == this.denoising )
+		{
+			this.log.info( "TODO" );
+		}
+
 		final List<FeatureVector> featureVectorList = FXCollections.observableArrayList();
 		final List<List<Float>> csvResult = FXCollections.observableArrayList();
 		final Mat[][] originalErrorSplit = Images.split( this.errorEntry.getOriginalWithErrorMat(), this.frameSize, this.frameSize );
