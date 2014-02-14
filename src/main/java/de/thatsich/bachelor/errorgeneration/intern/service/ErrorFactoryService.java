@@ -21,8 +21,9 @@ public class ErrorFactoryService
 	public ErrorEntry getErrorEntryFromPath( Path filePath )
 	{
 		final String unparsedString = filePath.getFileName().toString();
-		final String className = this.parseClassName( unparsedString );
-		final String errorName = unparsedString.replace( className, "" );
+		final String splitString[] = unparsedString.split( "_" );
+		final String className = splitString[0];
+		final String errorName = splitString[1];
 
 		final Mat encodedImage = Images.toMat( filePath );
 
@@ -40,33 +41,13 @@ public class ErrorFactoryService
 	public ErrorEntry getErrorEntryFromMat( Path filePath, Mat originalMat, Mat originalWithErrorMat )
 	{
 		final String unparsedString = filePath.getFileName().toString();
-		final String className = this.parseClassName( unparsedString );
-		final String errorName = unparsedString.replace( className, "" );
+		final String splitString[] = unparsedString.split( "_" );
+		final String className = splitString[0];
+		final String errorName = splitString[1];
 		
 		final Mat onlyErrorMat = new Mat();
 		Core.absdiff( originalMat, originalWithErrorMat, onlyErrorMat );
 
 		return new ErrorEntry( filePath, originalMat, originalWithErrorMat, onlyErrorMat, className, errorName );
-	}
-
-	/**
-	 * Extracts classname
-	 * 
-	 * @param unparsedString
-	 *            String which contains the ClassName in it.
-	 * 
-	 * @return the name of the class
-	 */
-	private String parseClassName( String unparsedString )
-	{
-		// Defining Pattern and Matcher
-		final Pattern errorClassPattern = Pattern.compile( "[a-zA-Z]+" );
-		final Matcher m = errorClassPattern.matcher( unparsedString );
-
-		// Searching first instance
-		m.find();
-		final String className = m.group();
-
-		return className;
 	}
 }
