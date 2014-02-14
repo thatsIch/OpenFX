@@ -27,8 +27,7 @@ public class GrayLevelCooccurenceMatrix extends AFeatureExtractor {
 				final boolean hasTopRight = hasTop && hasRight;
 				
 				final int center = (int) image.get(row, col)[0];
-//				System.out.println("(" + row + "," + col + "): " + center + " of (" + rows + "," + cols + ") " + call);
-				
+
 				if (hasTopLeft) {
 					final int direction = (int) image.get(row - 1, col - 1)[0];
 					final double currentValue = GLCM.get(center, direction)[0];
