@@ -2,8 +2,8 @@ package de.thatsich.bachelor.errorgeneration.api.guice;
 
 import java.util.List;
 
-import de.thatsich.bachelor.errorgeneration.intern.command.IErrorCommandProvider;
-import de.thatsich.bachelor.errorgeneration.intern.command.IErrorInitCommandProvider;
+import de.thatsich.bachelor.errorgeneration.intern.command.provider.IErrorCommandProvider;
+import de.thatsich.bachelor.errorgeneration.intern.command.provider.IErrorInitCommandProvider;
 import de.thatsich.core.guice.ACommandModule;
 import de.thatsich.core.guice.ICommandProvider;
 
