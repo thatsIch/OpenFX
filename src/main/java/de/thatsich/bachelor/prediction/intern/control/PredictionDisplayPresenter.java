@@ -29,6 +29,10 @@ public class PredictionDisplayPresenter extends AFXMLPresenter
 	@FXML private Label					nodeLabelSpecificity;
 	@FXML private Label					nodeLabelAccuracy;
 
+	@FXML private Label					nodeLabelF05;
+	@FXML private Label					nodeLabelF1;
+	@FXML private Label					nodeLabelF2;
+
 	// Injects
 	@Inject private IBinaryPredictions	binaryPredictions;
 	@Inject private PrecisionRecall		precisionRecall;
@@ -67,23 +71,34 @@ public class PredictionDisplayPresenter extends AFXMLPresenter
 					final int falsePositive = newValue.getFalsePositiveProperty().get();
 					final int trueNegative = newValue.getTrueNegativeProperty().get();
 					final int falseNegative = newValue.getFalseNegativeProperty().get();
-					
-					nodeLabelPrecision.setText( precisionRecall.precision( truePositive, falsePositive, trueNegative, falseNegative ) + "" );
-					nodeLabelRecall.setText( precisionRecall.recall( truePositive, falsePositive, trueNegative, falseNegative ) + "" );
+
+					final double precision = precisionRecall.precision( truePositive, falsePositive, trueNegative, falseNegative );
+					final double recall = precisionRecall.recall( truePositive, falsePositive, trueNegative, falseNegative );
+
+					nodeLabelPrecision.setText( precision + "" );
+					nodeLabelRecall.setText( recall + "" );
 					nodeLabelSpecificity.setText( precisionRecall.specificity( truePositive, falsePositive, trueNegative, falseNegative ) + "" );
 					nodeLabelAccuracy.setText( precisionRecall.accuracy( truePositive, falsePositive, trueNegative, falseNegative ) + "" );
-					
+
+					nodeLabelF05.setText( precisionRecall.f05( precision, recall ) + "" );
+					nodeLabelF1.setText( precisionRecall.f1( precision, recall ) + "" );
+					nodeLabelF2.setText( precisionRecall.f2( precision, recall ) + "" );
+
 					log.info( "Selected new " + newValue );
 				}
 				else
 				{
 					nodeImageViewPrediction.imageProperty().set( null );
-					
+
 					nodeLabelPrecision.setText( null );
 					nodeLabelRecall.setText( null );
 					nodeLabelSpecificity.setText( null );
 					nodeLabelAccuracy.setText( null );
-					
+
+					nodeLabelF05.setText( null );
+					nodeLabelF1.setText( null );
+					nodeLabelF2.setText( null );
+
 					log.info( "Deselected." );
 				}
 			}
@@ -123,13 +138,13 @@ public class PredictionDisplayPresenter extends AFXMLPresenter
 				// if error is not there but predicted > Red
 				else if ( errorValue == 0 && predictionValue > 0.75 * 255 )
 				{
-//					buffer[0] = 255;
+					// buffer[0] = 255;
 				}
 
 				// if error is not there and predicted > Green
 				else if ( errorValue == 0 && predictionValue <= 7.25 * 255 )
 				{
-//					buffer[1] = 255;
+					// buffer[1] = 255;
 				}
 
 				originalMat.put( row, col, buffer );

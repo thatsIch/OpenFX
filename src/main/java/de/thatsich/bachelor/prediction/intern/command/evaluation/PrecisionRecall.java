@@ -29,13 +29,13 @@ public class PrecisionRecall
 	 * document is relevant.
 	 * 
 	 * @param truePositive
-	 *            Correct Result
+	 *        Correct Result
 	 * @param falsePositive
-	 *            Unexpected Result
+	 *        Unexpected Result
 	 * @param trueNegative
-	 *            Correct Absence of Result
+	 *        Correct Absence of Result
 	 * @param falseNegative
-	 *            Missing Result
+	 *        Missing Result
 	 * 
 	 * @return precision
 	 */
@@ -50,13 +50,13 @@ public class PrecisionRecall
 	 * retrieved in a search.
 	 * 
 	 * @param truePositive
-	 *            Correct Result
+	 *        Correct Result
 	 * @param falsePositive
-	 *            Unexpected Result
+	 *        Unexpected Result
 	 * @param trueNegative
-	 *            Correct Absence of Result
+	 *        Correct Absence of Result
 	 * @param falseNegative
-	 *            Missing Result
+	 *        Missing Result
 	 * 
 	 * @return recall
 	 */
@@ -70,13 +70,13 @@ public class PrecisionRecall
 	 * Specificity relates to the test's ability to identify negative results.
 	 * 
 	 * @param truePositive
-	 *            Correct Result
+	 *        Correct Result
 	 * @param falsePositive
-	 *            Unexpected Result
+	 *        Unexpected Result
 	 * @param trueNegative
-	 *            Correct Absence of Result
+	 *        Correct Absence of Result
 	 * @param falseNegative
-	 *            Missing Result
+	 *        Missing Result
 	 * 
 	 * @return specificity
 	 */
@@ -91,18 +91,81 @@ public class PrecisionRecall
 	 * as the given values.
 	 * 
 	 * @param truePositive
-	 *            Correct Result
+	 *        Correct Result
 	 * @param falsePositive
-	 *            Unexpected Result
+	 *        Unexpected Result
 	 * @param trueNegative
-	 *            Correct Absence of Result
+	 *        Correct Absence of Result
 	 * @param falseNegative
-	 *            Missing Result
+	 *        Missing Result
 	 * 
 	 * @return accuracy
 	 */
 	public double accuracy( int truePositive, int falsePositive, int trueNegative, int falseNegative )
 	{
 		return 1.0 * ( truePositive + trueNegative ) / ( truePositive + trueNegative + falsePositive + falseNegative );
+	}
+
+	/**
+	 * F Measure
+	 * harmonic mean of precision and recall
+	 * 
+	 * @param precision
+	 *        Precision
+	 * @param recall
+	 *        Recall
+	 * @param beta
+	 *        Weight
+	 * 
+	 * @return F Measure
+	 */
+	public double f( double precision, double recall, double beta )
+	{
+		if ( beta < 0 ) return -1;
+		final double betasquare = beta * beta;
+		return ( 1 + betasquare ) * precision * recall / ( betasquare * precision + recall );
+	}
+
+	/**
+	 * F1 Measure where recall and precision are evenly weighted.
+	 * 
+	 * @param precision
+	 *        Precision
+	 * @param recall
+	 *        Recall
+	 * 
+	 * @return F1 Measure
+	 */
+	public double f1( double precision, double recall )
+	{
+		return this.f( precision, recall, 1 );
+	}
+
+	/**
+	 * F0.5 Measure which puts more emphasis on precision than recall
+	 * 
+	 * @param precision
+	 *        Precision
+	 * @param recall
+	 *        Recall
+	 * 
+	 * @return F0.5 Measure
+	 */
+	public double f05( double precision, double recall )
+	{
+		return this.f( precision, recall, 0.5 );
+	}
+
+	/**
+	 * F2 Measure which puts more emphasis on recall than precision
+	 * 
+	 * @param precision Precision
+	 * @param recall Recall
+	 * 
+	 * @return F2 Measure
+	 */
+	public double f2( double precision, double recall )
+	{
+		return this.f( precision, recall, 2 );
 	}
 }
