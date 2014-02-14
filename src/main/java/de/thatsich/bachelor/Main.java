@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
+import org.opencv.utils.Converters;
+
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -28,7 +30,7 @@ import de.thatsich.core.opencv.OpenCVLoader;
 // TODO Denoising http://docs.opencv.org/trunk/modules/photo/doc/denoising.html
 // TODO CvtColor, CvSmooth, CvThreshold
 // TODO private static double sigmoid(double x) { return 1 / (1 + Math.exp(-x));
-// }
+// Converters.Mat_to_vector_float( positiveTrainData, null );
 /**
  * Main Execution Class
  * 

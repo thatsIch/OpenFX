@@ -13,7 +13,6 @@ import de.thatsich.core.opencv.Images;
 
 public class ErrorStorageService
 {
-	// TODO maybe cache ErrorEntries 
 	public void store( ErrorEntry entry )
 	{
 		final List<Mat> listMat = Arrays.asList( entry.getOriginalMat(), entry.getOriginalWithErrorMat(), entry.getErrorMat() );
