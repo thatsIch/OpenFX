@@ -11,7 +11,6 @@ import de.thatsich.bachelor.prediction.intern.model.BinaryPredictions;
 import de.thatsich.bachelor.prediction.intern.model.PredictionState;
 import de.thatsich.bachelor.prediction.intern.service.BinaryPredictionConfigService;
 import de.thatsich.bachelor.prediction.intern.service.BinaryPredictionFileStorageService;
-import de.thatsich.bachelor.prediction.intern.view.BinaryPredictionSplitChannelView;
 import de.thatsich.bachelor.prediction.intern.view.PredictionDisplayView;
 import de.thatsich.bachelor.prediction.intern.view.PredictionInputView;
 import de.thatsich.bachelor.prediction.intern.view.PredictionListView;
@@ -34,7 +33,6 @@ public class PredictionWiringModule extends AWiringModule {
 		super.bind(IPredictionDisplayView.class).to(PredictionDisplayView.class).in(Scopes.SINGLETON);
 		super.bind(IPredictionInputView.class).to(PredictionInputView.class).in(Scopes.SINGLETON);
 		super.bind(IPredictionListView.class).to(PredictionListView.class).in(Scopes.SINGLETON);
-		super.bind(BinaryPredictionSplitChannelView.class).in(Scopes.SINGLETON);
 	}
 
 	@Override

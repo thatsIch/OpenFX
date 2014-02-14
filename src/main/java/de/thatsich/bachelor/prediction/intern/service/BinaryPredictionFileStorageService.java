@@ -33,7 +33,7 @@ public class BinaryPredictionFileStorageService {
 	
 	public BinaryPrediction load(Path filePath) throws WrongNumberArgsException {
 		final Mat layeredImage = Highgui.imread(filePath.toAbsolutePath().toString());
-		
+		System.out.println(layeredImage.depth());
 		// split channels to extract GL and Error Mat
 		final List<Mat> layeredImageChannelMats = new ArrayList<Mat>(); 
 		Core.split(layeredImage, layeredImageChannelMats);

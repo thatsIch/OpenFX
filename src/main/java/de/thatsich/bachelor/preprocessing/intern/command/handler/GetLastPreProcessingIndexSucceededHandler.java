@@ -22,9 +22,9 @@ public class GetLastPreProcessingIndexSucceededHandler extends ACommandHandler<I
 	{
 		if ( value >= 0 )
 		{
-			final IPreProcessing selected = this.pps.getPreProcessingListProperty().get(value);
+			final IPreProcessing selected = this.pps.getPreProcessingListProperty().get( value );
 			this.pps.setSelectedPreProcessing( selected );
-			log.info("Set last selected " + selected + " in Model.");	
+			log.info( "Set last selected " + selected + " in Model." );
 		}
 	}
 }

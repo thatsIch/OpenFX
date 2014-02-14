@@ -175,7 +175,7 @@ public class TestBinaryClassificationCommand extends ACommand<BinaryPrediction> 
 		final MatOfFloat[][] featureVectorSplit = getFeatureVectorSplit(withErrorSplit, featureExtractor);
 		final Mat[][] predictionMatSplit = predictError(featureVectorSplit, frameSize, binaryClassification);
 		final Mat predictionMat = assembleImage(predictionMatSplit, onlyError.size());
-		log.info("Prepared Image Content.");
+		this.log.info("Prepared Image Content.");
 		
 		final String strBinaryClassification = this.binaryClassification.getName();
 		final String strFeatureExtractor = this.featureExtractor.getName();
@@ -189,16 +189,16 @@ public class TestBinaryClassificationCommand extends ACommand<BinaryPrediction> 
 		fileName.append(intFrameSize + "_");
 		fileName.append(strErrorGenerator + "_");
 		fileName.append(strID + ".png");
-		log.info("Prepared Image FileName.");
+		this.log.info("Prepared Image FileName.");
 		
 		final Path filePath = predictionFolderPath.resolve(fileName.toString());
-		log.info("Resolved FileName.");
+		this.log.info("Resolved FileName.");
 		
 		final BinaryPrediction prediction = new BinaryPrediction(filePath, withError, errorIndicationMat, predictionMat, strBinaryClassification, strFeatureExtractor, intFrameSize, strErrorGenerator, strID);
-		log.info("Created Binary Prediction.");
+		this.log.info("Created Binary Prediction.");
 		
-		fileStorage.save(prediction);
-		log.info("Stored Prediction to FileSystem.");
+		this.fileStorage.save(prediction);
+		this.log.info("Stored Prediction to FileSystem.");
 		
 		return prediction;
 	}

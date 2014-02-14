@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
-import org.opencv.utils.Converters;
-
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -24,7 +22,6 @@ import de.thatsich.core.opencv.OpenCVLoader;
 
 
 // TODO need Threshold
-// TODO bind erfolgsrate precision recall
 // ODO low priority - Random Feature Extractor
 // TODO CNBC
 // TODO Denoising http://docs.opencv.org/trunk/modules/photo/doc/denoising.html
