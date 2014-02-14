@@ -18,6 +18,7 @@ import de.thatsich.bachelor.errorgeneration.intern.command.handler.GetLastErrorG
 import de.thatsich.bachelor.errorgeneration.intern.command.handler.GetLastErrorLoopCountSucceededHandler;
 import de.thatsich.bachelor.errorgeneration.intern.command.handler.InitErrorEntryListSucceededHandler;
 import de.thatsich.bachelor.errorgeneration.intern.command.handler.InitErrorGeneratorListSucceededHandler;
+import de.thatsich.bachelor.errorgeneration.intern.command.provider.IErrorInitCommandProvider;
 import de.thatsich.core.Log;
 import de.thatsich.core.javafx.CommandExecutor;
 

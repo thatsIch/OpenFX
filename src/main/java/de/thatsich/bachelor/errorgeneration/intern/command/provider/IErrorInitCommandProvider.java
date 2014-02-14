@@ -1,4 +1,4 @@
-package de.thatsich.bachelor.errorgeneration.intern.command;
+package de.thatsich.bachelor.errorgeneration.intern.command.provider;
 
 import java.nio.file.Path;
 

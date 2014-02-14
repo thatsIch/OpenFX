@@ -12,8 +12,8 @@ import com.google.inject.Inject;
 import de.thatsich.bachelor.errorgeneration.api.core.IErrorEntries;
 import de.thatsich.bachelor.errorgeneration.api.entities.ErrorEntry;
 import de.thatsich.bachelor.errorgeneration.intern.command.ErrorInitCommander;
-import de.thatsich.bachelor.errorgeneration.intern.command.IErrorCommandProvider;
 import de.thatsich.bachelor.errorgeneration.intern.command.commands.SetLastErrorEntryIndexCommand;
+import de.thatsich.bachelor.errorgeneration.intern.command.provider.IErrorCommandProvider;
 import de.thatsich.core.javafx.AFXMLPresenter;
 
 public class ErrorListPresenter extends AFXMLPresenter {
