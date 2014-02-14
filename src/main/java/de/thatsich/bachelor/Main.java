@@ -22,6 +22,7 @@ import de.thatsich.core.opencv.OpenCVLoader;
 
 // ODO low priority - Random Feature Extractor
 // TODO CNBC
+// TODO shift denoising and such to Error Generation
 // Converters.Mat_to_vector_float( positiveTrainData, null );
 /**
  * Main Execution Class
