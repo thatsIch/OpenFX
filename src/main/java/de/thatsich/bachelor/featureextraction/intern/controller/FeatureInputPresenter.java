@@ -7,6 +7,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.util.StringConverter;
 
@@ -37,6 +38,10 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 	@FXML private Button nodeButtonExtractFeatureVector;
 	@FXML private Button nodeButtonRemoveFeatureVector;
 	@FXML private Button nodeButtonResetFeatureVectorList;
+	
+	@FXML private CheckBox nodeCheckBoxSmooth;
+	@FXML private CheckBox nodeCheckBoxThreshold;
+	@FXML private CheckBox nodeCheckBoxDenoising;
 
 	// Injects
 	@Inject FeatureInitCommander initCommander;
@@ -118,7 +123,10 @@ public class FeatureInputPresenter extends AFXMLPresenter {
 				this.featureState.getFeatureVectorFolderPath(), 
 				this.errorEntryList.getSelectedErrorEntry(), 
 				this.featureExtractors.getSelectedFeatureExtractor(), 
-				this.featureState.getFrameSize());
+				this.featureState.getFrameSize(),
+				this.nodeCheckBoxSmooth.isSelected(),
+				this.nodeCheckBoxThreshold.isSelected(),
+				this.nodeCheckBoxDenoising.isSelected());
 		extractCommand.setOnSucceededCommandHandler(ExtractFeatureVectorSetSucceededHandler.class);
 		extractCommand.start();
 		this.log.info("FeatureVector deleted and removed from FeatureVectorList.");

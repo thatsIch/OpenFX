@@ -30,18 +30,23 @@ public class ExtractFeatureVectorSetCommand extends ACommand<FeatureVectorSet>
 	private final ErrorEntry		errorEntry;
 	private final IFeatureExtractor	featureExtractor;
 	private final int				frameSize;
-
+	private final boolean			smooth;
+	private final boolean			threshold;
+	private final boolean			denoising;
+	
 	// Injects
-	@Inject
-	private CSVService				csvService;
+	@Inject private CSVService		csvService;
 
 	@Inject
-	public ExtractFeatureVectorSetCommand( @Assisted Path folderPath, @Assisted ErrorEntry errorEntry, @Assisted IFeatureExtractor extractor, @Assisted int frameSize )
+	public ExtractFeatureVectorSetCommand( @Assisted Path folderPath, @Assisted ErrorEntry errorEntry, @Assisted IFeatureExtractor extractor, @Assisted int frameSize, @Assisted boolean smooth, @Assisted boolean threshold, @Assisted boolean denoising )
 	{
 		this.featureInputFolderPath = folderPath;
 		this.errorEntry = errorEntry;
 		this.featureExtractor = extractor;
 		this.frameSize = frameSize;
+		this.smooth = smooth;
+		this.threshold = threshold;
+		this.denoising = denoising;
 	}
 
 	@Override
@@ -51,7 +56,7 @@ public class ExtractFeatureVectorSetCommand extends ACommand<FeatureVectorSet>
 		final String extractorName = this.featureExtractor.getName();
 		final String id = UUID.randomUUID().toString();
 		log.info( "Prepared all necessary information." );
-
+//		Imgproc.threshold
 		final List<FeatureVector> featureVectorList = FXCollections.observableArrayList();
 		final List<List<Float>> csvResult = FXCollections.observableArrayList();
 		final Mat[][] originalErrorSplit = Images.split( this.errorEntry.getOriginalWithErrorMat(), this.frameSize, this.frameSize );

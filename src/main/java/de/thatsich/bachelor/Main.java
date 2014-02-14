@@ -20,13 +20,10 @@ import de.thatsich.core.guice.LoggerModule;
 import de.thatsich.core.guice.PostInitModule;
 import de.thatsich.core.opencv.OpenCVLoader;
 
-
-// TODO need Threshold
 // ODO low priority - Random Feature Extractor
 // TODO CNBC
 // TODO Denoising http://docs.opencv.org/trunk/modules/photo/doc/denoising.html
-// TODO CvtColor, CvSmooth, CvThreshold
-// TODO private static double sigmoid(double x) { return 1 / (1 + Math.exp(-x));
+// TODO CvSmooth, CvThreshold
 // Converters.Mat_to_vector_float( positiveTrainData, null );
 /**
  * Main Execution Class
