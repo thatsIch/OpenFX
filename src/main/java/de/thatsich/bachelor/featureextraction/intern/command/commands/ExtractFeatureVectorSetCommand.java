@@ -10,6 +10,7 @@ import javafx.collections.FXCollections;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfFloat;
+import org.opencv.photo.Photo;
 
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
@@ -55,19 +56,24 @@ public class ExtractFeatureVectorSetCommand extends ACommand<FeatureVectorSet>
 		final String className = this.errorEntry.getErrorClassProperty().get();
 		final String extractorName = this.featureExtractor.getName();
 		final String id = UUID.randomUUID().toString();
+		final Mat originalWithErrorMat = this.errorEntry.getOriginalWithErrorMat().clone();
 		log.info( "Prepared all necessary information." );
 
-		// TODO Implement Smooth, Denoising and Threshold somehow Denoising
-		// http://docs.opencv.org/trunk/modules/photo/doc/denoising.html
+		// TODO Implement Smooth and Threshold somehow Denoising
 		// CvSmooth, CvThreshold
 		if ( this.smooth == this.threshold == this.denoising )
 		{
 			this.log.info( "TODO" );
 		}
 
+		if ( this.denoising )
+		{
+			Photo.fastNlMeansDenoising( originalWithErrorMat, originalWithErrorMat );
+		}
+
 		final List<FeatureVector> featureVectorList = FXCollections.observableArrayList();
 		final List<List<Float>> csvResult = FXCollections.observableArrayList();
-		final Mat[][] originalErrorSplit = Images.split( this.errorEntry.getOriginalWithErrorMat(), this.frameSize, this.frameSize );
+		final Mat[][] originalErrorSplit = Images.split( originalWithErrorMat, this.frameSize, this.frameSize );
 		final Mat[][] errorSplit = Images.split( this.errorEntry.getErrorMat(), this.frameSize, this.frameSize );
 		log.info( "Prepared split images." );
 

@@ -22,7 +22,6 @@ import de.thatsich.core.opencv.Images;
 
 public class PredictionDisplayPresenter extends AFXMLPresenter
 {
-
 	// Nodes
 	@FXML private ImageView				nodeImageViewPrediction;
 	@FXML private Label					nodeLabelPrecision;
