@@ -1,29 +1,20 @@
 package de.thatsich.bachelor.errorgeneration.api.entities;
 
-import java.nio.file.Path;
-
 import javafx.beans.property.ReadOnlyStringProperty;
 import javafx.beans.property.ReadOnlyStringWrapper;
-import lombok.Getter;
-
 import org.opencv.core.Mat;
+
+import java.nio.file.Path;
 
 
 public class ErrorEntry
 {
-	@Getter
-	private final Mat					originalMat;
-
-	@Getter
-	private final Mat					errorMat;
-
-	@Getter
-	private final Mat					originalWithErrorMat;
-	private final ReadOnlyStringWrapper	errorClass	= new ReadOnlyStringWrapper();
-	private final ReadOnlyStringWrapper	errorName	= new ReadOnlyStringWrapper();
-
-	@Getter
-	private final Path					storagePath;
+	private final Mat originalMat;
+	private final Mat errorMat;
+	private final Mat originalWithErrorMat;
+	private final ReadOnlyStringWrapper errorClass = new ReadOnlyStringWrapper();
+	private final ReadOnlyStringWrapper errorName = new ReadOnlyStringWrapper();
+	private final Path storagePath;
 
 	// /**
 	// * Generating ErrorEntry CTOR
@@ -51,7 +42,7 @@ public class ErrorEntry
 	// this.mergedMat.set(mergedMat);
 	// }
 
-	public ErrorEntry( Path storagePath, Mat originalMat, Mat originalWithErrorMat, Mat errorMat, String errorClass, String errorName )
+	public ErrorEntry(Path storagePath, Mat originalMat, Mat originalWithErrorMat, Mat errorMat, String errorClass, String errorName)
 	{
 		this.storagePath = storagePath;
 
@@ -59,8 +50,8 @@ public class ErrorEntry
 		this.errorMat = errorMat;
 		this.originalWithErrorMat = originalWithErrorMat;
 
-		this.errorClass.set( errorClass );
-		this.errorName.set( errorName );
+		this.errorClass.set(errorClass);
+		this.errorName.set(errorName);
 	}
 
 	// ==================================================
@@ -76,4 +67,9 @@ public class ErrorEntry
 	{
 		return this.errorName.getReadOnlyProperty();
 	}
+
+	public Mat getOriginalMat() { return this.originalMat; }
+	public Mat getErrorMat() { return this.errorMat;}
+	public Mat getOriginalWithErrorMat() { return this.originalWithErrorMat; }
+	public Path getStoragePath() { return this.storagePath; }
 }

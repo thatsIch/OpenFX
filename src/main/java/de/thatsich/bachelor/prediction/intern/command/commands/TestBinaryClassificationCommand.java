@@ -1,19 +1,7 @@
 package de.thatsich.bachelor.prediction.intern.command.commands;
 
-import java.nio.file.Path;
-import java.security.InvalidParameterException;
-import java.util.UUID;
-
-import org.opencv.core.Core;
-import org.opencv.core.CvType;
-import org.opencv.core.Mat;
-import org.opencv.core.MatOfFloat;
-import org.opencv.core.Scalar;
-import org.opencv.core.Size;
-
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
-
 import de.thatsich.bachelor.classification.api.entities.IBinaryClassification;
 import de.thatsich.bachelor.errorgeneration.api.entities.IErrorGenerator;
 import de.thatsich.bachelor.featureextraction.intern.command.extractor.IFeatureExtractor;
@@ -22,6 +10,16 @@ import de.thatsich.bachelor.prediction.api.entities.BinaryPrediction;
 import de.thatsich.bachelor.prediction.intern.service.BinaryPredictionFileStorageService;
 import de.thatsich.core.javafx.ACommand;
 import de.thatsich.core.opencv.Images;
+import org.opencv.core.Core;
+import org.opencv.core.CvType;
+import org.opencv.core.Mat;
+import org.opencv.core.MatOfFloat;
+import org.opencv.core.Scalar;
+import org.opencv.core.Size;
+
+import java.nio.file.Path;
+import java.security.InvalidParameterException;
+import java.util.UUID;
 
 public class TestBinaryClassificationCommand extends ACommand<BinaryPrediction> {
 
@@ -182,16 +180,8 @@ public class TestBinaryClassificationCommand extends ACommand<BinaryPrediction> 
 		final int intFrameSize = this.frameSize;
 		final String strErrorGenerator = this.errorGenerator.getName();
 		final String strID = UUID.randomUUID().toString();
-		
-		final StringBuffer fileName = new StringBuffer();
-		fileName.append(strBinaryClassification + "_");
-		fileName.append(strFeatureExtractor + "_");
-		fileName.append(intFrameSize + "_");
-		fileName.append(strErrorGenerator + "_");
-		fileName.append(strID + ".png");
-		this.log.info("Prepared Image FileName.");
-		
-		final Path filePath = predictionFolderPath.resolve(fileName.toString());
+
+		final Path filePath = predictionFolderPath.resolve(strBinaryClassification + "_" + strFeatureExtractor + "_" + intFrameSize + "_" + strErrorGenerator + "_" + strID + ".png");
 		this.log.info("Resolved FileName.");
 		
 		final BinaryPrediction prediction = new BinaryPrediction(filePath, withError, errorIndicationMat, predictionMat, strBinaryClassification, strFeatureExtractor, intFrameSize, strErrorGenerator, strID);
