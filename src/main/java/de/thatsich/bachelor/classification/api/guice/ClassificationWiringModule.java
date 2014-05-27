@@ -58,7 +58,6 @@ public class ClassificationWiringModule extends AWiringModule
 	protected void bindService()
 	{
 		super.bind( ClassificationConfigService.class ).in( Scopes.SINGLETON );
-
 		super.bind( SVMBinaryClassifier.class ).in( Scopes.SINGLETON );
 		super.bind( RandomForestBinaryClassifier.class ).in( Scopes.SINGLETON );
 	}

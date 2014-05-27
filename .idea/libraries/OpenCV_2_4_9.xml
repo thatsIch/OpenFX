@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="OpenCV 2.4.9">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/src/main/resources/de/thatsich/core/libs/OpenCV/opencv-249.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/src/main/resources/de/thatsich/core/libs/OpenCV/opencv-249.jar!/" />
+    </SOURCES>
+  </library>
+</component>
