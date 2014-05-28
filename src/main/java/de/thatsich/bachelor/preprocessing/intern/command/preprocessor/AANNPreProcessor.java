@@ -44,6 +44,7 @@ public class AANNPreProcessor extends APreProcessor
 	@Override
 	public IPreProcessing train(double[][] trainData, double[][] labelData, PreProcessorConfiguration config)
 	{
+
 		// extract important informations
 		final int featureVectorCount = trainData.length;
 		final int featureVectorLength = trainData[0].length;
