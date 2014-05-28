@@ -13,41 +13,52 @@ import java.util.List;
 
 /**
  * CSV Service to read and write to a CSV filled with float values
- * 
+ *
  * @author Minh
- * 
  */
 public class CSVService
 {
 	/**
 	 * writes a csv filled with a list of float-arrays to a specified path
-	 * 
-	 * @param csvPath
-	 *            Path to CSV
-	 * @param values
-	 *            List of FloatArrays
-	 * 
-	 * @throws IOException
-	 *             when writing is not possible
+	 *
+	 * @param csvPath Path to CSV
+	 * @param values  List of FloatArrays
+	 *
+	 * @throws IOException when writing is not possible
 	 */
-	public void write( Path csvPath, List<List<Float>> values ) throws IOException
+	public void write(Path csvPath, List<List<Float>> values) throws IOException
 	{
-		if ( csvPath == null ) throw new InvalidParameterException( "Path is null." );
-		if ( values == null ) throw new InvalidParameterException( "Values is null." );
-		if ( values.size() == 0 ) throw new InvalidParameterException( "Values are empty." );
-
-		final BufferedWriter writer = Files.newBufferedWriter( csvPath, StandardCharsets.US_ASCII );
-
-		for ( int row = 0; row < values.size(); row++ )
+		if (csvPath == null)
 		{
-			for ( int col = 0; col < values.get( row ).size(); col++ )
-			{
-				writer.write( String.valueOf( values.get( row ).get( col ) ).toString() );
+			throw new InvalidParameterException("Path is null.");
+		}
+		if (values == null)
+		{
+			throw new InvalidParameterException("Values is null.");
+		}
+		if (values.size() == 0)
+		{
+			throw new InvalidParameterException("Values are empty.");
+		}
 
-				if ( col < values.get( row ).size() - 1 ) writer.write( "," );
+		final BufferedWriter writer = Files.newBufferedWriter(csvPath, StandardCharsets.US_ASCII);
+
+		for (int row = 0; row < values.size(); row++)
+		{
+			for (int col = 0; col < values.get(row).size(); col++)
+			{
+				writer.write(String.valueOf(values.get(row).get(col)));
+
+				if (col < values.get(row).size() - 1)
+				{
+					writer.write(",");
+				}
 			}
 
-			if ( row < values.size() - 1 ) writer.write( "\n" );
+			if (row < values.size() - 1)
+			{
+				writer.write("\n");
+			}
 		}
 
 		writer.close();
@@ -55,35 +66,39 @@ public class CSVService
 
 	/**
 	 * Reads a CSV File and splits them up into a List of floatarrays
-	 * 
-	 * @param csvPath
-	 *            Path to CSV File
-	 * 
+	 *
+	 * @param csvPath Path to CSV File
+	 *
 	 * @return List of the comma seperated float values in a row
-	 * 
-	 * @throws IOException
-	 *             when reading was not possible
+	 *
+	 * @throws IOException when reading was not possible
 	 */
-	public List<List<Float>> read( Path csvPath ) throws IOException
+	public List<List<Float>> read(Path csvPath) throws IOException
 	{
-		if ( csvPath == null ) throw new InvalidParameterException();
-		if ( Files.notExists( csvPath ) ) throw new IOException( "Path " + csvPath.toString() + " does not exist." );
+		if (csvPath == null)
+		{
+			throw new InvalidParameterException();
+		}
+		if (Files.notExists(csvPath))
+		{
+			throw new IOException("Path " + csvPath.toString() + " does not exist.");
+		}
 
 		final List<List<Float>> result = new ArrayList<>();
 
-		final BufferedReader reader = Files.newBufferedReader( csvPath, StandardCharsets.US_ASCII );
+		final BufferedReader reader = Files.newBufferedReader(csvPath, StandardCharsets.US_ASCII);
 
 		String stringRow;
-		while ( ( stringRow = reader.readLine() ) != null )
+		while ((stringRow = reader.readLine()) != null)
 		{
-			final String[] stringFloats = stringRow.split( "," );
-			final List<Float> floats = new ArrayList<Float>( stringFloats.length );
+			final String[] stringFloats = stringRow.split(",");
+			final List<Float> floats = new ArrayList<>(stringFloats.length);
 
-			for ( int col = 0; col < stringFloats.length; col++ )
+			for (final String stringFloat : stringFloats)
 			{
-				floats.add( Float.parseFloat( stringFloats[col] ) );
+				floats.add(Float.parseFloat(stringFloat));
 			}
-			result.add( floats );
+			result.add(floats);
 		}
 		reader.close();
 

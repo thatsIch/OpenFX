@@ -1,19 +1,18 @@
 package de.thatsich.bachelor.preprocessing.intern.model;
 
-import java.nio.file.Path;
-
 import com.google.inject.Singleton;
-
+import de.thatsich.bachelor.preprocessing.api.models.IPreProcessingState;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import de.thatsich.bachelor.preprocessing.api.models.IPreProcessingState;
+
+import java.nio.file.Path;
 
 @Singleton
 public class PreProcessingState implements IPreProcessingState
 {
 	// Properties
-	private final ObjectProperty<Path> path = new SimpleObjectProperty<Path>();
-	
+	private final ObjectProperty<Path> path = new SimpleObjectProperty<>();
+
 	@Override
 	public ObjectProperty<Path> getPreProcessingFolderPathProperty()
 	{
@@ -27,9 +26,9 @@ public class PreProcessingState implements IPreProcessingState
 	}
 
 	@Override
-	public void setPreProcessingFolderPath( Path folderPath )
+	public void setPreProcessingFolderPath(Path folderPath)
 	{
-		this.path.set( folderPath );
+		this.path.set(folderPath);
 	}
 
 }

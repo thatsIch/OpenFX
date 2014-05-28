@@ -1,30 +1,29 @@
 package de.thatsich.bachelor.preprocessing.intern.command.preprocessing.core;
 
-import java.nio.file.Path;
-
+import com.google.inject.Inject;
+import de.thatsich.bachelor.preprocessing.api.entities.IPreProcessing;
+import de.thatsich.bachelor.preprocessing.intern.command.preprocessor.core.PreProcessorConfiguration;
+import de.thatsich.core.Log;
 import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyStringProperty;
 
-import com.google.inject.Inject;
-
-import de.thatsich.bachelor.preprocessing.api.entities.IPreProcessing;
-import de.thatsich.bachelor.preprocessing.intern.command.preprocessor.core.PreProcessorConfiguration;
-import de.thatsich.core.Log;
+import java.nio.file.Path;
 
 
 public abstract class APreProcessing implements IPreProcessing
 {
 	// Properties
-	private final PreProcessorConfiguration	config;
+	private final PreProcessorConfiguration config;
 
 	// Injects
-	@Inject protected Log					log;
+	@Inject
+	protected Log log;
 
 	/**
 	 * CTOR
 	 */
-	protected APreProcessing( PreProcessorConfiguration config )
+	protected APreProcessing(PreProcessorConfiguration config)
 	{
 		this.config = config;
 	}

@@ -7,11 +7,11 @@ import java.util.logging.LogRecord;
 /**
  * Handles the formatting of the Logger
  * Tries to pad the message
- * 
- * @author Minh
  *
+ * @author Minh
  */
-public class LogFormatter extends Formatter {
+public class LogFormatter extends Formatter
+{
 
 	final private static String MESSAGE_PATTERN = "[%tT] [%-7s] %s%s > %s %s\n";
 
@@ -23,19 +23,12 @@ public class LogFormatter extends Formatter {
 	 * - message
 	 */
 	@Override
-	public String format(final LogRecord log) {
+	public String format(final LogRecord log)
+	{
 		int classIndex = log.getSourceClassName().lastIndexOf(".") + 1;
 		String className = log.getSourceClassName().substring(classIndex) + ".";
 
-		return String.format(
-			LogFormatter.MESSAGE_PATTERN, 
-			new Date(log.getMillis()),
-			log.getThrown() == null ? log.getLevel() : "THROW",
-			className,
-			log.getSourceMethodName(),
-			log.getMessage(),
-			log.getThrown() == null ? "" : log.getThrown()
-		);
+		return String.format(LogFormatter.MESSAGE_PATTERN, new Date(log.getMillis()), log.getThrown() == null ? log.getLevel() : "THROW", className, log.getSourceMethodName(), log.getMessage(), log.getThrown() == null ? "" : log.getThrown());
 	}
 
 }

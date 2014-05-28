@@ -1,26 +1,25 @@
 package de.thatsich.bachelor.imageprocessing.api.guice;
 
-import java.util.List;
-
 import de.thatsich.bachelor.imageprocessing.intern.command.provider.IImageCommandProvider;
 import de.thatsich.bachelor.imageprocessing.intern.command.provider.IImageInitCommandProvider;
 import de.thatsich.core.guice.ACommandModule;
 import de.thatsich.core.guice.ICommandProvider;
 
+import java.util.List;
+
 
 /**
  * Guice Module
- * 
- * @see ACommandModule
- * 
+ *
  * @author thatsIch
+ * @see ACommandModule
  */
 public class ImageCommandModule extends ACommandModule
 {
 	@Override
-	protected void buildProviderModule( List<Class<? extends ICommandProvider>> providerList )
+	protected void buildProviderModule(List<Class<? extends ICommandProvider>> providerList)
 	{
-		providerList.add( IImageCommandProvider.class );
-		providerList.add( IImageInitCommandProvider.class );
+		providerList.add(IImageCommandProvider.class);
+		providerList.add(IImageInitCommandProvider.class);
 	}
 }

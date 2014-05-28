@@ -1,7 +1,6 @@
 package de.thatsich.bachelor.preprocessing.api.guice;
 
 import com.google.inject.Scopes;
-
 import de.thatsich.bachelor.preprocessing.api.models.IPreProcessingState;
 import de.thatsich.bachelor.preprocessing.api.models.IPreProcessings;
 import de.thatsich.bachelor.preprocessing.api.models.IPreProcessors;
@@ -24,15 +23,23 @@ public class PreProcessingWiringModule extends AWiringModule
 	@Override
 	protected void bindModule()
 	{
-		super.bind( PreProcessingWiringModule.class ).toInstance( this );
+		super.bind(PreProcessingWiringModule.class).toInstance(this);
+	}
+
+	@Override
+	protected void bindService()
+	{
+		super.bind(PreProcessingConfigService.class).in(Scopes.SINGLETON);
+
+		super.bind(AANNPreProcessor.class).in(Scopes.SINGLETON);
 	}
 
 	@Override
 	protected void bindView()
 	{
-		super.bind( IPreProcessingDisplayView.class ).to( PreProcessingDisplayView.class ).in( Scopes.SINGLETON );
-		super.bind( IPreProcessingInputView.class ).to( PreProcessingInputView.class ).in( Scopes.SINGLETON );
-		super.bind( IPreProcessingListView.class ).to( PreProcessingListView.class ).in( Scopes.SINGLETON );
+		super.bind(IPreProcessingDisplayView.class).to(PreProcessingDisplayView.class).in(Scopes.SINGLETON);
+		super.bind(IPreProcessingInputView.class).to(PreProcessingInputView.class).in(Scopes.SINGLETON);
+		super.bind(IPreProcessingListView.class).to(PreProcessingListView.class).in(Scopes.SINGLETON);
 	}
 
 	@Override
@@ -48,16 +55,8 @@ public class PreProcessingWiringModule extends AWiringModule
 	@Override
 	protected void bindModel()
 	{
-		super.bind( IPreProcessors.class ).to( PreProcessors.class ).in( Scopes.SINGLETON );
-		super.bind( IPreProcessings.class ).to( PreProcessings.class ).in( Scopes.SINGLETON );
-		super.bind( IPreProcessingState.class ).to( PreProcessingState.class ).in( Scopes.SINGLETON );
-	}
-
-	@Override
-	protected void bindService()
-	{
-		super.bind( PreProcessingConfigService.class ).in( Scopes.SINGLETON );
-		
-		super.bind( AANNPreProcessor.class ).in( Scopes.SINGLETON );
+		super.bind(IPreProcessors.class).to(PreProcessors.class).in(Scopes.SINGLETON);
+		super.bind(IPreProcessings.class).to(PreProcessings.class).in(Scopes.SINGLETON);
+		super.bind(IPreProcessingState.class).to(PreProcessingState.class).in(Scopes.SINGLETON);
 	}
 }

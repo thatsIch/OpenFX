@@ -5,10 +5,11 @@ import de.thatsich.core.javafx.IFXMLView;
 
 /**
  * Interface for the DisplayView of Classifications
- * 
- * @see IFXMLView
+ *
  * @author thatsIch
+ * @see IFXMLView
  */
-public interface IClassificationDisplayView extends IFXMLView {
+public interface IClassificationDisplayView extends IFXMLView
+{
 
 }

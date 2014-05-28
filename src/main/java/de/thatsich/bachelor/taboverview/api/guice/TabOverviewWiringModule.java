@@ -1,7 +1,6 @@
 package de.thatsich.bachelor.taboverview.api.guice;
 
 import com.google.inject.Scopes;
-
 import de.thatsich.bachelor.classification.api.guice.ClassificationWiringModule;
 import de.thatsich.bachelor.errorgeneration.api.guice.ErrorWiringModule;
 import de.thatsich.bachelor.featureextraction.api.guice.FeatureWiringModule;
@@ -18,20 +17,25 @@ public class TabOverviewWiringModule extends AWiringModule
 	@Override
 	protected void bindModule()
 	{
-		super.bind( TabOverviewWiringModule.class ).toInstance( this );
+		super.bind(TabOverviewWiringModule.class).toInstance(this);
 
-		this.install( new PredictionWiringModule() );
-		this.install( new ClassificationWiringModule() );
-		this.install( new ErrorWiringModule() );
-		this.install( new PreProcessingWiringModule() );
-		this.install( new FeatureWiringModule() );
-		this.install( new ImageWiringModule() );
+		this.install(new PredictionWiringModule());
+		this.install(new ClassificationWiringModule());
+		this.install(new ErrorWiringModule());
+		this.install(new PreProcessingWiringModule());
+		this.install(new FeatureWiringModule());
+		this.install(new ImageWiringModule());
+	}
+
+	@Override
+	protected void bindService()
+	{
 	}
 
 	@Override
 	protected void bindView()
 	{
-		super.bind( ITabOverviewView.class ).to( TabOverviewView.class ).in( Scopes.SINGLETON );
+		super.bind(ITabOverviewView.class).to(TabOverviewView.class).in(Scopes.SINGLETON);
 	}
 
 	@Override
@@ -46,11 +50,6 @@ public class TabOverviewWiringModule extends AWiringModule
 
 	@Override
 	protected void bindModel()
-	{
-	}
-
-	@Override
-	protected void bindService()
 	{
 	}
 }

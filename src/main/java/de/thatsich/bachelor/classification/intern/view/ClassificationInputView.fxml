@@ -8,55 +8,55 @@
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.Separator?>
 
-<FlowPane hgap="5.0" prefWidth="-1.0" xmlns="http://javafx.com/javafx/8"
-	xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="de.thatsich.bachelor.classification.intern.control.ClassificationInputPresenter">
+<FlowPane xmlns:fx="http://javafx.com/fxml/1" hgap="5.0" prefWidth="-1.0"
+          xmlns="http://javafx.com/javafx/8"
+          fx:controller="de.thatsich.bachelor.classification.intern.control.ClassificationInputPresenter">
 
-	<children>
-		<Button fx:id="nodeButtonTrainBinaryClassifier" onAction="#onTrainBinaryClassifierAction">
-			<graphic>
-				<ImageView>
-					<image>
-						<Image url="@add.png" />
-					</image>
-				</ImageView>
-			</graphic>
-			<tooltip>
-				<Tooltip text="Train BinaryClassifier and add the BinaryClassification to the List." />
-			</tooltip>
-		</Button>
-		<Button fx:id="nodeButtonRemoveBinaryClassifier" onAction="#onRemoveBinaryClassifierAction">
-			<graphic>
-				<ImageView>
-					<image>
-						<Image url="@remove.png" />
-					</image>
-				</ImageView>
-			</graphic>
-			<tooltip>
-				<Tooltip text="Removes a BinaryClassification from the List." />
-			</tooltip>
-		</Button>
-		<Button fx:id="nodeButtonResetBinaryClassifierList" onAction="#onResetBinaryClassifierListAction">
-			<graphic>
-				<ImageView>
-					<image>
-						<Image url="@delete.png" />
-					</image>
-				</ImageView>
-			</graphic>
-			<tooltip>
-				<Tooltip text="Resets the whole BinaryClassifications List physically. CAUTION!" />
-			</tooltip>
-		</Button>
+    <children>
+        <Button fx:id="nodeButtonTrainBinaryClassifier" onAction="#onTrainBinaryClassifierAction">
+            <graphic>
+                <ImageView>
+                    <image>
+                        <Image url="@add.png"/>
+                    </image>
+                </ImageView>
+            </graphic>
+            <tooltip>
+                <Tooltip text="Train BinaryClassifier and add the BinaryClassification to the List."/>
+            </tooltip>
+        </Button>
+        <Button fx:id="nodeButtonRemoveBinaryClassifier" onAction="#onRemoveBinaryClassifierAction">
+            <graphic>
+                <ImageView>
+                    <image>
+                        <Image url="@remove.png"/>
+                    </image>
+                </ImageView>
+            </graphic>
+            <tooltip>
+                <Tooltip text="Removes a BinaryClassification from the List."/>
+            </tooltip>
+        </Button>
+        <Button fx:id="nodeButtonResetBinaryClassifierList" onAction="#onResetBinaryClassifierListAction">
+            <graphic>
+                <ImageView>
+                    <image>
+                        <Image url="@delete.png"/>
+                    </image>
+                </ImageView>
+            </graphic>
+            <tooltip>
+                <Tooltip text="Resets the whole BinaryClassifications List physically. CAUTION!"/>
+            </tooltip>
+        </Button>
 
-		<Separator orientation="VERTICAL" />
+        <Separator orientation="VERTICAL"/>
 
-		<ChoiceBox fx:id="nodeChoiceBoxBinaryClassifier" prefWidth="200.0" />
+        <ChoiceBox fx:id="nodeChoiceBoxBinaryClassifier" prefWidth="200.0"/>
 
-	</children>
-	<padding>
-		<Insets bottom="10.0" />
-	</padding>
+    </children>
+    <padding>
+        <Insets bottom="10.0"/>
+    </padding>
 
 </FlowPane>

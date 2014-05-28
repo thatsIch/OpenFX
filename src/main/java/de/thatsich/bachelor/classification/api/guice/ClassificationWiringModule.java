@@ -1,7 +1,6 @@
 package de.thatsich.bachelor.classification.api.guice;
 
 import com.google.inject.Scopes;
-
 import de.thatsich.bachelor.classification.api.models.IBinaryClassifications;
 import de.thatsich.bachelor.classification.api.models.IBinaryClassifiers;
 import de.thatsich.bachelor.classification.api.models.IClassificationState;
@@ -25,15 +24,23 @@ public class ClassificationWiringModule extends AWiringModule
 	@Override
 	protected void bindModule()
 	{
-		super.bind( ClassificationWiringModule.class ).toInstance( this );
+		super.bind(ClassificationWiringModule.class).toInstance(this);
+	}
+
+	@Override
+	protected void bindService()
+	{
+		super.bind(ClassificationConfigService.class).in(Scopes.SINGLETON);
+		super.bind(SVMBinaryClassifier.class).in(Scopes.SINGLETON);
+		super.bind(RandomForestBinaryClassifier.class).in(Scopes.SINGLETON);
 	}
 
 	@Override
 	protected void bindView()
 	{
-		super.bind( IClassificationDisplayView.class ).to( ClassificationDisplayView.class ).in( Scopes.SINGLETON );
-		super.bind( IClassificationInputView.class ).to( ClassificationInputView.class ).in( Scopes.SINGLETON );
-		super.bind( IClassificationListView.class ).to( ClassificationListView.class ).in( Scopes.SINGLETON );
+		super.bind(IClassificationDisplayView.class).to(ClassificationDisplayView.class).in(Scopes.SINGLETON);
+		super.bind(IClassificationInputView.class).to(ClassificationInputView.class).in(Scopes.SINGLETON);
+		super.bind(IClassificationListView.class).to(ClassificationListView.class).in(Scopes.SINGLETON);
 	}
 
 	@Override
@@ -49,16 +56,8 @@ public class ClassificationWiringModule extends AWiringModule
 	@Override
 	protected void bindModel()
 	{
-		super.bind( IBinaryClassifiers.class ).to( BinaryClassifiers.class ).in( Scopes.SINGLETON );
-		super.bind( IBinaryClassifications.class ).to( BinaryClassifications.class ).in( Scopes.SINGLETON );
-		super.bind( IClassificationState.class ).to( ClassificationState.class ).in( Scopes.SINGLETON );
-	}
-
-	@Override
-	protected void bindService()
-	{
-		super.bind( ClassificationConfigService.class ).in( Scopes.SINGLETON );
-		super.bind( SVMBinaryClassifier.class ).in( Scopes.SINGLETON );
-		super.bind( RandomForestBinaryClassifier.class ).in( Scopes.SINGLETON );
+		super.bind(IBinaryClassifiers.class).to(BinaryClassifiers.class).in(Scopes.SINGLETON);
+		super.bind(IBinaryClassifications.class).to(BinaryClassifications.class).in(Scopes.SINGLETON);
+		super.bind(IClassificationState.class).to(ClassificationState.class).in(Scopes.SINGLETON);
 	}
 }

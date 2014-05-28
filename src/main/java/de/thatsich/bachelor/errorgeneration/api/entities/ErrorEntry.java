@@ -68,7 +68,8 @@ public class ErrorEntry
 		return this.errorName.getReadOnlyProperty();
 	}
 
-	public Mat getOriginalMat() {
+	public Mat getOriginalMat()
+	{
 		return this.originalMat;
 	}
 

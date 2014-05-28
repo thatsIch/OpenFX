@@ -1,7 +1,6 @@
 package de.thatsich.bachelor.imageprocessing.api.guice;
 
 import com.google.inject.Scopes;
-
 import de.thatsich.bachelor.imageprocessing.api.core.IImageDisplayView;
 import de.thatsich.bachelor.imageprocessing.api.core.IImageEntries;
 import de.thatsich.bachelor.imageprocessing.api.core.IImageInputView;
@@ -19,11 +18,11 @@ import de.thatsich.core.guice.AWiringModule;
 
 /**
  * Guice Graph of the whole MVP structure
- * 
- * @author Minh
  *
+ * @author Minh
  */
-public class ImageWiringModule extends AWiringModule {
+public class ImageWiringModule extends AWiringModule
+{
 
 	/*
 	 * ==================================================
@@ -32,12 +31,20 @@ public class ImageWiringModule extends AWiringModule {
 	 * used to map interfaces to implementations
 	 */
 	@Override
-	protected void bindModule() {
+	protected void bindModule()
+	{
 		super.bind(ImageWiringModule.class).toInstance(this);
 	}
-	
+
 	@Override
-	protected void bindView() {
+	protected void bindService()
+	{
+		super.bind(ImageConfigService.class).in(Scopes.SINGLETON);
+	}
+
+	@Override
+	protected void bindView()
+	{
 		super.bind(IImageDisplayView.class).to(ImageDisplayView.class).in(Scopes.SINGLETON);
 		super.bind(IImageInputView.class).to(ImageInputView.class).in(Scopes.SINGLETON);
 		super.bind(IImageListView.class).to(ImageListView.class).in(Scopes.SINGLETON);
@@ -45,21 +52,19 @@ public class ImageWiringModule extends AWiringModule {
 	}
 
 	@Override
-	protected void bindController() {
+	protected void bindController()
+	{
 	}
 
 	@Override
-	protected void bindCommand() {
+	protected void bindCommand()
+	{
 	}
 
 	@Override
-	protected void bindModel() {
+	protected void bindModel()
+	{
 		super.bind(IImageEntries.class).to(ImageEntries.class).in(Scopes.SINGLETON);
 		super.bind(IImageState.class).to(ImageState.class).in(Scopes.SINGLETON);
-	}
-
-	@Override
-	protected void bindService() {
-		super.bind(ImageConfigService.class).in(Scopes.SINGLETON);
 	}
 }

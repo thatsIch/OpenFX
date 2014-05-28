@@ -1,17 +1,19 @@
 package de.thatsich.bachelor.classification.intern.command.commands;
 
 import com.google.inject.Inject;
-
 import de.thatsich.bachelor.classification.intern.service.ClassificationConfigService;
 import de.thatsich.core.javafx.ACommand;
 
-public class GetLastBinaryClassificationIndexCommand extends ACommand<Integer> {
-	
+public class GetLastBinaryClassificationIndexCommand extends ACommand<Integer>
+{
+
 	// Injections
-	@Inject private ClassificationConfigService config;
+	@Inject
+	private ClassificationConfigService config;
 
 	@Override
-	protected Integer call() throws Exception {
+	protected Integer call() throws Exception
+	{
 		return this.config.getLastBinaryClassificationIndexInt();
 	}
 }

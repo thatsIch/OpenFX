@@ -1,9 +1,6 @@
 package de.thatsich.bachelor.prediction.intern.command.provider;
 
-import java.nio.file.Path;
-
 import com.google.inject.assistedinject.Assisted;
-
 import de.thatsich.bachelor.classification.api.entities.IBinaryClassification;
 import de.thatsich.bachelor.errorgeneration.api.entities.IErrorGenerator;
 import de.thatsich.bachelor.featureextraction.intern.command.extractor.IFeatureExtractor;
@@ -14,9 +11,14 @@ import de.thatsich.bachelor.prediction.intern.command.commands.SetLastBinaryPred
 import de.thatsich.bachelor.prediction.intern.command.commands.TestBinaryClassificationCommand;
 import de.thatsich.core.guice.ICommandProvider;
 
+import java.nio.file.Path;
 
-public interface IPredictionCommandProvider extends ICommandProvider {
+
+public interface IPredictionCommandProvider extends ICommandProvider
+{
 	public TestBinaryClassificationCommand createTestBinaryClassificationCommand(@Assisted Path predictionFolderPath, @Assisted ImageEntry imageEntry, @Assisted int frameSize, @Assisted IErrorGenerator errorGenerator, @Assisted IFeatureExtractor featureExtractor, @Assisted IBinaryClassification binaryClassification);
+
 	public SetLastBinaryPredictionIndexCommand createSetLastBinaryPredictionIndexCommand(@Assisted int lastBinaryPredictionIndex);
-	public DeleteBinaryPredictionCommand createDeleteBinaryPredictionCommand(BinaryPrediction toBeDeletedBinaryPrediction);	
+
+	public DeleteBinaryPredictionCommand createDeleteBinaryPredictionCommand(BinaryPrediction toBeDeletedBinaryPrediction);
 }

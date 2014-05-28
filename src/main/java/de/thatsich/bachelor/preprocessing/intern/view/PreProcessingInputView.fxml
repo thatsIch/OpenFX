@@ -8,55 +8,55 @@
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.Separator?>
 
-<FlowPane hgap="5.0" prefWidth="-1.0" xmlns="http://javafx.com/javafx/8"
-	xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="de.thatsich.bachelor.preprocessing.intern.control.PreProcessingInputPresenter">
+<FlowPane xmlns:fx="http://javafx.com/fxml/1" hgap="5.0" prefWidth="-1.0"
+          xmlns="http://javafx.com/javafx/8"
+          fx:controller="de.thatsich.bachelor.preprocessing.intern.control.PreProcessingInputPresenter">
 
-	<children>
-		<Button fx:id="nodeButtonTrainPreProcessor" onAction="#onTrainPreProcessorAction">
-			<graphic>
-				<ImageView>
-					<image>
-						<Image url="@add.png" />
-					</image>
-				</ImageView>
-			</graphic>
-			<tooltip>
-				<Tooltip text="Train PreProcessor and add the PreProcession to the List." />
-			</tooltip>
-		</Button>
-		<Button fx:id="nodeButtonRemovePreProcessing" onAction="#onRemovePreProcessingAction">
-			<graphic>
-				<ImageView>
-					<image>
-						<Image url="@remove.png" />
-					</image>
-				</ImageView>
-			</graphic>
-			<tooltip>
-				<Tooltip text="Removes a PreProcessing from the List." />
-			</tooltip>
-		</Button>
-		<Button fx:id="nodeButtonResetPreProcessingList" onAction="#onResetPreProcessingAction">
-			<graphic>
-				<ImageView>
-					<image>
-						<Image url="@delete.png" />
-					</image>
-				</ImageView>
-			</graphic>
-			<tooltip>
-				<Tooltip text="Resets the whole PreProcessing List physically. CAUTION!" />
-			</tooltip>
-		</Button>
+    <children>
+        <Button fx:id="nodeButtonTrainPreProcessor" onAction="#onTrainPreProcessorAction">
+            <graphic>
+                <ImageView>
+                    <image>
+                        <Image url="@add.png"/>
+                    </image>
+                </ImageView>
+            </graphic>
+            <tooltip>
+                <Tooltip text="Train PreProcessor and add the PreProcession to the List."/>
+            </tooltip>
+        </Button>
+        <Button fx:id="nodeButtonRemovePreProcessing" onAction="#onRemovePreProcessingAction">
+            <graphic>
+                <ImageView>
+                    <image>
+                        <Image url="@remove.png"/>
+                    </image>
+                </ImageView>
+            </graphic>
+            <tooltip>
+                <Tooltip text="Removes a PreProcessing from the List."/>
+            </tooltip>
+        </Button>
+        <Button fx:id="nodeButtonResetPreProcessingList" onAction="#onResetPreProcessingAction">
+            <graphic>
+                <ImageView>
+                    <image>
+                        <Image url="@delete.png"/>
+                    </image>
+                </ImageView>
+            </graphic>
+            <tooltip>
+                <Tooltip text="Resets the whole PreProcessing List physically. CAUTION!"/>
+            </tooltip>
+        </Button>
 
-		<Separator orientation="VERTICAL" />
+        <Separator orientation="VERTICAL"/>
 
-		<ChoiceBox fx:id="nodeChoiceBoxPreProcessor" prefWidth="200.0" />
+        <ChoiceBox fx:id="nodeChoiceBoxPreProcessor" prefWidth="200.0"/>
 
-	</children>
-	<padding>
-		<Insets bottom="10.0" />
-	</padding>
+    </children>
+    <padding>
+        <Insets bottom="10.0"/>
+    </padding>
 
 </FlowPane>

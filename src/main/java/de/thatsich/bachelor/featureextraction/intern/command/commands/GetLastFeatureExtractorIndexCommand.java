@@ -1,17 +1,19 @@
 package de.thatsich.bachelor.featureextraction.intern.command.commands;
 
 import com.google.inject.Inject;
-
 import de.thatsich.bachelor.featureextraction.intern.services.FeatureConfigService;
 import de.thatsich.core.javafx.ACommand;
 
-public class GetLastFeatureExtractorIndexCommand extends ACommand<Integer> {
+public class GetLastFeatureExtractorIndexCommand extends ACommand<Integer>
+{
 
 	// Injections
-	@Inject private FeatureConfigService config;
+	@Inject
+	private FeatureConfigService config;
 
 	@Override
-	protected Integer call() throws Exception {
+	protected Integer call() throws Exception
+	{
 		return config.getLastFeatureExtractorIndexInt();
 	}
 }

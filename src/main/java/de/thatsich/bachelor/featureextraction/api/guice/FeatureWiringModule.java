@@ -1,7 +1,6 @@
 package de.thatsich.bachelor.featureextraction.api.guice;
 
 import com.google.inject.Scopes;
-
 import de.thatsich.bachelor.featureextraction.api.core.IFeatureDisplayView;
 import de.thatsich.bachelor.featureextraction.api.core.IFeatureExtractors;
 import de.thatsich.bachelor.featureextraction.api.core.IFeatureInputView;
@@ -21,42 +20,48 @@ import de.thatsich.core.guice.AWiringModule;
 
 /**
  * Guice Graph of the whole MVP structure
- * 
- * @author Minh
  *
+ * @author Minh
  */
-public class FeatureWiringModule extends AWiringModule {
+public class FeatureWiringModule extends AWiringModule
+{
 	@Override
-	protected void bindModule() {
+	protected void bindModule()
+	{
 		super.bind(FeatureWiringModule.class).toInstance(this);
 	}
 
 	@Override
-	protected void bindView() {
+	protected void bindService()
+	{
+		super.bind(FeatureConfigService.class).in(Scopes.SINGLETON);
+		super.bind(CSVService.class).in(Scopes.SINGLETON);
+	}
+
+	@Override
+	protected void bindView()
+	{
 		super.bind(IFeatureDisplayView.class).to(FeatureDisplayView.class).in(Scopes.SINGLETON);
 		super.bind(IFeatureInputView.class).to(FeatureInputView.class).in(Scopes.SINGLETON);
 		super.bind(IFeatureListView.class).to(FeatureListView.class).in(Scopes.SINGLETON);
 	}
 
 	@Override
-	protected void bindController() {
+	protected void bindController()
+	{
 	}
 
 	@Override
-	protected void bindCommand() {
+	protected void bindCommand()
+	{
 
 	}
 
 	@Override
-	protected void bindModel() {
+	protected void bindModel()
+	{
 		super.bind(IFeatureExtractors.class).to(FeatureExtractors.class).in(Scopes.SINGLETON);
 		super.bind(IFeatureState.class).to(FeatureState.class).in(Scopes.SINGLETON);
 		super.bind(IFeatureVectorSets.class).to(FeatureVectorSets.class).in(Scopes.SINGLETON);
-	}
-
-	@Override
-	protected void bindService() {
-		super.bind(FeatureConfigService.class).in(Scopes.SINGLETON);
-		super.bind(CSVService.class).in(Scopes.SINGLETON);
 	}
 }

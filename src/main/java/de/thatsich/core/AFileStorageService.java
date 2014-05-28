@@ -5,8 +5,10 @@ import java.nio.file.Path;
 /**
  * Test
  */
-public abstract class AFileStorageService {
-    public Path copyFilePath(Path filePath) {
-        return null;
-    }
+public abstract class AFileStorageService
+{
+	public Path copyFilePath(Path filePath)
+	{
+		return null;
+	}
 }

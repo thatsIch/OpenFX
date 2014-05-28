@@ -2,7 +2,6 @@ package de.thatsich.bachelor.preprocessing.intern.command.commands;
 
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
-
 import de.thatsich.bachelor.preprocessing.intern.service.EPreProcessingConfigType;
 import de.thatsich.bachelor.preprocessing.intern.service.PreProcessingConfigService;
 import de.thatsich.core.javafx.ACommand;
@@ -11,12 +10,12 @@ import de.thatsich.core.javafx.ACommand;
 public class SetLastPreProcessingIndexCommand extends ACommand<Void>
 {
 	// Fields
-	private final int							index;
-	private final PreProcessingConfigService	config;
+	private final int index;
+	private final PreProcessingConfigService config;
 
 	// CTOR
 	@Inject
-	protected SetLastPreProcessingIndexCommand( @Assisted int index, PreProcessingConfigService config )
+	protected SetLastPreProcessingIndexCommand(@Assisted int index, PreProcessingConfigService config)
 	{
 		this.index = index;
 		this.config = config;
@@ -25,8 +24,8 @@ public class SetLastPreProcessingIndexCommand extends ACommand<Void>
 	@Override
 	protected Void call() throws Exception
 	{
-		this.config.set( EPreProcessingConfigType.LAST_PRE_PROCESSING_INDEX, this.index );
-		
+		this.config.set(EPreProcessingConfigType.LAST_PRE_PROCESSING_INDEX, this.index);
+
 		return null;
 	}
 }

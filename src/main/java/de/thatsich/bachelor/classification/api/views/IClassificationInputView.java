@@ -5,9 +5,9 @@ import de.thatsich.core.javafx.IFXMLView;
 
 /**
  * Interface for the InputView of Classifications
- * 
- * @see IFXMLView
+ *
  * @author thatsIch
+ * @see IFXMLView
  */
 public interface IClassificationInputView extends IFXMLView
 {

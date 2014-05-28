@@ -1,21 +1,20 @@
 package de.thatsich.bachelor.preprocessing.intern.model;
 
 import com.google.inject.Singleton;
-
+import de.thatsich.bachelor.preprocessing.api.entities.IPreProcessing;
+import de.thatsich.bachelor.preprocessing.api.models.IPreProcessings;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
-import de.thatsich.bachelor.preprocessing.api.entities.IPreProcessing;
-import de.thatsich.bachelor.preprocessing.api.models.IPreProcessings;
 
 @Singleton
 public class PreProcessings implements IPreProcessings
 {
 	// Properties
-	private final ListProperty<IPreProcessing>		list		= new SimpleListProperty<IPreProcessing>( FXCollections.<IPreProcessing >observableArrayList() );
-	private final ObjectProperty<IPreProcessing>	selected	= new SimpleObjectProperty<IPreProcessing>();
+	private final ListProperty<IPreProcessing> list = new SimpleListProperty<>(FXCollections.<IPreProcessing>observableArrayList());
+	private final ObjectProperty<IPreProcessing> selected = new SimpleObjectProperty<>();
 
 	@Override
 	public ListProperty<IPreProcessing> getPreProcessingListProperty()
@@ -36,9 +35,9 @@ public class PreProcessings implements IPreProcessings
 	}
 
 	@Override
-	public void setSelectedPreProcessing( IPreProcessing pp )
+	public void setSelectedPreProcessing(IPreProcessing pp)
 	{
-		this.selected.set( pp );
+		this.selected.set(pp);
 	}
 
 }

@@ -5,8 +5,7 @@ import de.thatsich.core.javafx.ACommand;
 
 /**
  * TODO training of the preprocessor
- * 
- * 
+ *
  * @author thatsIch
  */
 public class TrainPreProcessorCommand extends ACommand<IPreProcessing>

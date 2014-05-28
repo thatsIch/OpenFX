@@ -9,49 +9,69 @@ import javafx.event.EventHandler;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
-public class IntegerField extends TextField {
-	
+public class IntegerField extends TextField
+{
+
 	// Properties
 	private final IntegerProperty value = new SimpleIntegerProperty();
-	
-	public IntegerField() {
-		this.textProperty().addListener(new ChangeListener<String>() {
-			@Override public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				if (newValue.matches("\\d+")) {
+
+	public IntegerField()
+	{
+		this.textProperty().addListener(new ChangeListener<String>()
+		{
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
+			{
+				if (newValue.matches("\\d+"))
+				{
 					final int count = Integer.parseInt(newValue);
 					value.set(count);
-				} else {
+				}
+				else
+				{
 					textProperty().set(oldValue);
 				}
 			}
 		});
-	
-		this.valueProperty().addListener(new ChangeListener<Number>() {
-			@Override public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+
+		this.valueProperty().addListener(new ChangeListener<Number>()
+		{
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue)
+			{
 				textProperty().set(newValue.toString());
 			}
 		});
-		
-		this.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+		this.setOnMouseClicked(new EventHandler<MouseEvent>()
+		{
 			@Override
-			public void handle(MouseEvent paramT) {
-				Platform.runLater(new Runnable() {
-					@Override public void run() {
-						if (isFocused() && !getText().isEmpty()) {
+			public void handle(MouseEvent paramT)
+			{
+				Platform.runLater(new Runnable()
+				{
+					@Override
+					public void run()
+					{
+						if (isFocused() && !getText().isEmpty())
+						{
 							selectAll();
-						}				
+						}
 					}
 				});
 			}
 		});
 	}
-	
+
 	// Property Getter
-	public IntegerProperty valueProperty() { return this.value; }
-	
+	public IntegerProperty valueProperty()
+	{ return this.value; }
+
 	// Getter
-	public int getValue() { return this.value.get(); }
-	
+	public int getValue()
+	{ return this.value.get(); }
+
 	// Setter
-	public void setValue(int value) { this.value.set(value); }
+	public void setValue(int value)
+	{ this.value.set(value); }
 }

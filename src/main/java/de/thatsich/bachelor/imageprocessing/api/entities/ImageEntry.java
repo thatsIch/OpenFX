@@ -26,5 +26,6 @@ public class ImageEntry implements IEntity
 	{
 		return imageMat;
 	}
+
 	public Path getImagePath() { return this.imagePath; }
 }

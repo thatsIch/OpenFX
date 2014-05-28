@@ -1,18 +1,6 @@
 package de.thatsich.bachelor.classification.intern.control;
 
-import java.nio.file.Path;
-import java.util.List;
-import java.util.concurrent.ExecutorService;
-
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.util.StringConverter;
-
 import com.google.inject.Inject;
-
 import de.thatsich.bachelor.classification.api.entities.IBinaryClassification;
 import de.thatsich.bachelor.classification.api.models.IBinaryClassifications;
 import de.thatsich.bachelor.classification.api.models.IBinaryClassifiers;
@@ -29,25 +17,40 @@ import de.thatsich.bachelor.featureextraction.api.core.IFeatureVectorSets;
 import de.thatsich.bachelor.featureextraction.api.entities.FeatureVectorSet;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.javafx.CommandExecutor;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.util.StringConverter;
+
+import java.nio.file.Path;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
 
 
 public class ClassificationInputPresenter extends AFXMLPresenter
 {
-	// Nodes
-	@FXML private ChoiceBox<IBinaryClassifier>		nodeChoiceBoxBinaryClassifier;
-	@FXML private Button							nodeButtonTrainBinaryClassifier;
-	@FXML private Button							nodeButtonRemoveBinaryClassifier;
-	@FXML private Button							nodeButtonResetBinaryClassifierList;
-
 	// Injects
-	@Inject private IClassificationCommandProvider	commander;
+	@Inject ClassificationInitCommander initCommander;
+	@Inject IClassificationCommandProvider commander;
+	@Inject IBinaryClassifiers binaryClassifiers;
+	@Inject IBinaryClassifications binaryClassifications;
+	@Inject IClassificationState trainState;
+	@Inject IFeatureVectorSets featureVectors;
 
-	@Inject private IBinaryClassifiers				binaryClassifiers;
-	@Inject private IBinaryClassifications			binaryClassifications;
-	@Inject private IClassificationState			trainState;
-	@Inject private IFeatureVectorSets				featureVectors;
+	// Nodes
+	@FXML ChoiceBox<IBinaryClassifier> nodeChoiceBoxBinaryClassifier;
+	@FXML Button nodeButtonTrainBinaryClassifier;
+	@FXML Button nodeButtonRemoveBinaryClassifier;
+	@FXML Button nodeButtonResetBinaryClassifierList;
 
-	@Inject ClassificationInitCommander				initCommander;
+	@Override
+	protected void bindComponents()
+	{
+		this.bindChoiceBoxBinaryClassifier();
+		this.bindButtons();
+	}
 
 	// ==================================================
 	// Initialization Implementation
@@ -58,54 +61,48 @@ public class ClassificationInputPresenter extends AFXMLPresenter
 
 	}
 
-	@Override
-	protected void bindComponents()
-	{
-		this.bindChoiceBoxBinaryClassifier();
-		this.bindButtons();
-	}
-
 	/**
 	 * Bind ChoiceBoxBinaryClassifier to the Model.
 	 */
 	private void bindChoiceBoxBinaryClassifier()
 	{
-		this.nodeChoiceBoxBinaryClassifier.setConverter( new StringConverter<IBinaryClassifier>()
+		this.nodeChoiceBoxBinaryClassifier.setConverter(new StringConverter<IBinaryClassifier>()
 		{
 			@Override
-			public String toString( IBinaryClassifier bc )
+			public String toString(IBinaryClassifier bc)
 			{
 				return bc.getName();
 			}
+
 			@Override
-			public IBinaryClassifier fromString( String string )
+			public IBinaryClassifier fromString(String string)
 			{
 				return null;
 			}
-		} );
-		this.log.info( "Set up ChoiceBoxBinaryClassifier for proper name display." );
+		});
+		this.log.info("Set up ChoiceBoxBinaryClassifier for proper name display.");
 
-		this.nodeChoiceBoxBinaryClassifier.itemsProperty().bindBidirectional( this.binaryClassifiers.getBinaryClassifierListProperty() );
-		this.nodeChoiceBoxBinaryClassifier.valueProperty().bindBidirectional( this.binaryClassifiers.getSelectedBinaryClassifierProperty() );
-		this.log.info( "Bound ChoiceBoxBinaryClassifier to Model." );
+		this.nodeChoiceBoxBinaryClassifier.itemsProperty().bindBidirectional(this.binaryClassifiers.getBinaryClassifierListProperty());
+		this.nodeChoiceBoxBinaryClassifier.valueProperty().bindBidirectional(this.binaryClassifiers.getSelectedBinaryClassifierProperty());
+		this.log.info("Bound ChoiceBoxBinaryClassifier to Model.");
 
-		this.nodeChoiceBoxBinaryClassifier.getSelectionModel().selectedIndexProperty().addListener( new ChangeListener<Number>()
+		this.nodeChoiceBoxBinaryClassifier.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>()
 		{
 			@Override
-			public void changed( ObservableValue<? extends Number> observable, Number oldValue, Number newValue )
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue)
 			{
-				final SetLastBinaryClassifierIndexCommand lastCommand = commander.createSetLastBinaryClassifierIndexCommand( newValue.intValue() );
+				final SetLastBinaryClassifierIndexCommand lastCommand = commander.createSetLastBinaryClassifierIndexCommand(newValue.intValue());
 				lastCommand.start();
 			}
-		} );
-		this.log.info( "Bound ChoiceBoxBinaryClassifier to Config." );
+		});
+		this.log.info("Bound ChoiceBoxBinaryClassifier to Config.");
 	}
 
 	private void bindButtons()
 	{
-		this.nodeButtonTrainBinaryClassifier.disableProperty().bind( this.featureVectors.getSelectedFeatureVectorSetProperty().isNull() );
-		this.nodeButtonRemoveBinaryClassifier.disableProperty().bind( this.binaryClassifications.getSelectedBinaryClassificationProperty().isNull() );
-		this.nodeButtonResetBinaryClassifierList.disableProperty().bind( this.binaryClassifications.getBinaryClassificationListProperty().emptyProperty() );
+		this.nodeButtonTrainBinaryClassifier.disableProperty().bind(this.featureVectors.getSelectedFeatureVectorSetProperty().isNull());
+		this.nodeButtonRemoveBinaryClassifier.disableProperty().bind(this.binaryClassifications.getSelectedBinaryClassificationProperty().isNull());
+		this.nodeButtonResetBinaryClassifierList.disableProperty().bind(this.binaryClassifications.getBinaryClassificationListProperty().emptyProperty());
 	}
 
 	// ==================================================
@@ -119,8 +116,8 @@ public class ClassificationInputPresenter extends AFXMLPresenter
 		final List<FeatureVectorSet> featureVectorSetList = this.featureVectors.getFeatureVectorSetListProperty();
 		final FeatureVectorSet selectedFeatureVectorSet = this.featureVectors.getSelectedFeatureVectorSet();
 
-		final TrainBinaryClassifierCommand command = this.commander.createTrainBinaryClassifierCommand( binaryClassifierFolderPath, selectedBinaryClassfier, selectedFeatureVectorSet, featureVectorSetList );
-		command.setOnSucceededCommandHandler( TrainBinaryClassifierSucceededHandler.class );
+		final TrainBinaryClassifierCommand command = this.commander.createTrainBinaryClassifierCommand(binaryClassifierFolderPath, selectedBinaryClassfier, selectedFeatureVectorSet, featureVectorSetList);
+		command.setOnSucceededCommandHandler(TrainBinaryClassifierSucceededHandler.class);
 		command.start();
 	}
 
@@ -129,39 +126,39 @@ public class ClassificationInputPresenter extends AFXMLPresenter
 	{
 		final IBinaryClassification selectedBinaryClassification = this.binaryClassifications.getSelectedBinaryClassification();
 
-		final RemoveBinaryClassificationCommand command = this.commander.createRemoveBinaryClassificationCommand( selectedBinaryClassification );
-		command.setOnSucceededCommandHandler( RemoveBinaryClassificationSucceededHandler.class );
+		final RemoveBinaryClassificationCommand command = this.commander.createRemoveBinaryClassificationCommand(selectedBinaryClassification);
+		command.setOnSucceededCommandHandler(RemoveBinaryClassificationSucceededHandler.class);
 		command.start();
-		this.log.info( "Commanded BinaryClassification Removal." );
+		this.log.info("Commanded BinaryClassification Removal.");
 	}
 
 	@FXML
 	private void onResetBinaryClassifierListAction()
 	{
 		final List<IBinaryClassification> binaryClassificationList = this.binaryClassifications.getBinaryClassificationListProperty();
-		final ExecutorService executor = CommandExecutor.newFixedThreadPool( binaryClassificationList.size() );
-		this.log.info( "Initialized Executor for resetting all Errors." );
+		final ExecutorService executor = CommandExecutor.newFixedThreadPool(binaryClassificationList.size());
+		this.log.info("Initialized Executor for resetting all Errors.");
 
-		for ( IBinaryClassification classification : binaryClassificationList )
+		for (IBinaryClassification classification : binaryClassificationList)
 		{
-			final RemoveBinaryClassificationCommand command = this.commander.createRemoveBinaryClassificationCommand( classification );
-			command.setOnSucceededCommandHandler( RemoveBinaryClassificationSucceededHandler.class );
-			command.setExecutor( executor );
+			final RemoveBinaryClassificationCommand command = this.commander.createRemoveBinaryClassificationCommand(classification);
+			command.setOnSucceededCommandHandler(RemoveBinaryClassificationSucceededHandler.class);
+			command.setExecutor(executor);
 			command.start();
-			this.log.info( "File Deletion executed." );
+			this.log.info("File Deletion executed.");
 		}
 
-		executor.execute( new Runnable()
+		executor.execute(new Runnable()
 		{
 			@Override
 			public void run()
 			{
 				System.gc();
 			}
-		} );
-		this.log.info( "Running Garbage Collector." );
+		});
+		this.log.info("Running Garbage Collector.");
 
 		executor.shutdown();
-		this.log.info( "Shutting down Executor." );
+		this.log.info("Shutting down Executor.");
 	}
 }

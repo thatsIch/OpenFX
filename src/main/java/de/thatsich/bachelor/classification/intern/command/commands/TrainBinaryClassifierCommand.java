@@ -1,32 +1,30 @@
 package de.thatsich.bachelor.classification.intern.command.commands;
 
-import java.nio.file.Path;
-import java.util.List;
-import java.util.UUID;
-
-import org.opencv.core.MatOfFloat;
-
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
-
 import de.thatsich.bachelor.classification.api.entities.IBinaryClassification;
 import de.thatsich.bachelor.classification.intern.command.classifier.core.BinaryClassifierConfiguration;
 import de.thatsich.bachelor.classification.intern.command.classifier.core.IBinaryClassifier;
 import de.thatsich.bachelor.featureextraction.api.entities.FeatureVector;
 import de.thatsich.bachelor.featureextraction.api.entities.FeatureVectorSet;
 import de.thatsich.core.javafx.ACommand;
+import org.opencv.core.MatOfFloat;
+
+import java.nio.file.Path;
+import java.util.List;
+import java.util.UUID;
 
 
 public class TrainBinaryClassifierCommand extends ACommand<IBinaryClassification>
 {
 	// Properties
-	private final Path						binaryClassifierFolderPath;
-	private final IBinaryClassifier			binaryClassifier;
-	private final FeatureVectorSet			selectedFeatureVector;
-	private final List<FeatureVectorSet>	featureVectorList;
+	private final Path binaryClassifierFolderPath;
+	private final IBinaryClassifier binaryClassifier;
+	private final FeatureVectorSet selectedFeatureVector;
+	private final List<FeatureVectorSet> featureVectorList;
 
 	@Inject
-	public TrainBinaryClassifierCommand( @Assisted Path binaryClassifierFolderPath, @Assisted IBinaryClassifier classifier, @Assisted FeatureVectorSet selected, @Assisted List<FeatureVectorSet> all )
+	public TrainBinaryClassifierCommand(@Assisted Path binaryClassifierFolderPath, @Assisted IBinaryClassifier classifier, @Assisted FeatureVectorSet selected, @Assisted List<FeatureVectorSet> all)
 	{
 		this.binaryClassifierFolderPath = binaryClassifierFolderPath;
 		this.binaryClassifier = classifier;
@@ -45,58 +43,52 @@ public class TrainBinaryClassifierCommand extends ACommand<IBinaryClassification
 
 		final MatOfFloat positive = new MatOfFloat();
 		final MatOfFloat negative = new MatOfFloat();
-		log.info( "Prepared all data for Training." );
+		log.info("Prepared all data for Training.");
 
 		// run through all FeatureVectorSets matching same categories
 		// (same FrameSize, same Extractor, same ErrorClass)
 		// which is not the selected one and their data to train
 		// extract all float lists and transform them into MatOfFloats
 		// use .t() on them to transpose them
-		for ( FeatureVectorSet set : this.featureVectorList )
+		for (FeatureVectorSet set : this.featureVectorList)
 		{
 			// select only with same FeatureExtractor and FrameSize
-			if ( set.getExtractorNameProperty().get().equals( featureExtractorName ) && set.getFrameSizeProperty().get() == frameSize )
+			if (set.getExtractorNameProperty().get().equals(featureExtractorName) && set.getFrameSizeProperty().get() == frameSize)
 			{
-				for ( FeatureVector vector : set.getFeatureVectorList() )
+				for (FeatureVector vector : set.getFeatureVectorList())
 				{
-					final float[] floatArray =  new float[ vector.getVectorProperty().size() ];
+					final float[] floatArray = new float[vector.getVectorProperty().size()];
 					int index = 0;
-					for ( float f : vector.getVectorProperty() )
+					for (float f : vector.getVectorProperty())
 					{
 						floatArray[index] = f;
 						index++;
 					}
 
-					if ( vector.getIsPositiveProperty().get() )
+					if (vector.getIsPositiveProperty().get())
 					{
-						positive.push_back( new MatOfFloat( floatArray ).t() );
+						positive.push_back(new MatOfFloat(floatArray).t());
 					}
 					else
 					{
-						negative.push_back( new MatOfFloat( floatArray ).t() );
+						negative.push_back(new MatOfFloat(floatArray).t());
 					}
 				}
 			}
 		}
-		log.info( "Prepared Negative and Positive DataSets." );
+		log.info("Prepared Negative and Positive DataSets.");
 
-		StringBuffer buffer = new StringBuffer();
-		buffer.append( binaryClassifierName + "_" );
-		buffer.append( featureExtractorName + "_" );
-		buffer.append( frameSize + "_" );
-		buffer.append( errorClassName + "_" );
-		buffer.append( id + ".yaml" );
-		final Path filePath = binaryClassifierFolderPath.resolve( buffer.toString() );
-		log.info( "Created FilePath" );
+		final Path filePath = binaryClassifierFolderPath.resolve(binaryClassifierName + "_" + featureExtractorName + "_" + frameSize + "_" + errorClassName + "_" + id + ".yaml");
+		log.info("Created FilePath");
 
-		final BinaryClassifierConfiguration config = new BinaryClassifierConfiguration( filePath, binaryClassifierName, featureExtractorName, frameSize, errorClassName, id );
-		log.info( "Created BinaryClassifierConfiguration." );
+		final BinaryClassifierConfiguration config = new BinaryClassifierConfiguration(filePath, binaryClassifierName, featureExtractorName, frameSize, errorClassName, id);
+		log.info("Created BinaryClassifierConfiguration.");
 
-		final IBinaryClassification classification = this.binaryClassifier.train( positive, negative, config );
-		log.info( "Trained Binary Classifier with " + positive + " positive and " + negative + " negative samples." );
+		final IBinaryClassification classification = this.binaryClassifier.train(positive, negative, config);
+		log.info("Trained Binary Classifier with " + positive + " positive and " + negative + " negative samples.");
 
-		classification.save( filePath.toString() );
-		log.info( "Saved File to FileSystem." );
+		classification.save(filePath.toString());
+		log.info("Saved File to FileSystem.");
 
 		return classification;
 	}

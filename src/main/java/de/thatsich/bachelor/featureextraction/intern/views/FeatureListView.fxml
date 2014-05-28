@@ -7,12 +7,12 @@
 <?import javafx.scene.layout.HBox?>
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2"
-	fx:controller="de.thatsich.bachelor.featureextraction.intern.controller.FeatureListPresenter">
-	<children>
+            fx:controller="de.thatsich.bachelor.featureextraction.intern.controller.FeatureListPresenter">
+    <children>
 
-		<TreeView fx:id="nodeTreeViewFeatureVectorSetList"
-			AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-			AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+        <TreeView fx:id="nodeTreeViewFeatureVectorSetList"
+                  AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                  AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
 
-	</children>
+    </children>
 </AnchorPane>

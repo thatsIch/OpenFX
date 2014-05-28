@@ -7,7 +7,7 @@ import de.thatsich.bachelor.preprocessing.intern.command.preprocessor.core.PrePr
 public class IdentityPreProcessor extends APreProcessor
 {
 	@Override
-	public IPreProcessing train( double[][] trainData, double[][] idealData, PreProcessorConfiguration config )
+	public IPreProcessing train(double[][] trainData, double[][] idealData, PreProcessorConfiguration config)
 	{
 		return null;
 	}
