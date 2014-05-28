@@ -4,6 +4,9 @@ apply plugin: 'java'
 // Apply the idea plugin to add support for IntelliJ IDEA
 apply plugin: 'idea'
 
+// sets default to run configuration
+apply plugin: 'application'
+
 
 /* We use Java 1.7 */
 sourceCompatibility = 1.7
@@ -36,16 +39,33 @@ dependencies {
     testCompile "org.jukito:jukito:1.4"
 }
 
+sourceSets {
+    main.java.srcDir 'src/main/java'
+    test.java.srcDir 'src/test/java'
+
+    main.resources.srcDir 'src/main/resources'
+    test.resources.srcDir 'src/test/resources'
+}
+
 idea {
-    workspace {
-        iws {
-            withXML { provider ->
-                def applicationDefaults = provider.node.component.find { it.@name == 'RunManager'}.configuration.find { it.@type == 'Application'}
-                if (applicationDefaults != null) {
-                    applicationDefaults.option.find { it.@name == 'VM_PARAMETERS'}.@value = '-Xmx1024m -XX:MaxPermSize=256m -Xss64k'
-                    applicationDefaults.option.find { it.@name == 'WORKING_DIRECTORY'}.@value = 'file://$MODULE_DIR$'
-                }
-            }
+    workspace.iws.withXml { provider ->
+        def applicationDefaults = provider.node.component.find { it.@name == 'RunManager'}.configuration.find { it.@type == 'Application'}
+        if (applicationDefaults != null) {
+            applicationDefaults.module.@name = 'BachelorOpenCV'
+
+            applicationDefaults.option.find { it.@name == 'MAIN_CLASS_NAME'}.@value = 'de.thatsich.bachelor.Main'
+            applicationDefaults.option.find { it.@name == 'VM_PARAMETERS'}.@value = '-Xmx1024m -XX:MaxPermSize=256m -Xss64k'
+            applicationDefaults.option.find { it.@name == 'WORKING_DIRECTORY'}.@value = 'file://$MODULE_DIR$'
+        }
+
+        def jUnitDefaults = provider.node.component.find { it.@name == 'RunManager'}.configuration.find { it.@type == 'JUnit'}
+        if (jUnitDefaults != null) {
+            jUnitDefaults.module.@name = 'BachelorOpenCV'
+
+            jUnitDefaults.option.find { it.@name == 'PACKAGE_NAME'}.@value = 'de.thatsich.bachelor'
+            jUnitDefaults.option.find { it.@name == 'TEST_OBJECT'}.@value = 'package'
+            jUnitDefaults.option.find { it.@name == 'VM_PARAMETERS'}.@value = '-ea'
+            jUnitDefaults.option.find { it.@name == 'WORKING_DIRECTORY'}.@value = 'file://$MODULE_DIR$'
         }
     }
 
@@ -65,3 +85,9 @@ idea {
         downloadSources = true
     }
 }
+
+/*
+ * APPLICATION PLUGIN
+ */
+mainClassName = 'de.thatsich.bachelor.Main'
+//applicationDefaultJvmArgs = ["-Dgreeting.language=en"]
