@@ -11,7 +11,7 @@ public class OpenCVLoader
 
 	public static void loadLibrary()
 	{
-		final String libName = getBitness() + "_" + Core.NATIVE_LIBRARY_NAME;
+		final String libName = getBits() + "_" + Core.NATIVE_LIBRARY_NAME;
 		//		loadFromJar(libName);
 		try
 		{
@@ -23,10 +23,10 @@ public class OpenCVLoader
 		}
 	}
 
-	private static String getBitness()
+	private static String getBits()
 	{
-		final int bitness = Integer.parseInt(System.getProperty("sun.arch.data.model"));
-		switch (bitness)
+		final int bits = Integer.parseInt(System.getProperty("sun.arch.data.model"));
+		switch (bits)
 		{
 			case 64:
 				return "x64";
@@ -42,12 +42,13 @@ public class OpenCVLoader
 		try
 		{
 			System.loadLibrary(libName);
+			System.out.println("Loaded OpenCV-Lib from FileSystem.");
 		}
 		catch (Exception e)
 		{
+			System.out.println("Could not load from FileSystem.");
 			throw new Exception("Could not load from FileSystem.");
 		}
-		System.out.println("Loaded OpenCV-Lib from FileSystem.");
 	}
 
 	private static void loadFromJar(String libName)
