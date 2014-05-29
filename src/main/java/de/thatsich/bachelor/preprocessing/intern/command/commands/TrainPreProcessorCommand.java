@@ -8,14 +8,16 @@ import de.thatsich.bachelor.preprocessing.api.entities.IPreProcessing;
 import de.thatsich.bachelor.preprocessing.intern.command.preprocessor.core.IPreProcessor;
 import de.thatsich.bachelor.preprocessing.intern.command.preprocessor.core.PreProcessorConfiguration;
 import de.thatsich.core.javafx.ACommand;
-import org.opencv.core.MatOfFloat;
 
 import java.nio.file.Path;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
 /**
  * TODO training of the preprocessor
+ * TODO loading of preprocessors
  *
  * @author thatsIch
  */
@@ -44,56 +46,21 @@ public class TrainPreProcessorCommand extends ACommand<IPreProcessing>
 		final int frameSize = this.selectedFeatureVector.getFrameSizeProperty().get();
 		final String errorClassName = this.selectedFeatureVector.getClassNameProperty().get();
 		final String id = UUID.randomUUID().toString();
-
-		final MatOfFloat positive = new MatOfFloat();
-		final MatOfFloat negative = new MatOfFloat();
 		log.info("Prepared all data for Training.");
 
-		// run through all FeatureVectorSets matching same categories
-		// (same FrameSize, same Extractor, same ErrorClass)
-		// which is not the selected one and their data to train
-		// extract all float lists and transform them into MatOfFloats
-		// use .t() on them to transpose them
-		for (FeatureVectorSet set : this.featureVectorList)
-		{
-			// select only with same FeatureExtractor and FrameSize
-			if (set.getExtractorNameProperty().get().equals(featureExtractorName) && set.getFrameSizeProperty().get() == frameSize)
-			{
-				for (FeatureVector vector : set.getFeatureVectorList())
-				{
-					final float[] floatArray = new float[vector.getVectorProperty().size()];
-					int index = 0;
-					for (float f : vector.getVectorProperty())
-					{
-						floatArray[index] = f;
-						index++;
-					}
-
-					if (vector.getIsPositiveProperty().get())
-					{
-						positive.push_back(new MatOfFloat(floatArray).t());
-					}
-					else
-					{
-						negative.push_back(new MatOfFloat(floatArray).t());
-					}
-				}
-			}
-		}
-		log.info("Prepared Negative and Positive DataSets.");
+		final double[][] data = this.convertToNativeMatrix(this.featureVectorList, featureExtractorName, frameSize);
+		final int featureVectorSize = this.featureVectorList.get(0).getFeatureVectorList().size();
+		log.info("Prepared DataSets.");
 
 		final String filename = preProcessorName + "_" + featureExtractorName + "_" + frameSize + "_" + errorClassName + "_" + id + ".yaml";
 		final Path filePath = this.preProcessingFolderPath.resolve(filename);
 		log.info("Created FilePath");
 
-		// TODO fix size
-		final PreProcessorConfiguration config = new PreProcessorConfiguration(filePath, preProcessorName, 0, 0, id);
-		log.info("Created BinaryClassifierConfiguration.");
+		final PreProcessorConfiguration config = new PreProcessorConfiguration(filePath, preProcessorName, featureVectorSize, 0, id);
+		log.info("Created PreProcessorConfiguration.");
 
-		// TODO fix data in train method
-		final double[][] data = new double[0][0];
 		final IPreProcessing preProcessing = this.preProcessor.train(data, data, config);
-		log.info("Trained Binary Classifier with " + positive + " positive and " + negative + " negative samples.");
+		log.info("Trained AANN with " + Arrays.deepToString(data) + " samples.");
 
 		preProcessing.save(filePath.toString());
 		log.info("Saved File to FileSystem.");
@@ -101,4 +68,37 @@ public class TrainPreProcessorCommand extends ACommand<IPreProcessing>
 		return preProcessing;
 	}
 
+	// run through all FeatureVectorSets matching same categories
+	// (same FrameSize, same Extractor, same ErrorClass)
+	// which is not the selected one and their data to train
+	// extract all float lists and transform them into MatOfFloats
+	// use .t() on them to transpose them
+	double[][] convertToNativeMatrix(final List<FeatureVectorSet> input, String name, int frameSize)
+	{
+		final List<double[]> output = new LinkedList<>();
+
+		for (FeatureVectorSet set : input)
+		{
+			final boolean equalName = set.getExtractorNameProperty().get().equals(name);
+			final boolean equalSize =set.getFrameSizeProperty().get() == frameSize;
+
+			// select only with same FeatureExtractor and FrameSize
+			if (equalName && equalSize)
+			{
+				for (FeatureVector vector : set.getFeatureVectorList())
+				{
+					final double[] featureArray = new double[vector.getVectorProperty().size()];
+					int index = 0;
+					for (float f : vector.getVectorProperty())
+					{
+						featureArray[index] = f;
+						index++;
+					}
+					output.add(featureArray);
+				}
+			}
+		}
+
+		return output.toArray(new double[0][0]);
+	}
 }

@@ -136,23 +136,19 @@ public class AANNPreProcessor extends APreProcessor
 	 */
 	BasicNetwork setupNetwork(int inputSize, int hiddenSize, int bottleneckSize)
 	{
-
 		final BasicNetwork network = new BasicNetwork();
+		final BasicLayer inputLayer = new BasicLayer(null, false, inputSize);
+		final BasicLayer compressionLayer = new BasicLayer(new ActivationSigmoid(), true, hiddenSize);
+		final BasicLayer bottleneckLayer = new BasicLayer(new ActivationLinear(), true, bottleneckSize);
+		final BasicLayer decompressionLayer = new BasicLayer(new ActivationSigmoid(), true, hiddenSize);
+		final BasicLayer outputLayer = new BasicLayer(null, false, inputSize);
 
-		// InputLayer
-		network.addLayer(new BasicLayer(null, false, inputSize));
-
-		// CompressionLayer
-		network.addLayer(new BasicLayer(new ActivationSigmoid(), true, hiddenSize));
-
-		// BottleneckLayer
-		network.addLayer(new BasicLayer(new ActivationLinear(), true, bottleneckSize));
-
-		// DecompressionLayer
-		network.addLayer(new BasicLayer(new ActivationSigmoid(), true, hiddenSize));
-
-		// OutputLayer
-		network.addLayer(new BasicLayer(null, false, inputSize));
+		// set layers
+		network.addLayer(inputLayer);
+		network.addLayer(compressionLayer);
+		network.addLayer(bottleneckLayer);
+		network.addLayer(decompressionLayer);
+		network.addLayer(outputLayer);
 
 		// finalize network
 		network.getStructure().finalizeStructure();
