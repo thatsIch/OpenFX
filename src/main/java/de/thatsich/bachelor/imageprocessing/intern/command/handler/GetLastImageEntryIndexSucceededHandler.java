@@ -20,8 +20,8 @@ public class GetLastImageEntryIndexSucceededHandler extends ACommandHandler<Inte
 	@Override
 	public void handle(Integer value)
 	{
-		final ImageEntry selectedImageEntry = this.imageEntries.imageEntriesmageEntryListProperty().get(value);
-		this.imageEntries.setSelctedImageEntry(selectedImageEntry);
+		final ImageEntry selectedImageEntry = this.imageEntries.imageEntryListProperty().get(value);
+		this.imageEntries.setSelectedImageEntry(selectedImageEntry);
 		log.info("Set last selected image entry index in Model.");
 	}
 }

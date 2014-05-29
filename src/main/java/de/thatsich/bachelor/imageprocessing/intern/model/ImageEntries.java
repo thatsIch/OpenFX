@@ -12,13 +12,12 @@ import javafx.collections.FXCollections;
 @Singleton
 public class ImageEntries implements IImageEntries
 {
-
 	// Properties
 	final private ObjectProperty<ImageEntry> selectedImageEntry = new SimpleObjectProperty<>();
 	final private ListProperty<ImageEntry> imageEntryList = new SimpleListProperty<>(FXCollections.<ImageEntry>observableArrayList());
 
 	// Property Getter
-	public ListProperty<ImageEntry> imageEntriesmageEntryListProperty()
+	public ListProperty<ImageEntry> imageEntryListProperty()
 	{ return this.imageEntryList; }
 
 	public ObjectProperty<ImageEntry> selectedImageEntryProperty() { return this.selectedImageEntry; }
@@ -28,6 +27,6 @@ public class ImageEntries implements IImageEntries
 	{ return this.selectedImageEntry.get(); }
 
 	// Setter
-	public void setSelctedImageEntry(ImageEntry selectedImageEntry)
+	public void setSelectedImageEntry(ImageEntry selectedImageEntry)
 	{ this.selectedImageEntry.set(selectedImageEntry); }
 }

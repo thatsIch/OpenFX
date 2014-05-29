@@ -219,6 +219,6 @@ public class Images
 	 */
 	public static Mat toMat(Path path)
 	{
-		return Highgui.imread(path.toAbsolutePath().toString());
+		return Highgui.imread(path.toAbsolutePath().toString(), 0);
 	}
 }

@@ -136,7 +136,7 @@ public class ErrorInputPresenter extends AFXMLPresenter
 	private void bindButton()
 	{
 		this.nodeButtonGenerateErrors.disableProperty().bind(this.imageEntryList.selectedImageEntryProperty().isNull().or(this.nodeChoiceBoxErrorGenerator.valueProperty().isNull()).or(this.nodeIntegerFieldErrorCount.valueProperty().isEqualTo(0)));
-		this.nodeButtonPermutateErrors.disableProperty().bind(this.imageEntryList.imageEntriesmageEntryListProperty().emptyProperty().or(this.nodeChoiceBoxErrorGenerator.valueProperty().isNull()).or(this.nodeIntegerFieldErrorCount.valueProperty().isEqualTo(0)));
+		this.nodeButtonPermutateErrors.disableProperty().bind(this.imageEntryList.imageEntryListProperty().emptyProperty().or(this.nodeChoiceBoxErrorGenerator.valueProperty().isNull()).or(this.nodeIntegerFieldErrorCount.valueProperty().isEqualTo(0)));
 		this.nodeButtonRemoveError.disableProperty().bind(this.errorEntryList.getSelectedErrorEntryProperty().isNull());
 		this.nodeButtonResetErrors.disableProperty().bind(this.errorEntryList.getErrorEntryListProperty().emptyProperty());
 	}
@@ -160,8 +160,8 @@ public class ErrorInputPresenter extends AFXMLPresenter
 
 		for (int step = 0; step < loops; step++)
 		{
-			final String dateTime = generator.getName() + "_" + new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-SSS").format(new Date()) + "_" + UUID.randomUUID().toString();
-			final Path imagePath = this.errorState.getErrorEntryFolderPath().resolve(dateTime + ".png");
+			final String dateTime = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-SSS").format(new Date()) + "_" + generator.getName() + "_" + UUID.randomUUID().toString();
+			final Path imagePath = this.errorState.getErrorEntryFolderPath().resolve(dateTime);
 			this.log.info("Path: " + imagePath);
 
 			final CreateErrorEntryCommand command = this.commander.createApplyErrorCommand(image, imagePath, generator);
@@ -203,7 +203,7 @@ public class ErrorInputPresenter extends AFXMLPresenter
 	@FXML
 	private void onPermutateErrorsAction()
 	{
-		final ObservableList<ImageEntry> imageEntries = this.imageEntryList.imageEntriesmageEntryListProperty();
+		final ObservableList<ImageEntry> imageEntries = this.imageEntryList.imageEntryListProperty();
 		final IErrorGenerator generator = this.errorGeneratorList.getSelectedErrorGenerator();
 		final int loops = this.errorState.getErrorLoopCount();
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(imageEntries.size() * loops);

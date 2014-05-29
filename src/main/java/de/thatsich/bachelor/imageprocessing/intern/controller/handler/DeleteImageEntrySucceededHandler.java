@@ -22,19 +22,19 @@ public class DeleteImageEntrySucceededHandler extends ACommandHandler<ImageEntry
 	@Override
 	public void handle(ImageEntry deletion)
 	{
-		final List<ImageEntry> imageEntryList = this.imageEntries.imageEntriesmageEntryListProperty().get();
+		final List<ImageEntry> imageEntryList = this.imageEntries.imageEntryListProperty().get();
 		imageEntryList.remove(deletion);
 		this.log.info("Removed ImageEntry from Database.");
 
 		if (imageEntryList.size() > 0)
 		{
 			final ImageEntry first = imageEntryList.get(0);
-			this.imageEntries.setSelctedImageEntry(first);
+			this.imageEntries.setSelectedImageEntry(first);
 			this.log.info("Reset Selection to the first.");
 		}
 		else
 		{
-			this.imageEntries.setSelctedImageEntry(null);
+			this.imageEntries.setSelectedImageEntry(null);
 		}
 	}
 }

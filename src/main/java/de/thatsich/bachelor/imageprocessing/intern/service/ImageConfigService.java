@@ -11,7 +11,6 @@ import de.thatsich.core.AConfigurationService;
  */
 public class ImageConfigService extends AConfigurationService
 {
-
 	// IDs
 	private static final String LAST_LOCATION = "last_location";
 	private static final String LAST_IMAGE_INDEX = "last_image";

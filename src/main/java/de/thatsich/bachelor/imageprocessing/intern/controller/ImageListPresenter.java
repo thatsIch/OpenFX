@@ -18,16 +18,15 @@ import javafx.util.Callback;
 
 public class ImageListPresenter extends AFXMLPresenter
 {
+	// Injects
+	@Inject ImageInitCommander initCommander;
+	@Inject IImageCommandProvider commander;
+	@Inject IImageEntries imageEntries;
 
 	// Nodes
 	@FXML TableView<ImageEntry> nodeTableViewImageList;
 	@FXML TableColumn<ImageEntry, String> nodeTableColumnImageList;
-	@Inject ImageInitCommander initCommander;
-	// Injects
-	@Inject
-	private IImageCommandProvider commander;
-	@Inject
-	private IImageEntries imageEntries;
+
 
 	@Override
 	protected void bindComponents()
@@ -53,7 +52,7 @@ public class ImageListPresenter extends AFXMLPresenter
 
 	private void bindTableViewContent()
 	{
-		this.nodeTableViewImageList.itemsProperty().bind(this.imageEntries.imageEntriesmageEntryListProperty());
+		this.nodeTableViewImageList.itemsProperty().bind(this.imageEntries.imageEntryListProperty());
 		this.log.info("Bound nodeTableViewImageList to ImageDatabase.");
 	}
 

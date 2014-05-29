@@ -61,7 +61,7 @@ public class ImageInputPresenter extends AFXMLPresenter
 	private void bindButtons()
 	{
 		this.nodeButtonRemoveImage.disableProperty().bind(this.imageEntries.selectedImageEntryProperty().isNull());
-		this.nodeButtonResetDatabase.disableProperty().bind(this.imageEntries.imageEntriesmageEntryListProperty().emptyProperty());
+		this.nodeButtonResetDatabase.disableProperty().bind(this.imageEntries.imageEntryListProperty().emptyProperty());
 	}
 
 	// ================================================== 
@@ -135,7 +135,7 @@ public class ImageInputPresenter extends AFXMLPresenter
 	@FXML
 	private void onResetDatabaseAction() throws IOException
 	{
-		final List<ImageEntry> imageEntryList = this.imageEntries.imageEntriesmageEntryListProperty();
+		final List<ImageEntry> imageEntryList = this.imageEntries.imageEntryListProperty();
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(imageEntryList.size());
 		this.log.info("Initialized Executor for resetting all Errors.");
 

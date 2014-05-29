@@ -7,39 +7,31 @@ import org.opencv.core.Core;
 import org.opencv.core.Mat;
 
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
 
 
 @Singleton
 public class ErrorFactoryService
 {
-	public ErrorEntry getErrorEntryFromPath(Path filePath)
+	public ErrorEntry getErrorEntryFromPath(Path directory)
 	{
-		final String unparsedString = filePath.getFileName().toString();
+		final String unparsedString = directory.getFileName().toString();
 		final String splitString[] = unparsedString.split("_");
 		final String className = splitString[0];
-		final String errorName = splitString[1];
+		final String id = splitString[1];
 
-		final Mat encodedImage = Images.toMat(filePath);
+		final Mat original = Images.toMat(directory.resolve("original.png"));
+		final Mat modified = Images.toMat(directory.resolve("modified.png"));
+		final Mat error = Images.toMat(directory.resolve("error.png"));
 
-		// split channels to extract GL and Error Mat
-		final List<Mat> encodedImageChannelMats = new ArrayList<>();
-		Core.split(encodedImage, encodedImageChannelMats);
-
-		final Mat originalMat = encodedImageChannelMats.get(0);
-		final Mat originalWithError = encodedImageChannelMats.get(1);
-		final Mat errorMat = encodedImageChannelMats.get(2);
-
-		return new ErrorEntry(filePath, originalMat, originalWithError, errorMat, className, errorName);
+		return new ErrorEntry(directory, original, modified, error, className, id);
 	}
 
 	public ErrorEntry getErrorEntryFromMat(Path filePath, Mat originalMat, Mat originalWithErrorMat)
 	{
 		final String unparsedString = filePath.getFileName().toString();
 		final String splitString[] = unparsedString.split("_");
-		final String className = splitString[0];
-		final String errorName = splitString[1];
+		final String errorName = splitString[0];
+		final String className = splitString[1];
 
 		final Mat onlyErrorMat = new Mat();
 		Core.absdiff(originalMat, originalWithErrorMat, onlyErrorMat);

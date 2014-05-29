@@ -26,7 +26,7 @@ public class AddImageEntrySucceededHandler extends ACommandHandler<Path>
 	{
 		final Mat copiedMat = Highgui.imread(value.toString(), 0);
 		final ImageEntry copy = new ImageEntry(value, copiedMat);
-		this.imageEntries.imageEntriesmageEntryListProperty().get().add(copy);
+		this.imageEntries.imageEntryListProperty().get().add(copy);
 		this.log.info("Added copy to ChoiceBoxDisplayImage: " + value.toString());
 
 		this.imageEntries.selectedImageEntryProperty().set(copy);

@@ -1,6 +1,7 @@
 package de.thatsich.bachelor.preprocessing.intern.command.commands;
 
 import de.thatsich.bachelor.preprocessing.intern.command.preprocessor.AANNPreProcessor;
+import de.thatsich.bachelor.preprocessing.intern.command.preprocessor.IdentityPreProcessor;
 import de.thatsich.bachelor.preprocessing.intern.command.preprocessor.core.IPreProcessor;
 import de.thatsich.core.javafx.ACommand;
 
@@ -15,7 +16,7 @@ public class InitPreProcessorListCommand extends ACommand<List<IPreProcessor>>
 	{
 		final List<IPreProcessor> list = new ArrayList<>();
 
-		// list.add( this.get( IdentityPreProcessor.class ) );
+		list.add( this.get( IdentityPreProcessor.class ) );
 		list.add(this.get(AANNPreProcessor.class));
 
 		return list;

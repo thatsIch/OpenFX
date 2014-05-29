@@ -22,7 +22,7 @@ public class InitImageEntryListSucceededHandler extends ACommandHandler<List<Ima
 	@Override
 	public void handle(List<ImageEntry> value)
 	{
-		imageEntries.imageEntriesmageEntryListProperty().get().addAll(value);
+		imageEntries.imageEntryListProperty().get().addAll(value);
 		log.info("Added ImageEntryList to Model.");
 	}
 }

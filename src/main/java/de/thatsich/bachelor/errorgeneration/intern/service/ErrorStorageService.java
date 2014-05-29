@@ -2,22 +2,33 @@ package de.thatsich.bachelor.errorgeneration.intern.service;
 
 import de.thatsich.bachelor.errorgeneration.api.entities.ErrorEntry;
 import de.thatsich.core.opencv.Images;
-import org.opencv.core.Core;
-import org.opencv.core.CvType;
-import org.opencv.core.Mat;
 
-import java.util.Arrays;
-import java.util.List;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 
 public class ErrorStorageService
 {
-	public void store(ErrorEntry entry)
+	public void store(ErrorEntry entry) throws IOException
 	{
-		final List<Mat> listMat = Arrays.asList(entry.getOriginalMat(), entry.getOriginalWithErrorMat(), entry.getErrorMat());
-		Mat mergedMat = new Mat(entry.getOriginalMat().size(), CvType.CV_8UC3);
-		Core.merge(listMat, mergedMat);
+		this.createInvalidDirectory(entry.getStoragePath());
 
-		Images.store(mergedMat, entry.getStoragePath());
+		Images.store(entry.getOriginalMat(), entry.getStoragePath().resolve("original.png"));
+		Images.store(entry.getOriginalWithErrorMat(), entry.getStoragePath().resolve("modified.png"));
+		Images.store(entry.getErrorMat(), entry.getStoragePath().resolve("error.png"));
+	}
+
+	/**
+	 * checks if either the directory exists and if its a directory
+	 *
+	 * @param directory to be created directory
+	 */
+	private void createInvalidDirectory(Path directory) throws IOException
+	{
+		if (Files.notExists(directory) || !Files.isDirectory(directory))
+		{
+			Files.createDirectories(directory);
+		}
 	}
 }

@@ -13,17 +13,14 @@ import java.nio.file.Path;
 
 public class CreateErrorEntryCommand extends ACommand<ErrorEntry>
 {
-
 	// Fields
 	final private Mat imageMat;
 	final private Path imagePath;
 	final private IErrorGenerator generator;
 
 	// Injections
-	@Inject
-	private ErrorFactoryService factory;
-	@Inject
-	private ErrorStorageService storage;
+	@Inject private ErrorFactoryService factory;
+	@Inject private ErrorStorageService storage;
 
 	@Inject
 	public CreateErrorEntryCommand(@Assisted Mat imageMat, @Assisted Path imagePath, @Assisted IErrorGenerator generator)

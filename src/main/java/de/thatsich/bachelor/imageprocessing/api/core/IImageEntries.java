@@ -6,12 +6,12 @@ import javafx.beans.property.ObjectProperty;
 
 public interface IImageEntries
 {
-	public ListProperty<ImageEntry> imageEntriesmageEntryListProperty();
+	public ListProperty<ImageEntry> imageEntryListProperty();
 
 	public ObjectProperty<ImageEntry> selectedImageEntryProperty();
 
 	public ImageEntry getSelectedImageEntry();
 
-	public void setSelctedImageEntry(ImageEntry selectedImageEntry);
+	public void setSelectedImageEntry(ImageEntry selectedImageEntry);
 
 }
