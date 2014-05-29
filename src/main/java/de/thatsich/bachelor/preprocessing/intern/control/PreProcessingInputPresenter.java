@@ -34,7 +34,7 @@ public class PreProcessingInputPresenter extends AFXMLPresenter
 	// Injects
 	@Inject PreProcessingInitCommander initCommander;
 	@Inject IPreProcessingCommandProvider commander;
-	@Inject IPreProcessors preProcesscors;
+	@Inject IPreProcessors preProcessors;
 	@Inject IPreProcessings preProcessings;
 	@Inject IPreProcessingState state;
 	@Inject IFeatureVectorSets featureVectors;
@@ -78,8 +78,8 @@ public class PreProcessingInputPresenter extends AFXMLPresenter
 		});
 		this.log.info("Bound " + this.nodeChoiceBoxPreProcessor + " proper Name display.");
 
-		this.nodeChoiceBoxPreProcessor.itemsProperty().bindBidirectional(this.preProcesscors.getPreProcessorListProperty());
-		this.nodeChoiceBoxPreProcessor.valueProperty().bindBidirectional(this.preProcesscors.getSelectedPreProcessorProperty());
+		this.nodeChoiceBoxPreProcessor.itemsProperty().bindBidirectional(this.preProcessors.getPreProcessorListProperty());
+		this.nodeChoiceBoxPreProcessor.valueProperty().bindBidirectional(this.preProcessors.getSelectedPreProcessorProperty());
 		this.log.info("Bound " + this.nodeChoiceBoxPreProcessor + " to Model.");
 
 		this.nodeChoiceBoxPreProcessor.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>()
@@ -110,7 +110,7 @@ public class PreProcessingInputPresenter extends AFXMLPresenter
 	private void onTrainPreProcessorAction()
 	{
 		final Path preProcessingFolderPath = this.state.getPreProcessingFolderPath();
-		final IPreProcessor selectedPreProcessor = this.preProcesscors.getSelectedPreProcessor();
+		final IPreProcessor selectedPreProcessor = this.preProcessors.getSelectedPreProcessor();
 		final List<FeatureVectorSet> featureVectorSetList = this.featureVectors.getFeatureVectorSetListProperty();
 		final FeatureVectorSet selectedFeatureVectorSet = this.featureVectors.getSelectedFeatureVectorSet();
 

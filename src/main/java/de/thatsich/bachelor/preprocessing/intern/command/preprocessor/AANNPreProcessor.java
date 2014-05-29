@@ -17,6 +17,7 @@ import org.encog.neural.networks.training.cross.CrossValidationKFold;
 import org.encog.neural.networks.training.propagation.resilient.RPROPType;
 import org.encog.neural.networks.training.propagation.resilient.ResilientPropagation;
 
+import java.nio.file.Path;
 import java.security.InvalidParameterException;
 
 
@@ -41,19 +42,8 @@ public class AANNPreProcessor extends APreProcessor
 	@Inject
 	private IPreProcessingProvider provider;
 
-	@Override
-	public IPreProcessing train(double[][] trainData, double[][] labelData, PreProcessorConfiguration config)
+	private void validate(int featureVectorCount, int featureVectorLength, int minHiddenLayerSize, int maxHiddenLayerSize, int minBottleLayerSize, int maxBottleLayerSize)
 	{
-		// extract important informations
-		final int featureVectorCount = trainData.length;
-		final int featureVectorLength = trainData[0].length;
-
-		final int minHiddenLayerSize = featureVectorLength + 1;
-		final int maxHiddenLayerSize = featureVectorLength * 2;
-		final int minBottleLayerSize = 1;
-		final int maxBottleLayerSize = featureVectorLength;
-
-		// validate
 		if (featureVectorCount < 2)
 		{
 			throw new InvalidParameterException("Not enough FeatureVectors to Cross-Validate the input data.");
@@ -70,6 +60,21 @@ public class AANNPreProcessor extends APreProcessor
 		{
 			throw new InvalidParameterException("The maxBottleLayerSize is smaller than the minBottleLayerSize.");
 		}
+	}
+
+	@Override
+	public IPreProcessing train(double[][] trainData, double[][] labelData, PreProcessorConfiguration config)
+	{
+		// extract important information
+		final int featureVectorCount = trainData.length;
+		final int featureVectorLength = trainData[0].length;
+
+		final int minHiddenLayerSize = featureVectorLength + 1;
+		final int maxHiddenLayerSize = featureVectorLength * 2;
+		final int minBottleLayerSize = 1;
+		final int maxBottleLayerSize = featureVectorLength;
+
+		this.validate(featureVectorCount, featureVectorLength, minHiddenLayerSize, maxHiddenLayerSize, minBottleLayerSize, maxBottleLayerSize);
 
 		// create real train data set
 		final MLDataSet trainingSet = new BasicMLDataSet(trainData, labelData);
@@ -107,7 +112,16 @@ public class AANNPreProcessor extends APreProcessor
 		// reduce the dimension
 		final BasicNetwork rebuildNetwork = this.rebuildNetworkForDimensionReduction(bestSetup.getKey());
 
-		return this.provider.createAANNPreProcessing(rebuildNetwork, config);
+		// rebuild config
+		final Path path = config.getFilePathProperty().get();
+		final String preProcessorName = config.getPreProcessorNameProperty().get();
+		final int inputSize = rebuildNetwork.getInputCount();
+		final int outputSize = rebuildNetwork.getOutputCount();
+		final String id = config.getIDProperty().get();
+
+		final PreProcessorConfiguration newConfig = new PreProcessorConfiguration(path, preProcessorName, inputSize, outputSize, id);
+
+		return this.provider.createAANNPreProcessing(rebuildNetwork, newConfig);
 	}
 
 	/**
