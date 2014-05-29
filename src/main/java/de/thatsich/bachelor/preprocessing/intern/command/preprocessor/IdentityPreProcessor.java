@@ -5,6 +5,7 @@ import de.thatsich.bachelor.preprocessing.api.entities.IPreProcessing;
 import de.thatsich.bachelor.preprocessing.intern.command.preprocessor.core.APreProcessor;
 import de.thatsich.bachelor.preprocessing.intern.command.preprocessor.core.PreProcessorConfiguration;
 import de.thatsich.bachelor.preprocessing.intern.command.provider.IPreProcessingProvider;
+import org.encog.neural.networks.BasicNetwork;
 
 public class IdentityPreProcessor extends APreProcessor
 {
@@ -14,6 +15,6 @@ public class IdentityPreProcessor extends APreProcessor
 	@Override
 	public IPreProcessing train(double[][] trainData, double[][] idealData, PreProcessorConfiguration config)
 	{
-		return this.provider.createIdentityPreProcessing(config);
+		return this.provider.createIdentityPreProcessing(new BasicNetwork(), config);
 	}
 }
