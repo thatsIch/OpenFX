@@ -8,7 +8,7 @@
 
 <FlowPane xmlns:fx="http://javafx.com/fxml/1" hgap="5.0" prefWidth="-1.0"
           xmlns="http://javafx.com/javafx/8"
-          fx:controller="de.thatsich.bachelor.imageprocessing.intern.controller.ImageInputPresenter">
+          fx:controller="de.thatsich.bachelor.imageprocessing.intern.control.ImageInputPresenter">
 
     <children>
         <Button fx:id="nodeButtonAddImage" onAction="#onAddImageAction">

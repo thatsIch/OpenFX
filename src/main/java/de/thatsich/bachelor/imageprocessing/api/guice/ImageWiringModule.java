@@ -1,15 +1,15 @@
 package de.thatsich.bachelor.imageprocessing.api.guice;
 
 import com.google.inject.Scopes;
-import de.thatsich.bachelor.imageprocessing.api.core.IImageDisplayView;
-import de.thatsich.bachelor.imageprocessing.api.core.IImageEntries;
-import de.thatsich.bachelor.imageprocessing.api.core.IImageInputView;
-import de.thatsich.bachelor.imageprocessing.api.core.IImageListView;
-import de.thatsich.bachelor.imageprocessing.api.core.IImageState;
-import de.thatsich.bachelor.imageprocessing.intern.controller.ImageFileChooser;
+import de.thatsich.bachelor.imageprocessing.api.view.IImageDisplayView;
+import de.thatsich.bachelor.imageprocessing.api.model.IImageEntries;
+import de.thatsich.bachelor.imageprocessing.api.view.IImageInputView;
+import de.thatsich.bachelor.imageprocessing.api.view.IImageListView;
+import de.thatsich.bachelor.imageprocessing.api.model.IImageState;
+import de.thatsich.bachelor.imageprocessing.intern.control.ImageFileChooser;
 import de.thatsich.bachelor.imageprocessing.intern.model.ImageEntries;
 import de.thatsich.bachelor.imageprocessing.intern.model.ImageState;
-import de.thatsich.bachelor.imageprocessing.intern.service.ImageConfigService;
+import de.thatsich.bachelor.imageprocessing.intern.control.command.service.ImageConfigService;
 import de.thatsich.bachelor.imageprocessing.intern.view.ImageDisplayView;
 import de.thatsich.bachelor.imageprocessing.intern.view.ImageInputView;
 import de.thatsich.bachelor.imageprocessing.intern.view.ImageListView;

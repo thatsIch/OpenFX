@@ -1,7 +1,7 @@
 package de.thatsich.bachelor.imageprocessing.api.guice;
 
-import de.thatsich.bachelor.imageprocessing.intern.command.provider.IImageCommandProvider;
-import de.thatsich.bachelor.imageprocessing.intern.command.provider.IImageInitCommandProvider;
+import de.thatsich.bachelor.imageprocessing.intern.control.command.provider.IImageCommandProvider;
+import de.thatsich.bachelor.imageprocessing.intern.control.command.provider.IImageInitCommandProvider;
 import de.thatsich.core.guice.ACommandModule;
 import de.thatsich.core.guice.ICommandProvider;
 

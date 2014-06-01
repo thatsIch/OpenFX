@@ -1,8 +1,8 @@
 package de.thatsich.bachelor.imageprocessing.intern.model;
 
 import com.google.inject.Singleton;
-import de.thatsich.bachelor.imageprocessing.api.core.IImageEntries;
-import de.thatsich.bachelor.imageprocessing.api.entities.ImageEntry;
+import de.thatsich.bachelor.imageprocessing.api.model.IImageEntries;
+import de.thatsich.bachelor.imageprocessing.api.control.ImageEntry;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleListProperty;

@@ -14,8 +14,8 @@ import de.thatsich.bachelor.errorgeneration.intern.control.command.commands.SetL
 import de.thatsich.bachelor.errorgeneration.intern.control.provider.IErrorCommandProvider;
 import de.thatsich.bachelor.errorgeneration.intern.control.handler.CreateErrorEntrySucceededHandler;
 import de.thatsich.bachelor.errorgeneration.intern.control.handler.DeleteErrorEntrySucceededHandler;
-import de.thatsich.bachelor.imageprocessing.api.core.IImageEntries;
-import de.thatsich.bachelor.imageprocessing.api.entities.ImageEntry;
+import de.thatsich.bachelor.imageprocessing.api.model.IImageEntries;
+import de.thatsich.bachelor.imageprocessing.api.control.ImageEntry;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.javafx.CommandExecutor;
 import de.thatsich.core.javafx.component.IntegerField;

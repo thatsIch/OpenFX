@@ -1,6 +1,6 @@
 package de.thatsich.bachelor.imageprocessing.intern.model;
 
-import de.thatsich.bachelor.imageprocessing.api.core.IImageState;
+import de.thatsich.bachelor.imageprocessing.api.model.IImageState;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 

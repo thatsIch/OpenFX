@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8"
-            fx:controller="de.thatsich.bachelor.imageprocessing.intern.controller.ImageListPresenter">
+            fx:controller="de.thatsich.bachelor.imageprocessing.intern.control.ImageListPresenter">
     <children>
 
         <TableView fx:id="nodeTableViewImageList"
