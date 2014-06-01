@@ -1,16 +1,16 @@
 package de.thatsich.bachelor.errorgeneration.api.guice;
 
 import com.google.inject.Scopes;
-import de.thatsich.bachelor.errorgeneration.api.core.IErrorDisplayView;
-import de.thatsich.bachelor.errorgeneration.api.core.IErrorEntries;
-import de.thatsich.bachelor.errorgeneration.api.core.IErrorGenerators;
-import de.thatsich.bachelor.errorgeneration.api.core.IErrorInputView;
-import de.thatsich.bachelor.errorgeneration.api.core.IErrorListView;
-import de.thatsich.bachelor.errorgeneration.api.core.IErrorState;
+import de.thatsich.bachelor.errorgeneration.api.view.IErrorDisplayView;
+import de.thatsich.bachelor.errorgeneration.api.model.IErrorEntries;
+import de.thatsich.bachelor.errorgeneration.api.model.IErrorGenerators;
+import de.thatsich.bachelor.errorgeneration.api.view.IErrorInputView;
+import de.thatsich.bachelor.errorgeneration.api.view.IErrorListView;
+import de.thatsich.bachelor.errorgeneration.api.model.IErrorState;
 import de.thatsich.bachelor.errorgeneration.intern.model.ErrorEntries;
 import de.thatsich.bachelor.errorgeneration.intern.model.ErrorGenerators;
 import de.thatsich.bachelor.errorgeneration.intern.model.ErrorState;
-import de.thatsich.bachelor.errorgeneration.intern.service.ErrorConfigService;
+import de.thatsich.bachelor.errorgeneration.intern.control.command.service.ErrorConfigService;
 import de.thatsich.bachelor.errorgeneration.intern.view.ErrorDisplayView;
 import de.thatsich.bachelor.errorgeneration.intern.view.ErrorInputView;
 import de.thatsich.bachelor.errorgeneration.intern.view.ErrorListView;

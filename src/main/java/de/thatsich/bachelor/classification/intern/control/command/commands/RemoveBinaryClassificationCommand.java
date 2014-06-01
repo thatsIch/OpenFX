@@ -2,7 +2,7 @@ package de.thatsich.bachelor.classification.intern.control.command.commands;
 
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
-import de.thatsich.bachelor.classification.api.model.IBinaryClassification;
+import de.thatsich.bachelor.classification.api.control.IBinaryClassification;
 import de.thatsich.core.javafx.ACommand;
 
 import java.nio.file.Files;

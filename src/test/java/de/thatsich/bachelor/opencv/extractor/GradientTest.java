@@ -6,7 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import de.thatsich.bachelor.featureextraction.intern.command.extractor.Gradient;
+import de.thatsich.bachelor.featureextraction.intern.control.extractor.Gradient;
 
 @RunWith(JUnit4.class) 
 public class GradientTest extends AFeatureExtractorTest {

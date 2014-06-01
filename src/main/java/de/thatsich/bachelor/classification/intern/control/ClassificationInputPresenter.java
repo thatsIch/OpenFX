@@ -1,7 +1,7 @@
 package de.thatsich.bachelor.classification.intern.control;
 
 import com.google.inject.Inject;
-import de.thatsich.bachelor.classification.api.model.IBinaryClassification;
+import de.thatsich.bachelor.classification.api.control.IBinaryClassification;
 import de.thatsich.bachelor.classification.api.model.IBinaryClassifications;
 import de.thatsich.bachelor.classification.api.model.IBinaryClassifiers;
 import de.thatsich.bachelor.classification.api.model.IClassificationState;
@@ -13,8 +13,8 @@ import de.thatsich.bachelor.classification.intern.control.command.commands.Train
 import de.thatsich.bachelor.classification.intern.control.provider.IClassificationCommandProvider;
 import de.thatsich.bachelor.classification.intern.control.handler.RemoveBinaryClassificationSucceededHandler;
 import de.thatsich.bachelor.classification.intern.control.handler.TrainBinaryClassifierSucceededHandler;
-import de.thatsich.bachelor.featureextraction.api.core.IFeatureVectorSets;
-import de.thatsich.bachelor.featureextraction.api.entities.FeatureVectorSet;
+import de.thatsich.bachelor.featureextraction.api.model.IFeatureVectorSets;
+import de.thatsich.bachelor.featureextraction.api.control.FeatureVectorSet;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.javafx.CommandExecutor;
 import javafx.beans.value.ChangeListener;

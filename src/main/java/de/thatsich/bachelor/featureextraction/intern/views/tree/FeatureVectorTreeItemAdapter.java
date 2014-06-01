@@ -1,7 +1,7 @@
 package de.thatsich.bachelor.featureextraction.intern.views.tree;
 
-import de.thatsich.bachelor.featureextraction.api.entities.FeatureVector;
-import de.thatsich.bachelor.featureextraction.api.entities.FeatureVectorSet;
+import de.thatsich.bachelor.featureextraction.api.control.FeatureVector;
+import de.thatsich.bachelor.featureextraction.api.control.FeatureVectorSet;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 

@@ -1,6 +1,6 @@
 package de.thatsich.bachelor.preprocessing.intern.command.provider;
 
-import de.thatsich.bachelor.featureextraction.api.entities.FeatureVectorSet;
+import de.thatsich.bachelor.featureextraction.api.control.FeatureVectorSet;
 import de.thatsich.bachelor.preprocessing.api.entities.IPreProcessing;
 import de.thatsich.bachelor.preprocessing.intern.command.commands.RemovePreProcessingCommand;
 import de.thatsich.bachelor.preprocessing.intern.command.commands.SetLastPreProcessingIndexCommand;

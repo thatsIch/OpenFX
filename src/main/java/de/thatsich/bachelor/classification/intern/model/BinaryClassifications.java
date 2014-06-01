@@ -1,6 +1,6 @@
 package de.thatsich.bachelor.classification.intern.model;
 
-import de.thatsich.bachelor.classification.api.model.IBinaryClassification;
+import de.thatsich.bachelor.classification.api.control.IBinaryClassification;
 import de.thatsich.bachelor.classification.api.model.IBinaryClassifications;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;

@@ -1,7 +1,7 @@
 package de.thatsich.bachelor.classification.intern.control.handler;
 
 import com.google.inject.Inject;
-import de.thatsich.bachelor.classification.api.model.IBinaryClassification;
+import de.thatsich.bachelor.classification.api.control.IBinaryClassification;
 import de.thatsich.bachelor.classification.api.model.IBinaryClassifications;
 import de.thatsich.core.javafx.ACommandHandler;
 import javafx.collections.ObservableList;

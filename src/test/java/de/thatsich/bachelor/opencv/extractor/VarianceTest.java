@@ -6,7 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import de.thatsich.bachelor.featureextraction.intern.command.extractor.Variance;
+import de.thatsich.bachelor.featureextraction.intern.control.extractor.Variance;
 
 @RunWith(JUnit4.class)
 public class VarianceTest extends AFeatureExtractorTest {

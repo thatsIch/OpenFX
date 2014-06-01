@@ -1,7 +1,7 @@
 package de.thatsich.bachelor.classification.intern.control.classification.core;
 
 import com.google.inject.Inject;
-import de.thatsich.bachelor.classification.api.model.IBinaryClassification;
+import de.thatsich.bachelor.classification.api.control.IBinaryClassification;
 import de.thatsich.bachelor.classification.intern.control.classifier.core.BinaryClassifierConfiguration;
 import de.thatsich.core.Log;
 import javafx.beans.property.ReadOnlyIntegerProperty;

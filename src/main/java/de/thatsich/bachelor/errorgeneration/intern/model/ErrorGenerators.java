@@ -1,7 +1,7 @@
 package de.thatsich.bachelor.errorgeneration.intern.model;
 
-import de.thatsich.bachelor.errorgeneration.api.core.IErrorGenerators;
-import de.thatsich.bachelor.errorgeneration.api.entities.IErrorGenerator;
+import de.thatsich.bachelor.errorgeneration.api.model.IErrorGenerators;
+import de.thatsich.bachelor.errorgeneration.api.control.IErrorGenerator;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleListProperty;

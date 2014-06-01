@@ -1,6 +1,6 @@
 package de.thatsich.bachelor.featureextraction.intern.models;
 
-import de.thatsich.bachelor.featureextraction.api.core.IFeatureState;
+import de.thatsich.bachelor.featureextraction.api.model.IFeatureState;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;

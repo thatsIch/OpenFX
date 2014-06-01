@@ -1,7 +1,7 @@
 package de.thatsich.bachelor.featureextraction.intern.models;
 
-import de.thatsich.bachelor.featureextraction.api.core.IFeatureExtractors;
-import de.thatsich.bachelor.featureextraction.intern.command.extractor.IFeatureExtractor;
+import de.thatsich.bachelor.featureextraction.api.model.IFeatureExtractors;
+import de.thatsich.bachelor.featureextraction.api.control.IFeatureExtractor;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleListProperty;

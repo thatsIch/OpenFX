@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2"
-            fx:controller="de.thatsich.bachelor.errorgeneration.intern.controller.ErrorListPresenter">
+            fx:controller="de.thatsich.bachelor.errorgeneration.intern.control.ErrorListPresenter">
     <children>
 
         <TableView fx:id="nodeTableViewErrorList"

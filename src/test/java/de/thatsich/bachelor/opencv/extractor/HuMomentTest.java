@@ -4,7 +4,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import de.thatsich.bachelor.featureextraction.intern.command.extractor.HuMoments;
+import de.thatsich.bachelor.featureextraction.intern.control.extractor.HuMoments;
 
 @RunWith(JUnit4.class)
 public class HuMomentTest extends AFeatureExtractorTest {

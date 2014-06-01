@@ -1,8 +1,8 @@
 package de.thatsich.bachelor.featureextraction.intern.models;
 
-import de.thatsich.bachelor.featureextraction.api.core.IFeatureVectorSets;
-import de.thatsich.bachelor.featureextraction.api.entities.FeatureVector;
-import de.thatsich.bachelor.featureextraction.api.entities.FeatureVectorSet;
+import de.thatsich.bachelor.featureextraction.api.model.IFeatureVectorSets;
+import de.thatsich.bachelor.featureextraction.api.control.FeatureVector;
+import de.thatsich.bachelor.featureextraction.api.control.FeatureVectorSet;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;

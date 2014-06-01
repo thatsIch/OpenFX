@@ -1,7 +1,7 @@
 package de.thatsich.bachelor.errorgeneration.api.guice;
 
-import de.thatsich.bachelor.errorgeneration.intern.command.provider.IErrorCommandProvider;
-import de.thatsich.bachelor.errorgeneration.intern.command.provider.IErrorInitCommandProvider;
+import de.thatsich.bachelor.errorgeneration.intern.control.provider.IErrorCommandProvider;
+import de.thatsich.bachelor.errorgeneration.intern.control.provider.IErrorInitCommandProvider;
 import de.thatsich.core.guice.ACommandModule;
 import de.thatsich.core.guice.ICommandProvider;
 

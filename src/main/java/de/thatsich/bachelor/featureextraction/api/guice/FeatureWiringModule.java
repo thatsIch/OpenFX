@@ -1,12 +1,12 @@
 package de.thatsich.bachelor.featureextraction.api.guice;
 
 import com.google.inject.Scopes;
-import de.thatsich.bachelor.featureextraction.api.core.IFeatureDisplayView;
-import de.thatsich.bachelor.featureextraction.api.core.IFeatureExtractors;
-import de.thatsich.bachelor.featureextraction.api.core.IFeatureInputView;
-import de.thatsich.bachelor.featureextraction.api.core.IFeatureListView;
-import de.thatsich.bachelor.featureextraction.api.core.IFeatureState;
-import de.thatsich.bachelor.featureextraction.api.core.IFeatureVectorSets;
+import de.thatsich.bachelor.featureextraction.api.view.IFeatureDisplayView;
+import de.thatsich.bachelor.featureextraction.api.model.IFeatureExtractors;
+import de.thatsich.bachelor.featureextraction.api.view.IFeatureInputView;
+import de.thatsich.bachelor.featureextraction.api.view.IFeatureListView;
+import de.thatsich.bachelor.featureextraction.api.model.IFeatureState;
+import de.thatsich.bachelor.featureextraction.api.model.IFeatureVectorSets;
 import de.thatsich.bachelor.featureextraction.intern.models.FeatureExtractors;
 import de.thatsich.bachelor.featureextraction.intern.models.FeatureState;
 import de.thatsich.bachelor.featureextraction.intern.models.FeatureVectorSets;

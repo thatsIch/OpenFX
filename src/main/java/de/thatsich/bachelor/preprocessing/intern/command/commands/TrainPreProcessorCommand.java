@@ -2,8 +2,8 @@ package de.thatsich.bachelor.preprocessing.intern.command.commands;
 
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
-import de.thatsich.bachelor.featureextraction.api.entities.FeatureVector;
-import de.thatsich.bachelor.featureextraction.api.entities.FeatureVectorSet;
+import de.thatsich.bachelor.featureextraction.api.control.FeatureVector;
+import de.thatsich.bachelor.featureextraction.api.control.FeatureVectorSet;
 import de.thatsich.bachelor.preprocessing.api.entities.IPreProcessing;
 import de.thatsich.bachelor.preprocessing.intern.command.preprocessor.core.IPreProcessor;
 import de.thatsich.bachelor.preprocessing.intern.command.preprocessor.core.PreProcessorConfiguration;

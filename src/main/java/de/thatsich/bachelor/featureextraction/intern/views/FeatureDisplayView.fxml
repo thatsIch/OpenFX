@@ -8,7 +8,7 @@
 
 <ScrollPane xmlns:fx="http://javafx.com/fxml/1" fitToHeight="true"
             fitToWidth="true" xmlns="http://javafx.com/javafx/8"
-            fx:controller="de.thatsich.bachelor.featureextraction.intern.controller.FeatureDisplayPresenter">
+            fx:controller="de.thatsich.bachelor.featureextraction.intern.control.FeatureDisplayPresenter">
     <content>
         <StackPane>
             <children>

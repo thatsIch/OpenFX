@@ -1,6 +1,6 @@
 package de.thatsich.bachelor.errorgeneration.intern.model;
 
-import de.thatsich.bachelor.errorgeneration.api.core.IErrorState;
+import de.thatsich.bachelor.errorgeneration.api.model.IErrorState;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;

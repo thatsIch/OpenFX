@@ -1,6 +1,6 @@
 package de.thatsich.bachelor.opencv.extractor;
 
-import de.thatsich.bachelor.featureextraction.intern.command.extractor.IFeatureExtractor;
+import de.thatsich.bachelor.featureextraction.api.control.IFeatureExtractor;
 import de.thatsich.core.opencv.OpenCVLoader;
 import org.junit.BeforeClass;
 import org.junit.Test;
