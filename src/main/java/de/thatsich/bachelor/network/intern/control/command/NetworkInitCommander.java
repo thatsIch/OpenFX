@@ -1,10 +1,10 @@
-package de.thatsich.bachelor.network.intern.command;
+package de.thatsich.bachelor.network.intern.control.command;
 
 import com.google.inject.Inject;
 import de.thatsich.bachelor.network.api.core.INetworkState;
-import de.thatsich.bachelor.network.intern.command.commands.GetLastNetworkIndexCommand;
-import de.thatsich.bachelor.network.intern.command.commands.InitNetworkFolderCommand;
-import de.thatsich.bachelor.network.intern.command.commands.InitNetworkListCommand;
+import de.thatsich.bachelor.network.intern.control.command.commands.GetLastNetworkIndexCommand;
+import de.thatsich.bachelor.network.intern.control.command.commands.InitNetworkFolderCommand;
+import de.thatsich.bachelor.network.intern.control.command.commands.InitNetworkListCommand;
 import de.thatsich.bachelor.network.intern.control.handler.GetLastNetworkIndexSucceededHandler;
 import de.thatsich.bachelor.network.intern.control.handler.InitNetworkListSucceededHandler;
 import de.thatsich.bachelor.network.intern.control.provider.INetworkInitCommandProvider;

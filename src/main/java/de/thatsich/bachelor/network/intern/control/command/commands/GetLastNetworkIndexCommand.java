@@ -1,4 +1,4 @@
-package de.thatsich.bachelor.network.intern.command.commands;
+package de.thatsich.bachelor.network.intern.control.command.commands;
 
 import com.google.inject.Inject;
 import de.thatsich.bachelor.network.intern.service.NetworkConfigService;

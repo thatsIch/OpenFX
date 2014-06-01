@@ -1,9 +1,9 @@
 package de.thatsich.bachelor.network.intern.control.provider;
 
 import com.google.inject.assistedinject.Assisted;
-import de.thatsich.bachelor.network.intern.command.commands.GetLastNetworkIndexCommand;
-import de.thatsich.bachelor.network.intern.command.commands.InitNetworkFolderCommand;
-import de.thatsich.bachelor.network.intern.command.commands.InitNetworkListCommand;
+import de.thatsich.bachelor.network.intern.control.command.commands.GetLastNetworkIndexCommand;
+import de.thatsich.bachelor.network.intern.control.command.commands.InitNetworkFolderCommand;
+import de.thatsich.bachelor.network.intern.control.command.commands.InitNetworkListCommand;
 import de.thatsich.core.guice.ICommandProvider;
 
 import java.nio.file.Path;
