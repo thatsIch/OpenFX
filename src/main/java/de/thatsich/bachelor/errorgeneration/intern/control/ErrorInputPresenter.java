@@ -1,26 +1,24 @@
 package de.thatsich.bachelor.errorgeneration.intern.control;
 
 import com.google.inject.Inject;
+import de.thatsich.bachelor.errorgeneration.api.control.IErrorGenerator;
 import de.thatsich.bachelor.errorgeneration.api.model.IErrorEntries;
 import de.thatsich.bachelor.errorgeneration.api.model.IErrorGenerators;
 import de.thatsich.bachelor.errorgeneration.api.model.IErrorState;
-import de.thatsich.bachelor.errorgeneration.intern.control.error.ErrorEntry;
-import de.thatsich.bachelor.errorgeneration.api.control.IErrorGenerator;
 import de.thatsich.bachelor.errorgeneration.intern.control.command.ErrorInitCommander;
 import de.thatsich.bachelor.errorgeneration.intern.control.command.commands.CreateErrorEntryCommand;
 import de.thatsich.bachelor.errorgeneration.intern.control.command.commands.DeleteErrorEntryCommand;
 import de.thatsich.bachelor.errorgeneration.intern.control.command.commands.SetLastErrorCountCommand;
 import de.thatsich.bachelor.errorgeneration.intern.control.command.commands.SetLastErrorGeneratorIndexCommand;
-import de.thatsich.bachelor.errorgeneration.intern.control.provider.IErrorCommandProvider;
+import de.thatsich.bachelor.errorgeneration.intern.control.error.ErrorEntry;
 import de.thatsich.bachelor.errorgeneration.intern.control.handler.CreateErrorEntrySucceededHandler;
 import de.thatsich.bachelor.errorgeneration.intern.control.handler.DeleteErrorEntrySucceededHandler;
-import de.thatsich.bachelor.imageprocessing.api.model.IImageEntries;
+import de.thatsich.bachelor.errorgeneration.intern.control.provider.IErrorCommandProvider;
 import de.thatsich.bachelor.imageprocessing.api.control.ImageEntry;
+import de.thatsich.bachelor.imageprocessing.api.model.IImageEntries;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.javafx.CommandExecutor;
 import de.thatsich.core.javafx.component.IntegerField;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -45,20 +43,20 @@ import java.util.concurrent.ExecutorService;
 public class ErrorInputPresenter extends AFXMLPresenter
 {
 	// Injects
-	@Inject ErrorInitCommander initCommander;
-	@Inject IImageEntries imageEntryList;
-	@Inject IErrorState errorState;
-	@Inject IErrorEntries errorEntryList;
-	@Inject IErrorGenerators errorGeneratorList;
-	@Inject IErrorCommandProvider commander;
+	@Inject private ErrorInitCommander initCommander;
+	@Inject private IImageEntries imageEntryList;
+	@Inject private IErrorState state;
+	@Inject private IErrorEntries errorEntryList;
+	@Inject private IErrorGenerators errorGeneratorList;
+	@Inject private IErrorCommandProvider provider;
 
 	// Nodes
-	@FXML ChoiceBox<IErrorGenerator> nodeChoiceBoxErrorGenerator;
-	@FXML IntegerField nodeIntegerFieldErrorCount;
-	@FXML Button nodeButtonGenerateErrors;
-	@FXML Button nodeButtonPermutateErrors;
-	@FXML Button nodeButtonRemoveError;
-	@FXML Button nodeButtonResetErrors;
+	@FXML private ChoiceBox<IErrorGenerator> nodeChoiceBoxErrorGenerator;
+	@FXML private IntegerField nodeIntegerFieldErrorCount;
+	@FXML private Button nodeButtonGenerateErrors;
+	@FXML private Button nodeButtonPermutateErrors;
+	@FXML private Button nodeButtonRemoveError;
+	@FXML private Button nodeButtonResetErrors;
 
 	@Override
 	protected void bindComponents()
@@ -101,14 +99,9 @@ public class ErrorInputPresenter extends AFXMLPresenter
 		this.nodeChoiceBoxErrorGenerator.valueProperty().bindBidirectional(this.errorGeneratorList.getSelectedErrorGeneratorProperty());
 		this.log.info("Bound ChoiceBoxErrorGenerator to Model.");
 
-		this.nodeChoiceBoxErrorGenerator.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>()
-		{
-			@Override
-			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue)
-			{
-				SetLastErrorGeneratorIndexCommand command = commander.createSetLastErrorGeneratorIndexCommand(newValue.intValue());
-				command.start();
-			}
+		this.nodeChoiceBoxErrorGenerator.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
+			SetLastErrorGeneratorIndexCommand command = provider.createSetLastErrorGeneratorIndexCommand(newValue.intValue());
+			command.start();
 		});
 		this.log.info("Bound ChoiceBoxErrorGenerator to Config.");
 	}
@@ -119,17 +112,12 @@ public class ErrorInputPresenter extends AFXMLPresenter
 	 */
 	private void bindIntegerFieldErrorCount()
 	{
-		this.nodeIntegerFieldErrorCount.value.addListener(new ChangeListener<Number>()
-		{
-			@Override
-			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue)
-			{
-				final int count = newValue.intValue();
-				errorState.getErrorLoopCountProperty().set(count);
-				final SetLastErrorCountCommand command = commander.createSetLastErrorCountCommand(count);
-				command.start();
-				log.info("Initiated SetLastErrorCountCommand with " + count + ".");
-			}
+		this.nodeIntegerFieldErrorCount.value.addListener((observable, oldValue, newValue) -> {
+			final int count = newValue.intValue();
+			state.getErrorLoopCountProperty().set(count);
+			final SetLastErrorCountCommand command = provider.createSetLastErrorCountCommand(count);
+			command.start();
+			log.info("Initiated SetLastErrorCountCommand with " + count + ".");
 		});
 	}
 
@@ -154,28 +142,24 @@ public class ErrorInputPresenter extends AFXMLPresenter
 		final ImageEntry imageEntry = this.imageEntryList.getSelectedImageEntry();
 		final Mat image = imageEntry.getImageMat().clone();
 		final IErrorGenerator generator = this.errorGeneratorList.getSelectedErrorGenerator();
-		final int loops = this.errorState.getErrorLoopCount();
+		final int loops = this.state.getErrorLoopCount();
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(loops);
 		this.log.info("Initialized Executor for generating all Errors.");
 
 		for (int step = 0; step < loops; step++)
 		{
 			final String dateTime = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-SSS").format(new Date()) + "_" + generator.getName() + "_" + UUID.randomUUID().toString();
-			final Path imagePath = this.errorState.getErrorEntryFolderPath().resolve(dateTime);
+			final Path imagePath = this.state.getErrorEntryFolderPath().resolve(dateTime);
 			this.log.info("Path: " + imagePath);
 
-			final CreateErrorEntryCommand command = this.commander.createApplyErrorCommand(image, imagePath, generator);
+			final CreateErrorEntryCommand command = this.provider.createApplyErrorCommand(image, imagePath, generator);
 			command.setOnSucceededCommandHandler(CreateErrorEntrySucceededHandler.class);
 			command.setExecutor(executor);
 			command.start();
 		}
 		this.log.info("File created and added to ErrorList.");
 
-		executor.execute(new Runnable()
-		{
-			@Override
-			public void run() { System.gc(); }
-		});
+		executor.execute(System::gc);
 		this.log.info("Running Garbage Collector.");
 
 		executor.shutdown();
@@ -191,7 +175,7 @@ public class ErrorInputPresenter extends AFXMLPresenter
 		final ErrorEntry entry = this.errorEntryList.getSelectedErrorEntry();
 		this.log.info("Fetched selected ErrorEntry.");
 
-		final DeleteErrorEntryCommand command = this.commander.createDeleteErrorEntryCommand(entry);
+		final DeleteErrorEntryCommand command = this.provider.createDeleteErrorEntryCommand(entry);
 		command.setOnSucceededCommandHandler(DeleteErrorEntrySucceededHandler.class);
 		command.start();
 		this.log.info("File deleted and removed from ErrorList.");
@@ -205,9 +189,9 @@ public class ErrorInputPresenter extends AFXMLPresenter
 	{
 		final ObservableList<ImageEntry> imageEntries = this.imageEntryList.imageEntryListProperty();
 		final IErrorGenerator generator = this.errorGeneratorList.getSelectedErrorGenerator();
-		final int loops = this.errorState.getErrorLoopCount();
+		final int loops = this.state.getErrorLoopCount();
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(imageEntries.size() * loops);
-		final Path errorEntryFolderPath = this.errorState.getErrorEntryFolderPath();
+		final Path errorEntryFolderPath = this.state.getErrorEntryFolderPath();
 		this.log.info("Initialized Executor for permutating all Errors.");
 
 		for (ImageEntry entry : imageEntries)
@@ -219,7 +203,7 @@ public class ErrorInputPresenter extends AFXMLPresenter
 				Path imagePath = errorEntryFolderPath.resolve(dateTime + ".png");
 				this.log.info("Path: " + imagePath);
 
-				final CreateErrorEntryCommand command = this.commander.createApplyErrorCommand(image, imagePath, generator);
+				final CreateErrorEntryCommand command = this.provider.createApplyErrorCommand(image, imagePath, generator);
 				command.setOnSucceededCommandHandler(CreateErrorEntrySucceededHandler.class);
 				command.setExecutor(executor);
 				command.start();
@@ -227,11 +211,7 @@ public class ErrorInputPresenter extends AFXMLPresenter
 		}
 		this.log.info("Files created and added to ErrorList.");
 
-		executor.execute(new Runnable()
-		{
-			@Override
-			public void run() { System.gc(); }
-		});
+		executor.execute(System::gc);
 		this.log.info("Running Garbage Collector.");
 
 		executor.shutdown();
@@ -250,18 +230,14 @@ public class ErrorInputPresenter extends AFXMLPresenter
 
 		for (ErrorEntry entry : errorEntryList)
 		{
-			final DeleteErrorEntryCommand command = this.commander.createDeleteErrorEntryCommand(entry);
+			final DeleteErrorEntryCommand command = this.provider.createDeleteErrorEntryCommand(entry);
 			command.setOnSucceededCommandHandler(DeleteErrorEntrySucceededHandler.class);
 			command.setExecutor(executor);
 			command.start();
 			this.log.info("File Deletion executed.");
 		}
 
-		executor.execute(new Runnable()
-		{
-			@Override
-			public void run() { System.gc(); }
-		});
+		executor.execute(System::gc);
 		this.log.info("Running Garbage Collector.");
 
 		executor.shutdown();

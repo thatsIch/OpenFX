@@ -30,7 +30,7 @@ public class NetworkInitCommander extends AInitCommander
 	@Inject
 	private void initNetworkList()
 	{
-		final Path networkInputPath = Paths.get("op/networks");
+		final Path networkInputPath = Paths.get("io/networks");
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(1);
 		this.log.info("Prepared Network Preparations.");
 

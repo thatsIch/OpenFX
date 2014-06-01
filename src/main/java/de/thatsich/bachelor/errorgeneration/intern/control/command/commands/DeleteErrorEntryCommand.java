@@ -5,12 +5,13 @@ import com.google.inject.assistedinject.Assisted;
 import de.thatsich.bachelor.errorgeneration.intern.control.error.ErrorEntry;
 import de.thatsich.core.javafx.ACommand;
 
+import java.io.IOException;
+import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class DeleteErrorEntryCommand extends ACommand<ErrorEntry>
 {
-
 	final private ErrorEntry entry;
 
 	@Inject
@@ -22,13 +23,38 @@ public class DeleteErrorEntryCommand extends ACommand<ErrorEntry>
 	@Override
 	protected ErrorEntry call() throws Exception
 	{
-		Path path = this.entry.getStoragePath();
-		if (Files.exists(path))
-		{
-			Files.delete(path);
-			log.info("File deleted.");
-		}
+		final Path path = this.entry.getStoragePath();
+		this.deleteChildren(path);
+		this.deletePath(path);
+		this.log.info("Error deleted.");
 
 		return this.entry;
+	}
+
+	private void deleteChildren(Path parent)
+	{
+		try (DirectoryStream<Path> children = Files.newDirectoryStream(parent))
+		{
+			for (Path child : children)
+			{
+				this.deletePath(child);
+			}
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
+
+	private void deletePath(Path path)
+	{
+		try
+		{
+			Files.deleteIfExists(path);
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
 	}
 }
