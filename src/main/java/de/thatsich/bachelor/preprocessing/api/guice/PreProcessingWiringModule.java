@@ -1,17 +1,17 @@
 package de.thatsich.bachelor.preprocessing.api.guice;
 
 import com.google.inject.Scopes;
-import de.thatsich.bachelor.preprocessing.api.models.IPreProcessingState;
-import de.thatsich.bachelor.preprocessing.api.models.IPreProcessings;
-import de.thatsich.bachelor.preprocessing.api.models.IPreProcessors;
-import de.thatsich.bachelor.preprocessing.api.views.IPreProcessingDisplayView;
-import de.thatsich.bachelor.preprocessing.api.views.IPreProcessingInputView;
-import de.thatsich.bachelor.preprocessing.api.views.IPreProcessingListView;
-import de.thatsich.bachelor.preprocessing.intern.command.preprocessor.AANNPreProcessor;
+import de.thatsich.bachelor.preprocessing.api.model.IPreProcessingState;
+import de.thatsich.bachelor.preprocessing.api.model.IPreProcessings;
+import de.thatsich.bachelor.preprocessing.api.model.IPreProcessors;
+import de.thatsich.bachelor.preprocessing.api.view.IPreProcessingDisplayView;
+import de.thatsich.bachelor.preprocessing.api.view.IPreProcessingInputView;
+import de.thatsich.bachelor.preprocessing.api.view.IPreProcessingListView;
+import de.thatsich.bachelor.preprocessing.intern.control.command.preprocessor.AANNPreProcessor;
 import de.thatsich.bachelor.preprocessing.intern.model.PreProcessingState;
 import de.thatsich.bachelor.preprocessing.intern.model.PreProcessings;
 import de.thatsich.bachelor.preprocessing.intern.model.PreProcessors;
-import de.thatsich.bachelor.preprocessing.intern.service.PreProcessingConfigService;
+import de.thatsich.bachelor.preprocessing.intern.control.command.service.PreProcessingConfigService;
 import de.thatsich.bachelor.preprocessing.intern.view.PreProcessingDisplayView;
 import de.thatsich.bachelor.preprocessing.intern.view.PreProcessingInputView;
 import de.thatsich.bachelor.preprocessing.intern.view.PreProcessingListView;

@@ -1,11 +1,11 @@
 package de.thatsich.bachelor.preprocessing.intern.control;
 
 import com.google.inject.Inject;
-import de.thatsich.bachelor.preprocessing.api.entities.IPreProcessing;
-import de.thatsich.bachelor.preprocessing.api.models.IPreProcessings;
-import de.thatsich.bachelor.preprocessing.intern.command.PreProcessingInitCommander;
-import de.thatsich.bachelor.preprocessing.intern.command.commands.SetLastPreProcessingIndexCommand;
-import de.thatsich.bachelor.preprocessing.intern.command.provider.IPreProcessingCommandProvider;
+import de.thatsich.bachelor.preprocessing.api.control.IPreProcessing;
+import de.thatsich.bachelor.preprocessing.api.model.IPreProcessings;
+import de.thatsich.bachelor.preprocessing.intern.control.command.PreProcessingInitCommander;
+import de.thatsich.bachelor.preprocessing.intern.control.command.commands.SetLastPreProcessingIndexCommand;
+import de.thatsich.bachelor.preprocessing.intern.control.command.provider.IPreProcessingCommandProvider;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;

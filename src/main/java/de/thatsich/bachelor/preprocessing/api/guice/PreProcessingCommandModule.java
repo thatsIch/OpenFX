@@ -1,8 +1,8 @@
 package de.thatsich.bachelor.preprocessing.api.guice;
 
-import de.thatsich.bachelor.preprocessing.intern.command.provider.IPreProcessingCommandProvider;
-import de.thatsich.bachelor.preprocessing.intern.command.provider.IPreProcessingInitCommandProvider;
-import de.thatsich.bachelor.preprocessing.intern.command.provider.IPreProcessingProvider;
+import de.thatsich.bachelor.preprocessing.intern.control.command.provider.IPreProcessingCommandProvider;
+import de.thatsich.bachelor.preprocessing.intern.control.command.provider.IPreProcessingInitCommandProvider;
+import de.thatsich.bachelor.preprocessing.intern.control.command.provider.IPreProcessingProvider;
 import de.thatsich.core.guice.ACommandModule;
 import de.thatsich.core.guice.ICommandProvider;
 

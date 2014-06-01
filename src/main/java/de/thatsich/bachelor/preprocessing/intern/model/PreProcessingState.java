@@ -1,7 +1,7 @@
 package de.thatsich.bachelor.preprocessing.intern.model;
 
 import com.google.inject.Singleton;
-import de.thatsich.bachelor.preprocessing.api.models.IPreProcessingState;
+import de.thatsich.bachelor.preprocessing.api.model.IPreProcessingState;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 

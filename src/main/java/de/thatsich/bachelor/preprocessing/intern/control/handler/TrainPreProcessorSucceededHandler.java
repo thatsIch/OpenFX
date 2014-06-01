@@ -1,8 +1,8 @@
 package de.thatsich.bachelor.preprocessing.intern.control.handler;
 
 import com.google.inject.Inject;
-import de.thatsich.bachelor.preprocessing.api.entities.IPreProcessing;
-import de.thatsich.bachelor.preprocessing.api.models.IPreProcessings;
+import de.thatsich.bachelor.preprocessing.api.control.IPreProcessing;
+import de.thatsich.bachelor.preprocessing.api.model.IPreProcessings;
 import de.thatsich.core.javafx.ACommandHandler;
 
 
