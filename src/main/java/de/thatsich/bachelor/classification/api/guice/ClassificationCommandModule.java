@@ -1,8 +1,8 @@
 package de.thatsich.bachelor.classification.api.guice;
 
-import de.thatsich.bachelor.classification.intern.command.provider.IBinaryClassificationProvider;
-import de.thatsich.bachelor.classification.intern.command.provider.IClassificationCommandProvider;
-import de.thatsich.bachelor.classification.intern.command.provider.IClassificationInitCommandProvider;
+import de.thatsich.bachelor.classification.intern.control.provider.IBinaryClassificationProvider;
+import de.thatsich.bachelor.classification.intern.control.provider.IClassificationCommandProvider;
+import de.thatsich.bachelor.classification.intern.control.provider.IClassificationInitCommandProvider;
 import de.thatsich.core.guice.ACommandModule;
 import de.thatsich.core.guice.ICommandProvider;
 

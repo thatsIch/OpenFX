@@ -1,16 +1,16 @@
 package de.thatsich.bachelor.classification.intern.control;
 
 import com.google.inject.Inject;
-import de.thatsich.bachelor.classification.api.entities.IBinaryClassification;
-import de.thatsich.bachelor.classification.api.models.IBinaryClassifications;
-import de.thatsich.bachelor.classification.api.models.IBinaryClassifiers;
-import de.thatsich.bachelor.classification.api.models.IClassificationState;
-import de.thatsich.bachelor.classification.intern.command.ClassificationInitCommander;
-import de.thatsich.bachelor.classification.intern.command.classifier.core.IBinaryClassifier;
-import de.thatsich.bachelor.classification.intern.command.commands.RemoveBinaryClassificationCommand;
-import de.thatsich.bachelor.classification.intern.command.commands.SetLastBinaryClassifierIndexCommand;
-import de.thatsich.bachelor.classification.intern.command.commands.TrainBinaryClassifierCommand;
-import de.thatsich.bachelor.classification.intern.command.provider.IClassificationCommandProvider;
+import de.thatsich.bachelor.classification.api.model.IBinaryClassification;
+import de.thatsich.bachelor.classification.api.model.IBinaryClassifications;
+import de.thatsich.bachelor.classification.api.model.IBinaryClassifiers;
+import de.thatsich.bachelor.classification.api.model.IClassificationState;
+import de.thatsich.bachelor.classification.intern.control.command.ClassificationInitCommander;
+import de.thatsich.bachelor.classification.intern.control.classifier.core.IBinaryClassifier;
+import de.thatsich.bachelor.classification.intern.control.command.commands.RemoveBinaryClassificationCommand;
+import de.thatsich.bachelor.classification.intern.control.command.commands.SetLastBinaryClassifierIndexCommand;
+import de.thatsich.bachelor.classification.intern.control.command.commands.TrainBinaryClassifierCommand;
+import de.thatsich.bachelor.classification.intern.control.provider.IClassificationCommandProvider;
 import de.thatsich.bachelor.classification.intern.control.handler.RemoveBinaryClassificationSucceededHandler;
 import de.thatsich.bachelor.classification.intern.control.handler.TrainBinaryClassifierSucceededHandler;
 import de.thatsich.bachelor.featureextraction.api.core.IFeatureVectorSets;

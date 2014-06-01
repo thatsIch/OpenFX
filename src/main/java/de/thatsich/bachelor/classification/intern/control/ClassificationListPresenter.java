@@ -1,11 +1,11 @@
 package de.thatsich.bachelor.classification.intern.control;
 
 import com.google.inject.Inject;
-import de.thatsich.bachelor.classification.api.entities.IBinaryClassification;
-import de.thatsich.bachelor.classification.api.models.IBinaryClassifications;
-import de.thatsich.bachelor.classification.intern.command.ClassificationInitCommander;
-import de.thatsich.bachelor.classification.intern.command.commands.SetLastBinaryClassificationIndexCommand;
-import de.thatsich.bachelor.classification.intern.command.provider.IClassificationCommandProvider;
+import de.thatsich.bachelor.classification.api.model.IBinaryClassification;
+import de.thatsich.bachelor.classification.api.model.IBinaryClassifications;
+import de.thatsich.bachelor.classification.intern.control.command.ClassificationInitCommander;
+import de.thatsich.bachelor.classification.intern.control.command.commands.SetLastBinaryClassificationIndexCommand;
+import de.thatsich.bachelor.classification.intern.control.provider.IClassificationCommandProvider;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;

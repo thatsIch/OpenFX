@@ -1,18 +1,18 @@
 package de.thatsich.bachelor.classification.api.guice;
 
 import com.google.inject.Scopes;
-import de.thatsich.bachelor.classification.api.models.IBinaryClassifications;
-import de.thatsich.bachelor.classification.api.models.IBinaryClassifiers;
-import de.thatsich.bachelor.classification.api.models.IClassificationState;
-import de.thatsich.bachelor.classification.api.views.IClassificationDisplayView;
-import de.thatsich.bachelor.classification.api.views.IClassificationInputView;
-import de.thatsich.bachelor.classification.api.views.IClassificationListView;
-import de.thatsich.bachelor.classification.intern.command.classifier.RandomForestBinaryClassifier;
-import de.thatsich.bachelor.classification.intern.command.classifier.SVMBinaryClassifier;
+import de.thatsich.bachelor.classification.api.model.IBinaryClassifications;
+import de.thatsich.bachelor.classification.api.model.IBinaryClassifiers;
+import de.thatsich.bachelor.classification.api.model.IClassificationState;
+import de.thatsich.bachelor.classification.api.view.IClassificationDisplayView;
+import de.thatsich.bachelor.classification.api.view.IClassificationInputView;
+import de.thatsich.bachelor.classification.api.view.IClassificationListView;
+import de.thatsich.bachelor.classification.intern.control.classifier.RandomForestBinaryClassifier;
+import de.thatsich.bachelor.classification.intern.control.classifier.SVMBinaryClassifier;
 import de.thatsich.bachelor.classification.intern.model.BinaryClassifications;
 import de.thatsich.bachelor.classification.intern.model.BinaryClassifiers;
 import de.thatsich.bachelor.classification.intern.model.ClassificationState;
-import de.thatsich.bachelor.classification.intern.service.ClassificationConfigService;
+import de.thatsich.bachelor.classification.intern.control.command.service.ClassificationConfigService;
 import de.thatsich.bachelor.classification.intern.view.ClassificationDisplayView;
 import de.thatsich.bachelor.classification.intern.view.ClassificationInputView;
 import de.thatsich.bachelor.classification.intern.view.ClassificationListView;

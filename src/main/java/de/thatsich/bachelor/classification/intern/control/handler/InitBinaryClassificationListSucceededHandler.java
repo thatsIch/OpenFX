@@ -5,25 +5,24 @@ import de.thatsich.bachelor.classification.api.model.IBinaryClassification;
 import de.thatsich.bachelor.classification.api.model.IBinaryClassifications;
 import de.thatsich.core.javafx.ACommandHandler;
 
+import java.util.List;
+
 /**
  * Handler for what should happen if the Command was successfull
- * for training BinaryClassifier
+ * for initializing the feature vector list
  *
  * @author Minh
  */
-public class TrainBinaryClassifierSucceededHandler extends ACommandHandler<IBinaryClassification>
+public class InitBinaryClassificationListSucceededHandler extends ACommandHandler<List<IBinaryClassification>>
 {
 
 	@Inject
 	private IBinaryClassifications binaryClassifications;
 
 	@Override
-	public void handle(IBinaryClassification classification)
+	public void handle(List<IBinaryClassification> trainedBinaryClassifierList)
 	{
-		this.binaryClassifications.getBinaryClassificationListProperty().add(classification);
-		this.log.info("Added BinaryClassification to Database.");
-
-		this.binaryClassifications.getSelectedBinaryClassificationProperty().set(classification);
-		this.log.info("Select BinaryClassifcation.");
+		this.binaryClassifications.getBinaryClassificationListProperty().addAll(trainedBinaryClassifierList);
+		this.log.info("Added TrainedBinaryClassifierList to Database.");
 	}
 }

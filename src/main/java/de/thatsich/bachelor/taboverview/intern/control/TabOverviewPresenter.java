@@ -2,9 +2,9 @@ package de.thatsich.bachelor.taboverview.intern.control;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import de.thatsich.bachelor.classification.api.views.IClassificationDisplayView;
-import de.thatsich.bachelor.classification.api.views.IClassificationInputView;
-import de.thatsich.bachelor.classification.api.views.IClassificationListView;
+import de.thatsich.bachelor.classification.api.view.IClassificationDisplayView;
+import de.thatsich.bachelor.classification.api.view.IClassificationInputView;
+import de.thatsich.bachelor.classification.api.view.IClassificationListView;
 import de.thatsich.bachelor.network.api.core.INetworkDisplayView;
 import de.thatsich.bachelor.network.api.core.INetworkInputView;
 import de.thatsich.bachelor.network.api.core.INetworkListView;

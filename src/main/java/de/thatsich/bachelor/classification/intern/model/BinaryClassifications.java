@@ -1,7 +1,7 @@
 package de.thatsich.bachelor.classification.intern.model;
 
-import de.thatsich.bachelor.classification.api.entities.IBinaryClassification;
-import de.thatsich.bachelor.classification.api.models.IBinaryClassifications;
+import de.thatsich.bachelor.classification.api.model.IBinaryClassification;
+import de.thatsich.bachelor.classification.api.model.IBinaryClassifications;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleListProperty;

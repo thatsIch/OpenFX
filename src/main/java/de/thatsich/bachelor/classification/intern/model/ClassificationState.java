@@ -1,6 +1,6 @@
 package de.thatsich.bachelor.classification.intern.model;
 
-import de.thatsich.bachelor.classification.api.models.IClassificationState;
+import de.thatsich.bachelor.classification.api.model.IClassificationState;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
