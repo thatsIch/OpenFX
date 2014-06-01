@@ -1,4 +1,4 @@
-package de.thatsich.bachelor.prediction.intern.service;
+package de.thatsich.bachelor.prediction.intern.control.command.service;
 
 import com.sun.org.apache.xpath.internal.functions.WrongNumberArgsException;
 import de.thatsich.bachelor.prediction.api.entities.BinaryPrediction;

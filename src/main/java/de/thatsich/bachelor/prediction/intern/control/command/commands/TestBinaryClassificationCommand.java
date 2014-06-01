@@ -1,4 +1,4 @@
-package de.thatsich.bachelor.prediction.intern.command.commands;
+package de.thatsich.bachelor.prediction.intern.control.command.commands;
 
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
@@ -7,7 +7,7 @@ import de.thatsich.bachelor.errorgeneration.api.entities.IErrorGenerator;
 import de.thatsich.bachelor.featureextraction.intern.command.extractor.IFeatureExtractor;
 import de.thatsich.bachelor.imageprocessing.api.entities.ImageEntry;
 import de.thatsich.bachelor.prediction.api.entities.BinaryPrediction;
-import de.thatsich.bachelor.prediction.intern.service.BinaryPredictionFileStorageService;
+import de.thatsich.bachelor.prediction.intern.control.command.service.BinaryPredictionFileStorageService;
 import de.thatsich.core.javafx.ACommand;
 import de.thatsich.core.opencv.Images;
 import org.opencv.core.Core;
