@@ -1,13 +1,13 @@
-package de.thatsich.bachelor.taboverview.intern.controller;
+package de.thatsich.bachelor.taboverview.intern.control;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import de.thatsich.bachelor.classification.api.views.IClassificationDisplayView;
 import de.thatsich.bachelor.classification.api.views.IClassificationInputView;
 import de.thatsich.bachelor.classification.api.views.IClassificationListView;
-import de.thatsich.bachelor.cnbc.api.core.INetworkDisplayView;
-import de.thatsich.bachelor.cnbc.api.core.INetworkInputView;
-import de.thatsich.bachelor.cnbc.api.core.INetworkListView;
+import de.thatsich.bachelor.network.api.core.INetworkDisplayView;
+import de.thatsich.bachelor.network.api.core.INetworkInputView;
+import de.thatsich.bachelor.network.api.core.INetworkListView;
 import de.thatsich.bachelor.errorgeneration.api.core.IErrorDisplayView;
 import de.thatsich.bachelor.errorgeneration.api.core.IErrorInputView;
 import de.thatsich.bachelor.errorgeneration.api.core.IErrorListView;

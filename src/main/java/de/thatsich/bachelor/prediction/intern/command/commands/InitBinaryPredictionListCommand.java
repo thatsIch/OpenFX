@@ -29,7 +29,6 @@ public class InitBinaryPredictionListCommand extends ACommand<List<BinaryPredict
 		this.binaryPredictionFolderPath = binaryPredictionFolderPath;
 	}
 
-	@SuppressWarnings("unused")
 	@Override
 	protected List<BinaryPrediction> call() throws Exception
 	{
@@ -44,21 +43,6 @@ public class InitBinaryPredictionListCommand extends ACommand<List<BinaryPredict
 		{
 			for (Path child : stream)
 			{
-				// split the file name 
-				// and check if has 5 members
-				// and extract them
-				final String fileName = child.getFileName().toString();
-				final String[] fileNameSplit = fileName.split("_");
-				//				if (fileNameSplit.length != 5) throw new WrongNumberArgsException("Expected 5 encoded information but found " + fileNameSplit.length);
-				log.info("Split FileNmae.");
-
-				final String classificationName = fileNameSplit[0];
-				final String extractorName = fileNameSplit[1];
-				final int frameSize = Integer.parseInt(fileNameSplit[2]);
-				final String errorName = fileNameSplit[3];
-				final String id = fileNameSplit[4];
-				log.info("Prepared SubInformation.");
-
 				final BinaryPrediction prediction = fileStorage.load(child);
 				binaryPredictionList.add(prediction);
 			}

@@ -6,7 +6,7 @@ import de.thatsich.bachelor.prediction.api.entities.BinaryPrediction;
 import de.thatsich.core.javafx.ACommandHandler;
 
 /**
- * Handler for what should happen if the Command was successfull
+ * Handler for what should happen if the Command was successful
  * for getting the LastFeatureVectorIndex
  *
  * @author Minh
@@ -22,6 +22,6 @@ public class GetLastBinaryPredictionIndexSucceededHandler extends ACommandHandle
 	{
 		final BinaryPrediction selectedBinaryPrediction = this.binaryPredictions.getBinaryPredictionListProperty().get(value);
 		this.binaryPredictions.setSelectedBinaryPrediction(selectedBinaryPrediction);
-		log.info("Set BinaryPrediction in Model.");
+		this.log.info("Set BinaryPrediction in Model.");
 	}
 }

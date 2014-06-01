@@ -30,19 +30,20 @@ import java.util.concurrent.ExecutorService;
 public class PredictionInputPresenter extends AFXMLPresenter
 {
 	// Injects
-	@Inject PredictionInitCommander initCommander;
-	@Inject IImageEntries imageEntries;
-	@Inject IErrorGenerators errorGenerators;
-	@Inject IFeatureExtractors featureExtractors;
-	@Inject IBinaryClassifications binaryClassifications;
-	@Inject IPredictionState predictionState;
-	@Inject IBinaryPredictions binaryPredictions;
-	@Inject IPredictionCommandProvider commander;
+	@Inject private PredictionInitCommander initCommander;
+
+	@Inject private IImageEntries imageEntries;
+	@Inject private IErrorGenerators errorGenerators;
+	@Inject private IFeatureExtractors featureExtractors;
+	@Inject private IBinaryClassifications binaryClassifications;
+	@Inject private IPredictionState predictionState;
+	@Inject private IBinaryPredictions binaryPredictions;
+	@Inject private IPredictionCommandProvider commander;
 
 	// Nodes
-	@FXML Button nodeButtonPredictBinaryClassification;
-	@FXML Button nodeButtonDeleteBinaryPrediction;
-	@FXML Button nodeButtonResetBinaryPrediction;
+	@FXML private Button nodeButtonPredictBinaryClassification;
+	@FXML private Button nodeButtonDeleteBinaryPrediction;
+	@FXML private Button nodeButtonResetBinaryPrediction;
 
 	@Override
 	protected void bindComponents()

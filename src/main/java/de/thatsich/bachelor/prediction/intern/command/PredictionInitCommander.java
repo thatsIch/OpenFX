@@ -19,14 +19,11 @@ import java.util.concurrent.ExecutorService;
 @Singleton
 public class PredictionInitCommander extends AInitCommander
 {
-
 	// Model
-	@Inject
-	private IPredictionState predictionState;
+	@Inject private IPredictionState predictionState;
 
 	// Command
-	@Inject
-	private IPredictionInitCommandProvider commander;
+	@Inject private IPredictionInitCommandProvider commander;
 
 	/**
 	 * Initialize BinaryPredictionList and pre-select last selected one

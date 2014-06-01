@@ -1,4 +1,4 @@
-package de.thatsich.bachelor.cnbc.api.guice;
+package de.thatsich.bachelor.network.api.guice;
 
 import de.thatsich.core.guice.ACommandModule;
 import de.thatsich.core.guice.ICommandProvider;

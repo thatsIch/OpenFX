@@ -1,4 +1,4 @@
-package de.thatsich.bachelor.cnbc.api.core;
+package de.thatsich.bachelor.network.api.core;
 
 /**
  * @author thatsIch

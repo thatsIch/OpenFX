@@ -9,7 +9,7 @@
 <?import javafx.scene.text.*?>
 
 <TabPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2"
-         fx:controller="de.thatsich.bachelor.taboverview.intern.controller.TabOverviewPresenter">
+         fx:controller="de.thatsich.bachelor.taboverview.intern.control.TabOverviewPresenter">
     <tabs>
         <Tab closable="false" text="Image Processing">
             <content>
