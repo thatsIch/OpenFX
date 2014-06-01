@@ -9,7 +9,7 @@ import de.thatsich.bachelor.prediction.intern.command.commands.InitPredictionFol
 import de.thatsich.bachelor.prediction.intern.command.handler.GetLastBinaryPredictionIndexSucceededHandler;
 import de.thatsich.bachelor.prediction.intern.command.handler.InitBinaryPredictionListSucceededHandler;
 import de.thatsich.bachelor.prediction.intern.command.provider.IPredictionInitCommandProvider;
-import de.thatsich.core.javafx.AInitCommader;
+import de.thatsich.core.javafx.AInitCommander;
 import de.thatsich.core.javafx.CommandExecutor;
 
 import java.nio.file.Path;
@@ -17,7 +17,7 @@ import java.nio.file.Paths;
 import java.util.concurrent.ExecutorService;
 
 @Singleton
-public class PredictionInitCommander extends AInitCommader
+public class PredictionInitCommander extends AInitCommander
 {
 
 	// Model

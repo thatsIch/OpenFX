@@ -1,11 +1,6 @@
 package de.thatsich.core.opencv;
 
-import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
@@ -30,35 +25,6 @@ public class Images
 	public static void store(Mat image, Path file)
 	{
 		Highgui.imwrite(file.toAbsolutePath().toString(), image);
-	}
-
-	/**
-	 * Creates a new Scene for a Mat-Image and renders it
-	 *
-	 * @param image Mat to be shown.
-	 */
-	public static void show(Mat image)
-	{
-		Images.show(Images.toImage(image));
-	}
-
-	/**
-	 * Creates a new Scene for an image and renders it.
-	 *
-	 * @param image Image to be shown
-	 */
-	public static void show(Image image)
-	{
-		final ImageView view = new ImageView();
-		final Pane layout = new HBox();
-		final Scene scene = new Scene(layout);
-		final Stage stage = new Stage();
-
-		view.setImage(image);
-		layout.getChildren().add(view);
-		stage.setScene(scene);
-
-		stage.show();
 	}
 
 	/**

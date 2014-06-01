@@ -25,14 +25,7 @@ public abstract class AFXMLView implements IFXMLView
 	/**
 	 * FXML Loader
 	 */
-	@Inject
-	private GuiceFXMLLoader loader;
-
-	/*
-	 * ==================================================
-	 * Private Helper Implementation
-	 * ==================================================
-	 */
+	@Inject private GuiceFXMLLoader loader;
 
 	/*
 	 * ==================================================

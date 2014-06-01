@@ -7,9 +7,7 @@ import javafx.event.EventHandler;
 
 public abstract class ACommandHandler<T> implements EventHandler<WorkerStateEvent>
 {
-
-	@Inject
-	protected Log log;
+	@Inject protected Log log;
 
 	@Override
 	@SuppressWarnings("unchecked")

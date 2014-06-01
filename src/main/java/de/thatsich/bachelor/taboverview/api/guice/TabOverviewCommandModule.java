@@ -1,6 +1,7 @@
 package de.thatsich.bachelor.taboverview.api.guice;
 
 import de.thatsich.bachelor.classification.api.guice.ClassificationCommandModule;
+import de.thatsich.bachelor.cnbc.api.guice.NetworkCommandModule;
 import de.thatsich.bachelor.errorgeneration.api.guice.ErrorCommandModule;
 import de.thatsich.bachelor.featureextraction.api.guice.FeatureCommandModule;
 import de.thatsich.bachelor.imageprocessing.api.guice.ImageCommandModule;
@@ -16,6 +17,7 @@ public class TabOverviewCommandModule extends ACommandModule
 	@Override
 	protected void buildProviderModule(List<Class<? extends ICommandProvider>> providerList)
 	{
+		this.install(new NetworkCommandModule());
 		this.install(new PredictionCommandModule());
 		this.install(new ClassificationCommandModule());
 		this.install(new ErrorCommandModule());

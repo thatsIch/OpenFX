@@ -11,9 +11,8 @@ import javafx.scene.input.MouseEvent;
 
 public class IntegerField extends TextField
 {
-
 	// Properties
-	private final IntegerProperty value = new SimpleIntegerProperty();
+	public final IntegerProperty value = new SimpleIntegerProperty();
 
 	public IntegerField()
 	{
@@ -34,7 +33,7 @@ public class IntegerField extends TextField
 			}
 		});
 
-		this.valueProperty().addListener(new ChangeListener<Number>()
+		this.value.addListener(new ChangeListener<Number>()
 		{
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue)
@@ -62,16 +61,4 @@ public class IntegerField extends TextField
 			}
 		});
 	}
-
-	// Property Getter
-	public IntegerProperty valueProperty()
-	{ return this.value; }
-
-	// Getter
-	public int getValue()
-	{ return this.value.get(); }
-
-	// Setter
-	public void setValue(int value)
-	{ this.value.set(value); }
 }

@@ -8,16 +8,15 @@ import java.util.logging.Logger;
  * Logger which is shared across the whole application.
  * Examples are shown below:
  *
- * this.log.info("das ist eine info");
- * this.log.warning("das ist eine warnung");
- * this.log.severe("das ist weniger sch�n");
+ * this.log.info("thats an info");
+ * this.log.warning("thats a warning");
+ * this.log.severe("das less pretty");
  * this.log.throwing(this.getClass().getSimpleName(), Thread.currentThread().getStackTrace()[1].getMethodName(), new Exception("test"));
  *
  * @author Minh
  */
 public class Log extends Logger
 {
-
 	final private static Level level = Level.ALL;
 
 	public Log()

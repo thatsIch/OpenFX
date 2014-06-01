@@ -2,6 +2,7 @@ package de.thatsich.bachelor.taboverview.api.guice;
 
 import com.google.inject.Scopes;
 import de.thatsich.bachelor.classification.api.guice.ClassificationWiringModule;
+import de.thatsich.bachelor.cnbc.api.guice.NetworkWiringModule;
 import de.thatsich.bachelor.errorgeneration.api.guice.ErrorWiringModule;
 import de.thatsich.bachelor.featureextraction.api.guice.FeatureWiringModule;
 import de.thatsich.bachelor.imageprocessing.api.guice.ImageWiringModule;
@@ -19,6 +20,7 @@ public class TabOverviewWiringModule extends AWiringModule
 	{
 		super.bind(TabOverviewWiringModule.class).toInstance(this);
 
+		this.install(new NetworkWiringModule());
 		this.install(new PredictionWiringModule());
 		this.install(new ClassificationWiringModule());
 		this.install(new ErrorWiringModule());

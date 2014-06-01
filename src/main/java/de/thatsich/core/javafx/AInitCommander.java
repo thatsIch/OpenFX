@@ -3,8 +3,7 @@ package de.thatsich.core.javafx;
 import com.google.inject.Inject;
 import de.thatsich.core.Log;
 
-public abstract class AInitCommader
+public abstract class AInitCommander
 {
-	@Inject
-	protected Log log;
+	@Inject protected Log log;
 }

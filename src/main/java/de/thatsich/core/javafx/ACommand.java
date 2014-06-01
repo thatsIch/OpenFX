@@ -9,10 +9,8 @@ import javafx.concurrent.Task;
 public abstract class ACommand<T> extends Service<T>
 {
 	// Injects
-	@Inject
-	protected Log log;
-	@Inject
-	protected Injector injector;
+	@Inject protected Log log;
+	@Inject protected Injector injector;
 
 	public void setOnSucceededCommandHandler(Class<? extends ACommandHandler<T>> handlerClass)
 	{

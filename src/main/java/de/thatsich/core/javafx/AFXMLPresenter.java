@@ -16,10 +16,8 @@ import java.util.ResourceBundle;
  */
 public abstract class AFXMLPresenter implements Initializable
 {
-
 	// Injects
-	@Inject
-	protected Log log;
+	@Inject protected Log log;
 
 	@Override
 	public final void initialize(URL paramURL, ResourceBundle paramResourceBundle)

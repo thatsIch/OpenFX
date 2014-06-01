@@ -5,6 +5,9 @@ import com.google.inject.Singleton;
 import de.thatsich.bachelor.classification.api.views.IClassificationDisplayView;
 import de.thatsich.bachelor.classification.api.views.IClassificationInputView;
 import de.thatsich.bachelor.classification.api.views.IClassificationListView;
+import de.thatsich.bachelor.cnbc.api.core.INetworkDisplayView;
+import de.thatsich.bachelor.cnbc.api.core.INetworkInputView;
+import de.thatsich.bachelor.cnbc.api.core.INetworkListView;
 import de.thatsich.bachelor.errorgeneration.api.core.IErrorDisplayView;
 import de.thatsich.bachelor.errorgeneration.api.core.IErrorInputView;
 import de.thatsich.bachelor.errorgeneration.api.core.IErrorListView;
@@ -40,37 +43,42 @@ import java.util.ResourceBundle;
 public class TabOverviewPresenter implements Initializable
 {
 	// TabContents
-	@FXML BorderPane paneImageProcessing;
-	@FXML BorderPane paneErrorGeneration;
-	@FXML BorderPane paneFeatureExtraction;
-	@FXML BorderPane panePreProcessing;
-	@FXML BorderPane paneClassification;
-	@FXML BorderPane panePrediction;
+	@FXML private BorderPane paneImageProcessing;
+	@FXML private BorderPane paneErrorGeneration;
+	@FXML private BorderPane paneFeatureExtraction;
+	@FXML private BorderPane panePreProcessing;
+	@FXML private BorderPane paneClassification;
+	@FXML private BorderPane panePrediction;
+	@FXML private BorderPane paneNetwork;
 
 	// Views
-	@Inject IImageInputView imageInputView;
-	@Inject IImageDisplayView imageDisplayView;
-	@Inject IImageListView imageListView;
+	@Inject private IImageInputView imageInputView;
+	@Inject private IImageDisplayView imageDisplayView;
+	@Inject private IImageListView imageListView;
 
-	@Inject IErrorInputView errorInputView;
-	@Inject IErrorDisplayView errorDisplayView;
-	@Inject IErrorListView errorListView;
+	@Inject private IErrorInputView errorInputView;
+	@Inject private IErrorDisplayView errorDisplayView;
+	@Inject private IErrorListView errorListView;
 
-	@Inject IFeatureInputView featureInputView;
-	@Inject IFeatureDisplayView featureDisplayView;
-	@Inject IFeatureListView featureListView;
+	@Inject private IFeatureInputView featureInputView;
+	@Inject private IFeatureDisplayView featureDisplayView;
+	@Inject private IFeatureListView featureListView;
 
-	@Inject IPreProcessingInputView preProcessingInputView;
-	@Inject IPreProcessingDisplayView preProcessingDisplayView;
-	@Inject IPreProcessingListView preProcessingListView;
+	@Inject private IPreProcessingInputView preProcessingInputView;
+	@Inject private IPreProcessingDisplayView preProcessingDisplayView;
+	@Inject private IPreProcessingListView preProcessingListView;
 
-	@Inject IClassificationInputView classificationInputView;
-	@Inject IClassificationDisplayView classificationDisplayView;
-	@Inject IClassificationListView classificationListView;
+	@Inject private IClassificationInputView classificationInputView;
+	@Inject private IClassificationDisplayView classificationDisplayView;
+	@Inject private IClassificationListView classificationListView;
 
-	@Inject IPredictionInputView predictionInputView;
-	@Inject IPredictionDisplayView predictionDisplayView;
-	@Inject IPredictionListView predictionListView;
+	@Inject private IPredictionInputView predictionInputView;
+	@Inject private IPredictionDisplayView predictionDisplayView;
+	@Inject private IPredictionListView predictionListView;
+
+	@Inject private INetworkInputView networkInputView;
+	@Inject private INetworkDisplayView networkDisplayView;
+	@Inject private INetworkListView networkListView;
 
 	// ==================================================
 	// Initializable Implementation
@@ -101,5 +109,9 @@ public class TabOverviewPresenter implements Initializable
 		this.panePrediction.setTop(this.predictionInputView.getRoot());
 		this.panePrediction.setLeft(this.predictionListView.getRoot());
 		this.panePrediction.setCenter(this.predictionDisplayView.getRoot());
+
+		this.paneNetwork.setTop(this.networkInputView.getRoot());
+		this.paneNetwork.setLeft(this.networkListView.getRoot());
+		this.paneNetwork.setCenter(this.networkDisplayView.getRoot());
 	}
 }

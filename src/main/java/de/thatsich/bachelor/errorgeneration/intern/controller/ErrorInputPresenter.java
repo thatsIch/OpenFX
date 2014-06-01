@@ -119,7 +119,7 @@ public class ErrorInputPresenter extends AFXMLPresenter
 	 */
 	private void bindIntegerFieldErrorCount()
 	{
-		this.nodeIntegerFieldErrorCount.valueProperty().addListener(new ChangeListener<Number>()
+		this.nodeIntegerFieldErrorCount.value.addListener(new ChangeListener<Number>()
 		{
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue)
@@ -135,8 +135,8 @@ public class ErrorInputPresenter extends AFXMLPresenter
 
 	private void bindButton()
 	{
-		this.nodeButtonGenerateErrors.disableProperty().bind(this.imageEntryList.selectedImageEntryProperty().isNull().or(this.nodeChoiceBoxErrorGenerator.valueProperty().isNull()).or(this.nodeIntegerFieldErrorCount.valueProperty().isEqualTo(0)));
-		this.nodeButtonPermutateErrors.disableProperty().bind(this.imageEntryList.imageEntryListProperty().emptyProperty().or(this.nodeChoiceBoxErrorGenerator.valueProperty().isNull()).or(this.nodeIntegerFieldErrorCount.valueProperty().isEqualTo(0)));
+		this.nodeButtonGenerateErrors.disableProperty().bind(this.imageEntryList.selectedImageEntryProperty().isNull().or(this.nodeChoiceBoxErrorGenerator.valueProperty().isNull()).or(this.nodeIntegerFieldErrorCount.value.isEqualTo(0)));
+		this.nodeButtonPermutateErrors.disableProperty().bind(this.imageEntryList.imageEntryListProperty().emptyProperty().or(this.nodeChoiceBoxErrorGenerator.valueProperty().isNull()).or(this.nodeIntegerFieldErrorCount.value.isEqualTo(0)));
 		this.nodeButtonRemoveError.disableProperty().bind(this.errorEntryList.getSelectedErrorEntryProperty().isNull());
 		this.nodeButtonResetErrors.disableProperty().bind(this.errorEntryList.getErrorEntryListProperty().emptyProperty());
 	}

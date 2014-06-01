@@ -12,7 +12,6 @@ import java.util.logging.LogRecord;
  */
 public class LogFormatter extends Formatter
 {
-
 	final private static String MESSAGE_PATTERN = "[%tT] [%-7s] %s%s > %s %s\n";
 
 	/**

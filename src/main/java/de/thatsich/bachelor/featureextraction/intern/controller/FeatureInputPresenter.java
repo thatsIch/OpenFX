@@ -99,10 +99,10 @@ public class FeatureInputPresenter extends AFXMLPresenter
 	 */
 	private void bindIntegerFieldFrameSize()
 	{
-		this.nodeIntegerFieldFrameSize.valueProperty().bindBidirectional(this.featureState.getFrameSizeProperty());
+		this.nodeIntegerFieldFrameSize.value.bindBidirectional(this.featureState.getFrameSizeProperty());
 		this.log.info("Bound FrameSize to DataBase");
 
-		this.nodeIntegerFieldFrameSize.valueProperty().addListener(new ChangeListener<Number>()
+		this.nodeIntegerFieldFrameSize.value.addListener(new ChangeListener<Number>()
 		{
 			@Override
 			public void changed(ObservableValue<? extends Number> paramObservableValue, Number oldValue, Number newValue)
