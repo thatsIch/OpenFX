@@ -22,7 +22,7 @@ public class InitBinaryClassificationListSucceededHandler extends ACommandHandle
 	@Override
 	public void handle(List<IBinaryClassification> trainedBinaryClassifierList)
 	{
-		this.binaryClassifications.getBinaryClassificationListProperty().addAll(trainedBinaryClassifierList);
+		this.binaryClassifications.binaryClassifications().addAll(trainedBinaryClassifierList);
 		this.log.info("Added TrainedBinaryClassifierList to Database.");
 	}
 }

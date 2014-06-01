@@ -20,8 +20,8 @@ public class GetLastBinaryClassifierIndexSucceededHandler extends ACommandHandle
 	@Override
 	public void handle(Integer value)
 	{
-		final IBinaryClassifier selected = this.binaryClassifiers.getBinaryClassifierListProperty().get(value);
-		this.binaryClassifiers.getSelectedBinaryClassifierProperty().set(selected);
+		final IBinaryClassifier selected = this.binaryClassifiers.binaryClassifiers().get(value);
+		this.binaryClassifiers.selectedBinaryClassifier().set(selected);
 		this.log.info("Set LastBinaryClassifierIndex in Model.");
 	}
 }

@@ -64,7 +64,7 @@ public class PredictionInputPresenter extends AFXMLPresenter
 	// ==================================================
 	private void bindButtons()
 	{
-		this.nodeButtonPredictBinaryClassification.disableProperty().bind(this.imageEntries.selectedImageEntryProperty().isNull().or(this.binaryClassifications.getSelectedBinaryClassificationProperty().isNull()));
+		this.nodeButtonPredictBinaryClassification.disableProperty().bind(this.imageEntries.selectedImageEntryProperty().isNull().or(this.binaryClassifications.selectedBinaryClassification().isNull()));
 		this.nodeButtonDeleteBinaryPrediction.disableProperty().bind(this.binaryPredictions.getSelectedBinaryPredictionProperty().isNull());
 		this.nodeButtonResetBinaryPrediction.disableProperty().bind(this.binaryPredictions.getBinaryPredictionListProperty().emptyProperty());
 	}
@@ -80,7 +80,7 @@ public class PredictionInputPresenter extends AFXMLPresenter
 	private void onPredictBinaryPredictionAction()
 	{
 		final Path predictionFolderPath = this.predictionState.getPredictionFolderPathProperty().get();
-		final IBinaryClassification binaryClassification = this.binaryClassifications.getSelectedBinaryClassification();
+		final IBinaryClassification binaryClassification = this.binaryClassifications.selectedBinaryClassification().get();
 		final String errorGeneratorName = binaryClassification.getErrorNameProperty().get();
 		final String featureExtractorName = binaryClassification.getExtractorNameProperty().get();
 		this.log.info("Prepared all information.");

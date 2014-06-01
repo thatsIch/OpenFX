@@ -20,20 +20,5 @@ public interface IClassificationState
 	 *
 	 * @return Property of FolderPath
 	 */
-	public ObjectProperty<Path> getBinaryClassifierFolderPathProperty();
-
-	/**
-	 * Getter of FolderPath
-	 *
-	 * @return FolderPath
-	 */
-	public Path getBinaryClassifierFolderPath();
-
-	/**
-	 * Setter of FolderPath
-	 *
-	 * @param binaryClassifierFolderPath FolderPath
-	 */
-	public void setBinaryClassifierFolderPath(Path binaryClassifierFolderPath);
-
+	ObjectProperty<Path> path();
 }

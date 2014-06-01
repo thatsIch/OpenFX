@@ -7,8 +7,6 @@ import de.thatsich.bachelor.classification.intern.control.command.Classification
 import de.thatsich.bachelor.classification.intern.control.command.commands.SetLastBinaryClassificationIndexCommand;
 import de.thatsich.bachelor.classification.intern.control.provider.IClassificationCommandProvider;
 import de.thatsich.core.javafx.AFXMLPresenter;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -68,7 +66,7 @@ public class ClassificationListPresenter extends AFXMLPresenter
 	 */
 	private void bindTableViewContent()
 	{
-		this.nodeTableViewBinaryClassificationList.itemsProperty().bind(this.binaryClassifications.getBinaryClassificationListProperty());
+		this.nodeTableViewBinaryClassificationList.itemsProperty().bind(this.binaryClassifications.binaryClassifications());
 		this.log.info("Bound Content to Model.");
 	}
 
@@ -77,29 +75,17 @@ public class ClassificationListPresenter extends AFXMLPresenter
 	 */
 	private void bindTableViewSelectionModel()
 	{
-		this.nodeTableViewBinaryClassificationList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<IBinaryClassification>()
-		{
-			@Override
-			public void changed(ObservableValue<? extends IBinaryClassification> paramObservableValue, IBinaryClassification oldvalue, IBinaryClassification newValue)
-			{
-				binaryClassifications.setSelectedBinaryClassification(newValue);
-				log.info("Set Selected BinaryClassification in Model.");
+		this.nodeTableViewBinaryClassificationList.getSelectionModel().selectedItemProperty().addListener((paramObservableValue, oldvalue, newValue) -> {
+			binaryClassifications.selectedBinaryClassification().set(newValue);
+			log.info("Set Selected BinaryClassification in Model.");
 
-				final int index = nodeTableViewBinaryClassificationList.getSelectionModel().getSelectedIndex();
-				final SetLastBinaryClassificationIndexCommand command = commander.createSetLastBinaryClassificationIndexCommand(index);
-				command.start();
-			}
+			final int index = nodeTableViewBinaryClassificationList.getSelectionModel().getSelectedIndex();
+			final SetLastBinaryClassificationIndexCommand command = commander.createSetLastBinaryClassificationIndexCommand(index);
+			command.start();
 		});
 		this.log.info("Bound Selection to Model.");
 
-		this.binaryClassifications.getSelectedBinaryClassificationProperty().addListener(new ChangeListener<IBinaryClassification>()
-		{
-			@Override
-			public void changed(ObservableValue<? extends IBinaryClassification> observable, IBinaryClassification oldValue, IBinaryClassification newValue)
-			{
-				nodeTableViewBinaryClassificationList.getSelectionModel().select(newValue);
-			}
-		});
+		this.binaryClassifications.selectedBinaryClassification().addListener((observable, oldValue, newValue) -> nodeTableViewBinaryClassificationList.getSelectionModel().select(newValue));
 		this.log.info("Bound Model to Selection.");
 	}
 
@@ -108,10 +94,10 @@ public class ClassificationListPresenter extends AFXMLPresenter
 	 */
 	private void bindTableViewCellValue()
 	{
-		this.nodeTableColumnClassifierName.setCellValueFactory(new PropertyValueFactory<IBinaryClassification, String>("getClassificationName"));
-		this.nodeTableColumnExtractorName.setCellValueFactory(new PropertyValueFactory<IBinaryClassification, String>("getExtractorName"));
-		this.nodeTableColumnFrameSize.setCellValueFactory(new PropertyValueFactory<IBinaryClassification, Integer>("getFrameSize"));
-		this.nodeTableErrorName.setCellValueFactory(new PropertyValueFactory<IBinaryClassification, String>("getErrorName"));
-		this.nodeTableColumnID.setCellValueFactory(new PropertyValueFactory<IBinaryClassification, String>("getId"));
+		this.nodeTableColumnClassifierName.setCellValueFactory(new PropertyValueFactory<>("getClassificationName"));
+		this.nodeTableColumnExtractorName.setCellValueFactory(new PropertyValueFactory<>("getExtractorName"));
+		this.nodeTableColumnFrameSize.setCellValueFactory(new PropertyValueFactory<>("getFrameSize"));
+		this.nodeTableErrorName.setCellValueFactory(new PropertyValueFactory<>("getErrorName"));
+		this.nodeTableColumnID.setCellValueFactory(new PropertyValueFactory<>("getId"));
 	}
 }

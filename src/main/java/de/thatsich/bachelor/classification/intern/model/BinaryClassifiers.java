@@ -10,22 +10,20 @@ import javafx.collections.FXCollections;
 
 public class BinaryClassifiers implements IBinaryClassifiers
 {
-
 	// Properties
 	private final ListProperty<IBinaryClassifier> binaryClassifierList = new SimpleListProperty<>(FXCollections.<IBinaryClassifier>observableArrayList());
 	private final ObjectProperty<IBinaryClassifier> selectedBinaryClassifier = new SimpleObjectProperty<>();
 
 	// Property Getter
-	public ListProperty<IBinaryClassifier> getBinaryClassifierListProperty()
-	{ return this.binaryClassifierList; }
+	@Override
+	public ListProperty<IBinaryClassifier> binaryClassifiers()
+	{
+		return this.binaryClassifierList;
+	}
 
-	public ObjectProperty<IBinaryClassifier> getSelectedBinaryClassifierProperty() { return this.selectedBinaryClassifier; }
-
-	// Getter
-	public IBinaryClassifier getSelectedBinaryClassifier()
-	{ return this.selectedBinaryClassifier.get(); }
-
-	// Setter
-	public void setSelectedBinaryClassifier(IBinaryClassifier bc)
-	{ this.selectedBinaryClassifier.set(bc); }
+	@Override
+	public ObjectProperty<IBinaryClassifier> selectedBinaryClassifier()
+	{
+		return this.selectedBinaryClassifier;
+	}
 }

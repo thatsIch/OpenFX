@@ -10,7 +10,6 @@ import java.nio.file.Path;
 
 public class RemoveBinaryClassificationCommand extends ACommand<IBinaryClassification>
 {
-
 	final private IBinaryClassification binaryClassification;
 
 	@Inject

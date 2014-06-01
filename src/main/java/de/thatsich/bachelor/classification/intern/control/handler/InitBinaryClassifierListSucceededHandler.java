@@ -15,14 +15,12 @@ import java.util.List;
  */
 public class InitBinaryClassifierListSucceededHandler extends ACommandHandler<List<IBinaryClassifier>>
 {
-
-	@Inject
-	private IBinaryClassifiers binaryClassifiers;
+	@Inject private IBinaryClassifiers binaryClassifiers;
 
 	@Override
 	public void handle(List<IBinaryClassifier> classifierList)
 	{
-		this.binaryClassifiers.getBinaryClassifierListProperty().addAll(classifierList);
+		this.binaryClassifiers.binaryClassifiers().addAll(classifierList);
 		this.log.info("Added BinaryClassifier to Database.");
 	}
 }	

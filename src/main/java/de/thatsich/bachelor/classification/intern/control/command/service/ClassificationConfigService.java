@@ -1,6 +1,7 @@
 package de.thatsich.bachelor.classification.intern.control.command.service;
 
 import de.thatsich.core.AConfigurationService;
+import javafx.util.Pair;
 
 
 /**
@@ -8,51 +9,26 @@ import de.thatsich.core.AConfigurationService;
  */
 public class ClassificationConfigService extends AConfigurationService
 {
+	private static final Pair<String, Integer> CLASSIFIER_INDEX = new Pair<>("classifer_index", 0);
+	private static final Pair<String, Integer> CLASSIFICATION_INDEX = new Pair<>("classification_index", 0);
 
-	/**
-	 *
-	 */
-	private static final String LAST_BINARY_CLASSIFIER_INDEX = "last_binary_classifier_index";
-	private static final String LAST_BINARY_CLASSIFICATION_INDEX = "last_binary_classification_index";
-
-	/**
-	 *
-	 */
-	private static final int DEFAULT_LAST_BINARY_CLASSIFIER_INDEX = 0;
-	private static final int DEFAULT_LAST_BINARY_CLASSIFICATION_INDEX = 0;
-
-
-	// ================================================== 
-	// Getter Implementation 
-	// ==================================================
-
-	/**
-	 *
-	 */
 	public int getLastBinaryClassifierIndexInt()
 	{
-		return super.get(LAST_BINARY_CLASSIFIER_INDEX, DEFAULT_LAST_BINARY_CLASSIFIER_INDEX);
+		return super.get(CLASSIFIER_INDEX.getKey(), CLASSIFIER_INDEX.getValue());
 	}
 
-	/**
-	 *
-	 */
-	public void setLastBinaryClassifierIndexInt(int lastBinaryClassifierIndex)
+	public void setLastBinaryClassifierIndexInt(int index)
 	{
-		super.set(LAST_BINARY_CLASSIFIER_INDEX, lastBinaryClassifierIndex);
+		super.set(CLASSIFIER_INDEX.getKey(), index);
 	}
-
-	// ================================================== 
-	// Setter Implementation 
-	// ==================================================
 
 	public int getLastBinaryClassificationIndexInt()
 	{
-		return super.get(LAST_BINARY_CLASSIFICATION_INDEX, DEFAULT_LAST_BINARY_CLASSIFICATION_INDEX);
+		return super.get(CLASSIFICATION_INDEX.getKey(), CLASSIFICATION_INDEX.getValue());
 	}
 
 	public void setLastBinaryClassificationIndexInt(int lastTrainedBinaryClassifierIndex)
 	{
-		super.set(LAST_BINARY_CLASSIFICATION_INDEX, lastTrainedBinaryClassifierIndex);
+		super.set(CLASSIFICATION_INDEX.getKey(), lastTrainedBinaryClassifierIndex);
 	}
 }

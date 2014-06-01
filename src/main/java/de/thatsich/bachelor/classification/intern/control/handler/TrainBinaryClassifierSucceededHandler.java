@@ -13,17 +13,15 @@ import de.thatsich.core.javafx.ACommandHandler;
  */
 public class TrainBinaryClassifierSucceededHandler extends ACommandHandler<IBinaryClassification>
 {
-
-	@Inject
-	private IBinaryClassifications binaryClassifications;
+	@Inject private IBinaryClassifications binaryClassifications;
 
 	@Override
 	public void handle(IBinaryClassification classification)
 	{
-		this.binaryClassifications.getBinaryClassificationListProperty().add(classification);
+		this.binaryClassifications.binaryClassifications().add(classification);
 		this.log.info("Added BinaryClassification to Database.");
 
-		this.binaryClassifications.getSelectedBinaryClassificationProperty().set(classification);
+		this.binaryClassifications.selectedBinaryClassification().set(classification);
 		this.log.info("Select BinaryClassifcation.");
 	}
 }

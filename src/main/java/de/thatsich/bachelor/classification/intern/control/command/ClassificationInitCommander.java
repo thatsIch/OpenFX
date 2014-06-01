@@ -23,13 +23,10 @@ import java.util.concurrent.ExecutorService;
 @Singleton
 public class ClassificationInitCommander
 {
-	@Inject
-	private Log log;
+	@Inject private Log log;
 
-	@Inject
-	private IClassificationInitCommandProvider commander;
-	@Inject
-	private IClassificationState trainState;
+	@Inject private IClassificationInitCommandProvider commander;
+	@Inject private IClassificationState trainState;
 
 	@Inject
 	private void init()
@@ -71,7 +68,7 @@ public class ClassificationInitCommander
 		final Path folderPath = Paths.get("io/binaryclassifier");
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(1);
 
-		this.trainState.getBinaryClassifierFolderPathProperty().set(folderPath);
+		this.trainState.path().set(folderPath);
 		this.log.info("Set ClassificationInputFolderPath to Model.");
 
 		final InitBinaryClassificationListCommand initCommand = this.commander.createInitBinaryClassificationListCommand(folderPath);

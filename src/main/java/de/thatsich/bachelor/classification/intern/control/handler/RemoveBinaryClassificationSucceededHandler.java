@@ -14,26 +14,24 @@ import javafx.collections.ObservableList;
  */
 public class RemoveBinaryClassificationSucceededHandler extends ACommandHandler<IBinaryClassification>
 {
-
-	@Inject
-	private IBinaryClassifications binaryClassifications;
+	@Inject private IBinaryClassifications binaryClassifications;
 
 	@Override
 	public void handle(IBinaryClassification deletion)
 	{
-		final ObservableList<IBinaryClassification> binaryClassificationList = this.binaryClassifications.getBinaryClassificationListProperty();
+		final ObservableList<IBinaryClassification> binaryClassificationList = this.binaryClassifications.binaryClassifications();
 		binaryClassificationList.remove(deletion);
 		log.info("Removed BinaryClassification from Database.");
 
 		if (binaryClassificationList.size() > 0)
 		{
 			final IBinaryClassification first = binaryClassificationList.get(0);
-			this.binaryClassifications.getSelectedBinaryClassificationProperty().set(first);
+			this.binaryClassifications.selectedBinaryClassification().set(first);
 			this.log.info("Reset Selection to first BinaryClassifcation.");
 		}
 		else
 		{
-			this.binaryClassifications.getSelectedBinaryClassificationProperty().set(null);
+			this.binaryClassifications.selectedBinaryClassification().set(null);
 			this.log.info("Reset Selection to null.");
 		}
 	}

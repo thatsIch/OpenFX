@@ -12,14 +12,7 @@ public class ClassificationState implements IClassificationState
 	private final ObjectProperty<Path> binaryClassifierFolderPath = new SimpleObjectProperty<>();
 
 	// Property Getter
-	public ObjectProperty<Path> getBinaryClassifierFolderPathProperty()
+	public ObjectProperty<Path> path()
 	{ return this.binaryClassifierFolderPath; }
 
-	// Getter
-	public Path getBinaryClassifierFolderPath()
-	{ return this.binaryClassifierFolderPath.get(); }
-
-	// Setter
-	public void setBinaryClassifierFolderPath(Path binaryClassifierFolderPath)
-	{ this.binaryClassifierFolderPath.set(binaryClassifierFolderPath); }
 }

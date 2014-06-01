@@ -6,7 +6,6 @@ import de.thatsich.core.javafx.ACommand;
 
 public class GetLastBinaryClassificationIndexCommand extends ACommand<Integer>
 {
-
 	// Injections
 	@Inject
 	private ClassificationConfigService config;
