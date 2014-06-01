@@ -3,7 +3,7 @@ package de.thatsich.bachelor;
 import com.cathive.fx.guice.GuiceApplication;
 import com.google.inject.Inject;
 import com.google.inject.Module;
-import de.thatsich.bachelor.taboverview.api.core.ITabOverviewView;
+import de.thatsich.bachelor.taboverview.api.view.ITabOverviewView;
 import de.thatsich.bachelor.taboverview.api.guice.TabOverviewCommandModule;
 import de.thatsich.bachelor.taboverview.api.guice.TabOverviewWiringModule;
 import de.thatsich.core.guice.LoggerModule;

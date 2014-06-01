@@ -1,4 +1,4 @@
-package de.thatsich.bachelor.taboverview.api.core;
+package de.thatsich.bachelor.taboverview.api.view;
 
 import de.thatsich.core.javafx.IFXMLView;
 
