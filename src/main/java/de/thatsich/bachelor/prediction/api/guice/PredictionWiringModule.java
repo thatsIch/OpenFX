@@ -1,11 +1,11 @@
 package de.thatsich.bachelor.prediction.api.guice;
 
 import com.google.inject.Scopes;
-import de.thatsich.bachelor.prediction.api.core.IBinaryPredictions;
-import de.thatsich.bachelor.prediction.api.core.IPredictionDisplayView;
-import de.thatsich.bachelor.prediction.api.core.IPredictionInputView;
-import de.thatsich.bachelor.prediction.api.core.IPredictionListView;
-import de.thatsich.bachelor.prediction.api.core.IPredictionState;
+import de.thatsich.bachelor.prediction.api.model.IBinaryPredictions;
+import de.thatsich.bachelor.prediction.api.view.IPredictionDisplayView;
+import de.thatsich.bachelor.prediction.api.view.IPredictionInputView;
+import de.thatsich.bachelor.prediction.api.view.IPredictionListView;
+import de.thatsich.bachelor.prediction.api.model.IPredictionState;
 import de.thatsich.bachelor.prediction.intern.model.BinaryPredictions;
 import de.thatsich.bachelor.prediction.intern.model.PredictionState;
 import de.thatsich.bachelor.prediction.intern.control.command.service.BinaryPredictionConfigService;

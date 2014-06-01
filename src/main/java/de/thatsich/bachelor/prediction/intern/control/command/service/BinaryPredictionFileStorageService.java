@@ -1,7 +1,7 @@
 package de.thatsich.bachelor.prediction.intern.control.command.service;
 
 import com.sun.org.apache.xpath.internal.functions.WrongNumberArgsException;
-import de.thatsich.bachelor.prediction.api.entities.BinaryPrediction;
+import de.thatsich.bachelor.prediction.api.control.BinaryPrediction;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;

@@ -5,7 +5,7 @@ import de.thatsich.bachelor.classification.api.control.IBinaryClassification;
 import de.thatsich.bachelor.errorgeneration.api.control.IErrorGenerator;
 import de.thatsich.bachelor.featureextraction.api.control.IFeatureExtractor;
 import de.thatsich.bachelor.imageprocessing.api.control.ImageEntry;
-import de.thatsich.bachelor.prediction.api.entities.BinaryPrediction;
+import de.thatsich.bachelor.prediction.api.control.BinaryPrediction;
 import de.thatsich.bachelor.prediction.intern.control.command.commands.DeleteBinaryPredictionCommand;
 import de.thatsich.bachelor.prediction.intern.control.command.commands.SetLastBinaryPredictionIndexCommand;
 import de.thatsich.bachelor.prediction.intern.control.command.commands.TestBinaryClassificationCommand;

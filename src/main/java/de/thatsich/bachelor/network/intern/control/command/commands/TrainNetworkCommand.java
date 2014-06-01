@@ -1,6 +1,6 @@
 package de.thatsich.bachelor.network.intern.control.command.commands;
 
-import de.thatsich.bachelor.network.api.entities.Network;
+import de.thatsich.bachelor.network.api.control.Network;
 import de.thatsich.core.javafx.ACommand;
 
 /**

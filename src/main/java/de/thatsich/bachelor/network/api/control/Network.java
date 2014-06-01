@@ -1,4 +1,4 @@
-package de.thatsich.bachelor.network.api.entities;
+package de.thatsich.bachelor.network.api.control;
 
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;

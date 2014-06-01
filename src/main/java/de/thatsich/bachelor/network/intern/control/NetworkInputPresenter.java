@@ -1,9 +1,9 @@
 package de.thatsich.bachelor.network.intern.control;
 
 import com.google.inject.Inject;
-import de.thatsich.bachelor.network.api.core.INetworkState;
-import de.thatsich.bachelor.network.api.core.INetworks;
-import de.thatsich.bachelor.network.api.entities.Network;
+import de.thatsich.bachelor.network.api.model.INetworkState;
+import de.thatsich.bachelor.network.api.model.INetworks;
+import de.thatsich.bachelor.network.api.control.Network;
 import de.thatsich.bachelor.network.intern.control.command.NetworkInitCommander;
 import de.thatsich.bachelor.network.intern.control.command.commands.DeleteNetworkCommand;
 import de.thatsich.bachelor.network.intern.control.handler.DeleteNetworkSucceededHandler;

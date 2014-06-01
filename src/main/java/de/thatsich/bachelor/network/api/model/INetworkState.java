@@ -1,4 +1,4 @@
-package de.thatsich.bachelor.network.api.core;
+package de.thatsich.bachelor.network.api.model;
 
 import javafx.beans.property.ObjectProperty;
 

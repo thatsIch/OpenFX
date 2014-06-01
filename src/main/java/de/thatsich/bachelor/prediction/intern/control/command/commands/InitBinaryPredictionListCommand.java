@@ -2,7 +2,7 @@ package de.thatsich.bachelor.prediction.intern.control.command.commands;
 
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
-import de.thatsich.bachelor.prediction.api.entities.BinaryPrediction;
+import de.thatsich.bachelor.prediction.api.control.BinaryPrediction;
 import de.thatsich.bachelor.prediction.intern.control.command.service.BinaryPredictionFileStorageService;
 import de.thatsich.core.javafx.ACommand;
 import javafx.collections.FXCollections;

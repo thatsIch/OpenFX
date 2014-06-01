@@ -1,4 +1,4 @@
-package de.thatsich.bachelor.prediction.api.entities;
+package de.thatsich.bachelor.prediction.api.control;
 
 import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.beans.property.ReadOnlyIntegerWrapper;

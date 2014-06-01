@@ -1,7 +1,7 @@
 package de.thatsich.bachelor.prediction.intern.model;
 
-import de.thatsich.bachelor.prediction.api.core.IBinaryPredictions;
-import de.thatsich.bachelor.prediction.api.entities.BinaryPrediction;
+import de.thatsich.bachelor.prediction.api.model.IBinaryPredictions;
+import de.thatsich.bachelor.prediction.api.control.BinaryPrediction;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleListProperty;

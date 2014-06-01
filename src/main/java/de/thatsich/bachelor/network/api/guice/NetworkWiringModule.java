@@ -1,11 +1,11 @@
 package de.thatsich.bachelor.network.api.guice;
 
 import com.google.inject.Scopes;
-import de.thatsich.bachelor.network.api.core.INetworkDisplayView;
-import de.thatsich.bachelor.network.api.core.INetworkInputView;
-import de.thatsich.bachelor.network.api.core.INetworkListView;
-import de.thatsich.bachelor.network.api.core.INetworkState;
-import de.thatsich.bachelor.network.api.core.INetworks;
+import de.thatsich.bachelor.network.api.view.INetworkDisplayView;
+import de.thatsich.bachelor.network.api.view.INetworkInputView;
+import de.thatsich.bachelor.network.api.view.INetworkListView;
+import de.thatsich.bachelor.network.api.model.INetworkState;
+import de.thatsich.bachelor.network.api.model.INetworks;
 import de.thatsich.bachelor.network.intern.model.NetworkState;
 import de.thatsich.bachelor.network.intern.model.Networks;
 import de.thatsich.bachelor.network.intern.control.command.service.NetworkConfigService;

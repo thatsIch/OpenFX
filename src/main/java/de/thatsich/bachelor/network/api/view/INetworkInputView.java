@@ -1,4 +1,4 @@
-package de.thatsich.bachelor.network.api.core;
+package de.thatsich.bachelor.network.api.view;
 
 import de.thatsich.core.javafx.IFXMLView;
 

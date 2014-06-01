@@ -1,7 +1,7 @@
 package de.thatsich.bachelor.network.intern.model;
 
-import de.thatsich.bachelor.network.api.core.INetworks;
-import de.thatsich.bachelor.network.api.entities.Network;
+import de.thatsich.bachelor.network.api.model.INetworks;
+import de.thatsich.bachelor.network.api.control.Network;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleListProperty;

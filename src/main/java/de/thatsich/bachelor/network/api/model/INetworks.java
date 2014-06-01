@@ -1,6 +1,6 @@
-package de.thatsich.bachelor.network.api.core;
+package de.thatsich.bachelor.network.api.model;
 
-import de.thatsich.bachelor.network.api.entities.Network;
+import de.thatsich.bachelor.network.api.control.Network;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
 

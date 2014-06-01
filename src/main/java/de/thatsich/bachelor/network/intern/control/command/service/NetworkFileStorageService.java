@@ -1,6 +1,6 @@
 package de.thatsich.bachelor.network.intern.control.command.service;
 
-import de.thatsich.bachelor.network.api.entities.Network;
+import de.thatsich.bachelor.network.api.control.Network;
 import de.thatsich.core.IFileStorageService;
 
 import java.nio.file.Path;

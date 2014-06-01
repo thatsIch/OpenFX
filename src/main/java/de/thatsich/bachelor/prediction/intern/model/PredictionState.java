@@ -1,6 +1,6 @@
 package de.thatsich.bachelor.prediction.intern.model;
 
-import de.thatsich.bachelor.prediction.api.core.IPredictionState;
+import de.thatsich.bachelor.prediction.api.model.IPredictionState;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 

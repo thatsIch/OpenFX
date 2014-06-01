@@ -1,6 +1,6 @@
 package de.thatsich.bachelor.network.intern.model;
 
-import de.thatsich.bachelor.network.api.core.INetworkState;
+import de.thatsich.bachelor.network.api.model.INetworkState;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 

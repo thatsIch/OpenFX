@@ -1,7 +1,7 @@
 package de.thatsich.bachelor.network.intern.control.command.commands;
 
 import com.google.inject.assistedinject.Assisted;
-import de.thatsich.bachelor.network.api.entities.Network;
+import de.thatsich.bachelor.network.api.control.Network;
 import de.thatsich.bachelor.network.intern.control.command.service.NetworkFileStorageService;
 import de.thatsich.core.javafx.ACommand;
 

@@ -1,7 +1,7 @@
 package de.thatsich.bachelor.network.intern.control.command;
 
 import com.google.inject.Inject;
-import de.thatsich.bachelor.network.api.core.INetworkState;
+import de.thatsich.bachelor.network.api.model.INetworkState;
 import de.thatsich.bachelor.network.intern.control.command.commands.GetLastNetworkIndexCommand;
 import de.thatsich.bachelor.network.intern.control.command.commands.InitNetworkFolderCommand;
 import de.thatsich.bachelor.network.intern.control.command.commands.InitNetworkListCommand;

@@ -2,7 +2,7 @@ package de.thatsich.bachelor.prediction.intern.control.command;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import de.thatsich.bachelor.prediction.api.core.IPredictionState;
+import de.thatsich.bachelor.prediction.api.model.IPredictionState;
 import de.thatsich.bachelor.prediction.intern.control.command.commands.GetLastBinaryPredictionIndexCommand;
 import de.thatsich.bachelor.prediction.intern.control.command.commands.InitBinaryPredictionListCommand;
 import de.thatsich.bachelor.prediction.intern.control.command.commands.InitPredictionFolderCommand;
