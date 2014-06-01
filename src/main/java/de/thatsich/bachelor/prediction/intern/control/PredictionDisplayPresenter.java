@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import de.thatsich.bachelor.prediction.api.core.IBinaryPredictions;
 import de.thatsich.bachelor.prediction.api.entities.BinaryPrediction;
 import de.thatsich.bachelor.prediction.intern.control.command.PredictionInitCommander;
-import de.thatsich.bachelor.prediction.intern.control.command.evaluation.PrecisionRecall;
+import de.thatsich.bachelor.prediction.intern.control.evaluation.PrecisionRecall;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.opencv.Images;
 import javafx.beans.value.ChangeListener;
@@ -19,16 +19,16 @@ import org.opencv.imgproc.Imgproc;
 
 public class PredictionDisplayPresenter extends AFXMLPresenter
 {
-	@Inject PredictionInitCommander initCommander;
+	@Inject private PredictionInitCommander initCommander;
 	// Nodes
-	@FXML ImageView nodeImageViewPrediction;
-	@FXML Label nodeLabelPrecision;
-	@FXML Label nodeLabelRecall;
-	@FXML Label nodeLabelSpecificity;
-	@FXML Label nodeLabelAccuracy;
-	@FXML Label nodeLabelF05;
-	@FXML Label nodeLabelF1;
-	@FXML Label nodeLabelF2;
+	@FXML private ImageView nodeImageViewPrediction;
+	@FXML private Label nodeLabelPrecision;
+	@FXML private Label nodeLabelRecall;
+	@FXML private Label nodeLabelSpecificity;
+	@FXML private Label nodeLabelAccuracy;
+	@FXML private Label nodeLabelF05;
+	@FXML private Label nodeLabelF1;
+	@FXML private Label nodeLabelF2;
 	// Injects
 	@Inject
 	private IBinaryPredictions binaryPredictions;

@@ -20,6 +20,7 @@ import java.util.List;
 
 // TODO CNBC
 // TODO shift denoising and such to Error Generation
+// TODO vllt einfach ein randomized EG etc haben, der dann einfach einen anderen aus der liste auswählt
 // Converters.Mat_to_vector_float( positiveTrainData, null );
 
 /**

@@ -1,4 +1,4 @@
-package de.thatsich.bachelor.network.intern.service;
+package de.thatsich.bachelor.network.intern.control.command.service;
 
 import de.thatsich.bachelor.network.api.entities.Network;
 import de.thatsich.core.IFileStorageService;

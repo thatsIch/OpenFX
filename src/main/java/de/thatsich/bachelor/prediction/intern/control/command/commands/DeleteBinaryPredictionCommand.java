@@ -23,7 +23,6 @@ public class DeleteBinaryPredictionCommand extends ACommand<BinaryPrediction>
 	@Override
 	protected BinaryPrediction call() throws Exception
 	{
-
 		final Path toBeDeletedFilePath = this.toBeDeletedBinaryPrediction.getFilePathProperty().get();
 		if (Files.exists(toBeDeletedFilePath))
 		{

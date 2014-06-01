@@ -1,4 +1,4 @@
-package de.thatsich.bachelor.network.intern.service;
+package de.thatsich.bachelor.network.intern.control.command.service;
 
 import de.thatsich.core.AConfigurationService;
 

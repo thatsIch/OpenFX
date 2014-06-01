@@ -23,7 +23,6 @@ import java.util.UUID;
 
 public class TestBinaryClassificationCommand extends ACommand<BinaryPrediction>
 {
-
 	// Properties
 	private final Path predictionFolderPath;
 	private final ImageEntry imageEntry;

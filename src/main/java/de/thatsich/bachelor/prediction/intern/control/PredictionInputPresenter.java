@@ -16,8 +16,8 @@ import de.thatsich.bachelor.prediction.intern.control.command.PredictionInitComm
 import de.thatsich.bachelor.prediction.intern.control.command.commands.DeleteBinaryPredictionCommand;
 import de.thatsich.bachelor.prediction.intern.control.command.commands.TestBinaryClassificationCommand;
 import de.thatsich.bachelor.prediction.intern.control.provider.IPredictionCommandProvider;
-import de.thatsich.bachelor.prediction.intern.control.handler.DeleteBinaryPredictionSucceededHandler;
-import de.thatsich.bachelor.prediction.intern.control.handler.PredictBinaryClassificationSucceededHandler;
+import de.thatsich.bachelor.prediction.intern.control.command.handler.DeleteBinaryPredictionSucceededHandler;
+import de.thatsich.bachelor.prediction.intern.control.command.handler.PredictBinaryClassificationSucceededHandler;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.javafx.CommandExecutor;
 import javafx.fxml.FXML;

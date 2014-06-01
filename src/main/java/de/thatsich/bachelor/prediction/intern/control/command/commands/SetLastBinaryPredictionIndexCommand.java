@@ -7,8 +7,6 @@ import de.thatsich.core.javafx.ACommand;
 
 public class SetLastBinaryPredictionIndexCommand extends ACommand<Void>
 {
-
-	// Properties
 	private final int lastBinaryPredictionIndex;
 
 	// Injects

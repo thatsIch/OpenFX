@@ -6,7 +6,7 @@ import de.thatsich.core.javafx.AFXMLPresenter;
  * @author thatsIch
  * @since 01.06.2014.
  */
-public class NetworkInputViewPresenter extends AFXMLPresenter
+public class NetworkListPresenter extends AFXMLPresenter
 {
 	@Override
 	protected void bindComponents()

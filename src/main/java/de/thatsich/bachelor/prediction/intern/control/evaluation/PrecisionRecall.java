@@ -1,4 +1,4 @@
-package de.thatsich.bachelor.prediction.intern.control.command.evaluation;
+package de.thatsich.bachelor.prediction.intern.control.evaluation;
 
 /**
  * Contains the result of how many
