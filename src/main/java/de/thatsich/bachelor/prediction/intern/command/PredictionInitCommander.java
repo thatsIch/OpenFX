@@ -8,7 +8,7 @@ import de.thatsich.bachelor.prediction.intern.command.commands.InitBinaryPredict
 import de.thatsich.bachelor.prediction.intern.command.commands.InitPredictionFolderCommand;
 import de.thatsich.bachelor.prediction.intern.command.handler.GetLastBinaryPredictionIndexSucceededHandler;
 import de.thatsich.bachelor.prediction.intern.command.handler.InitBinaryPredictionListSucceededHandler;
-import de.thatsich.bachelor.prediction.intern.command.provider.IPredictionInitCommandProvider;
+import de.thatsich.bachelor.prediction.intern.control.provider.IPredictionInitCommandProvider;
 import de.thatsich.core.javafx.AInitCommander;
 import de.thatsich.core.javafx.CommandExecutor;
 

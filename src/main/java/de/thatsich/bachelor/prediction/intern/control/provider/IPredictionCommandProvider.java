@@ -1,4 +1,4 @@
-package de.thatsich.bachelor.prediction.intern.command.provider;
+package de.thatsich.bachelor.prediction.intern.control.provider;
 
 import com.google.inject.assistedinject.Assisted;
 import de.thatsich.bachelor.classification.api.entities.IBinaryClassification;

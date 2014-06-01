@@ -5,7 +5,7 @@ import de.thatsich.bachelor.prediction.api.core.IBinaryPredictions;
 import de.thatsich.bachelor.prediction.api.entities.BinaryPrediction;
 import de.thatsich.bachelor.prediction.intern.command.PredictionInitCommander;
 import de.thatsich.bachelor.prediction.intern.command.commands.SetLastBinaryPredictionIndexCommand;
-import de.thatsich.bachelor.prediction.intern.command.provider.IPredictionCommandProvider;
+import de.thatsich.bachelor.prediction.intern.control.provider.IPredictionCommandProvider;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
