@@ -4,6 +4,12 @@ import com.google.inject.Scopes;
 import de.thatsich.bachelor.network.api.core.INetworkDisplayView;
 import de.thatsich.bachelor.network.api.core.INetworkInputView;
 import de.thatsich.bachelor.network.api.core.INetworkListView;
+import de.thatsich.bachelor.network.api.core.INetworkState;
+import de.thatsich.bachelor.network.api.core.INetworks;
+import de.thatsich.bachelor.network.intern.model.NetworkState;
+import de.thatsich.bachelor.network.intern.model.Networks;
+import de.thatsich.bachelor.network.intern.service.NetworkConfigService;
+import de.thatsich.bachelor.network.intern.service.NetworkFileStorageService;
 import de.thatsich.bachelor.network.intern.view.NetworkDisplayView;
 import de.thatsich.bachelor.network.intern.view.NetworkInputView;
 import de.thatsich.bachelor.network.intern.view.NetworkListView;
@@ -24,7 +30,8 @@ public class NetworkWiringModule extends AWiringModule
 	@Override
 	protected void bindService()
 	{
-
+		super.bind(NetworkFileStorageService.class).in(Scopes.SINGLETON);
+		super.bind(NetworkConfigService.class).in(Scopes.SINGLETON);
 	}
 
 	@Override
@@ -50,6 +57,7 @@ public class NetworkWiringModule extends AWiringModule
 	@Override
 	protected void bindModel()
 	{
-
+		super.bind(INetworks.class).to(Networks.class).in(Scopes.SINGLETON);
+		super.bind(INetworkState.class).to(NetworkState.class).in(Scopes.SINGLETON);
 	}
 }

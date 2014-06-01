@@ -1,5 +1,7 @@
 package de.thatsich.bachelor.network.api.core;
 
+import javafx.beans.property.ObjectProperty;
+
 import java.nio.file.Path;
 
 /**
@@ -8,5 +10,7 @@ import java.nio.file.Path;
  */
 public interface INetworkState
 {
+	ObjectProperty<Path> getPathProperty();
+	Path getNetworkPath();
 	void setNetworkPath(Path networkInputPath);
 }

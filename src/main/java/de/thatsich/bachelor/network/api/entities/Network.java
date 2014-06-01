@@ -1,4 +1,4 @@
-package de.thatsich.bachelor.network.entities;
+package de.thatsich.bachelor.network.api.entities;
 
 /**
  * @author thatsIch

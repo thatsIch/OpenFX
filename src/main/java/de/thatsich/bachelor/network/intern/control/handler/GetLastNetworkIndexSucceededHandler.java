@@ -2,7 +2,7 @@ package de.thatsich.bachelor.network.intern.control.handler;
 
 import com.google.inject.Inject;
 import de.thatsich.bachelor.network.api.core.INetworks;
-import de.thatsich.bachelor.network.entities.Network;
+import de.thatsich.bachelor.network.api.entities.Network;
 import de.thatsich.core.javafx.ACommandHandler;
 
 /**
