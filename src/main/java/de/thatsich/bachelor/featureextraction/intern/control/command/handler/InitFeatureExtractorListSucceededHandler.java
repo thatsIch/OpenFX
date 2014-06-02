@@ -15,14 +15,12 @@ import java.util.List;
  */
 public class InitFeatureExtractorListSucceededHandler extends ACommandHandler<List<IFeatureExtractor>>
 {
-
-	@Inject
-	private IFeatureExtractors featureExtractors;
+	@Inject	private IFeatureExtractors featureExtractors;
 
 	@Override
 	public void handle(List<IFeatureExtractor> list)
 	{
-		this.featureExtractors.getFeatureExtractorsProperty().addAll(list);
+		this.featureExtractors.list().addAll(list);
 		this.log.info("Added FeatureExtractor to Database.");
 	}
 }

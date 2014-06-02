@@ -15,13 +15,12 @@ import java.util.List;
  */
 public class InitFeatureVectorListSucceededHandler extends ACommandHandler<List<FeatureVectorSet>>
 {
-
-	@Inject IFeatureVectorSets featureVectors;
+	@Inject private IFeatureVectorSets featureVectors;
 
 	@Override
 	public void handle(List<FeatureVectorSet> featureVectorList)
 	{
-		featureVectors.getFeatureVectorSetListProperty().addAll(featureVectorList);
+		featureVectors.list().addAll(featureVectorList);
 		this.log.info("Added FeatureExtractor to Database.");
 	}
 }

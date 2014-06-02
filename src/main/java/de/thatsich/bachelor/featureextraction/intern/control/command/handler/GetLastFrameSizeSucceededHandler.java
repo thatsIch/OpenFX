@@ -12,14 +12,12 @@ import de.thatsich.core.javafx.ACommandHandler;
  */
 public class GetLastFrameSizeSucceededHandler extends ACommandHandler<Integer>
 {
-
-	@Inject
-	private IFeatureState featureState;
+	@Inject	private IFeatureState featureState;
 
 	@Override
 	public void handle(Integer value)
 	{
-		this.featureState.setFrameSize(value);
+		this.featureState.frameSize().set(value);
 		this.log.info("Set LastErrorLoopCount in Model.");
 	}
 }

@@ -7,18 +7,7 @@ import java.nio.file.Path;
 
 public interface IFeatureState
 {
-	// Property Getter
-	public ObjectProperty<Path> getFeatureVectorFolderPathProperty();
+	ObjectProperty<Path> path();
 
-	public IntegerProperty getFrameSizeProperty();
-
-	// Getter
-	public Path getFeatureVectorFolderPath();
-
-	// Setter
-	public void setFeatureVectorFolderPath(Path featureVectorFolderPath);
-
-	public int getFrameSize();
-
-	public void setFrameSize(int frameSize);
+	IntegerProperty frameSize();
 }

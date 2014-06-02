@@ -1,6 +1,7 @@
 package de.thatsich.bachelor.featureextraction.intern.services;
 
 import de.thatsich.core.AConfigurationService;
+import javafx.util.Pair;
 
 
 /**
@@ -8,74 +9,37 @@ import de.thatsich.core.AConfigurationService;
  */
 public class FeatureConfigService extends AConfigurationService
 {
+	private static final Pair<String, Integer> FRAME_SIZE = new Pair<>("frame_size", 2);
+	private static final Pair<String, Integer> EXTRACTOR = new Pair<>("extractor", 0);
+	private static final Pair<String, Integer> INDEX = new Pair<>("index", 0);
 
-	/**
-	 *
-	 */
-	private static final String LAST_FRAME_SIZE = "last_frame_size";
-	private static final String LAST_FEATURE_EXTRACTOR_INDEX = "last_feature_extractor";
-	private static final String LAST_FEATURE_VECTOR_INDEX = "last_feature_vector_index";
-
-	/**
-	 *
-	 */
-	private static final int DEFAULT_LAST_FRAME_SIZE = 2;
-	private static final int DEFAULT_LAST_FEATURE_EXTRACTOR_INDEX = 0;
-	private static final int DEFAULT_LAST_FEATURE_VECTOR_INDEX = 0;
-
-	// ================================================== 
-	// Getter Implementation 
-	// ==================================================
-
-	/**
-	 *
-	 */
 	public int getLastFrameSizeInt()
 	{
-		return super.get(LAST_FRAME_SIZE, DEFAULT_LAST_FRAME_SIZE);
+		return super.get(FRAME_SIZE.getKey(), FRAME_SIZE.getValue());
 	}
 
-	/**
-	 *
-	 */
 	public void setLastFrameSizeInt(int lastFrameSize)
 	{
-		super.set(LAST_FRAME_SIZE, lastFrameSize);
+		super.set(FRAME_SIZE.getKey(), lastFrameSize);
 	}
 
-	/**
-	 *
-	 */
 	public int getLastFeatureExtractorIndexInt()
 	{
-		return super.get(LAST_FEATURE_EXTRACTOR_INDEX, DEFAULT_LAST_FEATURE_EXTRACTOR_INDEX);
+		return super.get(EXTRACTOR.getKey(), EXTRACTOR.getValue());
 	}
 
-	// ================================================== 
-	// Setter Implementation 
-	// ==================================================
-
-	/**
-	 *
-	 */
-	public void setLastFeatureExtractorIndexInt(int lastFeatureExtractorIndex)
+	public void setLastFeatureExtractorIndex(int index)
 	{
-		super.set(LAST_FEATURE_EXTRACTOR_INDEX, lastFeatureExtractorIndex);
+		super.set(EXTRACTOR.getKey(), index);
 	}
 
-	/**
-	 *
-	 */
 	public int getLastFeatureVectorIndexInt()
 	{
-		return super.get(LAST_FEATURE_VECTOR_INDEX, DEFAULT_LAST_FEATURE_VECTOR_INDEX);
+		return super.get(INDEX.getKey(), INDEX.getValue());
 	}
 
-	/**
-	 *
-	 */
-	public void setLastFeatureVectorIndexInt(int lastFeatureVectorIndex)
+	public void setLastFeatureVectorIndexInt(int index)
 	{
-		super.set(LAST_FEATURE_VECTOR_INDEX, lastFeatureVectorIndex);
+		super.set(INDEX.getKey(), index);
 	}
 }

@@ -10,7 +10,6 @@ import java.nio.file.Files;
 
 public class DeleteFeatureVectorSetCommand extends ACommand<FeatureVectorSet>
 {
-
 	// Properties
 	private final FeatureVectorSet featureVectorSet;
 
@@ -25,8 +24,8 @@ public class DeleteFeatureVectorSetCommand extends ACommand<FeatureVectorSet>
 	{
 		try
 		{
-			this.log.info(this.featureVectorSet.getPathProperty().get().toString());
-			Files.delete(this.featureVectorSet.getPathProperty().get());
+			this.log.info(this.featureVectorSet.path().get().toString());
+			Files.delete(this.featureVectorSet.path().get());
 
 			this.log.info("Deleted FeatureVectorSet from FileSystem.");
 		}

@@ -16,7 +16,6 @@ import java.util.List;
  */
 public class FeatureVector
 {
-
 	// Properties
 	private final ReadOnlyListWrapper<Float> vector = new ReadOnlyListWrapper<>(FXCollections.<Float>observableArrayList());
 	private final ReadOnlyBooleanWrapper isPositive = new ReadOnlyBooleanWrapper();
@@ -34,8 +33,13 @@ public class FeatureVector
 	}
 
 	// Property Getter
-	public ReadOnlyListProperty<Float> getVectorProperty()
-	{ return this.vector.getReadOnlyProperty(); }
+	public ReadOnlyListProperty<Float> vector()
+	{
+		return this.vector.getReadOnlyProperty();
+	}
 
-	public ReadOnlyBooleanProperty getIsPositiveProperty() { return this.isPositive.getReadOnlyProperty(); }
+	public ReadOnlyBooleanProperty isPositive()
+	{
+		return this.isPositive.getReadOnlyProperty();
+	}
 }

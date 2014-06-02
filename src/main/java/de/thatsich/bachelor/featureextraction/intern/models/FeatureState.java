@@ -15,20 +15,15 @@ public class FeatureState implements IFeatureState
 	private final IntegerProperty frameSize = new SimpleIntegerProperty();
 
 	// Property Getter
-	public ObjectProperty<Path> getFeatureVectorFolderPathProperty()
-	{ return this.featureVectorFolderPath; }
+	@Override
+	public ObjectProperty<Path> path()
+	{
+		return this.featureVectorFolderPath;
+	}
 
-	public IntegerProperty getFrameSizeProperty() { return this.frameSize; }
-
-	// Getter
-	public Path getFeatureVectorFolderPath()
-	{ return this.featureVectorFolderPath.get(); }
-
-	// Setter
-	public void setFeatureVectorFolderPath(Path featureVectorFolderPath)
-	{ this.featureVectorFolderPath.set(featureVectorFolderPath); }
-
-	public int getFrameSize() { return this.frameSize.get(); }
-
-	public void setFrameSize(int frameSize) { this.frameSize.set(frameSize); }
+	@Override
+	public IntegerProperty frameSize()
+	{
+		return this.frameSize;
+	}
 }

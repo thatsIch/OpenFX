@@ -15,7 +15,6 @@ import javafx.beans.property.SimpleObjectProperty;
  */
 public class FeatureVectorTreeItemAdapter implements IFeatureSpaceTreeItemAdapter
 {
-
 	// Properties
 	private final ObjectProperty<FeatureVector> featureVector = new SimpleObjectProperty<>();
 
@@ -32,8 +31,8 @@ public class FeatureVectorTreeItemAdapter implements IFeatureSpaceTreeItemAdapte
 	@Override
 	public String toString()
 	{
-		final String isPositive = this.featureVector.get().getIsPositiveProperty().getValue().toString();
-		String featureVector = this.featureVector.get().getVectorProperty().get().toString();
+		final String isPositive = this.featureVector.get().isPositive().getValue().toString();
+		String featureVector = this.featureVector.get().vector().get().toString();
 		if (featureVector.length() > 100)
 		{
 			featureVector = featureVector.substring(0, 100) + "...";

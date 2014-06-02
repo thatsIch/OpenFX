@@ -5,7 +5,7 @@ import org.opencv.core.MatOfFloat;
 
 public interface IFeatureExtractor
 {
-	public MatOfFloat extractFeature(Mat image);
+	MatOfFloat extractFeature(Mat image);
 
-	public String getName();
+	String getName();
 }

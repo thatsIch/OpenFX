@@ -2,30 +2,25 @@ package de.thatsich.bachelor.featureextraction.intern.control;
 
 import com.google.inject.Inject;
 import de.thatsich.bachelor.featureextraction.api.model.IFeatureVectorSets;
-import de.thatsich.bachelor.featureextraction.api.control.FeatureVector;
-import de.thatsich.bachelor.featureextraction.api.control.FeatureVectorSet;
 import de.thatsich.bachelor.featureextraction.intern.control.command.FeatureInitCommander;
 import de.thatsich.core.javafx.AFXMLPresenter;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 
 public class FeatureDisplayPresenter extends AFXMLPresenter
 {
-
 	// Injects
-	@Inject FeatureInitCommander initCommander;
+	@Inject private FeatureInitCommander initCommander;
+	@Inject private IFeatureVectorSets featureVectors;
+
 	// Nodes
-	@FXML Label nodeLabelClassName;
-	@FXML Label nodeLabelExtractorName;
-	@FXML Label nodeLabelFrameSize;
-	@FXML Label nodeLabelID;
-	@FXML Label nodeLabelFeatureVector;
-	@FXML Label nodeLabelFeatureLabel;
-	@Inject
-	private IFeatureVectorSets featureVectors;
+	@FXML private Label nodeLabelClassName;
+	@FXML private Label nodeLabelExtractorName;
+	@FXML private Label nodeLabelFrameSize;
+	@FXML private Label nodeLabelID;
+	@FXML private Label nodeLabelFeatureVector;
+	@FXML private Label nodeLabelFeatureLabel;
 
 	@Override
 	protected void bindComponents()
@@ -49,46 +44,36 @@ public class FeatureDisplayPresenter extends AFXMLPresenter
 		this.nodeLabelFeatureVector.setTooltip(new Tooltip());
 		this.log.info("Initialized Tooltip of LabelFeatureVector.");
 
-		this.featureVectors.getSelectedFeatureVectorSetProperty().addListener(new ChangeListener<FeatureVectorSet>()
-		{
-			@Override
-			public void changed(ObservableValue<? extends FeatureVectorSet> observable, FeatureVectorSet oldValue, FeatureVectorSet newValue)
+		this.featureVectors.selectedSet().addListener((observable, oldValue, newValue) -> {
+			if (newValue != null)
 			{
-				if (newValue != null)
-				{
-					nodeLabelClassName.setText(newValue.getClassNameProperty().getValue());
-					nodeLabelExtractorName.setText(newValue.getExtractorNameProperty().getValue());
-					nodeLabelFrameSize.setText(newValue.getFrameSizeProperty().getValue().toString());
-					nodeLabelID.setText(newValue.getIdProperty().getValue());
-				}
-				else
-				{
-					nodeLabelClassName.setText(null);
-					nodeLabelExtractorName.setText(null);
-					nodeLabelFrameSize.setText(null);
-					nodeLabelID.setText(null);
-				}
+				nodeLabelClassName.setText(newValue.className().getValue());
+				nodeLabelExtractorName.setText(newValue.extractorName().getValue());
+				nodeLabelFrameSize.setText(newValue.frameSize().getValue().toString());
+				nodeLabelID.setText(newValue.id().getValue());
+			}
+			else
+			{
+				nodeLabelClassName.setText(null);
+				nodeLabelExtractorName.setText(null);
+				nodeLabelFrameSize.setText(null);
+				nodeLabelID.setText(null);
 			}
 		});
 		this.log.info("Bound Labels to changing FeatureVectorSet.");
 
-		this.featureVectors.getSelectedFeatureVectorProperty().addListener(new ChangeListener<FeatureVector>()
-		{
-			@Override
-			public void changed(ObservableValue<? extends FeatureVector> observable, FeatureVector oldValue, FeatureVector newValue)
+		this.featureVectors.selected().addListener((observable, oldValue, newValue) -> {
+			if (newValue != null)
 			{
-				if (newValue != null)
-				{
-					nodeLabelFeatureVector.setText(newValue.getVectorProperty().getValue().toString());
-					nodeLabelFeatureVector.getTooltip().setText(newValue.getVectorProperty().getValue().toString());
-					nodeLabelFeatureLabel.setText(newValue.getIsPositiveProperty().getValue().toString());
-				}
-				else
-				{
-					nodeLabelFeatureVector.setText(null);
-					nodeLabelFeatureVector.getTooltip().setText(null);
-					nodeLabelFeatureLabel.setText(null);
-				}
+				nodeLabelFeatureVector.setText(newValue.vector().getValue().toString());
+				nodeLabelFeatureVector.getTooltip().setText(newValue.vector().getValue().toString());
+				nodeLabelFeatureLabel.setText(newValue.isPositive().getValue().toString());
+			}
+			else
+			{
+				nodeLabelFeatureVector.setText(null);
+				nodeLabelFeatureVector.getTooltip().setText(null);
+				nodeLabelFeatureLabel.setText(null);
 			}
 		});
 		this.log.info("Bound Labels to chainging FeatureVector.");

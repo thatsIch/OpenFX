@@ -42,14 +42,14 @@ public class TrainPreProcessorCommand extends ACommand<IPreProcessing>
 	protected IPreProcessing call() throws Exception
 	{
 		final String preProcessorName = this.preProcessor.getName();
-		final String featureExtractorName = this.selectedFeatureVector.getExtractorNameProperty().get();
-		final int frameSize = this.selectedFeatureVector.getFrameSizeProperty().get();
-		final String errorClassName = this.selectedFeatureVector.getClassNameProperty().get();
+		final String featureExtractorName = this.selectedFeatureVector.extractorName().get();
+		final int frameSize = this.selectedFeatureVector.frameSize().get();
+		final String errorClassName = this.selectedFeatureVector.className().get();
 		final String id = UUID.randomUUID().toString();
 		log.info("Prepared all data for Training.");
 
 		final double[][] data = this.convertToNativeMatrix(this.featureVectorList, featureExtractorName, frameSize);
-		final int featureVectorSize = this.featureVectorList.get(0).getFeatureVectorList().size();
+		final int featureVectorSize = this.featureVectorList.get(0).featureVectors().size();
 		log.info("Prepared DataSets.");
 
 		final String filename = preProcessorName + "_" + featureExtractorName + "_" + frameSize + "_" + errorClassName + "_" + id + ".yaml";
@@ -79,17 +79,17 @@ public class TrainPreProcessorCommand extends ACommand<IPreProcessing>
 
 		for (FeatureVectorSet set : input)
 		{
-			final boolean equalName = set.getExtractorNameProperty().get().equals(name);
-			final boolean equalSize =set.getFrameSizeProperty().get() == frameSize;
+			final boolean equalName = set.extractorName().get().equals(name);
+			final boolean equalSize =set.frameSize().get() == frameSize;
 
 			// select only with same FeatureExtractor and FrameSize
 			if (equalName && equalSize)
 			{
-				for (FeatureVector vector : set.getFeatureVectorList())
+				for (FeatureVector vector : set.featureVectors())
 				{
-					final double[] featureArray = new double[vector.getVectorProperty().size()];
+					final double[] featureArray = new double[vector.vector().size()];
 					int index = 0;
-					for (float f : vector.getVectorProperty())
+					for (float f : vector.vector())
 					{
 						featureArray[index] = f;
 						index++;

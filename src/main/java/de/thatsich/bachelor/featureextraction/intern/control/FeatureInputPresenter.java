@@ -28,22 +28,22 @@ import java.util.concurrent.ExecutorService;
 public class FeatureInputPresenter extends AFXMLPresenter
 {
 	// Injects
-	@Inject FeatureInitCommander initCommander;
-	@Inject IFeatureCommandProvider commander;
-	@Inject IErrorEntries errorEntryList;
-	@Inject IFeatureExtractors featureExtractors;
-	@Inject IFeatureState featureState;
-	@Inject IFeatureVectorSets featureVectors;
+	@Inject private FeatureInitCommander initCommander;
+	@Inject private IFeatureCommandProvider commander;
+	@Inject private IErrorEntries errorEntryList;
+	@Inject private IFeatureExtractors featureExtractors;
+	@Inject private IFeatureState featureState;
+	@Inject private IFeatureVectorSets featureVectors;
 
 	// Nodes
-	@FXML ChoiceBox<IFeatureExtractor> nodeChoiceBoxFeatureExtractor;
-	@FXML IntegerField nodeIntegerFieldFrameSize;
-	@FXML Button nodeButtonExtractFeatureVector;
-	@FXML Button nodeButtonRemoveFeatureVector;
-	@FXML Button nodeButtonResetFeatureVectorList;
-	@FXML CheckBox nodeCheckBoxSmooth;
-	@FXML CheckBox nodeCheckBoxThreshold;
-	@FXML CheckBox nodeCheckBoxDenoising;
+	@FXML private ChoiceBox<IFeatureExtractor> nodeChoiceBoxFeatureExtractor;
+	@FXML private IntegerField nodeIntegerFieldFrameSize;
+	@FXML private Button nodeButtonExtractFeatureVector;
+	@FXML private Button nodeButtonRemoveFeatureVector;
+	@FXML private Button nodeButtonResetFeatureVectorList;
+	@FXML private CheckBox nodeCheckBoxSmooth;
+	@FXML private CheckBox nodeCheckBoxThreshold;
+	@FXML private CheckBox nodeCheckBoxDenoising;
 
 	@Override
 	protected void bindComponents()
@@ -77,8 +77,8 @@ public class FeatureInputPresenter extends AFXMLPresenter
 		});
 		this.log.info("Set up ChoiceBoxFeatureExtractor for proper name display.");
 
-		this.nodeChoiceBoxFeatureExtractor.itemsProperty().bindBidirectional(this.featureExtractors.getFeatureExtractorsProperty());
-		this.nodeChoiceBoxFeatureExtractor.valueProperty().bindBidirectional(this.featureExtractors.getSelectedFeatureExtractorProperty());
+		this.nodeChoiceBoxFeatureExtractor.itemsProperty().bindBidirectional(this.featureExtractors.list());
+		this.nodeChoiceBoxFeatureExtractor.valueProperty().bindBidirectional(this.featureExtractors.selected());
 		this.log.info("Bound ChoiceBoxFeatureExtractor to Model.");
 
 		this.nodeChoiceBoxFeatureExtractor.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> commander.createSetLastFeatureExtractorIndexCommand(newValue.intValue()).start());
@@ -90,13 +90,13 @@ public class FeatureInputPresenter extends AFXMLPresenter
 	 */
 	private void bindIntegerFieldFrameSize()
 	{
-		this.nodeIntegerFieldFrameSize.value.bindBidirectional(this.featureState.getFrameSizeProperty());
+		this.nodeIntegerFieldFrameSize.value.bindBidirectional(this.featureState.frameSize());
 		this.log.info("Bound FrameSize to DataBase");
 
 		this.nodeIntegerFieldFrameSize.value.addListener((paramObservableValue, oldValue, newValue) -> {
 			final int frameSize = newValue.intValue();
 
-			featureState.setFrameSize(frameSize);
+			featureState.frameSize().set(frameSize);
 			commander.createSetLastFrameSizeCommand(frameSize).start();
 			log.info("Initiated SetLastFrameSizeCommand with " + frameSize + ".");
 		});
@@ -109,8 +109,8 @@ public class FeatureInputPresenter extends AFXMLPresenter
 	private void bindButtons()
 	{
 		this.nodeButtonExtractFeatureVector.disableProperty().bind(this.errorEntryList.selectedErrorEntry().isNull().or(this.nodeChoiceBoxFeatureExtractor.valueProperty().isNull()));
-		this.nodeButtonRemoveFeatureVector.disableProperty().bind(this.featureVectors.getSelectedFeatureVectorSetProperty().isNull());
-		this.nodeButtonResetFeatureVectorList.disableProperty().bind(this.featureVectors.getFeatureVectorSetListProperty().emptyProperty());
+		this.nodeButtonRemoveFeatureVector.disableProperty().bind(this.featureVectors.selectedSet().isNull());
+		this.nodeButtonResetFeatureVectorList.disableProperty().bind(this.featureVectors.list().emptyProperty());
 	}
 
 	// ================================================== 
@@ -119,7 +119,7 @@ public class FeatureInputPresenter extends AFXMLPresenter
 	@FXML
 	private void onExtractAction()
 	{
-		final ExtractFeatureVectorSetCommand extractCommand = this.commander.createExtractFeatureVectorCommand(this.featureState.getFeatureVectorFolderPath(), this.errorEntryList.selectedErrorEntry().get(), this.featureExtractors.getSelectedFeatureExtractor(), this.featureState.getFrameSize(), this.nodeCheckBoxSmooth.isSelected(), this.nodeCheckBoxThreshold.isSelected(), this.nodeCheckBoxDenoising.isSelected());
+		final ExtractFeatureVectorSetCommand extractCommand = this.commander.createExtractFeatureVectorCommand(this.featureState.path().get(), this.errorEntryList.selectedErrorEntry().get(), this.featureExtractors.selected().get(), this.featureState.frameSize().get(), this.nodeCheckBoxSmooth.isSelected(), this.nodeCheckBoxThreshold.isSelected(), this.nodeCheckBoxDenoising.isSelected());
 		extractCommand.setOnSucceededCommandHandler(ExtractFeatureVectorSetSucceededHandler.class);
 		extractCommand.start();
 		this.log.info("FeatureVector deleted and removed from FeatureVectorList.");
@@ -128,7 +128,7 @@ public class FeatureInputPresenter extends AFXMLPresenter
 	@FXML
 	private void onRemoveAction()
 	{
-		final DeleteFeatureVectorSetCommand command = this.commander.createRemoveFeatureVectorSetCommand(this.featureVectors.getSelectedFeatureVectorSet());
+		final DeleteFeatureVectorSetCommand command = this.commander.createRemoveFeatureVectorSetCommand(this.featureVectors.selectedSet().get());
 		command.setOnSucceededCommandHandler(RemoveFeatureVectorSetSucceededHandler.class);
 		command.start();
 		this.log.info("FeatureVectorSet deletion instantiated.");
@@ -137,7 +137,7 @@ public class FeatureInputPresenter extends AFXMLPresenter
 	@FXML
 	private void onResetAction()
 	{
-		final List<FeatureVectorSet> list = this.featureVectors.getFeatureVectorSetListProperty();
+		final List<FeatureVectorSet> list = this.featureVectors.list();
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(list.size());
 		this.log.info("Initialized Executor for resetting all FeatureVectors.");
 

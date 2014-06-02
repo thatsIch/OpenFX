@@ -6,13 +6,7 @@ import javafx.beans.property.ObjectProperty;
 
 public interface IFeatureExtractors
 {
-	public ListProperty<IFeatureExtractor> getFeatureExtractorsProperty();
+	ListProperty<IFeatureExtractor> list();
 
-	public ObjectProperty<IFeatureExtractor> getSelectedFeatureExtractorProperty();
-
-	// Getter
-	public IFeatureExtractor getSelectedFeatureExtractor();
-
-	// Setter
-	public void setSelectedFeatureExtractor(IFeatureExtractor extractor);
+	ObjectProperty<IFeatureExtractor> selected();
 }

@@ -85,7 +85,7 @@ public class FeatureInitCommander
 		final Path folderPath = Paths.get("io/featurevectors");
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(1);
 
-		this.featureState.setFeatureVectorFolderPath(folderPath);
+		this.featureState.path().set(folderPath);
 		this.log.info("Set FeatureVectorInputFolderPath to Model.");
 
 		final InitFeatureVectorSetListCommand initCommand = this.commander.createInitFeatureVectorListCommand(folderPath);

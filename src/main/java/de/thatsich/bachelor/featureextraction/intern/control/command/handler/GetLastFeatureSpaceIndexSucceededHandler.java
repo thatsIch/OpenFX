@@ -12,14 +12,12 @@ import de.thatsich.core.javafx.ACommandHandler;
  */
 public class GetLastFeatureSpaceIndexSucceededHandler extends ACommandHandler<Integer>
 {
-
-	@Inject
-	private IFeatureVectorSets featureVectors;
+	@Inject	private IFeatureVectorSets featureVectors;
 
 	@Override
 	public void handle(Integer value)
 	{
-		this.featureVectors.setSelectedIndex(value);
+		this.featureVectors.index().set(value);
 		this.log.info("Set SelectedIndex.");
 	}
 }

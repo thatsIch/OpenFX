@@ -24,7 +24,7 @@ public class SetLastFeatureExtractorIndexCommand extends ACommand<Void>
 	@Override
 	protected Void call() throws Exception
 	{
-		this.config.setLastFeatureExtractorIndexInt(this.lastFeatureExtractorIndex);
+		this.config.setLastFeatureExtractorIndex(this.lastFeatureExtractorIndex);
 
 		return null;
 	}

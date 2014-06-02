@@ -15,26 +15,24 @@ import java.util.List;
  */
 public class RemoveFeatureVectorSetSucceededHandler extends ACommandHandler<FeatureVectorSet>
 {
-
-	@Inject
-	private IFeatureVectorSets featureVectors;
+	@Inject	private IFeatureVectorSets featureVectors;
 
 	@Override
 	public void handle(FeatureVectorSet fv)
 	{
-		final List<FeatureVectorSet> list = this.featureVectors.getFeatureVectorSetListProperty();
+		final List<FeatureVectorSet> list = this.featureVectors.list();
 		list.remove(fv);
 		this.log.info("Removed FeatureVector from Database.");
 
 		if (list.size() > 0)
 		{
 			final FeatureVectorSet first = list.get(0);
-			this.featureVectors.setSelectedFeatureVectorSet(first);
+			this.featureVectors.selectedSet().set(first);
 			this.log.info("Reset Selection to first FeatureVectorSet.");
 		}
 		else
 		{
-			this.featureVectors.setSelectedFeatureVectorSet(null);
+			this.featureVectors.selectedSet().set(null);
 			this.log.info("Reset Selection to null.");
 		}
 	}

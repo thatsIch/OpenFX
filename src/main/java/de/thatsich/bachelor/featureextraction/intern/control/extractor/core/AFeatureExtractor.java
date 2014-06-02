@@ -11,7 +11,6 @@ import de.thatsich.core.Log;
  */
 public abstract class AFeatureExtractor implements IFeatureExtractor
 {
-
 	protected Log log;
 
 	/**
@@ -22,5 +21,4 @@ public abstract class AFeatureExtractor implements IFeatureExtractor
 	{
 		return this.getClass().getSimpleName();
 	}
-
 }

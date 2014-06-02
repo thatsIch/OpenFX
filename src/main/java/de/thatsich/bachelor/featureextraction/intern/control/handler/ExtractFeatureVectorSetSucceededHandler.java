@@ -13,17 +13,15 @@ import de.thatsich.core.javafx.ACommandHandler;
  */
 public class ExtractFeatureVectorSetSucceededHandler extends ACommandHandler<FeatureVectorSet>
 {
-
-	@Inject
-	private IFeatureVectorSets featureVectors;
+	@Inject	private IFeatureVectorSets featureVectors;
 
 	@Override
 	public void handle(FeatureVectorSet set)
 	{
-		this.featureVectors.getFeatureVectorSetListProperty().addAll(set);
+		this.featureVectors.list().addAll(set);
 		this.log.info("Added FeatureVector to Database.");
 
-		this.featureVectors.setSelectedFeatureVectorSet(set);
+		this.featureVectors.selectedSet().set(set);
 		this.log.info("Set current to selected FeatureVectorSet.");
 	}
 }

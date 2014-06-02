@@ -22,7 +22,6 @@ import java.util.List;
  */
 public class FeatureVectorSet
 {
-
 	// Properties
 	private final ReadOnlyObjectWrapper<Path> path = new ReadOnlyObjectWrapper<>();
 	private final ReadOnlyStringWrapper className = new ReadOnlyStringWrapper();
@@ -51,16 +50,33 @@ public class FeatureVectorSet
 	}
 
 	// Property Getter
-	public ReadOnlyObjectProperty<Path> getPathProperty()
-	{ return this.path.getReadOnlyProperty(); }
+	public ReadOnlyObjectProperty<Path> path()
+	{
+		return this.path.getReadOnlyProperty();
+	}
 
-	public ReadOnlyStringProperty getClassNameProperty() { return this.className.getReadOnlyProperty(); }
+	public ReadOnlyStringProperty className()
+	{
+		return this.className.getReadOnlyProperty();
+	}
 
-	public ReadOnlyStringProperty getExtractorNameProperty() { return this.extractorName.getReadOnlyProperty(); }
+	public ReadOnlyStringProperty extractorName()
+	{
+		return this.extractorName.getReadOnlyProperty();
+	}
 
-	public ReadOnlyIntegerProperty getFrameSizeProperty() { return this.frameSize.getReadOnlyProperty(); }
+	public ReadOnlyIntegerProperty frameSize()
+	{
+		return this.frameSize.getReadOnlyProperty();
+	}
 
-	public ReadOnlyStringProperty getIdProperty() { return this.id.getReadOnlyProperty(); }
+	public ReadOnlyStringProperty id()
+	{
+		return this.id.getReadOnlyProperty();
+	}
 
-	public ReadOnlyListProperty<FeatureVector> getFeatureVectorList() { return this.featureVectorList.getReadOnlyProperty(); }
+	public ReadOnlyListProperty<FeatureVector> featureVectors()
+	{
+		return this.featureVectorList.getReadOnlyProperty();
+	}
 }

@@ -14,7 +14,6 @@ import javafx.beans.property.SimpleObjectProperty;
  */
 public class FeatureVectorSetTreeItemAdapter implements IFeatureSpaceTreeItemAdapter
 {
-
 	// Properties
 	private final ObjectProperty<FeatureVectorSet> featureVectorSet = new SimpleObjectProperty<>();
 
@@ -29,7 +28,7 @@ public class FeatureVectorSetTreeItemAdapter implements IFeatureSpaceTreeItemAda
 	}
 
 	@Override
-	public String toString() { return this.featureVectorSet.get().getClassNameProperty().get() + " - " + this.featureVectorSet.get().getExtractorNameProperty().get() + " - " + this.featureVectorSet.get().getFrameSizeProperty().get() + "px - " + this.featureVectorSet.get().getIdProperty().get(); }
+	public String toString() { return this.featureVectorSet.get().className().get() + " - " + this.featureVectorSet.get().extractorName().get() + " - " + this.featureVectorSet.get().frameSize().get() + "px - " + this.featureVectorSet.get().id().get(); }
 
 	// IFeatureSpaceTreeItemAdapter Implementation
 	@Override

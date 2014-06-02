@@ -8,26 +8,11 @@ import javafx.beans.property.ObjectProperty;
 
 public interface IFeatureVectorSets
 {
-	// Property Getter
-	public ListProperty<FeatureVectorSet> getFeatureVectorSetListProperty();
+	ListProperty<FeatureVectorSet> list();
 
-	public ObjectProperty<FeatureVectorSet> getSelectedFeatureVectorSetProperty();
+	ObjectProperty<FeatureVectorSet> selectedSet();
 
-	public ObjectProperty<FeatureVector> getSelectedFeatureVectorProperty();
+	ObjectProperty<FeatureVector> selected();
 
-	public IntegerProperty getSelectedIndexProperty();
-
-	// Getter
-	public FeatureVectorSet getSelectedFeatureVectorSet();
-
-	// Setter
-	public void setSelectedFeatureVectorSet(FeatureVectorSet featureVectorSet);
-
-	public FeatureVector getSelectedFeatureVector();
-
-	public void setSelectedFeatureVector(FeatureVector featureVector);
-
-	public int getSelectedIndex();
-
-	public void setSelectedIndex(int index);
+	IntegerProperty index();
 }

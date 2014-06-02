@@ -112,7 +112,7 @@ public class PredictionInputPresenter extends AFXMLPresenter
 
 	private IFeatureExtractor getFeatureExtractor(String featureExtractorName)
 	{
-		for (IFeatureExtractor extractor : this.featureExtractors.getFeatureExtractorsProperty())
+		for (IFeatureExtractor extractor : this.featureExtractors.list())
 		{
 			if (featureExtractorName.equals(extractor.getName()))
 			{

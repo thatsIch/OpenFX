@@ -36,9 +36,9 @@ public class TrainBinaryClassifierCommand extends ACommand<IBinaryClassification
 	protected IBinaryClassification call() throws Exception
 	{
 		final String binaryClassifierName = this.binaryClassifier.getName();
-		final String featureExtractorName = this.selectedFeatureVector.getExtractorNameProperty().get();
-		final int frameSize = this.selectedFeatureVector.getFrameSizeProperty().get();
-		final String errorClassName = this.selectedFeatureVector.getClassNameProperty().get();
+		final String featureExtractorName = this.selectedFeatureVector.extractorName().get();
+		final int frameSize = this.selectedFeatureVector.frameSize().get();
+		final String errorClassName = this.selectedFeatureVector.className().get();
 		final String id = UUID.randomUUID().toString();
 
 		final MatOfFloat positive = new MatOfFloat();
@@ -53,19 +53,19 @@ public class TrainBinaryClassifierCommand extends ACommand<IBinaryClassification
 		for (FeatureVectorSet set : this.featureVectorList)
 		{
 			// select only with same FeatureExtractor and FrameSize
-			if (set.getExtractorNameProperty().get().equals(featureExtractorName) && set.getFrameSizeProperty().get() == frameSize)
+			if (set.extractorName().get().equals(featureExtractorName) && set.frameSize().get() == frameSize)
 			{
-				for (FeatureVector vector : set.getFeatureVectorList())
+				for (FeatureVector vector : set.featureVectors())
 				{
-					final float[] floatArray = new float[vector.getVectorProperty().size()];
+					final float[] floatArray = new float[vector.vector().size()];
 					int index = 0;
-					for (float f : vector.getVectorProperty())
+					for (float f : vector.vector())
 					{
 						floatArray[index] = f;
 						index++;
 					}
 
-					if (vector.getIsPositiveProperty().get())
+					if (vector.isPositive().get())
 					{
 						positive.push_back(new MatOfFloat(floatArray).t());
 					}

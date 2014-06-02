@@ -93,7 +93,7 @@ public class ClassificationInputPresenter extends AFXMLPresenter
 
 	private void bindButtons()
 	{
-		this.nodeButtonTrainBinaryClassifier.disableProperty().bind(this.featureVectors.getSelectedFeatureVectorSetProperty().isNull());
+		this.nodeButtonTrainBinaryClassifier.disableProperty().bind(this.featureVectors.selectedSet().isNull());
 		this.nodeButtonRemoveBinaryClassifier.disableProperty().bind(this.binaryClassifications.selectedBinaryClassification().isNull());
 		this.nodeButtonResetBinaryClassifierList.disableProperty().bind(this.binaryClassifications.binaryClassifications().emptyProperty());
 	}
@@ -106,8 +106,8 @@ public class ClassificationInputPresenter extends AFXMLPresenter
 	{
 		final Path binaryClassifierFolderPath = this.trainState.path().get();
 		final IBinaryClassifier selectedBinaryClassfier = this.binaryClassifiers.selectedBinaryClassifier().get();
-		final List<FeatureVectorSet> featureVectorSetList = this.featureVectors.getFeatureVectorSetListProperty();
-		final FeatureVectorSet selectedFeatureVectorSet = this.featureVectors.getSelectedFeatureVectorSet();
+		final List<FeatureVectorSet> featureVectorSetList = this.featureVectors.list();
+		final FeatureVectorSet selectedFeatureVectorSet = this.featureVectors.selectedSet().get();
 
 		final TrainBinaryClassifierCommand command = this.commander.createTrainBinaryClassifierCommand(binaryClassifierFolderPath, selectedBinaryClassfier, selectedFeatureVectorSet, featureVectorSetList);
 		command.setOnSucceededCommandHandler(TrainBinaryClassifierSucceededHandler.class);
