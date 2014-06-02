@@ -7,7 +7,6 @@ import de.thatsich.core.javafx.ACommand;
 
 public class SetLastErrorGeneratorIndexCommand extends ACommand<Void>
 {
-
 	// Properties
 	private final int lastErrorGeneratorIndex;
 

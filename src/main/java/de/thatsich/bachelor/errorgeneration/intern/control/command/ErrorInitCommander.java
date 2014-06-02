@@ -24,14 +24,9 @@ import java.util.concurrent.ExecutorService;
 @Singleton
 public class ErrorInitCommander
 {
-	@Inject
-	private Log log;
-
-	@Inject
-	private IErrorState errorState;
-
-	@Inject
-	private IErrorInitCommandProvider commander;
+	@Inject private Log log;
+	@Inject private IErrorState errorState;
+	@Inject private IErrorInitCommandProvider commander;
 
 	@Inject
 	private void init()
@@ -82,7 +77,7 @@ public class ErrorInitCommander
 		final Path errorInputFolderPath = Paths.get("io/error");
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(1);
 
-		this.errorState.setErrorEntryFolderPath(errorInputFolderPath);
+		this.errorState.path().set(errorInputFolderPath);
 		this.log.info("Set ErrorInputFolderPath to Model.");
 
 		final InitErrorEntryListCommand initCommand = this.commander.createInitErrorEntryListCommand(errorInputFolderPath);

@@ -7,15 +7,7 @@ import java.nio.file.Path;
 
 public interface IErrorState
 {
-	public ObjectProperty<Path> getErrorEntryFolderPathProperty();
+	public ObjectProperty<Path> path();
 
-	public IntegerProperty getErrorLoopCountProperty();
-
-	public Path getErrorEntryFolderPath();
-
-	public void setErrorEntryFolderPath(Path errorEntryFolderPath);
-
-	public int getErrorLoopCount();
-
-	public void setErrorLoopCount(int errorLoopCount);
+	public IntegerProperty loopCount();
 }

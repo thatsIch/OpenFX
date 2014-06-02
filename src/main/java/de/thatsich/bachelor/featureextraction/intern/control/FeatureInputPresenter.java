@@ -2,22 +2,20 @@ package de.thatsich.bachelor.featureextraction.intern.control;
 
 import com.google.inject.Inject;
 import de.thatsich.bachelor.errorgeneration.api.model.IErrorEntries;
+import de.thatsich.bachelor.featureextraction.api.control.FeatureVectorSet;
+import de.thatsich.bachelor.featureextraction.api.control.IFeatureExtractor;
 import de.thatsich.bachelor.featureextraction.api.model.IFeatureExtractors;
 import de.thatsich.bachelor.featureextraction.api.model.IFeatureState;
 import de.thatsich.bachelor.featureextraction.api.model.IFeatureVectorSets;
-import de.thatsich.bachelor.featureextraction.api.control.FeatureVectorSet;
 import de.thatsich.bachelor.featureextraction.intern.control.command.FeatureInitCommander;
 import de.thatsich.bachelor.featureextraction.intern.control.command.IFeatureCommandProvider;
 import de.thatsich.bachelor.featureextraction.intern.control.command.commands.DeleteFeatureVectorSetCommand;
 import de.thatsich.bachelor.featureextraction.intern.control.command.commands.ExtractFeatureVectorSetCommand;
-import de.thatsich.bachelor.featureextraction.api.control.IFeatureExtractor;
 import de.thatsich.bachelor.featureextraction.intern.control.handler.ExtractFeatureVectorSetSucceededHandler;
 import de.thatsich.bachelor.featureextraction.intern.control.handler.RemoveFeatureVectorSetSucceededHandler;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.javafx.CommandExecutor;
 import de.thatsich.core.javafx.component.IntegerField;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -83,14 +81,7 @@ public class FeatureInputPresenter extends AFXMLPresenter
 		this.nodeChoiceBoxFeatureExtractor.valueProperty().bindBidirectional(this.featureExtractors.getSelectedFeatureExtractorProperty());
 		this.log.info("Bound ChoiceBoxFeatureExtractor to Model.");
 
-		this.nodeChoiceBoxFeatureExtractor.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>()
-		{
-			@Override
-			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue)
-			{
-				commander.createSetLastFeatureExtractorIndexCommand(newValue.intValue()).start();
-			}
-		});
+		this.nodeChoiceBoxFeatureExtractor.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> commander.createSetLastFeatureExtractorIndexCommand(newValue.intValue()).start());
 		this.log.info("Bound ChoiceBoxFeatureExtractor to Config.");
 	}
 
@@ -102,17 +93,12 @@ public class FeatureInputPresenter extends AFXMLPresenter
 		this.nodeIntegerFieldFrameSize.value.bindBidirectional(this.featureState.getFrameSizeProperty());
 		this.log.info("Bound FrameSize to DataBase");
 
-		this.nodeIntegerFieldFrameSize.value.addListener(new ChangeListener<Number>()
-		{
-			@Override
-			public void changed(ObservableValue<? extends Number> paramObservableValue, Number oldValue, Number newValue)
-			{
-				final int frameSize = newValue.intValue();
+		this.nodeIntegerFieldFrameSize.value.addListener((paramObservableValue, oldValue, newValue) -> {
+			final int frameSize = newValue.intValue();
 
-				featureState.setFrameSize(frameSize);
-				commander.createSetLastFrameSizeCommand(frameSize).start();
-				log.info("Initiated SetLastFrameSizeCommand with " + frameSize + ".");
-			}
+			featureState.setFrameSize(frameSize);
+			commander.createSetLastFrameSizeCommand(frameSize).start();
+			log.info("Initiated SetLastFrameSizeCommand with " + frameSize + ".");
 		});
 		this.log.info("Bound FrameSize to Config.");
 	}
@@ -122,7 +108,7 @@ public class FeatureInputPresenter extends AFXMLPresenter
 	 */
 	private void bindButtons()
 	{
-		this.nodeButtonExtractFeatureVector.disableProperty().bind(this.errorEntryList.getSelectedErrorEntryProperty().isNull().or(this.nodeChoiceBoxFeatureExtractor.valueProperty().isNull()));
+		this.nodeButtonExtractFeatureVector.disableProperty().bind(this.errorEntryList.selectedErrorEntry().isNull().or(this.nodeChoiceBoxFeatureExtractor.valueProperty().isNull()));
 		this.nodeButtonRemoveFeatureVector.disableProperty().bind(this.featureVectors.getSelectedFeatureVectorSetProperty().isNull());
 		this.nodeButtonResetFeatureVectorList.disableProperty().bind(this.featureVectors.getFeatureVectorSetListProperty().emptyProperty());
 	}
@@ -133,7 +119,7 @@ public class FeatureInputPresenter extends AFXMLPresenter
 	@FXML
 	private void onExtractAction()
 	{
-		final ExtractFeatureVectorSetCommand extractCommand = this.commander.createExtractFeatureVectorCommand(this.featureState.getFeatureVectorFolderPath(), this.errorEntryList.getSelectedErrorEntry(), this.featureExtractors.getSelectedFeatureExtractor(), this.featureState.getFrameSize(), this.nodeCheckBoxSmooth.isSelected(), this.nodeCheckBoxThreshold.isSelected(), this.nodeCheckBoxDenoising.isSelected());
+		final ExtractFeatureVectorSetCommand extractCommand = this.commander.createExtractFeatureVectorCommand(this.featureState.getFeatureVectorFolderPath(), this.errorEntryList.selectedErrorEntry().get(), this.featureExtractors.getSelectedFeatureExtractor(), this.featureState.getFrameSize(), this.nodeCheckBoxSmooth.isSelected(), this.nodeCheckBoxThreshold.isSelected(), this.nodeCheckBoxDenoising.isSelected());
 		extractCommand.setOnSucceededCommandHandler(ExtractFeatureVectorSetSucceededHandler.class);
 		extractCommand.start();
 		this.log.info("FeatureVector deleted and removed from FeatureVectorList.");
@@ -164,11 +150,7 @@ public class FeatureInputPresenter extends AFXMLPresenter
 			this.log.info("FeatureVector Deletion executed.");
 		}
 
-		executor.execute(new Runnable()
-		{
-			@Override
-			public void run() { System.gc(); }
-		});
+		executor.execute(System::gc);
 		this.log.info("Running Garbage Collector.");
 
 		executor.shutdown();

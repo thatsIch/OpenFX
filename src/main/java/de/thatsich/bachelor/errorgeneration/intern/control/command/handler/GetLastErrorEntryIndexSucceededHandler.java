@@ -2,7 +2,7 @@ package de.thatsich.bachelor.errorgeneration.intern.control.command.handler;
 
 import com.google.inject.Inject;
 import de.thatsich.bachelor.errorgeneration.api.model.IErrorEntries;
-import de.thatsich.bachelor.errorgeneration.intern.control.error.ErrorEntry;
+import de.thatsich.bachelor.errorgeneration.intern.control.error.core.ErrorEntry;
 import de.thatsich.core.javafx.ACommandHandler;
 
 /**
@@ -13,15 +13,13 @@ import de.thatsich.core.javafx.ACommandHandler;
  */
 public class GetLastErrorEntryIndexSucceededHandler extends ACommandHandler<Integer>
 {
-
-	@Inject
-	private IErrorEntries errorEntryList;
+	@Inject private IErrorEntries errorEntryList;
 
 	@Override
 	public void handle(Integer value)
 	{
-		final ErrorEntry selectedErrorEntry = this.errorEntryList.getErrorEntryListProperty().get(value);
-		this.errorEntryList.getSelectedErrorEntryProperty().set(selectedErrorEntry);
+		final ErrorEntry selectedErrorEntry = this.errorEntryList.errorEntries().get(value);
+		this.errorEntryList.selectedErrorEntry().set(selectedErrorEntry);
 		this.log.info("Set last selected error entry index in Model.");
 	}
 }

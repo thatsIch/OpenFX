@@ -2,7 +2,7 @@ package de.thatsich.bachelor.errorgeneration.intern.control.command.commands;
 
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
-import de.thatsich.bachelor.errorgeneration.intern.control.error.ErrorEntry;
+import de.thatsich.bachelor.errorgeneration.intern.control.error.core.ErrorEntry;
 import de.thatsich.bachelor.errorgeneration.intern.control.command.service.ErrorFactoryService;
 import de.thatsich.core.javafx.ACommand;
 
@@ -62,7 +62,7 @@ public class InitErrorEntryListCommand extends ACommand<List<ErrorEntry>>
 		{
 			for (Path sub : subs)
 			{
-				errorEntryList.add(this.factory.getErrorEntryFromPath(sub));
+				errorEntryList.add(this.factory.pathToErrorEntry(sub));
 				this.log.info("Added " + sub + ".");
 			}
 		}

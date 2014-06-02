@@ -8,7 +8,6 @@ import org.opencv.core.Scalar;
 
 public class CircleError extends AErrorGenerator
 {
-
 	private static final int RADIUS_MEAN = 50;
 	private static final int RADIUS_STDDEV = 25;
 	private static final int MIN_LINE_THICKNESS = 2;

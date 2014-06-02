@@ -10,26 +10,19 @@ import java.nio.file.Path;
 
 public class ErrorState implements IErrorState
 {
-
 	// Properties
 	final private ObjectProperty<Path> errorEntryFolderPath = new SimpleObjectProperty<>();
 	final private IntegerProperty errorLoopCount = new SimpleIntegerProperty();
 
 	// Property Getter
-	public ObjectProperty<Path> getErrorEntryFolderPathProperty()
-	{ return this.errorEntryFolderPath; }
+	public ObjectProperty<Path> path()
+	{
+		return this.errorEntryFolderPath;
+	}
 
-	public IntegerProperty getErrorLoopCountProperty() { return this.errorLoopCount; }
+	public IntegerProperty loopCount()
+	{
+		return this.errorLoopCount;
+	}
 
-	// Getter
-	public Path getErrorEntryFolderPath()
-	{ return this.errorEntryFolderPath.get(); }
-
-	// Setter
-	public void setErrorEntryFolderPath(Path errorEntryFolderPath)
-	{ this.errorEntryFolderPath.set(errorEntryFolderPath); }
-
-	public int getErrorLoopCount() { return this.errorLoopCount.get(); }
-
-	public void setErrorLoopCount(int errorLoopCount) { this.errorLoopCount.set(errorLoopCount); }
 }

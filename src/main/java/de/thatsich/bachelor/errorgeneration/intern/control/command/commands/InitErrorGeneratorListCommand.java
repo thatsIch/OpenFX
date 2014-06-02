@@ -1,9 +1,7 @@
 package de.thatsich.bachelor.errorgeneration.intern.control.command.commands;
 
-import com.google.inject.Inject;
-import com.google.inject.Injector;
-import de.thatsich.bachelor.errorgeneration.intern.control.error.CircleError;
 import de.thatsich.bachelor.errorgeneration.api.control.IErrorGenerator;
+import de.thatsich.bachelor.errorgeneration.intern.control.error.CircleError;
 import de.thatsich.bachelor.errorgeneration.intern.control.error.LineError;
 import de.thatsich.core.javafx.ACommand;
 
@@ -12,10 +10,6 @@ import java.util.List;
 
 public class InitErrorGeneratorListCommand extends ACommand<List<IErrorGenerator>>
 {
-
-	@Inject
-	private Injector injector;
-
 	@Override
 	protected List<IErrorGenerator> call() throws Exception
 	{
@@ -29,6 +23,6 @@ public class InitErrorGeneratorListCommand extends ACommand<List<IErrorGenerator
 
 	private <T extends IErrorGenerator> T get(Class<T> type)
 	{
-		return injector.getInstance(type);
+		return super.injector.getInstance(type);
 	}
 }

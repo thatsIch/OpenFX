@@ -12,14 +12,12 @@ import de.thatsich.core.javafx.ACommandHandler;
  */
 public class GetLastErrorLoopCountSucceededHandler extends ACommandHandler<Integer>
 {
-
-	@Inject
-	private IErrorState errorState;
+	@Inject	private IErrorState errorState;
 
 	@Override
 	public void handle(Integer value)
 	{
-		this.errorState.setErrorLoopCount(value);
+		this.errorState.loopCount().set(value);
 		this.log.info("Set LastErrorLoopCount in Model.");
 	}
 }

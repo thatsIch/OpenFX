@@ -2,12 +2,10 @@ package de.thatsich.bachelor.errorgeneration.intern.control;
 
 import com.google.inject.Inject;
 import de.thatsich.bachelor.errorgeneration.api.model.IErrorEntries;
-import de.thatsich.bachelor.errorgeneration.intern.control.error.ErrorEntry;
 import de.thatsich.bachelor.errorgeneration.intern.control.command.ErrorInitCommander;
+import de.thatsich.bachelor.errorgeneration.intern.control.error.core.ErrorEntry;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.opencv.Images;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -17,33 +15,27 @@ import org.opencv.imgproc.Imgproc;
 
 public class ErrorDisplayPresenter extends AFXMLPresenter
 {
-
+	// Injects
 	@Inject ErrorInitCommander initCommander;
+	@Inject private IErrorEntries errorEntryList;
+
 	// Nodes
 	@FXML ImageView nodeImageViewError;
-	// Injects
-	@Inject
-	private IErrorEntries errorEntryList;
 
 	@Override
 	protected void bindComponents()
 	{
-		this.errorEntryList.getSelectedErrorEntryProperty().addListener(new ChangeListener<ErrorEntry>()
-		{
-			@Override
-			public void changed(ObservableValue<? extends ErrorEntry> observable, ErrorEntry oldValue, ErrorEntry newValue)
+		this.errorEntryList.selectedErrorEntry().addListener((observable, oldValue, newValue) -> {
+			if (newValue != null)
 			{
-				if (newValue != null)
-				{
-					final Image image = errorEntryToImage(newValue);
-					nodeImageViewError.imageProperty().setValue(image);
-					log.info("Selected new ErrorEntry.");
-				}
-				else
-				{
-					nodeImageViewError.imageProperty().set(null);
-					log.info("Set Image to null.");
-				}
+				final Image image = errorEntryToImage(newValue);
+				nodeImageViewError.imageProperty().setValue(image);
+				log.info("Selected new ErrorEntry.");
+			}
+			else
+			{
+				nodeImageViewError.imageProperty().set(null);
+				log.info("Set Image to null.");
 			}
 		});
 		this.log.info("Bound nodeImageViewError to Model.");
@@ -52,7 +44,7 @@ public class ErrorDisplayPresenter extends AFXMLPresenter
 	@Override
 	protected void initComponents()
 	{
-		final ErrorEntry entry = this.errorEntryList.getSelectedErrorEntry();
+		final ErrorEntry entry = this.errorEntryList.selectedErrorEntry().get();
 		if (entry != null)
 		{
 			final Image image = this.errorEntryToImage(entry);

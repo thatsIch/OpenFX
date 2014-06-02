@@ -6,11 +6,7 @@ import javafx.beans.property.ObjectProperty;
 
 public interface IErrorGenerators
 {
-	public ListProperty<IErrorGenerator> getErrorGeneratorListProperty();
+	ListProperty<IErrorGenerator> errorGenerators();
 
-	public ObjectProperty<IErrorGenerator> getSelectedErrorGeneratorProperty();
-
-	public IErrorGenerator getSelectedErrorGenerator();
-
-	public void setSelectedErrorGenerator(IErrorGenerator generator);
+	ObjectProperty<IErrorGenerator> selectedErrorGenerator();
 }

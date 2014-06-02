@@ -2,7 +2,7 @@ package de.thatsich.bachelor.errorgeneration.intern.control.command.commands;
 
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
-import de.thatsich.bachelor.errorgeneration.intern.control.error.ErrorEntry;
+import de.thatsich.bachelor.errorgeneration.intern.control.error.core.ErrorEntry;
 import de.thatsich.bachelor.errorgeneration.api.control.IErrorGenerator;
 import de.thatsich.bachelor.errorgeneration.intern.control.command.service.ErrorFactoryService;
 import de.thatsich.bachelor.errorgeneration.intern.control.command.service.ErrorStorageService;
@@ -37,7 +37,7 @@ public class CreateErrorEntryCommand extends ACommand<ErrorEntry>
 		copy = this.generator.generateError(copy);
 		this.log.info("Error generated.");
 
-		final ErrorEntry entry = this.factory.getErrorEntryFromMat(this.imagePath, this.imageMat, copy);
+		final ErrorEntry entry = this.factory.matToErrorEntry(this.imagePath, this.imageMat, copy);
 
 		// store created error
 		this.storage.store(entry);

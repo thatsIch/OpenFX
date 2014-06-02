@@ -15,14 +15,12 @@ import java.util.List;
  */
 public class InitErrorGeneratorListSucceededHandler extends ACommandHandler<List<IErrorGenerator>>
 {
-
-	@Inject
-	private IErrorGenerators errorGeneratorList;
+	@Inject	private IErrorGenerators errorGeneratorList;
 
 	@Override
 	public void handle(List<IErrorGenerator> generatorList)
 	{
-		this.errorGeneratorList.getErrorGeneratorListProperty().addAll(generatorList);
+		this.errorGeneratorList.errorGenerators().addAll(generatorList);
 		this.log.info("Added all ErrorGenerators.");
 	}
 }

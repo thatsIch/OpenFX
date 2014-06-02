@@ -99,7 +99,7 @@ public class PredictionInputPresenter extends AFXMLPresenter
 
 	private IErrorGenerator getErrorGenerator(String errorGeneratorName)
 	{
-		for (IErrorGenerator generator : this.errorGenerators.getErrorGeneratorListProperty())
+		for (IErrorGenerator generator : this.errorGenerators.errorGenerators())
 		{
 			if (errorGeneratorName.equals(generator.getName()))
 			{

@@ -10,7 +10,7 @@ import de.thatsich.bachelor.errorgeneration.intern.control.command.commands.Crea
 import de.thatsich.bachelor.errorgeneration.intern.control.command.commands.DeleteErrorEntryCommand;
 import de.thatsich.bachelor.errorgeneration.intern.control.command.commands.SetLastErrorCountCommand;
 import de.thatsich.bachelor.errorgeneration.intern.control.command.commands.SetLastErrorGeneratorIndexCommand;
-import de.thatsich.bachelor.errorgeneration.intern.control.error.ErrorEntry;
+import de.thatsich.bachelor.errorgeneration.intern.control.error.core.ErrorEntry;
 import de.thatsich.bachelor.errorgeneration.intern.control.handler.CreateErrorEntrySucceededHandler;
 import de.thatsich.bachelor.errorgeneration.intern.control.handler.DeleteErrorEntrySucceededHandler;
 import de.thatsich.bachelor.errorgeneration.intern.control.provider.IErrorCommandProvider;
@@ -95,8 +95,8 @@ public class ErrorInputPresenter extends AFXMLPresenter
 		});
 		this.log.info("Set up StringErrorGeneratorConverter for proper name display.");
 
-		this.nodeChoiceBoxErrorGenerator.itemsProperty().bindBidirectional(this.errorGeneratorList.getErrorGeneratorListProperty());
-		this.nodeChoiceBoxErrorGenerator.valueProperty().bindBidirectional(this.errorGeneratorList.getSelectedErrorGeneratorProperty());
+		this.nodeChoiceBoxErrorGenerator.itemsProperty().bindBidirectional(this.errorGeneratorList.errorGenerators());
+		this.nodeChoiceBoxErrorGenerator.valueProperty().bindBidirectional(this.errorGeneratorList.selectedErrorGenerator());
 		this.log.info("Bound ChoiceBoxErrorGenerator to Model.");
 
 		this.nodeChoiceBoxErrorGenerator.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
@@ -114,7 +114,7 @@ public class ErrorInputPresenter extends AFXMLPresenter
 	{
 		this.nodeIntegerFieldErrorCount.value.addListener((observable, oldValue, newValue) -> {
 			final int count = newValue.intValue();
-			state.getErrorLoopCountProperty().set(count);
+			state.loopCount().set(count);
 			final SetLastErrorCountCommand command = provider.createSetLastErrorCountCommand(count);
 			command.start();
 			log.info("Initiated SetLastErrorCountCommand with " + count + ".");
@@ -125,8 +125,8 @@ public class ErrorInputPresenter extends AFXMLPresenter
 	{
 		this.nodeButtonGenerateErrors.disableProperty().bind(this.imageEntryList.selectedImageEntryProperty().isNull().or(this.nodeChoiceBoxErrorGenerator.valueProperty().isNull()).or(this.nodeIntegerFieldErrorCount.value.isEqualTo(0)));
 		this.nodeButtonPermutateErrors.disableProperty().bind(this.imageEntryList.imageEntryListProperty().emptyProperty().or(this.nodeChoiceBoxErrorGenerator.valueProperty().isNull()).or(this.nodeIntegerFieldErrorCount.value.isEqualTo(0)));
-		this.nodeButtonRemoveError.disableProperty().bind(this.errorEntryList.getSelectedErrorEntryProperty().isNull());
-		this.nodeButtonResetErrors.disableProperty().bind(this.errorEntryList.getErrorEntryListProperty().emptyProperty());
+		this.nodeButtonRemoveError.disableProperty().bind(this.errorEntryList.selectedErrorEntry().isNull());
+		this.nodeButtonResetErrors.disableProperty().bind(this.errorEntryList.errorEntries().emptyProperty());
 	}
 
 	// ================================================== 
@@ -141,15 +141,15 @@ public class ErrorInputPresenter extends AFXMLPresenter
 	{
 		final ImageEntry imageEntry = this.imageEntryList.getSelectedImageEntry();
 		final Mat image = imageEntry.getImageMat().clone();
-		final IErrorGenerator generator = this.errorGeneratorList.getSelectedErrorGenerator();
-		final int loops = this.state.getErrorLoopCount();
+		final IErrorGenerator generator = this.errorGeneratorList.selectedErrorGenerator().get();
+		final int loops = this.state.loopCount().get();
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(loops);
 		this.log.info("Initialized Executor for generating all Errors.");
 
 		for (int step = 0; step < loops; step++)
 		{
 			final String dateTime = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-SSS").format(new Date()) + "_" + generator.getName() + "_" + UUID.randomUUID().toString();
-			final Path imagePath = this.state.getErrorEntryFolderPath().resolve(dateTime);
+			final Path imagePath = this.state.path().get().resolve(dateTime);
 			this.log.info("Path: " + imagePath);
 
 			final CreateErrorEntryCommand command = this.provider.createApplyErrorCommand(image, imagePath, generator);
@@ -172,7 +172,7 @@ public class ErrorInputPresenter extends AFXMLPresenter
 	@FXML
 	private void onRemoveErrorAction()
 	{
-		final ErrorEntry entry = this.errorEntryList.getSelectedErrorEntry();
+		final ErrorEntry entry = this.errorEntryList.selectedErrorEntry().get();
 		this.log.info("Fetched selected ErrorEntry.");
 
 		final DeleteErrorEntryCommand command = this.provider.createDeleteErrorEntryCommand(entry);
@@ -188,10 +188,10 @@ public class ErrorInputPresenter extends AFXMLPresenter
 	private void onPermutateErrorsAction()
 	{
 		final ObservableList<ImageEntry> imageEntries = this.imageEntryList.imageEntryListProperty();
-		final IErrorGenerator generator = this.errorGeneratorList.getSelectedErrorGenerator();
-		final int loops = this.state.getErrorLoopCount();
+		final IErrorGenerator generator = this.errorGeneratorList.selectedErrorGenerator().get();
+		final int loops = this.state.loopCount().get();
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(imageEntries.size() * loops);
-		final Path errorEntryFolderPath = this.state.getErrorEntryFolderPath();
+		final Path errorEntryFolderPath = this.state.path().get();
 		this.log.info("Initialized Executor for permutating all Errors.");
 
 		for (ImageEntry entry : imageEntries)
@@ -224,7 +224,7 @@ public class ErrorInputPresenter extends AFXMLPresenter
 	@FXML
 	private void onResetErrorsAction()
 	{
-		final List<ErrorEntry> errorEntryList = this.errorEntryList.getErrorEntryListProperty();
+		final List<ErrorEntry> errorEntryList = this.errorEntryList.errorEntries();
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(errorEntryList.size());
 		this.log.info("Initialized Executor for resetting all Errors.");
 

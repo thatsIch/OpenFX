@@ -6,7 +6,6 @@ import de.thatsich.core.javafx.ACommand;
 
 public class GetLastErrorGeneratorIndexCommand extends ACommand<Integer>
 {
-
 	// Injections
 	@Inject
 	private ErrorConfigService config;

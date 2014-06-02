@@ -1,7 +1,7 @@
 package de.thatsich.bachelor.errorgeneration.intern.control.command.service;
 
 import com.google.inject.Singleton;
-import de.thatsich.bachelor.errorgeneration.intern.control.error.ErrorEntry;
+import de.thatsich.bachelor.errorgeneration.intern.control.error.core.ErrorEntry;
 import de.thatsich.core.opencv.Images;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
@@ -12,7 +12,7 @@ import java.nio.file.Path;
 @Singleton
 public class ErrorFactoryService
 {
-	public ErrorEntry getErrorEntryFromPath(Path directory)
+	public ErrorEntry pathToErrorEntry(Path directory)
 	{
 		final String unparsedString = directory.getFileName().toString();
 		final String splitString[] = unparsedString.split("_");
@@ -26,7 +26,7 @@ public class ErrorFactoryService
 		return new ErrorEntry(directory, original, modified, error, className, id);
 	}
 
-	public ErrorEntry getErrorEntryFromMat(Path filePath, Mat originalMat, Mat originalWithErrorMat)
+	public ErrorEntry matToErrorEntry(Path filePath, Mat originalMat, Mat originalWithErrorMat)
 	{
 		final String unparsedString = filePath.getFileName().toString();
 		final String splitString[] = unparsedString.split("_");

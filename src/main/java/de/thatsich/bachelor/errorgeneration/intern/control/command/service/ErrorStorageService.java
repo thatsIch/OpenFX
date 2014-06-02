@@ -1,6 +1,6 @@
 package de.thatsich.bachelor.errorgeneration.intern.control.command.service;
 
-import de.thatsich.bachelor.errorgeneration.intern.control.error.ErrorEntry;
+import de.thatsich.bachelor.errorgeneration.intern.control.error.core.ErrorEntry;
 import de.thatsich.core.opencv.Images;
 
 import java.io.IOException;

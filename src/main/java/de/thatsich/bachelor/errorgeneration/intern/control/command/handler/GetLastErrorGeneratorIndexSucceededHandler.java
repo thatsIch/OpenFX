@@ -13,15 +13,13 @@ import de.thatsich.core.javafx.ACommandHandler;
  */
 public class GetLastErrorGeneratorIndexSucceededHandler extends ACommandHandler<Integer>
 {
-
-	@Inject
-	private IErrorGenerators errorGeneratorList;
+	@Inject	private IErrorGenerators errorGeneratorList;
 
 	@Override
 	public void handle(Integer value)
 	{
-		final IErrorGenerator selectedErrorGenerator = this.errorGeneratorList.getErrorGeneratorListProperty().get(value);
-		this.errorGeneratorList.getSelectedErrorGeneratorProperty().set(selectedErrorGenerator);
+		final IErrorGenerator selectedErrorGenerator = this.errorGeneratorList.errorGenerators().get(value);
+		this.errorGeneratorList.selectedErrorGenerator().set(selectedErrorGenerator);
 		this.log.info("Set last selected error generator index in Model.");
 	}
 }

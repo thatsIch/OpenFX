@@ -1,4 +1,4 @@
-package de.thatsich.bachelor.errorgeneration.intern.control.error;
+package de.thatsich.bachelor.errorgeneration.intern.control.error.core;
 
 import javafx.beans.property.ReadOnlyStringProperty;
 import javafx.beans.property.ReadOnlyStringWrapper;

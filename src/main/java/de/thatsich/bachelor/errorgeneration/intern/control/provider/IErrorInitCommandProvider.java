@@ -11,13 +11,13 @@ import java.nio.file.Path;
 
 public interface IErrorInitCommandProvider extends ICommandProvider
 {
-	public InitErrorEntryListCommand createInitErrorEntryListCommand(Path errorInputFolderPath);
+	InitErrorEntryListCommand createInitErrorEntryListCommand(Path errorInputFolderPath);
 
-	public InitErrorGeneratorListCommand createInitErrorGeneratorListCommand();
+	InitErrorGeneratorListCommand createInitErrorGeneratorListCommand();
 
-	public GetLastErrorGeneratorIndexCommand createGetLastErrorGeneratorIndexCommand();
+	GetLastErrorGeneratorIndexCommand createGetLastErrorGeneratorIndexCommand();
 
-	public GetLastErrorEntryIndexCommand createGetLastErrorEntryIndexCommand();
+	GetLastErrorEntryIndexCommand createGetLastErrorEntryIndexCommand();
 
-	public GetLastErrorCountCommand createGetLastErrorCountCommand();
+	GetLastErrorCountCommand createGetLastErrorCountCommand();
 }

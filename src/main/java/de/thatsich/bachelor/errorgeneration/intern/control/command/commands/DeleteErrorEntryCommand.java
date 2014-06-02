@@ -2,7 +2,7 @@ package de.thatsich.bachelor.errorgeneration.intern.control.command.commands;
 
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
-import de.thatsich.bachelor.errorgeneration.intern.control.error.ErrorEntry;
+import de.thatsich.bachelor.errorgeneration.intern.control.error.core.ErrorEntry;
 import de.thatsich.core.javafx.ACommand;
 
 import java.io.IOException;
