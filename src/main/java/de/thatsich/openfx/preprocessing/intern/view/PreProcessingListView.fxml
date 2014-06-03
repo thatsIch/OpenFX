@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2"
+            fx:controller="de.thatsich.openfx.preprocessing.intern.control.PreProcessingListPresenter">
+    <children>
+
+        <TableView fx:id="nodeTableViewPreProcessingList"
+                   AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                   AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+
+            <columns>
+                <TableColumn editable="false" prefWidth="100.0"
+                             sortable="false" text="PreProcessing" fx:id="nodeTableColumnPreProcessingName"/>
+                <TableColumn editable="false" prefWidth="100.0"
+                             sortable="false" text="InputSize" fx:id="nodeTableColumnInputSize"/>
+                <TableColumn editable="false" prefWidth="100.0"
+                             sortable="false" text="OutputSize" fx:id="nodeTableColumnOutputSize"/>
+                <TableColumn editable="false" prefWidth="100.0"
+                             sortable="false" text="ID" fx:id="nodeTableColumnID"/>
+            </columns>
+
+            <columnResizePolicy>
+                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+            </columnResizePolicy>
+
+        </TableView>
+
+    </children>
+</AnchorPane>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<FlowPane xmlns:fx="http://javafx.com/fxml/1" hgap="5.0" prefWidth="-1.0"
+          xmlns="http://javafx.com/javafx/8"
+          fx:controller="de.thatsich.openfx.imageprocessing.intern.control.ImageInputPresenter">
+
+    <children>
+        <Button fx:id="nodeButtonAddImage" onAction="#onAddImageAction">
+            <graphic>
+                <ImageView>
+                    <image>
+                        <Image url="@add.png"/>
+                    </image>
+                </ImageView>
+            </graphic>
+            <tooltip>
+                <Tooltip text="Adds an Image to the List."/>
+            </tooltip>
+        </Button>
+
+        <Button fx:id="nodeButtonRemoveImage" onAction="#onRemoveImageAction">
+            <graphic>
+                <ImageView>
+                    <image>
+                        <Image url="@remove.png"/>
+                    </image>
+                </ImageView>
+            </graphic>
+            <tooltip>
+                <Tooltip text="Removes an Image from the List."/>
+            </tooltip>
+        </Button>
+
+        <Button fx:id="nodeButtonResetDatabase" onAction="#onResetDatabaseAction">
+            <graphic>
+                <ImageView>
+                    <image>
+                        <Image url="@delete.png"/>
+                    </image>
+                </ImageView>
+            </graphic>
+            <tooltip>
+                <Tooltip text="Resets the whole Image List physically. CAUTION!"/>
+            </tooltip>
+        </Button>
+
+    </children>
+    <padding>
+        <Insets bottom="10.0"/>
+    </padding>
+
+</FlowPane>

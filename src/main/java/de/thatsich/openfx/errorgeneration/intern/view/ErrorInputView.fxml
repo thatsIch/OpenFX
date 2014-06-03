@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import de.thatsich.core.javafx.component.IntegerField?>
+<?import javafx.scene.control.Separator?>
+
+<FlowPane xmlns:fx="http://javafx.com/fxml/1" hgap="5.0" prefWidth="-1.0"
+          xmlns="http://javafx.com/javafx/8"
+          fx:controller="de.thatsich.openfx.errorgeneration.intern.control.ErrorInputPresenter">
+
+    <children>
+        <Button fx:id="nodeButtonGenerateErrors" onAction="#onGenerateErrorsAction">
+            <graphic>
+                <ImageView>
+                    <image>
+                        <Image url="@add.png"/>
+                    </image>
+                </ImageView>
+            </graphic>
+            <tooltip>
+                <Tooltip text="Generate Error(s) and adds them to the List."/>
+            </tooltip>
+        </Button>
+        <Button fx:id="nodeButtonRemoveError" onAction="#onRemoveErrorAction">
+            <graphic>
+                <ImageView>
+                    <image>
+                        <Image url="@remove.png"/>
+                    </image>
+                </ImageView>
+            </graphic>
+            <tooltip>
+                <Tooltip text="Removes an Error from the List."/>
+            </tooltip>
+        </Button>
+        <Button fx:id="nodeButtonPermutateErrors" onAction="#onPermutateErrorsAction">
+            <graphic>
+                <ImageView>
+                    <image>
+                        <Image url="@permutate.png"/>
+                    </image>
+                </ImageView>
+            </graphic>
+            <tooltip>
+                <Tooltip text="Permutates ErrorClasses and Images."/>
+            </tooltip>
+        </Button>
+        <Button fx:id="nodeButtonResetErrors" onAction="#onResetErrorsAction">
+            <graphic>
+                <ImageView>
+                    <image>
+                        <Image url="@delete.png"/>
+                    </image>
+                </ImageView>
+            </graphic>
+            <tooltip>
+                <Tooltip text="Resets the whole Error List physically. CAUTION!"/>
+            </tooltip>
+        </Button>
+
+        <Separator orientation="VERTICAL"/>
+
+        <ChoiceBox id="ChoiceBoxErrorGenerator" fx:id="nodeChoiceBoxErrorGenerator"
+                   minWidth="50.0" prefWidth="100.0"/>
+
+        <Label labelFor="$nodeIntegerFieldErrorCount" text="#"/>
+        <IntegerField fx:id="nodeIntegerFieldErrorCount"
+                      alignment="CENTER_RIGHT" prefWidth="40.0" text="1"/>
+
+    </children>
+    <padding>
+        <Insets bottom="10.0"/>
+    </padding>
+
+</FlowPane>
+

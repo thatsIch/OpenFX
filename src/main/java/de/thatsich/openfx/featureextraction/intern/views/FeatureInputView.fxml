@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import de.thatsich.core.javafx.component.IntegerField?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.CheckBox?>
+
+
+<FlowPane xmlns:fx="http://javafx.com/fxml/1" hgap="5.0" prefWidth="-1.0"
+          xmlns="http://javafx.com/javafx/8"
+          fx:controller="de.thatsich.openfx.featureextraction.intern.control.FeatureInputPresenter">
+
+    <children>
+        <Button fx:id="nodeButtonExtractFeatureVector" onAction="#onExtractAction">
+            <graphic>
+                <ImageView>
+                    <image>
+                        <Image url="@add.png"/>
+                    </image>
+                </ImageView>
+            </graphic>
+            <tooltip>
+                <Tooltip text="Generate Error(s) and adds them to the List."/>
+            </tooltip>
+        </Button>
+        <Button fx:id="nodeButtonRemoveFeatureVector" onAction="#onRemoveAction">
+            <graphic>
+                <ImageView>
+                    <image>
+                        <Image url="@remove.png"/>
+                    </image>
+                </ImageView>
+            </graphic>
+            <tooltip>
+                <Tooltip text="Removes an Error from the List."/>
+            </tooltip>
+        </Button>
+        <Button fx:id="nodeButtonResetFeatureVectorList" onAction="#onResetAction">
+            <graphic>
+                <ImageView>
+                    <image>
+                        <Image url="@delete.png"/>
+                    </image>
+                </ImageView>
+            </graphic>
+            <tooltip>
+                <Tooltip text="Resets the whole Error List physically. CAUTION!"/>
+            </tooltip>
+        </Button>
+
+        <Separator orientation="VERTICAL"/>
+
+        <ChoiceBox id="ChoiceBoxFeatureExtractor" fx:id="nodeChoiceBoxFeatureExtractor"
+                   prefWidth="200.0"/>
+
+        <Label labelFor="$nodeIntegerFieldFrameSize" text="TileSize (PX x PX)"/>
+        <IntegerField fx:id="nodeIntegerFieldFrameSize"
+                      alignment="CENTER_RIGHT" prefWidth="40.0" text="1"/>
+
+        <Separator orientation="VERTICAL"/>
+
+        <CheckBox fx:id="nodeCheckBoxSmooth" text="Smooth"/>
+        <CheckBox fx:id="nodeCheckBoxThreshold" text="Threshold"/>
+        <CheckBox fx:id="nodeCheckBoxDenoising" text="Denoising"/>
+
+    </children>
+    <padding>
+        <Insets bottom="10.0"/>
+    </padding>
+
+</FlowPane>
