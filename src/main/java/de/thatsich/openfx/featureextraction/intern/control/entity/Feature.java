@@ -1,6 +1,6 @@
 package de.thatsich.openfx.featureextraction.intern.control.entity;
 
-import de.thatsich.openfx.featureextraction.api.control.IFeature;
+import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
 
 import java.nio.file.Path;
 import java.util.List;

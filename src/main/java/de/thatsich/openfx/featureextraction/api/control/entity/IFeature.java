@@ -1,4 +1,4 @@
-package de.thatsich.openfx.featureextraction.api.control;
+package de.thatsich.openfx.featureextraction.api.control.entity;
 
 import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVector;
 

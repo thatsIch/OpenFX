@@ -1,6 +1,6 @@
 package de.thatsich.openfx.featureextraction.intern.control.extractor;
 
-import de.thatsich.openfx.featureextraction.api.control.IFeatureExtractor;
+import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureExtractor;
 import de.thatsich.openfx.featureextraction.intern.control.extractor.core.AFeatureExtractor;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;

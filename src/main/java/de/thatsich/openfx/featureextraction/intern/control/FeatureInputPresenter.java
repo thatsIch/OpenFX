@@ -5,7 +5,7 @@ import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.javafx.CommandExecutor;
 import de.thatsich.core.javafx.component.IntegerField;
 import de.thatsich.openfx.errorgeneration.api.model.IErrorEntries;
-import de.thatsich.openfx.featureextraction.api.control.IFeatureExtractor;
+import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureExtractor;
 import de.thatsich.openfx.featureextraction.api.model.IFeatureExtractors;
 import de.thatsich.openfx.featureextraction.api.model.IFeatureState;
 import de.thatsich.openfx.featureextraction.api.model.IFeatureVectorSets;

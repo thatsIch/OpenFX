@@ -1,7 +1,7 @@
 package de.thatsich.openfx.featureextraction.intern.control.extractor.core;
 
-import de.thatsich.openfx.featureextraction.api.control.IFeatureExtractor;
 import de.thatsich.core.Log;
+import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureExtractor;
 
 
 /**

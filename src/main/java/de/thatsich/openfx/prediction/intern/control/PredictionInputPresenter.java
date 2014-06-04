@@ -1,25 +1,25 @@
 package de.thatsich.openfx.prediction.intern.control;
 
 import com.google.inject.Inject;
+import de.thatsich.core.javafx.AFXMLPresenter;
+import de.thatsich.core.javafx.CommandExecutor;
 import de.thatsich.openfx.classification.api.control.IBinaryClassification;
 import de.thatsich.openfx.classification.api.model.IBinaryClassifications;
-import de.thatsich.openfx.errorgeneration.api.model.IErrorGenerators;
 import de.thatsich.openfx.errorgeneration.api.control.IErrorGenerator;
+import de.thatsich.openfx.errorgeneration.api.model.IErrorGenerators;
+import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureExtractor;
 import de.thatsich.openfx.featureextraction.api.model.IFeatureExtractors;
-import de.thatsich.openfx.featureextraction.api.control.IFeatureExtractor;
-import de.thatsich.openfx.imageprocessing.api.model.IImageEntries;
 import de.thatsich.openfx.imageprocessing.api.control.ImageEntry;
+import de.thatsich.openfx.imageprocessing.api.model.IImageEntries;
+import de.thatsich.openfx.prediction.api.control.BinaryPrediction;
 import de.thatsich.openfx.prediction.api.model.IBinaryPredictions;
 import de.thatsich.openfx.prediction.api.model.IPredictionState;
-import de.thatsich.openfx.prediction.api.control.BinaryPrediction;
 import de.thatsich.openfx.prediction.intern.control.command.PredictionInitCommander;
 import de.thatsich.openfx.prediction.intern.control.command.commands.DeleteBinaryPredictionCommand;
 import de.thatsich.openfx.prediction.intern.control.command.commands.TestBinaryClassificationCommand;
-import de.thatsich.openfx.prediction.intern.control.provider.IPredictionCommandProvider;
 import de.thatsich.openfx.prediction.intern.control.command.handler.DeleteBinaryPredictionSucceededHandler;
 import de.thatsich.openfx.prediction.intern.control.command.handler.PredictBinaryClassificationSucceededHandler;
-import de.thatsich.core.javafx.AFXMLPresenter;
-import de.thatsich.core.javafx.CommandExecutor;
+import de.thatsich.openfx.prediction.intern.control.provider.IPredictionCommandProvider;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 

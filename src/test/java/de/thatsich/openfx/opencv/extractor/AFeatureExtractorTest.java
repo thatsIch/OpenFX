@@ -1,7 +1,7 @@
 package de.thatsich.openfx.opencv.extractor;
 
-import de.thatsich.openfx.featureextraction.api.control.IFeatureExtractor;
 import de.thatsich.core.opencv.OpenCVLoader;
+import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureExtractor;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;

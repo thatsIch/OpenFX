@@ -3,7 +3,7 @@ package de.thatsich.openfx.featureextraction.intern.control.command;
 import com.google.inject.assistedinject.Assisted;
 import de.thatsich.core.guice.ICommandProvider;
 import de.thatsich.openfx.errorgeneration.intern.control.error.core.ErrorEntry;
-import de.thatsich.openfx.featureextraction.api.control.IFeatureExtractor;
+import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureExtractor;
 import de.thatsich.openfx.featureextraction.intern.control.command.commands.DeleteFeatureVectorSetCommand;
 import de.thatsich.openfx.featureextraction.intern.control.command.commands.ExtractFeatureVectorSetCommand;
 import de.thatsich.openfx.featureextraction.intern.control.command.commands.SetLastFeatureExtractorIndexCommand;

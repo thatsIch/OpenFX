@@ -5,7 +5,7 @@ import com.google.inject.assistedinject.Assisted;
 import de.thatsich.core.javafx.ACommand;
 import de.thatsich.core.opencv.Images;
 import de.thatsich.openfx.errorgeneration.intern.control.error.core.ErrorEntry;
-import de.thatsich.openfx.featureextraction.api.control.IFeatureExtractor;
+import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureExtractor;
 import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVector;
 import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVectorSet;
 import de.thatsich.openfx.featureextraction.intern.service.CSVService;

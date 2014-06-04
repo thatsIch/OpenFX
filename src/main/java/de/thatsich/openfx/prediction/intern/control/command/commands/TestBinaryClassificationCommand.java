@@ -2,14 +2,14 @@ package de.thatsich.openfx.prediction.intern.control.command.commands;
 
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
+import de.thatsich.core.javafx.ACommand;
+import de.thatsich.core.opencv.Images;
 import de.thatsich.openfx.classification.api.control.IBinaryClassification;
 import de.thatsich.openfx.errorgeneration.api.control.IErrorGenerator;
-import de.thatsich.openfx.featureextraction.api.control.IFeatureExtractor;
+import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureExtractor;
 import de.thatsich.openfx.imageprocessing.api.control.ImageEntry;
 import de.thatsich.openfx.prediction.api.control.BinaryPrediction;
 import de.thatsich.openfx.prediction.intern.control.command.service.BinaryPredictionFileStorageService;
-import de.thatsich.core.javafx.ACommand;
-import de.thatsich.core.opencv.Images;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;

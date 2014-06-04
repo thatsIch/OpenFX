@@ -1,4 +1,4 @@
-package de.thatsich.openfx.featureextraction.api.control;
+package de.thatsich.openfx.featureextraction.api.control.entity;
 
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfFloat;

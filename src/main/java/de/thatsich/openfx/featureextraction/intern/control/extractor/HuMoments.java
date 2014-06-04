@@ -1,7 +1,7 @@
 package de.thatsich.openfx.featureextraction.intern.control.extractor;
 
 import com.google.inject.Singleton;
-import de.thatsich.openfx.featureextraction.api.control.IFeatureExtractor;
+import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureExtractor;
 import de.thatsich.openfx.featureextraction.intern.control.extractor.core.AFeatureExtractor;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;

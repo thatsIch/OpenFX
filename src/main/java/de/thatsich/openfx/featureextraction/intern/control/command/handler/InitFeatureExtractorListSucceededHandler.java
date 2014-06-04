@@ -1,9 +1,9 @@
 package de.thatsich.openfx.featureextraction.intern.control.command.handler;
 
 import com.google.inject.Inject;
-import de.thatsich.openfx.featureextraction.api.model.IFeatureExtractors;
-import de.thatsich.openfx.featureextraction.api.control.IFeatureExtractor;
 import de.thatsich.core.javafx.ACommandHandler;
+import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureExtractor;
+import de.thatsich.openfx.featureextraction.api.model.IFeatureExtractors;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class InitFeatureExtractorListSucceededHandler extends ACommandHandler<List<IFeatureExtractor>>
 {
-	@Inject	private IFeatureExtractors featureExtractors;
+	@Inject private IFeatureExtractors featureExtractors;
 
 	@Override
 	public void handle(List<IFeatureExtractor> list)
