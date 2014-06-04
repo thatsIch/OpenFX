@@ -2,12 +2,12 @@ package de.thatsich.openfx.featureextraction.intern.control;
 
 import com.google.inject.Inject;
 import de.thatsich.core.javafx.AFXMLPresenter;
-import de.thatsich.openfx.featureextraction.api.model.IFeatureVectorSets;
+import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
+import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureVector;
+import de.thatsich.openfx.featureextraction.api.model.IFeatures;
 import de.thatsich.openfx.featureextraction.intern.control.command.FeatureInitCommander;
 import de.thatsich.openfx.featureextraction.intern.control.command.IFeatureCommandProvider;
 import de.thatsich.openfx.featureextraction.intern.control.command.commands.SetLastFeatureVectorIndexCommand;
-import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVector;
-import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVectorSet;
 import de.thatsich.openfx.featureextraction.intern.view.tree.FeatureVectorSetTreeItemAdapter;
 import de.thatsich.openfx.featureextraction.intern.view.tree.FeatureVectorTreeItemAdapter;
 import de.thatsich.openfx.featureextraction.intern.view.tree.IFeatureSpaceTreeItemAdapter;
@@ -22,7 +22,7 @@ import java.util.List;
 public class FeatureListPresenter extends AFXMLPresenter
 {
 	@Inject private FeatureInitCommander initCommander;
-	@Inject private IFeatureVectorSets featureVectors;
+	@Inject private IFeatures features;
 	@Inject private IFeatureCommandProvider commander;
 
 	// Nodes
@@ -56,55 +56,55 @@ public class FeatureListPresenter extends AFXMLPresenter
 			public boolean isSet() { return false; }
 
 			@Override
-			public FeatureVector getVector() { return null; }
+			public IFeatureVector getVector() { return null; }
 
 			@Override
-			public FeatureVectorSet getSet() { return null; }
+			public IFeature getFeature() { return null; }
 		});
 		this.nodeTreeViewRoot.setExpanded(true);
-		this.nodeTreeViewFeatureVectorSetList.setRoot(nodeTreeViewRoot);
+		this.nodeTreeViewFeatureVectorSetList.setRoot(this.nodeTreeViewRoot);
 	}
 
 	private void bindTreeViewModel()
 	{
-		this.featureVectors.list().addListener((ListChangeListener<FeatureVectorSet>) paramChange -> {
+		this.features.list().addListener((ListChangeListener<IFeature>) paramChange -> {
 			while (paramChange.next())
 			{
 				if (paramChange.wasAdded())
 				{
-					log.info("Items were added to TreeView.");
+					this.log.info("Items were added to TreeView.");
 
-					final List<? extends FeatureVectorSet> featureVectorSetList = paramChange.getAddedSubList();
-					log.info("List Size: " + featureVectorSetList.size());
+					final List<? extends IFeature> featureVectorSetList = paramChange.getAddedSubList();
+					this.log.info("List Size: " + featureVectorSetList.size());
 
-					for (FeatureVectorSet set : featureVectorSetList)
+					for (IFeature feature : featureVectorSetList)
 					{
-						log.info(set.toString());
-						final List<FeatureVector> featureVectorList = set.featureVectors();
-						final TreeItem<IFeatureSpaceTreeItemAdapter> setTreeItem = new TreeItem<>(new FeatureVectorSetTreeItemAdapter(set));
+						this.log.info(feature.toString());
+						final List<IFeatureVector> featureVectorList = feature.getFeatureVectors();
+						final TreeItem<IFeatureSpaceTreeItemAdapter> setTreeItem = new TreeItem<>(new FeatureVectorSetTreeItemAdapter(feature));
 						setTreeItem.setExpanded(true);
 
-						for (FeatureVector vector : featureVectorList)
+						for (IFeatureVector vector : featureVectorList)
 						{
 							setTreeItem.getChildren().add(new TreeItem<>(new FeatureVectorTreeItemAdapter(vector)));
 						}
 
-						nodeTreeViewRoot.getChildren().add(setTreeItem);
-						nodeTreeViewFeatureVectorSetList.getSelectionModel().select(setTreeItem);
+						this.nodeTreeViewRoot.getChildren().add(setTreeItem);
+						this.nodeTreeViewFeatureVectorSetList.getSelectionModel().select(setTreeItem);
 					}
 				}
 				else if (paramChange.wasRemoved())
 				{
-					log.info("Items were removed from TreeView.");
+					this.log.info("Items were removed from TreeView.");
 
-					final List<? extends FeatureVectorSet> removedSubList = paramChange.getRemoved();
+					final List<? extends IFeature> removedSubList = paramChange.getRemoved();
 					final List<TreeItem<IFeatureSpaceTreeItemAdapter>> removing = FXCollections.observableArrayList();
 
-					for (TreeItem<IFeatureSpaceTreeItemAdapter> child : nodeTreeViewRoot.getChildren())
+					for (TreeItem<IFeatureSpaceTreeItemAdapter> child : this.nodeTreeViewRoot.getChildren())
 					{
-						for (FeatureVectorSet set : removedSubList)
+						for (IFeature set : removedSubList)
 						{
-							final FeatureVectorSet childSet = child.getValue().getSet();
+							final IFeature childSet = child.getValue().getFeature();
 
 							if (set.equals(childSet))
 							{
@@ -115,12 +115,12 @@ public class FeatureListPresenter extends AFXMLPresenter
 
 					for (TreeItem<IFeatureSpaceTreeItemAdapter> removeChild : removing)
 					{
-						nodeTreeViewRoot.getChildren().remove(removeChild);
+						this.nodeTreeViewRoot.getChildren().remove(removeChild);
 					}
 
-					if (!nodeTreeViewRoot.getChildren().isEmpty())
+					if (!this.nodeTreeViewRoot.getChildren().isEmpty())
 					{
-						nodeTreeViewFeatureVectorSetList.getSelectionModel().select(0);
+						this.nodeTreeViewFeatureVectorSetList.getSelectionModel().select(0);
 						return;
 					}
 				}
@@ -131,7 +131,7 @@ public class FeatureListPresenter extends AFXMLPresenter
 
 	private void bindTreeViewSelection()
 	{
-		this.featureVectors.index().addListener((paramObservableValue, paramT1, paramT2) -> nodeTreeViewFeatureVectorSetList.getSelectionModel().select(paramT2.intValue()));
+		this.features.index().addListener((paramObservableValue, paramT1, paramT2) -> this.nodeTreeViewFeatureVectorSetList.getSelectionModel().select(paramT2.intValue()));
 
 		this.nodeTreeViewFeatureVectorSetList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
 			if (newValue == null)
@@ -143,8 +143,8 @@ public class FeatureListPresenter extends AFXMLPresenter
 
 			if (item.isSet())
 			{
-				featureVectors.selectedSet().set(item.getSet());
-				featureVectors.selected().set(null);
+				this.features.selectedFeature().set(item.getFeature());
+				this.features.selectedFeatureVector().set(null);
 			}
 			else if (item.isVector())
 			{
@@ -154,19 +154,19 @@ public class FeatureListPresenter extends AFXMLPresenter
 					throw new IllegalStateException("Superset of a FeatureVector should be a FeatureVectorSet.");
 				}
 
-				featureVectors.selectedSet().set(set.getSet());
-				featureVectors.selected().set(item.getVector());
+				this.features.selectedFeature().set(set.getFeature());
+				this.features.selectedFeatureVector().set(item.getVector());
 			}
 
 			// is root or something else
 			else
 			{
-				featureVectors.selectedSet().set(null);
-				featureVectors.selected().set(null);
+				this.features.selectedFeature().set(null);
+				this.features.selectedFeatureVector().set(null);
 			}
 
-			final int selectedIndex = nodeTreeViewFeatureVectorSetList.getSelectionModel().getSelectedIndex();
-			final SetLastFeatureVectorIndexCommand command = commander.createSetLastFeatureVectorIndexCommand(selectedIndex);
+			final int selectedIndex = this.nodeTreeViewFeatureVectorSetList.getSelectionModel().getSelectedIndex();
+			final SetLastFeatureVectorIndexCommand command = this.commander.createSetLastFeatureVectorIndexCommand(selectedIndex);
 			command.start();
 		});
 	}

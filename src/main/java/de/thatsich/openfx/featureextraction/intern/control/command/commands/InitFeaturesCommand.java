@@ -4,8 +4,10 @@ import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import com.sun.org.apache.xpath.internal.functions.WrongNumberArgsException;
 import de.thatsich.core.javafx.ACommand;
+import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
+import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureVector;
+import de.thatsich.openfx.featureextraction.intern.control.entity.Feature;
 import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVector;
-import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVectorSet;
 import de.thatsich.openfx.featureextraction.intern.service.CSVService;
 import javafx.collections.FXCollections;
 
@@ -17,30 +19,30 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InitFeatureVectorSetListCommand extends ACommand<List<FeatureVectorSet>>
+public class InitFeaturesCommand extends ACommand<List<IFeature>>
 {
 
 	// Fields
-	private final Path featureVectorFolderPath;
+	private final Path path;
 
 	// Injects
 	@Inject
 	private CSVService csv;
 
 	@Inject
-	protected InitFeatureVectorSetListCommand(@Assisted Path featureVectorFolderPath)
+	protected InitFeaturesCommand(@Assisted Path path)
 	{
-		this.featureVectorFolderPath = featureVectorFolderPath;
+		this.path = path;
 	}
 
 	@Override
-	protected List<FeatureVectorSet> call() throws Exception
+	protected List<IFeature> call() throws Exception
 	{
-		final List<FeatureVectorSet> featureVectorSetList = new ArrayList<>();
+		final List<IFeature> features = new ArrayList<>();
 
-		if (Files.notExists(this.featureVectorFolderPath) || !Files.isDirectory(this.featureVectorFolderPath))
+		if (Files.notExists(this.path) || !Files.isDirectory(this.path))
 		{
-			Files.createDirectories(this.featureVectorFolderPath);
+			Files.createDirectories(this.path);
 		}
 
 		final String GLOB_PATTERN = "*.{csv}";
@@ -48,7 +50,7 @@ public class InitFeatureVectorSetListCommand extends ACommand<List<FeatureVector
 		// traverse whole directory and search for csv files
 		// try to open them
 		// and read each csv file
-		try (DirectoryStream<Path> stream = Files.newDirectoryStream(this.featureVectorFolderPath, GLOB_PATTERN))
+		try (DirectoryStream<Path> stream = Files.newDirectoryStream(this.path, GLOB_PATTERN))
 		{
 			for (Path child : stream)
 			{
@@ -62,16 +64,15 @@ public class InitFeatureVectorSetListCommand extends ACommand<List<FeatureVector
 				{
 					throw new WrongNumberArgsException("Expected 4 encoded information but found " + fileNameSplit.length);
 				}
-				final List<List<Float>> floatValues = csv.read(child);
+				final List<List<Float>> floatValues = this.csv.read(child);
 				final String className = fileNameSplit[0];
 				final String extractorName = fileNameSplit[1];
 				final int frameSize = Integer.parseInt(fileNameSplit[2]);
-				final String id = fileNameSplit[3];
 
 				// read each line
 				// and store them as a single FeatureVector
 				// in the end write all information into the FeatureVectorSet
-				final List<FeatureVector> featureVectorList = FXCollections.observableArrayList();
+				final List<IFeatureVector> featureVectorList = FXCollections.observableArrayList();
 				for (List<Float> vector : floatValues)
 				{
 					final Float label = vector.get(vector.size() - 1);
@@ -83,17 +84,17 @@ public class InitFeatureVectorSetListCommand extends ACommand<List<FeatureVector
 
 				floatValues.clear();
 
-				featureVectorSetList.add(new FeatureVectorSet(child, className, extractorName, frameSize, id, featureVectorList));
-				log.info("Added " + child + " with Attribute " + Files.probeContentType(child));
+				features.add(new Feature(child, className, extractorName, frameSize, featureVectorList));
+				this.log.info("Added " + child + " with Attribute " + Files.probeContentType(child));
 			}
 		}
 		catch (IOException | DirectoryIteratorException e)
 		{
 			e.printStackTrace();
 		}
-		log.info("All FeatureVectors added.");
+		this.log.info("All FeatureVectors added.");
 
-		return featureVectorSetList;
+		return features;
 	}
 
 }

@@ -1,7 +1,7 @@
 package de.thatsich.openfx.featureextraction.intern.view.tree;
 
-import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVector;
-import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVectorSet;
+import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
+import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureVector;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
@@ -16,14 +16,14 @@ import javafx.beans.property.SimpleObjectProperty;
 public class FeatureVectorTreeItemAdapter implements IFeatureSpaceTreeItemAdapter
 {
 	// Properties
-	private final ObjectProperty<FeatureVector> featureVector = new SimpleObjectProperty<>();
+	private final ObjectProperty<IFeatureVector> featureVector = new SimpleObjectProperty<>();
 
 	/**
 	 * CTOR
 	 *
 	 * @param vector Vector
 	 */
-	public FeatureVectorTreeItemAdapter(FeatureVector vector)
+	public FeatureVectorTreeItemAdapter(IFeatureVector vector)
 	{
 		this.featureVector.set(vector);
 	}
@@ -55,13 +55,13 @@ public class FeatureVectorTreeItemAdapter implements IFeatureSpaceTreeItemAdapte
 	}
 
 	@Override
-	public FeatureVectorSet getSet()
+	public IFeature getFeature()
 	{
 		return null;
 	}
 
 	@Override
-	public FeatureVector getVector()
+	public IFeatureVector getVector()
 	{
 		return this.featureVector.get();
 	}

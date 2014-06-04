@@ -2,9 +2,9 @@ package de.thatsich.openfx.network.intern.control.cnbc.nbc;
 
 import de.thatsich.openfx.classification.api.control.IBinaryClassification;
 import de.thatsich.openfx.classification.intern.control.classifier.core.IBinaryClassifier;
-import de.thatsich.openfx.featureextraction.api.model.IFeatureVectorSets;
+import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
+import de.thatsich.openfx.featureextraction.api.model.IFeatures;
 import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVector;
-import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVectorSet;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -30,13 +30,13 @@ public class NetworkBinaryClassifiers implements INBC
 		this.binaryClassifiers.add(bc);
 	}
 
-	public void train(List<IFeatureVectorSets> sets)
+	public void train(List<IFeatures> sets)
 	{
 		this.trainBinaryClassifiers(sets);
 		this.trainFuser();
 	}
 
-	private List<IBinaryClassification> trainBinaryClassifiers(List<IFeatureVectorSets> featureVectorSets)
+	private List<IBinaryClassification> trainBinaryClassifiers(List<IFeatures> featureVectorSets)
 	{
 		final List<IBinaryClassification> classifications = new LinkedList<>();
 
@@ -54,7 +54,7 @@ public class NetworkBinaryClassifiers implements INBC
 		this.fuser.train();
 	}
 
-	public void addNewFeatureVectorSet(final FeatureVectorSet fvs) {}
+	public void addNewFeatureVectorSet(final IFeature fvs) {}
 
 	public void addNewFeature(final FeatureVector fv)
 	{

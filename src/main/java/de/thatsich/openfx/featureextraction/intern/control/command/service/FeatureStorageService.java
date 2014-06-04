@@ -1,6 +1,8 @@
 package de.thatsich.openfx.featureextraction.intern.control.command.service;
 
 import de.thatsich.core.IFileStorageService;
+import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
+import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureVector;
 import de.thatsich.openfx.featureextraction.intern.control.entity.Feature;
 import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVector;
 
@@ -19,17 +21,17 @@ import java.util.stream.Collectors;
  * @author thatsIch
  * @since 04.06.2014.
  */
-public class FeatureStorageService implements IFileStorageService<Feature>
+public class FeatureStorageService implements IFileStorageService<IFeature>
 {
 	@Override
-	public void save(final Feature elem) throws IOException
+	public void save(final IFeature elem) throws IOException
 	{
 		final BufferedWriter writer = Files.newBufferedWriter(elem.getPath(), StandardCharsets.US_ASCII);
-		final List<FeatureVector> featureVectors = elem.getFeatureVectors();
+		final List<IFeatureVector> featureVectors = elem.getFeatureVectors();
 
 		for (int fvIndex = 0; fvIndex < featureVectors.size(); fvIndex++)
 		{
-			final FeatureVector fv = featureVectors.get(fvIndex);
+			final IFeatureVector fv = featureVectors.get(fvIndex);
 			final List<Float> floats = fv.vector();
 			for (int floatIndex = 0; floatIndex < floats.size(); floatIndex++)
 			{
@@ -50,7 +52,7 @@ public class FeatureStorageService implements IFileStorageService<Feature>
 	}
 
 	@Override
-	public Feature load(final Path path) throws IOException
+	public IFeature load(final Path path) throws IOException
 	{
 		// extract file information
 		final String fileName = path.getFileName().toString();
@@ -61,7 +63,7 @@ public class FeatureStorageService implements IFileStorageService<Feature>
 		final String extractorName = fileNameSplit[1];
 		final int frameSize = Integer.parseInt(fileNameSplit[2]);
 
-		final List<FeatureVector> featureVectors = new LinkedList<>();
+		final List<IFeatureVector> featureVectors = new LinkedList<>();
 		final BufferedReader reader = Files.newBufferedReader(path, StandardCharsets.US_ASCII);
 
 		String stringRow;

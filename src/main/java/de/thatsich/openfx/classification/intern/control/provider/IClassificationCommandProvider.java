@@ -7,14 +7,14 @@ import de.thatsich.openfx.classification.intern.control.command.commands.RemoveB
 import de.thatsich.openfx.classification.intern.control.command.commands.SetLastBinaryClassificationIndexCommand;
 import de.thatsich.openfx.classification.intern.control.command.commands.SetLastBinaryClassifierIndexCommand;
 import de.thatsich.openfx.classification.intern.control.command.commands.TrainBinaryClassifierCommand;
-import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVectorSet;
+import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
 
 import java.nio.file.Path;
 import java.util.List;
 
 public interface IClassificationCommandProvider extends ICommandProvider
 {
-	public TrainBinaryClassifierCommand createTrainBinaryClassifierCommand(Path binaryClassifierFolderPath, IBinaryClassifier classifier, FeatureVectorSet selected, List<FeatureVectorSet> all);
+	public TrainBinaryClassifierCommand createTrainBinaryClassifierCommand(Path binaryClassifierFolderPath, IBinaryClassifier classifier, IFeature selected, List<IFeature> all);
 
 	public RemoveBinaryClassificationCommand createRemoveBinaryClassificationCommand(IBinaryClassification binaryClassification);
 

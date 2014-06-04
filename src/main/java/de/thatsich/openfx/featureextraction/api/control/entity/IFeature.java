@@ -1,7 +1,5 @@
 package de.thatsich.openfx.featureextraction.api.control.entity;
 
-import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVector;
-
 import java.nio.file.Path;
 import java.util.List;
 
@@ -19,5 +17,5 @@ public interface IFeature
 
 	int getFrameSize();
 
-	List<FeatureVector> getFeatureVectors();
+	List<IFeatureVector> getFeatureVectors();
 }

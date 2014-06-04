@@ -5,9 +5,11 @@ import com.google.inject.assistedinject.Assisted;
 import de.thatsich.core.javafx.ACommand;
 import de.thatsich.core.opencv.Images;
 import de.thatsich.openfx.errorgeneration.intern.control.error.core.ErrorEntry;
+import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureExtractor;
+import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureVector;
+import de.thatsich.openfx.featureextraction.intern.control.entity.Feature;
 import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVector;
-import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVectorSet;
 import de.thatsich.openfx.featureextraction.intern.service.CSVService;
 import javafx.collections.FXCollections;
 import org.opencv.core.Core;
@@ -21,7 +23,7 @@ import java.util.List;
 import java.util.UUID;
 
 
-public class ExtractFeatureVectorSetCommand extends ACommand<FeatureVectorSet>
+public class ExtractFeatureCommand extends ACommand<IFeature>
 {
 	// Properties
 	private final Path featureInputFolderPath;
@@ -33,11 +35,10 @@ public class ExtractFeatureVectorSetCommand extends ACommand<FeatureVectorSet>
 	private final boolean denoising;
 
 	// Injects
-	@Inject
-	private CSVService csvService;
+	@Inject private CSVService csvService;
 
 	@Inject
-	public ExtractFeatureVectorSetCommand(@Assisted Path folderPath, @Assisted ErrorEntry errorEntry, @Assisted IFeatureExtractor extractor, @Assisted int frameSize, @Assisted("smooth") boolean smooth, @Assisted("threshold") boolean threshold, @Assisted("denoising") boolean denoising)
+	public ExtractFeatureCommand(@Assisted Path folderPath, @Assisted ErrorEntry errorEntry, @Assisted IFeatureExtractor extractor, @Assisted int frameSize, @Assisted("smooth") boolean smooth, @Assisted("threshold") boolean threshold, @Assisted("denoising") boolean denoising)
 	{
 		this.featureInputFolderPath = folderPath;
 		this.errorEntry = errorEntry;
@@ -49,7 +50,7 @@ public class ExtractFeatureVectorSetCommand extends ACommand<FeatureVectorSet>
 	}
 
 	@Override
-	protected FeatureVectorSet call() throws Exception
+	protected IFeature call() throws Exception
 	{
 		final String className = this.errorEntry.getErrorClassProperty().get();
 		final String extractorName = this.featureExtractor.getName();
@@ -69,7 +70,7 @@ public class ExtractFeatureVectorSetCommand extends ACommand<FeatureVectorSet>
 			Photo.fastNlMeansDenoising(originalWithErrorMat, originalWithErrorMat);
 		}
 
-		final List<FeatureVector> featureVectorList = FXCollections.observableArrayList();
+		final List<IFeatureVector> featureVectorList = FXCollections.observableArrayList();
 		final List<List<Float>> csvResult = FXCollections.observableArrayList();
 		final Mat[][] originalErrorSplit = Images.split(originalWithErrorMat, this.frameSize, this.frameSize);
 		final Mat[][] errorSplit = Images.split(this.errorEntry.getErrorMat(), this.frameSize, this.frameSize);
@@ -114,6 +115,6 @@ public class ExtractFeatureVectorSetCommand extends ACommand<FeatureVectorSet>
 		this.csvService.write(filePath, csvResult);
 
 		this.log.info("Extracted FeatureVectors: " + featureVectorList.size());
-		return new FeatureVectorSet(filePath, className, extractorName, this.frameSize, id, featureVectorList);
+		return new Feature(filePath, className, extractorName, this.frameSize, featureVectorList);
 	}
 }

@@ -1,7 +1,7 @@
 package de.thatsich.openfx.preprocessing.intern.control.command.provider;
 
 import de.thatsich.core.guice.ICommandProvider;
-import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVectorSet;
+import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
 import de.thatsich.openfx.preprocessing.api.control.IPreProcessing;
 import de.thatsich.openfx.preprocessing.intern.control.command.commands.RemovePreProcessingCommand;
 import de.thatsich.openfx.preprocessing.intern.control.command.commands.SetLastPreProcessingIndexCommand;
@@ -15,7 +15,7 @@ import java.util.List;
 
 public interface IPreProcessingCommandProvider extends ICommandProvider
 {
-	TrainPreProcessorCommand createTrainPreProcessorCommand(Path preProcessingFolderPath, IPreProcessor selectedPreProcessor, FeatureVectorSet selectedFeatureVectorSet, List<FeatureVectorSet> featureVectorSetList);
+	TrainPreProcessorCommand createTrainPreProcessorCommand(Path preProcessingFolderPath, IPreProcessor selectedPreProcessor, IFeature selectedFeatureVectorSet, List<IFeature> featureVectorSetList);
 
 	RemovePreProcessingCommand createRemovePreProcessingCommand(IPreProcessing pp);
 

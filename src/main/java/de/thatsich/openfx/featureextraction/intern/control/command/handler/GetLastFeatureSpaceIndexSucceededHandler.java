@@ -1,8 +1,8 @@
 package de.thatsich.openfx.featureextraction.intern.control.command.handler;
 
 import com.google.inject.Inject;
-import de.thatsich.openfx.featureextraction.api.model.IFeatureVectorSets;
 import de.thatsich.core.javafx.ACommandHandler;
+import de.thatsich.openfx.featureextraction.api.model.IFeatures;
 
 /**
  * Handler for what should happen if the Command was successfull
@@ -12,7 +12,7 @@ import de.thatsich.core.javafx.ACommandHandler;
  */
 public class GetLastFeatureSpaceIndexSucceededHandler extends ACommandHandler<Integer>
 {
-	@Inject	private IFeatureVectorSets featureVectors;
+	@Inject private IFeatures featureVectors;
 
 	@Override
 	public void handle(Integer value)

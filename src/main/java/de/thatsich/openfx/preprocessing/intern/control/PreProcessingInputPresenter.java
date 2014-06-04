@@ -3,8 +3,8 @@ package de.thatsich.openfx.preprocessing.intern.control;
 import com.google.inject.Inject;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.javafx.CommandExecutor;
-import de.thatsich.openfx.featureextraction.api.model.IFeatureVectorSets;
-import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVectorSet;
+import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
+import de.thatsich.openfx.featureextraction.api.model.IFeatures;
 import de.thatsich.openfx.preprocessing.api.control.IPreProcessing;
 import de.thatsich.openfx.preprocessing.api.model.IPreProcessingState;
 import de.thatsich.openfx.preprocessing.api.model.IPreProcessings;
@@ -35,7 +35,7 @@ public class PreProcessingInputPresenter extends AFXMLPresenter
 	@Inject IPreProcessors preProcessors;
 	@Inject IPreProcessings preProcessings;
 	@Inject IPreProcessingState state;
-	@Inject IFeatureVectorSets featureVectors;
+	@Inject IFeatures features;
 
 	// Nodes
 	@FXML Button nodeButtonTrainPreProcessor;
@@ -81,7 +81,7 @@ public class PreProcessingInputPresenter extends AFXMLPresenter
 		this.log.info("Bound " + this.nodeChoiceBoxPreProcessor + " to Model.");
 
 		this.nodeChoiceBoxPreProcessor.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
-			final SetLastPreProcessorIndexCommand lastCommand = commander.createSetLastPreProcessorIndexCommand(newValue.intValue());
+			final SetLastPreProcessorIndexCommand lastCommand = this.commander.createSetLastPreProcessorIndexCommand(newValue.intValue());
 			lastCommand.start();
 		});
 		this.log.info("Bound " + this.nodeChoiceBoxPreProcessor + " to Config.");
@@ -90,7 +90,7 @@ public class PreProcessingInputPresenter extends AFXMLPresenter
 
 	private void bindButtons()
 	{
-		this.nodeButtonTrainPreProcessor.disableProperty().bind(this.featureVectors.selectedSet().isNull());
+		this.nodeButtonTrainPreProcessor.disableProperty().bind(this.features.selectedFeature().isNull());
 		this.nodeButtonRemovePreProcessing.disableProperty().bind(this.preProcessings.getSelectedPreProcessingProperty().isNull());
 		this.nodeButtonResetPreProcessingList.disableProperty().bind(this.preProcessings.getPreProcessingListProperty().emptyProperty());
 		this.log.info("Bound Buttons Disablility.");
@@ -104,8 +104,8 @@ public class PreProcessingInputPresenter extends AFXMLPresenter
 	{
 		final Path preProcessingFolderPath = this.state.getPreProcessingFolderPath();
 		final IPreProcessor selectedPreProcessor = this.preProcessors.getSelectedPreProcessor();
-		final List<FeatureVectorSet> featureVectorSetList = this.featureVectors.list();
-		final FeatureVectorSet selectedFeatureVectorSet = this.featureVectors.selectedSet().get();
+		final List<IFeature> featureVectorSetList = this.features.list();
+		final IFeature selectedFeatureVectorSet = this.features.selectedFeature().get();
 
 		final TrainPreProcessorCommand command = this.commander.createTrainPreProcessorCommand(preProcessingFolderPath, selectedPreProcessor, selectedFeatureVectorSet, featureVectorSetList);
 		command.setOnSucceededCommandHandler(TrainPreProcessorSucceededHandler.class);

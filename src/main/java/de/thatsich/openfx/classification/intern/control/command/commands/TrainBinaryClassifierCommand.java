@@ -6,8 +6,8 @@ import de.thatsich.core.javafx.ACommand;
 import de.thatsich.openfx.classification.api.control.IBinaryClassification;
 import de.thatsich.openfx.classification.intern.control.classifier.core.BinaryClassifierConfiguration;
 import de.thatsich.openfx.classification.intern.control.classifier.core.IBinaryClassifier;
-import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVector;
-import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVectorSet;
+import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
+import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureVector;
 import org.opencv.core.MatOfFloat;
 
 import java.nio.file.Path;
@@ -20,11 +20,11 @@ public class TrainBinaryClassifierCommand extends ACommand<IBinaryClassification
 	// Properties
 	private final Path binaryClassifierFolderPath;
 	private final IBinaryClassifier binaryClassifier;
-	private final FeatureVectorSet selectedFeatureVector;
-	private final List<FeatureVectorSet> featureVectorList;
+	private final IFeature selectedFeatureVector;
+	private final List<IFeature> featureVectorList;
 
 	@Inject
-	public TrainBinaryClassifierCommand(@Assisted Path binaryClassifierFolderPath, @Assisted IBinaryClassifier classifier, @Assisted FeatureVectorSet selected, @Assisted List<FeatureVectorSet> all)
+	public TrainBinaryClassifierCommand(@Assisted Path binaryClassifierFolderPath, @Assisted IBinaryClassifier classifier, @Assisted IFeature selected, @Assisted List<IFeature> all)
 	{
 		this.binaryClassifierFolderPath = binaryClassifierFolderPath;
 		this.binaryClassifier = classifier;
@@ -36,9 +36,9 @@ public class TrainBinaryClassifierCommand extends ACommand<IBinaryClassification
 	protected IBinaryClassification call() throws Exception
 	{
 		final String binaryClassifierName = this.binaryClassifier.getName();
-		final String featureExtractorName = this.selectedFeatureVector.extractorName().get();
-		final int frameSize = this.selectedFeatureVector.frameSize().get();
-		final String errorClassName = this.selectedFeatureVector.className().get();
+		final String featureExtractorName = this.selectedFeatureVector.getExtractorName();
+		final int frameSize = this.selectedFeatureVector.getFrameSize();
+		final String errorClassName = this.selectedFeatureVector.getClassName();
 		final String id = UUID.randomUUID().toString();
 
 		final MatOfFloat positive = new MatOfFloat();
@@ -50,12 +50,12 @@ public class TrainBinaryClassifierCommand extends ACommand<IBinaryClassification
 		// which is not the selected one and their data to train
 		// extract all float lists and transform them into MatOfFloats
 		// use .t() on them to transpose them
-		for (FeatureVectorSet set : this.featureVectorList)
+		for (IFeature feature : this.featureVectorList)
 		{
 			// select only with same FeatureExtractor and FrameSize
-			if (set.extractorName().get().equals(featureExtractorName) && set.frameSize().get() == frameSize)
+			if (feature.getExtractorName().equals(featureExtractorName) && feature.getFrameSize() == frameSize)
 			{
-				for (FeatureVector vector : set.featureVectors())
+				for (IFeatureVector vector : feature.getFeatureVectors())
 				{
 					final float[] floatArray = new float[vector.vector().size()];
 					int index = 0;

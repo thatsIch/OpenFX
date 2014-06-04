@@ -15,8 +15,8 @@ import de.thatsich.openfx.classification.intern.control.command.commands.TrainBi
 import de.thatsich.openfx.classification.intern.control.handler.RemoveBinaryClassificationSucceededHandler;
 import de.thatsich.openfx.classification.intern.control.handler.TrainBinaryClassifierSucceededHandler;
 import de.thatsich.openfx.classification.intern.control.provider.IClassificationCommandProvider;
-import de.thatsich.openfx.featureextraction.api.model.IFeatureVectorSets;
-import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVectorSet;
+import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
+import de.thatsich.openfx.featureextraction.api.model.IFeatures;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -30,18 +30,18 @@ import java.util.concurrent.ExecutorService;
 public class ClassificationInputPresenter extends AFXMLPresenter
 {
 	// Injects
-	@Inject ClassificationInitCommander initCommander;
-	@Inject IClassificationCommandProvider commander;
-	@Inject IBinaryClassifiers binaryClassifiers;
-	@Inject IBinaryClassifications binaryClassifications;
-	@Inject IClassificationState trainState;
-	@Inject IFeatureVectorSets featureVectors;
+	@Inject private ClassificationInitCommander initCommander;
+	@Inject private IClassificationCommandProvider commander;
+	@Inject private IBinaryClassifiers binaryClassifiers;
+	@Inject private IBinaryClassifications binaryClassifications;
+	@Inject private IClassificationState trainState;
+	@Inject private IFeatures features;
 
 	// Nodes
-	@FXML ChoiceBox<IBinaryClassifier> nodeChoiceBoxBinaryClassifier;
-	@FXML Button nodeButtonTrainBinaryClassifier;
-	@FXML Button nodeButtonRemoveBinaryClassifier;
-	@FXML Button nodeButtonResetBinaryClassifierList;
+	@FXML private ChoiceBox<IBinaryClassifier> nodeChoiceBoxBinaryClassifier;
+	@FXML private Button nodeButtonTrainBinaryClassifier;
+	@FXML private Button nodeButtonRemoveBinaryClassifier;
+	@FXML private Button nodeButtonResetBinaryClassifierList;
 
 	@Override
 	protected void bindComponents()
@@ -85,7 +85,7 @@ public class ClassificationInputPresenter extends AFXMLPresenter
 		this.log.info("Bound ChoiceBoxBinaryClassifier to Model.");
 
 		this.nodeChoiceBoxBinaryClassifier.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
-			final SetLastBinaryClassifierIndexCommand lastCommand = commander.createSetLastBinaryClassifierIndexCommand(newValue.intValue());
+			final SetLastBinaryClassifierIndexCommand lastCommand = this.commander.createSetLastBinaryClassifierIndexCommand(newValue.intValue());
 			lastCommand.start();
 		});
 		this.log.info("Bound ChoiceBoxBinaryClassifier to Config.");
@@ -93,7 +93,7 @@ public class ClassificationInputPresenter extends AFXMLPresenter
 
 	private void bindButtons()
 	{
-		this.nodeButtonTrainBinaryClassifier.disableProperty().bind(this.featureVectors.selectedSet().isNull());
+		this.nodeButtonTrainBinaryClassifier.disableProperty().bind(this.features.list().isNull());
 		this.nodeButtonRemoveBinaryClassifier.disableProperty().bind(this.binaryClassifications.selectedBinaryClassification().isNull());
 		this.nodeButtonResetBinaryClassifierList.disableProperty().bind(this.binaryClassifications.binaryClassifications().emptyProperty());
 	}
@@ -106,10 +106,10 @@ public class ClassificationInputPresenter extends AFXMLPresenter
 	{
 		final Path binaryClassifierFolderPath = this.trainState.path().get();
 		final IBinaryClassifier selectedBinaryClassfier = this.binaryClassifiers.selectedBinaryClassifier().get();
-		final List<FeatureVectorSet> featureVectorSetList = this.featureVectors.list();
-		final FeatureVectorSet selectedFeatureVectorSet = this.featureVectors.selectedSet().get();
+		final List<IFeature> features = this.features.list();
+		final IFeature selected = this.features.selectedFeature().get();
 
-		final TrainBinaryClassifierCommand command = this.commander.createTrainBinaryClassifierCommand(binaryClassifierFolderPath, selectedBinaryClassfier, selectedFeatureVectorSet, featureVectorSetList);
+		final TrainBinaryClassifierCommand command = this.commander.createTrainBinaryClassifierCommand(binaryClassifierFolderPath, selectedBinaryClassfier, selected, features);
 		command.setOnSucceededCommandHandler(TrainBinaryClassifierSucceededHandler.class);
 		command.start();
 	}

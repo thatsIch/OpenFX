@@ -2,7 +2,7 @@ package de.thatsich.openfx.featureextraction.intern.control;
 
 import com.google.inject.Inject;
 import de.thatsich.core.javafx.AFXMLPresenter;
-import de.thatsich.openfx.featureextraction.api.model.IFeatureVectorSets;
+import de.thatsich.openfx.featureextraction.api.model.IFeatures;
 import de.thatsich.openfx.featureextraction.intern.control.command.FeatureInitCommander;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -12,7 +12,7 @@ public class FeatureDisplayPresenter extends AFXMLPresenter
 {
 	// Injects
 	@Inject private FeatureInitCommander initCommander;
-	@Inject private IFeatureVectorSets featureVectors;
+	@Inject private IFeatures features;
 
 	// Nodes
 	@FXML private Label nodeLabelClassName;
@@ -44,25 +44,23 @@ public class FeatureDisplayPresenter extends AFXMLPresenter
 		this.nodeLabelFeatureVector.setTooltip(new Tooltip());
 		this.log.info("Initialized Tooltip of LabelFeatureVector.");
 
-		this.featureVectors.selectedSet().addListener((observable, oldValue, newValue) -> {
+		this.features.selectedFeature().addListener((observable, oldValue, newValue) -> {
 			if (newValue != null)
 			{
-				this.nodeLabelClassName.setText(newValue.className().getValue());
-				this.nodeLabelExtractorName.setText(newValue.extractorName().getValue());
-				this.nodeLabelFrameSize.setText(newValue.frameSize().getValue().toString());
-				this.nodeLabelID.setText(newValue.id().getValue());
+				this.nodeLabelClassName.setText(newValue.getClassName());
+				this.nodeLabelExtractorName.setText(newValue.getExtractorName());
+				this.nodeLabelFrameSize.setText(String.valueOf(newValue.getFrameSize()));
 			}
 			else
 			{
 				this.nodeLabelClassName.setText(null);
 				this.nodeLabelExtractorName.setText(null);
 				this.nodeLabelFrameSize.setText(null);
-				this.nodeLabelID.setText(null);
 			}
 		});
 		this.log.info("Bound Labels to changing FeatureVectorSet.");
 
-		this.featureVectors.selected().addListener((observable, oldValue, newValue) -> {
+		this.features.selectedFeatureVector().addListener((observable, oldValue, newValue) -> {
 			if (newValue != null)
 			{
 				this.nodeLabelFeatureVector.setText(newValue.vector().toString());

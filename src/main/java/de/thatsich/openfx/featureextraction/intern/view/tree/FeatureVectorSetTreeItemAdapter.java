@@ -1,7 +1,7 @@
 package de.thatsich.openfx.featureextraction.intern.view.tree;
 
-import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVector;
-import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVectorSet;
+import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
+import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureVector;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
@@ -15,20 +15,23 @@ import javafx.beans.property.SimpleObjectProperty;
 public class FeatureVectorSetTreeItemAdapter implements IFeatureSpaceTreeItemAdapter
 {
 	// Properties
-	private final ObjectProperty<FeatureVectorSet> featureVectorSet = new SimpleObjectProperty<>();
+	private final ObjectProperty<IFeature> feature = new SimpleObjectProperty<>();
 
 	/**
 	 * CTOR
 	 *
-	 * @param set vector set
+	 * @param feature vector set
 	 */
-	public FeatureVectorSetTreeItemAdapter(FeatureVectorSet set)
+	public FeatureVectorSetTreeItemAdapter(IFeature feature)
 	{
-		this.featureVectorSet.set(set);
+		this.feature.set(feature);
 	}
 
 	@Override
-	public String toString() { return this.featureVectorSet.get().className().get() + " - " + this.featureVectorSet.get().extractorName().get() + " - " + this.featureVectorSet.get().frameSize().get() + "px - " + this.featureVectorSet.get().id().get(); }
+	public String toString()
+	{
+		return this.feature.get().getClassName() + " - " + this.feature.get().getExtractorName() + " - " + this.feature.get().getFrameSize() + "px";
+	}
 
 	// IFeatureSpaceTreeItemAdapter Implementation
 	@Override
@@ -38,8 +41,8 @@ public class FeatureVectorSetTreeItemAdapter implements IFeatureSpaceTreeItemAda
 	public boolean isVector() { return false; }
 
 	@Override
-	public FeatureVectorSet getSet() { return this.featureVectorSet.get(); }
+	public IFeature getFeature() { return this.feature.get(); }
 
 	@Override
-	public FeatureVector getVector() { return null; }
+	public IFeatureVector getVector() { return null; }
 }

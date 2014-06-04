@@ -2,19 +2,19 @@ package de.thatsich.openfx.featureextraction.intern.control.command;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import de.thatsich.core.Log;
+import de.thatsich.core.javafx.CommandExecutor;
 import de.thatsich.openfx.featureextraction.api.model.IFeatureState;
 import de.thatsich.openfx.featureextraction.intern.control.command.commands.GetLastFeatureExtractorIndexCommand;
 import de.thatsich.openfx.featureextraction.intern.control.command.commands.GetLastFeatureVectorIndexCommand;
 import de.thatsich.openfx.featureextraction.intern.control.command.commands.GetLastFrameSizeCommand;
 import de.thatsich.openfx.featureextraction.intern.control.command.commands.InitFeatureExtractorListCommand;
-import de.thatsich.openfx.featureextraction.intern.control.command.commands.InitFeatureVectorSetListCommand;
+import de.thatsich.openfx.featureextraction.intern.control.command.commands.InitFeaturesCommand;
 import de.thatsich.openfx.featureextraction.intern.control.command.handler.GetLastFeatureExtractorIndexSucceededHandler;
 import de.thatsich.openfx.featureextraction.intern.control.command.handler.GetLastFeatureSpaceIndexSucceededHandler;
 import de.thatsich.openfx.featureextraction.intern.control.command.handler.GetLastFrameSizeSucceededHandler;
 import de.thatsich.openfx.featureextraction.intern.control.command.handler.InitFeatureExtractorListSucceededHandler;
-import de.thatsich.openfx.featureextraction.intern.control.command.handler.InitFeatureVectorListSucceededHandler;
-import de.thatsich.core.Log;
-import de.thatsich.core.javafx.CommandExecutor;
+import de.thatsich.openfx.featureextraction.intern.control.command.handler.InitFeaturesSucceededHandler;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -88,8 +88,8 @@ public class FeatureInitCommander
 		this.featureState.path().set(folderPath);
 		this.log.info("Set FeatureVectorInputFolderPath to Model.");
 
-		final InitFeatureVectorSetListCommand initCommand = this.commander.createInitFeatureVectorListCommand(folderPath);
-		initCommand.setOnSucceededCommandHandler(InitFeatureVectorListSucceededHandler.class);
+		final InitFeaturesCommand initCommand = this.commander.createInitFeatureVectorListCommand(folderPath);
+		initCommand.setOnSucceededCommandHandler(InitFeaturesSucceededHandler.class);
 		initCommand.setExecutor(executor);
 		initCommand.start();
 		this.log.info("Initialized InitFeatureVectorList Retrieval.");

@@ -2,8 +2,8 @@ package de.thatsich.openfx.network.intern.control.cnbc;
 
 import com.google.inject.Inject;
 import de.thatsich.core.Log;
+import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
 import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVector;
-import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVectorSet;
 import de.thatsich.openfx.network.intern.control.cnbc.nbc.NetworkBinaryClassifiers;
 
 import java.util.HashSet;
@@ -58,7 +58,7 @@ public class CollectiveNetworkBinaryClassifiers implements ICNBC
 	 *
 	 * @param fvs FeatureVectorSet
 	 */
-	private void addNewFeatureVectorSet(FeatureVectorSet fvs)
+	private void addNewFeatureVectorSet(IFeature fvs)
 	{
 		this.nbcs.forEach(nbc -> nbc.addNewFeatureVectorSet(fvs));
 	}
@@ -73,7 +73,7 @@ public class CollectiveNetworkBinaryClassifiers implements ICNBC
 		this.nbcs.forEach((nbc) -> nbc.addNewFeature(fv));
 	}
 
-	public void initialEvolution(List<FeatureVectorSet> fvs)
+	public void initialEvolution(List<IFeature> fvs)
 	{
 		fvs.forEach(this::addNewFeatureVectorSet);
 		this.trainNetworkBinaryClassifiers();
