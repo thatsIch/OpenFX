@@ -17,27 +17,14 @@ public class PreProcessings implements IPreProcessings
 	private final ObjectProperty<IPreProcessing> selected = new SimpleObjectProperty<>();
 
 	@Override
-	public ListProperty<IPreProcessing> getPreProcessingListProperty()
+	public ListProperty<IPreProcessing> list()
 	{
 		return this.list;
 	}
 
 	@Override
-	public ObjectProperty<IPreProcessing> getSelectedPreProcessingProperty()
+	public ObjectProperty<IPreProcessing> selected()
 	{
 		return this.selected;
 	}
-
-	@Override
-	public IPreProcessing getSelectedPreProcessing()
-	{
-		return this.selected.get();
-	}
-
-	@Override
-	public void setSelectedPreProcessing(IPreProcessing pp)
-	{
-		this.selected.set(pp);
-	}
-
 }

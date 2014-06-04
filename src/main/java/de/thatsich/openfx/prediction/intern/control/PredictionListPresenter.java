@@ -1,12 +1,12 @@
 package de.thatsich.openfx.prediction.intern.control;
 
 import com.google.inject.Inject;
-import de.thatsich.openfx.prediction.api.model.IBinaryPredictions;
+import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.openfx.prediction.api.control.BinaryPrediction;
+import de.thatsich.openfx.prediction.api.model.IBinaryPredictions;
 import de.thatsich.openfx.prediction.intern.control.command.PredictionInitCommander;
 import de.thatsich.openfx.prediction.intern.control.command.commands.SetLastBinaryPredictionIndexCommand;
 import de.thatsich.openfx.prediction.intern.control.provider.IPredictionCommandProvider;
-import de.thatsich.core.javafx.AFXMLPresenter;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -52,7 +52,7 @@ public class PredictionListPresenter extends AFXMLPresenter
 
 	private void bindTableViewModel()
 	{
-		this.nodeTableViewBinaryPredictionList.itemsProperty().bind(this.binaryPredictions.getBinaryPredictionListProperty());
+		this.nodeTableViewBinaryPredictionList.itemsProperty().bind(this.binaryPredictions.list());
 		this.log.info("Bound Content to Model.");
 	}
 
@@ -63,7 +63,7 @@ public class PredictionListPresenter extends AFXMLPresenter
 			@Override
 			public void changed(ObservableValue<? extends BinaryPrediction> paramObservableValue, BinaryPrediction oldvalue, BinaryPrediction newValue)
 			{
-				binaryPredictions.getSelectedBinaryPredictionProperty().set(newValue);
+				binaryPredictions.selected().set(newValue);
 				log.info("Set Selected BinaryPrediction in Model.");
 
 				final int index = nodeTableViewBinaryPredictionList.getSelectionModel().getSelectedIndex();
@@ -73,7 +73,7 @@ public class PredictionListPresenter extends AFXMLPresenter
 		});
 		this.log.info("Bound Selection to Model.");
 
-		this.binaryPredictions.getSelectedBinaryPredictionProperty().addListener(new ChangeListener<BinaryPrediction>()
+		this.binaryPredictions.selected().addListener(new ChangeListener<BinaryPrediction>()
 		{
 
 			@Override

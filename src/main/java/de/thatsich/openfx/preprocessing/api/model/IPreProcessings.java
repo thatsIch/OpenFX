@@ -20,27 +20,13 @@ public interface IPreProcessings
 	 *
 	 * @return ListProperty of PreProcessings
 	 */
-	ListProperty<IPreProcessing> getPreProcessingListProperty();
+	ListProperty<IPreProcessing> list();
 
 	/**
 	 * PropertyGetter of selected PreProcessing
 	 *
 	 * @return Property of selected PreProcessing
 	 */
-	ObjectProperty<IPreProcessing> getSelectedPreProcessingProperty();
-
-	/**
-	 * Getter of selected Binary Classification
-	 *
-	 * @return Selected Binary Classification
-	 */
-	IPreProcessing getSelectedPreProcessing();
-
-	/**
-	 * Setter of selected PreProcessing
-	 *
-	 * @param pp Selected PreProcessing
-	 */
-	void setSelectedPreProcessing(IPreProcessing pp);
+	ObjectProperty<IPreProcessing> selected();
 
 }

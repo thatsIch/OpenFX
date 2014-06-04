@@ -94,8 +94,8 @@ public class ClassificationInputPresenter extends AFXMLPresenter
 	private void bindButtons()
 	{
 		this.nodeButtonTrainBinaryClassifier.disableProperty().bind(this.features.list().isNull());
-		this.nodeButtonRemoveBinaryClassifier.disableProperty().bind(this.binaryClassifications.selectedBinaryClassification().isNull());
-		this.nodeButtonResetBinaryClassifierList.disableProperty().bind(this.binaryClassifications.binaryClassifications().emptyProperty());
+		this.nodeButtonRemoveBinaryClassifier.disableProperty().bind(this.binaryClassifications.selected().isNull());
+		this.nodeButtonResetBinaryClassifierList.disableProperty().bind(this.binaryClassifications.list().emptyProperty());
 	}
 
 	// ==================================================
@@ -117,7 +117,7 @@ public class ClassificationInputPresenter extends AFXMLPresenter
 	@FXML
 	private void onRemoveBinaryClassifierAction()
 	{
-		final IBinaryClassification selectedBinaryClassification = this.binaryClassifications.selectedBinaryClassification().get();
+		final IBinaryClassification selectedBinaryClassification = this.binaryClassifications.selected().get();
 
 		final RemoveBinaryClassificationCommand command = this.commander.createRemoveBinaryClassificationCommand(selectedBinaryClassification);
 		command.setOnSucceededCommandHandler(RemoveBinaryClassificationSucceededHandler.class);
@@ -128,7 +128,7 @@ public class ClassificationInputPresenter extends AFXMLPresenter
 	@FXML
 	private void onResetBinaryClassifierListAction()
 	{
-		final List<IBinaryClassification> binaryClassificationList = this.binaryClassifications.binaryClassifications();
+		final List<IBinaryClassification> binaryClassificationList = this.binaryClassifications.list();
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(binaryClassificationList.size());
 		this.log.info("Initialized Executor for resetting all Errors.");
 

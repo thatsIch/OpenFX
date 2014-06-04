@@ -64,9 +64,9 @@ public class PredictionInputPresenter extends AFXMLPresenter
 	// ==================================================
 	private void bindButtons()
 	{
-		this.nodeButtonPredictBinaryClassification.disableProperty().bind(this.imageEntries.selectedImageEntryProperty().isNull().or(this.binaryClassifications.selectedBinaryClassification().isNull()));
-		this.nodeButtonDeleteBinaryPrediction.disableProperty().bind(this.binaryPredictions.getSelectedBinaryPredictionProperty().isNull());
-		this.nodeButtonResetBinaryPrediction.disableProperty().bind(this.binaryPredictions.getBinaryPredictionListProperty().emptyProperty());
+		this.nodeButtonPredictBinaryClassification.disableProperty().bind(this.imageEntries.selectedImageEntryProperty().isNull().or(this.binaryClassifications.selected().isNull()));
+		this.nodeButtonDeleteBinaryPrediction.disableProperty().bind(this.binaryPredictions.selected().isNull());
+		this.nodeButtonResetBinaryPrediction.disableProperty().bind(this.binaryPredictions.list().emptyProperty());
 	}
 
 	// ================================================== 
@@ -80,7 +80,7 @@ public class PredictionInputPresenter extends AFXMLPresenter
 	private void onPredictBinaryPredictionAction()
 	{
 		final Path predictionFolderPath = this.predictionState.getPredictionFolderPathProperty().get();
-		final IBinaryClassification binaryClassification = this.binaryClassifications.selectedBinaryClassification().get();
+		final IBinaryClassification binaryClassification = this.binaryClassifications.selected().get();
 		final String errorGeneratorName = binaryClassification.getErrorNameProperty().get();
 		final String featureExtractorName = binaryClassification.getExtractorNameProperty().get();
 		this.log.info("Prepared all information.");
@@ -126,7 +126,7 @@ public class PredictionInputPresenter extends AFXMLPresenter
 	@FXML
 	private void onDeleteBinaryPredictionAction()
 	{
-		final BinaryPrediction selected = this.binaryPredictions.getSelectedBinaryPrediction();
+		final BinaryPrediction selected = this.binaryPredictions.selected().get();
 		final DeleteBinaryPredictionCommand command = this.commander.createDeleteBinaryPredictionCommand(selected);
 		command.setOnSucceededCommandHandler(DeleteBinaryPredictionSucceededHandler.class);
 		command.start();
@@ -136,7 +136,7 @@ public class PredictionInputPresenter extends AFXMLPresenter
 	@FXML
 	private void onResetBinaryPredictionAction()
 	{
-		final List<BinaryPrediction> binaryPredictionList = this.binaryPredictions.getBinaryPredictionListProperty();
+		final List<BinaryPrediction> binaryPredictionList = this.binaryPredictions.list();
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(binaryPredictionList.size());
 
 		for (final BinaryPrediction binaryPrediction : binaryPredictionList)

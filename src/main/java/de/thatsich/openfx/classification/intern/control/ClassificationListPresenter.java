@@ -1,12 +1,12 @@
 package de.thatsich.openfx.classification.intern.control;
 
 import com.google.inject.Inject;
+import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.openfx.classification.api.control.IBinaryClassification;
 import de.thatsich.openfx.classification.api.model.IBinaryClassifications;
 import de.thatsich.openfx.classification.intern.control.command.ClassificationInitCommander;
 import de.thatsich.openfx.classification.intern.control.command.commands.SetLastBinaryClassificationIndexCommand;
 import de.thatsich.openfx.classification.intern.control.provider.IClassificationCommandProvider;
-import de.thatsich.core.javafx.AFXMLPresenter;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -66,7 +66,7 @@ public class ClassificationListPresenter extends AFXMLPresenter
 	 */
 	private void bindTableViewContent()
 	{
-		this.nodeTableViewBinaryClassificationList.itemsProperty().bind(this.binaryClassifications.binaryClassifications());
+		this.nodeTableViewBinaryClassificationList.itemsProperty().bind(this.binaryClassifications.list());
 		this.log.info("Bound Content to Model.");
 	}
 
@@ -76,7 +76,7 @@ public class ClassificationListPresenter extends AFXMLPresenter
 	private void bindTableViewSelectionModel()
 	{
 		this.nodeTableViewBinaryClassificationList.getSelectionModel().selectedItemProperty().addListener((paramObservableValue, oldvalue, newValue) -> {
-			binaryClassifications.selectedBinaryClassification().set(newValue);
+			binaryClassifications.selected().set(newValue);
 			log.info("Set Selected BinaryClassification in Model.");
 
 			final int index = nodeTableViewBinaryClassificationList.getSelectionModel().getSelectedIndex();
@@ -85,7 +85,7 @@ public class ClassificationListPresenter extends AFXMLPresenter
 		});
 		this.log.info("Bound Selection to Model.");
 
-		this.binaryClassifications.selectedBinaryClassification().addListener((observable, oldValue, newValue) -> nodeTableViewBinaryClassificationList.getSelectionModel().select(newValue));
+		this.binaryClassifications.selected().addListener((observable, oldValue, newValue) -> nodeTableViewBinaryClassificationList.getSelectionModel().select(newValue));
 		this.log.info("Bound Model to Selection.");
 	}
 

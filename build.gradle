@@ -46,32 +46,42 @@ sourceSets {
 idea {
     workspace.iws.withXml { provider ->
         // Default application run configuration
-        def applicationDefaults = provider.node.component.find { it.@name == 'RunManager'}.configuration.find { it.@type == 'Application'}
+        def applicationDefaults = provider.node.component.find { it.@name == 'RunManager' }.configuration.find {
+            it.@type == 'Application'
+        }
         if (applicationDefaults != null) {
             applicationDefaults.module.@name = 'BachelorOpenCV'
 
-            applicationDefaults.option.find { it.@name == 'MAIN_CLASS_NAME'}.@value = 'Main'
-            applicationDefaults.option.find { it.@name == 'VM_PARAMETERS'}.@value = '-Djava.library.path="$MODULE_DIR$/dll"'
-            applicationDefaults.option.find { it.@name == 'WORKING_DIRECTORY'}.@value = 'file://$MODULE_DIR$'
+            applicationDefaults.option.find { it.@name == 'MAIN_CLASS_NAME' }.@value = 'Main'
+            applicationDefaults.option.find {
+                it.@name == 'VM_PARAMETERS'
+            }.@value = '-Djava.library.path="$MODULE_DIR$/dll"'
+            applicationDefaults.option.find { it.@name == 'WORKING_DIRECTORY' }.@value = 'file://$MODULE_DIR$'
         }
 
         // default junit run configuration
-        def jUnitDefaults = provider.node.component.find { it.@name == 'RunManager'}.configuration.find { it.@type == 'JUnit'}
+        def jUnitDefaults = provider.node.component.find { it.@name == 'RunManager' }.configuration.find {
+            it.@type == 'JUnit'
+        }
         if (jUnitDefaults != null) {
             jUnitDefaults.module.@name = 'BachelorOpenCV'
 
-            jUnitDefaults.option.find { it.@name == 'PACKAGE_NAME'}.@value = 'de.thatsich.bachelor'
-            jUnitDefaults.option.find { it.@name == 'TEST_OBJECT'}.@value = 'package'
-            jUnitDefaults.option.find { it.@name == 'VM_PARAMETERS'}.@value = '-ea -Djava.library.path="$MODULE_DIR$/dll"'
-            jUnitDefaults.option.find { it.@name == 'WORKING_DIRECTORY'}.@value = 'file://$MODULE_DIR$'
+            jUnitDefaults.option.find { it.@name == 'PACKAGE_NAME' }.@value = 'de.thatsich.openfx'
+            jUnitDefaults.option.find { it.@name == 'TEST_OBJECT' }.@value = 'package'
+            jUnitDefaults.option.find {
+                it.@name == 'VM_PARAMETERS'
+            }.@value = '-ea -Djava.library.path="$MODULE_DIR$/dll"'
+            jUnitDefaults.option.find { it.@name == 'WORKING_DIRECTORY' }.@value = 'file://$MODULE_DIR$'
         }
 
         // actual app run configuration
-        def application = provider.node.component.find { it.@name == 'RunManager'}.configuration.find { it.@type == 'Application' && it.@name == 'OpenFX'}
+        def application = provider.node.component.find { it.@name == 'RunManager' }.configuration.find {
+            it.@type == 'Application' && it.@name == 'OpenFX'
+        }
         if (application == null) {
-            def clonedNode = new XmlParser().parseText( XmlUtil.serialize(applicationDefaults))
+            def clonedNode = new XmlParser().parseText(XmlUtil.serialize(applicationDefaults))
             clondeNode.@name = 'OpenFX'
-            provider.node.component.find { it.@name == 'RunManager'}.append(clonedNode)
+            provider.node.component.find { it.@name == 'RunManager' }.append(clonedNode)
         }
     }
 

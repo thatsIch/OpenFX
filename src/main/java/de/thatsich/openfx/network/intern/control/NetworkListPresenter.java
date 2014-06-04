@@ -1,14 +1,12 @@
 package de.thatsich.openfx.network.intern.control;
 
 import com.google.inject.Inject;
-import de.thatsich.openfx.network.api.model.INetworks;
+import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.openfx.network.api.control.Network;
+import de.thatsich.openfx.network.api.model.INetworks;
 import de.thatsich.openfx.network.intern.control.command.NetworkInitCommander;
 import de.thatsich.openfx.network.intern.control.command.commands.SetLastNetworkIndexCommand;
 import de.thatsich.openfx.network.intern.control.provider.INetworkCommandProvider;
-import de.thatsich.core.javafx.AFXMLPresenter;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -54,44 +52,32 @@ public class NetworkListPresenter extends AFXMLPresenter
 
 	private void bindTableViewModel()
 	{
-		this.nodeTableViewNetworkList.itemsProperty().bind(this.networks.getNetworkListProperty());
+		this.nodeTableViewNetworkList.itemsProperty().bind(this.networks.list());
 		this.log.info("Bound Content to Model.");
 	}
 
 	private void bindTableViewSelection()
 	{
-		this.nodeTableViewNetworkList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Network>()
-		{
-			@Override
-			public void changed(ObservableValue<? extends Network> paramObservableValue, Network oldValue, Network newValue)
-			{
-				networks.setSelectedNetwork(newValue);
-				log.info("Set Selected BinaryPrediction in Model.");
+		this.nodeTableViewNetworkList.getSelectionModel().selectedItemProperty().addListener((paramObservableValue, oldValue, newValue) -> {
+			this.networks.selected().set(newValue);
+			this.log.info("Set Selected BinaryPrediction in Model.");
 
-				final int index = nodeTableViewNetworkList.getSelectionModel().getSelectedIndex();
-				final SetLastNetworkIndexCommand command = provider.createSetLastNetworkIndexCommand(index);
-				command.start();
-			}
+			final int index = this.nodeTableViewNetworkList.getSelectionModel().getSelectedIndex();
+			final SetLastNetworkIndexCommand command = this.provider.createSetLastNetworkIndexCommand(index);
+			command.start();
 		});
 		this.log.info("Bound Selection to Model.");
 
-		this.networks.getSelectedNetworkProperty().addListener(new ChangeListener<Network>()
-		{
-			@Override
-			public void changed(ObservableValue<? extends Network> observable, Network oldValue, Network newValue)
-			{
-				nodeTableViewNetworkList.getSelectionModel().select(newValue);
-			}
-		});
+		this.networks.selected().addListener((observable, oldValue, newValue) -> this.nodeTableViewNetworkList.getSelectionModel().select(newValue));
 		this.log.info("Bound Model to Selection.");
 	}
 
 	private void bindTableViewCellValue()
 	{
-		this.nodeTableColumnClassifierName.setCellValueFactory(new PropertyValueFactory<Network, String>("getClassifierName"));
-		this.nodeTableColumnExtractorName.setCellValueFactory(new PropertyValueFactory<Network, String>("getExtractorName"));
-		this.nodeTableColumnFrameSize.setCellValueFactory(new PropertyValueFactory<Network, Integer>("getFrameSize"));
-		this.nodeTableColumnErrorClassName.setCellValueFactory(new PropertyValueFactory<Network, String>("getErrorClassName"));
-		this.nodeTableColumnID.setCellValueFactory(new PropertyValueFactory<Network, String>("getID"));
+		this.nodeTableColumnClassifierName.setCellValueFactory(new PropertyValueFactory<>("getClassifierName"));
+		this.nodeTableColumnExtractorName.setCellValueFactory(new PropertyValueFactory<>("getExtractorName"));
+		this.nodeTableColumnFrameSize.setCellValueFactory(new PropertyValueFactory<>("getFrameSize"));
+		this.nodeTableColumnErrorClassName.setCellValueFactory(new PropertyValueFactory<>("getErrorClassName"));
+		this.nodeTableColumnID.setCellValueFactory(new PropertyValueFactory<>("getID"));
 	}
 }

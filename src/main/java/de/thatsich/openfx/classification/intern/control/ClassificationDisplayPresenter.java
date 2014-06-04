@@ -1,9 +1,9 @@
 package de.thatsich.openfx.classification.intern.control;
 
 import com.google.inject.Inject;
+import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.openfx.classification.api.model.IBinaryClassifications;
 import de.thatsich.openfx.classification.intern.control.command.ClassificationInitCommander;
-import de.thatsich.core.javafx.AFXMLPresenter;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
@@ -39,7 +39,7 @@ public class ClassificationDisplayPresenter extends AFXMLPresenter
 	 */
 	private void bindLabels()
 	{
-		this.binaryClassifications.selectedBinaryClassification().addListener((observable, oldValue, newValue) -> {
+		this.binaryClassifications.selected().addListener((observable, oldValue, newValue) -> {
 			if (newValue != null)
 			{
 				nodeLabelClassificationName.setText(newValue.getClassificationNameProperty().getValue());

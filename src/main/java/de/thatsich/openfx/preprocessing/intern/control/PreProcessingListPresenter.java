@@ -1,14 +1,12 @@
 package de.thatsich.openfx.preprocessing.intern.control;
 
 import com.google.inject.Inject;
+import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.openfx.preprocessing.api.control.IPreProcessing;
 import de.thatsich.openfx.preprocessing.api.model.IPreProcessings;
 import de.thatsich.openfx.preprocessing.intern.control.command.PreProcessingInitCommander;
 import de.thatsich.openfx.preprocessing.intern.control.command.commands.SetLastPreProcessingIndexCommand;
 import de.thatsich.openfx.preprocessing.intern.control.command.provider.IPreProcessingCommandProvider;
-import de.thatsich.core.javafx.AFXMLPresenter;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -63,7 +61,7 @@ public class PreProcessingListPresenter extends AFXMLPresenter
 	 */
 	private void bindTableViewContent()
 	{
-		this.nodeTableViewPreProcessingList.itemsProperty().bind(this.preProcessings.getPreProcessingListProperty());
+		this.nodeTableViewPreProcessingList.itemsProperty().bind(this.preProcessings.list());
 		this.log.info("Bound Content to Model.");
 	}
 
@@ -72,29 +70,17 @@ public class PreProcessingListPresenter extends AFXMLPresenter
 	 */
 	private void bindTableViewSelectionModel()
 	{
-		this.nodeTableViewPreProcessingList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<IPreProcessing>()
-		{
-			@Override
-			public void changed(ObservableValue<? extends IPreProcessing> observable, IPreProcessing oldValue, IPreProcessing newValue)
-			{
-				preProcessings.setSelectedPreProcessing(newValue);
-				log.info("Selected " + newValue);
+		this.nodeTableViewPreProcessingList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+			this.preProcessings.selected().set(newValue);
+			this.log.info("Selected " + newValue);
 
-				final int index = nodeTableViewPreProcessingList.getSelectionModel().getSelectedIndex();
-				final SetLastPreProcessingIndexCommand command = commander.createSetLastPreProcessingIndexCommand(index);
-				command.start();
-			}
+			final int index = this.nodeTableViewPreProcessingList.getSelectionModel().getSelectedIndex();
+			final SetLastPreProcessingIndexCommand command = this.commander.createSetLastPreProcessingIndexCommand(index);
+			command.start();
 		});
 		this.log.info("Bound Selection to Model.");
 
-		this.preProcessings.getSelectedPreProcessingProperty().addListener(new ChangeListener<IPreProcessing>()
-		{
-			@Override
-			public void changed(ObservableValue<? extends IPreProcessing> observable, IPreProcessing oldValue, IPreProcessing newValue)
-			{
-				nodeTableViewPreProcessingList.getSelectionModel().select(newValue);
-			}
-		});
+		this.preProcessings.selected().addListener((observable, oldValue, newValue) -> this.nodeTableViewPreProcessingList.getSelectionModel().select(newValue));
 		this.log.info("Bound Model to Selection.");
 	}
 
@@ -103,9 +89,9 @@ public class PreProcessingListPresenter extends AFXMLPresenter
 	 */
 	private void bindTableViewCellValue()
 	{
-		this.nodeTableColumnPreProcessingName.setCellValueFactory(new PropertyValueFactory<IPreProcessing, String>("getPreProcessingName"));
-		this.nodeTableColumnInputSize.setCellValueFactory(new PropertyValueFactory<IPreProcessing, Integer>("getInputSize"));
-		this.nodeTableColumnOutputSize.setCellValueFactory(new PropertyValueFactory<IPreProcessing, Integer>("getOutputSize"));
-		this.nodeTableColumnID.setCellValueFactory(new PropertyValueFactory<IPreProcessing, String>("getId"));
+		this.nodeTableColumnPreProcessingName.setCellValueFactory(new PropertyValueFactory<>("getPreProcessingName"));
+		this.nodeTableColumnInputSize.setCellValueFactory(new PropertyValueFactory<>("getInputSize"));
+		this.nodeTableColumnOutputSize.setCellValueFactory(new PropertyValueFactory<>("getOutputSize"));
+		this.nodeTableColumnID.setCellValueFactory(new PropertyValueFactory<>("getId"));
 	}
 }

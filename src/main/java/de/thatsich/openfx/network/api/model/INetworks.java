@@ -10,9 +10,9 @@ import javafx.beans.property.ObjectProperty;
  */
 public interface INetworks
 {
-	ListProperty<Network> getNetworkListProperty();
+	ListProperty<Network> list();
 
-	ObjectProperty<Network> getSelectedNetworkProperty();
+	ObjectProperty<Network> selected();
 
 	Network getSelectedNetwork();
 

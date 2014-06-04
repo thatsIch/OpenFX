@@ -1,12 +1,12 @@
 package de.thatsich.openfx.prediction.intern.control;
 
 import com.google.inject.Inject;
-import de.thatsich.openfx.prediction.api.model.IBinaryPredictions;
-import de.thatsich.openfx.prediction.api.control.BinaryPrediction;
-import de.thatsich.openfx.prediction.intern.control.command.PredictionInitCommander;
-import de.thatsich.openfx.prediction.intern.control.evaluation.PrecisionRecall;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.opencv.Images;
+import de.thatsich.openfx.prediction.api.control.BinaryPrediction;
+import de.thatsich.openfx.prediction.api.model.IBinaryPredictions;
+import de.thatsich.openfx.prediction.intern.control.command.PredictionInitCommander;
+import de.thatsich.openfx.prediction.intern.control.evaluation.PrecisionRecall;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -59,7 +59,7 @@ public class PredictionDisplayPresenter extends AFXMLPresenter
 
 	private void initImageViewContent()
 	{
-		this.binaryPredictions.getSelectedBinaryPredictionProperty().addListener(new ChangeListener<BinaryPrediction>()
+		this.binaryPredictions.selected().addListener(new ChangeListener<BinaryPrediction>()
 		{
 			@Override
 			public void changed(ObservableValue<? extends BinaryPrediction> observable, BinaryPrediction oldValue, BinaryPrediction newValue)

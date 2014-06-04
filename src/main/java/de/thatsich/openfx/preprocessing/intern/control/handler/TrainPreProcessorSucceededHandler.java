@@ -1,9 +1,9 @@
 package de.thatsich.openfx.preprocessing.intern.control.handler;
 
 import com.google.inject.Inject;
+import de.thatsich.core.javafx.ACommandHandler;
 import de.thatsich.openfx.preprocessing.api.control.IPreProcessing;
 import de.thatsich.openfx.preprocessing.api.model.IPreProcessings;
-import de.thatsich.core.javafx.ACommandHandler;
 
 
 /**
@@ -20,10 +20,10 @@ public class TrainPreProcessorSucceededHandler extends ACommandHandler<IPreProce
 	@Override
 	public void handle(IPreProcessing value)
 	{
-		this.preProcessings.getPreProcessingListProperty().add(value);
-		this.log.info("Added " + value + " to " + preProcessings + ".");
+		this.preProcessings.list().add(value);
+		this.log.info("Added " + value + " to " + this.preProcessings + ".");
 
-		this.preProcessings.setSelectedPreProcessing(value);
+		this.preProcessings.selected().set(value);
 		this.log.info("Selected " + value + ".");
 	}
 }

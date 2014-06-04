@@ -1,9 +1,9 @@
 package de.thatsich.openfx.network.intern.control.handler;
 
 import com.google.inject.Inject;
-import de.thatsich.openfx.network.api.model.INetworks;
-import de.thatsich.openfx.network.api.control.Network;
 import de.thatsich.core.javafx.ACommandHandler;
+import de.thatsich.openfx.network.api.control.Network;
+import de.thatsich.openfx.network.api.model.INetworks;
 
 /**
  * @author thatsIch
@@ -16,10 +16,10 @@ public class TrainNetworkSucceededHandler extends ACommandHandler<Network>
 	@Override
 	public void handle(final Network value)
 	{
-		this.networks.getNetworkListProperty().add(value);
+		this.networks.list().add(value);
 		this.log.info("Added Network to Database.");
 
-		this.networks.setSelectedNetwork(value);
+		this.networks.selected().set(value);
 		this.log.info("Set current to selected Network.");
 	}
 }

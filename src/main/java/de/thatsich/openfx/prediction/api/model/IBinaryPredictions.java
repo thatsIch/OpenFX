@@ -7,13 +7,7 @@ import javafx.beans.property.ObjectProperty;
 public interface IBinaryPredictions
 {
 	// Property Getter
-	public ListProperty<BinaryPrediction> getBinaryPredictionListProperty();
+	public ListProperty<BinaryPrediction> list();
 
-	public ObjectProperty<BinaryPrediction> getSelectedBinaryPredictionProperty();
-
-	// Getter
-	public BinaryPrediction getSelectedBinaryPrediction();
-
-	// Setter
-	public void setSelectedBinaryPrediction(BinaryPrediction prediction);
+	public ObjectProperty<BinaryPrediction> selected();
 }

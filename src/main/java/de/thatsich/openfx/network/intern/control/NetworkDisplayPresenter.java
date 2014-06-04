@@ -1,10 +1,10 @@
 package de.thatsich.openfx.network.intern.control;
 
 import com.google.inject.Inject;
-import de.thatsich.openfx.network.api.model.INetworks;
-import de.thatsich.openfx.network.api.control.Network;
-import de.thatsich.openfx.network.intern.control.command.NetworkInitCommander;
 import de.thatsich.core.javafx.AFXMLPresenter;
+import de.thatsich.openfx.network.api.control.Network;
+import de.thatsich.openfx.network.api.model.INetworks;
+import de.thatsich.openfx.network.intern.control.command.NetworkInitCommander;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -50,7 +50,7 @@ public class NetworkDisplayPresenter extends AFXMLPresenter
 
 	private void initImageViewContent()
 	{
-		this.networks.getSelectedNetworkProperty().addListener(new ChangeListener<Network>()
+		this.networks.selected().addListener(new ChangeListener<Network>()
 		{
 			@Override
 			public void changed(ObservableValue<? extends Network> observable, Network oldValue, Network newValue)

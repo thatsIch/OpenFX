@@ -1,9 +1,9 @@
 package de.thatsich.openfx.prediction.intern.control.command.handler;
 
 import com.google.inject.Inject;
-import de.thatsich.openfx.prediction.api.model.IBinaryPredictions;
-import de.thatsich.openfx.prediction.api.control.BinaryPrediction;
 import de.thatsich.core.javafx.ACommandHandler;
+import de.thatsich.openfx.prediction.api.control.BinaryPrediction;
+import de.thatsich.openfx.prediction.api.model.IBinaryPredictions;
 
 /**
  * Handler for what should happen if the Command was successfull
@@ -20,10 +20,10 @@ public class PredictBinaryClassificationSucceededHandler extends ACommandHandler
 	@Override
 	public void handle(BinaryPrediction prediction)
 	{
-		this.binaryPredictions.getBinaryPredictionListProperty().add(prediction);
+		this.binaryPredictions.list().add(prediction);
 		this.log.info("Added BinaryPrediction to Database.");
 
-		this.binaryPredictions.getSelectedBinaryPredictionProperty().set(prediction);
+		this.binaryPredictions.selected().set(prediction);
 		this.log.info("Set current to selected BinaryPrediction.");
 	}
 }

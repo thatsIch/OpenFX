@@ -91,8 +91,8 @@ public class PreProcessingInputPresenter extends AFXMLPresenter
 	private void bindButtons()
 	{
 		this.nodeButtonTrainPreProcessor.disableProperty().bind(this.features.selectedFeature().isNull());
-		this.nodeButtonRemovePreProcessing.disableProperty().bind(this.preProcessings.getSelectedPreProcessingProperty().isNull());
-		this.nodeButtonResetPreProcessingList.disableProperty().bind(this.preProcessings.getPreProcessingListProperty().emptyProperty());
+		this.nodeButtonRemovePreProcessing.disableProperty().bind(this.preProcessings.selected().isNull());
+		this.nodeButtonResetPreProcessingList.disableProperty().bind(this.preProcessings.list().emptyProperty());
 		this.log.info("Bound Buttons Disablility.");
 	}
 
@@ -115,7 +115,7 @@ public class PreProcessingInputPresenter extends AFXMLPresenter
 	@FXML
 	private void onRemovePreProcessingAction()
 	{
-		final IPreProcessing selected = this.preProcessings.getSelectedPreProcessing();
+		final IPreProcessing selected = this.preProcessings.selected().get();
 
 		final RemovePreProcessingCommand command = this.commander.createRemovePreProcessingCommand(selected);
 		command.setOnSucceededCommandHandler(RemovePreProcessingSucceededHandler.class);
@@ -126,7 +126,7 @@ public class PreProcessingInputPresenter extends AFXMLPresenter
 	@FXML
 	private void onResetPreProcessingAction()
 	{
-		final List<IPreProcessing> list = this.preProcessings.getPreProcessingListProperty();
+		final List<IPreProcessing> list = this.preProcessings.list();
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(list.size());
 		this.log.info("Initialized " + executor + " for resetting.");
 

@@ -1,9 +1,9 @@
 package de.thatsich.openfx.preprocessing.intern.control.command.handler;
 
 import com.google.inject.Inject;
+import de.thatsich.core.javafx.ACommandHandler;
 import de.thatsich.openfx.preprocessing.api.control.IPreProcessing;
 import de.thatsich.openfx.preprocessing.api.model.IPreProcessings;
-import de.thatsich.core.javafx.ACommandHandler;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ public class InitPreProcessingListSucceededHandler extends ACommandHandler<List<
 	@Override
 	public void handle(List<IPreProcessing> value)
 	{
-		this.pps.getPreProcessingListProperty().addAll(value);
+		this.pps.list().addAll(value);
 		this.log.info("Added " + value + " with Size " + value.size() + " to DataBase.");
 	}
 }

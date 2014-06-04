@@ -15,12 +15,12 @@ public class BinaryClassifications implements IBinaryClassifications
 	private final ObjectProperty<IBinaryClassification> selectedBinaryClassification = new SimpleObjectProperty<>();
 
 	// Property Getter
-	public ListProperty<IBinaryClassification> binaryClassifications()
+	public ListProperty<IBinaryClassification> list()
 	{
 		return this.binaryClassificationList;
 	}
 
-	public ObjectProperty<IBinaryClassification> selectedBinaryClassification()
+	public ObjectProperty<IBinaryClassification> selected()
 	{
 		return this.selectedBinaryClassification;
 	}

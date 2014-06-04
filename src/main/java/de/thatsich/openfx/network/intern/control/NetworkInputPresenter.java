@@ -1,15 +1,15 @@
 package de.thatsich.openfx.network.intern.control;
 
 import com.google.inject.Inject;
+import de.thatsich.core.javafx.AFXMLPresenter;
+import de.thatsich.core.javafx.CommandExecutor;
+import de.thatsich.openfx.network.api.control.Network;
 import de.thatsich.openfx.network.api.model.INetworkState;
 import de.thatsich.openfx.network.api.model.INetworks;
-import de.thatsich.openfx.network.api.control.Network;
 import de.thatsich.openfx.network.intern.control.command.NetworkInitCommander;
 import de.thatsich.openfx.network.intern.control.command.commands.DeleteNetworkCommand;
 import de.thatsich.openfx.network.intern.control.handler.DeleteNetworkSucceededHandler;
 import de.thatsich.openfx.network.intern.control.provider.INetworkCommandProvider;
-import de.thatsich.core.javafx.AFXMLPresenter;
-import de.thatsich.core.javafx.CommandExecutor;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
@@ -42,8 +42,8 @@ public class NetworkInputPresenter extends AFXMLPresenter
 	{
 		// Buttons
 //		this.nodeButtonTrainNetwork.disabledProperty().bind(this) //TODO bind depending on which model I want to get from
-		this.nodeButtonDeleteNetwork.disableProperty().bind(this.networks.getSelectedNetworkProperty().isNull());
-		this.nodeButtonResetNetwork.disableProperty().bind(this.networks.getNetworkListProperty().emptyProperty());
+		this.nodeButtonDeleteNetwork.disableProperty().bind(this.networks.selected().isNull());
+		this.nodeButtonResetNetwork.disableProperty().bind(this.networks.list().emptyProperty());
 	}
 
 	@Override
@@ -59,7 +59,7 @@ public class NetworkInputPresenter extends AFXMLPresenter
 	}
 
 	@FXML private void onDeleteNetworkAction() {
-		final Network selected = this.networks.getSelectedNetwork();
+		final Network selected = this.networks.selected().get();
 		final DeleteNetworkCommand command = this.provider.createDeleteNetworkCommand(selected);
 		command.setOnSucceededCommandHandler(DeleteNetworkSucceededHandler.class);
 		command.start();
@@ -67,7 +67,7 @@ public class NetworkInputPresenter extends AFXMLPresenter
 	}
 
 	@FXML private void onResetNetworkAction() {
-		final List<Network> networkList = this.networks.getNetworkListProperty();
+		final List<Network> networkList = this.networks.list();
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(networkList.size());
 
 		for (final Network network : networkList)
