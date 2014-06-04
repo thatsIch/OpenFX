@@ -1,6 +1,8 @@
 package de.thatsich.openfx.classification.intern.control;
 
 import com.google.inject.Inject;
+import de.thatsich.core.javafx.AFXMLPresenter;
+import de.thatsich.core.javafx.CommandExecutor;
 import de.thatsich.openfx.classification.api.control.IBinaryClassification;
 import de.thatsich.openfx.classification.api.model.IBinaryClassifications;
 import de.thatsich.openfx.classification.api.model.IBinaryClassifiers;
@@ -13,10 +15,8 @@ import de.thatsich.openfx.classification.intern.control.command.commands.TrainBi
 import de.thatsich.openfx.classification.intern.control.handler.RemoveBinaryClassificationSucceededHandler;
 import de.thatsich.openfx.classification.intern.control.handler.TrainBinaryClassifierSucceededHandler;
 import de.thatsich.openfx.classification.intern.control.provider.IClassificationCommandProvider;
-import de.thatsich.openfx.featureextraction.api.control.FeatureVectorSet;
 import de.thatsich.openfx.featureextraction.api.model.IFeatureVectorSets;
-import de.thatsich.core.javafx.AFXMLPresenter;
-import de.thatsich.core.javafx.CommandExecutor;
+import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVectorSet;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;

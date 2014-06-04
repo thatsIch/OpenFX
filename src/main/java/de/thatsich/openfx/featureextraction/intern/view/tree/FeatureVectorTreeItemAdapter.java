@@ -1,7 +1,7 @@
-package de.thatsich.openfx.featureextraction.intern.views.tree;
+package de.thatsich.openfx.featureextraction.intern.view.tree;
 
 import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVector;
-import de.thatsich.openfx.featureextraction.api.control.FeatureVectorSet;
+import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVectorSet;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
@@ -31,8 +31,8 @@ public class FeatureVectorTreeItemAdapter implements IFeatureSpaceTreeItemAdapte
 	@Override
 	public String toString()
 	{
-		final String isPositive = this.featureVector.get().isPositive().getValue().toString();
-		String featureVector = this.featureVector.get().vector().get().toString();
+		final String isPositive = String.valueOf(this.featureVector.get().isPositive());
+		String featureVector = this.featureVector.get().vector().toString();
 		if (featureVector.length() > 100)
 		{
 			featureVector = featureVector.substring(0, 100) + "...";

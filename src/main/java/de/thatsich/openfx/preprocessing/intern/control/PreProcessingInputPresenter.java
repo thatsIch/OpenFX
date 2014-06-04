@@ -1,8 +1,10 @@
 package de.thatsich.openfx.preprocessing.intern.control;
 
 import com.google.inject.Inject;
-import de.thatsich.openfx.featureextraction.api.control.FeatureVectorSet;
+import de.thatsich.core.javafx.AFXMLPresenter;
+import de.thatsich.core.javafx.CommandExecutor;
 import de.thatsich.openfx.featureextraction.api.model.IFeatureVectorSets;
+import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVectorSet;
 import de.thatsich.openfx.preprocessing.api.control.IPreProcessing;
 import de.thatsich.openfx.preprocessing.api.model.IPreProcessingState;
 import de.thatsich.openfx.preprocessing.api.model.IPreProcessings;
@@ -15,8 +17,6 @@ import de.thatsich.openfx.preprocessing.intern.control.command.preprocessor.core
 import de.thatsich.openfx.preprocessing.intern.control.command.provider.IPreProcessingCommandProvider;
 import de.thatsich.openfx.preprocessing.intern.control.handler.RemovePreProcessingSucceededHandler;
 import de.thatsich.openfx.preprocessing.intern.control.handler.TrainPreProcessorSucceededHandler;
-import de.thatsich.core.javafx.AFXMLPresenter;
-import de.thatsich.core.javafx.CommandExecutor;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;

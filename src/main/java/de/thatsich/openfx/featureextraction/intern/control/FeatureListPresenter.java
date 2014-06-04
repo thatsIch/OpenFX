@@ -1,16 +1,16 @@
 package de.thatsich.openfx.featureextraction.intern.control;
 
 import com.google.inject.Inject;
-import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVector;
-import de.thatsich.openfx.featureextraction.api.control.FeatureVectorSet;
+import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.openfx.featureextraction.api.model.IFeatureVectorSets;
 import de.thatsich.openfx.featureextraction.intern.control.command.FeatureInitCommander;
 import de.thatsich.openfx.featureextraction.intern.control.command.IFeatureCommandProvider;
 import de.thatsich.openfx.featureextraction.intern.control.command.commands.SetLastFeatureVectorIndexCommand;
-import de.thatsich.openfx.featureextraction.intern.views.tree.FeatureVectorSetTreeItemAdapter;
-import de.thatsich.openfx.featureextraction.intern.views.tree.FeatureVectorTreeItemAdapter;
-import de.thatsich.openfx.featureextraction.intern.views.tree.IFeatureSpaceTreeItemAdapter;
-import de.thatsich.core.javafx.AFXMLPresenter;
+import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVector;
+import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVectorSet;
+import de.thatsich.openfx.featureextraction.intern.view.tree.FeatureVectorSetTreeItemAdapter;
+import de.thatsich.openfx.featureextraction.intern.view.tree.FeatureVectorTreeItemAdapter;
+import de.thatsich.openfx.featureextraction.intern.view.tree.IFeatureSpaceTreeItemAdapter;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;

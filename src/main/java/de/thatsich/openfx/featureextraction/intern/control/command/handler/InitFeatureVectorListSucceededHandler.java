@@ -1,9 +1,9 @@
 package de.thatsich.openfx.featureextraction.intern.control.command.handler;
 
 import com.google.inject.Inject;
-import de.thatsich.openfx.featureextraction.api.model.IFeatureVectorSets;
-import de.thatsich.openfx.featureextraction.api.control.FeatureVectorSet;
 import de.thatsich.core.javafx.ACommandHandler;
+import de.thatsich.openfx.featureextraction.api.model.IFeatureVectorSets;
+import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVectorSet;
 
 import java.util.List;
 

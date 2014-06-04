@@ -1,7 +1,7 @@
-package de.thatsich.openfx.featureextraction.intern.views.tree;
+package de.thatsich.openfx.featureextraction.intern.view.tree;
 
 import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVector;
-import de.thatsich.openfx.featureextraction.api.control.FeatureVectorSet;
+import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVectorSet;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 

@@ -1,21 +1,21 @@
 package de.thatsich.openfx.featureextraction.api.guice;
 
 import com.google.inject.Scopes;
-import de.thatsich.openfx.featureextraction.api.view.IFeatureDisplayView;
+import de.thatsich.core.guice.AWiringModule;
 import de.thatsich.openfx.featureextraction.api.model.IFeatureExtractors;
+import de.thatsich.openfx.featureextraction.api.model.IFeatureState;
+import de.thatsich.openfx.featureextraction.api.model.IFeatures;
+import de.thatsich.openfx.featureextraction.api.view.IFeatureDisplayView;
 import de.thatsich.openfx.featureextraction.api.view.IFeatureInputView;
 import de.thatsich.openfx.featureextraction.api.view.IFeatureListView;
-import de.thatsich.openfx.featureextraction.api.model.IFeatureState;
-import de.thatsich.openfx.featureextraction.api.model.IFeatureVectorSets;
-import de.thatsich.openfx.featureextraction.intern.models.FeatureExtractors;
-import de.thatsich.openfx.featureextraction.intern.models.FeatureState;
-import de.thatsich.openfx.featureextraction.intern.models.FeatureVectorSets;
-import de.thatsich.openfx.featureextraction.intern.services.CSVService;
-import de.thatsich.openfx.featureextraction.intern.services.FeatureConfigService;
-import de.thatsich.openfx.featureextraction.intern.views.FeatureDisplayView;
-import de.thatsich.openfx.featureextraction.intern.views.FeatureInputView;
-import de.thatsich.openfx.featureextraction.intern.views.FeatureListView;
-import de.thatsich.core.guice.AWiringModule;
+import de.thatsich.openfx.featureextraction.intern.control.command.service.FeatureConfigService;
+import de.thatsich.openfx.featureextraction.intern.model.FeatureExtractors;
+import de.thatsich.openfx.featureextraction.intern.model.FeatureState;
+import de.thatsich.openfx.featureextraction.intern.model.Features;
+import de.thatsich.openfx.featureextraction.intern.service.CSVService;
+import de.thatsich.openfx.featureextraction.intern.view.FeatureDisplayView;
+import de.thatsich.openfx.featureextraction.intern.view.FeatureInputView;
+import de.thatsich.openfx.featureextraction.intern.view.FeatureListView;
 
 
 /**
@@ -62,6 +62,6 @@ public class FeatureWiringModule extends AWiringModule
 	{
 		super.bind(IFeatureExtractors.class).to(FeatureExtractors.class).in(Scopes.SINGLETON);
 		super.bind(IFeatureState.class).to(FeatureState.class).in(Scopes.SINGLETON);
-		super.bind(IFeatureVectorSets.class).to(FeatureVectorSets.class).in(Scopes.SINGLETON);
+		super.bind(IFeatures.class).to(Features.class).in(Scopes.SINGLETON);
 	}
 }

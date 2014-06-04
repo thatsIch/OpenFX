@@ -1,6 +1,5 @@
-package de.thatsich.openfx.featureextraction.api.control;
+package de.thatsich.openfx.featureextraction.intern.control.entity;
 
-import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVector;
 import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.beans.property.ReadOnlyIntegerWrapper;
 import javafx.beans.property.ReadOnlyListProperty;

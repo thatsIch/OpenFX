@@ -1,9 +1,9 @@
 package de.thatsich.openfx.featureextraction.intern.control.handler;
 
 import com.google.inject.Inject;
-import de.thatsich.openfx.featureextraction.api.model.IFeatureVectorSets;
-import de.thatsich.openfx.featureextraction.api.control.FeatureVectorSet;
 import de.thatsich.core.javafx.ACommandHandler;
+import de.thatsich.openfx.featureextraction.api.model.IFeatureVectorSets;
+import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVectorSet;
 
 /**
  * Handler for what should happen if the Command was successfull
@@ -13,7 +13,7 @@ import de.thatsich.core.javafx.ACommandHandler;
  */
 public class ExtractFeatureVectorSetSucceededHandler extends ACommandHandler<FeatureVectorSet>
 {
-	@Inject	private IFeatureVectorSets featureVectors;
+	@Inject private IFeatureVectorSets featureVectors;
 
 	@Override
 	public void handle(FeatureVectorSet set)

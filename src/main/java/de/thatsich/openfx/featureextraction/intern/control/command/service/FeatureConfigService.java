@@ -1,4 +1,4 @@
-package de.thatsich.openfx.featureextraction.intern.services;
+package de.thatsich.openfx.featureextraction.intern.control.command.service;
 
 import de.thatsich.core.AConfigurationService;
 import javafx.util.Pair;

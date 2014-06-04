@@ -2,8 +2,8 @@ package de.thatsich.openfx.featureextraction.intern.control.command.commands;
 
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
-import de.thatsich.openfx.featureextraction.api.control.FeatureVectorSet;
 import de.thatsich.core.javafx.ACommand;
+import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVectorSet;
 
 import java.io.IOException;
 import java.nio.file.Files;

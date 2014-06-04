@@ -2,13 +2,13 @@ package de.thatsich.openfx.featureextraction.intern.control.command.commands;
 
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
-import de.thatsich.openfx.errorgeneration.intern.control.error.core.ErrorEntry;
-import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVector;
-import de.thatsich.openfx.featureextraction.api.control.FeatureVectorSet;
-import de.thatsich.openfx.featureextraction.api.control.IFeatureExtractor;
-import de.thatsich.openfx.featureextraction.intern.services.CSVService;
 import de.thatsich.core.javafx.ACommand;
 import de.thatsich.core.opencv.Images;
+import de.thatsich.openfx.errorgeneration.intern.control.error.core.ErrorEntry;
+import de.thatsich.openfx.featureextraction.api.control.IFeatureExtractor;
+import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVector;
+import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVectorSet;
+import de.thatsich.openfx.featureextraction.intern.service.CSVService;
 import javafx.collections.FXCollections;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
@@ -55,7 +55,7 @@ public class ExtractFeatureVectorSetCommand extends ACommand<FeatureVectorSet>
 		final String extractorName = this.featureExtractor.getName();
 		final String id = UUID.randomUUID().toString();
 		final Mat originalWithErrorMat = this.errorEntry.getOriginalWithErrorMat().clone();
-		log.info("Prepared all necessary information.");
+		this.log.info("Prepared all necessary information.");
 
 		// TODO Implement Smooth and Threshold somehow Denoising
 		// CvSmooth, CvThreshold
@@ -73,7 +73,7 @@ public class ExtractFeatureVectorSetCommand extends ACommand<FeatureVectorSet>
 		final List<List<Float>> csvResult = FXCollections.observableArrayList();
 		final Mat[][] originalErrorSplit = Images.split(originalWithErrorMat, this.frameSize, this.frameSize);
 		final Mat[][] errorSplit = Images.split(this.errorEntry.getErrorMat(), this.frameSize, this.frameSize);
-		log.info("Prepared split images.");
+		this.log.info("Prepared split images.");
 
 		for (int col = 0; col < originalErrorSplit.length; col++)
 		{

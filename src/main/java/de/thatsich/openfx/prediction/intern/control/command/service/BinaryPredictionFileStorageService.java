@@ -1,6 +1,7 @@
 package de.thatsich.openfx.prediction.intern.control.command.service;
 
 import com.sun.org.apache.xpath.internal.functions.WrongNumberArgsException;
+import de.thatsich.core.IFileStorageService;
 import de.thatsich.openfx.prediction.api.control.BinaryPrediction;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
@@ -8,12 +9,13 @@ import org.opencv.core.Mat;
 import org.opencv.highgui.Highgui;
 
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
-public class BinaryPredictionFileStorageService
+public class BinaryPredictionFileStorageService implements IFileStorageService<BinaryPrediction>
 {
+	@Override
 	public void save(BinaryPrediction prediction)
 	{
 		// Preprare each information
@@ -31,12 +33,13 @@ public class BinaryPredictionFileStorageService
 		Highgui.imwrite(file, mergedMat);
 	}
 
+	@Override
 	public BinaryPrediction load(Path filePath) throws WrongNumberArgsException
 	{
 		final Mat layeredImage = Highgui.imread(filePath.toAbsolutePath().toString());
 
 		// split channels to extract GL and Error Mat
-		final List<Mat> layeredImageChannelMats = new ArrayList<>();
+		final List<Mat> layeredImageChannelMats = new LinkedList<>();
 		Core.split(layeredImage, layeredImageChannelMats);
 
 		final Mat firstLayer = layeredImageChannelMats.get(0);

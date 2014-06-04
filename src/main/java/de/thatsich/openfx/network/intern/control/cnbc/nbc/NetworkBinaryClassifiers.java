@@ -2,9 +2,9 @@ package de.thatsich.openfx.network.intern.control.cnbc.nbc;
 
 import de.thatsich.openfx.classification.api.control.IBinaryClassification;
 import de.thatsich.openfx.classification.intern.control.classifier.core.IBinaryClassifier;
-import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVector;
-import de.thatsich.openfx.featureextraction.api.control.FeatureVectorSet;
 import de.thatsich.openfx.featureextraction.api.model.IFeatureVectorSets;
+import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVector;
+import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVectorSet;
 
 import java.util.LinkedList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package de.thatsich.openfx.featureextraction.intern.models;
+package de.thatsich.openfx.featureextraction.intern.model;
 
 import de.thatsich.openfx.featureextraction.api.model.IFeatureState;
 import javafx.beans.property.IntegerProperty;

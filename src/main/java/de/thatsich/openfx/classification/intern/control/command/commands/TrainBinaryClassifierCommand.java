@@ -2,12 +2,12 @@ package de.thatsich.openfx.classification.intern.control.command.commands;
 
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
+import de.thatsich.core.javafx.ACommand;
 import de.thatsich.openfx.classification.api.control.IBinaryClassification;
 import de.thatsich.openfx.classification.intern.control.classifier.core.BinaryClassifierConfiguration;
 import de.thatsich.openfx.classification.intern.control.classifier.core.IBinaryClassifier;
 import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVector;
-import de.thatsich.openfx.featureextraction.api.control.FeatureVectorSet;
-import de.thatsich.core.javafx.ACommand;
+import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVectorSet;
 import org.opencv.core.MatOfFloat;
 
 import java.nio.file.Path;
@@ -43,7 +43,7 @@ public class TrainBinaryClassifierCommand extends ACommand<IBinaryClassification
 
 		final MatOfFloat positive = new MatOfFloat();
 		final MatOfFloat negative = new MatOfFloat();
-		log.info("Prepared all data for Training.");
+		this.log.info("Prepared all data for Training.");
 
 		// run through all FeatureVectorSets matching same categories
 		// (same FrameSize, same Extractor, same ErrorClass)
@@ -65,7 +65,7 @@ public class TrainBinaryClassifierCommand extends ACommand<IBinaryClassification
 						index++;
 					}
 
-					if (vector.isPositive().get())
+					if (vector.isPositive())
 					{
 						positive.push_back(new MatOfFloat(floatArray).t());
 					}
@@ -76,19 +76,19 @@ public class TrainBinaryClassifierCommand extends ACommand<IBinaryClassification
 				}
 			}
 		}
-		log.info("Prepared Negative and Positive DataSets.");
+		this.log.info("Prepared Negative and Positive DataSets.");
 
-		final Path filePath = binaryClassifierFolderPath.resolve(binaryClassifierName + "_" + featureExtractorName + "_" + frameSize + "_" + errorClassName + "_" + id + ".yaml");
-		log.info("Created FilePath");
+		final Path filePath = this.binaryClassifierFolderPath.resolve(binaryClassifierName + "_" + featureExtractorName + "_" + frameSize + "_" + errorClassName + "_" + id + ".yaml");
+		this.log.info("Created FilePath");
 
 		final BinaryClassifierConfiguration config = new BinaryClassifierConfiguration(filePath, binaryClassifierName, featureExtractorName, frameSize, errorClassName, id);
-		log.info("Created BinaryClassifierConfiguration.");
+		this.log.info("Created BinaryClassifierConfiguration.");
 
 		final IBinaryClassification classification = this.binaryClassifier.train(positive, negative, config);
-		log.info("Trained Binary Classifier with " + positive + " positive and " + negative + " negative samples.");
+		this.log.info("Trained Binary Classifier with " + positive + " positive and " + negative + " negative samples.");
 
 		classification.save(filePath.toString());
-		log.info("Saved File to FileSystem.");
+		this.log.info("Saved File to FileSystem.");
 
 		return classification;
 	}

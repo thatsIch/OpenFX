@@ -1,4 +1,4 @@
-package de.thatsich.openfx.featureextraction.intern.services;
+package de.thatsich.openfx.featureextraction.intern.service;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

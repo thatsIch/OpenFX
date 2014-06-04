@@ -1,9 +1,9 @@
 package de.thatsich.openfx.featureextraction.intern.control.handler;
 
 import com.google.inject.Inject;
-import de.thatsich.openfx.featureextraction.api.model.IFeatureVectorSets;
-import de.thatsich.openfx.featureextraction.api.control.FeatureVectorSet;
 import de.thatsich.core.javafx.ACommandHandler;
+import de.thatsich.openfx.featureextraction.api.model.IFeatureVectorSets;
+import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVectorSet;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class RemoveFeatureVectorSetSucceededHandler extends ACommandHandler<FeatureVectorSet>
 {
-	@Inject	private IFeatureVectorSets featureVectors;
+	@Inject private IFeatureVectorSets featureVectors;
 
 	@Override
 	public void handle(FeatureVectorSet fv)

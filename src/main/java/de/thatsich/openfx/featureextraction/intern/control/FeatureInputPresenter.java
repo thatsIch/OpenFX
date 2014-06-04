@@ -1,8 +1,10 @@
 package de.thatsich.openfx.featureextraction.intern.control;
 
 import com.google.inject.Inject;
+import de.thatsich.core.javafx.AFXMLPresenter;
+import de.thatsich.core.javafx.CommandExecutor;
+import de.thatsich.core.javafx.component.IntegerField;
 import de.thatsich.openfx.errorgeneration.api.model.IErrorEntries;
-import de.thatsich.openfx.featureextraction.api.control.FeatureVectorSet;
 import de.thatsich.openfx.featureextraction.api.control.IFeatureExtractor;
 import de.thatsich.openfx.featureextraction.api.model.IFeatureExtractors;
 import de.thatsich.openfx.featureextraction.api.model.IFeatureState;
@@ -11,11 +13,9 @@ import de.thatsich.openfx.featureextraction.intern.control.command.FeatureInitCo
 import de.thatsich.openfx.featureextraction.intern.control.command.IFeatureCommandProvider;
 import de.thatsich.openfx.featureextraction.intern.control.command.commands.DeleteFeatureVectorSetCommand;
 import de.thatsich.openfx.featureextraction.intern.control.command.commands.ExtractFeatureVectorSetCommand;
+import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVectorSet;
 import de.thatsich.openfx.featureextraction.intern.control.handler.ExtractFeatureVectorSetSucceededHandler;
 import de.thatsich.openfx.featureextraction.intern.control.handler.RemoveFeatureVectorSetSucceededHandler;
-import de.thatsich.core.javafx.AFXMLPresenter;
-import de.thatsich.core.javafx.CommandExecutor;
-import de.thatsich.core.javafx.component.IntegerField;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
