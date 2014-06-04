@@ -20,7 +20,6 @@ import org.opencv.photo.Photo;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 
 public class ExtractFeatureCommand extends ACommand<IFeature>
@@ -54,9 +53,8 @@ public class ExtractFeatureCommand extends ACommand<IFeature>
 	{
 		final String className = this.errorEntry.getErrorClassProperty().get();
 		final String extractorName = this.featureExtractor.getName();
-		final String id = UUID.randomUUID().toString();
 		final Mat originalWithErrorMat = this.errorEntry.getOriginalWithErrorMat().clone();
-		this.log.info("Prepared all necessary information.");
+		this.log.info("Prepared all necessary information + " + className + ", " + extractorName);
 
 		// TODO Implement Smooth and Threshold somehow Denoising
 		// CvSmooth, CvThreshold
@@ -111,7 +109,7 @@ public class ExtractFeatureCommand extends ACommand<IFeature>
 			}
 		}
 
-		final Path filePath = this.path.resolve(className + "_" + extractorName + "_" + this.frameSize + "_" + id + ".csv");
+		final Path filePath = this.path.resolve(className + "_" + extractorName + "_" + this.frameSize + ".csv");
 		final IFeature feature = new Feature(filePath, className, extractorName, this.frameSize, featureVectorList);
 
 		this.storage.save(feature);

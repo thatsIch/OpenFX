@@ -2,8 +2,8 @@ package de.thatsich.openfx.errorgeneration.intern.control.command.commands;
 
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
-import de.thatsich.openfx.errorgeneration.intern.control.error.core.ErrorEntry;
 import de.thatsich.core.javafx.ACommand;
+import de.thatsich.openfx.errorgeneration.intern.control.error.core.ErrorEntry;
 
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
@@ -23,7 +23,7 @@ public class DeleteErrorEntryCommand extends ACommand<ErrorEntry>
 	@Override
 	protected ErrorEntry call() throws Exception
 	{
-		final Path path = this.entry.getStoragePath();
+		final Path path = this.entry.path();
 		this.deleteChildren(path);
 		this.deletePath(path);
 		this.log.info("Error deleted.");

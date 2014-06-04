@@ -26,7 +26,7 @@ public class ExtractFeatureSucceededHandler extends ACommandHandler<IFeature>
 		this.log.info("Merged Feature into Database.");
 
 		this.features.selectedFeature().set(merge);
-		this.log.info("Set current to selected FeatureVectorSet.");
+		this.log.info("Set current to selected Feature.");
 	}
 
 	private IFeature merge(IFeatures features, IFeature feature)
@@ -59,6 +59,7 @@ public class ExtractFeatureSucceededHandler extends ACommandHandler<IFeature>
 
 			if (sameSize && sameClass && sameExtractor)
 			{
+				this.log.info("Found matching feature.");
 				return Optional.of(iFeature);
 			}
 		}

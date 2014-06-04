@@ -2,28 +2,28 @@ package de.thatsich.openfx.errorgeneration.intern.control.command.commands;
 
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
-import de.thatsich.openfx.errorgeneration.intern.control.error.core.ErrorEntry;
-import de.thatsich.openfx.errorgeneration.intern.control.command.service.ErrorFactoryService;
 import de.thatsich.core.javafx.ACommand;
+import de.thatsich.openfx.errorgeneration.intern.control.command.service.ErrorStorageService;
+import de.thatsich.openfx.errorgeneration.intern.control.error.core.ErrorEntry;
 
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 
 public class InitErrorEntryListCommand extends ACommand<List<ErrorEntry>>
 {
 	private final Path errorInputFolderPath;
-
-	@Inject private ErrorFactoryService factory;
+	private final ErrorStorageService storage;
 
 	@Inject
-	protected InitErrorEntryListCommand(@Assisted Path errorInputFolderPath)
+	protected InitErrorEntryListCommand(@Assisted Path errorInputFolderPath, ErrorStorageService storage)
 	{
 		this.errorInputFolderPath = errorInputFolderPath;
+		this.storage = storage;
 	}
 
 	@Override
@@ -56,13 +56,13 @@ public class InitErrorEntryListCommand extends ACommand<List<ErrorEntry>>
 	 */
 	private List<ErrorEntry> getErrorEntryList(Path directory)
 	{
-		final List<ErrorEntry> errorEntryList = new ArrayList<>();
+		final List<ErrorEntry> errorEntryList = new LinkedList<>();
 
 		try (DirectoryStream<Path> subs = Files.newDirectoryStream(directory, new DirectoriesFilter()))
 		{
 			for (Path sub : subs)
 			{
-				errorEntryList.add(this.factory.pathToErrorEntry(sub));
+				errorEntryList.add(this.storage.load(sub));
 				this.log.info("Added " + sub + ".");
 			}
 		}

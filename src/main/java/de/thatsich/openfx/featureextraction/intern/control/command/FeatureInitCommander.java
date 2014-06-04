@@ -82,7 +82,7 @@ public class FeatureInitCommander
 
 	private void initFeatureVectorList()
 	{
-		final Path folderPath = Paths.get("io/featurevectors");
+		final Path folderPath = Paths.get("io/features");
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(1);
 
 		this.featureState.path().set(folderPath);

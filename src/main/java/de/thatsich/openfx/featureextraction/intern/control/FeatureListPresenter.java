@@ -124,6 +124,14 @@ public class FeatureListPresenter extends AFXMLPresenter
 						return;
 					}
 				}
+				else if (paramChange.wasUpdated())
+				{
+					System.out.println("TEST");
+				}
+				else if (paramChange.wasPermutated())
+				{
+					System.out.println("perm");
+				}
 			}
 		});
 		this.log.info("Bound TreeView to FeatureSpace.");
