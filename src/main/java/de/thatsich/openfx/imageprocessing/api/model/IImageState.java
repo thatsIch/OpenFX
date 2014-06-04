@@ -6,18 +6,7 @@ import java.nio.file.Path;
 
 public interface IImageState
 {
-	// Property Getter
-	public ObjectProperty<Path> imageFolderPathProperty();
+	ObjectProperty<Path> imageFolder();
 
-	public ObjectProperty<Path> getLastLocationProperty();
-
-	// Getter
-	public Path getImageFolderPath();
-
-	// Setter
-	public void setImageFolderPath(Path imageFolderPath);
-
-	public Path getLastLocation();
-
-	public void setLastLocation(Path lastLocation);
+	ObjectProperty<Path> lastLocation();
 }

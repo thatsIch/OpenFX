@@ -3,8 +3,8 @@ package de.thatsich.openfx.errorgeneration.intern.control.command.commands;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import de.thatsich.core.javafx.ACommand;
-import de.thatsich.openfx.errorgeneration.intern.control.command.service.ErrorStorageService;
-import de.thatsich.openfx.errorgeneration.intern.control.error.core.ErrorEntry;
+import de.thatsich.openfx.errorgeneration.api.control.entity.IError;
+import de.thatsich.openfx.errorgeneration.intern.control.command.service.ErrorFileStorageService;
 
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
@@ -14,20 +14,20 @@ import java.util.LinkedList;
 import java.util.List;
 
 
-public class InitErrorEntryListCommand extends ACommand<List<ErrorEntry>>
+public class InitErrorEntryListCommand extends ACommand<List<IError>>
 {
 	private final Path errorInputFolderPath;
-	private final ErrorStorageService storage;
+	private final ErrorFileStorageService storage;
 
 	@Inject
-	protected InitErrorEntryListCommand(@Assisted Path errorInputFolderPath, ErrorStorageService storage)
+	protected InitErrorEntryListCommand(@Assisted Path errorInputFolderPath, ErrorFileStorageService storage)
 	{
 		this.errorInputFolderPath = errorInputFolderPath;
 		this.storage = storage;
 	}
 
 	@Override
-	protected List<ErrorEntry> call() throws Exception
+	protected List<IError> call() throws Exception
 	{
 		this.createInvalidDirectory(this.errorInputFolderPath);
 		return this.getErrorEntryList(this.errorInputFolderPath);
@@ -54,15 +54,15 @@ public class InitErrorEntryListCommand extends ACommand<List<ErrorEntry>>
 	 *
 	 * @return all images
 	 */
-	private List<ErrorEntry> getErrorEntryList(Path directory)
+	private List<IError> getErrorEntryList(Path directory)
 	{
-		final List<ErrorEntry> errorEntryList = new LinkedList<>();
+		final List<IError> errorList = new LinkedList<>();
 
 		try (DirectoryStream<Path> subs = Files.newDirectoryStream(directory, new DirectoriesFilter()))
 		{
 			for (Path sub : subs)
 			{
-				errorEntryList.add(this.storage.load(sub));
+				errorList.add(this.storage.load(sub));
 				this.log.info("Added " + sub + ".");
 			}
 		}
@@ -70,9 +70,9 @@ public class InitErrorEntryListCommand extends ACommand<List<ErrorEntry>>
 		{
 			e.printStackTrace();
 		}
-		this.log.info("All OpenCV Supported Images added: " + errorEntryList.size() + ".");
+		this.log.info("All OpenCV Supported Images added: " + errorList.size() + ".");
 
-		return errorEntryList;
+		return errorList;
 	}
 
 	/**

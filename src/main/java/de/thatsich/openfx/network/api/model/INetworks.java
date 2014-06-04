@@ -13,8 +13,4 @@ public interface INetworks
 	ListProperty<Network> list();
 
 	ObjectProperty<Network> selected();
-
-	Network getSelectedNetwork();
-
-	void setSelectedNetwork(Network network);
 }

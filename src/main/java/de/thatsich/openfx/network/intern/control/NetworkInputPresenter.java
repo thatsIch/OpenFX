@@ -41,7 +41,7 @@ public class NetworkInputPresenter extends AFXMLPresenter
 	protected void bindComponents()
 	{
 		// Buttons
-//		this.nodeButtonTrainNetwork.disabledProperty().bind(this) //TODO bind depending on which model I want to get from
+		//		this.nodeButtonTrainNetwork.disabledProperty().bind(this) //TODO bind depending on which model I want to get from
 		this.nodeButtonDeleteNetwork.disableProperty().bind(this.networks.selected().isNull());
 		this.nodeButtonResetNetwork.disableProperty().bind(this.networks.list().emptyProperty());
 	}
@@ -52,13 +52,17 @@ public class NetworkInputPresenter extends AFXMLPresenter
 
 	}
 
-	@FXML private void onTrainNetworkAction() {
-		final Path path = this.state.getNetworkPath();
-//		final N //TODO depending on what I want to depend on
+	@FXML
+	private void onTrainNetworkAction()
+	{
+		final Path path = this.state.path().get();
+		//		final N //TODO depending on what I want to depend on
 
 	}
 
-	@FXML private void onDeleteNetworkAction() {
+	@FXML
+	private void onDeleteNetworkAction()
+	{
 		final Network selected = this.networks.selected().get();
 		final DeleteNetworkCommand command = this.provider.createDeleteNetworkCommand(selected);
 		command.setOnSucceededCommandHandler(DeleteNetworkSucceededHandler.class);
@@ -66,7 +70,9 @@ public class NetworkInputPresenter extends AFXMLPresenter
 		this.log.info("Initiated Delete of Network.");
 	}
 
-	@FXML private void onResetNetworkAction() {
+	@FXML
+	private void onResetNetworkAction()
+	{
 		final List<Network> networkList = this.networks.list();
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(networkList.size());
 
@@ -79,11 +85,7 @@ public class NetworkInputPresenter extends AFXMLPresenter
 		}
 		this.log.info("Initiated Reset of all Networks.");
 
-		executor.execute(new Runnable()
-		{
-			@Override
-			public void run() { System.gc(); }
-		});
+		executor.execute(System::gc);
 		this.log.info("Running Garbage Collector.");
 
 		executor.shutdown();

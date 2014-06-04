@@ -1,9 +1,9 @@
 package de.thatsich.openfx.errorgeneration.intern.control.handler;
 
 import com.google.inject.Inject;
-import de.thatsich.openfx.errorgeneration.api.model.IErrorEntries;
-import de.thatsich.openfx.errorgeneration.intern.control.error.core.ErrorEntry;
 import de.thatsich.core.javafx.ACommandHandler;
+import de.thatsich.openfx.errorgeneration.api.control.entity.IError;
+import de.thatsich.openfx.errorgeneration.api.model.IErrors;
 import javafx.collections.ObservableList;
 
 /**
@@ -12,26 +12,26 @@ import javafx.collections.ObservableList;
  *
  * @author Minh
  */
-public class DeleteErrorEntrySucceededHandler extends ACommandHandler<ErrorEntry>
+public class DeleteErrorEntrySucceededHandler extends ACommandHandler<IError>
 {
-	@Inject private IErrorEntries errorEntryList;
+	@Inject private IErrors errorEntryList;
 
 	@Override
-	public void handle(ErrorEntry value)
+	public void handle(IError value)
 	{
-		final ObservableList<ErrorEntry> entryList = this.errorEntryList.errorEntries();
+		final ObservableList<IError> entryList = this.errorEntryList.list();
 		entryList.remove(value);
 		this.log.info("Removed ErrorEntry from Database.");
 
 		if (entryList.size() > 0)
 		{
-			final ErrorEntry first = entryList.get(0);
-			this.errorEntryList.selectedErrorEntry().set(first);
+			final IError first = entryList.get(0);
+			this.errorEntryList.selected().set(first);
 			this.log.info("Reset Selection to first ErrorEntry.");
 		}
 		else
 		{
-			this.errorEntryList.selectedErrorEntry().set(null);
+			this.errorEntryList.selected().set(null);
 			this.log.info("Reset Selection to null.");
 		}
 	}

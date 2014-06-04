@@ -1,20 +1,20 @@
 package de.thatsich.openfx.errorgeneration.api.guice;
 
 import com.google.inject.Scopes;
-import de.thatsich.openfx.errorgeneration.api.view.IErrorDisplayView;
-import de.thatsich.openfx.errorgeneration.api.model.IErrorEntries;
+import de.thatsich.core.guice.AWiringModule;
 import de.thatsich.openfx.errorgeneration.api.model.IErrorGenerators;
+import de.thatsich.openfx.errorgeneration.api.model.IErrorState;
+import de.thatsich.openfx.errorgeneration.api.model.IErrors;
+import de.thatsich.openfx.errorgeneration.api.view.IErrorDisplayView;
 import de.thatsich.openfx.errorgeneration.api.view.IErrorInputView;
 import de.thatsich.openfx.errorgeneration.api.view.IErrorListView;
-import de.thatsich.openfx.errorgeneration.api.model.IErrorState;
-import de.thatsich.openfx.errorgeneration.intern.model.ErrorEntries;
+import de.thatsich.openfx.errorgeneration.intern.control.command.service.ErrorConfigService;
 import de.thatsich.openfx.errorgeneration.intern.model.ErrorGenerators;
 import de.thatsich.openfx.errorgeneration.intern.model.ErrorState;
-import de.thatsich.openfx.errorgeneration.intern.control.command.service.ErrorConfigService;
+import de.thatsich.openfx.errorgeneration.intern.model.Errors;
 import de.thatsich.openfx.errorgeneration.intern.view.ErrorDisplayView;
 import de.thatsich.openfx.errorgeneration.intern.view.ErrorInputView;
 import de.thatsich.openfx.errorgeneration.intern.view.ErrorListView;
-import de.thatsich.core.guice.AWiringModule;
 
 
 /**
@@ -59,7 +59,7 @@ public class ErrorWiringModule extends AWiringModule
 	@Override
 	protected void bindModel()
 	{
-		super.bind(IErrorEntries.class).to(ErrorEntries.class).in(Scopes.SINGLETON);
+		super.bind(IErrors.class).to(Errors.class).in(Scopes.SINGLETON);
 		super.bind(IErrorGenerators.class).to(ErrorGenerators.class).in(Scopes.SINGLETON);
 		super.bind(IErrorState.class).to(ErrorState.class).in(Scopes.SINGLETON);
 	}

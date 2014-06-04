@@ -1,47 +1,37 @@
 package de.thatsich.openfx.imageprocessing.intern.control;
 
 import com.google.inject.Inject;
-import de.thatsich.openfx.imageprocessing.api.model.IImageEntries;
-import de.thatsich.openfx.imageprocessing.api.control.ImageEntry;
-import de.thatsich.openfx.imageprocessing.intern.control.command.ImageInitCommander;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.opencv.Images;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import de.thatsich.openfx.imageprocessing.api.control.IImage;
+import de.thatsich.openfx.imageprocessing.api.model.IImages;
+import de.thatsich.openfx.imageprocessing.intern.control.command.ImageInitCommander;
 import javafx.fxml.FXML;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class ImageDisplayPresenter extends AFXMLPresenter
 {
-
-	@Inject ImageInitCommander initCommander;
-	// Nodes
-	@FXML ImageView nodeImageViewInput;
 	// Injects
-	@Inject IImageEntries imageEntries;
+	@Inject private ImageInitCommander init;
+	@Inject private IImages images;
+
+	// Nodes
+	@FXML private ImageView nodeImageViewInput;
 
 	@Override
 	protected void bindComponents()
 	{
-		this.imageEntries.selectedImageEntryProperty().addListener(new ChangeListener<ImageEntry>()
-		{
-			@Override
-			public void changed(ObservableValue<? extends ImageEntry> observable, ImageEntry oldValue, ImageEntry newValue)
-			{
-				nodeImageViewInput.imageProperty().setValue((newValue != null) ? Images.toImage(newValue.getImageMat()) : null);
-			}
-		});
+		this.images.selected().addListener((observable, oldValue, newValue) -> this.nodeImageViewInput.imageProperty().setValue((newValue != null) ? Images.toImage(newValue.getImageMat()) : null));
 		this.log.info("Bound ImageView to Model.");
 	}
 
 	@Override
 	protected void initComponents()
 	{
-		ImageEntry entry = this.imageEntries.selectedImageEntryProperty().get();
+		final IImage entry = this.images.selected().get();
 		if (entry != null)
 		{
-			final Image entryImage = Images.toImage(entry.getImageMat());
+			final javafx.scene.image.Image entryImage = Images.toImage(entry.getImageMat());
 			this.nodeImageViewInput.imageProperty().setValue(entryImage);
 			this.log.info("Initialized nodeImageViewInput.");
 		}

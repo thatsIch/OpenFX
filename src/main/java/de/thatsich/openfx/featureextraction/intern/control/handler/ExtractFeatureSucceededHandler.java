@@ -38,6 +38,8 @@ public class ExtractFeatureSucceededHandler extends ACommandHandler<IFeature>
 			final List<IFeatureVector> vectors = feature.vectors();
 
 			match.vectors().addAll(vectors);
+			features.list().remove(match);
+			features.list().add(match);
 
 			return match;
 		}

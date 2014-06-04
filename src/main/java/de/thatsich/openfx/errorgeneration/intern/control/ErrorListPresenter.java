@@ -1,12 +1,12 @@
 package de.thatsich.openfx.errorgeneration.intern.control;
 
 import com.google.inject.Inject;
-import de.thatsich.openfx.errorgeneration.api.model.IErrorEntries;
+import de.thatsich.core.javafx.AFXMLPresenter;
+import de.thatsich.openfx.errorgeneration.api.control.entity.IError;
+import de.thatsich.openfx.errorgeneration.api.model.IErrors;
 import de.thatsich.openfx.errorgeneration.intern.control.command.ErrorInitCommander;
 import de.thatsich.openfx.errorgeneration.intern.control.command.commands.SetLastErrorEntryIndexCommand;
-import de.thatsich.openfx.errorgeneration.intern.control.error.core.ErrorEntry;
 import de.thatsich.openfx.errorgeneration.intern.control.provider.IErrorCommandProvider;
-import de.thatsich.core.javafx.AFXMLPresenter;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -16,13 +16,13 @@ public class ErrorListPresenter extends AFXMLPresenter
 {
 	// Injects
 	@Inject private ErrorInitCommander init;
-	@Inject private IErrorEntries errorEntries;
+	@Inject private IErrors errors;
 	@Inject private IErrorCommandProvider provider;
 
 	// Nodes
-	@FXML private TableView<ErrorEntry> nodeTableViewErrorList;
-	@FXML private TableColumn<ErrorEntry, String> nodeTableColumnErrorClass;
-	@FXML private TableColumn<ErrorEntry, String> nodeTableColumnErrorName;
+	@FXML private TableView<IError> nodeTableViewErrorList;
+	@FXML private TableColumn<IError, String> nodeTableColumnErrorClass;
+	@FXML private TableColumn<IError, String> nodeTableColumnErrorName;
 
 	@Override
 	protected void bindComponents()
@@ -51,22 +51,22 @@ public class ErrorListPresenter extends AFXMLPresenter
 
 	private void bindTableViewContent()
 	{
-		this.nodeTableViewErrorList.itemsProperty().bind(this.errorEntries.errorEntries());
+		this.nodeTableViewErrorList.itemsProperty().bind(this.errors.list());
 		this.log.info("Bound Content to Model.");
 	}
 
 	private void bindTableViewSelectionModel()
 	{
 		this.nodeTableViewErrorList.getSelectionModel().selectedItemProperty().addListener((paramObservableValue, oldvalue, newValue) -> {
-			errorEntries.selectedErrorEntry().set(newValue);
+			this.errors.selected().set(newValue);
 
-			final int index = nodeTableViewErrorList.getSelectionModel().getSelectedIndex();
-			final SetLastErrorEntryIndexCommand command = provider.createSetLastErrorEntryIndexCommand(index);
+			final int index = this.nodeTableViewErrorList.getSelectionModel().getSelectedIndex();
+			final SetLastErrorEntryIndexCommand command = this.provider.createSetLastErrorEntryIndexCommand(index);
 			command.start();
 		});
 		this.log.info("Bound Selection to Model.");
 
-		this.errorEntries.selectedErrorEntry().addListener((observable, oldValue, newValue) -> nodeTableViewErrorList.getSelectionModel().select(newValue));
+		this.errors.selected().addListener((observable, oldValue, newValue) -> this.nodeTableViewErrorList.getSelectionModel().select(newValue));
 		this.log.info("Bound Model to Selection.");
 	}
 

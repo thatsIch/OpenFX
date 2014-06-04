@@ -1,6 +1,8 @@
 package de.thatsich.openfx.network.intern.control.command;
 
 import com.google.inject.Inject;
+import de.thatsich.core.javafx.AInitCommander;
+import de.thatsich.core.javafx.CommandExecutor;
 import de.thatsich.openfx.network.api.model.INetworkState;
 import de.thatsich.openfx.network.intern.control.command.commands.GetLastNetworkIndexCommand;
 import de.thatsich.openfx.network.intern.control.command.commands.InitNetworkFolderCommand;
@@ -8,8 +10,6 @@ import de.thatsich.openfx.network.intern.control.command.commands.InitNetworkLis
 import de.thatsich.openfx.network.intern.control.handler.GetLastNetworkIndexSucceededHandler;
 import de.thatsich.openfx.network.intern.control.handler.InitNetworkListSucceededHandler;
 import de.thatsich.openfx.network.intern.control.provider.INetworkInitCommandProvider;
-import de.thatsich.core.javafx.AInitCommander;
-import de.thatsich.core.javafx.CommandExecutor;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -34,7 +34,7 @@ public class NetworkInitCommander extends AInitCommander
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(1);
 		this.log.info("Prepared Network Preparations.");
 
-		this.state.setNetworkPath(networkInputPath);
+		this.state.path().set(networkInputPath);
 		this.log.info("Set Network Path in Model.");
 
 		final InitNetworkFolderCommand command = this.provider.createInitNetworkFolderCommand(networkInputPath);

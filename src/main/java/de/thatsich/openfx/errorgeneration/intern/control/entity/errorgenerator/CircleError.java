@@ -1,6 +1,5 @@
-package de.thatsich.openfx.errorgeneration.intern.control.error;
+package de.thatsich.openfx.errorgeneration.intern.control.entity.errorgenerator;
 
-import de.thatsich.openfx.errorgeneration.intern.control.error.core.AErrorGenerator;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;

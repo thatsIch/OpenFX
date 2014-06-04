@@ -80,8 +80,8 @@ public class ClassificationInputPresenter extends AFXMLPresenter
 		});
 		this.log.info("Set up ChoiceBoxBinaryClassifier for proper name display.");
 
-		this.nodeChoiceBoxBinaryClassifier.itemsProperty().bindBidirectional(this.binaryClassifiers.binaryClassifiers());
-		this.nodeChoiceBoxBinaryClassifier.valueProperty().bindBidirectional(this.binaryClassifiers.selectedBinaryClassifier());
+		this.nodeChoiceBoxBinaryClassifier.itemsProperty().bindBidirectional(this.binaryClassifiers.list());
+		this.nodeChoiceBoxBinaryClassifier.valueProperty().bindBidirectional(this.binaryClassifiers.selected());
 		this.log.info("Bound ChoiceBoxBinaryClassifier to Model.");
 
 		this.nodeChoiceBoxBinaryClassifier.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
@@ -105,7 +105,7 @@ public class ClassificationInputPresenter extends AFXMLPresenter
 	private void onTrainBinaryClassifierAction()
 	{
 		final Path binaryClassifierFolderPath = this.trainState.path().get();
-		final IBinaryClassifier selectedBinaryClassfier = this.binaryClassifiers.selectedBinaryClassifier().get();
+		final IBinaryClassifier selectedBinaryClassfier = this.binaryClassifiers.selected().get();
 		final List<IFeature> features = this.features.list();
 		final IFeature selected = this.features.selectedFeature().get();
 

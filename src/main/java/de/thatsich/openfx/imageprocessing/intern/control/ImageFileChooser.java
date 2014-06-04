@@ -2,9 +2,9 @@ package de.thatsich.openfx.imageprocessing.intern.control;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import de.thatsich.core.Log;
 import de.thatsich.openfx.imageprocessing.api.model.IImageState;
 import de.thatsich.openfx.imageprocessing.intern.control.command.provider.IImageCommandProvider;
-import de.thatsich.core.Log;
 import javafx.collections.FXCollections;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -84,7 +84,7 @@ public class ImageFileChooser
 	 */
 	public List<Path> show()
 	{
-		this.chooser.setInitialDirectory(this.imageState.getLastLocation().toFile());
+		this.chooser.setInitialDirectory(this.imageState.lastLocation().get().toFile());
 
 		List<File> result = this.chooser.showOpenMultipleDialog(null);
 		this.log.info("Showing Open Dialog.");

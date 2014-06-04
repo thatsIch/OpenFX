@@ -2,39 +2,26 @@ package de.thatsich.openfx.prediction.intern.control.command.commands;
 
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
-import de.thatsich.openfx.prediction.api.control.BinaryPrediction;
 import de.thatsich.core.javafx.ACommand;
-
-import java.nio.file.Files;
-import java.nio.file.Path;
+import de.thatsich.openfx.prediction.api.control.BinaryPrediction;
+import de.thatsich.openfx.prediction.intern.control.command.service.BinaryPredictionFileStorageService;
 
 public class DeleteBinaryPredictionCommand extends ACommand<BinaryPrediction>
 {
-
-	// Fields
-	final BinaryPrediction toBeDeletedBinaryPrediction;
+	final BinaryPrediction prediction;
+	final BinaryPredictionFileStorageService storage;
 
 	@Inject
-	private DeleteBinaryPredictionCommand(@Assisted BinaryPrediction toBeDeletedBinaryPrediction)
+	private DeleteBinaryPredictionCommand(@Assisted BinaryPrediction prediction, final BinaryPredictionFileStorageService storage)
 	{
-		this.toBeDeletedBinaryPrediction = toBeDeletedBinaryPrediction;
+		this.prediction = prediction;
+		this.storage = storage;
 	}
 
 	@Override
 	protected BinaryPrediction call() throws Exception
 	{
-		final Path toBeDeletedFilePath = this.toBeDeletedBinaryPrediction.getFilePathProperty().get();
-		if (Files.exists(toBeDeletedFilePath))
-		{
-			Files.delete(toBeDeletedFilePath);
-			this.log.info(toBeDeletedFilePath + " deleted.");
-		}
-		else
-		{
-			this.log.warning("Could not delete " + toBeDeletedFilePath + " because it was not found.");
-		}
-
-		return this.toBeDeletedBinaryPrediction;
+		this.storage.delete(this.prediction);
+		return this.prediction;
 	}
-
 }

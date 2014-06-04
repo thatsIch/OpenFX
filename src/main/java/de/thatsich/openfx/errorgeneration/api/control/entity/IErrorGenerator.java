@@ -1,4 +1,4 @@
-package de.thatsich.openfx.errorgeneration.api.control;
+package de.thatsich.openfx.errorgeneration.api.control.entity;
 
 import org.opencv.core.Mat;
 

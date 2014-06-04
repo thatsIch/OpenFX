@@ -2,6 +2,8 @@ package de.thatsich.openfx.prediction.intern.control.command;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import de.thatsich.core.javafx.AInitCommander;
+import de.thatsich.core.javafx.CommandExecutor;
 import de.thatsich.openfx.prediction.api.model.IPredictionState;
 import de.thatsich.openfx.prediction.intern.control.command.commands.GetLastBinaryPredictionIndexCommand;
 import de.thatsich.openfx.prediction.intern.control.command.commands.InitBinaryPredictionListCommand;
@@ -9,8 +11,6 @@ import de.thatsich.openfx.prediction.intern.control.command.commands.InitPredict
 import de.thatsich.openfx.prediction.intern.control.command.handler.GetLastBinaryPredictionIndexSucceededHandler;
 import de.thatsich.openfx.prediction.intern.control.command.handler.InitBinaryPredictionListSucceededHandler;
 import de.thatsich.openfx.prediction.intern.control.provider.IPredictionInitCommandProvider;
-import de.thatsich.core.javafx.AInitCommander;
-import de.thatsich.core.javafx.CommandExecutor;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -35,7 +35,7 @@ public class PredictionInitCommander extends AInitCommander
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(1);
 		this.log.info("Prepared BinaryPrediction Preparations.");
 
-		this.predictionState.setPredictionFolderPath(predictionInputFolderPath);
+		this.predictionState.path().set(predictionInputFolderPath);
 		this.log.info("Set BinaryPredictionFolderPath in Model.");
 
 		final InitPredictionFolderCommand command = this.commander.createInitPredictionFolderCommand(predictionInputFolderPath);

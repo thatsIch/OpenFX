@@ -1,9 +1,9 @@
 package de.thatsich.openfx.errorgeneration.intern.control.command.handler;
 
 import com.google.inject.Inject;
-import de.thatsich.openfx.errorgeneration.api.model.IErrorEntries;
-import de.thatsich.openfx.errorgeneration.intern.control.error.core.ErrorEntry;
 import de.thatsich.core.javafx.ACommandHandler;
+import de.thatsich.openfx.errorgeneration.api.control.entity.IError;
+import de.thatsich.openfx.errorgeneration.api.model.IErrors;
 
 import java.util.List;
 
@@ -13,14 +13,14 @@ import java.util.List;
  *
  * @author Minh
  */
-public class InitErrorEntryListSucceededHandler extends ACommandHandler<List<ErrorEntry>>
+public class InitErrorEntryListSucceededHandler extends ACommandHandler<List<IError>>
 {
-	@Inject	private IErrorEntries errorEntryList;
+	@Inject private IErrors errors;
 
 	@Override
-	public void handle(List<ErrorEntry> entryList)
+	public void handle(List<IError> entryList)
 	{
-		this.errorEntryList.errorEntries().addAll(entryList);
+		this.errors.list().addAll(entryList);
 		this.log.info("Initialized all ErrorEntries into Model.");
 	}
 }

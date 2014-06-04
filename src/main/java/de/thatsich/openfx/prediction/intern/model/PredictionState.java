@@ -9,17 +9,11 @@ import java.nio.file.Path;
 public class PredictionState implements IPredictionState
 {
 	// Properties
-	private final ObjectProperty<Path> predictionFolderPath = new SimpleObjectProperty<>();
+	private final ObjectProperty<Path> path = new SimpleObjectProperty<>();
 
-	// Property Getter
-	public ObjectProperty<Path> getPredictionFolderPathProperty()
-	{ return this.predictionFolderPath; }
-
-	// Getter
-	public Path getPredictionFolderPath()
-	{ return this.predictionFolderPath.get(); }
-
-	// Setter
-	public void setPredictionFolderPath(Path predictionFolderPath)
-	{ this.predictionFolderPath.set(predictionFolderPath); }
+	@Override
+	public ObjectProperty<Path> path()
+	{
+		return this.path;
+	}
 }

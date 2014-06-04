@@ -1,32 +1,27 @@
 package de.thatsich.openfx.imageprocessing.intern.control;
 
 import com.google.inject.Inject;
-import de.thatsich.openfx.imageprocessing.api.model.IImageEntries;
-import de.thatsich.openfx.imageprocessing.api.control.ImageEntry;
+import de.thatsich.core.javafx.AFXMLPresenter;
+import de.thatsich.openfx.imageprocessing.api.control.IImage;
+import de.thatsich.openfx.imageprocessing.api.model.IImages;
 import de.thatsich.openfx.imageprocessing.intern.control.command.ImageInitCommander;
 import de.thatsich.openfx.imageprocessing.intern.control.command.commands.SetLastImageEntryIndexCommand;
 import de.thatsich.openfx.imageprocessing.intern.control.command.provider.IImageCommandProvider;
-import de.thatsich.core.javafx.AFXMLPresenter;
 import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
-import javafx.util.Callback;
 
 public class ImageListPresenter extends AFXMLPresenter
 {
 	// Injects
-	@Inject ImageInitCommander initCommander;
-	@Inject IImageCommandProvider commander;
-	@Inject IImageEntries imageEntries;
+	@Inject private ImageInitCommander init;
+	@Inject private IImageCommandProvider provider;
+	@Inject private IImages images;
 
 	// Nodes
-	@FXML TableView<ImageEntry> nodeTableViewImageList;
-	@FXML TableColumn<ImageEntry, String> nodeTableColumnImageList;
-
+	@FXML private TableView<IImage> nodeTableViewImageList;
+	@FXML private TableColumn<IImage, String> nodeTableColumnImageList;
 
 	@Override
 	protected void bindComponents()
@@ -52,50 +47,31 @@ public class ImageListPresenter extends AFXMLPresenter
 
 	private void bindTableViewContent()
 	{
-		this.nodeTableViewImageList.itemsProperty().bind(this.imageEntries.imageEntryListProperty());
+		this.nodeTableViewImageList.itemsProperty().bind(this.images.list());
 		this.log.info("Bound nodeTableViewImageList to ImageDatabase.");
 	}
 
 	private void bindTableViewSelectionModel()
 	{
 		// change selection > change model
-		this.nodeTableViewImageList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<ImageEntry>()
-		{
-			@Override
-			public void changed(ObservableValue<? extends ImageEntry> paramObservableValue, ImageEntry oldValue, ImageEntry newValue)
-			{
-				imageEntries.selectedImageEntryProperty().set(newValue);
+		this.nodeTableViewImageList.getSelectionModel().selectedItemProperty().addListener((paramObservableValue, oldValue, newValue) -> {
+			this.images.selected().set(newValue);
 
-				final int index = nodeTableViewImageList.getSelectionModel().getSelectedIndex();
-				final SetLastImageEntryIndexCommand command = commander.createSetLastImageEntryIndexCommand(index);
-				command.start();
-				log.info("Seleced index " + index);
-			}
+			final int index = this.nodeTableViewImageList.getSelectionModel().getSelectedIndex();
+			final SetLastImageEntryIndexCommand command = this.provider.createSetLastImageEntryIndexCommand(index);
+			command.start();
+			this.log.info("Seleced index " + index);
 		});
 		this.log.info("Bound Model to TableView.");
 
 		// change model > select
-		this.imageEntries.selectedImageEntryProperty().addListener(new ChangeListener<ImageEntry>()
-		{
-			@Override
-			public void changed(ObservableValue<? extends ImageEntry> observable, ImageEntry oldValue, ImageEntry newValue)
-			{
-				nodeTableViewImageList.getSelectionModel().select(newValue);
-			}
-		});
+		this.images.selected().addListener((observable, oldValue, newValue) -> this.nodeTableViewImageList.getSelectionModel().select(newValue));
 		this.log.info("Bound TableView to Model.");
 	}
 
 	private void bindTableViewCellValue()
 	{
-		this.nodeTableColumnImageList.setCellValueFactory(new Callback<CellDataFeatures<ImageEntry, String>, ObservableValue<String>>()
-		{
-			@Override
-			public ObservableValue<String> call(CellDataFeatures<ImageEntry, String> feature)
-			{
-				return new ReadOnlyObjectWrapper<>(feature.getValue().getName());
-			}
-		});
+		this.nodeTableColumnImageList.setCellValueFactory(feature -> new ReadOnlyObjectWrapper<>(feature.getValue().getImageName()));
 		this.log.info("Setup CellValueFactory for nodeTableColumnImageList.");
 	}
 

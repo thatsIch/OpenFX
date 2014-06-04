@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import de.thatsich.core.javafx.ACommand;
 import de.thatsich.core.opencv.Images;
-import de.thatsich.openfx.errorgeneration.intern.control.error.core.ErrorEntry;
+import de.thatsich.openfx.errorgeneration.intern.control.entity.Error;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureExtractor;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureVector;
@@ -26,7 +26,7 @@ public class ExtractFeatureCommand extends ACommand<IFeature>
 {
 	// Properties
 	private final Path path;
-	private final ErrorEntry errorEntry;
+	private final Error error;
 	private final IFeatureExtractor featureExtractor;
 	private final int frameSize;
 	private final boolean smooth;
@@ -37,10 +37,10 @@ public class ExtractFeatureCommand extends ACommand<IFeature>
 	@Inject private FeatureStorageService storage;
 
 	@Inject
-	public ExtractFeatureCommand(@Assisted Path folderPath, @Assisted ErrorEntry errorEntry, @Assisted IFeatureExtractor extractor, @Assisted int frameSize, @Assisted("smooth") boolean smooth, @Assisted("threshold") boolean threshold, @Assisted("denoising") boolean denoising)
+	public ExtractFeatureCommand(@Assisted Path folderPath, @Assisted de.thatsich.openfx.errorgeneration.intern.control.entity.Error error, @Assisted IFeatureExtractor extractor, @Assisted int frameSize, @Assisted("smooth") boolean smooth, @Assisted("threshold") boolean threshold, @Assisted("denoising") boolean denoising)
 	{
 		this.path = folderPath;
-		this.errorEntry = errorEntry;
+		this.error = error;
 		this.featureExtractor = extractor;
 		this.frameSize = frameSize;
 		this.smooth = smooth;
@@ -51,9 +51,9 @@ public class ExtractFeatureCommand extends ACommand<IFeature>
 	@Override
 	protected IFeature call() throws Exception
 	{
-		final String className = this.errorEntry.getErrorClassProperty().get();
+		final String className = this.error.getClazz();
 		final String extractorName = this.featureExtractor.getName();
-		final Mat originalWithErrorMat = this.errorEntry.getOriginalWithErrorMat().clone();
+		final Mat originalWithErrorMat = this.error.getModified().clone();
 		this.log.info("Prepared all necessary information + " + className + ", " + extractorName);
 
 		// TODO Implement Smooth and Threshold somehow Denoising
@@ -71,7 +71,7 @@ public class ExtractFeatureCommand extends ACommand<IFeature>
 		final List<IFeatureVector> featureVectorList = FXCollections.observableArrayList();
 		final List<List<Float>> csvResult = FXCollections.observableArrayList();
 		final Mat[][] originalErrorSplit = Images.split(originalWithErrorMat, this.frameSize, this.frameSize);
-		final Mat[][] errorSplit = Images.split(this.errorEntry.getErrorMat(), this.frameSize, this.frameSize);
+		final Mat[][] errorSplit = Images.split(this.error.getError(), this.frameSize, this.frameSize);
 		this.log.info("Prepared split images.");
 
 		for (int col = 0; col < originalErrorSplit.length; col++)

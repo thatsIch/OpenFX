@@ -2,6 +2,8 @@ package de.thatsich.openfx.preprocessing.intern.control.command;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import de.thatsich.core.Log;
+import de.thatsich.core.javafx.CommandExecutor;
 import de.thatsich.openfx.preprocessing.api.model.IPreProcessingState;
 import de.thatsich.openfx.preprocessing.intern.control.command.commands.GetLastPreProcessingIndexCommand;
 import de.thatsich.openfx.preprocessing.intern.control.command.commands.GetLastPreProcessorIndexCommand;
@@ -12,8 +14,6 @@ import de.thatsich.openfx.preprocessing.intern.control.command.handler.GetLastPr
 import de.thatsich.openfx.preprocessing.intern.control.command.handler.InitPreProcessingListSucceededHandler;
 import de.thatsich.openfx.preprocessing.intern.control.command.handler.InitPreProcessorListSucceededHandler;
 import de.thatsich.openfx.preprocessing.intern.control.command.provider.IPreProcessingInitCommandProvider;
-import de.thatsich.core.Log;
-import de.thatsich.core.javafx.CommandExecutor;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -64,7 +64,7 @@ public class PreProcessingInitCommander
 		final Path path = Paths.get("io/preprocessing");
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(1);
 
-		this.state.setPreProcessingFolderPath(path);
+		this.state.path().set(path);
 		this.log.info("Set " + path + " to Model.");
 
 		final InitPreProcessingListCommand initCommand = this.commander.createInitPreProcessingListCommand(path);

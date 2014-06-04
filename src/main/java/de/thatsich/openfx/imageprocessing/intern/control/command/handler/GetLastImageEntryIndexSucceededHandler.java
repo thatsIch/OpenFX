@@ -1,9 +1,11 @@
 package de.thatsich.openfx.imageprocessing.intern.control.command.handler;
 
 import com.google.inject.Inject;
-import de.thatsich.openfx.imageprocessing.api.model.IImageEntries;
-import de.thatsich.openfx.imageprocessing.api.control.ImageEntry;
 import de.thatsich.core.javafx.ACommandHandler;
+import de.thatsich.openfx.imageprocessing.api.control.IImage;
+import de.thatsich.openfx.imageprocessing.api.model.IImages;
+
+import java.util.List;
 
 /**
  * Handler for what should happen if the Command was successfull
@@ -15,13 +17,18 @@ public class GetLastImageEntryIndexSucceededHandler extends ACommandHandler<Inte
 {
 
 	@Inject
-	private IImageEntries imageEntries;
+	private IImages images;
 
 	@Override
 	public void handle(Integer value)
 	{
-		final ImageEntry selectedImageEntry = this.imageEntries.imageEntryListProperty().get(value);
-		this.imageEntries.setSelectedImageEntry(selectedImageEntry);
-		log.info("Set last selected image entry index in Model.");
+		final List<IImage> list = this.images.list();
+
+		if (value >= 0 && list.size() > 0)
+		{
+			final IImage selected = list.get(value);
+			this.images.selected().set(selected);
+			this.log.info("Set last selected image index in Model.");
+		}
 	}
 }

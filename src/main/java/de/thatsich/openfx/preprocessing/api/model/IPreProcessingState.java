@@ -20,19 +20,5 @@ public interface IPreProcessingState
 	 *
 	 * @return Property of FolderPath
 	 */
-	ObjectProperty<Path> getPreProcessingFolderPathProperty();
-
-	/**
-	 * Getter of FolderPath
-	 *
-	 * @return FolderPath
-	 */
-	Path getPreProcessingFolderPath();
-
-	/**
-	 * Setter of FolderPath
-	 *
-	 * @param folderPath FolderPath
-	 */
-	void setPreProcessingFolderPath(Path folderPath);
+	ObjectProperty<Path> path();
 }

@@ -1,17 +1,17 @@
 package de.thatsich.openfx.imageprocessing.intern.control;
 
 import com.google.inject.Inject;
-import de.thatsich.openfx.imageprocessing.api.model.IImageEntries;
+import de.thatsich.core.javafx.AFXMLPresenter;
+import de.thatsich.core.javafx.CommandExecutor;
+import de.thatsich.openfx.imageprocessing.api.control.IImage;
 import de.thatsich.openfx.imageprocessing.api.model.IImageState;
-import de.thatsich.openfx.imageprocessing.api.control.ImageEntry;
+import de.thatsich.openfx.imageprocessing.api.model.IImages;
 import de.thatsich.openfx.imageprocessing.intern.control.command.ImageInitCommander;
 import de.thatsich.openfx.imageprocessing.intern.control.command.commands.CopyFileCommand;
 import de.thatsich.openfx.imageprocessing.intern.control.command.commands.DeleteImageEntryCommand;
 import de.thatsich.openfx.imageprocessing.intern.control.command.provider.IImageCommandProvider;
 import de.thatsich.openfx.imageprocessing.intern.control.handler.AddImageEntrySucceededHandler;
 import de.thatsich.openfx.imageprocessing.intern.control.handler.DeleteImageEntrySucceededHandler;
-import de.thatsich.core.javafx.AFXMLPresenter;
-import de.thatsich.core.javafx.CommandExecutor;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
@@ -30,20 +30,16 @@ import java.util.concurrent.ExecutorService;
  */
 public class ImageInputPresenter extends AFXMLPresenter
 {
-
-	@Inject ImageInitCommander initCommander;
-	// Nodes
-	@FXML Button nodeButtonRemoveImage;
-	@FXML Button nodeButtonResetDatabase;
 	// Injects
-	@Inject
-	private IImageCommandProvider commander;
-	@Inject
-	private IImageEntries imageEntries;
-	@Inject
-	private IImageState imageState;
-	@Inject
-	private ImageFileChooser chooser;
+	@Inject private ImageInitCommander init;
+	@Inject private IImageCommandProvider provider;
+	@Inject private IImages images;
+	@Inject private IImageState state;
+	@Inject private ImageFileChooser chooser;
+
+	// Nodes
+	@FXML private Button nodeButtonRemoveImage;
+	@FXML private Button nodeButtonResetDatabase;
 
 	// Binding Implementation
 	@Override
@@ -60,8 +56,8 @@ public class ImageInputPresenter extends AFXMLPresenter
 
 	private void bindButtons()
 	{
-		this.nodeButtonRemoveImage.disableProperty().bind(this.imageEntries.selectedImageEntryProperty().isNull());
-		this.nodeButtonResetDatabase.disableProperty().bind(this.imageEntries.imageEntryListProperty().emptyProperty());
+		this.nodeButtonRemoveImage.disableProperty().bind(this.images.selected().isNull());
+		this.nodeButtonResetDatabase.disableProperty().bind(this.images.list().emptyProperty());
 	}
 
 	// ================================================== 
@@ -90,10 +86,10 @@ public class ImageInputPresenter extends AFXMLPresenter
 
 		for (final Path imagePath : imagePathList)
 		{
-			final Path copyPath = this.imageState.getImageFolderPath().resolve(imagePath.getFileName());
+			final Path copyPath = this.state.imageFolder().get().resolve(imagePath.getFileName());
 			this.log.info("Created new Path: " + copyPath);
 
-			final CopyFileCommand command = this.commander.createCopyFileCommand(imagePath, copyPath);
+			final CopyFileCommand command = this.provider.createCopyFileCommand(imagePath, copyPath);
 			command.setOnSucceededCommandHandler(AddImageEntrySucceededHandler.class);
 			command.setExecutor(executor);
 			command.start();
@@ -112,7 +108,7 @@ public class ImageInputPresenter extends AFXMLPresenter
 	@FXML
 	private void onRemoveImageAction() throws IOException
 	{
-		final ImageEntry choice = this.imageEntries.getSelectedImageEntry();
+		final IImage choice = this.images.selected().get();
 		this.log.info("Fetched selected ImageEntry.");
 
 		if (choice == null)
@@ -121,7 +117,7 @@ public class ImageInputPresenter extends AFXMLPresenter
 			return;
 		}
 
-		final DeleteImageEntryCommand command = this.commander.createDeleteImageEntryCommand(choice);
+		final DeleteImageEntryCommand command = this.provider.createDeleteImageEntryCommand(choice);
 		command.setOnSucceededCommandHandler(DeleteImageEntrySucceededHandler.class);
 		command.start();
 		this.log.info("File deleted and removed from EntryList.");
@@ -135,24 +131,20 @@ public class ImageInputPresenter extends AFXMLPresenter
 	@FXML
 	private void onResetDatabaseAction() throws IOException
 	{
-		final List<ImageEntry> imageEntryList = this.imageEntries.imageEntryListProperty();
-		final ExecutorService executor = CommandExecutor.newFixedThreadPool(imageEntryList.size());
+		final List<IImage> list = this.images.list();
+		final ExecutorService executor = CommandExecutor.newFixedThreadPool(list.size());
 		this.log.info("Initialized Executor for resetting all Errors.");
 
-		for (ImageEntry entry : imageEntryList)
+		for (IImage entry : list)
 		{
-			final DeleteImageEntryCommand command = this.commander.createDeleteImageEntryCommand(entry);
+			final DeleteImageEntryCommand command = this.provider.createDeleteImageEntryCommand(entry);
 			command.setOnSucceededCommandHandler(DeleteImageEntrySucceededHandler.class);
 			command.setExecutor(executor);
 			command.start();
 		}
 		this.log.info("EntryList resetted.");
 
-		executor.execute(new Runnable()
-		{
-			@Override
-			public void run() { System.gc(); }
-		});
+		executor.execute(System::gc);
 		this.log.info("Running Garbage Collector.");
 
 		executor.shutdown();

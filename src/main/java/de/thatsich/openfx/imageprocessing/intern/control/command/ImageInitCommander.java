@@ -2,16 +2,16 @@ package de.thatsich.openfx.imageprocessing.intern.control.command;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import de.thatsich.core.Log;
+import de.thatsich.core.javafx.CommandExecutor;
 import de.thatsich.openfx.imageprocessing.api.model.IImageState;
 import de.thatsich.openfx.imageprocessing.intern.control.command.commands.GetLastImageEntryIndexCommand;
 import de.thatsich.openfx.imageprocessing.intern.control.command.commands.GetLastLocationCommand;
 import de.thatsich.openfx.imageprocessing.intern.control.command.commands.InitImageEntryListCommand;
 import de.thatsich.openfx.imageprocessing.intern.control.command.handler.GetLastImageEntryIndexSucceededHandler;
 import de.thatsich.openfx.imageprocessing.intern.control.command.handler.GetLastLocationSucceededHandler;
-import de.thatsich.openfx.imageprocessing.intern.control.command.handler.InitImageEntryListSucceededHandler;
+import de.thatsich.openfx.imageprocessing.intern.control.command.handler.InitImagesSucceededHandler;
 import de.thatsich.openfx.imageprocessing.intern.control.command.provider.IImageInitCommandProvider;
-import de.thatsich.core.Log;
-import de.thatsich.core.javafx.CommandExecutor;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -38,11 +38,11 @@ public class ImageInitCommander
 		final Path imageInputPath = Paths.get("io/input");
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(1);
 
-		this.imageState.imageFolderPathProperty().set(imageInputPath);
+		this.imageState.imageFolder().set(imageInputPath);
 		this.log.info("Set ImageInputFolderPath to Model.");
 
 		final InitImageEntryListCommand initCommand = this.commander.createInitImageEntryListCommand(imageInputPath);
-		initCommand.setOnSucceededCommandHandler(InitImageEntryListSucceededHandler.class);
+		initCommand.setOnSucceededCommandHandler(InitImagesSucceededHandler.class);
 		initCommand.setExecutor(executor);
 		initCommand.start();
 		this.log.info("Initialized ImageEntryList Retrieval.");

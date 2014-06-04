@@ -10,7 +10,5 @@ import java.nio.file.Path;
  */
 public interface INetworkState
 {
-	ObjectProperty<Path> getPathProperty();
-	Path getNetworkPath();
-	void setNetworkPath(Path networkInputPath);
+	ObjectProperty<Path> path();
 }

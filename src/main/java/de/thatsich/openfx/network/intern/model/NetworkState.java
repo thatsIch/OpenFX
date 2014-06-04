@@ -15,20 +15,8 @@ public class NetworkState implements INetworkState
 	private final ObjectProperty<Path> path = new SimpleObjectProperty<>();
 
 	@Override
-	public ObjectProperty<Path> getPathProperty()
+	public ObjectProperty<Path> path()
 	{
 		return this.path;
-	}
-
-	@Override
-	public Path getNetworkPath()
-	{
-		return this.path.get();
-	}
-
-	@Override
-	public void setNetworkPath(final Path networkInputPath)
-	{
-		this.path.set(networkInputPath);
 	}
 }

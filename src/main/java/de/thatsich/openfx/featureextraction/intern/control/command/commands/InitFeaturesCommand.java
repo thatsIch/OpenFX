@@ -2,7 +2,6 @@ package de.thatsich.openfx.featureextraction.intern.control.command.commands;
 
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
-import com.sun.org.apache.xpath.internal.functions.WrongNumberArgsException;
 import de.thatsich.core.javafx.ACommand;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
 import de.thatsich.openfx.featureextraction.intern.control.command.service.FeatureStorageService;
@@ -12,7 +11,7 @@ import java.nio.file.DirectoryIteratorException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class InitFeaturesCommand extends ACommand<List<IFeature>>
@@ -31,7 +30,7 @@ public class InitFeaturesCommand extends ACommand<List<IFeature>>
 	@Override
 	protected List<IFeature> call() throws Exception
 	{
-		final List<IFeature> features = new ArrayList<>();
+		final List<IFeature> features = new LinkedList<>();
 
 		if (Files.notExists(this.path) || !Files.isDirectory(this.path))
 		{
@@ -47,19 +46,7 @@ public class InitFeaturesCommand extends ACommand<List<IFeature>>
 		{
 			for (Path child : stream)
 			{
-
-				// split the file name 
-				// and check if has 4 members
-				// and extract them
-				final String fileName = child.getFileName().toString();
-				final String[] fileNameSplit = fileName.split("_");
-				if (fileNameSplit.length != 4)
-				{
-					throw new WrongNumberArgsException("Expected 4 encoded information but found " + fileNameSplit.length);
-				}
-
 				final IFeature load = this.storage.load(child);
-
 				features.add(load);
 				this.log.info("Added " + child + " with Attribute " + Files.probeContentType(child));
 			}

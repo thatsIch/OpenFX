@@ -2,33 +2,28 @@ package de.thatsich.openfx.imageprocessing.intern.control.command.commands;
 
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
-import de.thatsich.openfx.imageprocessing.api.control.ImageEntry;
 import de.thatsich.core.javafx.ACommand;
+import de.thatsich.openfx.imageprocessing.api.control.IImage;
+import de.thatsich.openfx.imageprocessing.intern.control.command.service.ImageFileStorageService;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-
-public class DeleteImageEntryCommand extends ACommand<ImageEntry>
+public class DeleteImageEntryCommand extends ACommand<IImage>
 {
 
-	final private ImageEntry entry;
+	final private IImage image;
+	private final ImageFileStorageService storage;
 
 	@Inject
-	public DeleteImageEntryCommand(@Assisted ImageEntry entry)
+	public DeleteImageEntryCommand(@Assisted IImage entry, ImageFileStorageService storage)
 	{
-		this.entry = entry;
+		this.image = entry;
+		this.storage = storage;
 	}
 
 	@Override
-	protected ImageEntry call() throws Exception
+	protected IImage call() throws Exception
 	{
-		final Path path = this.entry.getImagePath();
-		if (Files.exists(path))
-		{
-			Files.delete(path);
-			log.info("File deleted.");
-		}
+		this.storage.delete(this.image);
 
-		return this.entry;
+		return this.image;
 	}
 }

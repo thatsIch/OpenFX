@@ -16,13 +16,13 @@ public class BinaryClassifiers implements IBinaryClassifiers
 
 	// Property Getter
 	@Override
-	public ListProperty<IBinaryClassifier> binaryClassifiers()
+	public ListProperty<IBinaryClassifier> list()
 	{
 		return this.binaryClassifierList;
 	}
 
 	@Override
-	public ObjectProperty<IBinaryClassifier> selectedBinaryClassifier()
+	public ObjectProperty<IBinaryClassifier> selected()
 	{
 		return this.selectedBinaryClassifier;
 	}

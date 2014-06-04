@@ -1,8 +1,10 @@
 package de.thatsich.openfx.featureextraction.intern.control.command.service;
 
-import de.thatsich.core.IFileStorageService;
+import com.google.inject.Inject;
+import de.thatsich.core.AFileStorageService;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureVector;
+import de.thatsich.openfx.featureextraction.api.model.IFeatureState;
 import de.thatsich.openfx.featureextraction.intern.control.entity.Feature;
 import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVector;
 
@@ -12,6 +14,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -21,12 +24,18 @@ import java.util.stream.Collectors;
  * @author thatsIch
  * @since 04.06.2014.
  */
-public class FeatureStorageService implements IFileStorageService<IFeature>
+public class FeatureStorageService extends AFileStorageService<IFeature>
 {
+	@Inject
+	protected FeatureStorageService(final IFeatureState state)
+	{
+		super(state.path().get());
+	}
+
 	@Override
 	public void save(final IFeature elem) throws IOException
 	{
-		final BufferedWriter writer = Files.newBufferedWriter(elem.path(), StandardCharsets.US_ASCII);
+		final BufferedWriter writer = Files.newBufferedWriter(elem.path(), StandardCharsets.US_ASCII, StandardOpenOption.APPEND);
 		final List<IFeatureVector> featureVectors = elem.vectors();
 
 		for (int fvIndex = 0; fvIndex < featureVectors.size(); fvIndex++)
@@ -45,7 +54,7 @@ public class FeatureStorageService implements IFileStorageService<IFeature>
 
 			if (fvIndex < featureVectors.size() - 1)
 			{
-				writer.write("\n");
+				writer.newLine();
 			}
 		}
 		writer.close();
@@ -54,6 +63,7 @@ public class FeatureStorageService implements IFileStorageService<IFeature>
 	@Override
 	public IFeature load(final Path path) throws IOException
 	{
+		System.out.println("LOAD");
 		// extract file information
 		final String fileName = path.getFileName().toString();
 		final String[] fileNameSplit = fileName.split("_");
@@ -77,6 +87,18 @@ public class FeatureStorageService implements IFileStorageService<IFeature>
 		reader.close();
 
 		return new Feature(path, className, extractorName, frameSize, featureVectors);
+
+	}
+
+	@Override
+	public void update(final IFeature elem) throws IOException
+	{
+
+	}
+
+	@Override
+	public void delete(final IFeature elem) throws IOException
+	{
 
 	}
 }

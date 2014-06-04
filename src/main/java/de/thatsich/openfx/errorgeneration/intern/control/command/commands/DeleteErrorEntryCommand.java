@@ -3,58 +3,28 @@ package de.thatsich.openfx.errorgeneration.intern.control.command.commands;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import de.thatsich.core.javafx.ACommand;
-import de.thatsich.openfx.errorgeneration.intern.control.error.core.ErrorEntry;
+import de.thatsich.openfx.errorgeneration.api.control.entity.IError;
+import de.thatsich.openfx.errorgeneration.intern.control.command.service.ErrorFileStorageService;
 
-import java.io.IOException;
-import java.nio.file.DirectoryStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-
-public class DeleteErrorEntryCommand extends ACommand<ErrorEntry>
+public class DeleteErrorEntryCommand extends ACommand<IError>
 {
-	final private ErrorEntry entry;
+	final private IError entry;
+	private final ErrorFileStorageService storage;
 
 	@Inject
-	public DeleteErrorEntryCommand(@Assisted ErrorEntry entry)
+	public DeleteErrorEntryCommand(@Assisted IError entry, ErrorFileStorageService storage)
 	{
 		this.entry = entry;
+		this.storage = storage;
 	}
 
 	@Override
-	protected ErrorEntry call() throws Exception
+	protected IError call() throws Exception
 	{
-		final Path path = this.entry.path();
-		this.deleteChildren(path);
-		this.deletePath(path);
+		this.storage.delete(this.entry);
 		this.log.info("Error deleted.");
 
 		return this.entry;
 	}
 
-	private void deleteChildren(Path parent)
-	{
-		try (DirectoryStream<Path> children = Files.newDirectoryStream(parent))
-		{
-			for (Path child : children)
-			{
-				this.deletePath(child);
-			}
-		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
-		}
-	}
-
-	private void deletePath(Path path)
-	{
-		try
-		{
-			Files.deleteIfExists(path);
-		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
-		}
-	}
 }

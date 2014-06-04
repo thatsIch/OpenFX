@@ -102,7 +102,7 @@ public class PreProcessingInputPresenter extends AFXMLPresenter
 	@FXML
 	private void onTrainPreProcessorAction()
 	{
-		final Path preProcessingFolderPath = this.state.getPreProcessingFolderPath();
+		final Path preProcessingFolderPath = this.state.path().get();
 		final IPreProcessor selectedPreProcessor = this.preProcessors.getSelectedPreProcessor();
 		final List<IFeature> featureVectorSetList = this.features.list();
 		final IFeature selectedFeatureVectorSet = this.features.selectedFeature().get();

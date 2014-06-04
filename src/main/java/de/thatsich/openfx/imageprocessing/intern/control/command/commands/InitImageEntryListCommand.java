@@ -1,51 +1,50 @@
 package de.thatsich.openfx.imageprocessing.intern.control.command.commands;
 
 import com.google.inject.Inject;
-import com.google.inject.assistedinject.Assisted;
-import de.thatsich.openfx.imageprocessing.api.control.ImageEntry;
 import de.thatsich.core.javafx.ACommand;
-import org.opencv.core.Mat;
-import org.opencv.highgui.Highgui;
+import de.thatsich.openfx.imageprocessing.api.control.IImage;
+import de.thatsich.openfx.imageprocessing.api.model.IImageState;
+import de.thatsich.openfx.imageprocessing.intern.control.command.service.ImageFileStorageService;
 
 import java.io.IOException;
 import java.nio.file.DirectoryIteratorException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
-public class InitImageEntryListCommand extends ACommand<List<ImageEntry>>
+public class InitImageEntryListCommand extends ACommand<List<IImage>>
 {
-
-	private final Path imageInputPath;
+	private final Path path;
+	private final ImageFileStorageService storage;
 
 	@Inject
-	protected InitImageEntryListCommand(@Assisted Path imageInputPath)
+	protected InitImageEntryListCommand(IImageState state, ImageFileStorageService storage)
 	{
-		this.imageInputPath = imageInputPath;
+		this.storage = storage;
+		this.path = state.imageFolder().get();
 	}
 
 	@Override
-	protected List<ImageEntry> call() throws Exception
+	protected List<IImage> call() throws Exception
 	{
-		final List<ImageEntry> result = new ArrayList<>();
+		final List<IImage> result = new LinkedList<>();
 		final String GLOB_PATTERN = "*.{png,jpeg,jpg,jpe}";
 
-		if (Files.notExists(this.imageInputPath) || !Files.isDirectory(this.imageInputPath))
+		if (Files.notExists(this.path) || !Files.isDirectory(this.path))
 		{
-			Files.createDirectories(this.imageInputPath);
+			Files.createDirectories(this.path);
 		}
 
-		try (DirectoryStream<Path> stream = Files.newDirectoryStream(this.imageInputPath, GLOB_PATTERN))
+		try (DirectoryStream<Path> stream = Files.newDirectoryStream(this.path, GLOB_PATTERN))
 		{
 			for (Path child : stream)
 			{
-				final Path imagePath = child.toAbsolutePath();
-				final Mat imageMat = Highgui.imread(imagePath.toString(), 0);
+				final IImage load = this.storage.load(child);
 
-				result.add(new ImageEntry(imagePath, imageMat));
-				this.log.info("Added " + child + " with Attribute " + Files.probeContentType(child));
+				result.add(load);
+				this.log.info("Added " + child);
 			}
 		}
 		catch (IOException | DirectoryIteratorException e)

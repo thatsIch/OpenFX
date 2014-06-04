@@ -33,13 +33,13 @@ public class CopyFileCommand extends ACommand<Path>
 
 		if (Files.exists(this.copyPath))
 		{
-			log.info("Duplicate found: File already exists.");
+			this.log.info("Duplicate found: File already exists.");
 			this.cancel();
 			return null;
 		}
 		else
 		{
-			log.info("Copying File.");
+			this.log.info("Copying File.");
 			return Files.copy(this.originPath, this.copyPath);
 		}
 	}

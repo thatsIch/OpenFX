@@ -1,9 +1,10 @@
 package de.thatsich.openfx.imageprocessing.intern.control.handler;
 
 import com.google.inject.Inject;
-import de.thatsich.openfx.imageprocessing.api.model.IImageEntries;
-import de.thatsich.openfx.imageprocessing.api.control.ImageEntry;
 import de.thatsich.core.javafx.ACommandHandler;
+import de.thatsich.openfx.imageprocessing.api.control.IImage;
+import de.thatsich.openfx.imageprocessing.api.model.IImages;
+import de.thatsich.openfx.imageprocessing.intern.control.entity.Image;
 import org.opencv.core.Mat;
 import org.opencv.highgui.Highgui;
 
@@ -17,19 +18,18 @@ import java.nio.file.Path;
  */
 public class AddImageEntrySucceededHandler extends ACommandHandler<Path>
 {
-
-	@Inject
-	private IImageEntries imageEntries;
+	@Inject private IImages images;
 
 	@Override
 	public void handle(Path value)
 	{
 		final Mat copiedMat = Highgui.imread(value.toString(), 0);
-		final ImageEntry copy = new ImageEntry(value, copiedMat);
-		this.imageEntries.imageEntryListProperty().get().add(copy);
+		final String fileName = value.getFileName().toString();
+		final IImage copy = new Image(copiedMat, fileName);
+		this.images.list().get().add(copy);
 		this.log.info("Added copy to ChoiceBoxDisplayImage: " + value.toString());
 
-		this.imageEntries.selectedImageEntryProperty().set(copy);
+		this.images.selected().set(copy);
 		this.log.info("Set currently selected Image to " + value);
 	}
 }

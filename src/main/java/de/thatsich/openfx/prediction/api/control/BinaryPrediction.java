@@ -8,14 +8,10 @@ import javafx.beans.property.ReadOnlyStringProperty;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import org.opencv.core.Mat;
 
-import java.nio.file.Path;
-
 
 public class BinaryPrediction
 {
-
 	// Properties
-	private final ReadOnlyObjectWrapper<Path> filePath = new ReadOnlyObjectWrapper<>();
 	private final ReadOnlyObjectWrapper<Mat> withError = new ReadOnlyObjectWrapper<>();
 	private final ReadOnlyObjectWrapper<Mat> errorIndication = new ReadOnlyObjectWrapper<>();
 	private final ReadOnlyObjectWrapper<Mat> errorPrediction = new ReadOnlyObjectWrapper<>();
@@ -30,9 +26,8 @@ public class BinaryPrediction
 	private final ReadOnlyIntegerWrapper trueNegative = new ReadOnlyIntegerWrapper();
 	private final ReadOnlyIntegerWrapper falseNegative = new ReadOnlyIntegerWrapper();
 
-	public BinaryPrediction(Path filePath, Mat withError, Mat errorIndication, Mat errorPrediction, String classifierName, String extractorName, int frameSize, String errorClassName, String id)
+	public BinaryPrediction(Mat withError, Mat errorIndication, Mat errorPrediction, String classifierName, String extractorName, int frameSize, String errorClassName, String id)
 	{
-		this.filePath.set(filePath);
 		this.withError.set(withError);
 		this.errorIndication.set(errorIndication);
 		this.errorPrediction.set(errorPrediction);
@@ -91,67 +86,62 @@ public class BinaryPrediction
 	}
 
 	// Property Getters
-	public ReadOnlyObjectProperty<Path> getFilePathProperty()
-	{
-		return this.filePath.getReadOnlyProperty();
-	}
-
-	public ReadOnlyObjectProperty<Mat> getWithErrorProperty()
+	public ReadOnlyObjectProperty<Mat> modified()
 	{
 		return this.withError.getReadOnlyProperty();
 	}
 
-	public ReadOnlyObjectProperty<Mat> getErrorIndicationProperty()
+	public ReadOnlyObjectProperty<Mat> errorIndication()
 	{
 		return this.errorIndication.getReadOnlyProperty();
 	}
 
-	public ReadOnlyObjectProperty<Mat> getErrorPredictionProperty()
+	public ReadOnlyObjectProperty<Mat> errorPrediction()
 	{
 		return this.errorPrediction.getReadOnlyProperty();
 	}
 
-	public ReadOnlyStringProperty getClassifierNameProperty()
+	public ReadOnlyStringProperty classifierName()
 	{
 		return this.classifierName.getReadOnlyProperty();
 	}
 
-	public ReadOnlyStringProperty getExtractorNameProperty()
+	public ReadOnlyStringProperty extractorName()
 	{
 		return this.extractorName.getReadOnlyProperty();
 	}
 
-	public ReadOnlyIntegerProperty getFrameSizeProperty()
+	public ReadOnlyIntegerProperty frameSize()
 	{
 		return this.frameSize.getReadOnlyProperty();
 	}
 
-	public ReadOnlyStringProperty getErrorClassNameProperty()
+	public ReadOnlyStringProperty errorClassName()
 	{
 		return this.errorClassName.getReadOnlyProperty();
 	}
 
-	public ReadOnlyStringProperty getIDProperty()
+	public ReadOnlyStringProperty id()
 	{
 		return this.id.getReadOnlyProperty();
 	}
 
-	public ReadOnlyIntegerProperty getTruePositiveProperty()
+	public ReadOnlyIntegerProperty truePositive()
 	{
 		return this.truePositive.getReadOnlyProperty();
 	}
 
-	public ReadOnlyIntegerProperty getTrueNegativeProperty()
+	public ReadOnlyIntegerProperty trueNegative()
 	{
 		return this.trueNegative.getReadOnlyProperty();
 	}
 
-	public ReadOnlyIntegerProperty getFalsePositiveProperty()
+	public ReadOnlyIntegerProperty falsePositive()
 	{
 		return this.falsePositive.getReadOnlyProperty();
 	}
 
-	public ReadOnlyIntegerProperty getFalseNegativeProperty()
+	public ReadOnlyIntegerProperty falseNegative()
 	{
 		return this.falseNegative.getReadOnlyProperty();
 	}

@@ -7,11 +7,5 @@ import java.nio.file.Path;
 public interface IPredictionState
 {
 	// Property Getter
-	public ObjectProperty<Path> getPredictionFolderPathProperty();
-
-	// Getter
-	public Path getPredictionFolderPath();
-
-	// Setter
-	public void setPredictionFolderPath(Path predictionFolderPath);
+	public ObjectProperty<Path> path();
 }

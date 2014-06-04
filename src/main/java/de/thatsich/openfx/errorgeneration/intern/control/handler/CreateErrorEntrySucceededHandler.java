@@ -1,9 +1,9 @@
 package de.thatsich.openfx.errorgeneration.intern.control.handler;
 
 import com.google.inject.Inject;
-import de.thatsich.openfx.errorgeneration.api.model.IErrorEntries;
-import de.thatsich.openfx.errorgeneration.intern.control.error.core.ErrorEntry;
 import de.thatsich.core.javafx.ACommandHandler;
+import de.thatsich.openfx.errorgeneration.api.control.entity.IError;
+import de.thatsich.openfx.errorgeneration.api.model.IErrors;
 
 /**
  * Handler for what should happen if the Command was successfull
@@ -11,17 +11,17 @@ import de.thatsich.core.javafx.ACommandHandler;
  *
  * @author Minh
  */
-public class CreateErrorEntrySucceededHandler extends ACommandHandler<ErrorEntry>
+public class CreateErrorEntrySucceededHandler extends ACommandHandler<IError>
 {
-	@Inject private IErrorEntries errorEntryList;
+	@Inject private IErrors errorEntryList;
 
 	@Override
-	public void handle(ErrorEntry addition)
+	public void handle(IError addition)
 	{
-		this.errorEntryList.errorEntries().add(addition);
+		this.errorEntryList.list().add(addition);
 		this.log.info("Added ErrorEntry to Database.");
 
-		this.errorEntryList.selectedErrorEntry().set(addition);
+		this.errorEntryList.selected().set(addition);
 		this.log.info("Set current to selected ErrorEntry.");
 	}
 }

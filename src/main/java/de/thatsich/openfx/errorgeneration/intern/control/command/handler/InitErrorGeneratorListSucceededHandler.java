@@ -1,9 +1,9 @@
 package de.thatsich.openfx.errorgeneration.intern.control.command.handler;
 
 import com.google.inject.Inject;
-import de.thatsich.openfx.errorgeneration.api.model.IErrorGenerators;
-import de.thatsich.openfx.errorgeneration.api.control.IErrorGenerator;
 import de.thatsich.core.javafx.ACommandHandler;
+import de.thatsich.openfx.errorgeneration.api.control.entity.IErrorGenerator;
+import de.thatsich.openfx.errorgeneration.api.model.IErrorGenerators;
 
 import java.util.List;
 
@@ -15,12 +15,12 @@ import java.util.List;
  */
 public class InitErrorGeneratorListSucceededHandler extends ACommandHandler<List<IErrorGenerator>>
 {
-	@Inject	private IErrorGenerators errorGeneratorList;
+	@Inject private IErrorGenerators errorGeneratorList;
 
 	@Override
 	public void handle(List<IErrorGenerator> generatorList)
 	{
-		this.errorGeneratorList.errorGenerators().addAll(generatorList);
+		this.errorGeneratorList.list().addAll(generatorList);
 		this.log.info("Added all ErrorGenerators.");
 	}
 }

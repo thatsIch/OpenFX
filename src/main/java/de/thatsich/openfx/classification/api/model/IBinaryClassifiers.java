@@ -20,12 +20,12 @@ public interface IBinaryClassifiers
 	 *
 	 * @return ListProperty of Binary Classifiers
 	 */
-	public ListProperty<IBinaryClassifier> binaryClassifiers();
+	public ListProperty<IBinaryClassifier> list();
 
 	/**
 	 * PropertyGetter of selected Binary Classifier
 	 *
 	 * @return Property of selected Binary Classifier
 	 */
-	public ObjectProperty<IBinaryClassifier> selectedBinaryClassifier();
+	public ObjectProperty<IBinaryClassifier> selected();
 }

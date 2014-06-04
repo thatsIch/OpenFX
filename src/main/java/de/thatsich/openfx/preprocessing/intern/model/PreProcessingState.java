@@ -14,21 +14,9 @@ public class PreProcessingState implements IPreProcessingState
 	private final ObjectProperty<Path> path = new SimpleObjectProperty<>();
 
 	@Override
-	public ObjectProperty<Path> getPreProcessingFolderPathProperty()
+	public ObjectProperty<Path> path()
 	{
 		return this.path;
-	}
-
-	@Override
-	public Path getPreProcessingFolderPath()
-	{
-		return this.path.get();
-	}
-
-	@Override
-	public void setPreProcessingFolderPath(Path folderPath)
-	{
-		this.path.set(folderPath);
 	}
 
 }

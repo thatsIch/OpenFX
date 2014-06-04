@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.javafx.CommandExecutor;
 import de.thatsich.core.javafx.component.IntegerField;
-import de.thatsich.openfx.errorgeneration.api.model.IErrorEntries;
+import de.thatsich.openfx.errorgeneration.api.model.IErrors;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureExtractor;
 import de.thatsich.openfx.featureextraction.api.model.IFeatureExtractors;
@@ -28,9 +28,9 @@ import java.util.concurrent.ExecutorService;
 public class FeatureInputPresenter extends AFXMLPresenter
 {
 	// Injects
-	@Inject private FeatureInitCommander initCommander;
-	@Inject private IFeatureCommandProvider commander;
-	@Inject private IErrorEntries errorEntryList;
+	@Inject private FeatureInitCommander init;
+	@Inject private IFeatureCommandProvider provider;
+	@Inject private IErrors errors;
 	@Inject private IFeatureExtractors featureExtractors;
 	@Inject private IFeatureState featureState;
 	@Inject private IFeatures features;
@@ -81,7 +81,7 @@ public class FeatureInputPresenter extends AFXMLPresenter
 		this.nodeChoiceBoxFeatureExtractor.valueProperty().bindBidirectional(this.featureExtractors.selected());
 		this.log.info("Bound ChoiceBoxFeatureExtractor to Model.");
 
-		this.nodeChoiceBoxFeatureExtractor.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> this.commander.createSetLastFeatureExtractorIndexCommand(newValue.intValue()).start());
+		this.nodeChoiceBoxFeatureExtractor.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> this.provider.createSetLastFeatureExtractorIndexCommand(newValue.intValue()).start());
 		this.log.info("Bound ChoiceBoxFeatureExtractor to Config.");
 	}
 
@@ -97,7 +97,7 @@ public class FeatureInputPresenter extends AFXMLPresenter
 			final int frameSize = newValue.intValue();
 
 			this.featureState.frameSize().set(frameSize);
-			this.commander.createSetLastFrameSizeCommand(frameSize).start();
+			this.provider.createSetLastFrameSizeCommand(frameSize).start();
 			this.log.info("Initiated SetLastFrameSizeCommand with " + frameSize + ".");
 		});
 		this.log.info("Bound FrameSize to Config.");
@@ -108,7 +108,7 @@ public class FeatureInputPresenter extends AFXMLPresenter
 	 */
 	private void bindButtons()
 	{
-		this.nodeButtonExtractFeatureVector.disableProperty().bind(this.errorEntryList.selectedErrorEntry().isNull().or(this.nodeChoiceBoxFeatureExtractor.valueProperty().isNull()));
+		this.nodeButtonExtractFeatureVector.disableProperty().bind(this.errors.selected().isNull().or(this.nodeChoiceBoxFeatureExtractor.valueProperty().isNull()));
 		this.nodeButtonRemoveFeatureVector.disableProperty().bind(this.features.selectedFeature().isNull());
 		this.nodeButtonResetFeatureVectorList.disableProperty().bind(this.features.list().emptyProperty());
 	}
@@ -119,7 +119,7 @@ public class FeatureInputPresenter extends AFXMLPresenter
 	@FXML
 	private void onExtractAction()
 	{
-		final ExtractFeatureCommand extractCommand = this.commander.createExtractFeatureVectorCommand(this.featureState.path().get(), this.errorEntryList.selectedErrorEntry().get(), this.featureExtractors.selected().get(), this.featureState.frameSize().get(), this.nodeCheckBoxSmooth.isSelected(), this.nodeCheckBoxThreshold.isSelected(), this.nodeCheckBoxDenoising.isSelected());
+		final ExtractFeatureCommand extractCommand = this.provider.createExtractFeatureVectorCommand(this.featureState.path().get(), this.errors.selected().get(), this.featureExtractors.selected().get(), this.featureState.frameSize().get(), this.nodeCheckBoxSmooth.isSelected(), this.nodeCheckBoxThreshold.isSelected(), this.nodeCheckBoxDenoising.isSelected());
 		extractCommand.setOnSucceededCommandHandler(ExtractFeatureSucceededHandler.class);
 		extractCommand.start();
 		this.log.info("FeatureVector deleted and removed from FeatureVectorList.");
@@ -128,7 +128,7 @@ public class FeatureInputPresenter extends AFXMLPresenter
 	@FXML
 	private void onRemoveAction()
 	{
-		final DeleteFeatureCommand command = this.commander.createRemoveFeatureVectorSetCommand(this.features.selectedFeature().get());
+		final DeleteFeatureCommand command = this.provider.createRemoveFeatureVectorSetCommand(this.features.selectedFeature().get());
 		command.setOnSucceededCommandHandler(RemoveFeatureSucceededHandler.class);
 		command.start();
 		this.log.info("FeatureVectorSet deletion instantiated.");
@@ -143,7 +143,7 @@ public class FeatureInputPresenter extends AFXMLPresenter
 
 		for (IFeature feature : list)
 		{
-			final DeleteFeatureCommand command = this.commander.createRemoveFeatureVectorSetCommand(feature);
+			final DeleteFeatureCommand command = this.provider.createRemoveFeatureVectorSetCommand(feature);
 			command.setOnSucceededCommandHandler(RemoveFeatureSucceededHandler.class);
 			command.setExecutor(executor);
 			command.start();

@@ -1,9 +1,9 @@
 package de.thatsich.openfx.imageprocessing.intern.control.handler;
 
 import com.google.inject.Inject;
-import de.thatsich.openfx.imageprocessing.api.model.IImageEntries;
-import de.thatsich.openfx.imageprocessing.api.control.ImageEntry;
 import de.thatsich.core.javafx.ACommandHandler;
+import de.thatsich.openfx.imageprocessing.api.control.IImage;
+import de.thatsich.openfx.imageprocessing.api.model.IImages;
 
 import java.util.List;
 
@@ -13,28 +13,26 @@ import java.util.List;
  *
  * @author Minh
  */
-public class DeleteImageEntrySucceededHandler extends ACommandHandler<ImageEntry>
+public class DeleteImageEntrySucceededHandler extends ACommandHandler<IImage>
 {
-
-	@Inject
-	private IImageEntries imageEntries;
+	@Inject private IImages images;
 
 	@Override
-	public void handle(ImageEntry deletion)
+	public void handle(IImage deletion)
 	{
-		final List<ImageEntry> imageEntryList = this.imageEntries.imageEntryListProperty().get();
+		final List<IImage> imageEntryList = this.images.list().get();
 		imageEntryList.remove(deletion);
 		this.log.info("Removed ImageEntry from Database.");
 
 		if (imageEntryList.size() > 0)
 		{
-			final ImageEntry first = imageEntryList.get(0);
-			this.imageEntries.setSelectedImageEntry(first);
+			final IImage first = imageEntryList.get(0);
+			this.images.selected().set(first);
 			this.log.info("Reset Selection to the first.");
 		}
 		else
 		{
-			this.imageEntries.setSelectedImageEntry(null);
+			this.images.selected().set(null);
 		}
 	}
 }

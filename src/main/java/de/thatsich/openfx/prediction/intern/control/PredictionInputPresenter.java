@@ -5,12 +5,12 @@ import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.javafx.CommandExecutor;
 import de.thatsich.openfx.classification.api.control.IBinaryClassification;
 import de.thatsich.openfx.classification.api.model.IBinaryClassifications;
-import de.thatsich.openfx.errorgeneration.api.control.IErrorGenerator;
+import de.thatsich.openfx.errorgeneration.api.control.entity.IErrorGenerator;
 import de.thatsich.openfx.errorgeneration.api.model.IErrorGenerators;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureExtractor;
 import de.thatsich.openfx.featureextraction.api.model.IFeatureExtractors;
-import de.thatsich.openfx.imageprocessing.api.control.ImageEntry;
-import de.thatsich.openfx.imageprocessing.api.model.IImageEntries;
+import de.thatsich.openfx.imageprocessing.api.control.IImage;
+import de.thatsich.openfx.imageprocessing.api.model.IImages;
 import de.thatsich.openfx.prediction.api.control.BinaryPrediction;
 import de.thatsich.openfx.prediction.api.model.IBinaryPredictions;
 import de.thatsich.openfx.prediction.api.model.IPredictionState;
@@ -32,7 +32,7 @@ public class PredictionInputPresenter extends AFXMLPresenter
 	// Injects
 	@Inject private PredictionInitCommander initCommander;
 
-	@Inject private IImageEntries imageEntries;
+	@Inject private IImages imageEntries;
 	@Inject private IErrorGenerators errorGenerators;
 	@Inject private IFeatureExtractors featureExtractors;
 	@Inject private IBinaryClassifications binaryClassifications;
@@ -64,7 +64,7 @@ public class PredictionInputPresenter extends AFXMLPresenter
 	// ==================================================
 	private void bindButtons()
 	{
-		this.nodeButtonPredictBinaryClassification.disableProperty().bind(this.imageEntries.selectedImageEntryProperty().isNull().or(this.binaryClassifications.selected().isNull()));
+		this.nodeButtonPredictBinaryClassification.disableProperty().bind(this.imageEntries.selected().isNull().or(this.binaryClassifications.selected().isNull()));
 		this.nodeButtonDeleteBinaryPrediction.disableProperty().bind(this.binaryPredictions.selected().isNull());
 		this.nodeButtonResetBinaryPrediction.disableProperty().bind(this.binaryPredictions.list().emptyProperty());
 	}
@@ -79,19 +79,19 @@ public class PredictionInputPresenter extends AFXMLPresenter
 	@FXML
 	private void onPredictBinaryPredictionAction()
 	{
-		final Path predictionFolderPath = this.predictionState.getPredictionFolderPathProperty().get();
+		final Path predictionFolderPath = this.predictionState.path().get();
 		final IBinaryClassification binaryClassification = this.binaryClassifications.selected().get();
 		final String errorGeneratorName = binaryClassification.getErrorNameProperty().get();
 		final String featureExtractorName = binaryClassification.getExtractorNameProperty().get();
 		this.log.info("Prepared all information.");
 
-		final ImageEntry imageEntry = this.imageEntries.getSelectedImageEntry();
+		final IImage imageEntry = this.imageEntries.selected().get();
 		final int frameSize = binaryClassification.getFrameSizeProperty().get();
 		final IErrorGenerator errorGenerator = this.getErrorGenerator(errorGeneratorName);
 		final IFeatureExtractor featureExtractor = this.getFeatureExtractor(featureExtractorName);
 		this.log.info("Prepared all Tools.");
 
-		final TestBinaryClassificationCommand command = this.commander.createTestBinaryClassificationCommand(predictionFolderPath, imageEntry, frameSize, errorGenerator, featureExtractor, binaryClassification);
+		final TestBinaryClassificationCommand command = this.commander.createTestBinaryClassificationCommand(imageEntry, frameSize, errorGenerator, featureExtractor, binaryClassification);
 		command.setOnSucceededCommandHandler(PredictBinaryClassificationSucceededHandler.class);
 		command.start();
 		this.log.info("Initiated testing the binary classification.");
@@ -99,7 +99,7 @@ public class PredictionInputPresenter extends AFXMLPresenter
 
 	private IErrorGenerator getErrorGenerator(String errorGeneratorName)
 	{
-		for (IErrorGenerator generator : this.errorGenerators.errorGenerators())
+		for (IErrorGenerator generator : this.errorGenerators.list())
 		{
 			if (errorGeneratorName.equals(generator.getName()))
 			{

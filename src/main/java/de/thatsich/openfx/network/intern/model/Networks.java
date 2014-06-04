@@ -28,16 +28,4 @@ public class Networks implements INetworks
 	{
 		return this.selectedNetwork;
 	}
-
-	@Override
-	public Network getSelectedNetwork()
-	{
-		return this.selectedNetwork.get();
-	}
-
-	@Override
-	public void setSelectedNetwork(final Network network)
-	{
-		this.selectedNetwork.set(network);
-	}
 }

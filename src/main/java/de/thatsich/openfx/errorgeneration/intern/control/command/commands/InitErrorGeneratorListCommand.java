@@ -1,9 +1,9 @@
 package de.thatsich.openfx.errorgeneration.intern.control.command.commands;
 
-import de.thatsich.openfx.errorgeneration.api.control.IErrorGenerator;
-import de.thatsich.openfx.errorgeneration.intern.control.error.CircleError;
-import de.thatsich.openfx.errorgeneration.intern.control.error.LineError;
 import de.thatsich.core.javafx.ACommand;
+import de.thatsich.openfx.errorgeneration.api.control.entity.IErrorGenerator;
+import de.thatsich.openfx.errorgeneration.intern.control.entity.errorgenerator.CircleError;
+import de.thatsich.openfx.errorgeneration.intern.control.entity.errorgenerator.LineError;
 
 import java.util.ArrayList;
 import java.util.List;

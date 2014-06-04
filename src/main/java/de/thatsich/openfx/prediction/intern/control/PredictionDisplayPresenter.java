@@ -69,10 +69,10 @@ public class PredictionDisplayPresenter extends AFXMLPresenter
 					final Image image = predictionToImage(newValue);
 					nodeImageViewPrediction.imageProperty().set(image);
 
-					final int truePositive = newValue.getTruePositiveProperty().get();
-					final int falsePositive = newValue.getFalsePositiveProperty().get();
-					final int trueNegative = newValue.getTrueNegativeProperty().get();
-					final int falseNegative = newValue.getFalseNegativeProperty().get();
+					final int truePositive = newValue.truePositive().get();
+					final int falsePositive = newValue.falsePositive().get();
+					final int trueNegative = newValue.trueNegative().get();
+					final int falseNegative = newValue.falseNegative().get();
 
 					final double precision = precisionRecall.precision(truePositive, falsePositive, trueNegative, falseNegative);
 					final double recall = precisionRecall.recall(truePositive, falsePositive, trueNegative, falseNegative);
@@ -109,9 +109,9 @@ public class PredictionDisplayPresenter extends AFXMLPresenter
 
 	private Image predictionToImage(BinaryPrediction prediction)
 	{
-		final Mat originalMat = prediction.getWithErrorProperty().get().clone();
-		final Mat onlyErrorMat = prediction.getErrorIndicationProperty().get();
-		final Mat onlyPrediction = prediction.getErrorPredictionProperty().get();
+		final Mat originalMat = prediction.modified().get().clone();
+		final Mat onlyErrorMat = prediction.errorIndication().get();
+		final Mat onlyPrediction = prediction.errorPrediction().get();
 
 		// convert originalMat into RGB
 		Imgproc.cvtColor(originalMat, originalMat, Imgproc.COLOR_GRAY2RGB);

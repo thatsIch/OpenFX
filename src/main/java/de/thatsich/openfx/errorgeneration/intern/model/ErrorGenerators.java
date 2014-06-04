@@ -1,6 +1,6 @@
 package de.thatsich.openfx.errorgeneration.intern.model;
 
-import de.thatsich.openfx.errorgeneration.api.control.IErrorGenerator;
+import de.thatsich.openfx.errorgeneration.api.control.entity.IErrorGenerator;
 import de.thatsich.openfx.errorgeneration.api.model.IErrorGenerators;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
@@ -15,12 +15,12 @@ public class ErrorGenerators implements IErrorGenerators
 	final private ObjectProperty<IErrorGenerator> selectedErrorGenerator = new SimpleObjectProperty<>();
 
 	// Getter
-	public ListProperty<IErrorGenerator> errorGenerators()
+	public ListProperty<IErrorGenerator> list()
 	{
 		return this.errorGeneratorList;
 	}
 
-	public ObjectProperty<IErrorGenerator> selectedErrorGenerator()
+	public ObjectProperty<IErrorGenerator> selected()
 	{
 		return this.selectedErrorGenerator;
 	}

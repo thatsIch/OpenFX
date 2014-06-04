@@ -1,11 +1,11 @@
 package de.thatsich.openfx.errorgeneration.intern.control;
 
 import com.google.inject.Inject;
-import de.thatsich.openfx.errorgeneration.api.model.IErrorEntries;
-import de.thatsich.openfx.errorgeneration.intern.control.command.ErrorInitCommander;
-import de.thatsich.openfx.errorgeneration.intern.control.error.core.ErrorEntry;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.opencv.Images;
+import de.thatsich.openfx.errorgeneration.api.control.entity.IError;
+import de.thatsich.openfx.errorgeneration.api.model.IErrors;
+import de.thatsich.openfx.errorgeneration.intern.control.command.ErrorInitCommander;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -16,26 +16,26 @@ import org.opencv.imgproc.Imgproc;
 public class ErrorDisplayPresenter extends AFXMLPresenter
 {
 	// Injects
-	@Inject ErrorInitCommander initCommander;
-	@Inject private IErrorEntries errorEntryList;
+	@Inject private ErrorInitCommander init;
+	@Inject private IErrors errors;
 
 	// Nodes
-	@FXML ImageView nodeImageViewError;
+	@FXML private ImageView nodeImageViewError;
 
 	@Override
 	protected void bindComponents()
 	{
-		this.errorEntryList.selectedErrorEntry().addListener((observable, oldValue, newValue) -> {
+		this.errors.selected().addListener((observable, oldValue, newValue) -> {
 			if (newValue != null)
 			{
-				final Image image = errorEntryToImage(newValue);
-				nodeImageViewError.imageProperty().setValue(image);
-				log.info("Selected new ErrorEntry.");
+				final Image image = this.errorEntryToImage(newValue);
+				this.nodeImageViewError.imageProperty().setValue(image);
+				this.log.info("Selected new ErrorEntry.");
 			}
 			else
 			{
-				nodeImageViewError.imageProperty().set(null);
-				log.info("Set Image to null.");
+				this.nodeImageViewError.imageProperty().set(null);
+				this.log.info("Set Image to null.");
 			}
 		});
 		this.log.info("Bound nodeImageViewError to Model.");
@@ -44,7 +44,7 @@ public class ErrorDisplayPresenter extends AFXMLPresenter
 	@Override
 	protected void initComponents()
 	{
-		final ErrorEntry entry = this.errorEntryList.selectedErrorEntry().get();
+		final IError entry = this.errors.selected().get();
 		if (entry != null)
 		{
 			final Image image = this.errorEntryToImage(entry);
@@ -53,10 +53,10 @@ public class ErrorDisplayPresenter extends AFXMLPresenter
 		}
 	}
 
-	private Image errorEntryToImage(ErrorEntry entry)
+	private Image errorEntryToImage(IError entry)
 	{
-		final Mat originalMat = entry.getOriginalMat().clone();
-		final Mat onlyErrorMat = entry.getErrorMat();
+		final Mat originalMat = entry.getOriginal().clone();
+		final Mat onlyErrorMat = entry.getError();
 
 		if (!originalMat.size().equals(onlyErrorMat.size()))
 		{
