@@ -1,6 +1,6 @@
 package de.thatsich.openfx.featureextraction.intern.views.tree;
 
-import de.thatsich.openfx.featureextraction.api.control.FeatureVector;
+import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVector;
 import de.thatsich.openfx.featureextraction.api.control.FeatureVectorSet;
 
 public abstract interface IFeatureSpaceTreeItemAdapter

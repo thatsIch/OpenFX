@@ -3,7 +3,7 @@ package de.thatsich.openfx.featureextraction.intern.control.command.commands;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import com.sun.org.apache.xpath.internal.functions.WrongNumberArgsException;
-import de.thatsich.openfx.featureextraction.api.control.FeatureVector;
+import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVector;
 import de.thatsich.openfx.featureextraction.api.control.FeatureVectorSet;
 import de.thatsich.openfx.featureextraction.intern.services.CSVService;
 import de.thatsich.core.javafx.ACommand;

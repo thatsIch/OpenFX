@@ -2,7 +2,7 @@ package de.thatsich.openfx.network.intern.control.cnbc.nbc;
 
 import de.thatsich.openfx.classification.api.control.IBinaryClassification;
 import de.thatsich.openfx.classification.intern.control.classifier.core.IBinaryClassifier;
-import de.thatsich.openfx.featureextraction.api.control.FeatureVector;
+import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVector;
 import de.thatsich.openfx.featureextraction.api.control.FeatureVectorSet;
 import de.thatsich.openfx.featureextraction.api.model.IFeatureVectorSets;
 
@@ -17,20 +17,18 @@ public class NetworkBinaryClassifiers implements INBC
 {
 	private final List<IBinaryClassifier> binaryClassifiers = new LinkedList<>();
 	private final Fuser fuser = new Fuser();
-	private final String errorClass;
+	private final String uniqueImageClass;
 	private double fuserOutput;
 
-	public NetworkBinaryClassifiers(final String errorClass)
+	public NetworkBinaryClassifiers(final String uniqueImageClass)
 	{
-		this.errorClass = errorClass;
+		this.uniqueImageClass = uniqueImageClass;
 	}
-	//	private final uniqueImageClass;
 
 	public void addBinaryClassifier(IBinaryClassifier bc)
 	{
 		this.binaryClassifiers.add(bc);
 	}
-
 
 	public void train(List<IFeatureVectorSets> sets)
 	{
@@ -66,7 +64,7 @@ public class NetworkBinaryClassifiers implements INBC
 	@Override
 	public String getUnqiueImageClass()
 	{
-		return null;
+		return this.uniqueImageClass;
 	}
 
 	@Override

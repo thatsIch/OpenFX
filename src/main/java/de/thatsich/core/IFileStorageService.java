@@ -1,5 +1,8 @@
 package de.thatsich.core;
 
+import com.sun.org.apache.xpath.internal.functions.WrongNumberArgsException;
+
+import java.io.IOException;
 import java.nio.file.Path;
 
 /**
@@ -8,7 +11,7 @@ import java.nio.file.Path;
  */
 public interface IFileStorageService<T>
 {
-	void save(T elem);
+	void save(T elem) throws IOException;
 
-	T load(Path path);
+	T load(Path path) throws WrongNumberArgsException, IOException;
 }

@@ -1,5 +1,6 @@
-package de.thatsich.openfx.featureextraction.api.control;
+package de.thatsich.openfx.featureextraction.intern.control.entity;
 
+import de.thatsich.openfx.featureextraction.api.control.IFeatureVector;
 import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.ReadOnlyBooleanWrapper;
 import javafx.beans.property.ReadOnlyListProperty;
@@ -14,7 +15,7 @@ import java.util.List;
  *
  * @author Minh
  */
-public class FeatureVector
+public class FeatureVector implements IFeatureVector
 {
 	// Properties
 	private final ReadOnlyListWrapper<Float> vector = new ReadOnlyListWrapper<>(FXCollections.<Float>observableArrayList());
@@ -32,14 +33,14 @@ public class FeatureVector
 		this.isPositive.set(isPositive);
 	}
 
+	public ReadOnlyBooleanProperty isPositive()
+	{
+		return this.isPositive.getReadOnlyProperty();
+	}
+
 	// Property Getter
 	public ReadOnlyListProperty<Float> vector()
 	{
 		return this.vector.getReadOnlyProperty();
-	}
-
-	public ReadOnlyBooleanProperty isPositive()
-	{
-		return this.isPositive.getReadOnlyProperty();
 	}
 }

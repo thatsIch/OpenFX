@@ -1,7 +1,7 @@
 package de.thatsich.openfx.featureextraction.intern.control;
 
 import com.google.inject.Inject;
-import de.thatsich.openfx.featureextraction.api.control.FeatureVector;
+import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVector;
 import de.thatsich.openfx.featureextraction.api.control.FeatureVectorSet;
 import de.thatsich.openfx.featureextraction.api.model.IFeatureVectorSets;
 import de.thatsich.openfx.featureextraction.intern.control.command.FeatureInitCommander;

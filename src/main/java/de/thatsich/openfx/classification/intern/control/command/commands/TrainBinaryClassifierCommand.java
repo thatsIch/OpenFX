@@ -5,7 +5,7 @@ import com.google.inject.assistedinject.Assisted;
 import de.thatsich.openfx.classification.api.control.IBinaryClassification;
 import de.thatsich.openfx.classification.intern.control.classifier.core.BinaryClassifierConfiguration;
 import de.thatsich.openfx.classification.intern.control.classifier.core.IBinaryClassifier;
-import de.thatsich.openfx.featureextraction.api.control.FeatureVector;
+import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVector;
 import de.thatsich.openfx.featureextraction.api.control.FeatureVectorSet;
 import de.thatsich.core.javafx.ACommand;
 import org.opencv.core.MatOfFloat;

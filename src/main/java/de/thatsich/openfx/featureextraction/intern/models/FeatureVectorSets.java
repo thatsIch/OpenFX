@@ -1,6 +1,6 @@
 package de.thatsich.openfx.featureextraction.intern.models;
 
-import de.thatsich.openfx.featureextraction.api.control.FeatureVector;
+import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVector;
 import de.thatsich.openfx.featureextraction.api.control.FeatureVectorSet;
 import de.thatsich.openfx.featureextraction.api.model.IFeatureVectorSets;
 import javafx.beans.property.IntegerProperty;

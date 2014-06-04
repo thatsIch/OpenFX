@@ -26,7 +26,6 @@ dependencies {
     compile "com.google.inject:guice:3.0"
     compile "com.google.inject.extensions:guice-assistedinject:3.0"
     compile "com.cathive.fx:fx-guice:2.1.3"
-    compile "com.objectdb:objectdb:2.5.5"
 
     // include all local libs, here OpenCV since no Maven support yet, else use JavaCV
     compile fileTree(dir: 'libs', include: ['*.jar'])
