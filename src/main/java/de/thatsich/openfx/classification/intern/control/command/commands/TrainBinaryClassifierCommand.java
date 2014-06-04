@@ -36,9 +36,9 @@ public class TrainBinaryClassifierCommand extends ACommand<IBinaryClassification
 	protected IBinaryClassification call() throws Exception
 	{
 		final String binaryClassifierName = this.binaryClassifier.getName();
-		final String featureExtractorName = this.selectedFeatureVector.getExtractorName();
-		final int frameSize = this.selectedFeatureVector.getFrameSize();
-		final String errorClassName = this.selectedFeatureVector.getClassName();
+		final String featureExtractorName = this.selectedFeatureVector.extractorName();
+		final int frameSize = this.selectedFeatureVector.frameSize();
+		final String errorClassName = this.selectedFeatureVector.className();
 		final String id = UUID.randomUUID().toString();
 
 		final MatOfFloat positive = new MatOfFloat();
@@ -53,9 +53,9 @@ public class TrainBinaryClassifierCommand extends ACommand<IBinaryClassification
 		for (IFeature feature : this.featureVectorList)
 		{
 			// select only with same FeatureExtractor and FrameSize
-			if (feature.getExtractorName().equals(featureExtractorName) && feature.getFrameSize() == frameSize)
+			if (feature.extractorName().equals(featureExtractorName) && feature.frameSize() == frameSize)
 			{
-				for (IFeatureVector vector : feature.getFeatureVectors())
+				for (IFeatureVector vector : feature.vectors())
 				{
 					final float[] floatArray = new float[vector.vector().size()];
 					int index = 0;

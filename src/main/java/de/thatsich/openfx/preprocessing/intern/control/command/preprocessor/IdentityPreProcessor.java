@@ -13,6 +13,12 @@ public class IdentityPreProcessor extends APreProcessor
 	private IPreProcessingProvider provider;
 
 	@Override
+	public String toString()
+	{
+		return "IdentityPreProcessor";
+	}
+
+	@Override
 	public IPreProcessing train(double[][] trainData, double[][] idealData, PreProcessorConfiguration config)
 	{
 		return this.provider.createIdentityPreProcessing(new BasicNetwork(), config);

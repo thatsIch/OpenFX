@@ -38,7 +38,7 @@ public class Features implements IFeatures
 	}
 
 	@Override
-	public ObjectProperty<IFeatureVector> selectedFeatureVector()
+	public ObjectProperty<IFeatureVector> selectedVector()
 	{
 		return this.selectedFeatureVector;
 	}

@@ -29,31 +29,31 @@ public class Feature implements IFeature
 	}
 
 	@Override
-	public Path getPath()
+	public Path path()
 	{
 		return this.path;
 	}
 
 	@Override
-	public String getExtractorName()
+	public String extractorName()
 	{
 		return this.extractorName;
 	}
 
 	@Override
-	public String getClassName()
+	public String className()
 	{
 		return this.className;
 	}
 
 	@Override
-	public int getFrameSize()
+	public int frameSize()
 	{
 		return this.frameSize;
 	}
 
 	@Override
-	public List<IFeatureVector> getFeatureVectors()
+	public List<IFeatureVector> vectors()
 	{
 		return this.featureVectors;
 	}

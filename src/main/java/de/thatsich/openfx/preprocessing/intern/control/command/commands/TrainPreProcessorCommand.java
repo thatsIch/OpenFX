@@ -42,14 +42,14 @@ public class TrainPreProcessorCommand extends ACommand<IPreProcessing>
 	protected IPreProcessing call() throws Exception
 	{
 		final String preProcessorName = this.preProcessor.getName();
-		final String featureExtractorName = this.selectedFeatureVector.getExtractorName();
-		final int frameSize = this.selectedFeatureVector.getFrameSize();
-		final String errorClassName = this.selectedFeatureVector.getClassName();
+		final String featureExtractorName = this.selectedFeatureVector.extractorName();
+		final int frameSize = this.selectedFeatureVector.frameSize();
+		final String errorClassName = this.selectedFeatureVector.className();
 		final String id = UUID.randomUUID().toString();
 		this.log.info("Prepared all data for Training.");
 
 		final double[][] data = this.convertToNativeMatrix(this.featureVectorList, featureExtractorName, frameSize);
-		final int featureVectorSize = this.featureVectorList.get(0).getFeatureVectors().size();
+		final int featureVectorSize = this.featureVectorList.get(0).vectors().size();
 		this.log.info("Prepared DataSets.");
 
 		final String filename = preProcessorName + "_" + featureExtractorName + "_" + frameSize + "_" + errorClassName + "_" + id + ".yaml";
@@ -79,13 +79,13 @@ public class TrainPreProcessorCommand extends ACommand<IPreProcessing>
 
 		for (IFeature set : input)
 		{
-			final boolean equalName = set.getExtractorName().equals(name);
-			final boolean equalSize = set.getFrameSize() == frameSize;
+			final boolean equalName = set.extractorName().equals(name);
+			final boolean equalSize = set.frameSize() == frameSize;
 
 			// select only with same FeatureExtractor and FrameSize
 			if (equalName && equalSize)
 			{
-				for (IFeatureVector vector : set.getFeatureVectors())
+				for (IFeatureVector vector : set.vectors())
 				{
 					final double[] featureArray = new double[vector.vector().size()];
 					int index = 0;

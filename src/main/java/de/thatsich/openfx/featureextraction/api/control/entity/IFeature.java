@@ -9,13 +9,13 @@ import java.util.List;
  */
 public interface IFeature
 {
-	Path getPath();
+	Path path();
 
-	String getExtractorName();
+	String extractorName();
 
-	String getClassName();
+	String className();
 
-	int getFrameSize();
+	int frameSize();
 
-	List<IFeatureVector> getFeatureVectors();
+	List<IFeatureVector> vectors();
 }

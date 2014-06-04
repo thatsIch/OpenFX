@@ -3,7 +3,11 @@ package de.thatsich.openfx.featureextraction.intern.control.handler;
 import com.google.inject.Inject;
 import de.thatsich.core.javafx.ACommandHandler;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
+import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureVector;
 import de.thatsich.openfx.featureextraction.api.model.IFeatures;
+
+import java.util.List;
+import java.util.Optional;
 
 /**
  * Handler for what should happen if the Command was successfull
@@ -18,10 +22,47 @@ public class ExtractFeatureSucceededHandler extends ACommandHandler<IFeature>
 	@Override
 	public void handle(IFeature feature)
 	{
-		this.features.list().add(feature);
-		this.log.info("Added FeatureVector to Database.");
+		final IFeature merge = this.merge(this.features, feature);
+		this.log.info("Merged Feature into Database.");
 
-		this.features.selectedFeature().set(feature);
+		this.features.selectedFeature().set(merge);
 		this.log.info("Set current to selected FeatureVectorSet.");
+	}
+
+	private IFeature merge(IFeatures features, IFeature feature)
+	{
+		final Optional<IFeature> maybeMatch = this.getMatchingFeature(features, feature);
+		if (maybeMatch.isPresent())
+		{
+			final IFeature match = maybeMatch.get();
+			final List<IFeatureVector> vectors = feature.vectors();
+
+			match.vectors().addAll(vectors);
+
+			return match;
+		}
+		else
+		{
+			features.list().add(feature);
+
+			return feature;
+		}
+	}
+
+	private Optional<IFeature> getMatchingFeature(IFeatures features, IFeature feature)
+	{
+		for (IFeature iFeature : features.list())
+		{
+			final boolean sameSize = iFeature.frameSize() == feature.frameSize();
+			final boolean sameClass = iFeature.className().equals(feature.className());
+			final boolean sameExtractor = iFeature.extractorName().equals(feature.extractorName());
+
+			if (sameSize && sameClass && sameExtractor)
+			{
+				return Optional.of(iFeature);
+			}
+		}
+
+		return Optional.empty();
 	}
 }

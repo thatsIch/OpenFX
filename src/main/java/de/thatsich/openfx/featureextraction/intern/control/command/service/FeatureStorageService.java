@@ -26,8 +26,8 @@ public class FeatureStorageService implements IFileStorageService<IFeature>
 	@Override
 	public void save(final IFeature elem) throws IOException
 	{
-		final BufferedWriter writer = Files.newBufferedWriter(elem.getPath(), StandardCharsets.US_ASCII);
-		final List<IFeatureVector> featureVectors = elem.getFeatureVectors();
+		final BufferedWriter writer = Files.newBufferedWriter(elem.path(), StandardCharsets.US_ASCII);
+		final List<IFeatureVector> featureVectors = elem.vectors();
 
 		for (int fvIndex = 0; fvIndex < featureVectors.size(); fvIndex++)
 		{

@@ -75,8 +75,8 @@ public class NetworkListPresenter extends AFXMLPresenter
 	private void bindTableViewCellValue()
 	{
 		this.nodeTableColumnClassifierName.setCellValueFactory(new PropertyValueFactory<>("getClassifierName"));
-		this.nodeTableColumnExtractorName.setCellValueFactory(new PropertyValueFactory<>("getExtractorName"));
-		this.nodeTableColumnFrameSize.setCellValueFactory(new PropertyValueFactory<>("getFrameSize"));
+		this.nodeTableColumnExtractorName.setCellValueFactory(new PropertyValueFactory<>("extractorName"));
+		this.nodeTableColumnFrameSize.setCellValueFactory(new PropertyValueFactory<>("frameSize"));
 		this.nodeTableColumnErrorClassName.setCellValueFactory(new PropertyValueFactory<>("getErrorClassName"));
 		this.nodeTableColumnID.setCellValueFactory(new PropertyValueFactory<>("getID"));
 	}

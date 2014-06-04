@@ -80,7 +80,7 @@ public class FeatureListPresenter extends AFXMLPresenter
 					for (IFeature feature : featureVectorSetList)
 					{
 						this.log.info(feature.toString());
-						final List<IFeatureVector> featureVectorList = feature.getFeatureVectors();
+						final List<IFeatureVector> featureVectorList = feature.vectors();
 						final TreeItem<IFeatureSpaceTreeItemAdapter> setTreeItem = new TreeItem<>(new FeatureVectorSetTreeItemAdapter(feature));
 						setTreeItem.setExpanded(true);
 
@@ -144,7 +144,7 @@ public class FeatureListPresenter extends AFXMLPresenter
 			if (item.isSet())
 			{
 				this.features.selectedFeature().set(item.getFeature());
-				this.features.selectedFeatureVector().set(null);
+				this.features.selectedVector().set(null);
 			}
 			else if (item.isVector())
 			{
@@ -155,14 +155,14 @@ public class FeatureListPresenter extends AFXMLPresenter
 				}
 
 				this.features.selectedFeature().set(set.getFeature());
-				this.features.selectedFeatureVector().set(item.getVector());
+				this.features.selectedVector().set(item.getVector());
 			}
 
 			// is root or something else
 			else
 			{
 				this.features.selectedFeature().set(null);
-				this.features.selectedFeatureVector().set(null);
+				this.features.selectedVector().set(null);
 			}
 
 			final int selectedIndex = this.nodeTreeViewFeatureVectorSetList.getSelectionModel().getSelectedIndex();

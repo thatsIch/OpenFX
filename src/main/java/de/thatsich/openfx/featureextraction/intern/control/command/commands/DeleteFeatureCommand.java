@@ -24,8 +24,8 @@ public class DeleteFeatureCommand extends ACommand<IFeature>
 	{
 		try
 		{
-			this.log.info(this.feature.getPath().toString());
-			Files.delete(this.feature.getPath());
+			this.log.info(this.feature.path().toString());
+			Files.delete(this.feature.path());
 
 			this.log.info("Deleted FeatureVectorSet from FileSystem.");
 		}

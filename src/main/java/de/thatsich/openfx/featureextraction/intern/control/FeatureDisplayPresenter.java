@@ -47,9 +47,9 @@ public class FeatureDisplayPresenter extends AFXMLPresenter
 		this.features.selectedFeature().addListener((observable, oldValue, newValue) -> {
 			if (newValue != null)
 			{
-				this.nodeLabelClassName.setText(newValue.getClassName());
-				this.nodeLabelExtractorName.setText(newValue.getExtractorName());
-				this.nodeLabelFrameSize.setText(String.valueOf(newValue.getFrameSize()));
+				this.nodeLabelClassName.setText(newValue.className());
+				this.nodeLabelExtractorName.setText(newValue.extractorName());
+				this.nodeLabelFrameSize.setText(String.valueOf(newValue.frameSize()));
 			}
 			else
 			{
@@ -60,7 +60,7 @@ public class FeatureDisplayPresenter extends AFXMLPresenter
 		});
 		this.log.info("Bound Labels to changing FeatureVectorSet.");
 
-		this.features.selectedFeatureVector().addListener((observable, oldValue, newValue) -> {
+		this.features.selectedVector().addListener((observable, oldValue, newValue) -> {
 			if (newValue != null)
 			{
 				this.nodeLabelFeatureVector.setText(newValue.vector().toString());

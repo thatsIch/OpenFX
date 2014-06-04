@@ -16,7 +16,7 @@ public interface IFeatures
 
 	ObjectProperty<IFeature> selectedFeature();
 
-	ObjectProperty<IFeatureVector> selectedFeatureVector();
+	ObjectProperty<IFeatureVector> selectedVector();
 
 	IntegerProperty index();
 }

@@ -30,7 +30,7 @@ public class FeatureVectorSetTreeItemAdapter implements IFeatureSpaceTreeItemAda
 	@Override
 	public String toString()
 	{
-		return this.feature.get().getClassName() + " - " + this.feature.get().getExtractorName() + " - " + this.feature.get().getFrameSize() + "px";
+		return this.feature.get().className() + " - " + this.feature.get().extractorName() + " - " + this.feature.get().frameSize() + "px";
 	}
 
 	// IFeatureSpaceTreeItemAdapter Implementation

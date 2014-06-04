@@ -42,24 +42,10 @@ public class AANNPreProcessor extends APreProcessor
 	@Inject
 	private IPreProcessingProvider provider;
 
-	private void validate(int featureVectorCount, int featureVectorLength, int minHiddenLayerSize, int maxHiddenLayerSize, int minBottleLayerSize, int maxBottleLayerSize)
+	@Override
+	public String toString()
 	{
-		if (featureVectorCount < 2)
-		{
-			throw new InvalidParameterException("Not enough FeatureVectors to Cross-Validate the input data.");
-		}
-		if (featureVectorLength < 1)
-		{
-			throw new InvalidParameterException("FeatureVector Size is 0.");
-		}
-		if (maxHiddenLayerSize < minHiddenLayerSize)
-		{
-			throw new InvalidParameterException("The maxHiddenLayerSize is smaller than the minHiddenLayerSize.");
-		}
-		if (maxBottleLayerSize < minBottleLayerSize)
-		{
-			throw new InvalidParameterException("The maxBottleLayerSize is smaller than the minBottleLayerSize.");
-		}
+		return "AANNPreProcessor";
 	}
 
 	@Override
@@ -122,6 +108,26 @@ public class AANNPreProcessor extends APreProcessor
 		final PreProcessorConfiguration newConfig = new PreProcessorConfiguration(path, preProcessorName, inputSize, outputSize, id);
 
 		return this.provider.createAANNPreProcessing(rebuildNetwork, newConfig);
+	}
+
+	private void validate(int featureVectorCount, int featureVectorLength, int minHiddenLayerSize, int maxHiddenLayerSize, int minBottleLayerSize, int maxBottleLayerSize)
+	{
+		if (featureVectorCount < 2)
+		{
+			throw new InvalidParameterException("Not enough FeatureVectors to Cross-Validate the input data.");
+		}
+		if (featureVectorLength < 1)
+		{
+			throw new InvalidParameterException("FeatureVector Size is 0.");
+		}
+		if (maxHiddenLayerSize < minHiddenLayerSize)
+		{
+			throw new InvalidParameterException("The maxHiddenLayerSize is smaller than the minHiddenLayerSize.");
+		}
+		if (maxBottleLayerSize < minBottleLayerSize)
+		{
+			throw new InvalidParameterException("The maxBottleLayerSize is smaller than the minBottleLayerSize.");
+		}
 	}
 
 	/**

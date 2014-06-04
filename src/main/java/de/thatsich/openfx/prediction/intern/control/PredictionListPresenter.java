@@ -91,8 +91,8 @@ public class PredictionListPresenter extends AFXMLPresenter
 	private void bindTableViewCellValue()
 	{
 		this.nodeTableColumnClassifierName.setCellValueFactory(new PropertyValueFactory<BinaryPrediction, String>("getClassifierName"));
-		this.nodeTableColumnExtractorName.setCellValueFactory(new PropertyValueFactory<BinaryPrediction, String>("getExtractorName"));
-		this.nodeTableColumnFrameSize.setCellValueFactory(new PropertyValueFactory<BinaryPrediction, Integer>("getFrameSize"));
+		this.nodeTableColumnExtractorName.setCellValueFactory(new PropertyValueFactory<BinaryPrediction, String>("extractorName"));
+		this.nodeTableColumnFrameSize.setCellValueFactory(new PropertyValueFactory<BinaryPrediction, Integer>("frameSize"));
 		this.nodeTableColumnErrorClassName.setCellValueFactory(new PropertyValueFactory<BinaryPrediction, String>("getErrorClassName"));
 		this.nodeTableColumnID.setCellValueFactory(new PropertyValueFactory<BinaryPrediction, String>("getID"));
 	}
