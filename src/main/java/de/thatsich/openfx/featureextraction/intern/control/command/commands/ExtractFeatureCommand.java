@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import de.thatsich.core.javafx.ACommand;
 import de.thatsich.core.opencv.Images;
-import de.thatsich.openfx.errorgeneration.intern.control.entity.Error;
+import de.thatsich.openfx.errorgeneration.api.control.entity.IError;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureExtractor;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureVector;
@@ -26,7 +26,7 @@ public class ExtractFeatureCommand extends ACommand<IFeature>
 {
 	// Properties
 	private final Path path;
-	private final Error error;
+	private final IError error;
 	private final IFeatureExtractor featureExtractor;
 	private final int frameSize;
 	private final boolean smooth;
@@ -37,7 +37,7 @@ public class ExtractFeatureCommand extends ACommand<IFeature>
 	@Inject private FeatureStorageService storage;
 
 	@Inject
-	public ExtractFeatureCommand(@Assisted Path folderPath, @Assisted de.thatsich.openfx.errorgeneration.intern.control.entity.Error error, @Assisted IFeatureExtractor extractor, @Assisted int frameSize, @Assisted("smooth") boolean smooth, @Assisted("threshold") boolean threshold, @Assisted("denoising") boolean denoising)
+	public ExtractFeatureCommand(@Assisted Path folderPath, @Assisted IError error, @Assisted IFeatureExtractor extractor, @Assisted int frameSize, @Assisted("smooth") boolean smooth, @Assisted("threshold") boolean threshold, @Assisted("denoising") boolean denoising)
 	{
 		this.path = folderPath;
 		this.error = error;
