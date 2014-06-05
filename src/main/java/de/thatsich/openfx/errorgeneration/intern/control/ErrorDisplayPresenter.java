@@ -55,8 +55,8 @@ public class ErrorDisplayPresenter extends AFXMLPresenter
 
 	private Image errorEntryToImage(IError entry)
 	{
-		final Mat originalMat = entry.getOriginal().get().clone();
-		final Mat onlyErrorMat = entry.getError().get();
+		final Mat originalMat = entry.originalProperty().get().clone();
+		final Mat onlyErrorMat = entry.errorProperty().get();
 
 		if (!originalMat.size().equals(onlyErrorMat.size()))
 		{

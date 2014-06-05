@@ -29,37 +29,37 @@ public class Error implements IError
 	}
 
 	@Override
-	public ReadOnlyStringProperty getDateTime()
+	public ReadOnlyStringProperty dateTimeProperty()
 	{
 		return this.dateTime.getReadOnlyProperty();
 	}
 
 	@Override
-	public ReadOnlyStringProperty getClazz()
+	public ReadOnlyStringProperty clazzProperty()
 	{
 		return this.clazz.getReadOnlyProperty();
 	}
 
 	@Override
-	public ReadOnlyStringProperty getId()
+	public ReadOnlyStringProperty idProperty()
 	{
 		return this.id.getReadOnlyProperty();
 	}
 
 	@Override
-	public ReadOnlyObjectProperty<Mat> getOriginal()
+	public ReadOnlyObjectProperty<Mat> originalProperty()
 	{
 		return this.original.getReadOnlyProperty();
 	}
 
 	@Override
-	public ReadOnlyObjectProperty<Mat> getError()
+	public ReadOnlyObjectProperty<Mat> errorProperty()
 	{
 		return this.error.getReadOnlyProperty();
 	}
 
 	@Override
-	public ReadOnlyObjectProperty<Mat> getModified()
+	public ReadOnlyObjectProperty<Mat> modifiedProperty()
 	{
 		return this.modified.getReadOnlyProperty();
 	}

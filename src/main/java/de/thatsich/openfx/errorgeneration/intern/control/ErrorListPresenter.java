@@ -75,7 +75,7 @@ public class ErrorListPresenter extends AFXMLPresenter
 	 */
 	private void bindTableViewCellValue()
 	{
-		this.nodeTableColumnErrorClass.setCellValueFactory(new PropertyValueFactory<>("getClazz"));
-		this.nodeTableColumnErrorName.setCellValueFactory(new PropertyValueFactory<>("getId"));
+		this.nodeTableColumnErrorClass.setCellValueFactory(new PropertyValueFactory<>("clazz"));
+		this.nodeTableColumnErrorName.setCellValueFactory(new PropertyValueFactory<>("id"));
 	}
 }

@@ -10,15 +10,15 @@ import org.opencv.core.Mat;
  */
 public interface IError
 {
-	ReadOnlyStringProperty getDateTime();
+	ReadOnlyStringProperty dateTimeProperty();
 
-	ReadOnlyStringProperty getClazz();
+	ReadOnlyStringProperty clazzProperty();
 
-	ReadOnlyStringProperty getId();
+	ReadOnlyStringProperty idProperty();
 
-	ReadOnlyObjectProperty<Mat> getOriginal();
+	ReadOnlyObjectProperty<Mat> originalProperty();
 
-	ReadOnlyObjectProperty<Mat> getError();
+	ReadOnlyObjectProperty<Mat> errorProperty();
 
-	ReadOnlyObjectProperty<Mat> getModified();
+	ReadOnlyObjectProperty<Mat> modifiedProperty();
 }

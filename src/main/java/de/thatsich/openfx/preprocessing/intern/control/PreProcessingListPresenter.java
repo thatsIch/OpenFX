@@ -92,6 +92,6 @@ public class PreProcessingListPresenter extends AFXMLPresenter
 		this.nodeTableColumnPreProcessingName.setCellValueFactory(new PropertyValueFactory<>("getPreProcessingName"));
 		this.nodeTableColumnInputSize.setCellValueFactory(new PropertyValueFactory<>("getInputSize"));
 		this.nodeTableColumnOutputSize.setCellValueFactory(new PropertyValueFactory<>("getOutputSize"));
-		this.nodeTableColumnID.setCellValueFactory(new PropertyValueFactory<>("getId"));
+		this.nodeTableColumnID.setCellValueFactory(new PropertyValueFactory<>("idProperty"));
 	}
 }
