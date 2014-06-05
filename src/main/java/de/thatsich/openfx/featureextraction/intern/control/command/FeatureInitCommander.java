@@ -21,35 +21,26 @@ import java.util.concurrent.ExecutorService;
 @Singleton
 public class FeatureInitCommander
 {
-
 	// Injects
-	@Inject
-	private Log log;
-
-	// Model
-	@Inject
-	private IFeatureState featureState;
-
-	// Command
-	@Inject
-	private IFeatureInitCommandProvider commander;
-	//	@Inject private FeatureCommandProvider commander;
+	@Inject private Log log;
+	@Inject private IFeatureState featureState;
+	@Inject private IFeatureInitCommandProvider provider;
 
 	@Inject
 	private void initialize()
 	{
-		this.initFrameSize();
+		this.initTileSize();
 
-		this.initFeatureExtractorList();
-		this.initFeatureVectorList();
+		this.initFeatureExtractors();
+		this.initFeatures();
 	}
 
 	/**
 	 * Fetches last FrameSize
 	 */
-	private void initFrameSize()
+	private void initTileSize()
 	{
-		final GetLastTileSizeCommand command = this.commander.createGetLastFrameSizeCommand();
+		final GetLastTileSizeCommand command = this.provider.createGetLastFrameSizeCommand();
 		command.setOnSucceededCommandHandler(GetLastTileSizeSucceededHandler.class);
 		command.start();
 		this.log.info("Initialized LastFrameSize Retrieval.");
@@ -58,17 +49,17 @@ public class FeatureInitCommander
 	/**
 	 * Gets FeatureExtractorList and preselects last selected one.
 	 */
-	private void initFeatureExtractorList()
+	private void initFeatureExtractors()
 	{
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(1);
 
-		final InitFeatureExtractorsCommand initCommand = this.commander.createInitFeatureExtractorListCommand();
+		final InitFeatureExtractorsCommand initCommand = this.provider.createInitFeatureExtractorListCommand();
 		initCommand.setOnSucceededCommandHandler(InitFeatureExtractorListSucceededHandler.class);
 		initCommand.setExecutor(executor);
 		initCommand.start();
 		this.log.info("Initialized FeatureExtractorList Retrieval.");
 
-		final GetLastFeatureExtractorIndexCommand lastCommand = this.commander.createGetLastFeatureExtractorIndexCommand();
+		final GetLastFeatureExtractorIndexCommand lastCommand = this.provider.createGetLastFeatureExtractorIndexCommand();
 		lastCommand.setOnSucceededCommandHandler(GetLastFeatureExtractorIndexSucceededHandler.class);
 		lastCommand.setExecutor(executor);
 		lastCommand.start();
@@ -78,7 +69,7 @@ public class FeatureInitCommander
 		this.log.info("Shutting down Executor.");
 	}
 
-	private void initFeatureVectorList()
+	private void initFeatures()
 	{
 		final Path folderPath = Paths.get("io/features");
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(1);
@@ -86,7 +77,7 @@ public class FeatureInitCommander
 		this.featureState.path().set(folderPath);
 		this.log.info("Set FeatureVectorInputFolderPath to Model.");
 
-		final InitFeaturesCommand initCommand = this.commander.createInitFeatureVectorListCommand(folderPath);
+		final InitFeaturesCommand initCommand = this.provider.createInitFeaturesCommand(folderPath);
 		initCommand.setOnSucceededCommandHandler(InitFeaturesSucceededHandler.class);
 		initCommand.setExecutor(executor);
 		initCommand.start();

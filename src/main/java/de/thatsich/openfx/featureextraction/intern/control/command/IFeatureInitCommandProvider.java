@@ -13,7 +13,7 @@ public interface IFeatureInitCommandProvider extends ICommandProvider
 {
 	InitFeatureExtractorsCommand createInitFeatureExtractorListCommand();
 
-	InitFeaturesCommand createInitFeatureVectorListCommand(Path folderPath);
+	InitFeaturesCommand createInitFeaturesCommand(Path folderPath);
 
 	GetLastTileSizeCommand createGetLastFrameSizeCommand();
 

@@ -11,14 +11,13 @@ import javafx.scene.control.Tooltip;
 public class FeatureDisplayPresenter extends AFXMLPresenter
 {
 	// Injects
-	@Inject private FeatureInitCommander initCommander;
+	@Inject private FeatureInitCommander init;
 	@Inject private IFeatures features;
 
 	// Nodes
 	@FXML private Label nodeLabelClassName;
 	@FXML private Label nodeLabelExtractorName;
 	@FXML private Label nodeLabelFrameSize;
-	@FXML private Label nodeLabelID;
 	@FXML private Label nodeLabelSize;
 	@FXML private Label nodeLabelFeatureVector;
 	@FXML private Label nodeLabelFeatureLabel;
@@ -26,25 +25,6 @@ public class FeatureDisplayPresenter extends AFXMLPresenter
 	@Override
 	protected void bindComponents()
 	{
-	}
-
-	// ==================================================
-	// Initialization Implementation
-	// ==================================================
-	@Override
-	protected void initComponents()
-	{
-		this.initLabels();
-	}
-
-	/**
-	 * Binds all labels to the changing FeatureVector
-	 */
-	private void initLabels()
-	{
-		this.nodeLabelFeatureVector.setTooltip(new Tooltip());
-		this.log.info("Initialized Tooltip of LabelFeatureVector.");
-
 		this.features.selected().addListener((observable, oldValue, newValue) -> {
 			if (newValue != null)
 			{
@@ -60,5 +40,12 @@ public class FeatureDisplayPresenter extends AFXMLPresenter
 			}
 		});
 		this.log.info("Bound Labels to changing FeatureVectorSet.");
+	}
+
+	@Override
+	protected void initComponents()
+	{
+		this.nodeLabelFeatureVector.setTooltip(new Tooltip());
+		this.log.info("Initialized Tooltip of LabelFeatureVector.");
 	}
 }
