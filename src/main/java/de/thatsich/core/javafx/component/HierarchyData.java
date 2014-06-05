@@ -14,7 +14,7 @@ public interface HierarchyData<T extends HierarchyData>
 	 * The children collection, which represents the recursive nature of the hierarchy.
 	 * Each child is again a {@link HierarchyData}.
 	 *
-	 * @return A list of children.
+	 * @return A get of children.
 	 */
 	ObservableList<T> getChildren();
 }

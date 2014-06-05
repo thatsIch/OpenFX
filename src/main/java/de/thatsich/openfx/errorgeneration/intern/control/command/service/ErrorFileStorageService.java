@@ -6,13 +6,13 @@ import de.thatsich.core.opencv.Images;
 import de.thatsich.openfx.errorgeneration.api.control.entity.IError;
 import de.thatsich.openfx.errorgeneration.api.model.IErrorState;
 import de.thatsich.openfx.errorgeneration.intern.control.entity.Error;
+import de.thatsich.openfx.errorgeneration.intern.control.entity.ErrorConfig;
 import org.opencv.core.Mat;
 
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.StringJoiner;
 
 
 public class ErrorFileStorageService extends AFileStorageService<IError>
@@ -26,11 +26,8 @@ public class ErrorFileStorageService extends AFileStorageService<IError>
 	@Override
 	public void save(final IError elem) throws IOException
 	{
-		final StringJoiner joiner = new StringJoiner("_");
-		joiner.add(elem.dateTimeProperty().get());
-		joiner.add(elem.clazzProperty().get());
-		joiner.add(elem.idProperty().get());
-		final String fileName = joiner.toString();
+		final ErrorConfig config = elem.getConfig();
+		final String fileName = config.toString();
 		final Path path = super.storagePath.resolve(fileName);
 
 		this.createInvalidDirectory(path);
@@ -56,17 +53,14 @@ public class ErrorFileStorageService extends AFileStorageService<IError>
 	@Override
 	public IError load(final Path path) throws IOException
 	{
-		final String unparsedString = path.getFileName().toString();
-		final String splitString[] = unparsedString.split("_");
-		final String date = splitString[0];
-		final String className = splitString[1];
-		final String id = splitString[2];
+		final String fileName = path.getFileName().toString();
 
+		final ErrorConfig config = new ErrorConfig(fileName);
 		final Mat original = Images.toMat(path.resolve("original.png"));
 		final Mat modified = Images.toMat(path.resolve("modified.png"));
 		final Mat error = Images.toMat(path.resolve("error.png"));
 
-		return new Error(original, modified, error, date, className, id);
+		return new Error(config, original, modified, error);
 	}
 
 	@Override
@@ -78,11 +72,8 @@ public class ErrorFileStorageService extends AFileStorageService<IError>
 	@Override
 	public void delete(final IError elem) throws IOException
 	{
-		final StringJoiner joiner = new StringJoiner("_");
-		joiner.add(elem.dateTimeProperty().get());
-		joiner.add(elem.clazzProperty().get());
-		joiner.add(elem.idProperty().get());
-		final String fileName = joiner.toString();
+		final ErrorConfig config = elem.getConfig();
+		final String fileName = config.toString();
 		final Path path = super.storagePath.resolve(fileName);
 
 		this.deleteChildren(path);

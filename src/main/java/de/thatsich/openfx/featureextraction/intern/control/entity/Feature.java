@@ -12,40 +12,42 @@ import java.util.List;
 public class Feature implements IFeature
 {
 	// Properties
-	private final String className;
-	private final String extractorName;
-	private final int tileSize;
+	private final FeatureConfig config;
 	private final List<IFeatureVector> featureVectors;
 
-	public Feature(final String className, final String extractorName, final int tileSize, final List<IFeatureVector> featureVectors)
+	public Feature(final FeatureConfig config, final List<IFeatureVector> featureVectors)
 	{
-		this.className = className;
-		this.extractorName = extractorName;
-		this.tileSize = tileSize;
+		this.config = config;
 		this.featureVectors = featureVectors;
 	}
 
 	@Override
 	public String extractorName()
 	{
-		return this.extractorName;
+		return this.config.extractorName;
 	}
 
 	@Override
 	public String className()
 	{
-		return this.className;
+		return this.config.className;
 	}
 
 	@Override
 	public int tileSize()
 	{
-		return this.tileSize;
+		return this.config.tileSize;
 	}
 
 	@Override
 	public List<IFeatureVector> vectors()
 	{
 		return this.featureVectors;
+	}
+
+	@Override
+	public FeatureConfig getConfig()
+	{
+		return this.config;
 	}
 }

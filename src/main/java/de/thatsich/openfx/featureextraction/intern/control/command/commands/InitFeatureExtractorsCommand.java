@@ -15,7 +15,7 @@ import de.thatsich.openfx.featureextraction.intern.control.extractor.Variance;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InitFeatureExtractorListCommand extends ACommand<List<IFeatureExtractor>>
+public class InitFeatureExtractorsCommand extends ACommand<List<IFeatureExtractor>>
 {
 
 	@Inject

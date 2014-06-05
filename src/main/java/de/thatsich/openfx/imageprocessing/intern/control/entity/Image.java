@@ -6,12 +6,12 @@ import org.opencv.core.Mat;
 public class Image implements IImage
 {
 	private final Mat imageMat;
-	private final String imageName;
+	private final ImageConfig config;
 
-	public Image(Mat imageMat, String imageName)
+	public Image(ImageConfig config, Mat imageMat)
 	{
+		this.config = config;
 		this.imageMat = imageMat;
-		this.imageName = imageName;
 	}
 
 	@Override
@@ -23,6 +23,12 @@ public class Image implements IImage
 	@Override
 	public String getImageName()
 	{
-		return this.imageName;
+		return this.config.imageName;
+	}
+
+	@Override
+	public ImageConfig getConfig()
+	{
+		return this.config;
 	}
 }

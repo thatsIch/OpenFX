@@ -42,19 +42,19 @@ public class ClassificationDisplayPresenter extends AFXMLPresenter
 		this.binaryClassifications.selected().addListener((observable, oldValue, newValue) -> {
 			if (newValue != null)
 			{
-				nodeLabelClassificationName.setText(newValue.getClassificationNameProperty().getValue());
-				nodeLabelExtractorName.setText(newValue.getExtractorNameProperty().getValue());
-				nodeLabelFrameSize.setText(newValue.getFrameSizeProperty().getValue().toString());
-				nodeLabelErrorName.setText(newValue.getErrorNameProperty().getValue());
-				nodeLabelID.setText(newValue.getIdProperty().getValue());
+				this.nodeLabelClassificationName.setText(newValue.getClassificationNameProperty().getValue());
+				this.nodeLabelExtractorName.setText(newValue.getExtractorNameProperty().getValue());
+				this.nodeLabelFrameSize.setText(newValue.getFrameSizeProperty().getValue().toString());
+				this.nodeLabelErrorName.setText(newValue.getErrorNameProperty().getValue());
+				this.nodeLabelID.setText(newValue.getIdProperty().getValue());
 			}
 			else
 			{
-				nodeLabelClassificationName.setText(null);
-				nodeLabelExtractorName.setText(null);
-				nodeLabelFrameSize.setText(null);
-				nodeLabelErrorName.setText(null);
-				nodeLabelID.setText(null);
+				this.nodeLabelClassificationName.setText(null);
+				this.nodeLabelExtractorName.setText(null);
+				this.nodeLabelFrameSize.setText(null);
+				this.nodeLabelErrorName.setText(null);
+				this.nodeLabelID.setText(null);
 			}
 		});
 		this.log.info("Bound Labels to changing BinaryClassification.");

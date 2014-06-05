@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * Handler for what should happen if the Command was successfull
- * for initializing the error entry list
+ * for initializing the error entry get
  *
  * @author Minh
  */

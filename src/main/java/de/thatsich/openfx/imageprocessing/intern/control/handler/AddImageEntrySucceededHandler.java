@@ -5,6 +5,7 @@ import de.thatsich.core.javafx.ACommandHandler;
 import de.thatsich.openfx.imageprocessing.api.control.IImage;
 import de.thatsich.openfx.imageprocessing.api.model.IImages;
 import de.thatsich.openfx.imageprocessing.intern.control.entity.Image;
+import de.thatsich.openfx.imageprocessing.intern.control.entity.ImageConfig;
 import org.opencv.core.Mat;
 import org.opencv.highgui.Highgui;
 
@@ -25,7 +26,8 @@ public class AddImageEntrySucceededHandler extends ACommandHandler<Path>
 	{
 		final Mat copiedMat = Highgui.imread(value.toString(), 0);
 		final String fileName = value.getFileName().toString();
-		final IImage copy = new Image(copiedMat, fileName);
+		final ImageConfig config = new ImageConfig(fileName);
+		final IImage copy = new Image(config, copiedMat);
 		this.images.list().get().add(copy);
 		this.log.info("Added copy to ChoiceBoxDisplayImage: " + value.toString());
 

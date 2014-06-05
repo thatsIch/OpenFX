@@ -158,7 +158,7 @@ public class Images
 	/**
 	 * Calculates the max value of an int array.
 	 * Faster than the actual Arrays operation since
-	 * there is no need to convert into a list first
+	 * there is no need to convert into a get first
 	 *
 	 * @param array to be searched array
 	 *

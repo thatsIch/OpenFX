@@ -76,16 +76,16 @@ public class ClassificationListPresenter extends AFXMLPresenter
 	private void bindTableViewSelectionModel()
 	{
 		this.nodeTableViewBinaryClassificationList.getSelectionModel().selectedItemProperty().addListener((paramObservableValue, oldvalue, newValue) -> {
-			binaryClassifications.selected().set(newValue);
-			log.info("Set Selected BinaryClassification in Model.");
+			this.binaryClassifications.selected().set(newValue);
+			this.log.info("Set Selected BinaryClassification in Model.");
 
-			final int index = nodeTableViewBinaryClassificationList.getSelectionModel().getSelectedIndex();
-			final SetLastBinaryClassificationIndexCommand command = commander.createSetLastBinaryClassificationIndexCommand(index);
+			final int index = this.nodeTableViewBinaryClassificationList.getSelectionModel().getSelectedIndex();
+			final SetLastBinaryClassificationIndexCommand command = this.commander.createSetLastBinaryClassificationIndexCommand(index);
 			command.start();
 		});
 		this.log.info("Bound Selection to Model.");
 
-		this.binaryClassifications.selected().addListener((observable, oldValue, newValue) -> nodeTableViewBinaryClassificationList.getSelectionModel().select(newValue));
+		this.binaryClassifications.selected().addListener((observable, oldValue, newValue) -> this.nodeTableViewBinaryClassificationList.getSelectionModel().select(newValue));
 		this.log.info("Bound Model to Selection.");
 	}
 

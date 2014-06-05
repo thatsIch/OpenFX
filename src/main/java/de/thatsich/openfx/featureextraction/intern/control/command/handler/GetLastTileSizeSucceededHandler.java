@@ -1,8 +1,8 @@
 package de.thatsich.openfx.featureextraction.intern.control.command.handler;
 
 import com.google.inject.Inject;
-import de.thatsich.openfx.featureextraction.api.model.IFeatureState;
 import de.thatsich.core.javafx.ACommandHandler;
+import de.thatsich.openfx.featureextraction.api.model.IFeatureState;
 
 /**
  * Handler for what should happen if the Command was successfull
@@ -10,9 +10,9 @@ import de.thatsich.core.javafx.ACommandHandler;
  *
  * @author Minh
  */
-public class GetLastFrameSizeSucceededHandler extends ACommandHandler<Integer>
+public class GetLastTileSizeSucceededHandler extends ACommandHandler<Integer>
 {
-	@Inject	private IFeatureState featureState;
+	@Inject private IFeatureState featureState;
 
 	@Override
 	public void handle(Integer value)

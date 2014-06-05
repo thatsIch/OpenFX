@@ -7,6 +7,7 @@ import de.thatsich.openfx.errorgeneration.api.control.entity.IError;
 import de.thatsich.openfx.errorgeneration.api.control.entity.IErrorGenerator;
 import de.thatsich.openfx.errorgeneration.intern.control.command.service.ErrorFileStorageService;
 import de.thatsich.openfx.errorgeneration.intern.control.entity.Error;
+import de.thatsich.openfx.errorgeneration.intern.control.entity.ErrorConfig;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 
@@ -55,6 +56,7 @@ public class CreateErrorEntryCommand extends ACommand<IError>
 		final String creationTime = format.format(new Date());
 		final String id = UUID.randomUUID().toString();
 
-		return new Error(original, modified, error, creationTime, this.errorClass, id);
+		final ErrorConfig config = new ErrorConfig(creationTime, this.errorClass, id);
+		return new Error(config, original, modified, error);
 	}
 }

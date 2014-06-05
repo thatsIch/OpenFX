@@ -109,8 +109,8 @@ public class FeatureInputPresenter extends AFXMLPresenter
 	private void bindButtons()
 	{
 		this.nodeButtonExtractFeatureVector.disableProperty().bind(this.errors.selected().isNull().or(this.nodeChoiceBoxFeatureExtractor.valueProperty().isNull()));
-		this.nodeButtonRemoveFeatureVector.disableProperty().bind(this.features.selectedFeature().isNull());
-		this.nodeButtonResetFeatureVectorList.disableProperty().bind(this.features.list().emptyProperty());
+		this.nodeButtonRemoveFeatureVector.disableProperty().bind(this.features.selected().isNull());
+		this.nodeButtonResetFeatureVectorList.disableProperty().bind(this.features.get().emptyProperty());
 	}
 
 	// ================================================== 
@@ -128,7 +128,7 @@ public class FeatureInputPresenter extends AFXMLPresenter
 	@FXML
 	private void onRemoveAction()
 	{
-		final DeleteFeatureCommand command = this.provider.createRemoveFeatureVectorSetCommand(this.features.selectedFeature().get());
+		final DeleteFeatureCommand command = this.provider.createRemoveFeatureVectorSetCommand(this.features.selected().get());
 		command.setOnSucceededCommandHandler(RemoveFeatureSucceededHandler.class);
 		command.start();
 		this.log.info("FeatureVectorSet deletion instantiated.");
@@ -137,7 +137,7 @@ public class FeatureInputPresenter extends AFXMLPresenter
 	@FXML
 	private void onResetAction()
 	{
-		final List<IFeature> list = this.features.list();
+		final List<IFeature> list = this.features.get();
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(list.size());
 		this.log.info("Initialized Executor for resetting all FeatureVectors.");
 

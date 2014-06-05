@@ -8,14 +8,14 @@ import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureExtractor
 import de.thatsich.openfx.featureextraction.intern.control.command.commands.DeleteFeatureCommand;
 import de.thatsich.openfx.featureextraction.intern.control.command.commands.ExtractFeatureCommand;
 import de.thatsich.openfx.featureextraction.intern.control.command.commands.SetLastFeatureExtractorIndexCommand;
-import de.thatsich.openfx.featureextraction.intern.control.command.commands.SetLastFeatureVectorIndexCommand;
-import de.thatsich.openfx.featureextraction.intern.control.command.commands.SetLastFrameSizeCommand;
+import de.thatsich.openfx.featureextraction.intern.control.command.commands.SetLastFeatureIndexCommand;
+import de.thatsich.openfx.featureextraction.intern.control.command.commands.SetLastTileSizeCommand;
 
 public interface IFeatureCommandProvider extends ICommandProvider
 {
-	SetLastFrameSizeCommand createSetLastFrameSizeCommand(int lastFrameSize);
+	SetLastTileSizeCommand createSetLastFrameSizeCommand(int lastFrameSize);
 
-	SetLastFeatureVectorIndexCommand createSetLastFeatureVectorIndexCommand(int lastFeatureVectorIndex);
+	SetLastFeatureIndexCommand createSetLastFeatureIndexCommand(int lastFeatureVectorIndex);
 
 	SetLastFeatureExtractorIndexCommand createSetLastFeatureExtractorIndexCommand(int lastFeatureExtractorIndex);
 

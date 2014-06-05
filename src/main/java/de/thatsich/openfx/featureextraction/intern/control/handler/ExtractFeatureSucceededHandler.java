@@ -25,7 +25,7 @@ public class ExtractFeatureSucceededHandler extends ACommandHandler<IFeature>
 		final IFeature merge = this.merge(this.features, feature);
 		this.log.info("Merged Feature into Database.");
 
-		this.features.selectedFeature().set(merge);
+		this.features.selected().set(merge);
 		this.log.info("Set current to selected Feature.");
 	}
 
@@ -38,14 +38,14 @@ public class ExtractFeatureSucceededHandler extends ACommandHandler<IFeature>
 			final List<IFeatureVector> vectors = feature.vectors();
 
 			match.vectors().addAll(vectors);
-			features.list().remove(match);
-			features.list().add(match);
+			features.get().remove(match);
+			features.get().add(match);
 
 			return match;
 		}
 		else
 		{
-			features.list().add(feature);
+			features.get().add(feature);
 
 			return feature;
 		}
@@ -53,7 +53,7 @@ public class ExtractFeatureSucceededHandler extends ACommandHandler<IFeature>
 
 	private Optional<IFeature> getMatchingFeature(IFeatures features, IFeature feature)
 	{
-		for (IFeature iFeature : features.list())
+		for (IFeature iFeature : features.get())
 		{
 			final boolean sameSize = iFeature.tileSize() == feature.tileSize();
 			final boolean sameClass = iFeature.className().equals(feature.className());

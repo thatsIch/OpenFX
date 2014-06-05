@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * Handler for what should happen if the Command was successfull
- * for initializing the preprocessing list
+ * for initializing the preprocessing get
  *
  * @author Minh
  */

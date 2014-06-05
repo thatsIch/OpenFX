@@ -6,6 +6,7 @@ import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureVector;
 import de.thatsich.openfx.featureextraction.api.model.IFeatureState;
 import de.thatsich.openfx.featureextraction.intern.control.entity.Feature;
+import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureConfig;
 import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVector;
 
 import java.io.BufferedReader;
@@ -36,8 +37,8 @@ public class FeatureFileStorageService extends AFileStorageService<IFeature>
 	@Override
 	public void save(final IFeature elem) throws IOException
 	{
-		final FeatureBean bean = new FeatureBean(elem);
-		final Path filePath = super.storagePath.resolve(bean.toString());
+		final FeatureConfig config = elem.getConfig();
+		final Path filePath = super.storagePath.resolve(config.toString());
 		final BufferedWriter writer = Files.newBufferedWriter(filePath, StandardCharsets.US_ASCII, StandardOpenOption.APPEND);
 		final StringJoiner featureJoiner = new StringJoiner(System.lineSeparator());
 
@@ -57,7 +58,7 @@ public class FeatureFileStorageService extends AFileStorageService<IFeature>
 		this.log.info("Loading Feature " + path);
 
 		final String fileName = super.getFileNameWithoutExtension(path);
-		final FeatureBean bean = new FeatureBean(fileName);
+		final FeatureConfig config = new FeatureConfig(fileName);
 
 		final List<IFeatureVector> featureVectors = new LinkedList<>();
 		final BufferedReader reader = Files.newBufferedReader(path, StandardCharsets.US_ASCII);
@@ -72,7 +73,7 @@ public class FeatureFileStorageService extends AFileStorageService<IFeature>
 		}
 		reader.close();
 
-		return new Feature(bean.className, bean.extractorName, bean.tileSize, featureVectors);
+		return new Feature(config, featureVectors);
 
 	}
 
@@ -86,38 +87,5 @@ public class FeatureFileStorageService extends AFileStorageService<IFeature>
 	public void delete(final IFeature elem) throws IOException
 	{
 
-	}
-
-	private class FeatureBean
-	{
-		public final String className;
-		public final String extractorName;
-		public final int tileSize;
-
-		private FeatureBean(final IFeature feature)
-		{
-			this.className = feature.className();
-			this.extractorName = feature.extractorName();
-			this.tileSize = feature.tileSize();
-		}
-
-		private FeatureBean(final String fileName)
-		{
-			final String[] fileNameSplit = fileName.split("_");
-			this.className = fileNameSplit[0];
-			this.extractorName = fileNameSplit[1];
-			this.tileSize = Integer.parseInt(fileNameSplit[2]);
-		}
-
-		@Override
-		public String toString()
-		{
-			final StringJoiner joiner = new StringJoiner(",", "", ".csv");
-			joiner.add(this.className);
-			joiner.add(this.extractorName);
-			joiner.add(String.valueOf(this.tileSize));
-
-			return joiner.toString();
-		}
 	}
 }

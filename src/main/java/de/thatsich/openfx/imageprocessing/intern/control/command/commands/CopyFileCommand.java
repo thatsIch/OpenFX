@@ -7,7 +7,6 @@ import de.thatsich.core.javafx.ACommand;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.concurrent.CancellationException;
 
 public class CopyFileCommand extends ACommand<Path>
 {
@@ -26,11 +25,6 @@ public class CopyFileCommand extends ACommand<Path>
 	@Override
 	protected Path call() throws IOException
 	{
-		if (this.originPath == null || this.copyPath == null)
-		{
-			throw new CancellationException("Command not initialized properly.");
-		}
-
 		if (Files.exists(this.copyPath))
 		{
 			this.log.info("Duplicate found: File already exists.");

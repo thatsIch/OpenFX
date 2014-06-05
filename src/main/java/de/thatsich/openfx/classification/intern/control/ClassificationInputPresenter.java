@@ -93,7 +93,7 @@ public class ClassificationInputPresenter extends AFXMLPresenter
 
 	private void bindButtons()
 	{
-		this.nodeButtonTrainBinaryClassifier.disableProperty().bind(this.features.list().isNull());
+		this.nodeButtonTrainBinaryClassifier.disableProperty().bind(this.features.get().isNull());
 		this.nodeButtonRemoveBinaryClassifier.disableProperty().bind(this.binaryClassifications.selected().isNull());
 		this.nodeButtonResetBinaryClassifierList.disableProperty().bind(this.binaryClassifications.list().emptyProperty());
 	}
@@ -106,8 +106,8 @@ public class ClassificationInputPresenter extends AFXMLPresenter
 	{
 		final Path binaryClassifierFolderPath = this.trainState.path().get();
 		final IBinaryClassifier selectedBinaryClassfier = this.binaryClassifiers.selected().get();
-		final List<IFeature> features = this.features.list();
-		final IFeature selected = this.features.selectedFeature().get();
+		final List<IFeature> features = this.features.get();
+		final IFeature selected = this.features.selected().get();
 
 		final TrainBinaryClassifierCommand command = this.commander.createTrainBinaryClassifierCommand(binaryClassifierFolderPath, selectedBinaryClassfier, selected, features);
 		command.setOnSucceededCommandHandler(TrainBinaryClassifierSucceededHandler.class);

@@ -4,63 +4,63 @@ import de.thatsich.openfx.errorgeneration.api.control.entity.IError;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringProperty;
-import javafx.beans.property.ReadOnlyStringWrapper;
 import org.opencv.core.Mat;
 
 
 public class Error implements IError
 {
-	private final ReadOnlyObjectWrapper<Mat> original;
-	private final ReadOnlyObjectWrapper<Mat> error;
-	private final ReadOnlyObjectWrapper<Mat> modified;
+	private final ReadOnlyObjectProperty<Mat> original;
+	private final ReadOnlyObjectProperty<Mat> error;
+	private final ReadOnlyObjectProperty<Mat> modified;
+	private final ErrorConfig config;
 
-	private final ReadOnlyStringWrapper dateTime;
-	private final ReadOnlyStringWrapper clazz;
-	private final ReadOnlyStringWrapper id;
-
-	public Error(Mat original, Mat modified, Mat error, String dateTime, String clazz, String id)
+	public Error(ErrorConfig config, Mat original, Mat modified, Mat error)
 	{
+		this.config = config;
 		this.original = new ReadOnlyObjectWrapper<>(original);
 		this.error = new ReadOnlyObjectWrapper<>(error);
 		this.modified = new ReadOnlyObjectWrapper<>(modified);
-		this.dateTime = new ReadOnlyStringWrapper(dateTime);
-		this.clazz = new ReadOnlyStringWrapper(clazz);
-		this.id = new ReadOnlyStringWrapper(id);
 	}
 
 	@Override
 	public ReadOnlyStringProperty dateTimeProperty()
 	{
-		return this.dateTime.getReadOnlyProperty();
+		return this.config.dateTime;
 	}
 
 	@Override
 	public ReadOnlyStringProperty clazzProperty()
 	{
-		return this.clazz.getReadOnlyProperty();
+		return this.config.clazz;
 	}
 
 	@Override
 	public ReadOnlyStringProperty idProperty()
 	{
-		return this.id.getReadOnlyProperty();
+		return this.config.id;
 	}
 
 	@Override
 	public ReadOnlyObjectProperty<Mat> originalProperty()
 	{
-		return this.original.getReadOnlyProperty();
+		return this.original;
 	}
 
 	@Override
 	public ReadOnlyObjectProperty<Mat> errorProperty()
 	{
-		return this.error.getReadOnlyProperty();
+		return this.error;
 	}
 
 	@Override
 	public ReadOnlyObjectProperty<Mat> modifiedProperty()
 	{
-		return this.modified.getReadOnlyProperty();
+		return this.modified;
+	}
+
+	@Override
+	public ErrorConfig getConfig()
+	{
+		return this.config;
 	}
 }

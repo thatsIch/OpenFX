@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import de.thatsich.core.javafx.ACommand;
 import de.thatsich.openfx.featureextraction.intern.control.command.service.FeatureConfigService;
 
-public class GetLastFrameSizeCommand extends ACommand<Integer>
+public class GetLastTileSizeCommand extends ACommand<Integer>
 {
 
 	// Injects
@@ -14,6 +14,6 @@ public class GetLastFrameSizeCommand extends ACommand<Integer>
 	@Override
 	protected Integer call() throws Exception
 	{
-		return this.config.getLastFrameSizeInt();
+		return this.config.getLastTileSize();
 	}
 }

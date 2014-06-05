@@ -20,19 +20,19 @@ public class RemoveFeatureSucceededHandler extends ACommandHandler<IFeature>
 	@Override
 	public void handle(IFeature feature)
 	{
-		final List<IFeature> list = this.features.list();
+		final List<IFeature> list = this.features.get();
 		list.remove(feature);
 		this.log.info("Removed FeatureVector from Database.");
 
 		if (list.size() > 0)
 		{
 			final IFeature first = list.get(0);
-			this.features.selectedFeature().set(first);
+			this.features.selected().set(first);
 			this.log.info("Reset Selection to first FeatureVectorSet.");
 		}
 		else
 		{
-			this.features.selectedFeature().set(null);
+			this.features.selected().set(null);
 			this.log.info("Reset Selection to null.");
 		}
 	}

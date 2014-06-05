@@ -90,7 +90,7 @@ public class PreProcessingInputPresenter extends AFXMLPresenter
 
 	private void bindButtons()
 	{
-		this.nodeButtonTrainPreProcessor.disableProperty().bind(this.features.selectedFeature().isNull());
+		this.nodeButtonTrainPreProcessor.disableProperty().bind(this.features.selected().isNull());
 		this.nodeButtonRemovePreProcessing.disableProperty().bind(this.preProcessings.selected().isNull());
 		this.nodeButtonResetPreProcessingList.disableProperty().bind(this.preProcessings.list().emptyProperty());
 		this.log.info("Bound Buttons Disablility.");
@@ -104,8 +104,8 @@ public class PreProcessingInputPresenter extends AFXMLPresenter
 	{
 		final Path preProcessingFolderPath = this.state.path().get();
 		final IPreProcessor selectedPreProcessor = this.preProcessors.getSelectedPreProcessor();
-		final List<IFeature> featureVectorSetList = this.features.list();
-		final IFeature selectedFeatureVectorSet = this.features.selectedFeature().get();
+		final List<IFeature> featureVectorSetList = this.features.get();
+		final IFeature selectedFeatureVectorSet = this.features.selected().get();
 
 		final TrainPreProcessorCommand command = this.commander.createTrainPreProcessorCommand(preProcessingFolderPath, selectedPreProcessor, selectedFeatureVectorSet, featureVectorSetList);
 		command.setOnSucceededCommandHandler(TrainPreProcessorSucceededHandler.class);

@@ -1,8 +1,6 @@
 package de.thatsich.openfx.featureextraction.api.model;
 
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
-import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureVector;
-import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
 
@@ -12,11 +10,7 @@ import javafx.beans.property.ObjectProperty;
  */
 public interface IFeatures
 {
-	ListProperty<IFeature> list();
+	ListProperty<IFeature> get();
 
-	ObjectProperty<IFeature> selectedFeature();
-
-	ObjectProperty<IFeatureVector> selectedVector();
-
-	IntegerProperty index();
+	ObjectProperty<IFeature> selected();
 }

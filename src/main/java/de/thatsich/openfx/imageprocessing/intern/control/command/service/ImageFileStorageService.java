@@ -5,6 +5,7 @@ import de.thatsich.core.AFileStorageService;
 import de.thatsich.openfx.imageprocessing.api.control.IImage;
 import de.thatsich.openfx.imageprocessing.api.model.IImageState;
 import de.thatsich.openfx.imageprocessing.intern.control.entity.Image;
+import de.thatsich.openfx.imageprocessing.intern.control.entity.ImageConfig;
 import org.opencv.core.Mat;
 import org.opencv.highgui.Highgui;
 
@@ -32,8 +33,9 @@ public class ImageFileStorageService extends AFileStorageService<IImage>
 		final Path imagePath = path.toAbsolutePath();
 		final Mat imageMat = Highgui.imread(imagePath.toString(), 0);
 		final String fileName = path.getFileName().toString();
+		final ImageConfig config = new ImageConfig(fileName);
 
-		return new Image(imageMat, fileName);
+		return new Image(config, imageMat);
 	}
 
 	@Override

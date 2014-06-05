@@ -19,7 +19,7 @@ import java.util.Map;
  * <p/>
  * This allows you to treat a {@link TreeView} in a similar way as a {@link ListView} or {@link TableView}.
  * <p/>
- * Each item in the list must implement the {@link HierarchyData} interface, in order to map the recursive nature of the tree data to the tree view.
+ * Each item in the get must implement the {@link HierarchyData} interface, in order to map the recursive nature of the tree data to the tree view.
  * <p/>
  * Each change in the underlying data (adding, removing, sorting) will then be automatically reflected in the UI.
  *
@@ -71,7 +71,7 @@ public class HierarchyTreeView<T extends HierarchyData<T>> extends TreeView<T>
 
 		this.setItems(FXCollections.<T>observableArrayList());
 
-		// Do not use ChangeListener, because it won't trigger if old list equals new list (but in fact different references).
+		// Do not use ChangeListener, because it won't trigger if old get equals new get (but in fact different references).
 		this.items.addListener(observable -> {
 			this.clear(this.getRoot());
 			this.updateItems();
@@ -119,9 +119,9 @@ public class HierarchyTreeView<T extends HierarchyData<T>> extends TreeView<T>
 	}
 
 	/**
-	 * Gets a {@link javafx.collections.ListChangeListener} for a  {@link TreeItem}. It listens to changes on the underlying list and updates the UI accordingly.
+	 * Gets a {@link javafx.collections.ListChangeListener} for a  {@link TreeItem}. It listens to changes on the underlying get and updates the UI accordingly.
 	 *
-	 * @param treeItemChildren The associated tree item's children list.
+	 * @param treeItemChildren The associated tree item's children get.
 	 *
 	 * @return The listener.
 	 */
@@ -151,7 +151,7 @@ public class HierarchyTreeView<T extends HierarchyData<T>> extends TreeView<T>
 						treeItemChildren.add(i, this.addRecursively(change.getList().get(i)));
 					}
 				}
-				// If the list was sorted.
+				// If the get was sorted.
 				if (change.wasPermutated())
 				{
 					// Store the new order.
@@ -236,7 +236,7 @@ public class HierarchyTreeView<T extends HierarchyData<T>> extends TreeView<T>
 	/**
 	 * Sets items for the tree.
 	 *
-	 * @param items The list.
+	 * @param items The get.
 	 */
 	public void setItems(ObservableList<? extends T> items)
 	{

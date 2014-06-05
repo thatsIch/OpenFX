@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * Handler for what should happen if the Command was successfull
- * for initializing the feature vector list
+ * for initializing the feature vector get
  *
  * @author Minh
  */
@@ -20,7 +20,7 @@ public class InitFeaturesSucceededHandler extends ACommandHandler<List<IFeature>
 	@Override
 	public void handle(List<IFeature> features)
 	{
-		this.features.list().addAll(features);
+		this.features.get().addAll(features);
 		this.log.info("Added FeatureExtractor to Database.");
 	}
 }

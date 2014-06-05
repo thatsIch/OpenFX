@@ -6,13 +6,11 @@ import de.thatsich.core.Log;
 import de.thatsich.core.javafx.CommandExecutor;
 import de.thatsich.openfx.featureextraction.api.model.IFeatureState;
 import de.thatsich.openfx.featureextraction.intern.control.command.commands.GetLastFeatureExtractorIndexCommand;
-import de.thatsich.openfx.featureextraction.intern.control.command.commands.GetLastFeatureVectorIndexCommand;
-import de.thatsich.openfx.featureextraction.intern.control.command.commands.GetLastFrameSizeCommand;
-import de.thatsich.openfx.featureextraction.intern.control.command.commands.InitFeatureExtractorListCommand;
+import de.thatsich.openfx.featureextraction.intern.control.command.commands.GetLastTileSizeCommand;
+import de.thatsich.openfx.featureextraction.intern.control.command.commands.InitFeatureExtractorsCommand;
 import de.thatsich.openfx.featureextraction.intern.control.command.commands.InitFeaturesCommand;
 import de.thatsich.openfx.featureextraction.intern.control.command.handler.GetLastFeatureExtractorIndexSucceededHandler;
-import de.thatsich.openfx.featureextraction.intern.control.command.handler.GetLastFeatureSpaceIndexSucceededHandler;
-import de.thatsich.openfx.featureextraction.intern.control.command.handler.GetLastFrameSizeSucceededHandler;
+import de.thatsich.openfx.featureextraction.intern.control.command.handler.GetLastTileSizeSucceededHandler;
 import de.thatsich.openfx.featureextraction.intern.control.command.handler.InitFeatureExtractorListSucceededHandler;
 import de.thatsich.openfx.featureextraction.intern.control.command.handler.InitFeaturesSucceededHandler;
 
@@ -51,8 +49,8 @@ public class FeatureInitCommander
 	 */
 	private void initFrameSize()
 	{
-		final GetLastFrameSizeCommand command = this.commander.createGetLastFrameSizeCommand();
-		command.setOnSucceededCommandHandler(GetLastFrameSizeSucceededHandler.class);
+		final GetLastTileSizeCommand command = this.commander.createGetLastFrameSizeCommand();
+		command.setOnSucceededCommandHandler(GetLastTileSizeSucceededHandler.class);
 		command.start();
 		this.log.info("Initialized LastFrameSize Retrieval.");
 	}
@@ -64,7 +62,7 @@ public class FeatureInitCommander
 	{
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(1);
 
-		final InitFeatureExtractorListCommand initCommand = this.commander.createInitFeatureExtractorListCommand();
+		final InitFeatureExtractorsCommand initCommand = this.commander.createInitFeatureExtractorListCommand();
 		initCommand.setOnSucceededCommandHandler(InitFeatureExtractorListSucceededHandler.class);
 		initCommand.setExecutor(executor);
 		initCommand.start();
@@ -93,12 +91,6 @@ public class FeatureInitCommander
 		initCommand.setExecutor(executor);
 		initCommand.start();
 		this.log.info("Initialized InitFeatureVectorList Retrieval.");
-
-		final GetLastFeatureVectorIndexCommand lastCommand = this.commander.createGetLastFeatureVectorIndexCommand();
-		lastCommand.setOnSucceededCommandHandler(GetLastFeatureSpaceIndexSucceededHandler.class);
-		lastCommand.setExecutor(executor);
-		lastCommand.start();
-		this.log.info("Initialized GetLastFeatureVectorIndex Retrieval.");
 
 		executor.shutdown();
 		this.log.info("Shutting down Executor.");

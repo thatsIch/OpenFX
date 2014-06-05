@@ -34,7 +34,7 @@ public abstract class ACommandModule extends AbstractModule
 	 * Abstract Method
 	 *
 	 * Child needs to implement this and add its {@link ICommandProvider} to the
-	 * list
+	 * get
 	 *
 	 * @param providerList List of ICommandProvider
 	 */

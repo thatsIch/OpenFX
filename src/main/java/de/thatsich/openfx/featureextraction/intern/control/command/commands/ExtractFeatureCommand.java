@@ -10,6 +10,7 @@ import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureExtractor
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureVector;
 import de.thatsich.openfx.featureextraction.intern.control.command.service.FeatureFileStorageService;
 import de.thatsich.openfx.featureextraction.intern.control.entity.Feature;
+import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureConfig;
 import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVector;
 import javafx.collections.FXCollections;
 import org.opencv.core.Core;
@@ -106,7 +107,8 @@ public class ExtractFeatureCommand extends ACommand<IFeature>
 			}
 		}
 
-		final IFeature feature = new Feature(className, extractorName, this.frameSize, featureVectorList);
+		final FeatureConfig config = new FeatureConfig(className, extractorName, this.frameSize);
+		final IFeature feature = new Feature(config, featureVectorList);
 
 		this.storage.save(feature);
 		this.log.info("Extracted FeatureVectors: " + featureVectorList.size());

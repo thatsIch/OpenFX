@@ -9,21 +9,21 @@ import javafx.util.Pair;
  */
 public class FeatureConfigService extends AConfigurationService
 {
-	private static final Pair<String, Integer> FRAME_SIZE = new Pair<>("frame_size", 2);
+	private static final Pair<String, Integer> TILE_SIZE = new Pair<>("tile_size", 31);
 	private static final Pair<String, Integer> EXTRACTOR = new Pair<>("extractor", 0);
 	private static final Pair<String, Integer> INDEX = new Pair<>("index", 0);
 
-	public int getLastFrameSizeInt()
+	public int getLastTileSize()
 	{
-		return super.get(FRAME_SIZE.getKey(), FRAME_SIZE.getValue());
+		return super.get(TILE_SIZE.getKey(), TILE_SIZE.getValue());
 	}
 
-	public void setLastFrameSizeInt(int lastFrameSize)
+	public void setLastTileSize(int lastTileSize)
 	{
-		super.set(FRAME_SIZE.getKey(), lastFrameSize);
+		super.set(TILE_SIZE.getKey(), lastTileSize);
 	}
 
-	public int getLastFeatureExtractorIndexInt()
+	public int getLastFeatureExtractorIndex()
 	{
 		return super.get(EXTRACTOR.getKey(), EXTRACTOR.getValue());
 	}
@@ -33,12 +33,12 @@ public class FeatureConfigService extends AConfigurationService
 		super.set(EXTRACTOR.getKey(), index);
 	}
 
-	public int getLastFeatureVectorIndexInt()
+	public int getLastFeatureIndex()
 	{
 		return super.get(INDEX.getKey(), INDEX.getValue());
 	}
 
-	public void setLastFeatureVectorIndexInt(int index)
+	public void setLastFeatureIndex(int index)
 	{
 		super.set(INDEX.getKey(), index);
 	}

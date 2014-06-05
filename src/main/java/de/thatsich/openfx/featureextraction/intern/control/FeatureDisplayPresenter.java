@@ -19,6 +19,7 @@ public class FeatureDisplayPresenter extends AFXMLPresenter
 	@FXML private Label nodeLabelExtractorName;
 	@FXML private Label nodeLabelFrameSize;
 	@FXML private Label nodeLabelID;
+	@FXML private Label nodeLabelSize;
 	@FXML private Label nodeLabelFeatureVector;
 	@FXML private Label nodeLabelFeatureLabel;
 
@@ -44,7 +45,7 @@ public class FeatureDisplayPresenter extends AFXMLPresenter
 		this.nodeLabelFeatureVector.setTooltip(new Tooltip());
 		this.log.info("Initialized Tooltip of LabelFeatureVector.");
 
-		this.features.selectedFeature().addListener((observable, oldValue, newValue) -> {
+		this.features.selected().addListener((observable, oldValue, newValue) -> {
 			if (newValue != null)
 			{
 				this.nodeLabelClassName.setText(newValue.className());
@@ -59,21 +60,5 @@ public class FeatureDisplayPresenter extends AFXMLPresenter
 			}
 		});
 		this.log.info("Bound Labels to changing FeatureVectorSet.");
-
-		this.features.selectedVector().addListener((observable, oldValue, newValue) -> {
-			if (newValue != null)
-			{
-				this.nodeLabelFeatureVector.setText(newValue.vector().toString());
-				this.nodeLabelFeatureVector.getTooltip().setText(newValue.vector().toString());
-				this.nodeLabelFeatureLabel.setText(String.valueOf(newValue.isPositive()));
-			}
-			else
-			{
-				this.nodeLabelFeatureVector.setText(null);
-				this.nodeLabelFeatureVector.getTooltip().setText(null);
-				this.nodeLabelFeatureLabel.setText(null);
-			}
-		});
-		this.log.info("Bound Labels to chainging FeatureVector.");
 	}
 }

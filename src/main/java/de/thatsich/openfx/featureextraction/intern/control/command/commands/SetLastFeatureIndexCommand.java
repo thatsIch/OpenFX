@@ -5,26 +5,23 @@ import com.google.inject.assistedinject.Assisted;
 import de.thatsich.core.javafx.ACommand;
 import de.thatsich.openfx.featureextraction.intern.control.command.service.FeatureConfigService;
 
-public class SetLastFrameSizeCommand extends ACommand<Void>
+public class SetLastFeatureIndexCommand extends ACommand<Void>
 {
-
 	// Properties
-	private final int lastFrameSize;
-
-	// Injects
-	@Inject
-	private FeatureConfigService config;
+	private final int lastFeatureVectorIndex;
+	private final FeatureConfigService config;
 
 	@Inject
-	protected SetLastFrameSizeCommand(@Assisted int lastFrameSize)
+	protected SetLastFeatureIndexCommand(@Assisted int lastFeatureVectorIndex, final FeatureConfigService config)
 	{
-		this.lastFrameSize = lastFrameSize;
+		this.lastFeatureVectorIndex = lastFeatureVectorIndex;
+		this.config = config;
 	}
 
 	@Override
 	protected Void call() throws Exception
 	{
-		config.setLastFrameSizeInt(this.lastFrameSize);
+		this.config.setLastFeatureIndex(this.lastFeatureVectorIndex);
 
 		return null;
 	}
