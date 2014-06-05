@@ -11,8 +11,6 @@ import de.thatsich.openfx.featureextraction.intern.control.command.commands.SetL
 import de.thatsich.openfx.featureextraction.intern.control.command.commands.SetLastFeatureVectorIndexCommand;
 import de.thatsich.openfx.featureextraction.intern.control.command.commands.SetLastFrameSizeCommand;
 
-import java.nio.file.Path;
-
 public interface IFeatureCommandProvider extends ICommandProvider
 {
 	SetLastFrameSizeCommand createSetLastFrameSizeCommand(int lastFrameSize);
@@ -21,7 +19,7 @@ public interface IFeatureCommandProvider extends ICommandProvider
 
 	SetLastFeatureExtractorIndexCommand createSetLastFeatureExtractorIndexCommand(int lastFeatureExtractorIndex);
 
-	ExtractFeatureCommand createExtractFeatureVectorCommand(Path folderPath, IError error, IFeatureExtractor extractor, int frameSize, @Assisted("smooth") boolean smooth, @Assisted("threshold") boolean threshold, @Assisted("denoising") boolean denoising);
+	ExtractFeatureCommand createExtractFeatureVectorCommand(IError error, IFeatureExtractor extractor, int frameSize, @Assisted("smooth") boolean smooth, @Assisted("threshold") boolean threshold, @Assisted("denoising") boolean denoising);
 
 	DeleteFeatureCommand createRemoveFeatureVectorSetCommand(IFeature feature);
 }

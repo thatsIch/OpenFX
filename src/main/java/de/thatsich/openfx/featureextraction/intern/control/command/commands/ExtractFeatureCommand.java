@@ -8,7 +8,7 @@ import de.thatsich.openfx.errorgeneration.api.control.entity.IError;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureExtractor;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureVector;
-import de.thatsich.openfx.featureextraction.intern.control.command.service.FeatureStorageService;
+import de.thatsich.openfx.featureextraction.intern.control.command.service.FeatureFileStorageService;
 import de.thatsich.openfx.featureextraction.intern.control.entity.Feature;
 import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVector;
 import javafx.collections.FXCollections;
@@ -17,7 +17,6 @@ import org.opencv.core.Mat;
 import org.opencv.core.MatOfFloat;
 import org.opencv.photo.Photo;
 
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +24,6 @@ import java.util.List;
 public class ExtractFeatureCommand extends ACommand<IFeature>
 {
 	// Properties
-	private final Path path;
 	private final IError error;
 	private final IFeatureExtractor featureExtractor;
 	private final int frameSize;
@@ -34,12 +32,11 @@ public class ExtractFeatureCommand extends ACommand<IFeature>
 	private final boolean denoising;
 
 	// Injects
-	@Inject private FeatureStorageService storage;
+	@Inject private FeatureFileStorageService storage;
 
 	@Inject
-	public ExtractFeatureCommand(@Assisted Path folderPath, @Assisted IError error, @Assisted IFeatureExtractor extractor, @Assisted int frameSize, @Assisted("smooth") boolean smooth, @Assisted("threshold") boolean threshold, @Assisted("denoising") boolean denoising)
+	public ExtractFeatureCommand(@Assisted IError error, @Assisted IFeatureExtractor extractor, @Assisted int frameSize, @Assisted("smooth") boolean smooth, @Assisted("threshold") boolean threshold, @Assisted("denoising") boolean denoising)
 	{
-		this.path = folderPath;
 		this.error = error;
 		this.featureExtractor = extractor;
 		this.frameSize = frameSize;
@@ -109,8 +106,7 @@ public class ExtractFeatureCommand extends ACommand<IFeature>
 			}
 		}
 
-		final Path filePath = this.path.resolve(className + "_" + extractorName + "_" + this.frameSize + ".csv");
-		final IFeature feature = new Feature(filePath, className, extractorName, this.frameSize, featureVectorList);
+		final IFeature feature = new Feature(className, extractorName, this.frameSize, featureVectorList);
 
 		this.storage.save(feature);
 		this.log.info("Extracted FeatureVectors: " + featureVectorList.size());

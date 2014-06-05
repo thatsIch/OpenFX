@@ -4,36 +4,25 @@ import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import de.thatsich.core.javafx.ACommand;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
-
-import java.io.IOException;
-import java.nio.file.Files;
+import de.thatsich.openfx.featureextraction.intern.control.command.service.FeatureFileStorageService;
 
 public class DeleteFeatureCommand extends ACommand<IFeature>
 {
 	// Properties
 	private final IFeature feature;
+	private final FeatureFileStorageService storage;
 
 	@Inject
-	public DeleteFeatureCommand(@Assisted IFeature featureVectorSet)
+	public DeleteFeatureCommand(@Assisted IFeature featureVectorSet, final FeatureFileStorageService storage)
 	{
 		this.feature = featureVectorSet;
+		this.storage = storage;
 	}
 
 	@Override
 	protected IFeature call() throws Exception
 	{
-		try
-		{
-			this.log.info(this.feature.path().toString());
-			Files.delete(this.feature.path());
-
-			this.log.info("Deleted FeatureVectorSet from FileSystem.");
-		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
-			this.log.info("Exception from deleting FeatureVectorSet from FileSystem.");
-		}
+		this.storage.delete(this.feature);
 
 		return this.feature;
 	}

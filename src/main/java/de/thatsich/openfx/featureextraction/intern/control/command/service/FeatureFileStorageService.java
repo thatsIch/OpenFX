@@ -18,16 +18,17 @@ import java.nio.file.StandardOpenOption;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
 /**
  * @author thatsIch
  * @since 04.06.2014.
  */
-public class FeatureStorageService extends AFileStorageService<IFeature>
+public class FeatureFileStorageService extends AFileStorageService<IFeature>
 {
 	@Inject
-	protected FeatureStorageService(final IFeatureState state)
+	protected FeatureFileStorageService(final IFeatureState state)
 	{
 		super(state.path().get());
 	}
@@ -35,43 +36,28 @@ public class FeatureStorageService extends AFileStorageService<IFeature>
 	@Override
 	public void save(final IFeature elem) throws IOException
 	{
-		final BufferedWriter writer = Files.newBufferedWriter(elem.path(), StandardCharsets.US_ASCII, StandardOpenOption.APPEND);
-		final List<IFeatureVector> featureVectors = elem.vectors();
+		final FeatureBean bean = new FeatureBean(elem);
+		final Path filePath = super.storagePath.resolve(bean.toString());
+		final BufferedWriter writer = Files.newBufferedWriter(filePath, StandardCharsets.US_ASCII, StandardOpenOption.APPEND);
+		final StringJoiner featureJoiner = new StringJoiner(System.lineSeparator());
 
-		for (int fvIndex = 0; fvIndex < featureVectors.size(); fvIndex++)
-		{
-			final IFeatureVector fv = featureVectors.get(fvIndex);
-			final List<Float> floats = fv.vector();
-			for (int floatIndex = 0; floatIndex < floats.size(); floatIndex++)
-			{
-				writer.write(String.valueOf(floats.get(floatIndex)));
+		elem.vectors().forEach(vector -> {
+			final StringJoiner vectorJoiner = new StringJoiner(",");
+			vector.vector().forEach(f -> vectorJoiner.add(String.valueOf(f)));
+			featureJoiner.merge(vectorJoiner);
+		});
+		writer.write(featureJoiner.toString());
 
-				if (floatIndex < floats.size() - 1)
-				{
-					writer.write(",");
-				}
-			}
-
-			if (fvIndex < featureVectors.size() - 1)
-			{
-				writer.newLine();
-			}
-		}
 		writer.close();
 	}
 
 	@Override
 	public IFeature load(final Path path) throws IOException
 	{
-		System.out.println("LOAD");
-		// extract file information
-		final String fileName = path.getFileName().toString();
-		final String[] fileNameSplit = fileName.split("_");
+		this.log.info("Loading Feature " + path);
 
-		// prepare subinfo
-		final String className = fileNameSplit[0];
-		final String extractorName = fileNameSplit[1];
-		final int frameSize = Integer.parseInt(fileNameSplit[2]);
+		final String fileName = super.getFileNameWithoutExtension(path);
+		final FeatureBean bean = new FeatureBean(fileName);
 
 		final List<IFeatureVector> featureVectors = new LinkedList<>();
 		final BufferedReader reader = Files.newBufferedReader(path, StandardCharsets.US_ASCII);
@@ -86,7 +72,7 @@ public class FeatureStorageService extends AFileStorageService<IFeature>
 		}
 		reader.close();
 
-		return new Feature(path, className, extractorName, frameSize, featureVectors);
+		return new Feature(bean.className, bean.extractorName, bean.tileSize, featureVectors);
 
 	}
 
@@ -100,5 +86,38 @@ public class FeatureStorageService extends AFileStorageService<IFeature>
 	public void delete(final IFeature elem) throws IOException
 	{
 
+	}
+
+	private class FeatureBean
+	{
+		public final String className;
+		public final String extractorName;
+		public final int tileSize;
+
+		private FeatureBean(final IFeature feature)
+		{
+			this.className = feature.className();
+			this.extractorName = feature.extractorName();
+			this.tileSize = feature.tileSize();
+		}
+
+		private FeatureBean(final String fileName)
+		{
+			final String[] fileNameSplit = fileName.split("_");
+			this.className = fileNameSplit[0];
+			this.extractorName = fileNameSplit[1];
+			this.tileSize = Integer.parseInt(fileNameSplit[2]);
+		}
+
+		@Override
+		public String toString()
+		{
+			final StringJoiner joiner = new StringJoiner(",", "", ".csv");
+			joiner.add(this.className);
+			joiner.add(this.extractorName);
+			joiner.add(String.valueOf(this.tileSize));
+
+			return joiner.toString();
+		}
 	}
 }

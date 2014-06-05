@@ -37,7 +37,7 @@ public class TrainBinaryClassifierCommand extends ACommand<IBinaryClassification
 	{
 		final String binaryClassifierName = this.binaryClassifier.getName();
 		final String featureExtractorName = this.selectedFeatureVector.extractorName();
-		final int frameSize = this.selectedFeatureVector.frameSize();
+		final int frameSize = this.selectedFeatureVector.tileSize();
 		final String errorClassName = this.selectedFeatureVector.className();
 		final String id = UUID.randomUUID().toString();
 
@@ -53,7 +53,7 @@ public class TrainBinaryClassifierCommand extends ACommand<IBinaryClassification
 		for (IFeature feature : this.featureVectorList)
 		{
 			// select only with same FeatureExtractor and FrameSize
-			if (feature.extractorName().equals(featureExtractorName) && feature.frameSize() == frameSize)
+			if (feature.extractorName().equals(featureExtractorName) && feature.tileSize() == frameSize)
 			{
 				for (IFeatureVector vector : feature.vectors())
 				{

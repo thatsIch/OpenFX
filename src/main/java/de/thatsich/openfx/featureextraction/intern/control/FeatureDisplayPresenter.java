@@ -49,7 +49,7 @@ public class FeatureDisplayPresenter extends AFXMLPresenter
 			{
 				this.nodeLabelClassName.setText(newValue.className());
 				this.nodeLabelExtractorName.setText(newValue.extractorName());
-				this.nodeLabelFrameSize.setText(String.valueOf(newValue.frameSize()));
+				this.nodeLabelFrameSize.setText(String.valueOf(newValue.tileSize()));
 			}
 			else
 			{

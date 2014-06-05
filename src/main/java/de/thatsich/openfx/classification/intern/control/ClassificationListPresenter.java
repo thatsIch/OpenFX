@@ -96,7 +96,7 @@ public class ClassificationListPresenter extends AFXMLPresenter
 	{
 		this.nodeTableColumnClassifierName.setCellValueFactory(new PropertyValueFactory<>("getClassificationName"));
 		this.nodeTableColumnExtractorName.setCellValueFactory(new PropertyValueFactory<>("extractorName"));
-		this.nodeTableColumnFrameSize.setCellValueFactory(new PropertyValueFactory<>("frameSize"));
+		this.nodeTableColumnFrameSize.setCellValueFactory(new PropertyValueFactory<>("tileSize"));
 		this.nodeTableErrorName.setCellValueFactory(new PropertyValueFactory<>("getErrorName"));
 		this.nodeTableColumnID.setCellValueFactory(new PropertyValueFactory<>("idProperty"));
 	}

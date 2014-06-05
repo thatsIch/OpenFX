@@ -55,7 +55,7 @@ public class ExtractFeatureSucceededHandler extends ACommandHandler<IFeature>
 	{
 		for (IFeature iFeature : features.list())
 		{
-			final boolean sameSize = iFeature.frameSize() == feature.frameSize();
+			final boolean sameSize = iFeature.tileSize() == feature.tileSize();
 			final boolean sameClass = iFeature.className().equals(feature.className());
 			final boolean sameExtractor = iFeature.extractorName().equals(feature.extractorName());
 

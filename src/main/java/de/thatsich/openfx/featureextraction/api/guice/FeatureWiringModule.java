@@ -9,7 +9,7 @@ import de.thatsich.openfx.featureextraction.api.view.IFeatureDisplayView;
 import de.thatsich.openfx.featureextraction.api.view.IFeatureInputView;
 import de.thatsich.openfx.featureextraction.api.view.IFeatureListView;
 import de.thatsich.openfx.featureextraction.intern.control.command.service.FeatureConfigService;
-import de.thatsich.openfx.featureextraction.intern.control.command.service.FeatureStorageService;
+import de.thatsich.openfx.featureextraction.intern.control.command.service.FeatureFileStorageService;
 import de.thatsich.openfx.featureextraction.intern.model.FeatureExtractors;
 import de.thatsich.openfx.featureextraction.intern.model.FeatureState;
 import de.thatsich.openfx.featureextraction.intern.model.Features;
@@ -35,7 +35,7 @@ public class FeatureWiringModule extends AWiringModule
 	protected void bindService()
 	{
 		super.bind(FeatureConfigService.class).in(Scopes.SINGLETON);
-		super.bind(FeatureStorageService.class).in(Scopes.SINGLETON);
+		super.bind(FeatureFileStorageService.class).in(Scopes.SINGLETON);
 	}
 
 	@Override

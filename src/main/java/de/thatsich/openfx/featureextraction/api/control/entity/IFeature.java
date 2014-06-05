@@ -1,6 +1,5 @@
 package de.thatsich.openfx.featureextraction.api.control.entity;
 
-import java.nio.file.Path;
 import java.util.List;
 
 /**
@@ -9,13 +8,11 @@ import java.util.List;
  */
 public interface IFeature
 {
-	Path path();
-
 	String extractorName();
 
 	String className();
 
-	int frameSize();
+	int tileSize();
 
 	List<IFeatureVector> vectors();
 }

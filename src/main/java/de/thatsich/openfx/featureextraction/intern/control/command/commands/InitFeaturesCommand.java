@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import de.thatsich.core.javafx.ACommand;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
-import de.thatsich.openfx.featureextraction.intern.control.command.service.FeatureStorageService;
+import de.thatsich.openfx.featureextraction.intern.control.command.service.FeatureFileStorageService;
 
 import java.io.IOException;
 import java.nio.file.DirectoryIteratorException;
@@ -18,10 +18,10 @@ public class InitFeaturesCommand extends ACommand<List<IFeature>>
 {
 	// Fields
 	private final Path path;
-	private final FeatureStorageService storage;
+	private final FeatureFileStorageService storage;
 
 	@Inject
-	protected InitFeaturesCommand(@Assisted Path path, FeatureStorageService storage)
+	protected InitFeaturesCommand(@Assisted Path path, FeatureFileStorageService storage)
 	{
 		this.path = path;
 		this.storage = storage;
@@ -48,7 +48,7 @@ public class InitFeaturesCommand extends ACommand<List<IFeature>>
 			{
 				final IFeature load = this.storage.load(child);
 				features.add(load);
-				this.log.info("Added " + child + " with Attribute " + Files.probeContentType(child));
+				this.log.info("Added Feature " + child + " with Attribute " + Files.probeContentType(child));
 			}
 		}
 		catch (IOException | DirectoryIteratorException e)

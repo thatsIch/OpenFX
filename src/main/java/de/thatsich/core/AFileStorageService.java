@@ -33,4 +33,13 @@ public abstract class AFileStorageService<T> implements IFileStorageService<T>
 	{
 		return format.format(new Date());
 	}
+
+	protected String getFileNameWithoutExtension(Path path)
+	{
+		final Path file = path.getFileName();
+		final String fileName = file.toString();
+		final int index = fileName.lastIndexOf('.');
+
+		return (index > 0) ? fileName.substring(0, index) : "";
+	}
 }
