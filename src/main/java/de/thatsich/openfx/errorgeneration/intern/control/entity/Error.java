@@ -1,62 +1,66 @@
 package de.thatsich.openfx.errorgeneration.intern.control.entity;
 
 import de.thatsich.openfx.errorgeneration.api.control.entity.IError;
+import javafx.beans.property.ReadOnlyObjectProperty;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.property.ReadOnlyStringProperty;
+import javafx.beans.property.ReadOnlyStringWrapper;
 import org.opencv.core.Mat;
 
 
 public class Error implements IError
 {
-	private final Mat original;
-	private final Mat error;
-	private final Mat modified;
+	private final ReadOnlyObjectWrapper<Mat> original;
+	private final ReadOnlyObjectWrapper<Mat> error;
+	private final ReadOnlyObjectWrapper<Mat> modified;
 
-	private final String dateTime;
-	private final String clazz;
-	private final String id;
+	private final ReadOnlyStringWrapper dateTime;
+	private final ReadOnlyStringWrapper clazz;
+	private final ReadOnlyStringWrapper id;
 
 	public Error(Mat original, Mat modified, Mat error, String dateTime, String clazz, String id)
 	{
-		this.original = original;
-		this.error = error;
-		this.modified = modified;
-		this.dateTime = dateTime;
-		this.clazz = clazz;
-		this.id = id;
+		this.original = new ReadOnlyObjectWrapper<>(original);
+		this.error = new ReadOnlyObjectWrapper<>(error);
+		this.modified = new ReadOnlyObjectWrapper<>(modified);
+		this.dateTime = new ReadOnlyStringWrapper(dateTime);
+		this.clazz = new ReadOnlyStringWrapper(clazz);
+		this.id = new ReadOnlyStringWrapper(id);
 	}
 
 	@Override
-	public String getDateTime()
+	public ReadOnlyStringProperty getDateTime()
 	{
-		return this.dateTime;
+		return this.dateTime.getReadOnlyProperty();
 	}
 
 	@Override
-	public String getClazz()
+	public ReadOnlyStringProperty getClazz()
 	{
-		return this.clazz;
+		return this.clazz.getReadOnlyProperty();
 	}
 
 	@Override
-	public String getId()
+	public ReadOnlyStringProperty getId()
 	{
-		return this.id;
+		return this.id.getReadOnlyProperty();
 	}
 
 	@Override
-	public Mat getOriginal()
+	public ReadOnlyObjectProperty<Mat> getOriginal()
 	{
-		return this.original;
+		return this.original.getReadOnlyProperty();
 	}
 
 	@Override
-	public Mat getError()
+	public ReadOnlyObjectProperty<Mat> getError()
 	{
-		return this.error;
+		return this.error.getReadOnlyProperty();
 	}
 
 	@Override
-	public Mat getModified()
+	public ReadOnlyObjectProperty<Mat> getModified()
 	{
-		return this.modified;
+		return this.modified.getReadOnlyProperty();
 	}
 }

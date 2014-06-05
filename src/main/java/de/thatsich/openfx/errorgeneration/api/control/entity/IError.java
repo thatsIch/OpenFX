@@ -1,5 +1,7 @@
 package de.thatsich.openfx.errorgeneration.api.control.entity;
 
+import javafx.beans.property.ReadOnlyObjectProperty;
+import javafx.beans.property.ReadOnlyStringProperty;
 import org.opencv.core.Mat;
 
 /**
@@ -8,15 +10,15 @@ import org.opencv.core.Mat;
  */
 public interface IError
 {
-	String getDateTime();
+	ReadOnlyStringProperty getDateTime();
 
-	String getClazz();
+	ReadOnlyStringProperty getClazz();
 
-	String getId();
+	ReadOnlyStringProperty getId();
 
-	Mat getOriginal();
+	ReadOnlyObjectProperty<Mat> getOriginal();
 
-	Mat getError();
+	ReadOnlyObjectProperty<Mat> getError();
 
-	Mat getModified();
+	ReadOnlyObjectProperty<Mat> getModified();
 }

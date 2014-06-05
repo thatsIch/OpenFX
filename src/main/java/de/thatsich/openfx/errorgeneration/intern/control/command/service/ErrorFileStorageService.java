@@ -27,17 +27,17 @@ public class ErrorFileStorageService extends AFileStorageService<IError>
 	public void save(final IError elem) throws IOException
 	{
 		final StringJoiner joiner = new StringJoiner("_");
-		joiner.add(elem.getDateTime());
-		joiner.add(elem.getClazz());
-		joiner.add(elem.getId());
+		joiner.add(elem.getDateTime().get());
+		joiner.add(elem.getClazz().get());
+		joiner.add(elem.getId().get());
 		final String fileName = joiner.toString();
 		final Path path = super.storagePath.resolve(fileName);
 
 		this.createInvalidDirectory(path);
 
-		Images.store(elem.getOriginal(), path.resolve("original.png"));
-		Images.store(elem.getModified(), path.resolve("modified.png"));
-		Images.store(elem.getError(), path.resolve("error.png"));
+		Images.store(elem.getOriginal().get(), path.resolve("original.png"));
+		Images.store(elem.getModified().get(), path.resolve("modified.png"));
+		Images.store(elem.getError().get(), path.resolve("error.png"));
 	}
 
 	/**
@@ -79,9 +79,9 @@ public class ErrorFileStorageService extends AFileStorageService<IError>
 	public void delete(final IError elem) throws IOException
 	{
 		final StringJoiner joiner = new StringJoiner("_");
-		joiner.add(elem.getDateTime());
-		joiner.add(elem.getClazz());
-		joiner.add(elem.getId());
+		joiner.add(elem.getDateTime().get());
+		joiner.add(elem.getClazz().get());
+		joiner.add(elem.getId().get());
 		final String fileName = joiner.toString();
 		final Path path = super.storagePath.resolve(fileName);
 

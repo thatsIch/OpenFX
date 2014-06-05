@@ -51,9 +51,9 @@ public class ExtractFeatureCommand extends ACommand<IFeature>
 	@Override
 	protected IFeature call() throws Exception
 	{
-		final String className = this.error.getClazz();
+		final String className = this.error.getClazz().get();
 		final String extractorName = this.featureExtractor.getName();
-		final Mat originalWithErrorMat = this.error.getModified().clone();
+		final Mat originalWithErrorMat = this.error.getModified().get().clone();
 		this.log.info("Prepared all necessary information + " + className + ", " + extractorName);
 
 		// TODO Implement Smooth and Threshold somehow Denoising
@@ -71,7 +71,7 @@ public class ExtractFeatureCommand extends ACommand<IFeature>
 		final List<IFeatureVector> featureVectorList = FXCollections.observableArrayList();
 		final List<List<Float>> csvResult = FXCollections.observableArrayList();
 		final Mat[][] originalErrorSplit = Images.split(originalWithErrorMat, this.frameSize, this.frameSize);
-		final Mat[][] errorSplit = Images.split(this.error.getError(), this.frameSize, this.frameSize);
+		final Mat[][] errorSplit = Images.split(this.error.getError().get(), this.frameSize, this.frameSize);
 		this.log.info("Prepared split images.");
 
 		for (int col = 0; col < originalErrorSplit.length; col++)
