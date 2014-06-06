@@ -7,8 +7,6 @@ import de.thatsich.openfx.featureextraction.intern.control.command.commands.GetL
 import de.thatsich.openfx.featureextraction.intern.control.command.commands.InitFeatureExtractorsCommand;
 import de.thatsich.openfx.featureextraction.intern.control.command.commands.InitFeaturesCommand;
 
-import java.nio.file.Path;
-
 public interface IFeatureInitCommandProvider extends ICommandProvider
 {
 	GetLastTileSizeCommand createGetLastFrameSizeCommand();
@@ -17,7 +15,7 @@ public interface IFeatureInitCommandProvider extends ICommandProvider
 
 	GetLastFeatureExtractorIndexCommand createGetLastFeatureExtractorIndexCommand();
 
-	InitFeaturesCommand createInitFeaturesCommand(Path folderPath);
+	InitFeaturesCommand createInitFeaturesCommand();
 
 	GetLastFeatureIndexCommand createGetLastFeatureIndexCommand();
 }

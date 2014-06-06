@@ -14,13 +14,13 @@ import java.util.LinkedList;
 import java.util.List;
 
 
-public class InitErrorEntryListCommand extends ACommand<List<IError>>
+public class InitErrorsCommand extends ACommand<List<IError>>
 {
 	private final Path errorInputFolderPath;
 	private final ErrorFileStorageService storage;
 
 	@Inject
-	protected InitErrorEntryListCommand(@Assisted Path errorInputFolderPath, ErrorFileStorageService storage)
+	protected InitErrorsCommand(@Assisted Path errorInputFolderPath, ErrorFileStorageService storage)
 	{
 		this.errorInputFolderPath = errorInputFolderPath;
 		this.storage = storage;

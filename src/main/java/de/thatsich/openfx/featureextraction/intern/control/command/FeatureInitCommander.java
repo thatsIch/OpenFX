@@ -25,13 +25,13 @@ public class FeatureInitCommander
 {
 	private final IFeatureInitCommandProvider provider;
 	private final Log log;
-	private final IFeatureState featureState;
+	private final IFeatureState state;
 
 	@Inject
 	public FeatureInitCommander(Log log, IFeatureState featureState, IFeatureInitCommandProvider provider)
 	{
 		this.log = log;
-		this.featureState = featureState;
+		this.state = featureState;
 		this.provider = provider;
 
 		this.initTileSize();
@@ -78,14 +78,14 @@ public class FeatureInitCommander
 		final Path folderPath = Paths.get("io/features");
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(1);
 
-		this.featureState.path().set(folderPath);
-		this.log.info("Set FeatureVectorInputFolderPath to Model.");
+		this.state.path().set(folderPath);
+		this.log.info("Set FeaturesPath to Model.");
 
-		final InitFeaturesCommand initCommand = this.provider.createInitFeaturesCommand(folderPath);
+		final InitFeaturesCommand initCommand = this.provider.createInitFeaturesCommand();
 		initCommand.setOnSucceededCommandHandler(InitFeaturesSucceededHandler.class);
 		initCommand.setExecutor(executor);
 		initCommand.start();
-		this.log.info("Initialized InitFeatureVectorList Retrieval.");
+		this.log.info("Initialized InitFeatures Retrieval.");
 
 		final GetLastFeatureIndexCommand lastCommand = this.provider.createGetLastFeatureIndexCommand();
 		lastCommand.setOnSucceededCommandHandler(GetLastFeatureIndexSucceededHandler.class);

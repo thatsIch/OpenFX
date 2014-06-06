@@ -43,7 +43,7 @@ public class FeatureFileStorageService extends AFileStorageService<IFeature>
 		this.createInvalidDirectory(filePath);
 
 		final Path vectorPath = filePath.resolve("vector.csv");
-		final Path labelPath = filePath.resolve("lable.csv");
+		final Path labelPath = filePath.resolve("label.csv");
 
 		try (
 			final BufferedWriter vectorWriter = Files.newBufferedWriter(vectorPath, StandardCharsets.US_ASCII);

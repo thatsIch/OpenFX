@@ -8,8 +8,8 @@ import de.thatsich.openfx.errorgeneration.api.model.IErrorState;
 import de.thatsich.openfx.errorgeneration.intern.control.command.commands.GetLastErrorCountCommand;
 import de.thatsich.openfx.errorgeneration.intern.control.command.commands.GetLastErrorEntryIndexCommand;
 import de.thatsich.openfx.errorgeneration.intern.control.command.commands.GetLastErrorGeneratorIndexCommand;
-import de.thatsich.openfx.errorgeneration.intern.control.command.commands.InitErrorEntryListCommand;
 import de.thatsich.openfx.errorgeneration.intern.control.command.commands.InitErrorGeneratorListCommand;
+import de.thatsich.openfx.errorgeneration.intern.control.command.commands.InitErrorsCommand;
 import de.thatsich.openfx.errorgeneration.intern.control.command.handler.GetLastErrorEntryIndexSucceededHandler;
 import de.thatsich.openfx.errorgeneration.intern.control.command.handler.GetLastErrorGeneratorIndexSucceededHandler;
 import de.thatsich.openfx.errorgeneration.intern.control.command.handler.GetLastErrorLoopCountSucceededHandler;
@@ -80,7 +80,7 @@ public class ErrorInitCommander
 		this.errorState.path().set(errorInputFolderPath);
 		this.log.info("Set ErrorInputFolderPath to Model.");
 
-		final InitErrorEntryListCommand initCommand = this.commander.createInitErrorEntryListCommand(errorInputFolderPath);
+		final InitErrorsCommand initCommand = this.commander.createInitErrorEntryListCommand(errorInputFolderPath);
 		initCommand.setOnSucceededCommandHandler(InitErrorEntryListSucceededHandler.class);
 		initCommand.setExecutor(executor);
 		initCommand.start();
