@@ -8,6 +8,7 @@ import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureVector;
 import de.thatsich.openfx.preprocessing.api.control.IPreProcessing;
 import de.thatsich.openfx.preprocessing.intern.control.command.preprocessor.core.IPreProcessor;
 import de.thatsich.openfx.preprocessing.intern.control.command.preprocessor.core.PreProcessorConfiguration;
+import de.thatsich.openfx.preprocessing.intern.control.command.service.PreProcessingFileStorageService;
 
 import java.nio.file.Path;
 import java.util.Arrays;
@@ -24,36 +25,38 @@ import java.util.UUID;
 public class TrainPreProcessorCommand extends ACommand<IPreProcessing>
 {
 	// Properties
-	private final Path preProcessingFolderPath;
+	private final Path path;
 	private final IPreProcessor preProcessor;
-	private final IFeature selectedFeatureVector;
-	private final List<IFeature> featureVectorList;
+	private final IFeature selectedFeature;
+	private final List<IFeature> features;
+	private final PreProcessingFileStorageService storage;
 
 	@Inject
-	public TrainPreProcessorCommand(@Assisted Path preProcessingFolderPath, @Assisted IPreProcessor preProcessor, @Assisted IFeature selected, @Assisted List<IFeature> all)
+	public TrainPreProcessorCommand(@Assisted Path path, @Assisted IPreProcessor preProcessor, @Assisted IFeature selected, @Assisted List<IFeature> all, PreProcessingFileStorageService storage)
 	{
-		this.preProcessingFolderPath = preProcessingFolderPath;
+		this.path = path;
 		this.preProcessor = preProcessor;
-		this.selectedFeatureVector = selected;
-		this.featureVectorList = all;
+		this.selectedFeature = selected;
+		this.features = all;
+		this.storage = storage;
 	}
 
 	@Override
 	protected IPreProcessing call() throws Exception
 	{
 		final String preProcessorName = this.preProcessor.getName();
-		final String featureExtractorName = this.selectedFeatureVector.extractorName().get();
-		final int frameSize = this.selectedFeatureVector.tileSize().get();
-		final String errorClassName = this.selectedFeatureVector.className().get();
+		final String featureExtractorName = this.selectedFeature.extractorName().get();
+		final int frameSize = this.selectedFeature.tileSize().get();
+		final String errorClassName = this.selectedFeature.className().get();
 		final String id = UUID.randomUUID().toString();
 		this.log.info("Prepared all data for Training.");
 
-		final double[][] data = this.convertToNativeMatrix(this.featureVectorList, featureExtractorName, frameSize);
-		final int featureVectorSize = this.featureVectorList.get(0).vectors().size();
+		final double[][] data = this.convertToNativeMatrix(this.features, featureExtractorName, frameSize);
+		final int featureVectorSize = this.features.get(0).vectors().size();
 		this.log.info("Prepared DataSets.");
 
 		final String filename = preProcessorName + "_" + featureExtractorName + "_" + frameSize + "_" + errorClassName + "_" + id + ".yaml";
-		final Path filePath = this.preProcessingFolderPath.resolve(filename);
+		final Path filePath = this.path.resolve(filename);
 		this.log.info("Created FilePath");
 
 		final PreProcessorConfiguration config = new PreProcessorConfiguration(filePath, preProcessorName, featureVectorSize, 0, id);
@@ -62,7 +65,7 @@ public class TrainPreProcessorCommand extends ACommand<IPreProcessing>
 		final IPreProcessing preProcessing = this.preProcessor.train(data, data, config);
 		this.log.info("Trained AANN with " + Arrays.deepToString(data) + " samples.");
 
-		preProcessing.save(filePath.toString());
+		this.storage.create(preProcessing);
 		this.log.info("Saved File to FileSystem.");
 
 		return preProcessing;

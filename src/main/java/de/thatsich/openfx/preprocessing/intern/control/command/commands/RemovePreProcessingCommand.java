@@ -2,32 +2,27 @@ package de.thatsich.openfx.preprocessing.intern.control.command.commands;
 
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
-import de.thatsich.openfx.preprocessing.api.control.IPreProcessing;
 import de.thatsich.core.javafx.ACommand;
-
-import java.nio.file.Files;
-import java.nio.file.Path;
+import de.thatsich.openfx.preprocessing.api.control.IPreProcessing;
+import de.thatsich.openfx.preprocessing.intern.control.command.service.PreProcessingFileStorageService;
 
 
 public class RemovePreProcessingCommand extends ACommand<IPreProcessing>
 {
 	private final IPreProcessing preProcessing;
+	private final PreProcessingFileStorageService storage;
 
 	@Inject
-	public RemovePreProcessingCommand(@Assisted IPreProcessing preProcessing)
+	public RemovePreProcessingCommand(@Assisted IPreProcessing preProcessing, PreProcessingFileStorageService storage)
 	{
 		this.preProcessing = preProcessing;
+		this.storage = storage;
 	}
 
 	@Override
 	protected IPreProcessing call() throws Exception
 	{
-		final Path path = preProcessing.getFilePathProperty().get();
-		if (Files.exists(path))
-		{
-			Files.delete(path);
-			this.log.info(path + " deleted.");
-		}
+		this.storage.delete(this.preProcessing);
 
 		return this.preProcessing;
 	}

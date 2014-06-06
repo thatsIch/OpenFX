@@ -20,26 +20,12 @@ public interface IPreProcessors
 	 *
 	 * @return ListProperty of PreProcessors
 	 */
-	ListProperty<IPreProcessor> getPreProcessorListProperty();
+	ListProperty<IPreProcessor> get();
 
 	/**
 	 * PropertyGetter of selected PreProcessor
 	 *
 	 * @return Property of selected PreProcessor
 	 */
-	ObjectProperty<IPreProcessor> getSelectedPreProcessorProperty();
-
-	/**
-	 * Getter of selected PreProcessor
-	 *
-	 * @return Selected PreProcessor
-	 */
-	IPreProcessor getSelectedPreProcessor();
-
-	/**
-	 * Setter of selected PreProcessor
-	 *
-	 * @param preProcessor Selected PreProcessor
-	 */
-	void setSelectedPreProcessor(IPreProcessor preProcessor);
+	ObjectProperty<IPreProcessor> selected();
 }

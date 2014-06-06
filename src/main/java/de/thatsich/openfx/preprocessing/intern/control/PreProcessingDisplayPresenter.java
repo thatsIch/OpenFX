@@ -46,10 +46,10 @@ public class PreProcessingDisplayPresenter extends AFXMLPresenter
 			{
 				if (newValue != null)
 				{
-					nodeLabelPreProcessingName.setText(newValue.getPreProcessingNameProperty().getValue());
-					nodeLabelInputSize.setText(newValue.getInputSizeProperty().getValue().toString());
-					nodeLabelOutputSize.setText(newValue.getOutputSizeProperty().getValue().toString());
-					nodeLabelID.setText(newValue.getIdProperty().getValue());
+					nodeLabelPreProcessingName.setText(newValue.nameProperty().getValue());
+					nodeLabelInputSize.setText(newValue.inputSizeProperty().getValue().toString());
+					nodeLabelOutputSize.setText(newValue.outputSizeProperty().getValue().toString());
+					nodeLabelID.setText(newValue.idProperty().getValue());
 				}
 				else
 				{

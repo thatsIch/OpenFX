@@ -3,15 +3,12 @@ package de.thatsich.openfx.preprocessing.intern.control.command.preprocessing;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import de.thatsich.openfx.preprocessing.intern.control.command.preprocessing.core.APreProcessing;
-import de.thatsich.openfx.preprocessing.intern.control.command.preprocessor.core.PreProcessorConfiguration;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import de.thatsich.openfx.preprocessing.intern.control.command.preprocessing.core.PreProcessingConfig;
+import javafx.beans.property.ReadOnlyObjectProperty;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import org.encog.ml.data.MLData;
 import org.encog.ml.data.basic.BasicMLData;
 import org.encog.neural.networks.BasicNetwork;
-import org.encog.persist.EncogDirectoryPersistence;
-
-import java.io.File;
 
 
 /**
@@ -21,13 +18,13 @@ import java.io.File;
  */
 public class AANNPreProcessing extends APreProcessing
 {
-	private ObjectProperty<BasicNetwork> networkProperty;
+	private ReadOnlyObjectProperty<BasicNetwork> networkProperty;
 
 	@Inject
-	public AANNPreProcessing(@Assisted BasicNetwork network, @Assisted PreProcessorConfiguration config)
+	public AANNPreProcessing(@Assisted BasicNetwork network, @Assisted PreProcessingConfig config)
 	{
 		super(config);
-		this.networkProperty = new SimpleObjectProperty<>(network);
+		this.networkProperty = new ReadOnlyObjectWrapper<>(network);
 	}
 
 	@Override
@@ -40,14 +37,8 @@ public class AANNPreProcessing extends APreProcessing
 	}
 
 	@Override
-	public void load(String fileName)
+	public ReadOnlyObjectProperty<BasicNetwork> networkProperty()
 	{
-		this.networkProperty.set((BasicNetwork) EncogDirectoryPersistence.loadObject(new File(fileName)));
-	}
-
-	@Override
-	public void save(String fileName)
-	{
-		EncogDirectoryPersistence.saveObject(new File(fileName), this.networkProperty.get());
+		return this.networkProperty;
 	}
 }

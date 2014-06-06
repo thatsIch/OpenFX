@@ -1,10 +1,11 @@
 package de.thatsich.openfx.preprocessing.api.control;
 
+import de.thatsich.core.IEntity;
+import de.thatsich.openfx.preprocessing.intern.control.command.preprocessing.core.PreProcessingConfig;
 import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyStringProperty;
-
-import java.nio.file.Path;
+import org.encog.neural.networks.BasicNetwork;
 
 
 /**
@@ -12,7 +13,7 @@ import java.nio.file.Path;
  *
  * @author thatsIch
  */
-public interface IPreProcessing
+public interface IPreProcessing extends IEntity
 {
 	/**
 	 * Preprocesses a featurevector to maybe optimize future classifications
@@ -23,34 +24,16 @@ public interface IPreProcessing
 	 */
 	double[] preprocess(double[] featureVector);
 
-	/**
-	 * Gets the name of the PreProcessing
-	 *
-	 * @return Name of the PreProcessing
-	 */
-	String getName();
+	ReadOnlyStringProperty nameProperty();
 
-	/**
-	 * Loads a PreProcessing from a FileName
-	 *
-	 * @param fileName Name of the PreProcessing File
-	 */
-	void load(String fileName);
+	ReadOnlyIntegerProperty inputSizeProperty();
 
-	/**
-	 * Saves a PreProcessing to a FileName
-	 *
-	 * @param fileName Name of the PreProcessing File
-	 */
-	void save(String fileName);
+	ReadOnlyIntegerProperty outputSizeProperty();
 
-	ReadOnlyObjectProperty<Path> getFilePathProperty();
+	ReadOnlyStringProperty idProperty();
 
-	ReadOnlyStringProperty getPreProcessingNameProperty();
+	ReadOnlyObjectProperty<BasicNetwork> networkProperty();
 
-	ReadOnlyIntegerProperty getInputSizeProperty();
-
-	ReadOnlyIntegerProperty getOutputSizeProperty();
-
-	ReadOnlyStringProperty getIdProperty();
+	@Override
+	PreProcessingConfig getConfig();
 }

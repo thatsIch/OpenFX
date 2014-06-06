@@ -76,8 +76,8 @@ public class PreProcessingInputPresenter extends AFXMLPresenter
 		});
 		this.log.info("Bound " + this.nodeChoiceBoxPreProcessor + " proper Name display.");
 
-		this.nodeChoiceBoxPreProcessor.itemsProperty().bindBidirectional(this.preProcessors.getPreProcessorListProperty());
-		this.nodeChoiceBoxPreProcessor.valueProperty().bindBidirectional(this.preProcessors.getSelectedPreProcessorProperty());
+		this.nodeChoiceBoxPreProcessor.itemsProperty().bindBidirectional(this.preProcessors.get());
+		this.nodeChoiceBoxPreProcessor.valueProperty().bindBidirectional(this.preProcessors.selected());
 		this.log.info("Bound " + this.nodeChoiceBoxPreProcessor + " to Model.");
 
 		this.nodeChoiceBoxPreProcessor.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
@@ -103,7 +103,7 @@ public class PreProcessingInputPresenter extends AFXMLPresenter
 	private void onTrainPreProcessorAction()
 	{
 		final Path preProcessingFolderPath = this.state.path().get();
-		final IPreProcessor selectedPreProcessor = this.preProcessors.getSelectedPreProcessor();
+		final IPreProcessor selectedPreProcessor = this.preProcessors.selected().get();
 		final List<IFeature> featureVectorSetList = this.features.get();
 		final IFeature selectedFeatureVectorSet = this.features.selected().get();
 

@@ -1,68 +1,55 @@
 package de.thatsich.openfx.preprocessing.intern.control.command.preprocessing.core;
 
 import com.google.inject.Inject;
-import de.thatsich.openfx.preprocessing.api.control.IPreProcessing;
-import de.thatsich.openfx.preprocessing.intern.control.command.preprocessor.core.PreProcessorConfiguration;
 import de.thatsich.core.Log;
+import de.thatsich.openfx.preprocessing.api.control.IPreProcessing;
 import javafx.beans.property.ReadOnlyIntegerProperty;
-import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyStringProperty;
-
-import java.nio.file.Path;
 
 
 public abstract class APreProcessing implements IPreProcessing
 {
 	// Properties
-	private final PreProcessorConfiguration config;
+	private final PreProcessingConfig config;
 
 	// Injects
-	@Inject
-	protected Log log;
+	@Inject protected Log log;
 
 	/**
 	 * CTOR
 	 */
-	protected APreProcessing(PreProcessorConfiguration config)
+	protected APreProcessing(PreProcessingConfig config)
 	{
 		this.config = config;
 	}
 
-	// Getter
 	@Override
-	public String getName()
+	public ReadOnlyStringProperty nameProperty()
 	{
-		return this.getClass().getSimpleName();
-	}
-
-	// Property Getter
-	@Override
-	public ReadOnlyObjectProperty<Path> getFilePathProperty()
-	{
-		return this.config.getFilePathProperty();
+		return this.config.name;
 	}
 
 	@Override
-	public ReadOnlyStringProperty getPreProcessingNameProperty()
+	public ReadOnlyIntegerProperty inputSizeProperty()
 	{
-		return this.config.getPreProcessorNameProperty();
+		return this.config.inputSize;
 	}
 
 	@Override
-	public ReadOnlyIntegerProperty getInputSizeProperty()
+	public ReadOnlyIntegerProperty outputSizeProperty()
 	{
-		return this.config.getInputSizeProperty();
+		return this.config.outputSize;
 	}
 
 	@Override
-	public ReadOnlyIntegerProperty getOutputSizeProperty()
+	public ReadOnlyStringProperty idProperty()
 	{
-		return this.config.getOutputSizeProperty();
+		return this.config.id;
 	}
 
 	@Override
-	public ReadOnlyStringProperty getIdProperty()
+	public PreProcessingConfig getConfig()
 	{
-		return this.config.getIDProperty();
+		return this.config;
 	}
 }

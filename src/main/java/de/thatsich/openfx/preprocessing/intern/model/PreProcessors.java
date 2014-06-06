@@ -17,26 +17,14 @@ public class PreProcessors implements IPreProcessors
 	private final ObjectProperty<IPreProcessor> selected = new SimpleObjectProperty<>();
 
 	@Override
-	public ListProperty<IPreProcessor> getPreProcessorListProperty()
+	public ListProperty<IPreProcessor> get()
 	{
 		return this.list;
 	}
 
 	@Override
-	public ObjectProperty<IPreProcessor> getSelectedPreProcessorProperty()
+	public ObjectProperty<IPreProcessor> selected()
 	{
 		return this.selected;
-	}
-
-	@Override
-	public IPreProcessor getSelectedPreProcessor()
-	{
-		return this.selected.get();
-	}
-
-	@Override
-	public void setSelectedPreProcessor(IPreProcessor preProcessor)
-	{
-		this.selected.set(preProcessor);
 	}
 }

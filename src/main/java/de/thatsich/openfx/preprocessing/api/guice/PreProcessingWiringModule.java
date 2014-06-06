@@ -9,7 +9,9 @@ import de.thatsich.openfx.preprocessing.api.view.IPreProcessingDisplayView;
 import de.thatsich.openfx.preprocessing.api.view.IPreProcessingInputView;
 import de.thatsich.openfx.preprocessing.api.view.IPreProcessingListView;
 import de.thatsich.openfx.preprocessing.intern.control.command.preprocessor.AANNPreProcessor;
+import de.thatsich.openfx.preprocessing.intern.control.command.preprocessor.IdentityPreProcessor;
 import de.thatsich.openfx.preprocessing.intern.control.command.service.PreProcessingConfigService;
+import de.thatsich.openfx.preprocessing.intern.control.command.service.PreProcessingFileStorageService;
 import de.thatsich.openfx.preprocessing.intern.model.PreProcessingState;
 import de.thatsich.openfx.preprocessing.intern.model.PreProcessings;
 import de.thatsich.openfx.preprocessing.intern.model.PreProcessors;
@@ -27,11 +29,11 @@ public class PreProcessingWiringModule extends AWiringModule
 	}
 
 	@Override
-	protected void bindService()
+	protected void bindModel()
 	{
-		super.bind(PreProcessingConfigService.class).in(Scopes.SINGLETON);
-
-		super.bind(AANNPreProcessor.class).in(Scopes.SINGLETON);
+		super.bind(IPreProcessors.class).to(PreProcessors.class).in(Scopes.SINGLETON);
+		super.bind(IPreProcessings.class).to(PreProcessings.class).in(Scopes.SINGLETON);
+		super.bind(IPreProcessingState.class).to(PreProcessingState.class).in(Scopes.SINGLETON);
 	}
 
 	@Override
@@ -50,13 +52,14 @@ public class PreProcessingWiringModule extends AWiringModule
 	@Override
 	protected void bindCommand()
 	{
+		super.bind(AANNPreProcessor.class).in(Scopes.SINGLETON);
+		super.bind(IdentityPreProcessor.class).in(Scopes.SINGLETON);
 	}
 
 	@Override
-	protected void bindModel()
+	protected void bindService()
 	{
-		super.bind(IPreProcessors.class).to(PreProcessors.class).in(Scopes.SINGLETON);
-		super.bind(IPreProcessings.class).to(PreProcessings.class).in(Scopes.SINGLETON);
-		super.bind(IPreProcessingState.class).to(PreProcessingState.class).in(Scopes.SINGLETON);
+		super.bind(PreProcessingConfigService.class).in(Scopes.SINGLETON);
+		super.bind(PreProcessingFileStorageService.class).in(Scopes.SINGLETON);
 	}
 }
