@@ -24,17 +24,19 @@ public class ErrorFileStorageService extends AFileStorageService<IError>
 	}
 
 	@Override
-	public void save(final IError elem) throws IOException
+	public IError create(final IError error) throws IOException
 	{
-		final ErrorConfig config = elem.getConfig();
+		final ErrorConfig config = error.getConfig();
 		final String fileName = config.toString();
 		final Path path = super.storagePath.resolve(fileName);
 
 		this.createInvalidDirectory(path);
 
-		Images.store(elem.originalProperty().get(), path.resolve("original.png"));
-		Images.store(elem.modifiedProperty().get(), path.resolve("modified.png"));
-		Images.store(elem.errorProperty().get(), path.resolve("error.png"));
+		Images.store(error.originalProperty().get(), path.resolve("original.png"));
+		Images.store(error.modifiedProperty().get(), path.resolve("modified.png"));
+		Images.store(error.errorProperty().get(), path.resolve("error.png"));
+
+		return error;
 	}
 
 	/**
@@ -51,7 +53,7 @@ public class ErrorFileStorageService extends AFileStorageService<IError>
 	}
 
 	@Override
-	public IError load(final Path path) throws IOException
+	public IError retrieve(final Path path) throws IOException
 	{
 		final String fileName = path.getFileName().toString();
 
@@ -64,9 +66,9 @@ public class ErrorFileStorageService extends AFileStorageService<IError>
 	}
 
 	@Override
-	public void update(final IError elem) throws IOException
+	public IError update(final IError elem) throws IOException
 	{
-
+		return elem;
 	}
 
 	@Override

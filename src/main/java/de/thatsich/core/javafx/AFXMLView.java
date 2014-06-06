@@ -10,7 +10,7 @@ import java.net.URL;
 
 
 /**
- * all view have a parent object they will load
+ * all view have a parent object they will retrieve
  * fetches the name from its own child-name
  *
  * @author Tran Minh Do
@@ -45,7 +45,7 @@ public abstract class AFXMLView implements IFXMLView
 				throw new IllegalStateException("Could not find urlFXML");
 			}
 
-			// load FXML
+			// retrieve FXML
 			Result res;
 			try
 			{
@@ -53,7 +53,7 @@ public abstract class AFXMLView implements IFXMLView
 			}
 			catch (IOException e)
 			{
-				throw new IllegalStateException("Could not load " + urlFXML, e);
+				throw new IllegalStateException("Could not retrieve " + urlFXML, e);
 			}
 
 			this.pane = res.getRoot();

@@ -22,13 +22,13 @@ public class ImageFileStorageService extends AFileStorageService<IImage>
 	}
 
 	@Override
-	public void save(final IImage elem) throws IOException
+	public IImage create(final IImage elem) throws IOException
 	{
-
+		return elem;
 	}
 
 	@Override
-	public IImage load(final Path path) throws IOException
+	public IImage retrieve(final Path path) throws IOException
 	{
 		final Path imagePath = path.toAbsolutePath();
 		final Mat imageMat = Highgui.imread(imagePath.toString(), 0);
@@ -39,9 +39,9 @@ public class ImageFileStorageService extends AFileStorageService<IImage>
 	}
 
 	@Override
-	public void update(final IImage elem) throws IOException
+	public IImage update(final IImage elem) throws IOException
 	{
-
+		return elem;
 	}
 
 	@Override

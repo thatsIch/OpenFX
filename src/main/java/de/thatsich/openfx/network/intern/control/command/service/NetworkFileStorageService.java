@@ -21,22 +21,23 @@ public class NetworkFileStorageService extends AFileStorageService<Network>
 	}
 
 	@Override
-	public void save(final Network elem)
+	public Network create(final Network elem)
 	{
-		// TODO save network
+		return elem;
+		// TODO create network
 	}
 
 	@Override
-	public Network load(final Path path)
+	public Network retrieve(final Path path)
 	{
-		// TODO load network
+		// TODO retrieve network
 		return null;
 	}
 
 	@Override
-	public void update(final Network elem) throws IOException
+	public Network update(final Network elem) throws IOException
 	{
-
+		return elem;
 	}
 
 	@Override

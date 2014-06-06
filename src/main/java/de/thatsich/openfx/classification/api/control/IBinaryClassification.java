@@ -11,7 +11,7 @@ import java.nio.file.Path;
 /**
  * Interface for defining what a BinaryClassification needs to fullfill.
  * BinaryClassifications are the results of a BinaryClassifier (RF, SVM etc)
- * With that you need to be able to save a calculated one, load a previously
+ * With that you need to be able to create a calculated one, retrieve a previously
  * calculated one and use it to predict.
  *
  * It offers additional access to BinaryClassificationConfiguration.

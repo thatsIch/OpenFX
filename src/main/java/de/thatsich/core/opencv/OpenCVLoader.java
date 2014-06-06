@@ -46,8 +46,8 @@ public class OpenCVLoader
 		}
 		catch (Exception e)
 		{
-			System.out.println("Could not load from FileSystem.");
-			throw new Exception("Could not load from FileSystem.");
+			System.out.println("Could not retrieve from FileSystem.");
+			throw new Exception("Could not retrieve from FileSystem.");
 		}
 	}
 

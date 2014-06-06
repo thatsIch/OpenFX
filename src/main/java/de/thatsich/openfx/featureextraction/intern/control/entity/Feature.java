@@ -19,7 +19,7 @@ public class Feature implements IFeature
 {
 	// Properties
 	private final FeatureConfig config;
-	private final ReadOnlyListProperty<IFeatureVector> featureVectors;
+	private final ReadOnlyListWrapper<IFeatureVector> featureVectors;
 
 	public Feature(final FeatureConfig config, final List<IFeatureVector> featureVectors)
 	{
@@ -32,25 +32,36 @@ public class Feature implements IFeature
 	@Override
 	public ReadOnlyStringProperty extractorName()
 	{
-		return this.config.extractorName;
+		return this.config.extractorName.getReadOnlyProperty();
 	}
 
 	@Override
 	public ReadOnlyStringProperty className()
 	{
-		return this.config.className;
+		return this.config.className.getReadOnlyProperty();
 	}
 
 	@Override
 	public ReadOnlyIntegerProperty tileSize()
 	{
-		return this.config.tileSize;
+		return this.config.tileSize.getReadOnlyProperty();
 	}
 
 	@Override
 	public ReadOnlyListProperty<IFeatureVector> vectors()
 	{
-		return this.featureVectors;
+		return this.featureVectors.getReadOnlyProperty();
+	}
+
+	@Override
+	public IFeature merge(IFeature that)
+	{
+		if (this.equals(that))
+		{
+			this.featureVectors.addAll(that.vectors());
+		}
+
+		return this;
 	}
 
 	@Override
@@ -58,4 +69,27 @@ public class Feature implements IFeature
 	{
 		return this.config;
 	}
+
+	@Override
+	public boolean equals(Object other)
+	{
+		if (this == other)
+		{
+			return true;
+		}
+
+		if (other instanceof IFeature)
+		{
+			final IFeature that = (IFeature) other;
+			final boolean equalExtractor = this.extractorName().get().equals(that.extractorName().get());
+			final boolean equalClass = this.className().get().equals(that.className().get());
+			final boolean equalTileSize = this.tileSize().get() == that.tileSize().get();
+
+			return equalExtractor && equalClass && equalTileSize;
+		}
+
+		return false;
+	}
+
+
 }

@@ -1,9 +1,7 @@
 package de.thatsich.openfx.featureextraction.intern.control.entity;
 
 import de.thatsich.core.IEntityConfiguration;
-import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.beans.property.ReadOnlyIntegerWrapper;
-import javafx.beans.property.ReadOnlyStringProperty;
 import javafx.beans.property.ReadOnlyStringWrapper;
 
 import java.util.StringJoiner;
@@ -14,9 +12,9 @@ import java.util.StringJoiner;
  */
 public class FeatureConfig implements IEntityConfiguration
 {
-	public final ReadOnlyStringProperty className;
-	public final ReadOnlyStringProperty extractorName;
-	public final ReadOnlyIntegerProperty tileSize;
+	public final ReadOnlyStringWrapper className;
+	public final ReadOnlyStringWrapper extractorName;
+	public final ReadOnlyIntegerWrapper tileSize;
 
 	public FeatureConfig(final String className, final String extractorName, final int tileSize)
 	{

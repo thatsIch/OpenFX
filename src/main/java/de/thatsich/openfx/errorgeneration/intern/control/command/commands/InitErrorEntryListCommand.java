@@ -62,7 +62,7 @@ public class InitErrorEntryListCommand extends ACommand<List<IError>>
 		{
 			for (Path sub : subs)
 			{
-				errorList.add(this.storage.load(sub));
+				errorList.add(this.storage.retrieve(sub));
 				this.log.info("Added " + sub + ".");
 			}
 		}

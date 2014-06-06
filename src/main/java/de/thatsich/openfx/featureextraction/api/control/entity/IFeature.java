@@ -20,6 +20,8 @@ public interface IFeature extends IEntity
 
 	ReadOnlyListProperty<IFeatureVector> vectors();
 
+	IFeature merge(IFeature other);
+
 	@Override
 	FeatureConfig getConfig();
 }

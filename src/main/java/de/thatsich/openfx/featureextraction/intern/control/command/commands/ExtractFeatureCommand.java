@@ -110,7 +110,7 @@ public class ExtractFeatureCommand extends ACommand<IFeature>
 		final FeatureConfig config = new FeatureConfig(className, extractorName, this.frameSize);
 		final IFeature feature = new Feature(config, featureVectorList);
 
-		this.storage.save(feature);
+		this.storage.create(feature);
 		this.log.info("Extracted FeatureVectors: " + featureVectorList.size());
 
 		return feature;

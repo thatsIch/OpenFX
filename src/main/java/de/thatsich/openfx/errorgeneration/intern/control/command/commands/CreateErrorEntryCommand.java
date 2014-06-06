@@ -44,7 +44,7 @@ public class CreateErrorEntryCommand extends ACommand<IError>
 		final IError entry = this.matToErrorEntry(this.imageMat, copy);
 
 		// store created error
-		this.storage.save(entry);
+		this.storage.create(entry);
 
 		return entry;
 	}

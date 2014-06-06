@@ -2,9 +2,9 @@ package de.thatsich.openfx.prediction.intern.control.command.commands;
 
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
+import de.thatsich.core.javafx.ACommand;
 import de.thatsich.openfx.prediction.api.control.BinaryPrediction;
 import de.thatsich.openfx.prediction.intern.control.command.service.BinaryPredictionFileStorageService;
-import de.thatsich.core.javafx.ACommand;
 import javafx.collections.FXCollections;
 
 import java.io.IOException;
@@ -43,7 +43,7 @@ public class InitBinaryPredictionListCommand extends ACommand<List<BinaryPredict
 		{
 			for (Path child : stream)
 			{
-				final BinaryPrediction prediction = fileStorage.load(child);
+				final BinaryPrediction prediction = fileStorage.retrieve(child);
 				binaryPredictionList.add(prediction);
 			}
 		}

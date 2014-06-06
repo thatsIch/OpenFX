@@ -66,7 +66,7 @@ public class AANNPreProcessor extends APreProcessor
 		final MLDataSet trainingSet = new BasicMLDataSet(trainData, labelData);
 		final FoldedDataSet foldedSet = new FoldedDataSet(trainingSet);
 
-		// save best setup
+		// create best setup
 		Pair<BasicNetwork, Double> bestSetup = new Pair<>(null, Double.MAX_VALUE);
 
 		// try out every possible hidden and bottleneck combination

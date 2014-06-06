@@ -41,7 +41,7 @@ public class InitImageEntryListCommand extends ACommand<List<IImage>>
 		{
 			for (Path child : stream)
 			{
-				final IImage load = this.storage.load(child);
+				final IImage load = this.storage.retrieve(child);
 
 				result.add(load);
 				this.log.info("Added " + child);

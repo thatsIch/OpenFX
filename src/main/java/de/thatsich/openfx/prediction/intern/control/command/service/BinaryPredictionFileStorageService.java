@@ -26,7 +26,7 @@ public class BinaryPredictionFileStorageService extends AFileStorageService<Bina
 	}
 
 	@Override
-	public void save(BinaryPrediction prediction)
+	public BinaryPrediction create(BinaryPrediction prediction)
 	{
 		// Preprare each information
 		final StringJoiner joiner = new StringJoiner("_");
@@ -49,10 +49,12 @@ public class BinaryPredictionFileStorageService extends AFileStorageService<Bina
 
 		// Write to FS
 		Highgui.imwrite(file, mergedMat);
+
+		return prediction;
 	}
 
 	@Override
-	public BinaryPrediction load(Path filePath)
+	public BinaryPrediction retrieve(Path filePath)
 	{
 		final Mat layeredImage = Highgui.imread(filePath.toAbsolutePath().toString());
 
@@ -79,9 +81,9 @@ public class BinaryPredictionFileStorageService extends AFileStorageService<Bina
 	}
 
 	@Override
-	public void update(final BinaryPrediction elem) throws IOException
+	public BinaryPrediction update(final BinaryPrediction elem) throws IOException
 	{
-
+		return elem;
 	}
 
 	@Override

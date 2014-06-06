@@ -46,7 +46,7 @@ public class InitFeaturesCommand extends ACommand<List<IFeature>>
 		{
 			for (Path child : stream)
 			{
-				final IFeature load = this.storage.load(child);
+				final IFeature load = this.storage.retrieve(child);
 				features.add(load);
 				this.log.info("Added Feature " + child + " with Attribute " + Files.probeContentType(child));
 			}

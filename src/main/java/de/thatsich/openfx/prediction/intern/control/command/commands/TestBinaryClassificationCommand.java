@@ -75,7 +75,7 @@ public class TestBinaryClassificationCommand extends ACommand<BinaryPrediction>
 		final BinaryPrediction prediction = new BinaryPrediction(modified, errorIndicationMat, predictionMat, strBinaryClassification, strFeatureExtractor, intFrameSize, strErrorGenerator, strID);
 		this.log.info("Created Binary Prediction.");
 
-		this.storage.save(prediction);
+		this.storage.create(prediction);
 		this.log.info("Stored Prediction to FileSystem.");
 
 		return prediction;

@@ -35,14 +35,14 @@ public class FeatureFileStorageService extends AFileStorageService<IFeature>
 	}
 
 	@Override
-	public void save(final IFeature elem) throws IOException
+	public IFeature create(final IFeature feature) throws IOException
 	{
-		final FeatureConfig config = elem.getConfig();
+		final FeatureConfig config = feature.getConfig();
 		final Path filePath = super.storagePath.resolve(config.toString());
 		final BufferedWriter writer = Files.newBufferedWriter(filePath, StandardCharsets.US_ASCII, StandardOpenOption.APPEND);
 		final StringJoiner featureJoiner = new StringJoiner(System.lineSeparator());
 
-		elem.vectors().forEach(vector -> {
+		feature.vectors().forEach(vector -> {
 			final StringJoiner vectorJoiner = new StringJoiner(",");
 			vector.vector().forEach(f -> vectorJoiner.add(String.valueOf(f)));
 			featureJoiner.merge(vectorJoiner);
@@ -50,13 +50,14 @@ public class FeatureFileStorageService extends AFileStorageService<IFeature>
 		writer.write(featureJoiner.toString());
 
 		writer.close();
+		this.log.info("Created Feature " + feature);
+
+		return feature;
 	}
 
 	@Override
-	public IFeature load(final Path path) throws IOException
+	public IFeature retrieve(final Path path) throws IOException
 	{
-		this.log.info("Loading Feature " + path);
-
 		final String fileName = super.getFileNameWithoutExtension(path);
 		final FeatureConfig config = new FeatureConfig(fileName);
 
@@ -73,19 +74,28 @@ public class FeatureFileStorageService extends AFileStorageService<IFeature>
 		}
 		reader.close();
 
-		return new Feature(config, featureVectors);
+		final Feature feature = new Feature(config, featureVectors);
+		this.log.info("Retrieved Feature " + feature);
 
+		return feature;
 	}
 
 	@Override
-	public void update(final IFeature elem) throws IOException
+	public IFeature update(final IFeature feature) throws IOException
 	{
 
+		this.log.info("Updated Feature " + feature);
+
+		return feature;
 	}
 
 	@Override
-	public void delete(final IFeature elem) throws IOException
+	public void delete(final IFeature feature) throws IOException
 	{
+		final FeatureConfig config = feature.getConfig();
+		final Path filePath = super.storagePath.resolve(config.toString());
 
+		Files.deleteIfExists(filePath);
+		this.log.info("Deleted " + filePath);
 	}
 }
