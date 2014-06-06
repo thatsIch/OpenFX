@@ -8,6 +8,7 @@ import de.thatsich.openfx.errorgeneration.api.model.IErrors;
 import de.thatsich.openfx.errorgeneration.api.view.IErrorDisplayView;
 import de.thatsich.openfx.errorgeneration.api.view.IErrorInputView;
 import de.thatsich.openfx.errorgeneration.api.view.IErrorListView;
+import de.thatsich.openfx.errorgeneration.intern.control.command.ErrorInitCommander;
 import de.thatsich.openfx.errorgeneration.intern.control.command.service.ErrorConfigService;
 import de.thatsich.openfx.errorgeneration.intern.model.ErrorGenerators;
 import de.thatsich.openfx.errorgeneration.intern.model.ErrorState;
@@ -32,9 +33,11 @@ public class ErrorWiringModule extends AWiringModule
 	}
 
 	@Override
-	protected void bindService()
+	protected void bindModel()
 	{
-		super.bind(ErrorConfigService.class).in(Scopes.SINGLETON);
+		super.bind(IErrors.class).to(Errors.class).in(Scopes.SINGLETON);
+		super.bind(IErrorGenerators.class).to(ErrorGenerators.class).in(Scopes.SINGLETON);
+		super.bind(IErrorState.class).to(ErrorState.class).in(Scopes.SINGLETON);
 	}
 
 	@Override
@@ -46,8 +49,9 @@ public class ErrorWiringModule extends AWiringModule
 	}
 
 	@Override
-	protected void bindController()
+	protected void bindControl()
 	{
+		super.bind(ErrorInitCommander.class).in(Scopes.SINGLETON);
 	}
 
 	@Override
@@ -57,10 +61,8 @@ public class ErrorWiringModule extends AWiringModule
 	}
 
 	@Override
-	protected void bindModel()
+	protected void bindService()
 	{
-		super.bind(IErrors.class).to(Errors.class).in(Scopes.SINGLETON);
-		super.bind(IErrorGenerators.class).to(ErrorGenerators.class).in(Scopes.SINGLETON);
-		super.bind(IErrorState.class).to(ErrorState.class).in(Scopes.SINGLETON);
+		super.bind(ErrorConfigService.class).in(Scopes.SINGLETON);
 	}
 }

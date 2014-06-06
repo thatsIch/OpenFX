@@ -1,19 +1,19 @@
 package de.thatsich.openfx.prediction.api.guice;
 
 import com.google.inject.Scopes;
+import de.thatsich.core.guice.AWiringModule;
 import de.thatsich.openfx.prediction.api.model.IBinaryPredictions;
+import de.thatsich.openfx.prediction.api.model.IPredictionState;
 import de.thatsich.openfx.prediction.api.view.IPredictionDisplayView;
 import de.thatsich.openfx.prediction.api.view.IPredictionInputView;
 import de.thatsich.openfx.prediction.api.view.IPredictionListView;
-import de.thatsich.openfx.prediction.api.model.IPredictionState;
-import de.thatsich.openfx.prediction.intern.model.BinaryPredictions;
-import de.thatsich.openfx.prediction.intern.model.PredictionState;
 import de.thatsich.openfx.prediction.intern.control.command.service.BinaryPredictionConfigService;
 import de.thatsich.openfx.prediction.intern.control.command.service.BinaryPredictionFileStorageService;
+import de.thatsich.openfx.prediction.intern.model.BinaryPredictions;
+import de.thatsich.openfx.prediction.intern.model.PredictionState;
 import de.thatsich.openfx.prediction.intern.view.PredictionDisplayView;
 import de.thatsich.openfx.prediction.intern.view.PredictionInputView;
 import de.thatsich.openfx.prediction.intern.view.PredictionListView;
-import de.thatsich.core.guice.AWiringModule;
 
 
 /**
@@ -45,7 +45,7 @@ public class PredictionWiringModule extends AWiringModule
 	}
 
 	@Override
-	protected void bindController()
+	protected void bindControl()
 	{
 	}
 

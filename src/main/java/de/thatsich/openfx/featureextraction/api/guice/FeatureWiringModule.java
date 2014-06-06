@@ -34,10 +34,12 @@ public class FeatureWiringModule extends AWiringModule
 	}
 
 	@Override
-	protected void bindService()
+	protected void bindModel()
 	{
-		super.bind(FeatureConfigService.class).in(Scopes.SINGLETON);
-		super.bind(FeatureFileStorageService.class).in(Scopes.SINGLETON);
+		super.bind(IFeatureExtractors.class).to(FeatureExtractors.class).in(Scopes.SINGLETON);
+		super.bind(IFeatureState.class).to(FeatureState.class).in(Scopes.SINGLETON);
+		super.bind(IFeatures.class).to(Features.class).in(Scopes.SINGLETON);
+		super.bind(IVectors.class).to(Vectors.class).in(Scopes.SINGLETON);
 	}
 
 	@Override
@@ -49,7 +51,7 @@ public class FeatureWiringModule extends AWiringModule
 	}
 
 	@Override
-	protected void bindController()
+	protected void bindControl()
 	{
 	}
 
@@ -60,11 +62,9 @@ public class FeatureWiringModule extends AWiringModule
 	}
 
 	@Override
-	protected void bindModel()
+	protected void bindService()
 	{
-		super.bind(IFeatureExtractors.class).to(FeatureExtractors.class).in(Scopes.SINGLETON);
-		super.bind(IFeatureState.class).to(FeatureState.class).in(Scopes.SINGLETON);
-		super.bind(IFeatures.class).to(Features.class).in(Scopes.SINGLETON);
-		super.bind(IVectors.class).to(Vectors.class).in(Scopes.SINGLETON);
+		super.bind(FeatureConfigService.class).in(Scopes.SINGLETON);
+		super.bind(FeatureFileStorageService.class).in(Scopes.SINGLETON);
 	}
 }

@@ -14,23 +14,22 @@ public abstract class AWiringModule extends AbstractModule
 	{
 		this.bindModule();
 
-		this.bindService();
-		this.bindView();
-		this.bindController();
-		this.bindCommand();
 		this.bindModel();
-
+		this.bindView();
+		this.bindControl();
+		this.bindCommand();
+		this.bindService();
 	}
 
 	protected abstract void bindModule();
 
-	protected abstract void bindService();
+	protected abstract void bindModel();
 
 	protected abstract void bindView();
 
-	protected abstract void bindController();
+	protected abstract void bindControl();
 
 	protected abstract void bindCommand();
 
-	protected abstract void bindModel();
+	protected abstract void bindService();
 }

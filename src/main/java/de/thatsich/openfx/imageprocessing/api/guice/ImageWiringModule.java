@@ -52,7 +52,7 @@ public class ImageWiringModule extends AWiringModule
 	}
 
 	@Override
-	protected void bindController()
+	protected void bindControl()
 	{
 	}
 

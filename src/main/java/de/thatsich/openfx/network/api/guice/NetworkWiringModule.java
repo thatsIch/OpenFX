@@ -1,19 +1,19 @@
 package de.thatsich.openfx.network.api.guice;
 
 import com.google.inject.Scopes;
+import de.thatsich.core.guice.AWiringModule;
+import de.thatsich.openfx.network.api.model.INetworkState;
+import de.thatsich.openfx.network.api.model.INetworks;
 import de.thatsich.openfx.network.api.view.INetworkDisplayView;
 import de.thatsich.openfx.network.api.view.INetworkInputView;
 import de.thatsich.openfx.network.api.view.INetworkListView;
-import de.thatsich.openfx.network.api.model.INetworkState;
-import de.thatsich.openfx.network.api.model.INetworks;
-import de.thatsich.openfx.network.intern.model.NetworkState;
-import de.thatsich.openfx.network.intern.model.Networks;
 import de.thatsich.openfx.network.intern.control.command.service.NetworkConfigService;
 import de.thatsich.openfx.network.intern.control.command.service.NetworkFileStorageService;
+import de.thatsich.openfx.network.intern.model.NetworkState;
+import de.thatsich.openfx.network.intern.model.Networks;
 import de.thatsich.openfx.network.intern.view.NetworkDisplayView;
 import de.thatsich.openfx.network.intern.view.NetworkInputView;
 import de.thatsich.openfx.network.intern.view.NetworkListView;
-import de.thatsich.core.guice.AWiringModule;
 
 /**
  * @author thatsIch
@@ -43,7 +43,7 @@ public class NetworkWiringModule extends AWiringModule
 	}
 
 	@Override
-	protected void bindController()
+	protected void bindControl()
 	{
 
 	}

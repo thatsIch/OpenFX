@@ -1,6 +1,7 @@
 package de.thatsich.openfx.classification.api.guice;
 
 import com.google.inject.Scopes;
+import de.thatsich.core.guice.AWiringModule;
 import de.thatsich.openfx.classification.api.model.IBinaryClassifications;
 import de.thatsich.openfx.classification.api.model.IBinaryClassifiers;
 import de.thatsich.openfx.classification.api.model.IClassificationState;
@@ -9,14 +10,13 @@ import de.thatsich.openfx.classification.api.view.IClassificationInputView;
 import de.thatsich.openfx.classification.api.view.IClassificationListView;
 import de.thatsich.openfx.classification.intern.control.classifier.RandomForestBinaryClassifier;
 import de.thatsich.openfx.classification.intern.control.classifier.SVMBinaryClassifier;
+import de.thatsich.openfx.classification.intern.control.command.service.ClassificationConfigService;
 import de.thatsich.openfx.classification.intern.model.BinaryClassifications;
 import de.thatsich.openfx.classification.intern.model.BinaryClassifiers;
 import de.thatsich.openfx.classification.intern.model.ClassificationState;
-import de.thatsich.openfx.classification.intern.control.command.service.ClassificationConfigService;
 import de.thatsich.openfx.classification.intern.view.ClassificationDisplayView;
 import de.thatsich.openfx.classification.intern.view.ClassificationInputView;
 import de.thatsich.openfx.classification.intern.view.ClassificationListView;
-import de.thatsich.core.guice.AWiringModule;
 
 
 public class ClassificationWiringModule extends AWiringModule
@@ -28,11 +28,11 @@ public class ClassificationWiringModule extends AWiringModule
 	}
 
 	@Override
-	protected void bindService()
+	protected void bindModel()
 	{
-		super.bind(ClassificationConfigService.class).in(Scopes.SINGLETON);
-		super.bind(SVMBinaryClassifier.class).in(Scopes.SINGLETON);
-		super.bind(RandomForestBinaryClassifier.class).in(Scopes.SINGLETON);
+		super.bind(IBinaryClassifiers.class).to(BinaryClassifiers.class).in(Scopes.SINGLETON);
+		super.bind(IBinaryClassifications.class).to(BinaryClassifications.class).in(Scopes.SINGLETON);
+		super.bind(IClassificationState.class).to(ClassificationState.class).in(Scopes.SINGLETON);
 	}
 
 	@Override
@@ -44,7 +44,7 @@ public class ClassificationWiringModule extends AWiringModule
 	}
 
 	@Override
-	protected void bindController()
+	protected void bindControl()
 	{
 	}
 
@@ -54,10 +54,10 @@ public class ClassificationWiringModule extends AWiringModule
 	}
 
 	@Override
-	protected void bindModel()
+	protected void bindService()
 	{
-		super.bind(IBinaryClassifiers.class).to(BinaryClassifiers.class).in(Scopes.SINGLETON);
-		super.bind(IBinaryClassifications.class).to(BinaryClassifications.class).in(Scopes.SINGLETON);
-		super.bind(IClassificationState.class).to(ClassificationState.class).in(Scopes.SINGLETON);
+		super.bind(ClassificationConfigService.class).in(Scopes.SINGLETON);
+		super.bind(SVMBinaryClassifier.class).in(Scopes.SINGLETON);
+		super.bind(RandomForestBinaryClassifier.class).in(Scopes.SINGLETON);
 	}
 }

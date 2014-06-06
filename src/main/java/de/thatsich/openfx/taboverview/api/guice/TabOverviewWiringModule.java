@@ -1,16 +1,16 @@
 package de.thatsich.openfx.taboverview.api.guice;
 
 import com.google.inject.Scopes;
+import de.thatsich.core.guice.AWiringModule;
 import de.thatsich.openfx.classification.api.guice.ClassificationWiringModule;
-import de.thatsich.openfx.network.api.guice.NetworkWiringModule;
 import de.thatsich.openfx.errorgeneration.api.guice.ErrorWiringModule;
 import de.thatsich.openfx.featureextraction.api.guice.FeatureWiringModule;
 import de.thatsich.openfx.imageprocessing.api.guice.ImageWiringModule;
+import de.thatsich.openfx.network.api.guice.NetworkWiringModule;
 import de.thatsich.openfx.prediction.api.guice.PredictionWiringModule;
 import de.thatsich.openfx.preprocessing.api.guice.PreProcessingWiringModule;
 import de.thatsich.openfx.taboverview.api.view.ITabOverviewView;
 import de.thatsich.openfx.taboverview.intern.view.TabOverviewView;
-import de.thatsich.core.guice.AWiringModule;
 
 
 public class TabOverviewWiringModule extends AWiringModule
@@ -30,7 +30,7 @@ public class TabOverviewWiringModule extends AWiringModule
 	}
 
 	@Override
-	protected void bindService()
+	protected void bindModel()
 	{
 	}
 
@@ -41,7 +41,7 @@ public class TabOverviewWiringModule extends AWiringModule
 	}
 
 	@Override
-	protected void bindController()
+	protected void bindControl()
 	{
 	}
 
@@ -51,7 +51,7 @@ public class TabOverviewWiringModule extends AWiringModule
 	}
 
 	@Override
-	protected void bindModel()
+	protected void bindService()
 	{
 	}
 }

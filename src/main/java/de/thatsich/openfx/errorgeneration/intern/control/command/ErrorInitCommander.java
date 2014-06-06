@@ -1,7 +1,6 @@
 package de.thatsich.openfx.errorgeneration.intern.control.command;
 
 import com.google.inject.Inject;
-import com.google.inject.Singleton;
 import de.thatsich.core.Log;
 import de.thatsich.core.javafx.CommandExecutor;
 import de.thatsich.openfx.errorgeneration.api.model.IErrorState;
@@ -21,7 +20,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.concurrent.ExecutorService;
 
-@Singleton
 public class ErrorInitCommander
 {
 	@Inject private Log log;
@@ -31,25 +29,24 @@ public class ErrorInitCommander
 	@Inject
 	private void init()
 	{
-		this.initErrorLoopCount();
-		this.initErrorGeneratorList();
-		this.initErrorEntryList();
+		this.initErrorState();
+		this.initErrorGenerators();
+		this.initErrors();
 	}
 
 	/**
-	 * Fetches the last ErrorLoopCount
+	 * Init the stat of error tab
 	 */
-	private void initErrorLoopCount()
+	private void initErrorState()
 	{
-		final GetLastErrorCountCommand command = this.commander.createGetLastErrorCountCommand();
-		command.setOnSucceededCommandHandler(GetLastErrorLoopCountSucceededHandler.class);
-		command.start();
+		this.initErrorPath();
+		this.initErrorLoopCount();
 	}
 
 	/**
 	 * Initialize the ErrorGeneratorList and preselects the last selected one
 	 */
-	private void initErrorGeneratorList()
+	private void initErrorGenerators()
 	{
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(1);
 
@@ -72,13 +69,11 @@ public class ErrorInitCommander
 	/**
 	 * Set up ErrorEntryList and preselects last selected one
 	 */
-	private void initErrorEntryList()
+	private void initErrors()
 	{
-		final Path errorInputFolderPath = Paths.get("io/errors");
+
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(1);
 
-		this.errorState.path().set(errorInputFolderPath);
-		this.log.info("Set ErrorInputFolderPath to Model.");
 
 		final InitErrorsCommand initCommand = this.commander.createInitErrorsCommand();
 		initCommand.setOnSucceededCommandHandler(InitErrorEntryListSucceededHandler.class);
@@ -94,5 +89,25 @@ public class ErrorInitCommander
 
 		executor.shutdown();
 		this.log.info("Shutting down Executor.");
+	}
+
+	/**
+	 * Sets the folder where all errors are saved to
+	 */
+	private void initErrorPath()
+	{
+		final Path errorPath = Paths.get("io/errors");
+		this.errorState.path().set(errorPath);
+		this.log.info("Set ErrorPath in Model.");
+	}
+
+	/**
+	 * Fetches the last ErrorLoopCount
+	 */
+	private void initErrorLoopCount()
+	{
+		final GetLastErrorCountCommand command = this.commander.createGetLastErrorCountCommand();
+		command.setOnSucceededCommandHandler(GetLastErrorLoopCountSucceededHandler.class);
+		command.start();
 	}
 }

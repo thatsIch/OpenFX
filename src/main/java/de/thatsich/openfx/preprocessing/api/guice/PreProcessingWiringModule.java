@@ -1,6 +1,7 @@
 package de.thatsich.openfx.preprocessing.api.guice;
 
 import com.google.inject.Scopes;
+import de.thatsich.core.guice.AWiringModule;
 import de.thatsich.openfx.preprocessing.api.model.IPreProcessingState;
 import de.thatsich.openfx.preprocessing.api.model.IPreProcessings;
 import de.thatsich.openfx.preprocessing.api.model.IPreProcessors;
@@ -8,14 +9,13 @@ import de.thatsich.openfx.preprocessing.api.view.IPreProcessingDisplayView;
 import de.thatsich.openfx.preprocessing.api.view.IPreProcessingInputView;
 import de.thatsich.openfx.preprocessing.api.view.IPreProcessingListView;
 import de.thatsich.openfx.preprocessing.intern.control.command.preprocessor.AANNPreProcessor;
+import de.thatsich.openfx.preprocessing.intern.control.command.service.PreProcessingConfigService;
 import de.thatsich.openfx.preprocessing.intern.model.PreProcessingState;
 import de.thatsich.openfx.preprocessing.intern.model.PreProcessings;
 import de.thatsich.openfx.preprocessing.intern.model.PreProcessors;
-import de.thatsich.openfx.preprocessing.intern.control.command.service.PreProcessingConfigService;
 import de.thatsich.openfx.preprocessing.intern.view.PreProcessingDisplayView;
 import de.thatsich.openfx.preprocessing.intern.view.PreProcessingInputView;
 import de.thatsich.openfx.preprocessing.intern.view.PreProcessingListView;
-import de.thatsich.core.guice.AWiringModule;
 
 
 public class PreProcessingWiringModule extends AWiringModule
@@ -43,7 +43,7 @@ public class PreProcessingWiringModule extends AWiringModule
 	}
 
 	@Override
-	protected void bindController()
+	protected void bindControl()
 	{
 	}
 
