@@ -6,10 +6,12 @@ import de.thatsich.core.Log;
 import de.thatsich.core.javafx.CommandExecutor;
 import de.thatsich.openfx.featureextraction.api.model.IFeatureState;
 import de.thatsich.openfx.featureextraction.intern.control.command.commands.GetLastFeatureExtractorIndexCommand;
+import de.thatsich.openfx.featureextraction.intern.control.command.commands.GetLastFeatureIndexCommand;
 import de.thatsich.openfx.featureextraction.intern.control.command.commands.GetLastTileSizeCommand;
 import de.thatsich.openfx.featureextraction.intern.control.command.commands.InitFeatureExtractorsCommand;
 import de.thatsich.openfx.featureextraction.intern.control.command.commands.InitFeaturesCommand;
 import de.thatsich.openfx.featureextraction.intern.control.command.handler.GetLastFeatureExtractorIndexSucceededHandler;
+import de.thatsich.openfx.featureextraction.intern.control.command.handler.GetLastFeatureIndexSucceededHandler;
 import de.thatsich.openfx.featureextraction.intern.control.command.handler.GetLastTileSizeSucceededHandler;
 import de.thatsich.openfx.featureextraction.intern.control.command.handler.InitFeatureExtractorListSucceededHandler;
 import de.thatsich.openfx.featureextraction.intern.control.command.handler.InitFeaturesSucceededHandler;
@@ -22,28 +24,31 @@ import java.util.concurrent.ExecutorService;
 public class FeatureInitCommander
 {
 	// Injects
-	@Inject private Log log;
-	@Inject private IFeatureState featureState;
-	@Inject private IFeatureInitCommandProvider provider;
+	private final IFeatureInitCommandProvider provider;
+	private final Log log;
+	private final IFeatureState featureState;
 
 	@Inject
-	private void initialize()
+	public FeatureInitCommander(Log log, IFeatureState featureState, IFeatureInitCommandProvider provider)
 	{
-		this.initTileSize();
+		this.log = log;
+		this.featureState = featureState;
+		this.provider = provider;
 
+		this.initTileSize();
 		this.initFeatureExtractors();
 		this.initFeatures();
 	}
 
 	/**
-	 * Fetches last FrameSize
+	 * Fetches last TileSize
 	 */
 	private void initTileSize()
 	{
 		final GetLastTileSizeCommand command = this.provider.createGetLastFrameSizeCommand();
 		command.setOnSucceededCommandHandler(GetLastTileSizeSucceededHandler.class);
 		command.start();
-		this.log.info("Initialized LastFrameSize Retrieval.");
+		this.log.info("Initialized LastTileSize Retrieval.");
 	}
 
 	/**
@@ -82,6 +87,12 @@ public class FeatureInitCommander
 		initCommand.setExecutor(executor);
 		initCommand.start();
 		this.log.info("Initialized InitFeatureVectorList Retrieval.");
+
+		final GetLastFeatureIndexCommand lastCommand = this.provider.createGetLastFeatureIndexCommand();
+		lastCommand.setOnSucceededCommandHandler(GetLastFeatureIndexSucceededHandler.class);
+		lastCommand.setExecutor(executor);
+		lastCommand.start();
+		this.log.info("Initialized GetLastFeatureIndexCommand Retrieval.");
 
 		executor.shutdown();
 		this.log.info("Shutting down Executor.");

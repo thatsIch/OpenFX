@@ -11,13 +11,13 @@ import java.nio.file.Path;
 
 public interface IFeatureInitCommandProvider extends ICommandProvider
 {
+	GetLastTileSizeCommand createGetLastFrameSizeCommand();
+
 	InitFeatureExtractorsCommand createInitFeatureExtractorListCommand();
+
+	GetLastFeatureExtractorIndexCommand createGetLastFeatureExtractorIndexCommand();
 
 	InitFeaturesCommand createInitFeaturesCommand(Path folderPath);
 
-	GetLastTileSizeCommand createGetLastFrameSizeCommand();
-
-	GetLastFeatureIndexCommand createGetLastFeatureVectorIndexCommand();
-
-	GetLastFeatureExtractorIndexCommand createGetLastFeatureExtractorIndexCommand();
+	GetLastFeatureIndexCommand createGetLastFeatureIndexCommand();
 }
