@@ -8,7 +8,7 @@ import de.thatsich.openfx.errorgeneration.intern.control.entity.errorgenerator.L
 import java.util.ArrayList;
 import java.util.List;
 
-public class InitErrorGeneratorListCommand extends ACommand<List<IErrorGenerator>>
+public class InitErrorGeneratorsCommand extends ACommand<List<IErrorGenerator>>
 {
 	@Override
 	protected List<IErrorGenerator> call() throws Exception

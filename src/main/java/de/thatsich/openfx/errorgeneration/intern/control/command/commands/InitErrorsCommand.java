@@ -1,9 +1,9 @@
 package de.thatsich.openfx.errorgeneration.intern.control.command.commands;
 
 import com.google.inject.Inject;
-import com.google.inject.assistedinject.Assisted;
 import de.thatsich.core.javafx.ACommand;
 import de.thatsich.openfx.errorgeneration.api.control.entity.IError;
+import de.thatsich.openfx.errorgeneration.api.model.IErrorState;
 import de.thatsich.openfx.errorgeneration.intern.control.command.service.ErrorFileStorageService;
 
 import java.io.IOException;
@@ -16,21 +16,21 @@ import java.util.List;
 
 public class InitErrorsCommand extends ACommand<List<IError>>
 {
-	private final Path errorInputFolderPath;
+	private final Path path;
 	private final ErrorFileStorageService storage;
 
 	@Inject
-	protected InitErrorsCommand(@Assisted Path errorInputFolderPath, ErrorFileStorageService storage)
+	protected InitErrorsCommand(IErrorState state, ErrorFileStorageService storage)
 	{
-		this.errorInputFolderPath = errorInputFolderPath;
+		this.path = state.path().get();
 		this.storage = storage;
 	}
 
 	@Override
 	protected List<IError> call() throws Exception
 	{
-		this.createInvalidDirectory(this.errorInputFolderPath);
-		return this.getErrorEntryList(this.errorInputFolderPath);
+		this.createInvalidDirectory(this.path);
+		return this.getErrorEntryList(this.path);
 	}
 
 	/**
