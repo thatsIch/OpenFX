@@ -38,7 +38,7 @@ public class ErrorConfig implements IEntityConfiguration
 		final StringJoiner joiner = new StringJoiner("_");
 		joiner.add(this.dateTime.get());
 		joiner.add(this.clazz.get());
-		joiner.add(this.id.toString());
+		joiner.add(this.id.get());
 
 		return joiner.toString();
 	}

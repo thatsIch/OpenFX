@@ -34,7 +34,7 @@ public class FeatureConfig implements IEntityConfiguration
 	@Override
 	public String toString()
 	{
-		final StringJoiner joiner = new StringJoiner("_", "", ".csv");
+		final StringJoiner joiner = new StringJoiner("_");
 		joiner.add(this.className.get());
 		joiner.add(this.extractorName.get());
 		joiner.add(String.valueOf(this.tileSize.get()));

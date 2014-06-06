@@ -2,6 +2,8 @@ package de.thatsich.openfx.errorgeneration.intern.control.command;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import de.thatsich.core.Log;
+import de.thatsich.core.javafx.CommandExecutor;
 import de.thatsich.openfx.errorgeneration.api.model.IErrorState;
 import de.thatsich.openfx.errorgeneration.intern.control.command.commands.GetLastErrorCountCommand;
 import de.thatsich.openfx.errorgeneration.intern.control.command.commands.GetLastErrorEntryIndexCommand;
@@ -14,8 +16,6 @@ import de.thatsich.openfx.errorgeneration.intern.control.command.handler.GetLast
 import de.thatsich.openfx.errorgeneration.intern.control.command.handler.InitErrorEntryListSucceededHandler;
 import de.thatsich.openfx.errorgeneration.intern.control.command.handler.InitErrorGeneratorListSucceededHandler;
 import de.thatsich.openfx.errorgeneration.intern.control.provider.IErrorInitCommandProvider;
-import de.thatsich.core.Log;
-import de.thatsich.core.javafx.CommandExecutor;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -74,7 +74,7 @@ public class ErrorInitCommander
 	 */
 	private void initErrorEntryList()
 	{
-		final Path errorInputFolderPath = Paths.get("io/error");
+		final Path errorInputFolderPath = Paths.get("io/errors");
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(1);
 
 		this.errorState.path().set(errorInputFolderPath);

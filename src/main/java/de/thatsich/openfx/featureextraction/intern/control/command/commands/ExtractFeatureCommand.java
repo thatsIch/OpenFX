@@ -18,7 +18,6 @@ import org.opencv.core.Mat;
 import org.opencv.core.MatOfFloat;
 import org.opencv.photo.Photo;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -31,12 +30,10 @@ public class ExtractFeatureCommand extends ACommand<IFeature>
 	private final boolean smooth;
 	private final boolean threshold;
 	private final boolean denoising;
-
-	// Injects
-	@Inject private FeatureFileStorageService storage;
+	private final FeatureFileStorageService storage;
 
 	@Inject
-	public ExtractFeatureCommand(@Assisted IError error, @Assisted IFeatureExtractor extractor, @Assisted int frameSize, @Assisted("smooth") boolean smooth, @Assisted("threshold") boolean threshold, @Assisted("denoising") boolean denoising)
+	public ExtractFeatureCommand(@Assisted IError error, @Assisted IFeatureExtractor extractor, @Assisted int frameSize, @Assisted("smooth") boolean smooth, @Assisted("threshold") boolean threshold, @Assisted("denoising") boolean denoising, FeatureFileStorageService storage)
 	{
 		this.error = error;
 		this.featureExtractor = extractor;
@@ -44,6 +41,7 @@ public class ExtractFeatureCommand extends ACommand<IFeature>
 		this.smooth = smooth;
 		this.threshold = threshold;
 		this.denoising = denoising;
+		this.storage = storage;
 	}
 
 	@Override
@@ -67,7 +65,6 @@ public class ExtractFeatureCommand extends ACommand<IFeature>
 		}
 
 		final List<IFeatureVector> featureVectorList = FXCollections.observableArrayList();
-		final List<List<Float>> csvResult = FXCollections.observableArrayList();
 		final Mat[][] originalErrorSplit = Images.split(originalWithErrorMat, this.frameSize, this.frameSize);
 		final Mat[][] errorSplit = Images.split(this.error.errorProperty().get(), this.frameSize, this.frameSize);
 		this.log.info("Prepared split images.");
@@ -78,27 +75,11 @@ public class ExtractFeatureCommand extends ACommand<IFeature>
 			{
 				try
 				{
-					// extract feature vector
-					// and reshape them into a one row feature vector if its 2D
-					// mat and removes unecessary channels
 					final MatOfFloat featureVector = this.featureExtractor.extractFeature(originalErrorSplit[col][row]);
-					List<Float> featureVectorAsList = new ArrayList<>(featureVector.toList());
+					List<Float> featureVectorAsList = featureVector.toList();
 
-					// if contain an error classify it as positive match
-					if (Core.sumElems(errorSplit[col][row]).val[0] != 0)
-					{
-						featureVectorList.add(new FeatureVector(featureVectorAsList, true));
-						featureVectorAsList.add(1F);
-					}
-
-					// else its a negative match
-					else
-					{
-						featureVectorList.add(new FeatureVector(featureVectorAsList, false));
-						featureVectorAsList.add(0F);
-					}
-
-					csvResult.add(featureVectorAsList);
+					final boolean isPositive = Core.sumElems(errorSplit[col][row]).val[0] != 0;
+					featureVectorList.add(new FeatureVector(featureVectorAsList, isPositive));
 				}
 				catch (Exception e)
 				{

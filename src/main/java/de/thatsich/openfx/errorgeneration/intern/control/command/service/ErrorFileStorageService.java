@@ -10,8 +10,6 @@ import de.thatsich.openfx.errorgeneration.intern.control.entity.ErrorConfig;
 import org.opencv.core.Mat;
 
 import java.io.IOException;
-import java.nio.file.DirectoryStream;
-import java.nio.file.Files;
 import java.nio.file.Path;
 
 
@@ -37,19 +35,6 @@ public class ErrorFileStorageService extends AFileStorageService<IError>
 		Images.store(error.errorProperty().get(), path.resolve("error.png"));
 
 		return error;
-	}
-
-	/**
-	 * checks if either the directory exists and if its a directory
-	 *
-	 * @param directory to be created directory
-	 */
-	private void createInvalidDirectory(Path directory) throws IOException
-	{
-		if (Files.notExists(directory) || !Files.isDirectory(directory))
-		{
-			Files.createDirectories(directory);
-		}
 	}
 
 	@Override
@@ -78,34 +63,6 @@ public class ErrorFileStorageService extends AFileStorageService<IError>
 		final String fileName = config.toString();
 		final Path path = super.storagePath.resolve(fileName);
 
-		this.deleteChildren(path);
-		this.deletePath(path);
-	}
-
-	private void deleteChildren(Path parent)
-	{
-		try (DirectoryStream<Path> children = Files.newDirectoryStream(parent))
-		{
-			for (Path child : children)
-			{
-				this.deletePath(child);
-			}
-		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
-		}
-	}
-
-	private void deletePath(Path path)
-	{
-		try
-		{
-			Files.deleteIfExists(path);
-		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
-		}
+		this.deleteRecursively(path);
 	}
 }

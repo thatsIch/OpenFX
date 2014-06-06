@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -38,18 +37,34 @@ public class FeatureFileStorageService extends AFileStorageService<IFeature>
 	public IFeature create(final IFeature feature) throws IOException
 	{
 		final FeatureConfig config = feature.getConfig();
-		final Path filePath = super.storagePath.resolve(config.toString());
-		final BufferedWriter writer = Files.newBufferedWriter(filePath, StandardCharsets.US_ASCII, StandardOpenOption.APPEND);
-		final StringJoiner featureJoiner = new StringJoiner(System.lineSeparator());
+		final String fileName = config.toString();
+		final Path filePath = super.storagePath.resolve(fileName);
 
-		feature.vectors().forEach(vector -> {
-			final StringJoiner vectorJoiner = new StringJoiner(",");
-			vector.vector().forEach(f -> vectorJoiner.add(String.valueOf(f)));
-			featureJoiner.merge(vectorJoiner);
-		});
-		writer.write(featureJoiner.toString());
+		this.createInvalidDirectory(filePath);
 
-		writer.close();
+		final Path vectorPath = filePath.resolve("vector.csv");
+		final Path labelPath = filePath.resolve("lable.csv");
+
+		try (
+			final BufferedWriter vectorWriter = Files.newBufferedWriter(vectorPath, StandardCharsets.US_ASCII);
+			final BufferedWriter labelWriter = Files.newBufferedWriter(labelPath, StandardCharsets.US_ASCII)
+		)
+		{
+			final StringJoiner vectorJoiner = new StringJoiner(System.lineSeparator());
+			final StringJoiner labelJoiner = new StringJoiner(System.lineSeparator());
+
+			feature.vectors().forEach(vector -> {
+				final StringJoiner floatsJoiner = new StringJoiner(",");
+				vector.vector().forEach(f -> floatsJoiner.add(String.valueOf(f)));
+
+				vectorJoiner.merge(floatsJoiner);
+				labelJoiner.add(String.valueOf(vector.isPositive().get()));
+			});
+
+			vectorWriter.write(vectorJoiner.toString());
+			labelWriter.write(labelJoiner.toString());
+		}
+
 		this.log.info("Created Feature " + feature);
 
 		return feature;
@@ -58,21 +73,31 @@ public class FeatureFileStorageService extends AFileStorageService<IFeature>
 	@Override
 	public IFeature retrieve(final Path path) throws IOException
 	{
-		final String fileName = super.getFileNameWithoutExtension(path);
+		final String fileName = path.getFileName().toString();
 		final FeatureConfig config = new FeatureConfig(fileName);
 
-		final List<IFeatureVector> featureVectors = new LinkedList<>();
-		final BufferedReader reader = Files.newBufferedReader(path, StandardCharsets.US_ASCII);
+		final Path vectorPath = path.resolve("vector.csv");
+		final Path labelPath = path.resolve("label.csv");
 
-		String stringRow;
-		while ((stringRow = reader.readLine()) != null)
+		final List<IFeatureVector> featureVectors = new LinkedList<>();
+
+		try (
+			final BufferedReader vectorReader = Files.newBufferedReader(vectorPath, StandardCharsets.US_ASCII);
+			final BufferedReader labelReader = Files.newBufferedReader(labelPath, StandardCharsets.US_ASCII)
+		)
 		{
-			final List<String> stringFloats = Arrays.asList(stringRow.split(","));
-			final List<Float> floats = stringFloats.stream().map(Float::parseFloat).collect(Collectors.toCollection(LinkedList::new));
-			final boolean isPositive = floats.remove(floats.size() - 1) == 1;
-			featureVectors.add(new FeatureVector(floats, isPositive));
+			String vectorRow;
+			String labelRow;
+
+			while ((vectorRow = vectorReader.readLine()) != null && (labelRow = labelReader.readLine()) != null)
+			{
+				final List<String> stringFloats = Arrays.asList(vectorRow.split(","));
+				final List<Float> floats = stringFloats.stream().map(Float::parseFloat).collect(Collectors.toCollection(LinkedList::new));
+				final boolean isPositive = Boolean.parseBoolean(labelRow);
+
+				featureVectors.add(new FeatureVector(floats, isPositive));
+			}
 		}
-		reader.close();
 
 		final Feature feature = new Feature(config, featureVectors);
 		this.log.info("Retrieved Feature " + feature);
@@ -93,9 +118,10 @@ public class FeatureFileStorageService extends AFileStorageService<IFeature>
 	public void delete(final IFeature feature) throws IOException
 	{
 		final FeatureConfig config = feature.getConfig();
-		final Path filePath = super.storagePath.resolve(config.toString());
+		final String pathName = config.toString();
+		final Path filePath = super.storagePath.resolve(pathName);
 
-		Files.deleteIfExists(filePath);
+		this.deleteRecursively(filePath);
 		this.log.info("Deleted " + filePath);
 	}
 }

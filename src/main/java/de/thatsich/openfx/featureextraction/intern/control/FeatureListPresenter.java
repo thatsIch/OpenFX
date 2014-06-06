@@ -56,13 +56,16 @@ public class FeatureListPresenter extends AFXMLPresenter
 		final TableView.TableViewSelectionModel<IFeature> selectionModel = this.nodeTableViewFeatures.getSelectionModel();
 
 		selectionModel.selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-			this.features.selected().set(newValue);
-			this.vectors.get().set(this.features.selected().get().vectors());
+			if (newValue != null)
+			{
+				this.features.selected().set(newValue);
+				this.vectors.get().set(newValue.vectors());
 
-			final int index = selectionModel.getSelectedIndex();
-			final SetLastFeatureIndexCommand command = this.provider.createSetLastFeatureIndexCommand(index);
-			command.start();
-			this.log.info("Seleced index " + index);
+				final int index = selectionModel.getSelectedIndex();
+				final SetLastFeatureIndexCommand command = this.provider.createSetLastFeatureIndexCommand(index);
+				command.start();
+				this.log.info("Seleced index " + index);
+			}
 		});
 		this.log.info("Bound Model to TableView.");
 

@@ -13,15 +13,15 @@ import de.thatsich.openfx.errorgeneration.api.model.IErrors;
  */
 public class CreateErrorEntrySucceededHandler extends ACommandHandler<IError>
 {
-	@Inject private IErrors errorEntryList;
+	@Inject private IErrors errors;
 
 	@Override
 	public void handle(IError addition)
 	{
-		this.errorEntryList.list().add(addition);
+		this.errors.list().add(addition);
 		this.log.info("Added ErrorEntry to Database.");
 
-		this.errorEntryList.selected().set(addition);
+		this.errors.selected().set(addition);
 		this.log.info("Set current to selected ErrorEntry.");
 	}
 }
