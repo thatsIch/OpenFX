@@ -4,10 +4,10 @@ import com.google.inject.Inject;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
 import de.thatsich.openfx.featureextraction.api.model.IFeatures;
+import de.thatsich.openfx.featureextraction.api.model.IVectors;
 import de.thatsich.openfx.featureextraction.intern.control.command.FeatureInitCommander;
 import de.thatsich.openfx.featureextraction.intern.control.command.IFeatureCommandProvider;
 import de.thatsich.openfx.featureextraction.intern.control.command.commands.SetLastFeatureIndexCommand;
-import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -16,6 +16,7 @@ public class FeatureListPresenter extends AFXMLPresenter
 {
 	@Inject private FeatureInitCommander initCommander;
 	@Inject private IFeatures features;
+	@Inject private IVectors vectors;
 	@Inject private IFeatureCommandProvider provider;
 
 	// Nodes
@@ -56,6 +57,7 @@ public class FeatureListPresenter extends AFXMLPresenter
 
 		selectionModel.selectedItemProperty().addListener((observable, oldValue, newValue) -> {
 			this.features.selected().set(newValue);
+			this.vectors.get().set(this.features.selected().get().vectors());
 
 			final int index = selectionModel.getSelectedIndex();
 			final SetLastFeatureIndexCommand command = this.provider.createSetLastFeatureIndexCommand(index);
@@ -71,9 +73,9 @@ public class FeatureListPresenter extends AFXMLPresenter
 
 	private void bindTableViewCellValue()
 	{
-		this.nodeTableColumnExtractorName.setCellValueFactory(feature -> new ReadOnlyObjectWrapper<>(feature.getValue().extractorName()));
-		this.nodeTableColumnClassName.setCellValueFactory(feature -> new ReadOnlyObjectWrapper<>(feature.getValue().className()));
-		this.nodeTableColumnTileSize.setCellValueFactory(feature -> new ReadOnlyObjectWrapper<>(feature.getValue().tileSize()));
-		this.log.info("Setup CellValueFactory for nodeTableColumnList.");
+		this.nodeTableColumnExtractorName.setCellValueFactory(feature -> feature.getValue().extractorName());
+		this.nodeTableColumnClassName.setCellValueFactory(feature -> feature.getValue().className());
+		this.nodeTableColumnTileSize.setCellValueFactory(feature -> feature.getValue().tileSize().asObject());
+		this.log.info("Setup CellValueFactory for nodeTableViewFeatures.");
 	}
 }

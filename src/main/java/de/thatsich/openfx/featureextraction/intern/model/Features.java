@@ -16,7 +16,7 @@ public class Features implements IFeatures
 {
 	// Properties
 	final private ListProperty<IFeature> list = new SimpleListProperty<>(FXCollections.<IFeature>observableArrayList());
-	final private ObjectProperty<IFeature> selectedFeature = new SimpleObjectProperty<>();
+	final private ObjectProperty<IFeature> selected = new SimpleObjectProperty<>();
 
 	// Property Getter
 	@Override
@@ -28,6 +28,7 @@ public class Features implements IFeatures
 	@Override
 	public ObjectProperty<IFeature> selected()
 	{
-		return this.selectedFeature;
+		return this.selected;
 	}
+
 }

@@ -1,6 +1,7 @@
 package de.thatsich.openfx.featureextraction.api.control.entity;
 
-import java.util.List;
+import javafx.beans.property.ReadOnlyBooleanProperty;
+import javafx.beans.property.ReadOnlyListProperty;
 
 /**
  * @author thatsIch
@@ -8,7 +9,7 @@ import java.util.List;
  */
 public interface IFeatureVector
 {
-	List<Float> vector();
+	ReadOnlyListProperty<Float> vector();
 
-	boolean isPositive();
+	ReadOnlyBooleanProperty isPositive();
 }

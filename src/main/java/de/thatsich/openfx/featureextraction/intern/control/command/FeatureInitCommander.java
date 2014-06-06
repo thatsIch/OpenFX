@@ -23,7 +23,6 @@ import java.util.concurrent.ExecutorService;
 @Singleton
 public class FeatureInitCommander
 {
-	// Injects
 	private final IFeatureInitCommandProvider provider;
 	private final Log log;
 	private final IFeatureState featureState;

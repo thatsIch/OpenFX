@@ -42,9 +42,9 @@ public class TrainPreProcessorCommand extends ACommand<IPreProcessing>
 	protected IPreProcessing call() throws Exception
 	{
 		final String preProcessorName = this.preProcessor.getName();
-		final String featureExtractorName = this.selectedFeatureVector.extractorName();
-		final int frameSize = this.selectedFeatureVector.tileSize();
-		final String errorClassName = this.selectedFeatureVector.className();
+		final String featureExtractorName = this.selectedFeatureVector.extractorName().get();
+		final int frameSize = this.selectedFeatureVector.tileSize().get();
+		final String errorClassName = this.selectedFeatureVector.className().get();
 		final String id = UUID.randomUUID().toString();
 		this.log.info("Prepared all data for Training.");
 
@@ -79,8 +79,8 @@ public class TrainPreProcessorCommand extends ACommand<IPreProcessing>
 
 		for (IFeature set : input)
 		{
-			final boolean equalName = set.extractorName().equals(name);
-			final boolean equalSize = set.tileSize() == frameSize;
+			final boolean equalName = set.extractorName().get().equals(name);
+			final boolean equalSize = set.tileSize().get() == frameSize;
 
 			// select only with same FeatureExtractor and FrameSize
 			if (equalName && equalSize)

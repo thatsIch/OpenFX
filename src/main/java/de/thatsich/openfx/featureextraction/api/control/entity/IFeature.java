@@ -2,8 +2,9 @@ package de.thatsich.openfx.featureextraction.api.control.entity;
 
 import de.thatsich.core.IEntity;
 import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureConfig;
-
-import java.util.List;
+import javafx.beans.property.ReadOnlyIntegerProperty;
+import javafx.beans.property.ReadOnlyListProperty;
+import javafx.beans.property.ReadOnlyStringProperty;
 
 /**
  * @author thatsIch
@@ -11,13 +12,13 @@ import java.util.List;
  */
 public interface IFeature extends IEntity
 {
-	String extractorName();
+	ReadOnlyStringProperty extractorName();
 
-	String className();
+	ReadOnlyStringProperty className();
 
-	int tileSize();
+	ReadOnlyIntegerProperty tileSize();
 
-	List<IFeatureVector> vectors();
+	ReadOnlyListProperty<IFeatureVector> vectors();
 
 	@Override
 	FeatureConfig getConfig();

@@ -5,6 +5,7 @@ import de.thatsich.core.guice.AWiringModule;
 import de.thatsich.openfx.featureextraction.api.model.IFeatureExtractors;
 import de.thatsich.openfx.featureextraction.api.model.IFeatureState;
 import de.thatsich.openfx.featureextraction.api.model.IFeatures;
+import de.thatsich.openfx.featureextraction.api.model.IVectors;
 import de.thatsich.openfx.featureextraction.api.view.IFeatureDisplayView;
 import de.thatsich.openfx.featureextraction.api.view.IFeatureInputView;
 import de.thatsich.openfx.featureextraction.api.view.IFeatureListView;
@@ -13,6 +14,7 @@ import de.thatsich.openfx.featureextraction.intern.control.command.service.Featu
 import de.thatsich.openfx.featureextraction.intern.model.FeatureExtractors;
 import de.thatsich.openfx.featureextraction.intern.model.FeatureState;
 import de.thatsich.openfx.featureextraction.intern.model.Features;
+import de.thatsich.openfx.featureextraction.intern.model.Vectors;
 import de.thatsich.openfx.featureextraction.intern.view.FeatureDisplayView;
 import de.thatsich.openfx.featureextraction.intern.view.FeatureInputView;
 import de.thatsich.openfx.featureextraction.intern.view.FeatureListView;
@@ -63,5 +65,6 @@ public class FeatureWiringModule extends AWiringModule
 		super.bind(IFeatureExtractors.class).to(FeatureExtractors.class).in(Scopes.SINGLETON);
 		super.bind(IFeatureState.class).to(FeatureState.class).in(Scopes.SINGLETON);
 		super.bind(IFeatures.class).to(Features.class).in(Scopes.SINGLETON);
+		super.bind(IVectors.class).to(Vectors.class).in(Scopes.SINGLETON);
 	}
 }

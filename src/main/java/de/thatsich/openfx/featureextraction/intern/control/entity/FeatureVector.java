@@ -1,6 +1,12 @@
 package de.thatsich.openfx.featureextraction.intern.control.entity;
 
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureVector;
+import javafx.beans.property.ReadOnlyBooleanProperty;
+import javafx.beans.property.ReadOnlyBooleanWrapper;
+import javafx.beans.property.ReadOnlyListProperty;
+import javafx.beans.property.ReadOnlyListWrapper;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.util.List;
 
@@ -13,8 +19,8 @@ import java.util.List;
 public class FeatureVector implements IFeatureVector
 {
 	// Properties
-	private final List<Float> floats;
-	private final boolean isPositive;
+	private final ReadOnlyListProperty<Float> floats;
+	private final ReadOnlyBooleanProperty isPositive;
 
 	/**
 	 * CTOR
@@ -24,18 +30,20 @@ public class FeatureVector implements IFeatureVector
 	 */
 	public FeatureVector(List<Float> vector, boolean isPositive)
 	{
-		this.floats = vector;
-		this.isPositive = isPositive;
+		final ObservableList<Float> floats = FXCollections.observableArrayList(vector);
+
+		this.floats = new ReadOnlyListWrapper<>(floats);
+		this.isPositive = new ReadOnlyBooleanWrapper(isPositive);
 	}
 
 	@Override
-	public List<Float> vector()
+	public ReadOnlyListProperty<Float> vector()
 	{
 		return this.floats;
 	}
 
 	@Override
-	public boolean isPositive()
+	public ReadOnlyBooleanProperty isPositive()
 	{
 		return this.isPositive;
 	}

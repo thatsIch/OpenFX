@@ -1,6 +1,10 @@
 package de.thatsich.openfx.featureextraction.intern.control.entity;
 
 import de.thatsich.core.IEntityConfiguration;
+import javafx.beans.property.ReadOnlyIntegerProperty;
+import javafx.beans.property.ReadOnlyIntegerWrapper;
+import javafx.beans.property.ReadOnlyStringProperty;
+import javafx.beans.property.ReadOnlyStringWrapper;
 
 import java.util.StringJoiner;
 
@@ -10,32 +14,32 @@ import java.util.StringJoiner;
  */
 public class FeatureConfig implements IEntityConfiguration
 {
-	public final String className;
-	public final String extractorName;
-	public final int tileSize;
+	public final ReadOnlyStringProperty className;
+	public final ReadOnlyStringProperty extractorName;
+	public final ReadOnlyIntegerProperty tileSize;
 
 	public FeatureConfig(final String className, final String extractorName, final int tileSize)
 	{
-		this.className = className;
-		this.extractorName = extractorName;
-		this.tileSize = tileSize;
+		this.className = new ReadOnlyStringWrapper(className);
+		this.extractorName = new ReadOnlyStringWrapper(extractorName);
+		this.tileSize = new ReadOnlyIntegerWrapper(tileSize);
 	}
 
 	public FeatureConfig(final String fileName)
 	{
 		final String[] fileNameSplit = fileName.split("_");
-		this.className = fileNameSplit[0];
-		this.extractorName = fileNameSplit[1];
-		this.tileSize = Integer.parseInt(fileNameSplit[2]);
+		this.className = new ReadOnlyStringWrapper(fileNameSplit[0]);
+		this.extractorName = new ReadOnlyStringWrapper(fileNameSplit[1]);
+		this.tileSize = new ReadOnlyIntegerWrapper(Integer.parseInt(fileNameSplit[2]));
 	}
 
 	@Override
 	public String toString()
 	{
 		final StringJoiner joiner = new StringJoiner("_", "", ".csv");
-		joiner.add(this.className);
-		joiner.add(this.extractorName);
-		joiner.add(String.valueOf(this.tileSize));
+		joiner.add(this.className.get());
+		joiner.add(this.extractorName.get());
+		joiner.add(String.valueOf(this.tileSize.get()));
 
 		return joiner.toString();
 	}
