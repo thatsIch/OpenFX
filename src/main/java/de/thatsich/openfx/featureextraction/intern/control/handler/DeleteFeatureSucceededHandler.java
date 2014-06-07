@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author Minh
  */
-public class RemoveFeatureSucceededHandler extends ACommandHandler<IFeature>
+public class DeleteFeatureSucceededHandler extends ACommandHandler<IFeature>
 {
 	@Inject private IFeatures features;
 

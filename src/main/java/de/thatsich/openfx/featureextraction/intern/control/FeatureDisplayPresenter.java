@@ -29,13 +29,6 @@ public class FeatureDisplayPresenter extends AFXMLPresenter
 	@FXML private Label nodeLabelCount;
 	@FXML private Label nodeLabelDimension;
 
-	//	@FXML private Label nodeLabelClassName;
-	//	@FXML private Label nodeLabelExtractorName;
-	//	@FXML private Label nodeLabelFrameSize;
-	//	@FXML private Label nodeLabelSize;
-	//	@FXML private Label nodeLabelFeatureVector;
-	//	@FXML private Label nodeLabelFeatureLabel;
-
 	@Override
 	protected void bindComponents()
 	{

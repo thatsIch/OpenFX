@@ -18,8 +18,11 @@ public class GetLastFeatureExtractorIndexSucceededHandler extends ACommandHandle
 	@Override
 	public void handle(Integer value)
 	{
-		final IFeatureExtractor selectedFeatureExtractor = this.featureExtractors.list().get(value);
-		this.featureExtractors.selected().set(selectedFeatureExtractor);
-		this.log.info("Set LastSelectedFeatureExtractor in Model.");
+		if (value >= 0 && this.featureExtractors.list().size() > 0)
+		{
+			final IFeatureExtractor selectedFeatureExtractor = this.featureExtractors.list().get(value);
+			this.featureExtractors.selected().set(selectedFeatureExtractor);
+			this.log.info("Set LastSelectedFeatureExtractor in Model.");
+		}
 	}
 }

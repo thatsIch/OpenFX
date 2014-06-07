@@ -4,7 +4,6 @@ import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import de.thatsich.core.javafx.ACommand;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
-import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureVector;
 import de.thatsich.openfx.preprocessing.api.control.IPreProcessing;
 import de.thatsich.openfx.preprocessing.intern.control.command.preprocessor.core.IPreProcessor;
 import de.thatsich.openfx.preprocessing.intern.control.command.preprocessor.core.PreProcessorConfiguration;
@@ -17,9 +16,6 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * TODO training of the preprocessor
- * TODO loading of preprocessors
- *
  * @author thatsIch
  */
 public class TrainPreProcessorCommand extends ACommand<IPreProcessing>
@@ -49,8 +45,8 @@ public class TrainPreProcessorCommand extends ACommand<IPreProcessing>
 		final String id = UUID.randomUUID().toString();
 		this.log.info("Prepared all data for Training.");
 
-		final double[][] data = this.convertToNativeMatrix(this.features, featureExtractorName, frameSize);
-		final int featureVectorSize = this.features.get(0).vectors().size();
+		final double[][] data = this.convertToNativeMatrix(this.feature);
+		final int featureVectorSize = this.feature.vectors().size();
 		this.log.info("Prepared DataSets.");
 
 		final String filename = preProcessorName + "_" + featureExtractorName + "_" + frameSize + "_" + errorClassName + "_" + id + ".yaml";
@@ -74,31 +70,21 @@ public class TrainPreProcessorCommand extends ACommand<IPreProcessing>
 	// which is not the selected one and their data to train
 	// extract all float lists and transform them into MatOfFloats
 	// use .t() on them to transpose them
-	double[][] convertToNativeMatrix(final List<IFeature> input, String name, int frameSize)
+	double[][] convertToNativeMatrix(final IFeature feature)
 	{
 		final List<double[]> output = new LinkedList<>();
 
-		for (IFeature set : input)
-		{
-			final boolean equalName = set.extractorName().get().equals(name);
-			final boolean equalSize = set.tileSize().get() == frameSize;
-
-			// select only with same FeatureExtractor and FrameSize
-			if (equalName && equalSize)
+		feature.vectors().forEach(featureVector -> {
+			final List<Float> vector = featureVector.vector();
+			final double[] featureArray = new double[vector.size()];
+			int index = 0;
+			for (float f : vector)
 			{
-				for (IFeatureVector vector : set.vectors())
-				{
-					final double[] featureArray = new double[vector.vector().size()];
-					int index = 0;
-					for (float f : vector.vector())
-					{
-						featureArray[index] = f;
-						index++;
-					}
-					output.add(featureArray);
-				}
+				featureArray[index] = f;
+				index++;
 			}
-		}
+			output.add(featureArray);
+		});
 
 		return output.toArray(new double[0][0]);
 	}

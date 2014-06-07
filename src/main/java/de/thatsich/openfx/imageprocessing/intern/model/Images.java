@@ -13,19 +13,19 @@ import javafx.collections.FXCollections;
 public class Images implements IImages
 {
 	// Properties
-	final private ObjectProperty<IImage> selectedImageEntry = new SimpleObjectProperty<>();
-	final private ListProperty<IImage> imageEntryList = new SimpleListProperty<>(FXCollections.<IImage>observableArrayList());
+	final private ObjectProperty<IImage> selected = new SimpleObjectProperty<>();
+	final private ListProperty<IImage> list = new SimpleListProperty<>(FXCollections.<IImage>observableArrayList());
 
 	// Property Getter
 	@Override
 	public ListProperty<IImage> list()
 	{
-		return this.imageEntryList;
+		return this.list;
 	}
 
 	@Override
 	public ObjectProperty<IImage> selected()
 	{
-		return this.selectedImageEntry;
+		return this.selected;
 	}
 }

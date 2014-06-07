@@ -2,22 +2,21 @@ package de.thatsich.openfx.imageprocessing.intern.control.command.commands;
 
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
-import de.thatsich.openfx.imageprocessing.intern.control.command.service.ImageConfigService;
 import de.thatsich.core.javafx.ACommand;
+import de.thatsich.openfx.imageprocessing.intern.control.command.service.ImageConfigService;
 
-public class SetLastImageEntryIndexCommand extends ACommand<Void>
+public class SetLastImagIndexCommand extends ACommand<Void>
 {
 
 	// Properties
 	private final int lastImageEntryIndex;
-
-	// Injects
-	@Inject ImageConfigService config;
+	private final ImageConfigService config;
 
 	@Inject
-	protected SetLastImageEntryIndexCommand(@Assisted int lastImageEntryIndex)
+	protected SetLastImagIndexCommand(@Assisted int lastImageEntryIndex, ImageConfigService config)
 	{
 		this.lastImageEntryIndex = lastImageEntryIndex;
+		this.config = config;
 	}
 
 	@Override

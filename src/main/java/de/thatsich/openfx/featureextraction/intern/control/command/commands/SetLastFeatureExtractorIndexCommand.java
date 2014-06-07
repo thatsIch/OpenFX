@@ -7,18 +7,14 @@ import de.thatsich.openfx.featureextraction.intern.control.command.service.Featu
 
 public class SetLastFeatureExtractorIndexCommand extends ACommand<Void>
 {
-
-	// Properties
 	private final int lastFeatureExtractorIndex;
-
-	// Injects
-	@Inject
-	private FeatureConfigService config;
+	private final FeatureConfigService config;
 
 	@Inject
-	protected SetLastFeatureExtractorIndexCommand(@Assisted int lastFeatureExtractorIndex)
+	protected SetLastFeatureExtractorIndexCommand(@Assisted int lastFeatureExtractorIndex, FeatureConfigService config)
 	{
 		this.lastFeatureExtractorIndex = lastFeatureExtractorIndex;
+		this.config = config;
 	}
 
 	@Override

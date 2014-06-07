@@ -10,21 +10,19 @@ public class SetLastTileSizeCommand extends ACommand<Void>
 
 	// Properties
 	private final int lastFrameSize;
-
-	// Injects
-	@Inject
-	private FeatureConfigService config;
+	private final FeatureConfigService config;
 
 	@Inject
-	protected SetLastTileSizeCommand(@Assisted int lastFrameSize)
+	protected SetLastTileSizeCommand(@Assisted int lastFrameSize, FeatureConfigService config)
 	{
 		this.lastFrameSize = lastFrameSize;
+		this.config = config;
 	}
 
 	@Override
 	protected Void call() throws Exception
 	{
-		config.setLastTileSize(this.lastFrameSize);
+		this.config.setLastTileSize(this.lastFrameSize);
 
 		return null;
 	}

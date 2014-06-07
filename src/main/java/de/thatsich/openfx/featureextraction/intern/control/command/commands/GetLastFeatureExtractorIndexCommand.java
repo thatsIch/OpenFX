@@ -14,6 +14,6 @@ public class GetLastFeatureExtractorIndexCommand extends ACommand<Integer>
 	@Override
 	protected Integer call() throws Exception
 	{
-		return config.getLastFeatureExtractorIndex();
+		return this.config.getLastFeatureExtractorIndex();
 	}
 }

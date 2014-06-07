@@ -19,7 +19,7 @@ public interface IFeatureCommandProvider extends ICommandProvider
 
 	SetLastFeatureExtractorIndexCommand createSetLastFeatureExtractorIndexCommand(int lastFeatureExtractorIndex);
 
-	ExtractFeatureCommand createExtractFeatureVectorCommand(IError error, IFeatureExtractor extractor, int frameSize, @Assisted("smooth") boolean smooth, @Assisted("threshold") boolean threshold, @Assisted("denoising") boolean denoising);
+	ExtractFeatureCommand createExtractFeatureCommand(IError error, IFeatureExtractor extractor, int frameSize, @Assisted("smooth") boolean smooth, @Assisted("threshold") boolean threshold, @Assisted("denoising") boolean denoising);
 
-	DeleteFeatureCommand createRemoveFeatureVectorSetCommand(IFeature feature);
+	DeleteFeatureCommand createDeleteFeatureCommand(IFeature feature);
 }

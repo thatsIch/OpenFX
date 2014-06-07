@@ -13,7 +13,7 @@ import de.thatsich.openfx.featureextraction.intern.control.command.commands.Init
 import de.thatsich.openfx.featureextraction.intern.control.command.handler.GetLastFeatureExtractorIndexSucceededHandler;
 import de.thatsich.openfx.featureextraction.intern.control.command.handler.GetLastFeatureIndexSucceededHandler;
 import de.thatsich.openfx.featureextraction.intern.control.command.handler.GetLastTileSizeSucceededHandler;
-import de.thatsich.openfx.featureextraction.intern.control.command.handler.InitFeatureExtractorListSucceededHandler;
+import de.thatsich.openfx.featureextraction.intern.control.command.handler.InitFeatureExtractorsSucceededHandler;
 import de.thatsich.openfx.featureextraction.intern.control.command.handler.InitFeaturesSucceededHandler;
 
 import java.nio.file.Path;
@@ -58,7 +58,7 @@ public class FeatureInitCommander
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(1);
 
 		final InitFeatureExtractorsCommand initCommand = this.provider.createInitFeatureExtractorListCommand();
-		initCommand.setOnSucceededCommandHandler(InitFeatureExtractorListSucceededHandler.class);
+		initCommand.setOnSucceededCommandHandler(InitFeatureExtractorsSucceededHandler.class);
 		initCommand.setExecutor(executor);
 		initCommand.start();
 		this.log.info("Initialized FeatureExtractorList Retrieval.");

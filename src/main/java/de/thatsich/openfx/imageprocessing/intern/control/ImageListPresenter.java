@@ -5,7 +5,7 @@ import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.openfx.imageprocessing.api.control.IImage;
 import de.thatsich.openfx.imageprocessing.api.model.IImages;
 import de.thatsich.openfx.imageprocessing.intern.control.command.ImageInitCommander;
-import de.thatsich.openfx.imageprocessing.intern.control.command.commands.SetLastImageEntryIndexCommand;
+import de.thatsich.openfx.imageprocessing.intern.control.command.commands.SetLastImagIndexCommand;
 import de.thatsich.openfx.imageprocessing.intern.control.command.provider.IImageCommandProvider;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.fxml.FXML;
@@ -58,7 +58,7 @@ public class ImageListPresenter extends AFXMLPresenter
 			this.images.selected().set(newValue);
 
 			final int index = this.nodeTableViewImageList.getSelectionModel().getSelectedIndex();
-			final SetLastImageEntryIndexCommand command = this.provider.createSetLastImageEntryIndexCommand(index);
+			final SetLastImagIndexCommand command = this.provider.createSetLastImageIndexCommand(index);
 			command.start();
 			this.log.info("Seleced index " + index);
 		});

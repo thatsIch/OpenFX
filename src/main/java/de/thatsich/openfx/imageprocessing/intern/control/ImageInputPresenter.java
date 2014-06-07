@@ -8,7 +8,7 @@ import de.thatsich.openfx.imageprocessing.api.model.IImageState;
 import de.thatsich.openfx.imageprocessing.api.model.IImages;
 import de.thatsich.openfx.imageprocessing.intern.control.command.ImageInitCommander;
 import de.thatsich.openfx.imageprocessing.intern.control.command.commands.CreateImageCommand;
-import de.thatsich.openfx.imageprocessing.intern.control.command.commands.DeleteImageEntryCommand;
+import de.thatsich.openfx.imageprocessing.intern.control.command.commands.DeleteImageCommand;
 import de.thatsich.openfx.imageprocessing.intern.control.command.provider.IImageCommandProvider;
 import de.thatsich.openfx.imageprocessing.intern.control.handler.CreateImageSucceededHandler;
 import de.thatsich.openfx.imageprocessing.intern.control.handler.DeleteImageEntrySucceededHandler;
@@ -114,7 +114,7 @@ public class ImageInputPresenter extends AFXMLPresenter
 			return;
 		}
 
-		final DeleteImageEntryCommand command = this.provider.createDeleteImageEntryCommand(choice);
+		final DeleteImageCommand command = this.provider.createDeleteImageCommand(choice);
 		command.setOnSucceededCommandHandler(DeleteImageEntrySucceededHandler.class);
 		command.start();
 		this.log.info("File deleted and removed from EntryList.");
@@ -134,7 +134,7 @@ public class ImageInputPresenter extends AFXMLPresenter
 
 		for (IImage entry : list)
 		{
-			final DeleteImageEntryCommand command = this.provider.createDeleteImageEntryCommand(entry);
+			final DeleteImageCommand command = this.provider.createDeleteImageCommand(entry);
 			command.setOnSucceededCommandHandler(DeleteImageEntrySucceededHandler.class);
 			command.setExecutor(executor);
 			command.start();

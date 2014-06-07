@@ -5,7 +5,7 @@ import com.google.inject.Singleton;
 import de.thatsich.core.Log;
 import de.thatsich.core.javafx.CommandExecutor;
 import de.thatsich.openfx.imageprocessing.api.model.IImageState;
-import de.thatsich.openfx.imageprocessing.intern.control.command.commands.GetLastImageEntryIndexCommand;
+import de.thatsich.openfx.imageprocessing.intern.control.command.commands.GetLastImageIndexCommand;
 import de.thatsich.openfx.imageprocessing.intern.control.command.commands.GetLastLocationCommand;
 import de.thatsich.openfx.imageprocessing.intern.control.command.commands.InitImagesCommand;
 import de.thatsich.openfx.imageprocessing.intern.control.command.handler.GetLastImageEntryIndexSucceededHandler;
@@ -20,14 +20,9 @@ import java.util.concurrent.ExecutorService;
 @Singleton
 public class ImageInitCommander
 {
-
-	@Inject
-	private Log log;
-
-	@Inject
-	private IImageState imageState;
-	@Inject
-	private IImageInitCommandProvider commander;
+	@Inject private Log log;
+	@Inject private IImageState imageState;
+	@Inject private IImageInitCommandProvider commander;
 
 	/**
 	 * Initialize all ImageEntries and Preselection of the last selected ImageEntry
@@ -41,13 +36,13 @@ public class ImageInitCommander
 		this.imageState.path().set(imageInputPath);
 		this.log.info("Set ImageInputFolderPath to Model.");
 
-		final InitImagesCommand initCommand = this.commander.createInitImageEntryListCommand(imageInputPath);
+		final InitImagesCommand initCommand = this.commander.createInitImagesCommand(imageInputPath);
 		initCommand.setOnSucceededCommandHandler(InitImagesSucceededHandler.class);
 		initCommand.setExecutor(executor);
 		initCommand.start();
 		this.log.info("Initialized ImageEntryList Retrieval.");
 
-		final GetLastImageEntryIndexCommand lastCommand = this.commander.createGetLastImageEntryIndexCommand();
+		final GetLastImageIndexCommand lastCommand = this.commander.createGetLastImageIndexCommand();
 		lastCommand.setOnSucceededCommandHandler(GetLastImageEntryIndexSucceededHandler.class);
 		lastCommand.setExecutor(executor);
 		lastCommand.start();

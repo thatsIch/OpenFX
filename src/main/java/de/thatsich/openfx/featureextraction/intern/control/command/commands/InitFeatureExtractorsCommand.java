@@ -12,7 +12,7 @@ import de.thatsich.openfx.featureextraction.intern.control.extractor.LocalBinary
 import de.thatsich.openfx.featureextraction.intern.control.extractor.Mean;
 import de.thatsich.openfx.featureextraction.intern.control.extractor.Variance;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class InitFeatureExtractorsCommand extends ACommand<List<IFeatureExtractor>>
@@ -23,21 +23,8 @@ public class InitFeatureExtractorsCommand extends ACommand<List<IFeatureExtracto
 	@Override
 	protected List<IFeatureExtractor> call() throws Exception
 	{
-		final List<IFeatureExtractor> featureExtractorList = new ArrayList<>();
-
-		featureExtractorList.add(this.get(Gradient.class));
-		featureExtractorList.add(this.get(GrayLevelCooccurenceHistogram.class));
-		featureExtractorList.add(this.get(HuMoments.class));
-		featureExtractorList.add(this.get(LocalBinaryPatternHistogram.class));
-		featureExtractorList.add(this.get(Mean.class));
-		featureExtractorList.add(this.get(Variance.class));
-		featureExtractorList.add(this.get(GrayLevelCooccurenceMatrix.class));
+		final List<IFeatureExtractor> featureExtractorList = Arrays.asList(new Gradient(), new GrayLevelCooccurenceHistogram(), new HuMoments(), new LocalBinaryPatternHistogram(), new Mean(), new Variance(), new GrayLevelCooccurenceMatrix());
 
 		return featureExtractorList;
-	}
-
-	private <T extends IFeatureExtractor> T get(Class<T> type)
-	{
-		return injector.getInstance(type);
 	}
 }

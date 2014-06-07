@@ -12,12 +12,15 @@ import de.thatsich.openfx.featureextraction.api.model.IFeatureState;
  */
 public class GetLastTileSizeSucceededHandler extends ACommandHandler<Integer>
 {
-	@Inject private IFeatureState featureState;
+	@Inject private IFeatureState state;
 
 	@Override
 	public void handle(Integer value)
 	{
-		this.featureState.frameSize().set(value);
-		this.log.info("Set LastErrorLoopCount in Model.");
+		if (value >= 0)
+		{
+			this.state.frameSize().set(value);
+			this.log.info("Set LastErrorLoopCount in Model.");
+		}
 	}
 }

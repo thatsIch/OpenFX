@@ -108,7 +108,7 @@ public class FeatureFileStorageService extends AFileStorageService<IFeature>
 	@Override
 	public IFeature update(final IFeature feature) throws IOException
 	{
-
+		this.create(feature);
 		this.log.info("Updated Feature " + feature);
 
 		return feature;

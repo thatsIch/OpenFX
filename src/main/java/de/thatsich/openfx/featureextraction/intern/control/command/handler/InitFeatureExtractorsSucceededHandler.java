@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author Minh
  */
-public class InitFeatureExtractorListSucceededHandler extends ACommandHandler<List<IFeatureExtractor>>
+public class InitFeatureExtractorsSucceededHandler extends ACommandHandler<List<IFeatureExtractor>>
 {
 	@Inject private IFeatureExtractors featureExtractors;
 

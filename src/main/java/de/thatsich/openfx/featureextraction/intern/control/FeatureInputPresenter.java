@@ -14,8 +14,8 @@ import de.thatsich.openfx.featureextraction.intern.control.command.FeatureInitCo
 import de.thatsich.openfx.featureextraction.intern.control.command.IFeatureCommandProvider;
 import de.thatsich.openfx.featureextraction.intern.control.command.commands.DeleteFeatureCommand;
 import de.thatsich.openfx.featureextraction.intern.control.command.commands.ExtractFeatureCommand;
+import de.thatsich.openfx.featureextraction.intern.control.handler.DeleteFeatureSucceededHandler;
 import de.thatsich.openfx.featureextraction.intern.control.handler.ExtractFeatureSucceededHandler;
-import de.thatsich.openfx.featureextraction.intern.control.handler.RemoveFeatureSucceededHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -119,7 +119,7 @@ public class FeatureInputPresenter extends AFXMLPresenter
 	@FXML
 	private void onExtractAction()
 	{
-		final ExtractFeatureCommand extractCommand = this.provider.createExtractFeatureVectorCommand(this.errors.selected().get(), this.featureExtractors.selected().get(), this.featureState.frameSize().get(), this.nodeCheckBoxSmooth.isSelected(), this.nodeCheckBoxThreshold.isSelected(), this.nodeCheckBoxDenoising.isSelected());
+		final ExtractFeatureCommand extractCommand = this.provider.createExtractFeatureCommand(this.errors.selected().get(), this.featureExtractors.selected().get(), this.featureState.frameSize().get(), this.nodeCheckBoxSmooth.isSelected(), this.nodeCheckBoxThreshold.isSelected(), this.nodeCheckBoxDenoising.isSelected());
 		extractCommand.setOnSucceededCommandHandler(ExtractFeatureSucceededHandler.class);
 		extractCommand.start();
 		this.log.info("FeatureVector deleted and removed from FeatureVectorList.");
@@ -128,10 +128,10 @@ public class FeatureInputPresenter extends AFXMLPresenter
 	@FXML
 	private void onRemoveAction()
 	{
-		final DeleteFeatureCommand command = this.provider.createRemoveFeatureVectorSetCommand(this.features.selected().get());
-		command.setOnSucceededCommandHandler(RemoveFeatureSucceededHandler.class);
+		final DeleteFeatureCommand command = this.provider.createDeleteFeatureCommand(this.features.selected().get());
+		command.setOnSucceededCommandHandler(DeleteFeatureSucceededHandler.class);
 		command.start();
-		this.log.info("FeatureVectorSet deletion instantiated.");
+		this.log.info("Feature Deletion instantiated.");
 	}
 
 	@FXML
@@ -143,11 +143,11 @@ public class FeatureInputPresenter extends AFXMLPresenter
 
 		for (IFeature feature : list)
 		{
-			final DeleteFeatureCommand command = this.provider.createRemoveFeatureVectorSetCommand(feature);
-			command.setOnSucceededCommandHandler(RemoveFeatureSucceededHandler.class);
+			final DeleteFeatureCommand command = this.provider.createDeleteFeatureCommand(feature);
+			command.setOnSucceededCommandHandler(DeleteFeatureSucceededHandler.class);
 			command.setExecutor(executor);
 			command.start();
-			this.log.info("FeatureVector Deletion executed.");
+			this.log.info("Feature Deletion executed.");
 		}
 
 		executor.execute(System::gc);
