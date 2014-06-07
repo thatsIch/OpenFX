@@ -28,7 +28,7 @@ public class ErrorDisplayPresenter extends AFXMLPresenter
 		this.errors.selected().addListener((observable, oldValue, newValue) -> {
 			if (newValue != null)
 			{
-				final Image image = this.errorEntryToImage(newValue);
+				final Image image = this.errorToImage(newValue);
 				this.nodeImageViewError.imageProperty().setValue(image);
 				this.log.info("Selected new ErrorEntry.");
 			}
@@ -47,13 +47,13 @@ public class ErrorDisplayPresenter extends AFXMLPresenter
 		final IError entry = this.errors.selected().get();
 		if (entry != null)
 		{
-			final Image image = this.errorEntryToImage(entry);
+			final Image image = this.errorToImage(entry);
 			this.nodeImageViewError.imageProperty().setValue(image);
 			this.log.info("Initialized nodeImageViewError.");
 		}
 	}
 
-	private Image errorEntryToImage(IError entry)
+	private Image errorToImage(IError entry)
 	{
 		final Mat originalMat = entry.originalProperty().get().clone();
 		final Mat onlyErrorMat = entry.errorProperty().get();

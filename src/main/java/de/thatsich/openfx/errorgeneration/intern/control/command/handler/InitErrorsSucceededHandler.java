@@ -13,14 +13,14 @@ import java.util.List;
  *
  * @author Minh
  */
-public class InitErrorEntryListSucceededHandler extends ACommandHandler<List<IError>>
+public class InitErrorsSucceededHandler extends ACommandHandler<List<IError>>
 {
-	@Inject private IErrors errors;
+	@Inject private IErrors emptyErrors;
 
 	@Override
-	public void handle(List<IError> entryList)
+	public void handle(List<IError> errors)
 	{
-		this.errors.list().addAll(entryList);
-		this.log.info("Initialized all ErrorEntries into Model.");
+		this.emptyErrors.list().addAll(errors);
+		this.log.info("Initialized all Errors into Model.");
 	}
 }

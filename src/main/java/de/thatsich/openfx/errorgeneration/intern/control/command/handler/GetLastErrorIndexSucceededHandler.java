@@ -11,7 +11,7 @@ import de.thatsich.openfx.errorgeneration.api.model.IErrors;
  *
  * @author Minh
  */
-public class GetLastErrorEntryIndexSucceededHandler extends ACommandHandler<Integer>
+public class GetLastErrorIndexSucceededHandler extends ACommandHandler<Integer>
 {
 	@Inject private IErrors errorEntryList;
 

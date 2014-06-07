@@ -9,11 +9,11 @@ import de.thatsich.openfx.errorgeneration.intern.control.command.commands.GetLas
 import de.thatsich.openfx.errorgeneration.intern.control.command.commands.GetLastErrorIndexCommand;
 import de.thatsich.openfx.errorgeneration.intern.control.command.commands.InitErrorGeneratorsCommand;
 import de.thatsich.openfx.errorgeneration.intern.control.command.commands.InitErrorsCommand;
-import de.thatsich.openfx.errorgeneration.intern.control.command.handler.GetLastErrorEntryIndexSucceededHandler;
 import de.thatsich.openfx.errorgeneration.intern.control.command.handler.GetLastErrorGeneratorIndexSucceededHandler;
+import de.thatsich.openfx.errorgeneration.intern.control.command.handler.GetLastErrorIndexSucceededHandler;
 import de.thatsich.openfx.errorgeneration.intern.control.command.handler.GetLastErrorLoopCountSucceededHandler;
-import de.thatsich.openfx.errorgeneration.intern.control.command.handler.InitErrorEntryListSucceededHandler;
-import de.thatsich.openfx.errorgeneration.intern.control.command.handler.InitErrorGeneratorListSucceededHandler;
+import de.thatsich.openfx.errorgeneration.intern.control.command.handler.InitErrorGeneratorsSucceededHandler;
+import de.thatsich.openfx.errorgeneration.intern.control.command.handler.InitErrorsSucceededHandler;
 import de.thatsich.openfx.errorgeneration.intern.control.provider.IErrorInitCommandProvider;
 
 import java.nio.file.Path;
@@ -51,7 +51,7 @@ public class ErrorInitCommander
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(1);
 
 		final InitErrorGeneratorsCommand initCommand = this.commander.createInitErrorGeneratorsCommand();
-		initCommand.setOnSucceededCommandHandler(InitErrorGeneratorListSucceededHandler.class);
+		initCommand.setOnSucceededCommandHandler(InitErrorGeneratorsSucceededHandler.class);
 		initCommand.setExecutor(executor);
 		initCommand.start();
 		this.log.info("Initialized ErrorGeneratorList Retrieval.");
@@ -76,13 +76,13 @@ public class ErrorInitCommander
 
 
 		final InitErrorsCommand initCommand = this.commander.createInitErrorsCommand();
-		initCommand.setOnSucceededCommandHandler(InitErrorEntryListSucceededHandler.class);
+		initCommand.setOnSucceededCommandHandler(InitErrorsSucceededHandler.class);
 		initCommand.setExecutor(executor);
 		initCommand.start();
 		this.log.info("Initialized ErrorEntryList Retrieval.");
 
 		final GetLastErrorIndexCommand lastCommand = this.commander.createGetLastErrorIndexCommand();
-		lastCommand.setOnSucceededCommandHandler(GetLastErrorEntryIndexSucceededHandler.class);
+		lastCommand.setOnSucceededCommandHandler(GetLastErrorIndexSucceededHandler.class);
 		lastCommand.setExecutor(executor);
 		lastCommand.start();
 		this.log.info("Initialized LastErrorEntryIndex Retrieval.");

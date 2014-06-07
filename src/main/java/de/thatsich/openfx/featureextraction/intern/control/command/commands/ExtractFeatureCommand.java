@@ -16,6 +16,8 @@ import javafx.collections.FXCollections;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfFloat;
+import org.opencv.core.Size;
+import org.opencv.imgproc.Imgproc;
 import org.opencv.photo.Photo;
 
 import java.util.List;
@@ -49,23 +51,28 @@ public class ExtractFeatureCommand extends ACommand<IFeature>
 	{
 		final String className = this.error.clazzProperty().get();
 		final String extractorName = this.featureExtractor.getName();
-		final Mat originalWithErrorMat = this.error.modifiedProperty().get().clone();
+		final Mat modified = this.error.modifiedProperty().get().clone();
 		this.log.info("Prepared all necessary information + " + className + ", " + extractorName);
 
-		// TODO Implement Smooth and Threshold somehow Denoising
 		// CvSmooth, CvThreshold
-		if (this.smooth == this.threshold == this.denoising)
+		if (this.smooth)
 		{
-			this.log.info("TODO");
+			Imgproc.adaptiveBilateralFilter(modified, modified, new Size(31, 31), 62);
+		}
+
+		if (this.threshold)
+		{
+			Imgproc.threshold(modified, modified, 0, 255, Imgproc.THRESH_OTSU);
+			//			Imgproc.adaptiveThreshold(modified, modified, 255, Imgproc.ADAPTIVE_THRESH_GAUSSIAN_C, Imgproc.THRESH_BINARY, 15, -5);
 		}
 
 		if (this.denoising)
 		{
-			Photo.fastNlMeansDenoising(originalWithErrorMat, originalWithErrorMat);
+			Photo.fastNlMeansDenoising(modified, modified);
 		}
 
 		final List<IFeatureVector> featureVectorList = FXCollections.observableArrayList();
-		final Mat[][] originalErrorSplit = Images.split(originalWithErrorMat, this.frameSize, this.frameSize);
+		final Mat[][] originalErrorSplit = Images.split(modified, this.frameSize, this.frameSize);
 		final Mat[][] errorSplit = Images.split(this.error.errorProperty().get(), this.frameSize, this.frameSize);
 		this.log.info("Prepared split images.");
 

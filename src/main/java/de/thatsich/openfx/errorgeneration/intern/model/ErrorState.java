@@ -15,11 +15,13 @@ public class ErrorState implements IErrorState
 	final private IntegerProperty errorLoopCount = new SimpleIntegerProperty();
 
 	// Property Getter
+	@Override
 	public ObjectProperty<Path> path()
 	{
 		return this.errorEntryFolderPath;
 	}
 
+	@Override
 	public IntegerProperty loopCount()
 	{
 		return this.errorLoopCount;

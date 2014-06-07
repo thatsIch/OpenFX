@@ -8,9 +8,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.UUID;
 
 /**
  * @author thatsIch
@@ -18,8 +15,6 @@ import java.util.UUID;
  */
 public abstract class AFileStorageService<T> implements IFileStorageService<T>
 {
-	private static final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-SSS");
-
 	public final Path storagePath;
 
 	@Inject public Log log;
@@ -27,16 +22,6 @@ public abstract class AFileStorageService<T> implements IFileStorageService<T>
 	protected AFileStorageService(Path storagePath)
 	{
 		this.storagePath = storagePath;
-	}
-
-	protected String getUniqueID()
-	{
-		return UUID.randomUUID().toString();
-	}
-
-	protected String getTimeStamp()
-	{
-		return format.format(new Date());
 	}
 
 	protected String getFileNameWithoutExtension(Path path)

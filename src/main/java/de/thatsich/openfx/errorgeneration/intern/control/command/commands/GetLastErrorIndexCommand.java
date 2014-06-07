@@ -13,6 +13,6 @@ public class GetLastErrorIndexCommand extends ACommand<Integer>
 	@Override
 	protected Integer call() throws Exception
 	{
-		return config.getLastErrorEntryIndexInt();
+		return this.config.getLastErrorEntryIndexInt();
 	}
 }

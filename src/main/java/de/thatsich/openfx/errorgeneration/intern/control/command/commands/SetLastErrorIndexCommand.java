@@ -7,17 +7,14 @@ import de.thatsich.openfx.errorgeneration.intern.control.command.service.ErrorCo
 
 public class SetLastErrorIndexCommand extends ACommand<Void>
 {
-
-	// Properties
 	private final int lastErrorEntryIndex;
-
-	// Injects
-	@Inject ErrorConfigService config;
+	private final ErrorConfigService config;
 
 	@Inject
-	protected SetLastErrorIndexCommand(@Assisted int lastErrorEntryIndex)
+	protected SetLastErrorIndexCommand(@Assisted int lastErrorEntryIndex, ErrorConfigService config)
 	{
 		this.lastErrorEntryIndex = lastErrorEntryIndex;
+		this.config = config;
 	}
 
 	@Override

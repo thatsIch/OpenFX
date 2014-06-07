@@ -15,11 +15,13 @@ public class ErrorGenerators implements IErrorGenerators
 	final private ObjectProperty<IErrorGenerator> selectedErrorGenerator = new SimpleObjectProperty<>();
 
 	// Getter
+	@Override
 	public ListProperty<IErrorGenerator> list()
 	{
 		return this.errorGeneratorList;
 	}
 
+	@Override
 	public ObjectProperty<IErrorGenerator> selected()
 	{
 		return this.selectedErrorGenerator;

@@ -2,21 +2,19 @@ package de.thatsich.openfx.errorgeneration.intern.control.command.commands;
 
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
-import de.thatsich.openfx.errorgeneration.intern.control.command.service.ErrorConfigService;
 import de.thatsich.core.javafx.ACommand;
+import de.thatsich.openfx.errorgeneration.intern.control.command.service.ErrorConfigService;
 
 public class SetLastErrorGeneratorIndexCommand extends ACommand<Void>
 {
-	// Properties
 	private final int lastErrorGeneratorIndex;
-
-	// Injects
-	@Inject ErrorConfigService config;
+	private final ErrorConfigService config;
 
 	@Inject
-	protected SetLastErrorGeneratorIndexCommand(@Assisted int lastErrorGeneratorIndex)
+	protected SetLastErrorGeneratorIndexCommand(@Assisted int lastErrorGeneratorIndex, ErrorConfigService config)
 	{
 		this.lastErrorGeneratorIndex = lastErrorGeneratorIndex;
+		this.config = config;
 	}
 
 	@Override

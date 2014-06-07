@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author Minh
  */
-public class InitErrorGeneratorListSucceededHandler extends ACommandHandler<List<IErrorGenerator>>
+public class InitErrorGeneratorsSucceededHandler extends ACommandHandler<List<IErrorGenerator>>
 {
 	@Inject private IErrorGenerators errorGeneratorList;
 
