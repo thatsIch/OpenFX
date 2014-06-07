@@ -15,14 +15,14 @@ import java.nio.file.Path;
 import java.util.List;
 
 
-public class InitPreProcessingListCommand extends ACommand<List<IPreProcessing>>
+public class InitPreProcessingsCommand extends ACommand<List<IPreProcessing>>
 {
 	// Fields
 	private final Path path;
 	private final PreProcessingFileStorageService storage;
 
 	@Inject
-	protected InitPreProcessingListCommand(PreProcessingState state, PreProcessingFileStorageService storage)
+	protected InitPreProcessingsCommand(PreProcessingState state, PreProcessingFileStorageService storage)
 	{
 		this.path = state.path().get();
 		this.storage = storage;

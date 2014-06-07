@@ -6,6 +6,7 @@ import de.thatsich.openfx.preprocessing.intern.control.command.preprocessing.cor
 import de.thatsich.openfx.preprocessing.intern.control.command.preprocessor.core.APreProcessor;
 import de.thatsich.openfx.preprocessing.intern.control.command.provider.IPreProcessingProvider;
 import org.encog.neural.networks.BasicNetwork;
+import org.encog.neural.networks.layers.BasicLayer;
 
 public class IdentityPreProcessor extends APreProcessor
 {
@@ -21,9 +22,23 @@ public class IdentityPreProcessor extends APreProcessor
 	@Override
 	public IPreProcessing train(double[][] trainData, double[][] idealData, PreProcessingConfig config)
 	{
+		final int vectorLength = trainData[0].length;
 		final BasicNetwork network = new BasicNetwork();
-		network.getStructure().finalizeStructure();
 
-		return this.provider.createIdentityPreProcessing(network, config);
+		final BasicLayer inputLayer = new BasicLayer(null, false, vectorLength);
+		final BasicLayer outputLayer = new BasicLayer(null, false, vectorLength);
+
+		network.addLayer(inputLayer);
+		network.addLayer(outputLayer);
+
+		network.getStructure().finalizeStructure();
+		network.reset();
+
+		final String name = config.name.getName();
+		final int inputSize = config.inputSize.get();
+		final String id = config.id.get();
+		final PreProcessingConfig newConfig = new PreProcessingConfig(name, inputSize, inputSize, id);
+
+		return this.provider.createIdentityPreProcessing(network, newConfig);
 	}
 }

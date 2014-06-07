@@ -1,10 +1,10 @@
 package de.thatsich.openfx.preprocessing.intern.control.command.provider;
 
+import de.thatsich.core.guice.ICommandProvider;
 import de.thatsich.openfx.preprocessing.intern.control.command.commands.GetLastPreProcessingIndexCommand;
 import de.thatsich.openfx.preprocessing.intern.control.command.commands.GetLastPreProcessorIndexCommand;
-import de.thatsich.openfx.preprocessing.intern.control.command.commands.InitPreProcessingListCommand;
+import de.thatsich.openfx.preprocessing.intern.control.command.commands.InitPreProcessingsCommand;
 import de.thatsich.openfx.preprocessing.intern.control.command.commands.InitPreProcessorListCommand;
-import de.thatsich.core.guice.ICommandProvider;
 
 import java.nio.file.Path;
 
@@ -12,7 +12,7 @@ public interface IPreProcessingInitCommandProvider extends ICommandProvider
 {
 	InitPreProcessorListCommand createInitPreProcessorListCommand();
 
-	InitPreProcessingListCommand createInitPreProcessingListCommand(Path path);
+	InitPreProcessingsCommand createInitPreProcessingsCommand(Path path);
 
 	GetLastPreProcessorIndexCommand createGetLastPreProcessorIndexCommand();
 

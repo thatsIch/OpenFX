@@ -7,11 +7,11 @@ import de.thatsich.core.javafx.CommandExecutor;
 import de.thatsich.openfx.preprocessing.api.model.IPreProcessingState;
 import de.thatsich.openfx.preprocessing.intern.control.command.commands.GetLastPreProcessingIndexCommand;
 import de.thatsich.openfx.preprocessing.intern.control.command.commands.GetLastPreProcessorIndexCommand;
-import de.thatsich.openfx.preprocessing.intern.control.command.commands.InitPreProcessingListCommand;
+import de.thatsich.openfx.preprocessing.intern.control.command.commands.InitPreProcessingsCommand;
 import de.thatsich.openfx.preprocessing.intern.control.command.commands.InitPreProcessorListCommand;
 import de.thatsich.openfx.preprocessing.intern.control.command.handler.GetLastPreProcessingIndexSucceededHandler;
 import de.thatsich.openfx.preprocessing.intern.control.command.handler.GetLastPreProcessorIndexSucceededHandler;
-import de.thatsich.openfx.preprocessing.intern.control.command.handler.InitPreProcessingListSucceededHandler;
+import de.thatsich.openfx.preprocessing.intern.control.command.handler.InitPreProcessingsSucceededHandler;
 import de.thatsich.openfx.preprocessing.intern.control.command.handler.InitPreProcessorListSucceededHandler;
 import de.thatsich.openfx.preprocessing.intern.control.command.provider.IPreProcessingInitCommandProvider;
 
@@ -24,13 +24,9 @@ import java.util.concurrent.ExecutorService;
 public class PreProcessingInitCommander
 {
 	// Injects
-	@Inject
-	private Log log;
-
-	@Inject
-	private IPreProcessingInitCommandProvider commander;
-	@Inject
-	private IPreProcessingState state;
+	@Inject private Log log;
+	@Inject private IPreProcessingInitCommandProvider commander;
+	@Inject private IPreProcessingState state;
 
 	@Inject
 	private void init()
@@ -67,8 +63,8 @@ public class PreProcessingInitCommander
 		this.state.path().set(path);
 		this.log.info("Set " + path + " to Model.");
 
-		final InitPreProcessingListCommand initCommand = this.commander.createInitPreProcessingListCommand(path);
-		initCommand.setOnSucceededCommandHandler(InitPreProcessingListSucceededHandler.class);
+		final InitPreProcessingsCommand initCommand = this.commander.createInitPreProcessingsCommand(path);
+		initCommand.setOnSucceededCommandHandler(InitPreProcessingsSucceededHandler.class);
 		initCommand.setExecutor(executor);
 		initCommand.start();
 		this.log.info("Initialized " + initCommand);

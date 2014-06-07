@@ -21,13 +21,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
  */
 public class PreProcessingListPresenter extends AFXMLPresenter
 {
-	@Inject PreProcessingInitCommander initCommander;
+	@Inject private PreProcessingInitCommander initCommander;
 	// Nodes
-	@FXML TableView<IPreProcessing> nodeTableViewPreProcessingList;
-	@FXML TableColumn<IPreProcessing, String> nodeTableColumnPreProcessingName;
-	@FXML TableColumn<IPreProcessing, Integer> nodeTableColumnInputSize;
-	@FXML TableColumn<IPreProcessing, Integer> nodeTableColumnOutputSize;
-	@FXML TableColumn<IPreProcessing, String> nodeTableColumnID;
+	@FXML private TableView<IPreProcessing> nodeTableViewPreProcessingList;
+	@FXML private TableColumn<IPreProcessing, String> nodeTableColumnPreProcessingName;
+	@FXML private TableColumn<IPreProcessing, Integer> nodeTableColumnInputSize;
+	@FXML private TableColumn<IPreProcessing, Integer> nodeTableColumnOutputSize;
+	@FXML private TableColumn<IPreProcessing, String> nodeTableColumnID;
 	// Injects
 	@Inject
 	private IPreProcessingCommandProvider commander;
@@ -89,9 +89,9 @@ public class PreProcessingListPresenter extends AFXMLPresenter
 	 */
 	private void bindTableViewCellValue()
 	{
-		this.nodeTableColumnPreProcessingName.setCellValueFactory(new PropertyValueFactory<>("getPreProcessingName"));
-		this.nodeTableColumnInputSize.setCellValueFactory(new PropertyValueFactory<>("getInputSize"));
-		this.nodeTableColumnOutputSize.setCellValueFactory(new PropertyValueFactory<>("getOutputSize"));
-		this.nodeTableColumnID.setCellValueFactory(new PropertyValueFactory<>("idProperty"));
+		this.nodeTableColumnPreProcessingName.setCellValueFactory(new PropertyValueFactory<>("name"));
+		this.nodeTableColumnInputSize.setCellValueFactory(new PropertyValueFactory<>("inputSize"));
+		this.nodeTableColumnOutputSize.setCellValueFactory(new PropertyValueFactory<>("outputSize"));
+		this.nodeTableColumnID.setCellValueFactory(new PropertyValueFactory<>("id"));
 	}
 }

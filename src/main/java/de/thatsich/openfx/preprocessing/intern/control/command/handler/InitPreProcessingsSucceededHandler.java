@@ -14,7 +14,7 @@ import java.util.List;
  *
  * @author Minh
  */
-public class InitPreProcessingListSucceededHandler extends ACommandHandler<List<IPreProcessing>>
+public class InitPreProcessingsSucceededHandler extends ACommandHandler<List<IPreProcessing>>
 {
 	@Inject
 	private IPreProcessings pps;

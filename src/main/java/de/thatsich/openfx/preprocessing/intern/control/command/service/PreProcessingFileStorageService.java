@@ -65,7 +65,8 @@ public class PreProcessingFileStorageService extends AFileStorageService<IPrePro
 	{
 		final Path filePath = path.getFileName();
 		final String fileName = filePath.toString();
-		final File file = filePath.toFile();
+		final File file = path.toAbsolutePath().toFile();
+
 		final BasicNetwork network = (BasicNetwork) EncogDirectoryPersistence.loadObject(file);
 		final String withoutExt = this.getFileNameWithoutExtension(path);
 		final PreProcessingConfig config = new PreProcessingConfig(withoutExt);
