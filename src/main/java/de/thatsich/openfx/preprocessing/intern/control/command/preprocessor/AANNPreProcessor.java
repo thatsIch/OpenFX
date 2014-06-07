@@ -2,8 +2,8 @@ package de.thatsich.openfx.preprocessing.intern.control.command.preprocessor;
 
 import com.google.inject.Inject;
 import de.thatsich.openfx.preprocessing.api.control.IPreProcessing;
+import de.thatsich.openfx.preprocessing.intern.control.command.preprocessing.core.PreProcessingConfig;
 import de.thatsich.openfx.preprocessing.intern.control.command.preprocessor.core.APreProcessor;
-import de.thatsich.openfx.preprocessing.intern.control.command.preprocessor.core.PreProcessorConfiguration;
 import de.thatsich.openfx.preprocessing.intern.control.command.provider.IPreProcessingProvider;
 import javafx.util.Pair;
 import org.encog.engine.network.activation.ActivationLinear;
@@ -17,7 +17,6 @@ import org.encog.neural.networks.training.cross.CrossValidationKFold;
 import org.encog.neural.networks.training.propagation.resilient.RPROPType;
 import org.encog.neural.networks.training.propagation.resilient.ResilientPropagation;
 
-import java.nio.file.Path;
 import java.security.InvalidParameterException;
 
 
@@ -49,7 +48,7 @@ public class AANNPreProcessor extends APreProcessor
 	}
 
 	@Override
-	public IPreProcessing train(double[][] trainData, double[][] labelData, PreProcessorConfiguration config)
+	public IPreProcessing train(double[][] trainData, double[][] labelData, PreProcessingConfig config)
 	{
 		// extract important information
 		final int featureVectorCount = trainData.length;
@@ -99,15 +98,13 @@ public class AANNPreProcessor extends APreProcessor
 		final BasicNetwork rebuildNetwork = this.rebuildNetworkForDimensionReduction(bestSetup.getKey());
 
 		// rebuild config
-		final Path path = config.getFilePathProperty().get();
-		final String preProcessorName = config.getPreProcessorNameProperty().get();
+		final String preProcessorName = config.name.get();
 		final int inputSize = rebuildNetwork.getInputCount();
 		final int outputSize = rebuildNetwork.getOutputCount();
-		final String id = config.getIDProperty().get();
+		final String id = config.id.get();
 
-		final PreProcessorConfiguration newConfig = new PreProcessorConfiguration(path, preProcessorName, inputSize, outputSize, id);
-
-		return this.provider.createAANNPreProcessing(rebuildNetwork, newConfig);
+		final PreProcessingConfig newerConfig = new PreProcessingConfig(preProcessorName, inputSize, outputSize, id);
+		return this.provider.createAANNPreProcessing(rebuildNetwork, newerConfig);
 	}
 
 	private void validate(int featureVectorCount, int featureVectorLength, int minHiddenLayerSize, int maxHiddenLayerSize, int minBottleLayerSize, int maxBottleLayerSize)

@@ -9,13 +9,12 @@ import de.thatsich.openfx.preprocessing.intern.control.command.commands.SetLastP
 import de.thatsich.openfx.preprocessing.intern.control.command.commands.TrainPreProcessorCommand;
 import de.thatsich.openfx.preprocessing.intern.control.command.preprocessor.core.IPreProcessor;
 
-import java.nio.file.Path;
 import java.util.List;
 
 
 public interface IPreProcessingCommandProvider extends ICommandProvider
 {
-	TrainPreProcessorCommand createTrainPreProcessorCommand(Path preProcessingFolderPath, IPreProcessor selectedPreProcessor, IFeature selectedFeatureVectorSet, List<IFeature> featureVectorSetList);
+	TrainPreProcessorCommand createTrainPreProcessorCommand(IPreProcessor selectedPreProcessor, IFeature selectedFeatureVectorSet, List<IFeature> featureVectorSetList);
 
 	RemovePreProcessingCommand createRemovePreProcessingCommand(IPreProcessing pp);
 

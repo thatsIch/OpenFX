@@ -1,7 +1,7 @@
 package de.thatsich.openfx.imageprocessing.intern.control.command.commands;
 
+import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
-import com.google.inject.assistedinject.AssistedInject;
 import de.thatsich.core.javafx.ACommand;
 import de.thatsich.core.opencv.Images;
 import de.thatsich.openfx.imageprocessing.api.control.IImage;
@@ -15,13 +15,12 @@ import java.nio.file.Path;
 
 public class CreateImageCommand extends ACommand<IImage>
 {
-
 	// Properties
 	private final Path originPath;
 	private final ImageFileStorageService storage;
 
-	@AssistedInject
-	public CreateImageCommand(@Assisted("origin") Path originPath, ImageFileStorageService storage)
+	@Inject
+	public CreateImageCommand(@Assisted Path originPath, ImageFileStorageService storage)
 	{
 		this.originPath = originPath;
 		this.storage = storage;

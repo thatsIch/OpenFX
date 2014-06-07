@@ -22,7 +22,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.util.StringConverter;
 
-import java.nio.file.Path;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 
@@ -30,18 +29,18 @@ import java.util.concurrent.ExecutorService;
 public class PreProcessingInputPresenter extends AFXMLPresenter
 {
 	// Injects
-	@Inject PreProcessingInitCommander initCommander;
-	@Inject IPreProcessingCommandProvider commander;
-	@Inject IPreProcessors preProcessors;
-	@Inject IPreProcessings preProcessings;
-	@Inject IPreProcessingState state;
-	@Inject IFeatures features;
+	@Inject private PreProcessingInitCommander initCommander;
+	@Inject private IPreProcessingCommandProvider commander;
+	@Inject private IPreProcessors preProcessors;
+	@Inject private IPreProcessings preProcessings;
+	@Inject private IPreProcessingState state;
+	@Inject private IFeatures features;
 
 	// Nodes
-	@FXML Button nodeButtonTrainPreProcessor;
-	@FXML Button nodeButtonRemovePreProcessing;
-	@FXML Button nodeButtonResetPreProcessingList;
-	@FXML ChoiceBox<IPreProcessor> nodeChoiceBoxPreProcessor;
+	@FXML private Button nodeButtonTrainPreProcessor;
+	@FXML private Button nodeButtonRemovePreProcessing;
+	@FXML private Button nodeButtonResetPreProcessingList;
+	@FXML private ChoiceBox<IPreProcessor> nodeChoiceBoxPreProcessor;
 
 	@Override
 	protected void bindComponents()
@@ -102,12 +101,11 @@ public class PreProcessingInputPresenter extends AFXMLPresenter
 	@FXML
 	private void onTrainPreProcessorAction()
 	{
-		final Path preProcessingFolderPath = this.state.path().get();
 		final IPreProcessor selectedPreProcessor = this.preProcessors.selected().get();
 		final List<IFeature> featureVectorSetList = this.features.get();
 		final IFeature selectedFeatureVectorSet = this.features.selected().get();
 
-		final TrainPreProcessorCommand command = this.commander.createTrainPreProcessorCommand(preProcessingFolderPath, selectedPreProcessor, selectedFeatureVectorSet, featureVectorSetList);
+		final TrainPreProcessorCommand command = this.commander.createTrainPreProcessorCommand(selectedPreProcessor, selectedFeatureVectorSet, featureVectorSetList);
 		command.setOnSucceededCommandHandler(TrainPreProcessorSucceededHandler.class);
 		command.start();
 	}

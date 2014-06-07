@@ -37,8 +37,7 @@ public class ImageFileChooser
 	/**
 	 * Injected Config to retrieve last location.
 	 */
-	@Inject
-	private IImageCommandProvider commander;
+	@Inject private IImageCommandProvider commander;
 
 	/**
 	 * Injected Logger

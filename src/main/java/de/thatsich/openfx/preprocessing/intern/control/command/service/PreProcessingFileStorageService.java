@@ -47,7 +47,15 @@ public class PreProcessingFileStorageService extends AFileStorageService<IPrePro
 		final Path filePath = this.storagePath.resolve(withExtension);
 		final File file = filePath.toFile();
 
-		EncogDirectoryPersistence.saveObject(file, elem.networkProperty().get());
+		try
+		{
+			EncogDirectoryPersistence.saveObject(file, elem.networkProperty().get());
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		this.log.info("Saved PreProcessing.");
 
 		return elem;
 	}
