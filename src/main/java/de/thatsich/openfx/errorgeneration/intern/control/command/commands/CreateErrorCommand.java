@@ -15,7 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
-public class CreateErrorEntryCommand extends ACommand<IError>
+public class CreateErrorCommand extends ACommand<IError>
 {
 	private static final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-SSS");
 
@@ -26,7 +26,7 @@ public class CreateErrorEntryCommand extends ACommand<IError>
 	private final ErrorFileStorageService storage;
 
 	@Inject
-	public CreateErrorEntryCommand(@Assisted String errorClass, @Assisted Mat imageMat, @Assisted IErrorGenerator generator, final ErrorFileStorageService storage)
+	public CreateErrorCommand(@Assisted String errorClass, @Assisted Mat imageMat, @Assisted IErrorGenerator generator, final ErrorFileStorageService storage)
 	{
 		this.imageMat = imageMat;
 		this.errorClass = errorClass;

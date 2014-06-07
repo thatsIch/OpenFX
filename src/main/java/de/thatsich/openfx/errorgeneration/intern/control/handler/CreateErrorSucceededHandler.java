@@ -11,7 +11,7 @@ import de.thatsich.openfx.errorgeneration.api.model.IErrors;
  *
  * @author Minh
  */
-public class CreateErrorEntrySucceededHandler extends ACommandHandler<IError>
+public class CreateErrorSucceededHandler extends ACommandHandler<IError>
 {
 	@Inject private IErrors errors;
 
@@ -19,9 +19,9 @@ public class CreateErrorEntrySucceededHandler extends ACommandHandler<IError>
 	public void handle(IError addition)
 	{
 		this.errors.list().add(addition);
-		this.log.info("Added ErrorEntry to Database.");
+		this.log.info("Added Error to Database.");
 
 		this.errors.selected().set(addition);
-		this.log.info("Set current to selected ErrorEntry.");
+		this.log.info("Set current to selected Error.");
 	}
 }

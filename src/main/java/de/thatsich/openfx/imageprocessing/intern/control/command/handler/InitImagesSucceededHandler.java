@@ -15,14 +15,12 @@ import java.util.List;
  */
 public class InitImagesSucceededHandler extends ACommandHandler<List<IImage>>
 {
-
-	@Inject
-	private IImages images;
+	@Inject private IImages images;
 
 	@Override
-	public void handle(List<IImage> value)
+	public void handle(List<IImage> newImages)
 	{
-		this.images.list().get().addAll(value);
+		this.images.list().get().addAll(newImages);
 		this.log.info("Added Images to Model.");
 	}
 }

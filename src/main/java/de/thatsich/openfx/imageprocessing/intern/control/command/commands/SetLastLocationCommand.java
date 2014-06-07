@@ -5,8 +5,8 @@ package de.thatsich.openfx.imageprocessing.intern.control.command.commands;
 
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
-import de.thatsich.openfx.imageprocessing.intern.control.command.service.ImageConfigService;
 import de.thatsich.core.javafx.ACommand;
+import de.thatsich.openfx.imageprocessing.intern.control.command.service.ImageConfigService;
 
 /**
  * Saves a String as LastLocation
@@ -15,22 +15,14 @@ import de.thatsich.core.javafx.ACommand;
  */
 public class SetLastLocationCommand extends ACommand<Void>
 {
-
-	/**
-	 * to be saved Last Location
-	 */
 	private final String lastLocation;
-
-	/**
-	 * Injected Config to retrieve last location.
-	 */
-	@Inject
-	private ImageConfigService config;
+	private final ImageConfigService config;
 
 	@Inject
-	private SetLastLocationCommand(@Assisted String lastLocation)
+	private SetLastLocationCommand(@Assisted String lastLocation, ImageConfigService config)
 	{
 		this.lastLocation = lastLocation;
+		this.config = config;
 	}
 
 	/**

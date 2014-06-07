@@ -27,17 +27,15 @@ public class TrainPreProcessorCommand extends ACommand<IPreProcessing>
 	// Properties
 	private final Path path;
 	private final IPreProcessor preProcessor;
-	private final IFeature selectedFeature;
-	private final List<IFeature> features;
+	private final IFeature feature;
 	private final PreProcessingFileStorageService storage;
 
 	@Inject
-	public TrainPreProcessorCommand(@Assisted Path path, @Assisted IPreProcessor preProcessor, @Assisted IFeature selected, @Assisted List<IFeature> all, PreProcessingFileStorageService storage)
+	public TrainPreProcessorCommand(@Assisted Path path, @Assisted IPreProcessor preProcessor, @Assisted IFeature feature, PreProcessingFileStorageService storage)
 	{
 		this.path = path;
 		this.preProcessor = preProcessor;
-		this.selectedFeature = selected;
-		this.features = all;
+		this.feature = feature;
 		this.storage = storage;
 	}
 
@@ -45,9 +43,9 @@ public class TrainPreProcessorCommand extends ACommand<IPreProcessing>
 	protected IPreProcessing call() throws Exception
 	{
 		final String preProcessorName = this.preProcessor.getName();
-		final String featureExtractorName = this.selectedFeature.extractorName().get();
-		final int frameSize = this.selectedFeature.tileSize().get();
-		final String errorClassName = this.selectedFeature.className().get();
+		final String featureExtractorName = this.feature.extractorName().get();
+		final int frameSize = this.feature.tileSize().get();
+		final String errorClassName = this.feature.className().get();
 		final String id = UUID.randomUUID().toString();
 		this.log.info("Prepared all data for Training.");
 

@@ -1,17 +1,15 @@
 package de.thatsich.openfx.imageprocessing.intern.control.command.commands;
 
 import com.google.inject.Inject;
-import de.thatsich.openfx.imageprocessing.intern.control.command.service.ImageConfigService;
 import de.thatsich.core.javafx.ACommand;
+import de.thatsich.openfx.imageprocessing.intern.control.command.service.ImageConfigService;
 
 import java.io.File;
 import java.nio.file.Path;
 
 public class GetLastLocationCommand extends ACommand<Path>
 {
-
-	@Inject
-	private ImageConfigService config;
+	@Inject private ImageConfigService config;
 
 	@Override
 	protected Path call() throws Exception
@@ -19,5 +17,4 @@ public class GetLastLocationCommand extends ACommand<Path>
 		final File file = new File(this.config.getLastLocationString());
 		return file.toPath();
 	}
-
 }

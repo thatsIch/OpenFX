@@ -14,24 +14,24 @@ import javafx.collections.ObservableList;
  */
 public class DeleteErrorEntrySucceededHandler extends ACommandHandler<IError>
 {
-	@Inject private IErrors errorEntryList;
+	@Inject private IErrors errors;
 
 	@Override
 	public void handle(IError value)
 	{
-		final ObservableList<IError> entryList = this.errorEntryList.list();
-		entryList.remove(value);
+		final ObservableList<IError> list = this.errors.list();
+		list.remove(value);
 		this.log.info("Removed ErrorEntry from Database.");
 
-		if (entryList.size() > 0)
+		if (list.size() > 0)
 		{
-			final IError first = entryList.get(0);
-			this.errorEntryList.selected().set(first);
+			final IError first = list.get(0);
+			this.errors.selected().set(first);
 			this.log.info("Reset Selection to first ErrorEntry.");
 		}
 		else
 		{
-			this.errorEntryList.selected().set(null);
+			this.errors.selected().set(null);
 			this.log.info("Reset Selection to null.");
 		}
 	}

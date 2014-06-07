@@ -17,7 +17,6 @@ import java.util.List;
 
 public class InitFeatureExtractorsCommand extends ACommand<List<IFeatureExtractor>>
 {
-
 	@Inject
 	private Injector injector;
 

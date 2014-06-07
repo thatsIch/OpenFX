@@ -13,9 +13,9 @@ public class DeleteFeatureCommand extends ACommand<IFeature>
 	private final FeatureFileStorageService storage;
 
 	@Inject
-	public DeleteFeatureCommand(@Assisted IFeature featureVectorSet, final FeatureFileStorageService storage)
+	public DeleteFeatureCommand(@Assisted IFeature feature, FeatureFileStorageService storage)
 	{
-		this.feature = featureVectorSet;
+		this.feature = feature;
 		this.storage = storage;
 	}
 

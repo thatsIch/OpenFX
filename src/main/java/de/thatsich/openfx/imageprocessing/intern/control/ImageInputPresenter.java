@@ -7,10 +7,10 @@ import de.thatsich.openfx.imageprocessing.api.control.IImage;
 import de.thatsich.openfx.imageprocessing.api.model.IImageState;
 import de.thatsich.openfx.imageprocessing.api.model.IImages;
 import de.thatsich.openfx.imageprocessing.intern.control.command.ImageInitCommander;
-import de.thatsich.openfx.imageprocessing.intern.control.command.commands.CopyFileCommand;
+import de.thatsich.openfx.imageprocessing.intern.control.command.commands.CreateImageCommand;
 import de.thatsich.openfx.imageprocessing.intern.control.command.commands.DeleteImageEntryCommand;
 import de.thatsich.openfx.imageprocessing.intern.control.command.provider.IImageCommandProvider;
-import de.thatsich.openfx.imageprocessing.intern.control.handler.AddImageEntrySucceededHandler;
+import de.thatsich.openfx.imageprocessing.intern.control.handler.CreateImageSucceededHandler;
 import de.thatsich.openfx.imageprocessing.intern.control.handler.DeleteImageEntrySucceededHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -86,11 +86,8 @@ public class ImageInputPresenter extends AFXMLPresenter
 
 		for (final Path imagePath : imagePathList)
 		{
-			final Path copyPath = this.state.imageFolder().get().resolve(imagePath.getFileName());
-			this.log.info("Created new Path: " + copyPath);
-
-			final CopyFileCommand command = this.provider.createCopyFileCommand(imagePath, copyPath);
-			command.setOnSucceededCommandHandler(AddImageEntrySucceededHandler.class);
+			final CreateImageCommand command = this.provider.createCreateImageCommand(imagePath);
+			command.setOnSucceededCommandHandler(CreateImageSucceededHandler.class);
 			command.setExecutor(executor);
 			command.start();
 			this.log.info("File copied and inserted into EntryList.");

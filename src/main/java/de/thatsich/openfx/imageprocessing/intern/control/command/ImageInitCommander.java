@@ -7,7 +7,7 @@ import de.thatsich.core.javafx.CommandExecutor;
 import de.thatsich.openfx.imageprocessing.api.model.IImageState;
 import de.thatsich.openfx.imageprocessing.intern.control.command.commands.GetLastImageEntryIndexCommand;
 import de.thatsich.openfx.imageprocessing.intern.control.command.commands.GetLastLocationCommand;
-import de.thatsich.openfx.imageprocessing.intern.control.command.commands.InitImageEntryListCommand;
+import de.thatsich.openfx.imageprocessing.intern.control.command.commands.InitImagesCommand;
 import de.thatsich.openfx.imageprocessing.intern.control.command.handler.GetLastImageEntryIndexSucceededHandler;
 import de.thatsich.openfx.imageprocessing.intern.control.command.handler.GetLastLocationSucceededHandler;
 import de.thatsich.openfx.imageprocessing.intern.control.command.handler.InitImagesSucceededHandler;
@@ -38,10 +38,10 @@ public class ImageInitCommander
 		final Path imageInputPath = Paths.get("io/input");
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(1);
 
-		this.imageState.imageFolder().set(imageInputPath);
+		this.imageState.path().set(imageInputPath);
 		this.log.info("Set ImageInputFolderPath to Model.");
 
-		final InitImageEntryListCommand initCommand = this.commander.createInitImageEntryListCommand(imageInputPath);
+		final InitImagesCommand initCommand = this.commander.createInitImageEntryListCommand(imageInputPath);
 		initCommand.setOnSucceededCommandHandler(InitImagesSucceededHandler.class);
 		initCommand.setExecutor(executor);
 		initCommand.start();

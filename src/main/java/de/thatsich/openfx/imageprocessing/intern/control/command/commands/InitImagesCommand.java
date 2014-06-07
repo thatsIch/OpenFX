@@ -14,16 +14,16 @@ import java.nio.file.Path;
 import java.util.LinkedList;
 import java.util.List;
 
-public class InitImageEntryListCommand extends ACommand<List<IImage>>
+public class InitImagesCommand extends ACommand<List<IImage>>
 {
 	private final Path path;
 	private final ImageFileStorageService storage;
 
 	@Inject
-	protected InitImageEntryListCommand(IImageState state, ImageFileStorageService storage)
+	protected InitImagesCommand(IImageState state, ImageFileStorageService storage)
 	{
 		this.storage = storage;
-		this.path = state.imageFolder().get();
+		this.path = state.path().get();
 	}
 
 	@Override

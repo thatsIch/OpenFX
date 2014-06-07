@@ -8,9 +8,7 @@ import java.nio.file.Path;
 
 public class GetLastLocationSucceededHandler extends ACommandHandler<Path>
 {
-
-	@Inject
-	private IImageState imageState;
+	@Inject private IImageState imageState;
 
 	@Override
 	public void handle(Path value)

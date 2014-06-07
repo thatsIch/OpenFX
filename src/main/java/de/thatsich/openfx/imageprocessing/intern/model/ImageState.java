@@ -14,7 +14,7 @@ public class ImageState implements IImageState
 
 	// Property Getter
 	@Override
-	public ObjectProperty<Path> imageFolder()
+	public ObjectProperty<Path> path()
 	{
 		return this.imageInputFolderPath;
 	}

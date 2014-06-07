@@ -10,11 +10,11 @@ import de.thatsich.openfx.errorgeneration.api.model.IErrorGenerators;
 import de.thatsich.openfx.errorgeneration.api.model.IErrorState;
 import de.thatsich.openfx.errorgeneration.api.model.IErrors;
 import de.thatsich.openfx.errorgeneration.intern.control.command.ErrorInitCommander;
-import de.thatsich.openfx.errorgeneration.intern.control.command.commands.CreateErrorEntryCommand;
-import de.thatsich.openfx.errorgeneration.intern.control.command.commands.DeleteErrorEntryCommand;
+import de.thatsich.openfx.errorgeneration.intern.control.command.commands.CreateErrorCommand;
+import de.thatsich.openfx.errorgeneration.intern.control.command.commands.DeleteErrorCommand;
 import de.thatsich.openfx.errorgeneration.intern.control.command.commands.SetLastErrorCountCommand;
 import de.thatsich.openfx.errorgeneration.intern.control.command.commands.SetLastErrorGeneratorIndexCommand;
-import de.thatsich.openfx.errorgeneration.intern.control.handler.CreateErrorEntrySucceededHandler;
+import de.thatsich.openfx.errorgeneration.intern.control.handler.CreateErrorSucceededHandler;
 import de.thatsich.openfx.errorgeneration.intern.control.handler.DeleteErrorEntrySucceededHandler;
 import de.thatsich.openfx.errorgeneration.intern.control.provider.IErrorCommandProvider;
 import de.thatsich.openfx.imageprocessing.api.control.IImage;
@@ -146,8 +146,8 @@ public class ErrorInputPresenter extends AFXMLPresenter
 
 		for (int step = 0; step < loops; step++)
 		{
-			final CreateErrorEntryCommand command = this.provider.createApplyErrorCommand(errorClass, image, generator);
-			command.setOnSucceededCommandHandler(CreateErrorEntrySucceededHandler.class);
+			final CreateErrorCommand command = this.provider.createApplyErrorCommand(errorClass, image, generator);
+			command.setOnSucceededCommandHandler(CreateErrorSucceededHandler.class);
 			command.setExecutor(executor);
 			command.start();
 		}
@@ -169,7 +169,7 @@ public class ErrorInputPresenter extends AFXMLPresenter
 		final IError entry = this.errors.selected().get();
 		this.log.info("Fetched selected ErrorEntry.");
 
-		final DeleteErrorEntryCommand command = this.provider.createDeleteErrorEntryCommand(entry);
+		final DeleteErrorCommand command = this.provider.createDeleteErrorEntryCommand(entry);
 		command.setOnSucceededCommandHandler(DeleteErrorEntrySucceededHandler.class);
 		command.start();
 		this.log.info("File deleted and removed from ErrorList.");
@@ -193,8 +193,8 @@ public class ErrorInputPresenter extends AFXMLPresenter
 			final Mat image = entry.getImageMat().clone();
 			for (int step = 0; step < loops; step++)
 			{
-				final CreateErrorEntryCommand command = this.provider.createApplyErrorCommand(errorClass, image, generator);
-				command.setOnSucceededCommandHandler(CreateErrorEntrySucceededHandler.class);
+				final CreateErrorCommand command = this.provider.createApplyErrorCommand(errorClass, image, generator);
+				command.setOnSucceededCommandHandler(CreateErrorSucceededHandler.class);
 				command.setExecutor(executor);
 				command.start();
 			}
@@ -220,7 +220,7 @@ public class ErrorInputPresenter extends AFXMLPresenter
 
 		for (IError entry : errorList)
 		{
-			final DeleteErrorEntryCommand command = this.provider.createDeleteErrorEntryCommand(entry);
+			final DeleteErrorCommand command = this.provider.createDeleteErrorEntryCommand(entry);
 			command.setOnSucceededCommandHandler(DeleteErrorEntrySucceededHandler.class);
 			command.setExecutor(executor);
 			command.start();

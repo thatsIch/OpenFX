@@ -5,7 +5,7 @@ import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.openfx.errorgeneration.api.control.entity.IError;
 import de.thatsich.openfx.errorgeneration.api.model.IErrors;
 import de.thatsich.openfx.errorgeneration.intern.control.command.ErrorInitCommander;
-import de.thatsich.openfx.errorgeneration.intern.control.command.commands.SetLastErrorEntryIndexCommand;
+import de.thatsich.openfx.errorgeneration.intern.control.command.commands.SetLastErrorIndexCommand;
 import de.thatsich.openfx.errorgeneration.intern.control.provider.IErrorCommandProvider;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
@@ -61,7 +61,7 @@ public class ErrorListPresenter extends AFXMLPresenter
 			this.errors.selected().set(newValue);
 
 			final int index = this.nodeTableViewErrorList.getSelectionModel().getSelectedIndex();
-			final SetLastErrorEntryIndexCommand command = this.provider.createSetLastErrorEntryIndexCommand(index);
+			final SetLastErrorIndexCommand command = this.provider.createSetLastErrorEntryIndexCommand(index);
 			command.start();
 		});
 		this.log.info("Bound Selection to Model.");

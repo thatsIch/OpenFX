@@ -15,9 +15,7 @@ import java.util.List;
  */
 public class GetLastImageEntryIndexSucceededHandler extends ACommandHandler<Integer>
 {
-
-	@Inject
-	private IImages images;
+	@Inject private IImages images;
 
 	@Override
 	public void handle(Integer value)
