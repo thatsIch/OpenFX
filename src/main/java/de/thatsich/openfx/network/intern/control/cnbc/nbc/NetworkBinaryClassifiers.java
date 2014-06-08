@@ -1,7 +1,7 @@
 package de.thatsich.openfx.network.intern.control.cnbc.nbc;
 
-import de.thatsich.openfx.classification.api.control.IBinaryClassification;
-import de.thatsich.openfx.classification.intern.control.classifier.core.IBinaryClassifier;
+import de.thatsich.openfx.classification.api.control.entity.IBinaryClassification;
+import de.thatsich.openfx.classification.api.control.entity.IBinaryClassifier;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
 import de.thatsich.openfx.featureextraction.api.model.IFeatures;
 import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVector;

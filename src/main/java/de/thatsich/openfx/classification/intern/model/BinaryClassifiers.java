@@ -1,7 +1,7 @@
 package de.thatsich.openfx.classification.intern.model;
 
+import de.thatsich.openfx.classification.api.control.entity.IBinaryClassifier;
 import de.thatsich.openfx.classification.api.model.IBinaryClassifiers;
-import de.thatsich.openfx.classification.intern.control.classifier.core.IBinaryClassifier;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleListProperty;

@@ -2,7 +2,7 @@ package de.thatsich.openfx.prediction.intern.control.provider;
 
 import com.google.inject.assistedinject.Assisted;
 import de.thatsich.core.guice.ICommandProvider;
-import de.thatsich.openfx.classification.api.control.IBinaryClassification;
+import de.thatsich.openfx.classification.api.control.entity.IBinaryClassification;
 import de.thatsich.openfx.errorgeneration.api.control.entity.IErrorGenerator;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureExtractor;
 import de.thatsich.openfx.imageprocessing.api.control.IImage;

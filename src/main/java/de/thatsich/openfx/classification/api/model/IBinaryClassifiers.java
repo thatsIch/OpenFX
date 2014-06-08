@@ -1,6 +1,6 @@
 package de.thatsich.openfx.classification.api.model;
 
-import de.thatsich.openfx.classification.intern.control.classifier.core.IBinaryClassifier;
+import de.thatsich.openfx.classification.api.control.entity.IBinaryClassifier;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
 

@@ -1,6 +1,6 @@
-package de.thatsich.openfx.classification.intern.control.classifier.core;
+package de.thatsich.openfx.classification.api.control.entity;
 
-import de.thatsich.openfx.classification.api.control.IBinaryClassification;
+import de.thatsich.openfx.classification.intern.control.classifier.core.BinaryClassifierConfiguration;
 import org.opencv.core.MatOfFloat;
 
 public interface IBinaryClassifier

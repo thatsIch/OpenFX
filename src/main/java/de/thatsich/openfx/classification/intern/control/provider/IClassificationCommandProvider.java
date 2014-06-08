@@ -1,8 +1,8 @@
 package de.thatsich.openfx.classification.intern.control.provider;
 
 import de.thatsich.core.guice.ICommandProvider;
-import de.thatsich.openfx.classification.api.control.IBinaryClassification;
-import de.thatsich.openfx.classification.intern.control.classifier.core.IBinaryClassifier;
+import de.thatsich.openfx.classification.api.control.entity.IBinaryClassification;
+import de.thatsich.openfx.classification.api.control.entity.IBinaryClassifier;
 import de.thatsich.openfx.classification.intern.control.command.commands.RemoveBinaryClassificationCommand;
 import de.thatsich.openfx.classification.intern.control.command.commands.SetLastBinaryClassificationIndexCommand;
 import de.thatsich.openfx.classification.intern.control.command.commands.SetLastBinaryClassifierIndexCommand;

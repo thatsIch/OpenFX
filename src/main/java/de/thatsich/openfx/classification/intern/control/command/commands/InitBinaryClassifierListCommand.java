@@ -1,9 +1,9 @@
 package de.thatsich.openfx.classification.intern.control.command.commands;
 
+import de.thatsich.core.javafx.ACommand;
+import de.thatsich.openfx.classification.api.control.entity.IBinaryClassifier;
 import de.thatsich.openfx.classification.intern.control.classifier.RandomForestBinaryClassifier;
 import de.thatsich.openfx.classification.intern.control.classifier.SVMBinaryClassifier;
-import de.thatsich.openfx.classification.intern.control.classifier.core.IBinaryClassifier;
-import de.thatsich.core.javafx.ACommand;
 
 import java.util.ArrayList;
 import java.util.List;

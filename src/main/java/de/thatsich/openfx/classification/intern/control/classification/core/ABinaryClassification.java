@@ -1,9 +1,9 @@
 package de.thatsich.openfx.classification.intern.control.classification.core;
 
 import com.google.inject.Inject;
-import de.thatsich.openfx.classification.api.control.IBinaryClassification;
-import de.thatsich.openfx.classification.intern.control.classifier.core.BinaryClassifierConfiguration;
 import de.thatsich.core.Log;
+import de.thatsich.openfx.classification.api.control.entity.IBinaryClassification;
+import de.thatsich.openfx.classification.intern.control.classifier.core.BinaryClassifierConfiguration;
 import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;

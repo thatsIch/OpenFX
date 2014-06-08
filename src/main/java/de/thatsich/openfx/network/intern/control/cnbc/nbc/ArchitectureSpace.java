@@ -1,6 +1,6 @@
 package de.thatsich.openfx.network.intern.control.cnbc.nbc;
 
-import de.thatsich.openfx.classification.intern.control.classifier.core.IBinaryClassifier;
+import de.thatsich.openfx.classification.api.control.entity.IBinaryClassifier;
 
 /**
  * @author thatsIch
