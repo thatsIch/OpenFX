@@ -33,7 +33,6 @@ public class FeatureDisplayPresenter extends AFXMLPresenter
 	protected void bindComponents()
 	{
 		this.bindTableViewContent();
-		this.bindTableViewSelectionModel();
 		this.bindTableViewCellValue();
 
 		this.bindLabelContent();
@@ -43,18 +42,6 @@ public class FeatureDisplayPresenter extends AFXMLPresenter
 	{
 		this.nodeTableViewVectors.itemsProperty().bind(this.vectors.get());
 		this.log.info("Bound nodeTableViewVectors to vectors.");
-	}
-
-	private void bindTableViewSelectionModel()
-	{
-		final TableView.TableViewSelectionModel<IFeatureVector> selectionModel = this.nodeTableViewVectors.getSelectionModel();
-
-		this.vectors.selected().bind(selectionModel.selectedItemProperty());
-		this.log.info("Bound Model to TableView.");
-
-		// change model > select
-		this.vectors.selected().addListener((observable, oldValue, newValue) -> selectionModel.select(newValue));
-		this.log.info("Bound TableView to Model.");
 	}
 
 	private void bindTableViewCellValue()
@@ -80,6 +67,8 @@ public class FeatureDisplayPresenter extends AFXMLPresenter
 				this.nodeLabelDimension.setText(null);
 			}
 		});
+
+
 		this.log.info("Bound Labels to changing FeatureVectorSet.");
 	}
 

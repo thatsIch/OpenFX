@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import de.thatsich.core.javafx.ACommandHandler;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
 import de.thatsich.openfx.featureextraction.api.model.IFeatures;
+import de.thatsich.openfx.featureextraction.api.model.IVectors;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ import java.util.List;
 public class DeleteFeatureSucceededHandler extends ACommandHandler<IFeature>
 {
 	@Inject private IFeatures features;
+	@Inject private IVectors vectors;
 
 	@Override
 	public void handle(IFeature feature)
@@ -26,13 +28,14 @@ public class DeleteFeatureSucceededHandler extends ACommandHandler<IFeature>
 
 		if (list.size() > 0)
 		{
-			final IFeature first = list.get(0);
-			this.features.selected().set(first);
+			final IFeature firstFeature = list.get(0);
+			this.features.selected().set(firstFeature);
 			this.log.info("Reset Selection to first FeatureVectorSet.");
 		}
 		else
 		{
 			this.features.selected().set(null);
+			this.vectors.selected().set(null);
 			this.log.info("Reset Selection to null.");
 		}
 	}

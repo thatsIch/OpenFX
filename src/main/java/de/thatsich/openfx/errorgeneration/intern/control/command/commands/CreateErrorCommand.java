@@ -51,7 +51,7 @@ public class CreateErrorCommand extends ACommand<IError>
 
 		final IError entry = this.matToErrorEntry(this.imageMat, error);
 		final Mat modified = entry.modifiedProperty().get();
-		// CvSmooth, CvThreshold
+
 		if (this.smooth)
 		{
 			final Mat dst = Mat.zeros(error.size(), error.type());

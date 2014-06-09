@@ -44,10 +44,8 @@ public class ExtractFeatureSucceededHandler extends ACommandHandler<IFeature>
 	private IFeature merge(IFeatures features, IFeature feature)
 	{
 		final Optional<IFeature> maybeMatch = this.getMatchingFeature(features, feature);
-		System.out.println("maybeMatch = " + maybeMatch);
 		if (maybeMatch.isPresent())
 		{
-			System.out.println("maybeMatch.get() = " + maybeMatch.get());
 			final IFeature match = maybeMatch.get();
 			final List<IFeatureVector> vectors = feature.vectors();
 

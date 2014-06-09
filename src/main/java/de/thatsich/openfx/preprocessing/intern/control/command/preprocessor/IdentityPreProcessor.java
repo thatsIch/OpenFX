@@ -34,7 +34,7 @@ public class IdentityPreProcessor extends APreProcessor
 		network.getStructure().finalizeStructure();
 		network.reset();
 
-		final String name = config.name.getName();
+		final String name = config.name.get();
 		final int inputSize = config.inputSize.get();
 		final String id = config.id.get();
 		final PreProcessingConfig newConfig = new PreProcessingConfig(name, inputSize, inputSize, id);

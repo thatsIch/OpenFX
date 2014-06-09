@@ -3,12 +3,12 @@ package de.thatsich.openfx;
 import com.cathive.fx.guice.GuiceApplication;
 import com.google.inject.Inject;
 import com.google.inject.Module;
-import de.thatsich.openfx.taboverview.api.view.ITabOverviewView;
-import de.thatsich.openfx.taboverview.api.guice.TabOverviewCommandModule;
-import de.thatsich.openfx.taboverview.api.guice.TabOverviewWiringModule;
 import de.thatsich.core.guice.LoggerModule;
 import de.thatsich.core.guice.PostInitModule;
 import de.thatsich.core.opencv.OpenCVLoader;
+import de.thatsich.openfx.taboverview.api.guice.TabOverviewCommandModule;
+import de.thatsich.openfx.taboverview.api.guice.TabOverviewWiringModule;
+import de.thatsich.openfx.taboverview.api.view.ITabOverviewView;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -18,8 +18,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
-// TODO CNBC
-// TODO shift denoising and such to Error Generation
 // TODO vllt einfach ein randomized EG etc haben, der dann einfach einen anderen aus der liste auswählt
 // Converters.Mat_to_vector_float( positiveTrainData, null );
 

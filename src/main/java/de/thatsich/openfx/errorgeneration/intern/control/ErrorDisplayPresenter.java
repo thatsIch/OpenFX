@@ -55,33 +55,28 @@ public class ErrorDisplayPresenter extends AFXMLPresenter
 
 	private Image errorToImage(IError entry)
 	{
-		final Mat originalMat = entry.originalProperty().get().clone();
-		final Mat onlyErrorMat = entry.errorProperty().get();
+		final Mat modified = entry.modifiedProperty().get().clone();
+		final Mat error = entry.errorProperty().get();
 
-		if (!originalMat.size().equals(onlyErrorMat.size()))
-		{
-			throw new IllegalStateException("Original Size: " + originalMat.size() + ", ErrorSize: " + onlyErrorMat.size());
-		}
-
-		// convert originalMat into RGB
-		Imgproc.cvtColor(originalMat, originalMat, Imgproc.COLOR_GRAY2RGB);
+		// convert modified into RGB
+		Imgproc.cvtColor(modified, modified, Imgproc.COLOR_GRAY2RGB);
 
 		// overwrite error pixel in red layer
-		for (int row = 0; row < originalMat.rows(); row++)
+		for (int row = 0; row < modified.rows(); row++)
 		{
-			for (int col = 0; col < originalMat.cols(); col++)
+			for (int col = 0; col < modified.cols(); col++)
 			{
-				final int value = (int) onlyErrorMat.get(row, col)[0];
+				final int value = (int) error.get(row, col)[0];
 
-				// if is error pixel overwrite tuple in original mat
+				// if is error pixel overwrite tuple in modified mat
 				if (value > 0)
 				{
 					final double[] buffer = {0, 0, 255};
-					originalMat.put(row, col, buffer);
+					modified.put(row, col, buffer);
 				}
 			}
 		}
 
-		return Images.toImage(originalMat);
+		return Images.toImage(modified);
 	}
 }

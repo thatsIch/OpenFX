@@ -66,6 +66,11 @@ public class FeatureListPresenter extends AFXMLPresenter
 				command.start();
 				this.log.info("Seleced index " + index);
 			}
+			else
+			{
+				this.features.selected().set(null);
+				this.vectors.get().set(null);
+			}
 		});
 		this.log.info("Bound Model to TableView.");
 
