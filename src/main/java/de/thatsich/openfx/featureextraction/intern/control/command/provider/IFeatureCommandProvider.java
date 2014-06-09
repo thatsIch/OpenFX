@@ -1,4 +1,4 @@
-package de.thatsich.openfx.featureextraction.intern.control.command;
+package de.thatsich.openfx.featureextraction.intern.control.command.provider;
 
 import de.thatsich.core.guice.ICommandProvider;
 import de.thatsich.openfx.errorgeneration.api.control.entity.IError;

@@ -1,7 +1,7 @@
 package de.thatsich.openfx.featureextraction.api.guice;
 
-import de.thatsich.openfx.featureextraction.intern.control.command.IFeatureCommandProvider;
-import de.thatsich.openfx.featureextraction.intern.control.command.IFeatureInitCommandProvider;
+import de.thatsich.openfx.featureextraction.intern.control.command.provider.IFeatureCommandProvider;
+import de.thatsich.openfx.featureextraction.intern.control.command.provider.IFeatureInitCommandProvider;
 import de.thatsich.core.guice.ACommandModule;
 import de.thatsich.core.guice.ICommandProvider;
 

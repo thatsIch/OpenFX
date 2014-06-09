@@ -24,22 +24,27 @@ import java.util.concurrent.ExecutorService;
 public class ClassificationInitCommander
 {
 	@Inject private Log log;
-
-	@Inject private IClassificationInitCommandProvider commander;
 	@Inject private IClassificationState trainState;
+	@Inject private IClassificationInitCommandProvider commander;
 
 	@Inject
 	private void init()
 	{
-		this.initBinaryClassifierList();
-		this.initBinaryClassificationList();
+		this.initClassificationState();
+		this.initClassifiers();
+		this.initClassifications();
+	}
+
+	private void initClassificationState()
+	{
+		this.initClassificationPath();
 	}
 
 	/**
 	 * Initialize the List of BinaryClassifiers and preselects the last selected
 	 * one.
 	 */
-	private void initBinaryClassifierList()
+	private void initClassifiers()
 	{
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(1);
 
@@ -63,15 +68,11 @@ public class ClassificationInitCommander
 	 * Initialize the List of BinaryClassification and preselects the last
 	 * selected one.
 	 */
-	private void initBinaryClassificationList()
+	private void initClassifications()
 	{
-		final Path folderPath = Paths.get("io/binaryclassifier");
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(1);
 
-		this.trainState.path().set(folderPath);
-		this.log.info("Set ClassificationInputFolderPath to Model.");
-
-		final InitBinaryClassificationsCommand initCommand = this.commander.createInitBinaryClassificationListCommand(folderPath);
+		final InitBinaryClassificationsCommand initCommand = this.commander.createInitBinaryClassificationListCommand();
 		initCommand.setOnSucceededCommandHandler(InitBinaryClassificationListSucceededHandler.class);
 		initCommand.setExecutor(executor);
 		initCommand.start();
@@ -85,5 +86,12 @@ public class ClassificationInitCommander
 
 		executor.shutdown();
 		this.log.info("Shutting down Executor.");
+	}
+
+	private void initClassificationPath()
+	{
+		final Path folderPath = Paths.get("io/binaryclassifier");
+		this.trainState.path().set(folderPath);
+		this.log.info("Set ErrorPath in Model.");
 	}
 }

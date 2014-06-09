@@ -15,6 +15,7 @@ import de.thatsich.openfx.featureextraction.intern.control.command.handler.GetLa
 import de.thatsich.openfx.featureextraction.intern.control.command.handler.GetLastTileSizeSucceededHandler;
 import de.thatsich.openfx.featureextraction.intern.control.command.handler.InitFeatureExtractorsSucceededHandler;
 import de.thatsich.openfx.featureextraction.intern.control.command.handler.InitFeaturesSucceededHandler;
+import de.thatsich.openfx.featureextraction.intern.control.command.provider.IFeatureInitCommandProvider;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;

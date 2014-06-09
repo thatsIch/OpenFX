@@ -22,7 +22,6 @@ public abstract class AFileStorageService<T> implements IFileStorageService<T>
 	protected AFileStorageService(Path storagePath)
 	{
 		this.storagePath = storagePath;
-		System.out.println("STORAGE " + this.getClass().getSimpleName() + " : " + this.storagePath);
 		this.createInvalidDirectory(storagePath);
 	}
 

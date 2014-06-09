@@ -1,7 +1,7 @@
 package de.thatsich.openfx.network.intern.control.command;
 
 import com.google.inject.Inject;
-import de.thatsich.core.javafx.AInitCommander;
+import de.thatsich.core.Log;
 import de.thatsich.core.javafx.CommandExecutor;
 import de.thatsich.openfx.network.api.model.INetworkState;
 import de.thatsich.openfx.network.intern.control.command.commands.GetLastNetworkIndexCommand;
@@ -18,12 +18,10 @@ import java.util.concurrent.ExecutorService;
  * @author thatsIch
  * @since 01.06.2014.
  */
-public class NetworkInitCommander extends AInitCommander
+public class NetworkInitCommander
 {
-	// Model
+	@Inject private Log log;
 	@Inject private INetworkState state;
-
-	// Command
 	@Inject private INetworkInitCommandProvider provider;
 
 	@Inject

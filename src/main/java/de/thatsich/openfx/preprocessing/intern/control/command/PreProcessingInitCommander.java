@@ -63,7 +63,7 @@ public class PreProcessingInitCommander
 		this.state.path().set(path);
 		this.log.info("Set " + path + " to Model.");
 
-		final InitPreProcessingsCommand initCommand = this.commander.createInitPreProcessingsCommand(path);
+		final InitPreProcessingsCommand initCommand = this.commander.createInitPreProcessingsCommand();
 		initCommand.setOnSucceededCommandHandler(InitPreProcessingsSucceededHandler.class);
 		initCommand.setExecutor(executor);
 		initCommand.start();

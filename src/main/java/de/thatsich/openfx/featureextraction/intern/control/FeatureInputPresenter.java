@@ -11,7 +11,7 @@ import de.thatsich.openfx.featureextraction.api.model.IFeatureExtractors;
 import de.thatsich.openfx.featureextraction.api.model.IFeatureState;
 import de.thatsich.openfx.featureextraction.api.model.IFeatures;
 import de.thatsich.openfx.featureextraction.intern.control.command.FeatureInitCommander;
-import de.thatsich.openfx.featureextraction.intern.control.command.IFeatureCommandProvider;
+import de.thatsich.openfx.featureextraction.intern.control.command.provider.IFeatureCommandProvider;
 import de.thatsich.openfx.featureextraction.intern.control.command.commands.DeleteFeatureCommand;
 import de.thatsich.openfx.featureextraction.intern.control.command.commands.ExtractFeatureCommand;
 import de.thatsich.openfx.featureextraction.intern.control.handler.DeleteFeatureSucceededHandler;

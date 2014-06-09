@@ -6,13 +6,11 @@ import de.thatsich.openfx.preprocessing.intern.control.command.commands.GetLastP
 import de.thatsich.openfx.preprocessing.intern.control.command.commands.InitPreProcessingsCommand;
 import de.thatsich.openfx.preprocessing.intern.control.command.commands.InitPreProcessorsCommand;
 
-import java.nio.file.Path;
-
 public interface IPreProcessingInitCommandProvider extends ICommandProvider
 {
 	InitPreProcessorsCommand createInitPreProcessorListCommand();
 
-	InitPreProcessingsCommand createInitPreProcessingsCommand(Path path);
+	InitPreProcessingsCommand createInitPreProcessingsCommand();
 
 	GetLastPreProcessorIndexCommand createGetLastPreProcessorIndexCommand();
 

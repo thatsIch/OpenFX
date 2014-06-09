@@ -71,9 +71,7 @@ public class ErrorInitCommander
 	 */
 	private void initErrors()
 	{
-
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(1);
-
 
 		final InitErrorsCommand initCommand = this.commander.createInitErrorsCommand();
 		initCommand.setOnSucceededCommandHandler(InitErrorsSucceededHandler.class);

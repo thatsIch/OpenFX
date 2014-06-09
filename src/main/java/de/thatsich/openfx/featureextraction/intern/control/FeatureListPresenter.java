@@ -6,7 +6,7 @@ import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
 import de.thatsich.openfx.featureextraction.api.model.IFeatures;
 import de.thatsich.openfx.featureextraction.api.model.IVectors;
 import de.thatsich.openfx.featureextraction.intern.control.command.FeatureInitCommander;
-import de.thatsich.openfx.featureextraction.intern.control.command.IFeatureCommandProvider;
+import de.thatsich.openfx.featureextraction.intern.control.command.provider.IFeatureCommandProvider;
 import de.thatsich.openfx.featureextraction.intern.control.command.commands.SetLastFeatureIndexCommand;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;

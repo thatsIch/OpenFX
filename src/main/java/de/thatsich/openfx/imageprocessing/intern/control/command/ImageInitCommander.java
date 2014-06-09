@@ -36,7 +36,7 @@ public class ImageInitCommander
 		this.imageState.path().set(imageInputPath);
 		this.log.info("Set ImageInputFolderPath to Model.");
 
-		final InitImagesCommand initCommand = this.commander.createInitImagesCommand(imageInputPath);
+		final InitImagesCommand initCommand = this.commander.createInitImagesCommand();
 		initCommand.setOnSucceededCommandHandler(InitImagesSucceededHandler.class);
 		initCommand.setExecutor(executor);
 		initCommand.start();
