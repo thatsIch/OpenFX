@@ -36,7 +36,7 @@ public class TrainPreProcessorCommand extends ACommand<IPreProcessing>
 	protected IPreProcessing call() throws Exception
 	{
 		final String preProcessorName = this.preProcessor.getName();
-		final int featureVectorSize = this.feature.vectors().size();
+		final int featureVectorSize = this.feature.vectors().get(0).vector().size();
 		final String id = UUID.randomUUID().toString();
 		this.log.info(String.format("Prepared all data for Training [%s, %d, %s].", preProcessorName, featureVectorSize, id));
 
