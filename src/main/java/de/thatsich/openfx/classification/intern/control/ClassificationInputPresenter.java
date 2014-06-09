@@ -9,7 +9,7 @@ import de.thatsich.openfx.classification.api.model.IBinaryClassifications;
 import de.thatsich.openfx.classification.api.model.IBinaryClassifiers;
 import de.thatsich.openfx.classification.api.model.IClassificationState;
 import de.thatsich.openfx.classification.intern.control.command.ClassificationInitCommander;
-import de.thatsich.openfx.classification.intern.control.command.commands.RemoveBinaryClassificationCommand;
+import de.thatsich.openfx.classification.intern.control.command.commands.DeleteBinaryClassificationCommand;
 import de.thatsich.openfx.classification.intern.control.command.commands.SetLastBinaryClassifierIndexCommand;
 import de.thatsich.openfx.classification.intern.control.command.commands.TrainBinaryClassifierCommand;
 import de.thatsich.openfx.classification.intern.control.handler.RemoveBinaryClassificationSucceededHandler;
@@ -104,12 +104,11 @@ public class ClassificationInputPresenter extends AFXMLPresenter
 	@FXML
 	private void onTrainBinaryClassifierAction()
 	{
-		final Path binaryClassifierFolderPath = this.trainState.path().get();
-		final IBinaryClassifier selectedBinaryClassfier = this.binaryClassifiers.selected().get();
-		final List<IFeature> features = this.features.get();
-		final IFeature selected = this.features.selected().get();
+		final Path path = this.trainState.path().get();
+		final IBinaryClassifier selectedBC = this.binaryClassifiers.selected().get();
+		final IFeature selectedF = this.features.selected().get();
 
-		final TrainBinaryClassifierCommand command = this.commander.createTrainBinaryClassifierCommand(binaryClassifierFolderPath, selectedBinaryClassfier, selected, features);
+		final TrainBinaryClassifierCommand command = this.commander.createTrainBinaryClassifierCommand(path, selectedBC, selectedF);
 		command.setOnSucceededCommandHandler(TrainBinaryClassifierSucceededHandler.class);
 		command.start();
 	}
@@ -119,7 +118,7 @@ public class ClassificationInputPresenter extends AFXMLPresenter
 	{
 		final IBinaryClassification selectedBinaryClassification = this.binaryClassifications.selected().get();
 
-		final RemoveBinaryClassificationCommand command = this.commander.createRemoveBinaryClassificationCommand(selectedBinaryClassification);
+		final DeleteBinaryClassificationCommand command = this.commander.createRemoveBinaryClassificationCommand(selectedBinaryClassification);
 		command.setOnSucceededCommandHandler(RemoveBinaryClassificationSucceededHandler.class);
 		command.start();
 		this.log.info("Commanded BinaryClassification Removal.");
@@ -134,7 +133,7 @@ public class ClassificationInputPresenter extends AFXMLPresenter
 
 		for (IBinaryClassification classification : binaryClassificationList)
 		{
-			final RemoveBinaryClassificationCommand command = this.commander.createRemoveBinaryClassificationCommand(classification);
+			final DeleteBinaryClassificationCommand command = this.commander.createRemoveBinaryClassificationCommand(classification);
 			command.setOnSucceededCommandHandler(RemoveBinaryClassificationSucceededHandler.class);
 			command.setExecutor(executor);
 			command.start();

@@ -8,7 +8,7 @@ import de.thatsich.openfx.preprocessing.api.model.IPreProcessingState;
 import de.thatsich.openfx.preprocessing.intern.control.command.commands.GetLastPreProcessingIndexCommand;
 import de.thatsich.openfx.preprocessing.intern.control.command.commands.GetLastPreProcessorIndexCommand;
 import de.thatsich.openfx.preprocessing.intern.control.command.commands.InitPreProcessingsCommand;
-import de.thatsich.openfx.preprocessing.intern.control.command.commands.InitPreProcessorListCommand;
+import de.thatsich.openfx.preprocessing.intern.control.command.commands.InitPreProcessorsCommand;
 import de.thatsich.openfx.preprocessing.intern.control.command.handler.GetLastPreProcessingIndexSucceededHandler;
 import de.thatsich.openfx.preprocessing.intern.control.command.handler.GetLastPreProcessorIndexSucceededHandler;
 import de.thatsich.openfx.preprocessing.intern.control.command.handler.InitPreProcessingsSucceededHandler;
@@ -39,7 +39,7 @@ public class PreProcessingInitCommander
 	{
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(1);
 
-		final InitPreProcessorListCommand initCommand = this.commander.createInitPreProcessorListCommand();
+		final InitPreProcessorsCommand initCommand = this.commander.createInitPreProcessorListCommand();
 		initCommand.setOnSucceededCommandHandler(InitPreProcessorListSucceededHandler.class);
 		initCommand.setExecutor(executor);
 		initCommand.start();

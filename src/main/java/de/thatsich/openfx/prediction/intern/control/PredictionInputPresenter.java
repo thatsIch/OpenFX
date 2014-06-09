@@ -81,12 +81,12 @@ public class PredictionInputPresenter extends AFXMLPresenter
 	{
 		final Path predictionFolderPath = this.predictionState.path().get();
 		final IBinaryClassification binaryClassification = this.binaryClassifications.selected().get();
-		final String errorGeneratorName = binaryClassification.getErrorNameProperty().get();
-		final String featureExtractorName = binaryClassification.getExtractorNameProperty().get();
+		final String errorGeneratorName = binaryClassification.errorNameProperty().get();
+		final String featureExtractorName = binaryClassification.extractorNameProperty().get();
 		this.log.info("Prepared all information.");
 
 		final IImage imageEntry = this.imageEntries.selected().get();
-		final int frameSize = binaryClassification.getFrameSizeProperty().get();
+		final int frameSize = binaryClassification.tileSizeProperty().get();
 		final IErrorGenerator errorGenerator = this.getErrorGenerator(errorGeneratorName);
 		final IFeatureExtractor featureExtractor = this.getFeatureExtractor(featureExtractorName);
 		this.log.info("Prepared all Tools.");

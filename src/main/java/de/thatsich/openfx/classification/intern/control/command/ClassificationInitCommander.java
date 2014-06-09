@@ -2,18 +2,18 @@ package de.thatsich.openfx.classification.intern.control.command;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import de.thatsich.core.Log;
+import de.thatsich.core.javafx.CommandExecutor;
 import de.thatsich.openfx.classification.api.model.IClassificationState;
 import de.thatsich.openfx.classification.intern.control.command.commands.GetLastBinaryClassificationIndexCommand;
 import de.thatsich.openfx.classification.intern.control.command.commands.GetLastBinaryClassifierIndexCommand;
-import de.thatsich.openfx.classification.intern.control.command.commands.InitBinaryClassificationListCommand;
+import de.thatsich.openfx.classification.intern.control.command.commands.InitBinaryClassificationsCommand;
 import de.thatsich.openfx.classification.intern.control.command.commands.InitBinaryClassifierListCommand;
 import de.thatsich.openfx.classification.intern.control.handler.GetLastBinaryClassificationIndexSucceededHandler;
 import de.thatsich.openfx.classification.intern.control.handler.GetLastBinaryClassifierIndexSucceededHandler;
 import de.thatsich.openfx.classification.intern.control.handler.InitBinaryClassificationListSucceededHandler;
 import de.thatsich.openfx.classification.intern.control.handler.InitBinaryClassifierListSucceededHandler;
 import de.thatsich.openfx.classification.intern.control.provider.IClassificationInitCommandProvider;
-import de.thatsich.core.Log;
-import de.thatsich.core.javafx.CommandExecutor;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -71,7 +71,7 @@ public class ClassificationInitCommander
 		this.trainState.path().set(folderPath);
 		this.log.info("Set ClassificationInputFolderPath to Model.");
 
-		final InitBinaryClassificationListCommand initCommand = this.commander.createInitBinaryClassificationListCommand(folderPath);
+		final InitBinaryClassificationsCommand initCommand = this.commander.createInitBinaryClassificationListCommand(folderPath);
 		initCommand.setOnSucceededCommandHandler(InitBinaryClassificationListSucceededHandler.class);
 		initCommand.setExecutor(executor);
 		initCommand.start();

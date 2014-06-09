@@ -1,11 +1,10 @@
 package de.thatsich.openfx.classification.api.control.entity;
 
+import de.thatsich.core.IEntity;
+import de.thatsich.openfx.classification.intern.control.classifier.core.BinaryClassificationConfig;
 import javafx.beans.property.ReadOnlyIntegerProperty;
-import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyStringProperty;
 import org.opencv.core.Mat;
-
-import java.nio.file.Path;
 
 
 /**
@@ -18,7 +17,7 @@ import java.nio.file.Path;
  *
  * @author thatsIch
  */
-public interface IBinaryClassification
+public interface IBinaryClassification extends IEntity
 {
 	/**
 	 * Gets the name of the BinaryClassification
@@ -37,58 +36,59 @@ public interface IBinaryClassification
 	double predict(Mat image);
 
 	/**
-	 * Loads a BinaryClassification saved as file
+	 * Saves to a full string path
 	 *
-	 * @param fileName Name of BinaryClassification File
+	 * @param filePath full string path
 	 */
-	void load(String fileName);
+	void save(String filePath);
 
 	/**
-	 * Saves a BinaryClassification to file
+	 * Loads from a full string path
 	 *
-	 * @param fileName Name of BinaryClassification File
+	 * @param filePath full string path
 	 */
-	void save(String fileName);
-
-	/**
-	 * Gets Property of FilePath
-	 *
-	 * @return Property of FilePath
-	 */
-	ReadOnlyObjectProperty<Path> getFilePathProperty();
+	void load(String filePath);
 
 	/**
 	 * Gets Property of FilePath
 	 *
 	 * @return Property of FilePath
 	 */
-	ReadOnlyStringProperty getClassificationNameProperty();
+	ReadOnlyStringProperty classificationNameProperty();
 
 	/**
 	 * Gets Property of ExtractorName
 	 *
 	 * @return Property of ExtractorName
 	 */
-	ReadOnlyStringProperty getExtractorNameProperty();
+	ReadOnlyStringProperty extractorNameProperty();
 
 	/**
 	 * Gets Property of FrameSize
 	 *
 	 * @return Property of FrameSize
 	 */
-	ReadOnlyIntegerProperty getFrameSizeProperty();
+	ReadOnlyIntegerProperty tileSizeProperty();
 
 	/**
 	 * Gets Property of ErrorName
 	 *
 	 * @return Property of ErrorName
 	 */
-	ReadOnlyStringProperty getErrorNameProperty();
+	ReadOnlyStringProperty errorNameProperty();
 
 	/**
 	 * Gets Property of ID
 	 *
 	 * @return Property of ID
 	 */
-	ReadOnlyStringProperty getIdProperty();
+	ReadOnlyStringProperty idProperty();
+
+	/**
+	 * Gets the config of the BC
+	 *
+	 * @return config of the BC
+	 */
+	@Override
+	BinaryClassificationConfig getConfig();
 }

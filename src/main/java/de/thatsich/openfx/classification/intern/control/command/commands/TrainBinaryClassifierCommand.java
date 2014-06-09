@@ -5,89 +5,71 @@ import com.google.inject.assistedinject.Assisted;
 import de.thatsich.core.javafx.ACommand;
 import de.thatsich.openfx.classification.api.control.entity.IBinaryClassification;
 import de.thatsich.openfx.classification.api.control.entity.IBinaryClassifier;
-import de.thatsich.openfx.classification.intern.control.classifier.core.BinaryClassifierConfiguration;
+import de.thatsich.openfx.classification.intern.control.classifier.core.BinaryClassificationConfig;
+import de.thatsich.openfx.classification.intern.control.command.service.ClassificationFileStorageService;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureVector;
 import org.opencv.core.MatOfFloat;
 
-import java.nio.file.Path;
-import java.util.List;
 import java.util.UUID;
 
 
 public class TrainBinaryClassifierCommand extends ACommand<IBinaryClassification>
 {
 	// Properties
-	private final Path binaryClassifierFolderPath;
 	private final IBinaryClassifier binaryClassifier;
-	private final IFeature selectedFeatureVector;
-	private final List<IFeature> featureVectorList;
+	private final IFeature feature;
+	private final ClassificationFileStorageService storage;
 
 	@Inject
-	public TrainBinaryClassifierCommand(@Assisted Path binaryClassifierFolderPath, @Assisted IBinaryClassifier classifier, @Assisted IFeature selected, @Assisted List<IFeature> all)
+	public TrainBinaryClassifierCommand(@Assisted IBinaryClassifier classifier, @Assisted IFeature feature, ClassificationFileStorageService storage)
 	{
-		this.binaryClassifierFolderPath = binaryClassifierFolderPath;
 		this.binaryClassifier = classifier;
-		this.selectedFeatureVector = selected;
-		this.featureVectorList = all;
+		this.feature = feature;
+		this.storage = storage;
 	}
 
 	@Override
 	protected IBinaryClassification call() throws Exception
 	{
 		final String binaryClassifierName = this.binaryClassifier.getName();
-		final String featureExtractorName = this.selectedFeatureVector.extractorName().getName();
-		final int frameSize = this.selectedFeatureVector.tileSize().get();
-		final String errorClassName = this.selectedFeatureVector.className().getName();
+		final String featureExtractorName = this.feature.extractorName().get();
+		final int tileSize = this.feature.tileSize().get();
+		final String errorClassName = this.feature.className().get();
 		final String id = UUID.randomUUID().toString();
 
 		final MatOfFloat positive = new MatOfFloat();
 		final MatOfFloat negative = new MatOfFloat();
 		this.log.info("Prepared all data for Training.");
 
-		// run through all FeatureVectorSets matching same categories
-		// (same FrameSize, same Extractor, same ErrorClass)
-		// which is not the selected one and their data to train
-		// extract all float lists and transform them into MatOfFloats
-		// use .t() on them to transpose them
-		for (IFeature feature : this.featureVectorList)
+		for (IFeatureVector vector : this.feature.vectors())
 		{
-			// select only with same FeatureExtractor and FrameSize
-			if (feature.extractorName().get().equals(featureExtractorName) && feature.tileSize().get() == frameSize)
+			final float[] floatArray = new float[vector.vector().size()];
+			int index = 0;
+			for (float f : vector.vector())
 			{
-				for (IFeatureVector vector : feature.vectors())
-				{
-					final float[] floatArray = new float[vector.vector().size()];
-					int index = 0;
-					for (float f : vector.vector())
-					{
-						floatArray[index] = f;
-						index++;
-					}
+				floatArray[index] = f;
+				index++;
+			}
 
-					if (vector.isPositive().get())
-					{
-						positive.push_back(new MatOfFloat(floatArray).t());
-					}
-					else
-					{
-						negative.push_back(new MatOfFloat(floatArray).t());
-					}
-				}
+			if (vector.isPositive().get())
+			{
+				positive.push_back(new MatOfFloat(floatArray).t());
+			}
+			else
+			{
+				negative.push_back(new MatOfFloat(floatArray).t());
 			}
 		}
 		this.log.info("Prepared Negative and Positive DataSets.");
 
-		final Path filePath = this.binaryClassifierFolderPath.resolve(binaryClassifierName + "_" + featureExtractorName + "_" + frameSize + "_" + errorClassName + "_" + id + ".yaml");
-		this.log.info("Created FilePath");
-
-		final BinaryClassifierConfiguration config = new BinaryClassifierConfiguration(filePath, binaryClassifierName, featureExtractorName, frameSize, errorClassName, id);
-		this.log.info("Created BinaryClassifierConfiguration.");
+		final BinaryClassificationConfig config = new BinaryClassificationConfig(binaryClassifierName, featureExtractorName, tileSize, errorClassName, id);
+		this.log.info("Created BinaryClassificationConfig.");
 
 		final IBinaryClassification classification = this.binaryClassifier.train(positive, negative, config);
 		this.log.info("Trained Binary Classifier with " + positive + " positive and " + negative + " negative samples.");
 
-		classification.save(filePath.toString());
+		this.storage.create(classification);
 		this.log.info("Saved File to FileSystem.");
 
 		return classification;

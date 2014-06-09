@@ -10,17 +10,16 @@ import javafx.scene.control.Label;
 
 public class ClassificationDisplayPresenter extends AFXMLPresenter
 {
-
-	@Inject ClassificationInitCommander initCommander;
-	// Nodes
-	@FXML Label nodeLabelClassificationName;
-	@FXML Label nodeLabelExtractorName;
-	@FXML Label nodeLabelFrameSize;
-	@FXML Label nodeLabelErrorName;
-	@FXML Label nodeLabelID;
 	// Injects
-	@Inject
-	private IBinaryClassifications binaryClassifications;
+	@Inject private ClassificationInitCommander initCommander;
+	@Inject private IBinaryClassifications binaryClassifications;
+
+	// Nodes
+	@FXML private Label nodeLabelClassificationName;
+	@FXML private Label nodeLabelExtractorName;
+	@FXML private Label nodeLabelFrameSize;
+	@FXML private Label nodeLabelErrorName;
+	@FXML private Label nodeLabelID;
 
 	@Override
 	protected void bindComponents()
@@ -42,11 +41,11 @@ public class ClassificationDisplayPresenter extends AFXMLPresenter
 		this.binaryClassifications.selected().addListener((observable, oldValue, newValue) -> {
 			if (newValue != null)
 			{
-				this.nodeLabelClassificationName.setText(newValue.getClassificationNameProperty().getValue());
-				this.nodeLabelExtractorName.setText(newValue.getExtractorNameProperty().getValue());
-				this.nodeLabelFrameSize.setText(newValue.getFrameSizeProperty().getValue().toString());
-				this.nodeLabelErrorName.setText(newValue.getErrorNameProperty().getValue());
-				this.nodeLabelID.setText(newValue.getIdProperty().getValue());
+				this.nodeLabelClassificationName.setText(newValue.classificationNameProperty().getValue());
+				this.nodeLabelExtractorName.setText(newValue.extractorNameProperty().getValue());
+				this.nodeLabelFrameSize.setText(newValue.tileSizeProperty().getValue().toString());
+				this.nodeLabelErrorName.setText(newValue.errorNameProperty().getValue());
+				this.nodeLabelID.setText(newValue.idProperty().getValue());
 			}
 			else
 			{

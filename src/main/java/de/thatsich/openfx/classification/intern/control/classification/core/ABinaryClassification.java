@@ -3,23 +3,18 @@ package de.thatsich.openfx.classification.intern.control.classification.core;
 import com.google.inject.Inject;
 import de.thatsich.core.Log;
 import de.thatsich.openfx.classification.api.control.entity.IBinaryClassification;
-import de.thatsich.openfx.classification.intern.control.classifier.core.BinaryClassifierConfiguration;
+import de.thatsich.openfx.classification.intern.control.classifier.core.BinaryClassificationConfig;
 import javafx.beans.property.ReadOnlyIntegerProperty;
-import javafx.beans.property.ReadOnlyObjectProperty;
-import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringProperty;
-
-import java.nio.file.Path;
 
 
 public abstract class ABinaryClassification implements IBinaryClassification
 {
 	// Properties
-	private final ReadOnlyObjectWrapper<BinaryClassifierConfiguration> config = new ReadOnlyObjectWrapper<>();
+	private final BinaryClassificationConfig config;
 
 	// Injects
-	@Inject
-	protected Log log;
+	@Inject protected Log log;
 
 	/**
 	 * CTOR
@@ -27,9 +22,9 @@ public abstract class ABinaryClassification implements IBinaryClassification
 	 * @param config Configuration of the BinaryClassifier (FilePath,
 	 *               ClassificaationName, ExtractorName, FrameSize, ErrorName, ID)
 	 */
-	protected ABinaryClassification(BinaryClassifierConfiguration config)
+	protected ABinaryClassification(BinaryClassificationConfig config)
 	{
-		this.config.set(config);
+		this.config = config;
 	}
 
 	// Getter
@@ -39,40 +34,39 @@ public abstract class ABinaryClassification implements IBinaryClassification
 		return this.getClass().getSimpleName();
 	}
 
-	// Property Getter
 	@Override
-	public ReadOnlyObjectProperty<Path> getFilePathProperty()
+	public ReadOnlyStringProperty classificationNameProperty()
 	{
-		return this.config.get().getFilePath();
+		return this.config.classificationName;
 	}
 
 	@Override
-	public ReadOnlyStringProperty getClassificationNameProperty()
+	public ReadOnlyStringProperty extractorNameProperty()
 	{
-		return this.config.get().getClassificationName();
+		return this.config.extractorName;
 	}
 
 	@Override
-	public ReadOnlyStringProperty getExtractorNameProperty()
+	public ReadOnlyIntegerProperty tileSizeProperty()
 	{
-		return this.config.get().getExtractorName();
+		return this.config.tileSize;
 	}
 
 	@Override
-	public ReadOnlyIntegerProperty getFrameSizeProperty()
+	public ReadOnlyStringProperty errorNameProperty()
 	{
-		return this.config.get().getFrameSize();
+		return this.config.errorName;
 	}
 
 	@Override
-	public ReadOnlyStringProperty getErrorNameProperty()
+	public ReadOnlyStringProperty idProperty()
 	{
-		return this.config.get().getErrorName();
+		return this.config.id;
 	}
 
 	@Override
-	public ReadOnlyStringProperty getIdProperty()
+	public BinaryClassificationConfig getConfig()
 	{
-		return this.config.get().getId();
+		return this.config;
 	}
 }

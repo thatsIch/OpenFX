@@ -3,9 +3,7 @@ package de.thatsich.openfx.classification.intern.control.classification;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import de.thatsich.openfx.classification.intern.control.classification.core.ABinaryClassification;
-import de.thatsich.openfx.classification.intern.control.classifier.core.BinaryClassifierConfiguration;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import de.thatsich.openfx.classification.intern.control.classifier.core.BinaryClassificationConfig;
 import org.opencv.core.Mat;
 import org.opencv.ml.CvRTrees;
 
@@ -13,30 +11,30 @@ import org.opencv.ml.CvRTrees;
 public class RandomForestBinaryClassification extends ABinaryClassification
 {
 
-	private final ObjectProperty<CvRTrees> trees = new SimpleObjectProperty<>(new CvRTrees());
+	private final CvRTrees trees;
 
 	@Inject
-	public RandomForestBinaryClassification(@Assisted CvRTrees trees, @Assisted BinaryClassifierConfiguration config)
+	public RandomForestBinaryClassification(@Assisted CvRTrees trees, @Assisted BinaryClassificationConfig config)
 	{
 		super(config);
-		this.trees.set(trees);
+		this.trees = trees;
 	}
 
 	@Override
 	public double predict(Mat image)
 	{
-		return this.trees.get().predict_prob(image);
+		return this.trees.predict_prob(image);
 	}
 
 	@Override
-	public void load(String fileName)
+	public void save(String filePath)
 	{
-		this.trees.get().load(fileName);
+		this.trees.save(filePath);
 	}
 
 	@Override
-	public void save(String fileName)
+	public void load(String filePath)
 	{
-		this.trees.get().save(fileName);
+		this.trees.load(filePath);
 	}
 }

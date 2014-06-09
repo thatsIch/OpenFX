@@ -4,29 +4,24 @@ import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import de.thatsich.core.javafx.ACommand;
 import de.thatsich.openfx.classification.api.control.entity.IBinaryClassification;
+import de.thatsich.openfx.classification.intern.control.command.service.ClassificationFileStorageService;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-
-public class RemoveBinaryClassificationCommand extends ACommand<IBinaryClassification>
+public class DeleteBinaryClassificationCommand extends ACommand<IBinaryClassification>
 {
 	final private IBinaryClassification binaryClassification;
+	private final ClassificationFileStorageService storage;
 
 	@Inject
-	public RemoveBinaryClassificationCommand(@Assisted IBinaryClassification binaryClassification)
+	public DeleteBinaryClassificationCommand(@Assisted IBinaryClassification binaryClassification, ClassificationFileStorageService storage)
 	{
 		this.binaryClassification = binaryClassification;
+		this.storage = storage;
 	}
 
 	@Override
 	protected IBinaryClassification call() throws Exception
 	{
-		final Path path = binaryClassification.getFilePathProperty().get();
-		if (Files.exists(path))
-		{
-			Files.delete(path);
-			this.log.info("File deleted.");
-		}
+		this.storage.delete(this.binaryClassification);
 
 		return this.binaryClassification;
 	}

@@ -3,7 +3,7 @@ package de.thatsich.openfx.classification.intern.control.classification;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import de.thatsich.openfx.classification.intern.control.classification.core.ABinaryClassification;
-import de.thatsich.openfx.classification.intern.control.classifier.core.BinaryClassifierConfiguration;
+import de.thatsich.openfx.classification.intern.control.classifier.core.BinaryClassificationConfig;
 import org.opencv.core.Mat;
 import org.opencv.ml.CvSVM;
 
@@ -23,7 +23,7 @@ public class SVMBinaryClassification extends ABinaryClassification
 	 * @param config Assisted Injected Config
 	 */
 	@Inject
-	public SVMBinaryClassification(@Assisted CvSVM svm, @Assisted BinaryClassifierConfiguration config)
+	public SVMBinaryClassification(@Assisted CvSVM svm, @Assisted BinaryClassificationConfig config)
 	{
 		super(config);
 		this.svm = svm;
@@ -38,23 +38,15 @@ public class SVMBinaryClassification extends ABinaryClassification
 		return this.svm.predict(image);
 	}
 
-	/**
-	 * @see ABinaryClassification
-	 */
 	@Override
-	public void load(String fileName)
+	public void save(String filePath)
 	{
-		this.svm.load(fileName);
-		this.log.info("SVM loaded from " + fileName);
+		this.svm.save(filePath);
 	}
 
-	/**
-	 * @see ABinaryClassification
-	 */
 	@Override
-	public void save(String fileName)
+	public void load(String filePath)
 	{
-		this.svm.save(fileName);
-		this.log.info("SVM saved to " + fileName);
+		this.svm.load(filePath);
 	}
 }
