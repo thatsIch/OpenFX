@@ -1,11 +1,11 @@
 package de.thatsich.openfx.network.intern.control.provider;
 
 import com.google.inject.assistedinject.Assisted;
-import de.thatsich.openfx.network.api.control.Network;
+import de.thatsich.core.guice.ICommandProvider;
 import de.thatsich.openfx.network.intern.control.command.commands.DeleteNetworkCommand;
 import de.thatsich.openfx.network.intern.control.command.commands.SetLastNetworkIndexCommand;
 import de.thatsich.openfx.network.intern.control.command.commands.TrainNetworkCommand;
-import de.thatsich.core.guice.ICommandProvider;
+import de.thatsich.openfx.network.intern.control.entity.Network;
 
 import java.nio.file.Path;
 

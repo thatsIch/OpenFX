@@ -3,8 +3,8 @@ package de.thatsich.openfx.classification.intern.control.command.commands;
 import com.google.inject.Inject;
 import de.thatsich.core.javafx.ACommand;
 import de.thatsich.openfx.classification.api.control.entity.IBinaryClassification;
+import de.thatsich.openfx.classification.api.model.IClassificationState;
 import de.thatsich.openfx.classification.intern.control.command.service.ClassificationFileStorageService;
-import de.thatsich.openfx.classification.intern.model.ClassificationState;
 
 import java.io.IOException;
 import java.nio.file.DirectoryIteratorException;
@@ -21,7 +21,7 @@ public class InitBinaryClassificationsCommand extends ACommand<List<IBinaryClass
 	private final ClassificationFileStorageService storage;
 
 	@Inject
-	protected InitBinaryClassificationsCommand(ClassificationState state, ClassificationFileStorageService storage)
+	protected InitBinaryClassificationsCommand(IClassificationState state, ClassificationFileStorageService storage)
 	{
 		this.storage = storage;
 		this.path = state.path().get();
@@ -37,15 +37,14 @@ public class InitBinaryClassificationsCommand extends ACommand<List<IBinaryClass
 			Files.createDirectories(this.path);
 		}
 
-		final String GLOB_PATTERN = "*.{yaml}";
-
 		// traverse whole directory and search for yaml files
 		// try to open them
 		// and parse the correct classifier
-		try (DirectoryStream<Path> stream = Files.newDirectoryStream(this.path, GLOB_PATTERN))
+		try (DirectoryStream<Path> stream = Files.newDirectoryStream(this.path))
 		{
 			for (Path child : stream)
 			{
+				System.out.println("Found " + child);
 				final IBinaryClassification bc = this.storage.retrieve(child);
 				classifications.add(bc);
 			}

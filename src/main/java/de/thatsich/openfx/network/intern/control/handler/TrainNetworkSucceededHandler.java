@@ -2,8 +2,8 @@ package de.thatsich.openfx.network.intern.control.handler;
 
 import com.google.inject.Inject;
 import de.thatsich.core.javafx.ACommandHandler;
-import de.thatsich.openfx.network.api.control.Network;
 import de.thatsich.openfx.network.api.model.INetworks;
+import de.thatsich.openfx.network.intern.control.entity.Network;
 
 /**
  * @author thatsIch

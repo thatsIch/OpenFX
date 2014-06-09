@@ -1,4 +1,4 @@
-package de.thatsich.openfx.network.api.control;
+package de.thatsich.openfx.network.intern.control.entity;
 
 import de.thatsich.openfx.network.api.control.entity.INetwork;
 import javafx.beans.property.ReadOnlyObjectProperty;

@@ -2,8 +2,8 @@ package de.thatsich.openfx.network.intern.control.command.commands;
 
 import com.google.inject.assistedinject.Assisted;
 import de.thatsich.core.javafx.ACommand;
-import de.thatsich.openfx.network.api.control.Network;
 import de.thatsich.openfx.network.intern.control.command.service.NetworkFileStorageService;
+import de.thatsich.openfx.network.intern.control.entity.Network;
 
 import javax.inject.Inject;
 import java.io.IOException;

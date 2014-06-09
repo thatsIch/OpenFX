@@ -32,6 +32,7 @@ public abstract class AFXMLView implements IFXMLView
 	 * Getter Implementation
 	 * ==================================================
 	 */
+	@Override
 	public Parent getRoot()
 	{
 		// lazy loading

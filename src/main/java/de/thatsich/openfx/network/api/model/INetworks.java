@@ -1,6 +1,6 @@
 package de.thatsich.openfx.network.api.model;
 
-import de.thatsich.openfx.network.api.control.Network;
+import de.thatsich.openfx.network.intern.control.entity.Network;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
 

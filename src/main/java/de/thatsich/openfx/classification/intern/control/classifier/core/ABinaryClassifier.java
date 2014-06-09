@@ -8,8 +8,7 @@ import de.thatsich.openfx.classification.api.control.entity.IBinaryClassifier;
 public abstract class ABinaryClassifier implements IBinaryClassifier
 {
 	// Injects
-	@Inject
-	protected Log log;
+	@Inject protected Log log;
 
 	@Override
 	public String getName()

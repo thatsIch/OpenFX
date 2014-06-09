@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class InitBinaryClassifierListCommand extends ACommand<List<IBinaryClassifier>>
+public class InitBinaryClassifiersCommand extends ACommand<List<IBinaryClassifier>>
 {
 	@Override
 	protected List<IBinaryClassifier> call() throws Exception

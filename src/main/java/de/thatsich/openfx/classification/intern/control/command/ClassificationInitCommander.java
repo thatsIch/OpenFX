@@ -8,7 +8,7 @@ import de.thatsich.openfx.classification.api.model.IClassificationState;
 import de.thatsich.openfx.classification.intern.control.command.commands.GetLastBinaryClassificationIndexCommand;
 import de.thatsich.openfx.classification.intern.control.command.commands.GetLastBinaryClassifierIndexCommand;
 import de.thatsich.openfx.classification.intern.control.command.commands.InitBinaryClassificationsCommand;
-import de.thatsich.openfx.classification.intern.control.command.commands.InitBinaryClassifierListCommand;
+import de.thatsich.openfx.classification.intern.control.command.commands.InitBinaryClassifiersCommand;
 import de.thatsich.openfx.classification.intern.control.handler.GetLastBinaryClassificationIndexSucceededHandler;
 import de.thatsich.openfx.classification.intern.control.handler.GetLastBinaryClassifierIndexSucceededHandler;
 import de.thatsich.openfx.classification.intern.control.handler.InitBinaryClassificationListSucceededHandler;
@@ -43,7 +43,7 @@ public class ClassificationInitCommander
 	{
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(1);
 
-		final InitBinaryClassifierListCommand initCommand = this.commander.createInitBinaryClassifierListCommand();
+		final InitBinaryClassifiersCommand initCommand = this.commander.createInitBinaryClassifierListCommand();
 		initCommand.setOnSucceededCommandHandler(InitBinaryClassifierListSucceededHandler.class);
 		initCommand.setExecutor(executor);
 		initCommand.start();

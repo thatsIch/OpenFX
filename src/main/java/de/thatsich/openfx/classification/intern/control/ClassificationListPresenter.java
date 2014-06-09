@@ -21,20 +21,18 @@ import javafx.scene.control.cell.PropertyValueFactory;
  */
 public class ClassificationListPresenter extends AFXMLPresenter
 {
-
-	@Inject ClassificationInitCommander initCommander;
-	// Nodes
-	@FXML TableView<IBinaryClassification> nodeTableViewBinaryClassificationList;
-	@FXML TableColumn<IBinaryClassification, String> nodeTableColumnClassifierName;
-	@FXML TableColumn<IBinaryClassification, String> nodeTableColumnExtractorName;
-	@FXML TableColumn<IBinaryClassification, Integer> nodeTableColumnFrameSize;
-	@FXML TableColumn<IBinaryClassification, String> nodeTableErrorName;
-	@FXML TableColumn<IBinaryClassification, String> nodeTableColumnID;
 	// Injects
-	@Inject
-	private IClassificationCommandProvider commander;
-	@Inject
-	private IBinaryClassifications binaryClassifications;
+	@Inject private ClassificationInitCommander init;
+	@Inject private IClassificationCommandProvider provider;
+	@Inject private IBinaryClassifications binaryClassifications;
+
+	// Nodes
+	@FXML private TableView<IBinaryClassification> nodeTableViewBinaryClassificationList;
+	@FXML private TableColumn<IBinaryClassification, String> nodeTableColumnClassifierName;
+	@FXML private TableColumn<IBinaryClassification, String> nodeTableColumnExtractorName;
+	@FXML private TableColumn<IBinaryClassification, Integer> nodeTableColumnFrameSize;
+	@FXML private TableColumn<IBinaryClassification, String> nodeTableErrorName;
+	@FXML private TableColumn<IBinaryClassification, String> nodeTableColumnID;
 
 	@Override
 	protected void bindComponents()
@@ -80,7 +78,7 @@ public class ClassificationListPresenter extends AFXMLPresenter
 			this.log.info("Set Selected BinaryClassification in Model.");
 
 			final int index = this.nodeTableViewBinaryClassificationList.getSelectionModel().getSelectedIndex();
-			final SetLastBinaryClassificationIndexCommand command = this.commander.createSetLastBinaryClassificationIndexCommand(index);
+			final SetLastBinaryClassificationIndexCommand command = this.provider.createSetLastBinaryClassificationIndexCommand(index);
 			command.start();
 		});
 		this.log.info("Bound Selection to Model.");
@@ -94,10 +92,10 @@ public class ClassificationListPresenter extends AFXMLPresenter
 	 */
 	private void bindTableViewCellValue()
 	{
-		this.nodeTableColumnClassifierName.setCellValueFactory(new PropertyValueFactory<>("getClassificationName"));
+		this.nodeTableColumnClassifierName.setCellValueFactory(new PropertyValueFactory<>("classificationName"));
 		this.nodeTableColumnExtractorName.setCellValueFactory(new PropertyValueFactory<>("extractorName"));
 		this.nodeTableColumnFrameSize.setCellValueFactory(new PropertyValueFactory<>("tileSize"));
-		this.nodeTableErrorName.setCellValueFactory(new PropertyValueFactory<>("getErrorName"));
-		this.nodeTableColumnID.setCellValueFactory(new PropertyValueFactory<>("idProperty"));
+		this.nodeTableErrorName.setCellValueFactory(new PropertyValueFactory<>("errorName"));
+		this.nodeTableColumnID.setCellValueFactory(new PropertyValueFactory<>("id"));
 	}
 }

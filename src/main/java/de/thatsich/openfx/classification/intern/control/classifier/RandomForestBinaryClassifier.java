@@ -26,7 +26,7 @@ public class RandomForestBinaryClassifier extends ABinaryClassifier
 		params.set_max_categories(25);
 		params.set_calc_var_importance(false);
 		params.set_nactive_vars(4);
-		params.set_term_crit(new TermCriteria(TermCriteria.MAX_ITER + TermCriteria.EPS, 100, 0.0F));
+		params.set_term_crit(new TermCriteria(TermCriteria.MAX_ITER + TermCriteria.EPS, 100, 0F));
 
 		// Labels
 		final Mat positiveLabels = Mat.ones(positiveTrainData.rows(), 1, CvType.CV_8U);

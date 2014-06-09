@@ -2,8 +2,8 @@ package de.thatsich.openfx.network.intern.control.command.commands;
 
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
-import de.thatsich.openfx.network.api.control.Network;
 import de.thatsich.core.javafx.ACommand;
+import de.thatsich.openfx.network.intern.control.entity.Network;
 
 import java.nio.file.Files;
 import java.nio.file.Path;

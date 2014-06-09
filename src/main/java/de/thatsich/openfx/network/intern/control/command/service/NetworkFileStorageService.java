@@ -2,8 +2,8 @@ package de.thatsich.openfx.network.intern.control.command.service;
 
 import com.google.inject.Inject;
 import de.thatsich.core.AFileStorageService;
-import de.thatsich.openfx.network.api.control.Network;
 import de.thatsich.openfx.network.api.model.INetworkState;
+import de.thatsich.openfx.network.intern.control.entity.Network;
 
 import java.io.IOException;
 import java.nio.file.Path;
