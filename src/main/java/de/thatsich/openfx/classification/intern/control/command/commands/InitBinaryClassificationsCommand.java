@@ -4,7 +4,6 @@ import com.google.inject.Inject;
 import de.thatsich.core.javafx.ACommand;
 import de.thatsich.openfx.classification.api.control.entity.IBinaryClassification;
 import de.thatsich.openfx.classification.intern.control.command.service.ClassificationFileStorageService;
-import de.thatsich.openfx.classification.intern.control.provider.IBinaryClassificationProvider;
 import de.thatsich.openfx.classification.intern.model.ClassificationState;
 
 import java.io.IOException;
@@ -20,8 +19,6 @@ public class InitBinaryClassificationsCommand extends ACommand<List<IBinaryClass
 {
 	private final Path path;
 	private final ClassificationFileStorageService storage;
-
-	@Inject private IBinaryClassificationProvider provider;
 
 	@Inject
 	protected InitBinaryClassificationsCommand(ClassificationState state, ClassificationFileStorageService storage)

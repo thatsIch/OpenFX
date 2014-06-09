@@ -1,10 +1,9 @@
 package de.thatsich.openfx.classification.intern.control.classifier;
 
-import com.google.inject.Inject;
 import de.thatsich.openfx.classification.api.control.entity.IBinaryClassification;
+import de.thatsich.openfx.classification.intern.control.classification.RandomForestBinaryClassification;
 import de.thatsich.openfx.classification.intern.control.classifier.core.ABinaryClassifier;
 import de.thatsich.openfx.classification.intern.control.classifier.core.BinaryClassificationConfig;
-import de.thatsich.openfx.classification.intern.control.provider.IBinaryClassificationProvider;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfFloat;
@@ -15,9 +14,6 @@ import org.opencv.ml.CvRTrees;
 
 public class RandomForestBinaryClassifier extends ABinaryClassifier
 {
-	@Inject
-	private IBinaryClassificationProvider provider;
-
 	@Override
 	public IBinaryClassification train(MatOfFloat positiveTrainData, MatOfFloat negativeTrainData, BinaryClassificationConfig config)
 	{
@@ -51,6 +47,6 @@ public class RandomForestBinaryClassifier extends ABinaryClassifier
 
 		trees.train(trainData, 1, trainLabels, new Mat(), new Mat(), new Mat(), new Mat(), params);
 
-		return this.provider.createRandomForestBinaryClassification(trees, config);
+		return new RandomForestBinaryClassification(trees, config);
 	}
 }
