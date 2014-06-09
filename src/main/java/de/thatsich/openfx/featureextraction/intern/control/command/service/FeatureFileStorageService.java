@@ -13,6 +13,8 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.DirectoryIteratorException;
+import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
@@ -34,13 +36,33 @@ public class FeatureFileStorageService extends AFileStorageService<IFeature>
 	}
 
 	@Override
+	public List<IFeature> init() throws IOException
+	{
+		final List<IFeature> features = new LinkedList<>();
+		try (DirectoryStream<Path> stream = Files.newDirectoryStream(this.storagePath))
+		{
+			for (Path featureFolder : stream)
+			{
+				final IFeature feature = this.retrieve(featureFolder);
+				features.add(feature);
+				this.log.info("Added Feature " + featureFolder);
+			}
+		}
+		catch (IOException | DirectoryIteratorException e)
+		{
+			e.printStackTrace();
+		}
+		this.log.info("All FeatureVectors added.");
+
+		return features;
+	}
+
+	@Override
 	public IFeature create(final IFeature feature) throws IOException
 	{
 		final FeatureConfig config = feature.getConfig();
 		final String fileName = config.toString();
 		final Path filePath = super.storagePath.resolve(fileName);
-
-		this.createInvalidDirectory(filePath);
 
 		final Path vectorPath = filePath.resolve("vector.csv");
 		final Path labelPath = filePath.resolve("label.csv");

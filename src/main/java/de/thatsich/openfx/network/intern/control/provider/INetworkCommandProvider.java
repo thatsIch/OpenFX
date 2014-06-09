@@ -2,12 +2,10 @@ package de.thatsich.openfx.network.intern.control.provider;
 
 import com.google.inject.assistedinject.Assisted;
 import de.thatsich.core.guice.ICommandProvider;
+import de.thatsich.openfx.network.api.control.entity.INetwork;
 import de.thatsich.openfx.network.intern.control.command.commands.DeleteNetworkCommand;
 import de.thatsich.openfx.network.intern.control.command.commands.SetLastNetworkIndexCommand;
 import de.thatsich.openfx.network.intern.control.command.commands.TrainNetworkCommand;
-import de.thatsich.openfx.network.intern.control.entity.Network;
-
-import java.nio.file.Path;
 
 /**
  * @author thatsIch
@@ -15,9 +13,9 @@ import java.nio.file.Path;
  */
 public interface INetworkCommandProvider extends ICommandProvider
 {
-	TrainNetworkCommand createTrainNetworkCommand(@Assisted Path path);
+	TrainNetworkCommand createTrainNetworkCommand();
 
-	DeleteNetworkCommand createDeleteNetworkCommand(Network selected);
+	DeleteNetworkCommand createDeleteNetworkCommand(INetwork selected);
 
 	SetLastNetworkIndexCommand createSetLastNetworkIndexCommand(@Assisted int index);
 }

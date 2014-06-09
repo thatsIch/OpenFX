@@ -11,8 +11,12 @@ import org.opencv.ml.CvRTrees;
 import org.opencv.ml.CvSVM;
 
 import java.io.IOException;
+import java.nio.file.DirectoryIteratorException;
+import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @author thatsIch
@@ -27,6 +31,28 @@ public class ClassificationFileStorageService extends AFileStorageService<IBinar
 	protected ClassificationFileStorageService(IClassificationState state)
 	{
 		super(state.path().get());
+	}
+
+	@Override
+	public List<IBinaryClassification> init() throws IOException
+	{
+		final List<IBinaryClassification> classifications = new LinkedList<>();
+
+		try (DirectoryStream<Path> stream = Files.newDirectoryStream(this.storagePath))
+		{
+			for (Path child : stream)
+			{
+				final IBinaryClassification bc = this.retrieve(child);
+				classifications.add(bc);
+			}
+		}
+		catch (IOException | DirectoryIteratorException e)
+		{
+			e.printStackTrace();
+		}
+		this.log.info("All BinaryClassification added.");
+
+		return classifications;
 	}
 
 	@Override

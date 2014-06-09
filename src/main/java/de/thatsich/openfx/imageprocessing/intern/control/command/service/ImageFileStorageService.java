@@ -11,8 +11,12 @@ import org.opencv.core.Mat;
 import org.opencv.highgui.Highgui;
 
 import java.io.IOException;
+import java.nio.file.DirectoryIteratorException;
+import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.LinkedList;
+import java.util.List;
 
 public class ImageFileStorageService extends AFileStorageService<IImage>
 {
@@ -20,6 +24,36 @@ public class ImageFileStorageService extends AFileStorageService<IImage>
 	protected ImageFileStorageService(IImageState state)
 	{
 		super(state.path().get());
+	}
+
+	@Override
+	public List<IImage> init() throws IOException
+	{
+		final List<IImage> result = new LinkedList<>();
+		final String GLOB_PATTERN = "*.{png,jpeg,jpg,jpe}";
+
+		if (Files.notExists(this.storagePath) || !Files.isDirectory(this.storagePath))
+		{
+			Files.createDirectories(this.storagePath);
+		}
+
+		try (DirectoryStream<Path> stream = Files.newDirectoryStream(this.storagePath, GLOB_PATTERN))
+		{
+			for (Path child : stream)
+			{
+				final IImage load = this.retrieve(child);
+
+				result.add(load);
+				this.log.info("Added " + child);
+			}
+		}
+		catch (IOException | DirectoryIteratorException e)
+		{
+			e.printStackTrace();
+		}
+		this.log.info("All OpenCV Supported Images added: " + result.size() + ".");
+
+		return result;
 	}
 
 	@Override

@@ -6,13 +6,11 @@ import de.thatsich.openfx.classification.intern.control.command.commands.GetLast
 import de.thatsich.openfx.classification.intern.control.command.commands.InitBinaryClassificationsCommand;
 import de.thatsich.openfx.classification.intern.control.command.commands.InitBinaryClassifiersCommand;
 
-import java.nio.file.Path;
-
 public interface IClassificationInitCommandProvider extends ICommandProvider
 {
 	public InitBinaryClassifiersCommand createInitBinaryClassifierListCommand();
 
-	public InitBinaryClassificationsCommand createInitBinaryClassificationListCommand(Path trainedBinaryClassifierFolderPath);
+	public InitBinaryClassificationsCommand createInitBinaryClassificationListCommand();
 
 	public GetLastBinaryClassifierIndexCommand createGetLastBinaryClassifierIndexCommand();
 

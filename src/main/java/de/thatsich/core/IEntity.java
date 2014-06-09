@@ -6,5 +6,5 @@ package de.thatsich.core;
  */
 public abstract interface IEntity
 {
-	IEntityConfiguration getConfig();
+	IEntityConfig getConfig();
 }

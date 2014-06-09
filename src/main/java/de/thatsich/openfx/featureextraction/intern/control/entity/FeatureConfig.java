@@ -1,6 +1,6 @@
 package de.thatsich.openfx.featureextraction.intern.control.entity;
 
-import de.thatsich.core.IEntityConfiguration;
+import de.thatsich.core.IEntityConfig;
 import javafx.beans.property.ReadOnlyIntegerWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
 
@@ -10,7 +10,7 @@ import java.util.StringJoiner;
  * @author thatsIch
  * @since 05.06.2014.
  */
-public class FeatureConfig implements IEntityConfiguration
+public class FeatureConfig implements IEntityConfig
 {
 	public final ReadOnlyStringWrapper className;
 	public final ReadOnlyStringWrapper extractorName;

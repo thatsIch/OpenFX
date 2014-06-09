@@ -4,9 +4,6 @@ import com.google.inject.Inject;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.openfx.network.api.model.INetworks;
 import de.thatsich.openfx.network.intern.control.command.NetworkInitCommander;
-import de.thatsich.openfx.network.intern.control.entity.Network;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -50,31 +47,26 @@ public class NetworkDisplayPresenter extends AFXMLPresenter
 
 	private void initImageViewContent()
 	{
-		this.networks.selected().addListener(new ChangeListener<Network>()
-		{
-			@Override
-			public void changed(ObservableValue<? extends Network> observable, Network oldValue, Network newValue)
+		this.networks.selected().addListener((observable, oldValue, newValue) -> {
+			if (newValue != null)
 			{
-				if (newValue != null)
-				{
-					// TODO change depending on new value
-					log.info("Selected new " + newValue);
-				}
-				else
-				{
-					nodeImageViewNetwork.imageProperty().set(null);
+				// TODO change depending on new value
+				this.log.info("Selected new " + newValue);
+			}
+			else
+			{
+				this.nodeImageViewNetwork.imageProperty().set(null);
 
-					nodeLabelPrecision.setText(null);
-					nodeLabelRecall.setText(null);
-					nodeLabelSpecificity.setText(null);
-					nodeLabelAccuracy.setText(null);
+				this.nodeLabelPrecision.setText(null);
+				this.nodeLabelRecall.setText(null);
+				this.nodeLabelSpecificity.setText(null);
+				this.nodeLabelAccuracy.setText(null);
 
-					nodeLabelF05.setText(null);
-					nodeLabelF1.setText(null);
-					nodeLabelF2.setText(null);
+				this.nodeLabelF05.setText(null);
+				this.nodeLabelF1.setText(null);
+				this.nodeLabelF2.setText(null);
 
-					log.info("Deselected.");
-				}
+				this.log.info("Deselected.");
 			}
 		});
 	}

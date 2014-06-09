@@ -1,6 +1,6 @@
 package de.thatsich.openfx.classification.intern.control.classifier.core;
 
-import de.thatsich.core.IEntityConfiguration;
+import de.thatsich.core.IEntityConfig;
 import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.beans.property.ReadOnlyStringProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -8,7 +8,7 @@ import javafx.beans.property.SimpleStringProperty;
 
 import java.util.StringJoiner;
 
-public class BinaryClassificationConfig implements IEntityConfiguration
+public class BinaryClassificationConfig implements IEntityConfig
 {
 	// Properties
 	public final ReadOnlyStringProperty classificationName;

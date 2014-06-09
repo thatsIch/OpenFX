@@ -2,6 +2,7 @@ package de.thatsich.core;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.List;
 
 /**
  * CRUD interface
@@ -16,6 +17,8 @@ import java.nio.file.Path;
  */
 public interface IFileStorageService<T>
 {
+	List<T> init() throws IOException;
+
 	T create(T elem) throws IOException;
 
 	T retrieve(Path path) throws IOException;

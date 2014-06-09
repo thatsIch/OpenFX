@@ -10,7 +10,11 @@ import de.thatsich.openfx.errorgeneration.intern.control.entity.ErrorConfig;
 import org.opencv.core.Mat;
 
 import java.io.IOException;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.LinkedList;
+import java.util.List;
 
 
 public class ErrorFileStorageService extends AFileStorageService<IError>
@@ -22,13 +26,33 @@ public class ErrorFileStorageService extends AFileStorageService<IError>
 	}
 
 	@Override
+	public List<IError> init() throws IOException
+	{
+		final List<IError> errorList = new LinkedList<>();
+
+		try (DirectoryStream<Path> subs = Files.newDirectoryStream(this.storagePath, new DirectoriesFilter()))
+		{
+			for (Path sub : subs)
+			{
+				errorList.add(this.retrieve(sub));
+				this.log.info("Added " + sub + ".");
+			}
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+		this.log.info("All OpenCV Supported Images added: " + errorList.size() + ".");
+
+		return errorList;
+	}
+
+	@Override
 	public IError create(final IError error) throws IOException
 	{
 		final ErrorConfig config = error.getConfig();
 		final String fileName = config.toString();
 		final Path path = super.storagePath.resolve(fileName);
-
-		this.createInvalidDirectory(path);
 
 		Images.store(error.originalProperty().get(), path.resolve("original.png"));
 		Images.store(error.modifiedProperty().get(), path.resolve("modified.png"));
@@ -64,5 +88,17 @@ public class ErrorFileStorageService extends AFileStorageService<IError>
 		final Path path = super.storagePath.resolve(fileName);
 
 		this.deleteRecursively(path);
+	}
+
+	/**
+	 * Filter to get only directories
+	 */
+	private class DirectoriesFilter implements DirectoryStream.Filter<Path>
+	{
+		@Override
+		public boolean accept(final Path path) throws IOException
+		{
+			return Files.isDirectory(path);
+		}
 	}
 }

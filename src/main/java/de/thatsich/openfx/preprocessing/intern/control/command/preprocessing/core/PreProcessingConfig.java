@@ -1,6 +1,6 @@
 package de.thatsich.openfx.preprocessing.intern.control.command.preprocessing.core;
 
-import de.thatsich.core.IEntityConfiguration;
+import de.thatsich.core.IEntityConfig;
 import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.beans.property.ReadOnlyIntegerWrapper;
 import javafx.beans.property.ReadOnlyStringProperty;
@@ -12,7 +12,7 @@ import java.util.StringJoiner;
  * @author thatsIch
  * @since 06.06.2014.
  */
-public class PreProcessingConfig implements IEntityConfiguration
+public class PreProcessingConfig implements IEntityConfig
 {
 	public final ReadOnlyStringProperty name;
 	public final ReadOnlyIntegerProperty inputSize;

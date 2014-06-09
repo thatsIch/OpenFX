@@ -22,6 +22,28 @@ public abstract class AFileStorageService<T> implements IFileStorageService<T>
 	protected AFileStorageService(Path storagePath)
 	{
 		this.storagePath = storagePath;
+		System.out.println("STORAGE " + this.getClass().getSimpleName() + " : " + this.storagePath);
+		this.createInvalidDirectory(storagePath);
+	}
+
+	/**
+	 * checks if either the directory exists and if its a directory
+	 *
+	 * @param directory to be created directory
+	 */
+	private void createInvalidDirectory(Path directory)
+	{
+		if (Files.notExists(directory) || !Files.isDirectory(directory))
+		{
+			try
+			{
+				Files.createDirectories(directory);
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
 	}
 
 	protected String getFileNameWithoutExtension(Path path)
@@ -31,19 +53,6 @@ public abstract class AFileStorageService<T> implements IFileStorageService<T>
 		final int index = fileName.lastIndexOf('.');
 
 		return (index > 0) ? fileName.substring(0, index) : "";
-	}
-
-	/**
-	 * checks if either the directory exists and if its a directory
-	 *
-	 * @param directory to be created directory
-	 */
-	protected void createInvalidDirectory(Path directory) throws IOException
-	{
-		if (Files.notExists(directory) || !Files.isDirectory(directory))
-		{
-			Files.createDirectories(directory);
-		}
 	}
 
 	protected void deleteRecursively(Path path) throws IOException

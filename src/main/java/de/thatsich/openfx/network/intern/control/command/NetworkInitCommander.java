@@ -5,8 +5,7 @@ import de.thatsich.core.javafx.AInitCommander;
 import de.thatsich.core.javafx.CommandExecutor;
 import de.thatsich.openfx.network.api.model.INetworkState;
 import de.thatsich.openfx.network.intern.control.command.commands.GetLastNetworkIndexCommand;
-import de.thatsich.openfx.network.intern.control.command.commands.InitNetworkFolderCommand;
-import de.thatsich.openfx.network.intern.control.command.commands.InitNetworkListCommand;
+import de.thatsich.openfx.network.intern.control.command.commands.InitNetworksCommand;
 import de.thatsich.openfx.network.intern.control.handler.GetLastNetworkIndexSucceededHandler;
 import de.thatsich.openfx.network.intern.control.handler.InitNetworkListSucceededHandler;
 import de.thatsich.openfx.network.intern.control.provider.INetworkInitCommandProvider;
@@ -37,12 +36,7 @@ public class NetworkInitCommander extends AInitCommander
 		this.state.path().set(networkInputPath);
 		this.log.info("Set Network Path in Model.");
 
-		final InitNetworkFolderCommand command = this.provider.createInitNetworkFolderCommand(networkInputPath);
-		command.setExecutor(executor);
-		command.start();
-		this.log.info("Start NetworkFolder Creation.");
-
-		final InitNetworkListCommand initCommand = this.provider.createInitNetworkListCommand(networkInputPath);
+		final InitNetworksCommand initCommand = this.provider.createInitNetworksCommand();
 		initCommand.setOnSucceededCommandHandler(InitNetworkListSucceededHandler.class);
 		initCommand.setExecutor(executor);
 		initCommand.start();

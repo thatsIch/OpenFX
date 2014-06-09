@@ -12,8 +12,12 @@ import org.encog.persist.EncogDirectoryPersistence;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.DirectoryIteratorException;
+import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @author thatsIch
@@ -28,6 +32,33 @@ public class PreProcessingFileStorageService extends AFileStorageService<IPrePro
 	protected PreProcessingFileStorageService(IPreProcessingState state)
 	{
 		super(state.path().get());
+	}
+
+	@Override
+	public List<IPreProcessing> init() throws IOException
+	{
+		final List<IPreProcessing> list = new LinkedList<>();
+
+		// traverse whole directory and search for pp files
+		// try to open them
+		// and parse the correct preprocessor
+		try (DirectoryStream<Path> stream = Files.newDirectoryStream(this.storagePath))
+		{
+			for (Path child : stream)
+			{
+				final IPreProcessing retrieve = this.retrieve(child);
+
+				list.add(retrieve);
+				this.log.info("Added " + retrieve);
+			} // END FOR
+		} // END OUTER TRY
+		catch (IOException | DirectoryIteratorException e)
+		{
+			e.printStackTrace();
+		}
+		this.log.info("All PreProcessings added.");
+
+		return list;
 	}
 
 	@Override

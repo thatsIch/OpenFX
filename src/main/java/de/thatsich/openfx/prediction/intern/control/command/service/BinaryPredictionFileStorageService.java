@@ -2,14 +2,16 @@ package de.thatsich.openfx.prediction.intern.control.command.service;
 
 import com.google.inject.Inject;
 import de.thatsich.core.AFileStorageService;
+import de.thatsich.openfx.prediction.api.model.IPredictionState;
 import de.thatsich.openfx.prediction.intern.control.entity.BinaryPrediction;
-import de.thatsich.openfx.prediction.intern.model.PredictionState;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.highgui.Highgui;
 
 import java.io.IOException;
+import java.nio.file.DirectoryIteratorException;
+import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
@@ -20,9 +22,36 @@ import java.util.StringJoiner;
 public class BinaryPredictionFileStorageService extends AFileStorageService<BinaryPrediction>
 {
 	@Inject
-	protected BinaryPredictionFileStorageService(PredictionState state)
+	protected BinaryPredictionFileStorageService(IPredictionState state)
 	{
 		super(state.path().get());
+	}
+
+	@Override
+	public List<BinaryPrediction> init() throws IOException
+	{
+		final List<BinaryPrediction> binaryPredictions = new LinkedList<>();
+
+		final String GLOB_PATTERN = "*.{png}";
+
+		// traverse whole directory and search for yaml files
+		// try to open them
+		// and parse the correct classifier
+		try (DirectoryStream<Path> stream = Files.newDirectoryStream(this.storagePath, GLOB_PATTERN))
+		{
+			for (Path child : stream)
+			{
+				final BinaryPrediction prediction = this.retrieve(child);
+				binaryPredictions.add(prediction);
+			}
+		}
+		catch (IOException | DirectoryIteratorException e)
+		{
+			e.printStackTrace();
+		}
+		this.log.info("All BinaryClassification extracted.");
+
+		return binaryPredictions;
 	}
 
 	@Override

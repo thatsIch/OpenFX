@@ -1,10 +1,6 @@
 package de.thatsich.openfx.network.intern.control.entity;
 
 import de.thatsich.openfx.network.api.control.entity.INetwork;
-import javafx.beans.property.ReadOnlyObjectProperty;
-import javafx.beans.property.ReadOnlyObjectWrapper;
-
-import java.nio.file.Path;
 
 /**
  * @author thatsIch
@@ -12,15 +8,17 @@ import java.nio.file.Path;
  */
 public class Network implements INetwork
 {
-	private final ReadOnlyObjectWrapper<Path> filePath = new ReadOnlyObjectWrapper<>();
+	private final NetworkConfig config;
 
-	public Network(Path filePath)
+	public Network(NetworkConfig config)
 	{
-		this.filePath.set(filePath);
+
+		this.config = config;
 	}
 
-	public ReadOnlyObjectProperty<Path> getFilePathProperty()
+	@Override
+	public NetworkConfig getConfig()
 	{
-		return this.filePath.getReadOnlyProperty();
+		return this.config;
 	}
 }

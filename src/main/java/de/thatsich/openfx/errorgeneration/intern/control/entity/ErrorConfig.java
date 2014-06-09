@@ -1,6 +1,6 @@
 package de.thatsich.openfx.errorgeneration.intern.control.entity;
 
-import de.thatsich.core.IEntityConfiguration;
+import de.thatsich.core.IEntityConfig;
 import javafx.beans.property.ReadOnlyStringProperty;
 import javafx.beans.property.ReadOnlyStringWrapper;
 
@@ -10,7 +10,7 @@ import java.util.StringJoiner;
  * @author thatsIch
  * @since 05.06.2014.
  */
-public class ErrorConfig implements IEntityConfiguration
+public class ErrorConfig implements IEntityConfig
 {
 	public final ReadOnlyStringProperty dateTime;
 	public final ReadOnlyStringProperty clazz;
