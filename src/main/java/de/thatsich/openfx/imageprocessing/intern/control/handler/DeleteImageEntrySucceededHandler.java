@@ -2,7 +2,7 @@ package de.thatsich.openfx.imageprocessing.intern.control.handler;
 
 import com.google.inject.Inject;
 import de.thatsich.core.javafx.ACommandHandler;
-import de.thatsich.openfx.imageprocessing.api.control.IImage;
+import de.thatsich.openfx.imageprocessing.api.control.entity.IImage;
 import de.thatsich.openfx.imageprocessing.api.model.IImages;
 
 import java.util.List;

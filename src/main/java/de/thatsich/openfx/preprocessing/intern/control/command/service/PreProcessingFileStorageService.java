@@ -2,7 +2,7 @@ package de.thatsich.openfx.preprocessing.intern.control.command.service;
 
 import com.google.inject.Inject;
 import de.thatsich.core.AFileStorageService;
-import de.thatsich.openfx.preprocessing.api.control.IPreProcessing;
+import de.thatsich.openfx.preprocessing.api.control.entity.IPreProcessing;
 import de.thatsich.openfx.preprocessing.api.model.IPreProcessingState;
 import de.thatsich.openfx.preprocessing.intern.control.command.preprocessing.AANNPreProcessing;
 import de.thatsich.openfx.preprocessing.intern.control.command.preprocessing.IdentityPreProcessing;

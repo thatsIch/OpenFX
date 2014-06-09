@@ -1,7 +1,7 @@
 package de.thatsich.openfx.imageprocessing.intern.model;
 
 import com.google.inject.Singleton;
-import de.thatsich.openfx.imageprocessing.api.control.IImage;
+import de.thatsich.openfx.imageprocessing.api.control.entity.IImage;
 import de.thatsich.openfx.imageprocessing.api.model.IImages;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;

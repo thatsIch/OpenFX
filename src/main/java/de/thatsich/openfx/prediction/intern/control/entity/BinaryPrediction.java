@@ -1,4 +1,4 @@
-package de.thatsich.openfx.prediction.api.control;
+package de.thatsich.openfx.prediction.intern.control.entity;
 
 import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.beans.property.ReadOnlyIntegerWrapper;

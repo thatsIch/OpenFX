@@ -1,4 +1,4 @@
-package de.thatsich.openfx.imageprocessing.api.control;
+package de.thatsich.openfx.imageprocessing.api.control.entity;
 
 import de.thatsich.core.IEntity;
 import de.thatsich.openfx.imageprocessing.intern.control.entity.ImageConfig;

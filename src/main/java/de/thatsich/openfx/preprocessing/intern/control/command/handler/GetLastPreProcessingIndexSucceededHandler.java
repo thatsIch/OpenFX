@@ -2,7 +2,7 @@ package de.thatsich.openfx.preprocessing.intern.control.command.handler;
 
 import com.google.inject.Inject;
 import de.thatsich.core.javafx.ACommandHandler;
-import de.thatsich.openfx.preprocessing.api.control.IPreProcessing;
+import de.thatsich.openfx.preprocessing.api.control.entity.IPreProcessing;
 import de.thatsich.openfx.preprocessing.api.model.IPreProcessings;
 
 

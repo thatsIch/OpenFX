@@ -5,7 +5,7 @@ import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.javafx.CommandExecutor;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
 import de.thatsich.openfx.featureextraction.api.model.IFeatures;
-import de.thatsich.openfx.preprocessing.api.control.IPreProcessing;
+import de.thatsich.openfx.preprocessing.api.control.entity.IPreProcessing;
 import de.thatsich.openfx.preprocessing.api.model.IPreProcessingState;
 import de.thatsich.openfx.preprocessing.api.model.IPreProcessings;
 import de.thatsich.openfx.preprocessing.api.model.IPreProcessors;

@@ -2,7 +2,7 @@ package de.thatsich.openfx.preprocessing.intern.control;
 
 import com.google.inject.Inject;
 import de.thatsich.core.javafx.AFXMLPresenter;
-import de.thatsich.openfx.preprocessing.api.control.IPreProcessing;
+import de.thatsich.openfx.preprocessing.api.control.entity.IPreProcessing;
 import de.thatsich.openfx.preprocessing.api.model.IPreProcessings;
 import de.thatsich.openfx.preprocessing.intern.control.command.PreProcessingInitCommander;
 import de.thatsich.openfx.preprocessing.intern.control.command.commands.SetLastPreProcessingIndexCommand;

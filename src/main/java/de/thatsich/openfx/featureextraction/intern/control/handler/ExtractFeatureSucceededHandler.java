@@ -5,7 +5,9 @@ import de.thatsich.core.javafx.ACommandHandler;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureVector;
 import de.thatsich.openfx.featureextraction.api.model.IFeatures;
+import de.thatsich.openfx.featureextraction.intern.control.command.service.FeatureFileStorageService;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,12 +20,22 @@ import java.util.Optional;
 public class ExtractFeatureSucceededHandler extends ACommandHandler<IFeature>
 {
 	@Inject private IFeatures features;
+	@Inject private FeatureFileStorageService storage;
 
 	@Override
 	public void handle(IFeature feature)
 	{
 		final IFeature merge = this.merge(this.features, feature);
 		this.log.info("Merged Feature into Database.");
+
+		try
+		{
+			this.storage.create(merge);
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
 
 		this.features.selected().set(merge);
 		this.log.info("Set current to selected Feature.");
@@ -32,8 +44,10 @@ public class ExtractFeatureSucceededHandler extends ACommandHandler<IFeature>
 	private IFeature merge(IFeatures features, IFeature feature)
 	{
 		final Optional<IFeature> maybeMatch = this.getMatchingFeature(features, feature);
+		System.out.println("maybeMatch = " + maybeMatch);
 		if (maybeMatch.isPresent())
 		{
+			System.out.println("maybeMatch.get() = " + maybeMatch.get());
 			final IFeature match = maybeMatch.get();
 			final List<IFeatureVector> vectors = feature.vectors();
 
@@ -53,9 +67,9 @@ public class ExtractFeatureSucceededHandler extends ACommandHandler<IFeature>
 	{
 		for (IFeature iFeature : features.get())
 		{
-			final boolean sameSize = iFeature.tileSize() == feature.tileSize();
-			final boolean sameClass = iFeature.className().equals(feature.className());
-			final boolean sameExtractor = iFeature.extractorName().equals(feature.extractorName());
+			final boolean sameSize = iFeature.tileSize().get() == feature.tileSize().get();
+			final boolean sameClass = iFeature.className().get().equals(feature.className().get());
+			final boolean sameExtractor = iFeature.extractorName().get().equals(feature.extractorName().get());
 
 			if (sameSize && sameClass && sameExtractor)
 			{

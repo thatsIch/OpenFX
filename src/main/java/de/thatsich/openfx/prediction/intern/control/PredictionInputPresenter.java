@@ -9,9 +9,8 @@ import de.thatsich.openfx.errorgeneration.api.control.entity.IErrorGenerator;
 import de.thatsich.openfx.errorgeneration.api.model.IErrorGenerators;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureExtractor;
 import de.thatsich.openfx.featureextraction.api.model.IFeatureExtractors;
-import de.thatsich.openfx.imageprocessing.api.control.IImage;
+import de.thatsich.openfx.imageprocessing.api.control.entity.IImage;
 import de.thatsich.openfx.imageprocessing.api.model.IImages;
-import de.thatsich.openfx.prediction.api.control.BinaryPrediction;
 import de.thatsich.openfx.prediction.api.model.IBinaryPredictions;
 import de.thatsich.openfx.prediction.api.model.IPredictionState;
 import de.thatsich.openfx.prediction.intern.control.command.PredictionInitCommander;
@@ -19,6 +18,7 @@ import de.thatsich.openfx.prediction.intern.control.command.commands.DeleteBinar
 import de.thatsich.openfx.prediction.intern.control.command.commands.TestBinaryClassificationCommand;
 import de.thatsich.openfx.prediction.intern.control.command.handler.DeleteBinaryPredictionSucceededHandler;
 import de.thatsich.openfx.prediction.intern.control.command.handler.PredictBinaryClassificationSucceededHandler;
+import de.thatsich.openfx.prediction.intern.control.entity.BinaryPrediction;
 import de.thatsich.openfx.prediction.intern.control.provider.IPredictionCommandProvider;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

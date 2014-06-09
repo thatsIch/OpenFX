@@ -2,7 +2,7 @@ package de.thatsich.openfx.preprocessing.intern.control.command.provider;
 
 import de.thatsich.core.guice.ICommandProvider;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
-import de.thatsich.openfx.preprocessing.api.control.IPreProcessing;
+import de.thatsich.openfx.preprocessing.api.control.entity.IPreProcessing;
 import de.thatsich.openfx.preprocessing.intern.control.command.commands.RemovePreProcessingCommand;
 import de.thatsich.openfx.preprocessing.intern.control.command.commands.SetLastPreProcessingIndexCommand;
 import de.thatsich.openfx.preprocessing.intern.control.command.commands.SetLastPreProcessorIndexCommand;

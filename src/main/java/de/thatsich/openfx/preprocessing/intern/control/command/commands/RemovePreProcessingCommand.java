@@ -3,7 +3,7 @@ package de.thatsich.openfx.preprocessing.intern.control.command.commands;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import de.thatsich.core.javafx.ACommand;
-import de.thatsich.openfx.preprocessing.api.control.IPreProcessing;
+import de.thatsich.openfx.preprocessing.api.control.entity.IPreProcessing;
 import de.thatsich.openfx.preprocessing.intern.control.command.service.PreProcessingFileStorageService;
 
 

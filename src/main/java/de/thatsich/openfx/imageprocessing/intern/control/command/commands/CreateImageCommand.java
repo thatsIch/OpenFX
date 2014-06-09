@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import de.thatsich.core.javafx.ACommand;
 import de.thatsich.core.opencv.Images;
-import de.thatsich.openfx.imageprocessing.api.control.IImage;
+import de.thatsich.openfx.imageprocessing.api.control.entity.IImage;
 import de.thatsich.openfx.imageprocessing.intern.control.command.service.ImageFileStorageService;
 import de.thatsich.openfx.imageprocessing.intern.control.entity.Image;
 import de.thatsich.openfx.imageprocessing.intern.control.entity.ImageConfig;

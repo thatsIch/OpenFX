@@ -1,7 +1,7 @@
 package de.thatsich.openfx.imageprocessing.intern.control.command.provider;
 
 import de.thatsich.core.guice.ICommandProvider;
-import de.thatsich.openfx.imageprocessing.api.control.IImage;
+import de.thatsich.openfx.imageprocessing.api.control.entity.IImage;
 import de.thatsich.openfx.imageprocessing.intern.control.command.commands.CreateImageCommand;
 import de.thatsich.openfx.imageprocessing.intern.control.command.commands.DeleteImageCommand;
 import de.thatsich.openfx.imageprocessing.intern.control.command.commands.SetLastImagIndexCommand;

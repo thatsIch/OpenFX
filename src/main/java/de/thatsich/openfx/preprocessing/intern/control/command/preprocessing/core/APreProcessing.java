@@ -2,7 +2,7 @@ package de.thatsich.openfx.preprocessing.intern.control.command.preprocessing.co
 
 import com.google.inject.Inject;
 import de.thatsich.core.Log;
-import de.thatsich.openfx.preprocessing.api.control.IPreProcessing;
+import de.thatsich.openfx.preprocessing.api.control.entity.IPreProcessing;
 import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.beans.property.ReadOnlyStringProperty;
 

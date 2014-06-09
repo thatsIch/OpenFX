@@ -1,5 +1,6 @@
 package de.thatsich.openfx.errorgeneration.intern.control.provider;
 
+import com.google.inject.assistedinject.Assisted;
 import de.thatsich.core.guice.ICommandProvider;
 import de.thatsich.openfx.errorgeneration.api.control.entity.IError;
 import de.thatsich.openfx.errorgeneration.api.control.entity.IErrorGenerator;
@@ -18,7 +19,7 @@ public interface IErrorCommandProvider extends ICommandProvider
 
 	SetLastErrorCountCommand createSetLastErrorCountCommand(int lastErrorLoopCount);
 
-	CreateErrorCommand createApplyErrorCommand(String errorClass, Mat imageMat, IErrorGenerator generator);
+	CreateErrorCommand createApplyErrorCommand(String errorClass, Mat imageMat, IErrorGenerator generator, @Assisted("smooth") boolean smooth, @Assisted("threshold") boolean threshold, @Assisted("denoising") boolean denoising);
 
 	DeleteErrorCommand createDeleteErrorEntryCommand(IError entry);
 }

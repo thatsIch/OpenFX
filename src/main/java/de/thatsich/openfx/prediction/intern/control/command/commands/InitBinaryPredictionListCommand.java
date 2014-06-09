@@ -3,8 +3,8 @@ package de.thatsich.openfx.prediction.intern.control.command.commands;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import de.thatsich.core.javafx.ACommand;
-import de.thatsich.openfx.prediction.api.control.BinaryPrediction;
 import de.thatsich.openfx.prediction.intern.control.command.service.BinaryPredictionFileStorageService;
+import de.thatsich.openfx.prediction.intern.control.entity.BinaryPrediction;
 import javafx.collections.FXCollections;
 
 import java.io.IOException;

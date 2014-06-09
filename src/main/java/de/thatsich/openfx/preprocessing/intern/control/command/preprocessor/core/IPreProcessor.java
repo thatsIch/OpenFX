@@ -1,6 +1,6 @@
 package de.thatsich.openfx.preprocessing.intern.control.command.preprocessor.core;
 
-import de.thatsich.openfx.preprocessing.api.control.IPreProcessing;
+import de.thatsich.openfx.preprocessing.api.control.entity.IPreProcessing;
 import de.thatsich.openfx.preprocessing.intern.control.command.preprocessing.core.PreProcessingConfig;
 
 

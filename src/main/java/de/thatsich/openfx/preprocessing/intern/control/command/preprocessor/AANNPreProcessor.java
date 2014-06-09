@@ -1,7 +1,7 @@
 package de.thatsich.openfx.preprocessing.intern.control.command.preprocessor;
 
 import com.google.inject.Inject;
-import de.thatsich.openfx.preprocessing.api.control.IPreProcessing;
+import de.thatsich.openfx.preprocessing.api.control.entity.IPreProcessing;
 import de.thatsich.openfx.preprocessing.intern.control.command.preprocessing.core.PreProcessingConfig;
 import de.thatsich.openfx.preprocessing.intern.control.command.preprocessor.core.APreProcessor;
 import de.thatsich.openfx.preprocessing.intern.control.command.provider.IPreProcessingProvider;

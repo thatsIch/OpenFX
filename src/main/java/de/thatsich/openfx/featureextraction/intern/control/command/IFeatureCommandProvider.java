@@ -1,6 +1,5 @@
 package de.thatsich.openfx.featureextraction.intern.control.command;
 
-import com.google.inject.assistedinject.Assisted;
 import de.thatsich.core.guice.ICommandProvider;
 import de.thatsich.openfx.errorgeneration.api.control.entity.IError;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
@@ -19,7 +18,7 @@ public interface IFeatureCommandProvider extends ICommandProvider
 
 	SetLastFeatureExtractorIndexCommand createSetLastFeatureExtractorIndexCommand(int lastFeatureExtractorIndex);
 
-	ExtractFeatureCommand createExtractFeatureCommand(IError error, IFeatureExtractor extractor, int frameSize, @Assisted("smooth") boolean smooth, @Assisted("threshold") boolean threshold, @Assisted("denoising") boolean denoising);
+	ExtractFeatureCommand createExtractFeatureCommand(IError error, IFeatureExtractor extractor, int frameSize);
 
 	DeleteFeatureCommand createDeleteFeatureCommand(IFeature feature);
 }

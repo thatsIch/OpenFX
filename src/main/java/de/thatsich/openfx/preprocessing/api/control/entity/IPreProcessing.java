@@ -1,4 +1,4 @@
-package de.thatsich.openfx.preprocessing.api.control;
+package de.thatsich.openfx.preprocessing.api.control.entity;
 
 import de.thatsich.core.IEntity;
 import de.thatsich.openfx.preprocessing.intern.control.command.preprocessing.core.PreProcessingConfig;

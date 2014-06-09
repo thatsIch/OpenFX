@@ -18,7 +18,6 @@ import de.thatsich.openfx.featureextraction.intern.control.handler.DeleteFeature
 import de.thatsich.openfx.featureextraction.intern.control.handler.ExtractFeatureSucceededHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.util.StringConverter;
 
@@ -41,9 +40,6 @@ public class FeatureInputPresenter extends AFXMLPresenter
 	@FXML private Button nodeButtonExtractFeatureVector;
 	@FXML private Button nodeButtonRemoveFeatureVector;
 	@FXML private Button nodeButtonResetFeatureVectorList;
-	@FXML private CheckBox nodeCheckBoxSmooth;
-	@FXML private CheckBox nodeCheckBoxThreshold;
-	@FXML private CheckBox nodeCheckBoxDenoising;
 
 	@Override
 	protected void bindComponents()
@@ -119,7 +115,7 @@ public class FeatureInputPresenter extends AFXMLPresenter
 	@FXML
 	private void onExtractAction()
 	{
-		final ExtractFeatureCommand extractCommand = this.provider.createExtractFeatureCommand(this.errors.selected().get(), this.featureExtractors.selected().get(), this.featureState.frameSize().get(), this.nodeCheckBoxSmooth.isSelected(), this.nodeCheckBoxThreshold.isSelected(), this.nodeCheckBoxDenoising.isSelected());
+		final ExtractFeatureCommand extractCommand = this.provider.createExtractFeatureCommand(this.errors.selected().get(), this.featureExtractors.selected().get(), this.featureState.frameSize().get());
 		extractCommand.setOnSucceededCommandHandler(ExtractFeatureSucceededHandler.class);
 		extractCommand.start();
 		this.log.info("FeatureVector deleted and removed from FeatureVectorList.");

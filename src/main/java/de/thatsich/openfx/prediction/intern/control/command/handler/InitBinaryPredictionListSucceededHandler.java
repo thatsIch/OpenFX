@@ -2,8 +2,8 @@ package de.thatsich.openfx.prediction.intern.control.command.handler;
 
 import com.google.inject.Inject;
 import de.thatsich.core.javafx.ACommandHandler;
-import de.thatsich.openfx.prediction.api.control.BinaryPrediction;
 import de.thatsich.openfx.prediction.api.model.IBinaryPredictions;
+import de.thatsich.openfx.prediction.intern.control.entity.BinaryPrediction;
 
 import java.util.List;
 

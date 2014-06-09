@@ -1,6 +1,6 @@
 package de.thatsich.openfx.imageprocessing.intern.control.entity;
 
-import de.thatsich.openfx.imageprocessing.api.control.IImage;
+import de.thatsich.openfx.imageprocessing.api.control.entity.IImage;
 import org.opencv.core.Mat;
 
 public class Image implements IImage

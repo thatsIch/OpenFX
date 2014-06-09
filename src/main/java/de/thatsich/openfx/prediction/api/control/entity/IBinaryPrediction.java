@@ -1,4 +1,4 @@
-package de.thatsich.openfx.prediction.api.control;
+package de.thatsich.openfx.prediction.api.control.entity;
 
 /**
  * @author thatsIch

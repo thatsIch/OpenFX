@@ -1,7 +1,7 @@
 package de.thatsich.openfx.preprocessing.intern.model;
 
 import com.google.inject.Singleton;
-import de.thatsich.openfx.preprocessing.api.control.IPreProcessing;
+import de.thatsich.openfx.preprocessing.api.control.entity.IPreProcessing;
 import de.thatsich.openfx.preprocessing.api.model.IPreProcessings;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;

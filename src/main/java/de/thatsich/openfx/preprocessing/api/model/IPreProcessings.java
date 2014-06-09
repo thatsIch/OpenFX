@@ -1,6 +1,6 @@
 package de.thatsich.openfx.preprocessing.api.model;
 
-import de.thatsich.openfx.preprocessing.api.control.IPreProcessing;
+import de.thatsich.openfx.preprocessing.api.control.entity.IPreProcessing;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
 

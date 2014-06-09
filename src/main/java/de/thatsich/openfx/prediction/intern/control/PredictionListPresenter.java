@@ -2,10 +2,10 @@ package de.thatsich.openfx.prediction.intern.control;
 
 import com.google.inject.Inject;
 import de.thatsich.core.javafx.AFXMLPresenter;
-import de.thatsich.openfx.prediction.api.control.BinaryPrediction;
 import de.thatsich.openfx.prediction.api.model.IBinaryPredictions;
 import de.thatsich.openfx.prediction.intern.control.command.PredictionInitCommander;
 import de.thatsich.openfx.prediction.intern.control.command.commands.SetLastBinaryPredictionIndexCommand;
+import de.thatsich.openfx.prediction.intern.control.entity.BinaryPrediction;
 import de.thatsich.openfx.prediction.intern.control.provider.IPredictionCommandProvider;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;

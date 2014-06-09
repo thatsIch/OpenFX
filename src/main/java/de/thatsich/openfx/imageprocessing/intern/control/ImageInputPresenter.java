@@ -3,7 +3,7 @@ package de.thatsich.openfx.imageprocessing.intern.control;
 import com.google.inject.Inject;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.javafx.CommandExecutor;
-import de.thatsich.openfx.imageprocessing.api.control.IImage;
+import de.thatsich.openfx.imageprocessing.api.control.entity.IImage;
 import de.thatsich.openfx.imageprocessing.api.model.IImageState;
 import de.thatsich.openfx.imageprocessing.api.model.IImages;
 import de.thatsich.openfx.imageprocessing.intern.control.command.ImageInitCommander;

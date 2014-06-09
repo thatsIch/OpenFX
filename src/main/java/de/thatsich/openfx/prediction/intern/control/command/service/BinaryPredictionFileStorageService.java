@@ -2,7 +2,7 @@ package de.thatsich.openfx.prediction.intern.control.command.service;
 
 import com.google.inject.Inject;
 import de.thatsich.core.AFileStorageService;
-import de.thatsich.openfx.prediction.api.control.BinaryPrediction;
+import de.thatsich.openfx.prediction.intern.control.entity.BinaryPrediction;
 import de.thatsich.openfx.prediction.intern.model.PredictionState;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;

@@ -1,6 +1,6 @@
 package de.thatsich.openfx.prediction.api.model;
 
-import de.thatsich.openfx.prediction.api.control.BinaryPrediction;
+import de.thatsich.openfx.prediction.intern.control.entity.BinaryPrediction;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
 
