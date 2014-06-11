@@ -2,12 +2,12 @@ package de.thatsich.openfx.preprocessing.intern.control.command.preprocessing.co
 
 import com.google.inject.Inject;
 import de.thatsich.core.Log;
-import de.thatsich.openfx.preprocessing.api.control.entity.IPreProcessing;
+import de.thatsich.openfx.preprocessing.api.control.entity.ITrainedPreProcessor;
 import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.beans.property.ReadOnlyStringProperty;
 
 
-public abstract class APreProcessing implements IPreProcessing
+public abstract class ATrainedPreProcessor implements ITrainedPreProcessor
 {
 	// Properties
 	private final PreProcessingConfig config;
@@ -18,7 +18,7 @@ public abstract class APreProcessing implements IPreProcessing
 	/**
 	 * CTOR
 	 */
-	protected APreProcessing(PreProcessingConfig config)
+	protected ATrainedPreProcessor(PreProcessingConfig config)
 	{
 		this.config = config;
 	}

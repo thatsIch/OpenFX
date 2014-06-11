@@ -2,7 +2,7 @@ package de.thatsich.openfx.preprocessing.intern.control;
 
 import com.google.inject.Inject;
 import de.thatsich.core.javafx.AFXMLPresenter;
-import de.thatsich.openfx.preprocessing.api.control.entity.IPreProcessing;
+import de.thatsich.openfx.preprocessing.api.control.entity.ITrainedPreProcessor;
 import de.thatsich.openfx.preprocessing.api.model.IPreProcessings;
 import de.thatsich.openfx.preprocessing.intern.control.command.PreProcessingInitCommander;
 import javafx.beans.value.ChangeListener;
@@ -39,10 +39,14 @@ public class PreProcessingDisplayPresenter extends AFXMLPresenter
 	 */
 	private void bindLabels()
 	{
-		this.preProcessings.selected().addListener(new ChangeListener<IPreProcessing>()
+		this.preProcessings.selected().addListener(new ChangeListener<ITrainedPreProcessor>()
 		{
 			@Override
-			public void changed(ObservableValue<? extends IPreProcessing> observable, IPreProcessing oldValue, IPreProcessing newValue)
+			public void changed(
+				ObservableValue<? extends ITrainedPreProcessor> observable,
+				ITrainedPreProcessor oldValue,
+				ITrainedPreProcessor newValue
+			)
 			{
 				if (newValue != null)
 				{

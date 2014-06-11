@@ -2,7 +2,7 @@ package de.thatsich.openfx.preprocessing.intern.control.command.handler;
 
 import com.google.inject.Inject;
 import de.thatsich.core.javafx.ACommandHandler;
-import de.thatsich.openfx.preprocessing.api.control.entity.IPreProcessing;
+import de.thatsich.openfx.preprocessing.api.control.entity.ITrainedPreProcessor;
 import de.thatsich.openfx.preprocessing.api.model.IPreProcessings;
 
 
@@ -22,7 +22,7 @@ public class GetLastPreProcessingIndexSucceededHandler extends ACommandHandler<I
 	{
 		if (value >= 0 && this.pps.list().size() > 0)
 		{
-			final IPreProcessing selected = this.pps.list().get(value);
+			final ITrainedPreProcessor selected = this.pps.list().get(value);
 			this.pps.selected().set(selected);
 			this.log.info("Set last selected " + selected + " in Model.");
 		}

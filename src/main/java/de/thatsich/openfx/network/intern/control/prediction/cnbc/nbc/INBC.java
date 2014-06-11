@@ -1,4 +1,4 @@
-package de.thatsich.openfx.network.intern.control.cnbc.nbc;
+package de.thatsich.openfx.network.intern.control.prediction.cnbc.nbc;
 
 /**
  * @author thatsIch

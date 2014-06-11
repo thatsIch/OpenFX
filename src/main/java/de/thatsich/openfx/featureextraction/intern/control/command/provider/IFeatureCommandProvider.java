@@ -5,7 +5,7 @@ import de.thatsich.openfx.errorgeneration.api.control.entity.IError;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureExtractor;
 import de.thatsich.openfx.featureextraction.intern.control.command.commands.DeleteFeatureCommand;
-import de.thatsich.openfx.featureextraction.intern.control.command.commands.ExtractFeatureCommand;
+import de.thatsich.openfx.featureextraction.intern.control.command.commands.CreateExtractedFeatureCommand;
 import de.thatsich.openfx.featureextraction.intern.control.command.commands.SetLastFeatureExtractorIndexCommand;
 import de.thatsich.openfx.featureextraction.intern.control.command.commands.SetLastFeatureIndexCommand;
 import de.thatsich.openfx.featureextraction.intern.control.command.commands.SetLastTileSizeCommand;
@@ -18,7 +18,7 @@ public interface IFeatureCommandProvider extends ICommandProvider
 
 	SetLastFeatureExtractorIndexCommand createSetLastFeatureExtractorIndexCommand(int lastFeatureExtractorIndex);
 
-	ExtractFeatureCommand createExtractFeatureCommand(IError error, IFeatureExtractor extractor, int frameSize);
+	CreateExtractedFeatureCommand createExtractFeatureCommand(IError error, IFeatureExtractor extractor, int frameSize);
 
 	DeleteFeatureCommand createDeleteFeatureCommand(IFeature feature);
 }

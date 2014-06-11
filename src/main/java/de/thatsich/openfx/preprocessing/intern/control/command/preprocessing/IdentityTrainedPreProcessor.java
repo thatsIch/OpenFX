@@ -2,38 +2,34 @@ package de.thatsich.openfx.preprocessing.intern.control.command.preprocessing;
 
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
-import de.thatsich.openfx.preprocessing.intern.control.command.preprocessing.core.APreProcessing;
+import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
+import de.thatsich.openfx.preprocessing.intern.control.command.preprocessing.core.ATrainedPreProcessor;
 import de.thatsich.openfx.preprocessing.intern.control.command.preprocessing.core.PreProcessingConfig;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
-import org.encog.ml.data.MLData;
-import org.encog.ml.data.basic.BasicMLData;
 import org.encog.neural.networks.BasicNetwork;
 
+import java.util.List;
 
 /**
- * Result of a AANNPreProcessor
- *
  * @author thatsIch
+ * @since 29.05.2014.
  */
-public class AANNPreProcessing extends APreProcessing
+public class IdentityTrainedPreProcessor extends ATrainedPreProcessor
 {
 	private ReadOnlyObjectProperty<BasicNetwork> networkProperty;
 
 	@Inject
-	public AANNPreProcessing(@Assisted BasicNetwork network, @Assisted PreProcessingConfig config)
+	public IdentityTrainedPreProcessor(@Assisted BasicNetwork network, @Assisted PreProcessingConfig config)
 	{
 		super(config);
 		this.networkProperty = new ReadOnlyObjectWrapper<>(network);
 	}
 
 	@Override
-	public double[] preprocess(double[] featureVector)
+	public List<IFeature> preprocess(List<IFeature> feature)
 	{
-		final MLData inputData = new BasicMLData(featureVector);
-		final MLData outputData = this.networkProperty.get().compute(inputData);
-
-		return outputData.getData();
+		return feature;
 	}
 
 	@Override

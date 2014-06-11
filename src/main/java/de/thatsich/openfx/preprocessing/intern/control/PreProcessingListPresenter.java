@@ -2,7 +2,7 @@ package de.thatsich.openfx.preprocessing.intern.control;
 
 import com.google.inject.Inject;
 import de.thatsich.core.javafx.AFXMLPresenter;
-import de.thatsich.openfx.preprocessing.api.control.entity.IPreProcessing;
+import de.thatsich.openfx.preprocessing.api.control.entity.ITrainedPreProcessor;
 import de.thatsich.openfx.preprocessing.api.model.IPreProcessings;
 import de.thatsich.openfx.preprocessing.intern.control.command.PreProcessingInitCommander;
 import de.thatsich.openfx.preprocessing.intern.control.command.commands.SetLastPreProcessingIndexCommand;
@@ -23,11 +23,11 @@ public class PreProcessingListPresenter extends AFXMLPresenter
 {
 	@Inject private PreProcessingInitCommander initCommander;
 	// Nodes
-	@FXML private TableView<IPreProcessing> nodeTableViewPreProcessingList;
-	@FXML private TableColumn<IPreProcessing, String> nodeTableColumnPreProcessingName;
-	@FXML private TableColumn<IPreProcessing, Integer> nodeTableColumnInputSize;
-	@FXML private TableColumn<IPreProcessing, Integer> nodeTableColumnOutputSize;
-	@FXML private TableColumn<IPreProcessing, String> nodeTableColumnID;
+	@FXML private TableView<ITrainedPreProcessor> nodeTableViewPreProcessingList;
+	@FXML private TableColumn<ITrainedPreProcessor, String> nodeTableColumnPreProcessingName;
+	@FXML private TableColumn<ITrainedPreProcessor, Integer> nodeTableColumnInputSize;
+	@FXML private TableColumn<ITrainedPreProcessor, Integer> nodeTableColumnOutputSize;
+	@FXML private TableColumn<ITrainedPreProcessor, String> nodeTableColumnID;
 	// Injects
 	@Inject
 	private IPreProcessingCommandProvider commander;
@@ -70,7 +70,11 @@ public class PreProcessingListPresenter extends AFXMLPresenter
 	 */
 	private void bindTableViewSelectionModel()
 	{
-		this.nodeTableViewPreProcessingList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+		this.nodeTableViewPreProcessingList.getSelectionModel().selectedItemProperty().addListener((
+			observable,
+			oldValue,
+			newValue
+		) -> {
 			this.preProcessings.selected().set(newValue);
 			this.log.info("Selected " + newValue);
 
@@ -80,7 +84,11 @@ public class PreProcessingListPresenter extends AFXMLPresenter
 		});
 		this.log.info("Bound Selection to Model.");
 
-		this.preProcessings.selected().addListener((observable, oldValue, newValue) -> this.nodeTableViewPreProcessingList.getSelectionModel().select(newValue));
+		this.preProcessings.selected().addListener((
+			observable,
+			oldValue,
+			newValue
+		) -> this.nodeTableViewPreProcessingList.getSelectionModel().select(newValue));
 		this.log.info("Bound Model to Selection.");
 	}
 

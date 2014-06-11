@@ -9,7 +9,7 @@ import javafx.beans.property.ReadOnlyListProperty;
  */
 public interface IFeatureVector
 {
-	ReadOnlyListProperty<Float> vector();
+	ReadOnlyListProperty<Double> vector();
 
 	ReadOnlyBooleanProperty isPositive();
 }

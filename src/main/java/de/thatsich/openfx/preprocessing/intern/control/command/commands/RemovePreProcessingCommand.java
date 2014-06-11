@@ -3,24 +3,27 @@ package de.thatsich.openfx.preprocessing.intern.control.command.commands;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import de.thatsich.core.javafx.ACommand;
-import de.thatsich.openfx.preprocessing.api.control.entity.IPreProcessing;
-import de.thatsich.openfx.preprocessing.intern.control.command.service.PreProcessingFileStorageService;
+import de.thatsich.openfx.preprocessing.api.control.entity.ITrainedPreProcessor;
+import de.thatsich.openfx.preprocessing.intern.control.command.service.TrainedPreProcessorFileStorageService;
 
 
-public class RemovePreProcessingCommand extends ACommand<IPreProcessing>
+public class RemovePreProcessingCommand extends ACommand<ITrainedPreProcessor>
 {
-	private final IPreProcessing preProcessing;
-	private final PreProcessingFileStorageService storage;
+	private final ITrainedPreProcessor preProcessing;
+	private final TrainedPreProcessorFileStorageService storage;
 
 	@Inject
-	public RemovePreProcessingCommand(@Assisted IPreProcessing preProcessing, PreProcessingFileStorageService storage)
+	public RemovePreProcessingCommand(
+		@Assisted ITrainedPreProcessor preProcessing,
+		TrainedPreProcessorFileStorageService storage
+	)
 	{
 		this.preProcessing = preProcessing;
 		this.storage = storage;
 	}
 
 	@Override
-	protected IPreProcessing call() throws Exception
+	protected ITrainedPreProcessor call() throws Exception
 	{
 		this.storage.delete(this.preProcessing);
 

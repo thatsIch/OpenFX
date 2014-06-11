@@ -11,9 +11,9 @@ import de.thatsich.openfx.featureextraction.api.model.IFeatureExtractors;
 import de.thatsich.openfx.featureextraction.api.model.IFeatureState;
 import de.thatsich.openfx.featureextraction.api.model.IFeatures;
 import de.thatsich.openfx.featureextraction.intern.control.command.FeatureInitCommander;
-import de.thatsich.openfx.featureextraction.intern.control.command.provider.IFeatureCommandProvider;
 import de.thatsich.openfx.featureextraction.intern.control.command.commands.DeleteFeatureCommand;
-import de.thatsich.openfx.featureextraction.intern.control.command.commands.ExtractFeatureCommand;
+import de.thatsich.openfx.featureextraction.intern.control.command.commands.CreateExtractedFeatureCommand;
+import de.thatsich.openfx.featureextraction.intern.control.command.provider.IFeatureCommandProvider;
 import de.thatsich.openfx.featureextraction.intern.control.handler.DeleteFeatureSucceededHandler;
 import de.thatsich.openfx.featureextraction.intern.control.handler.ExtractFeatureSucceededHandler;
 import javafx.fxml.FXML;
@@ -77,7 +77,9 @@ public class FeatureInputPresenter extends AFXMLPresenter
 		this.nodeChoiceBoxFeatureExtractor.valueProperty().bindBidirectional(this.featureExtractors.selected());
 		this.log.info("Bound ChoiceBoxFeatureExtractor to Model.");
 
-		this.nodeChoiceBoxFeatureExtractor.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> this.provider.createSetLastFeatureExtractorIndexCommand(newValue.intValue()).start());
+		this.nodeChoiceBoxFeatureExtractor.getSelectionModel().selectedIndexProperty().addListener((
+			observable, oldValue, newValue
+		) -> this.provider.createSetLastFeatureExtractorIndexCommand(newValue.intValue()).start());
 		this.log.info("Bound ChoiceBoxFeatureExtractor to Config.");
 	}
 
@@ -115,7 +117,7 @@ public class FeatureInputPresenter extends AFXMLPresenter
 	@FXML
 	private void onExtractAction()
 	{
-		final ExtractFeatureCommand extractCommand = this.provider.createExtractFeatureCommand(this.errors.selected().get(), this.featureExtractors.selected().get(), this.featureState.frameSize().get());
+		final CreateExtractedFeatureCommand extractCommand = this.provider.createExtractFeatureCommand(this.errors.selected().get(), this.featureExtractors.selected().get(), this.featureState.frameSize().get());
 		extractCommand.setOnSucceededCommandHandler(ExtractFeatureSucceededHandler.class);
 		extractCommand.start();
 		this.log.info("FeatureVector deleted and removed from FeatureVectorList.");

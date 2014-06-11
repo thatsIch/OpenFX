@@ -4,10 +4,10 @@ import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import de.thatsich.core.javafx.ACommand;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
-import de.thatsich.openfx.preprocessing.api.control.entity.IPreProcessing;
+import de.thatsich.openfx.preprocessing.api.control.entity.ITrainedPreProcessor;
 import de.thatsich.openfx.preprocessing.intern.control.command.preprocessing.core.PreProcessingConfig;
 import de.thatsich.openfx.preprocessing.intern.control.command.preprocessor.core.IPreProcessor;
-import de.thatsich.openfx.preprocessing.intern.control.command.service.PreProcessingFileStorageService;
+import de.thatsich.openfx.preprocessing.intern.control.command.service.TrainedPreProcessorFileStorageService;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -17,15 +17,17 @@ import java.util.UUID;
 /**
  * @author thatsIch
  */
-public class TrainPreProcessorCommand extends ACommand<IPreProcessing>
+public class CreateTrainedPreProcessorCommand extends ACommand<ITrainedPreProcessor>
 {
 	// Properties
 	private final IPreProcessor preProcessor;
 	private final IFeature feature;
-	private final PreProcessingFileStorageService storage;
+	private final TrainedPreProcessorFileStorageService storage;
 
 	@Inject
-	public TrainPreProcessorCommand(@Assisted IPreProcessor preProcessor, @Assisted IFeature feature, PreProcessingFileStorageService storage)
+	public CreateTrainedPreProcessorCommand(
+		@Assisted IPreProcessor preProcessor, @Assisted IFeature feature, TrainedPreProcessorFileStorageService storage
+	)
 	{
 		this.preProcessor = preProcessor;
 		this.feature = feature;
@@ -33,7 +35,7 @@ public class TrainPreProcessorCommand extends ACommand<IPreProcessing>
 	}
 
 	@Override
-	protected IPreProcessing call() throws Exception
+	public ITrainedPreProcessor call() throws Exception
 	{
 		final String preProcessorName = this.preProcessor.getName();
 		final int featureVectorSize = this.feature.vectors().get(0).vector().size();
@@ -46,7 +48,7 @@ public class TrainPreProcessorCommand extends ACommand<IPreProcessing>
 		final PreProcessingConfig config = new PreProcessingConfig(preProcessorName, featureVectorSize, 0, id);
 		this.log.info("Created PreProcessorConfiguration.");
 
-		final IPreProcessing preProcessing = this.preProcessor.train(data, data, config);
+		final ITrainedPreProcessor preProcessing = this.preProcessor.train(data, data, config);
 		this.log.info("Trained with " + Arrays.deepToString(data) + " samples.");
 
 		this.storage.create(preProcessing);

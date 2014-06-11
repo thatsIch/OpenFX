@@ -1,6 +1,6 @@
 package de.thatsich.openfx.preprocessing.api.model;
 
-import de.thatsich.openfx.preprocessing.api.control.entity.IPreProcessing;
+import de.thatsich.openfx.preprocessing.api.control.entity.ITrainedPreProcessor;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
 
@@ -20,13 +20,13 @@ public interface IPreProcessings
 	 *
 	 * @return ListProperty of PreProcessings
 	 */
-	ListProperty<IPreProcessing> list();
+	ListProperty<ITrainedPreProcessor> list();
 
 	/**
 	 * PropertyGetter of selected PreProcessing
 	 *
 	 * @return Property of selected PreProcessing
 	 */
-	ObjectProperty<IPreProcessing> selected();
+	ObjectProperty<ITrainedPreProcessor> selected();
 
 }

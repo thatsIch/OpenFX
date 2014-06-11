@@ -14,7 +14,7 @@ import org.opencv.core.MatOfFloat;
 import java.util.UUID;
 
 
-public class TrainBinaryClassifierCommand extends ACommand<IBinaryClassification>
+public class CreateTrainedBinaryClassifierCommand extends ACommand<IBinaryClassification>
 {
 	// Properties
 	private final IBinaryClassifier binaryClassifier;
@@ -22,7 +22,9 @@ public class TrainBinaryClassifierCommand extends ACommand<IBinaryClassification
 	private final ClassificationFileStorageService storage;
 
 	@Inject
-	public TrainBinaryClassifierCommand(@Assisted IBinaryClassifier classifier, @Assisted IFeature feature, ClassificationFileStorageService storage)
+	public CreateTrainedBinaryClassifierCommand(
+		@Assisted IBinaryClassifier classifier, @Assisted IFeature feature, ClassificationFileStorageService storage
+	)
 	{
 		this.binaryClassifier = classifier;
 		this.feature = feature;

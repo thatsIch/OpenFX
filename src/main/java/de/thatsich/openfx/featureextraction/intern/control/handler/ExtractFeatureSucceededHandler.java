@@ -19,8 +19,15 @@ import java.util.Optional;
  */
 public class ExtractFeatureSucceededHandler extends ACommandHandler<IFeature>
 {
-	@Inject private IFeatures features;
-	@Inject private FeatureFileStorageService storage;
+	private final IFeatures features;
+	private final FeatureFileStorageService storage;
+
+	@Inject
+	public ExtractFeatureSucceededHandler(IFeatures features, FeatureFileStorageService storage)
+	{
+		this.features = features;
+		this.storage = storage;
+	}
 
 	@Override
 	public void handle(IFeature feature)

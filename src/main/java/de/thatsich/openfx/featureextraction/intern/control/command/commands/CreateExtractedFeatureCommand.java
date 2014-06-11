@@ -19,7 +19,7 @@ import org.opencv.core.MatOfFloat;
 import java.util.List;
 
 
-public class ExtractFeatureCommand extends ACommand<IFeature>
+public class CreateExtractedFeatureCommand extends ACommand<IFeature>
 {
 	// Properties
 	private final IError error;
@@ -27,7 +27,9 @@ public class ExtractFeatureCommand extends ACommand<IFeature>
 	private final int frameSize;
 
 	@Inject
-	public ExtractFeatureCommand(@Assisted IError error, @Assisted IFeatureExtractor extractor, @Assisted int frameSize)
+	public CreateExtractedFeatureCommand(
+		@Assisted IError error, @Assisted IFeatureExtractor extractor, @Assisted int frameSize
+	)
 	{
 		this.error = error;
 		this.featureExtractor = extractor;
@@ -35,7 +37,7 @@ public class ExtractFeatureCommand extends ACommand<IFeature>
 	}
 
 	@Override
-	protected IFeature call() throws Exception
+	public IFeature call() throws Exception
 	{
 		final String className = this.error.clazzProperty().get();
 		final String extractorName = this.featureExtractor.getName();

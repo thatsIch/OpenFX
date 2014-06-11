@@ -19,7 +19,7 @@ import java.util.List;
 public class FeatureVector implements IFeatureVector
 {
 	// Properties
-	private final ReadOnlyListProperty<Float> floats;
+	private final ReadOnlyListProperty<Double> floats;
 	private final ReadOnlyBooleanProperty isPositive;
 
 	/**
@@ -28,16 +28,16 @@ public class FeatureVector implements IFeatureVector
 	 * @param vector     Feature Vector
 	 * @param isPositive Error Label
 	 */
-	public FeatureVector(List<Float> vector, boolean isPositive)
+	public FeatureVector(List<Double> vector, boolean isPositive)
 	{
-		final ObservableList<Float> floats = FXCollections.observableArrayList(vector);
+		final ObservableList<Double> floats = FXCollections.observableArrayList(vector);
 
 		this.floats = new ReadOnlyListWrapper<>(floats);
 		this.isPositive = new ReadOnlyBooleanWrapper(isPositive);
 	}
 
 	@Override
-	public ReadOnlyListProperty<Float> vector()
+	public ReadOnlyListProperty<Double> vector()
 	{
 		return this.floats;
 	}

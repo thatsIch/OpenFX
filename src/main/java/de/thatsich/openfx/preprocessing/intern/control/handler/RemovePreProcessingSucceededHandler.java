@@ -2,7 +2,7 @@ package de.thatsich.openfx.preprocessing.intern.control.handler;
 
 import com.google.inject.Inject;
 import de.thatsich.core.javafx.ACommandHandler;
-import de.thatsich.openfx.preprocessing.api.control.entity.IPreProcessing;
+import de.thatsich.openfx.preprocessing.api.control.entity.ITrainedPreProcessor;
 import de.thatsich.openfx.preprocessing.api.model.IPreProcessings;
 
 import java.util.List;
@@ -14,21 +14,21 @@ import java.util.List;
  *
  * @author Minh
  */
-public class RemovePreProcessingSucceededHandler extends ACommandHandler<IPreProcessing>
+public class RemovePreProcessingSucceededHandler extends ACommandHandler<ITrainedPreProcessor>
 {
 	@Inject
 	private IPreProcessings preProcessings;
 
 	@Override
-	public void handle(IPreProcessing value)
+	public void handle(ITrainedPreProcessor value)
 	{
-		final List<IPreProcessing> list = this.preProcessings.list();
+		final List<ITrainedPreProcessor> list = this.preProcessings.list();
 		list.remove(value);
 		this.log.info("Removed " + value);
 
 		if (list.size() > 0)
 		{
-			final IPreProcessing first = list.get(0);
+			final ITrainedPreProcessor first = list.get(0);
 			this.preProcessings.selected().set(first);
 			this.log.info("Reset Selection to first: " + first);
 		}

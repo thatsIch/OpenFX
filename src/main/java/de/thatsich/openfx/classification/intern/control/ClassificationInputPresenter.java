@@ -11,7 +11,7 @@ import de.thatsich.openfx.classification.api.model.IClassificationState;
 import de.thatsich.openfx.classification.intern.control.command.ClassificationInitCommander;
 import de.thatsich.openfx.classification.intern.control.command.commands.DeleteBinaryClassificationCommand;
 import de.thatsich.openfx.classification.intern.control.command.commands.SetLastBinaryClassifierIndexCommand;
-import de.thatsich.openfx.classification.intern.control.command.commands.TrainBinaryClassifierCommand;
+import de.thatsich.openfx.classification.intern.control.command.commands.CreateTrainedBinaryClassifierCommand;
 import de.thatsich.openfx.classification.intern.control.handler.RemoveBinaryClassificationSucceededHandler;
 import de.thatsich.openfx.classification.intern.control.handler.TrainBinaryClassifierSucceededHandler;
 import de.thatsich.openfx.classification.intern.control.provider.IClassificationCommandProvider;
@@ -84,7 +84,11 @@ public class ClassificationInputPresenter extends AFXMLPresenter
 		this.nodeChoiceBoxBinaryClassifier.valueProperty().bindBidirectional(this.binaryClassifiers.selected());
 		this.log.info("Bound ChoiceBoxBinaryClassifier to Model.");
 
-		this.nodeChoiceBoxBinaryClassifier.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
+		this.nodeChoiceBoxBinaryClassifier.getSelectionModel().selectedIndexProperty().addListener((
+			observable,
+			oldValue,
+			newValue
+		) -> {
 			final SetLastBinaryClassifierIndexCommand lastCommand = this.commander.createSetLastBinaryClassifierIndexCommand(newValue.intValue());
 			lastCommand.start();
 		});
@@ -108,7 +112,7 @@ public class ClassificationInputPresenter extends AFXMLPresenter
 		final IBinaryClassifier selectedBC = this.binaryClassifiers.selected().get();
 		final IFeature selectedF = this.features.selected().get();
 
-		final TrainBinaryClassifierCommand command = this.commander.createTrainBinaryClassifierCommand(path, selectedBC, selectedF);
+		final CreateTrainedBinaryClassifierCommand command = this.commander.createTrainBinaryClassifierCommand(path, selectedBC, selectedF);
 		command.setOnSucceededCommandHandler(TrainBinaryClassifierSucceededHandler.class);
 		command.start();
 	}

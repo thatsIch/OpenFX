@@ -1,10 +1,13 @@
-package de.thatsich.openfx.network.intern.control.cnbc;
+package de.thatsich.openfx.network.intern.control.prediction.cnbc;
 
 import com.google.inject.Inject;
 import de.thatsich.core.Log;
+import de.thatsich.openfx.classification.api.control.entity.IBinaryClassifier;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
-import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVector;
-import de.thatsich.openfx.network.intern.control.cnbc.nbc.NetworkBinaryClassifiers;
+import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureVector;
+import de.thatsich.openfx.network.intern.control.prediction.cnbc.nbc.INBC;
+import de.thatsich.openfx.network.intern.control.prediction.cnbc.nbc.NetworkBinaryClassifiers;
+import javafx.util.Pair;
 
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -17,20 +20,23 @@ import java.util.Set;
  */
 public class CollectiveNetworkBinaryClassifiers implements ICNBC
 {
-	final private List<NetworkBinaryClassifiers> nbcs;
-	final private Set<String> uniqueErrorClasses;
-	final private ClassSelection classSelection;
-
+	private final List<IBinaryClassifier> binaryClassifiers;
 	final private Log log;
+	final private List<INBC> nbcs;
+	final private Set<String> uniqueErrorClasses;
 
 	@Inject
-	public CollectiveNetworkBinaryClassifiers(ClassSelection classSelection, Log log)
+	public CollectiveNetworkBinaryClassifiers(List<IBinaryClassifier> binaryClassifiers, Log log)
 	{
+		this.binaryClassifiers = binaryClassifiers;
+		this.log = log;
 		this.nbcs = new LinkedList<>();
 		this.uniqueErrorClasses = new HashSet<>();
-		this.classSelection = classSelection;
+	}
 
-		this.log = log;
+	public List<INBC> getNbcs()
+	{
+		return this.nbcs;
 	}
 
 	/**
@@ -68,14 +74,14 @@ public class CollectiveNetworkBinaryClassifiers implements ICNBC
 	 *
 	 * @param fv new featurevector
 	 */
-	private void addNewFeatureVector(FeatureVector fv)
+	private void addNewFeatureVector(IFeatureVector fv)
 	{
 		this.nbcs.forEach((nbc) -> nbc.addNewFeature(fv));
 	}
 
-	public void initialEvolution(List<IFeature> fvs)
+	public void initialEvolution(List<IFeature> features)
 	{
-		fvs.forEach(this::addNewFeatureVectorSet);
+		features.forEach(this::addNewFeatureVectorSet);
 		this.trainNetworkBinaryClassifiers();
 	}
 
@@ -90,13 +96,13 @@ public class CollectiveNetworkBinaryClassifiers implements ICNBC
 	}
 
 	@Override
-	public void removeFeature()
+	public void removeFeature(IFeature feature)
 	{
 
 	}
 
 	@Override
-	public void addFeature()
+	public void addFeature(IFeature feature)
 	{
 
 	}
@@ -109,6 +115,18 @@ public class CollectiveNetworkBinaryClassifiers implements ICNBC
 
 	@Override
 	public void adeptToNewClass()
+	{
+
+	}
+
+	@Override
+	public List<Pair<String, Double>> predict(List<IFeature> features)
+	{
+		return null;
+	}
+
+	@Override
+	public void train(List<IFeature> features)
 	{
 
 	}

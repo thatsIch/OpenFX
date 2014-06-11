@@ -1,7 +1,7 @@
 package de.thatsich.openfx.preprocessing.intern.control.command.preprocessor;
 
 import com.google.inject.Inject;
-import de.thatsich.openfx.preprocessing.api.control.entity.IPreProcessing;
+import de.thatsich.openfx.preprocessing.api.control.entity.ITrainedPreProcessor;
 import de.thatsich.openfx.preprocessing.intern.control.command.preprocessing.core.PreProcessingConfig;
 import de.thatsich.openfx.preprocessing.intern.control.command.preprocessor.core.APreProcessor;
 import de.thatsich.openfx.preprocessing.intern.control.command.provider.IPreProcessingProvider;
@@ -48,7 +48,7 @@ public class AANNPreProcessor extends APreProcessor
 	}
 
 	@Override
-	public IPreProcessing train(double[][] trainData, double[][] labelData, PreProcessingConfig config)
+	public ITrainedPreProcessor train(double[][] trainData, double[][] labelData, PreProcessingConfig config)
 	{
 		// extract important information
 		final int featureVectorCount = trainData.length;
@@ -107,7 +107,14 @@ public class AANNPreProcessor extends APreProcessor
 		return this.provider.createAANNPreProcessing(rebuildNetwork, newerConfig);
 	}
 
-	private void validate(int featureVectorCount, int featureVectorLength, int minHiddenLayerSize, int maxHiddenLayerSize, int minBottleLayerSize, int maxBottleLayerSize)
+	private void validate(
+		int featureVectorCount,
+		int featureVectorLength,
+		int minHiddenLayerSize,
+		int maxHiddenLayerSize,
+		int minBottleLayerSize,
+		int maxBottleLayerSize
+	)
 	{
 		if (featureVectorCount < 2)
 		{

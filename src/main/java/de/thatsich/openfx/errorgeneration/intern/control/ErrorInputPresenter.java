@@ -25,7 +25,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.util.StringConverter;
-import org.opencv.core.Mat;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -99,7 +98,11 @@ public class ErrorInputPresenter extends AFXMLPresenter
 		this.nodeChoiceBoxErrorGenerator.valueProperty().bindBidirectional(this.generators.selected());
 		this.log.info("Bound ChoiceBoxErrorGenerator to Model.");
 
-		this.nodeChoiceBoxErrorGenerator.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
+		this.nodeChoiceBoxErrorGenerator.getSelectionModel().selectedIndexProperty().addListener((
+			observable,
+			oldValue,
+			newValue
+		) -> {
 			SetLastErrorGeneratorIndexCommand command = this.provider.createSetLastErrorGeneratorIndexCommand(newValue.intValue());
 			command.start();
 		});
@@ -140,7 +143,6 @@ public class ErrorInputPresenter extends AFXMLPresenter
 	private void onGenerateErrorsAction()
 	{
 		final IImage imageEntry = this.images.selected().get();
-		final Mat image = imageEntry.getImageMat().clone();
 		final IErrorGenerator generator = this.generators.selected().get();
 		final int loops = this.state.loopCount().get();
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(loops);
@@ -149,11 +151,9 @@ public class ErrorInputPresenter extends AFXMLPresenter
 		final boolean denoising = this.nodeCheckBoxDenoising.isSelected();
 		this.log.info("Initialized Executor for generating all Errors.");
 
-		final String errorClass = generator.getName();
-
 		for (int step = 0; step < loops; step++)
 		{
-			final CreateErrorCommand command = this.provider.createApplyErrorCommand(errorClass, image, generator, smooth, threshold, denoising);
+			final CreateErrorCommand command = this.provider.createCreateErrorCommand(imageEntry, generator, smooth, threshold, denoising);
 			command.setOnSucceededCommandHandler(CreateErrorSucceededHandler.class);
 			command.setExecutor(executor);
 			command.start();
@@ -192,7 +192,6 @@ public class ErrorInputPresenter extends AFXMLPresenter
 		final IErrorGenerator generator = this.generators.selected().get();
 		final int loops = this.state.loopCount().get();
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(imageEntries.size() * loops);
-		final String errorClass = generator.getName();
 		final boolean smooth = this.nodeCheckBoxSmooth.isSelected();
 		final boolean threshold = this.nodeCheckBoxThreshold.isSelected();
 		final boolean denoising = this.nodeCheckBoxDenoising.isSelected();
@@ -200,10 +199,9 @@ public class ErrorInputPresenter extends AFXMLPresenter
 
 		for (IImage entry : imageEntries)
 		{
-			final Mat image = entry.getImageMat().clone();
 			for (int step = 0; step < loops; step++)
 			{
-				final CreateErrorCommand command = this.provider.createApplyErrorCommand(errorClass, image, generator, smooth, threshold, denoising);
+				final CreateErrorCommand command = this.provider.createCreateErrorCommand(entry, generator, smooth, threshold, denoising);
 				command.setOnSucceededCommandHandler(CreateErrorSucceededHandler.class);
 				command.setExecutor(executor);
 				command.start();

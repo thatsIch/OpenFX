@@ -11,7 +11,7 @@ import de.thatsich.openfx.preprocessing.api.view.IPreProcessingListView;
 import de.thatsich.openfx.preprocessing.intern.control.command.preprocessor.AANNPreProcessor;
 import de.thatsich.openfx.preprocessing.intern.control.command.preprocessor.IdentityPreProcessor;
 import de.thatsich.openfx.preprocessing.intern.control.command.service.PreProcessingConfigService;
-import de.thatsich.openfx.preprocessing.intern.control.command.service.PreProcessingFileStorageService;
+import de.thatsich.openfx.preprocessing.intern.control.command.service.TrainedPreProcessorFileStorageService;
 import de.thatsich.openfx.preprocessing.intern.model.PreProcessingState;
 import de.thatsich.openfx.preprocessing.intern.model.PreProcessings;
 import de.thatsich.openfx.preprocessing.intern.model.PreProcessors;
@@ -60,6 +60,6 @@ public class PreProcessingWiringModule extends AWiringModule
 	protected void bindService()
 	{
 		super.bind(PreProcessingConfigService.class).in(Scopes.SINGLETON);
-		super.bind(PreProcessingFileStorageService.class).in(Scopes.SINGLETON);
+		super.bind(TrainedPreProcessorFileStorageService.class).in(Scopes.SINGLETON);
 	}
 }

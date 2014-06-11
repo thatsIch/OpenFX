@@ -9,7 +9,7 @@ import de.thatsich.openfx.errorgeneration.intern.control.command.commands.Delete
 import de.thatsich.openfx.errorgeneration.intern.control.command.commands.SetLastErrorCountCommand;
 import de.thatsich.openfx.errorgeneration.intern.control.command.commands.SetLastErrorGeneratorIndexCommand;
 import de.thatsich.openfx.errorgeneration.intern.control.command.commands.SetLastErrorIndexCommand;
-import org.opencv.core.Mat;
+import de.thatsich.openfx.imageprocessing.api.control.entity.IImage;
 
 public interface IErrorCommandProvider extends ICommandProvider
 {
@@ -19,7 +19,13 @@ public interface IErrorCommandProvider extends ICommandProvider
 
 	SetLastErrorCountCommand createSetLastErrorCountCommand(int lastErrorLoopCount);
 
-	CreateErrorCommand createApplyErrorCommand(String errorClass, Mat imageMat, IErrorGenerator generator, @Assisted("smooth") boolean smooth, @Assisted("threshold") boolean threshold, @Assisted("denoising") boolean denoising);
+	CreateErrorCommand createCreateErrorCommand(
+		IImage image,
+		IErrorGenerator generator,
+		@Assisted("smooth") boolean smooth,
+		@Assisted("threshold") boolean threshold,
+		@Assisted("denoising") boolean denoising
+	);
 
 	DeleteErrorCommand createDeleteErrorEntryCommand(IError entry);
 }

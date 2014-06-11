@@ -1,11 +1,14 @@
 package de.thatsich.openfx.preprocessing.api.control.entity;
 
 import de.thatsich.core.IEntity;
+import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
 import de.thatsich.openfx.preprocessing.intern.control.command.preprocessing.core.PreProcessingConfig;
 import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyStringProperty;
 import org.encog.neural.networks.BasicNetwork;
+
+import java.util.List;
 
 
 /**
@@ -13,16 +16,16 @@ import org.encog.neural.networks.BasicNetwork;
  *
  * @author thatsIch
  */
-public interface IPreProcessing extends IEntity
+public interface ITrainedPreProcessor extends IEntity
 {
 	/**
 	 * Preprocesses a featurevector to maybe optimize future classifications
 	 *
-	 * @param featureVector to be processed FeatureVector
+	 * @param feature to be processed feature
 	 *
-	 * @return Preprocessed FeatureVector
+	 * @return Preprocessed feature
 	 */
-	double[] preprocess(double[] featureVector);
+	List<IFeature> preprocess(List<IFeature> feature);
 
 	ReadOnlyStringProperty nameProperty();
 

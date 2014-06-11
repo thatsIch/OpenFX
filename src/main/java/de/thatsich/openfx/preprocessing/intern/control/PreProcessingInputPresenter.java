@@ -5,14 +5,14 @@ import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.javafx.CommandExecutor;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
 import de.thatsich.openfx.featureextraction.api.model.IFeatures;
-import de.thatsich.openfx.preprocessing.api.control.entity.IPreProcessing;
+import de.thatsich.openfx.preprocessing.api.control.entity.ITrainedPreProcessor;
 import de.thatsich.openfx.preprocessing.api.model.IPreProcessingState;
 import de.thatsich.openfx.preprocessing.api.model.IPreProcessings;
 import de.thatsich.openfx.preprocessing.api.model.IPreProcessors;
 import de.thatsich.openfx.preprocessing.intern.control.command.PreProcessingInitCommander;
 import de.thatsich.openfx.preprocessing.intern.control.command.commands.RemovePreProcessingCommand;
 import de.thatsich.openfx.preprocessing.intern.control.command.commands.SetLastPreProcessorIndexCommand;
-import de.thatsich.openfx.preprocessing.intern.control.command.commands.TrainPreProcessorCommand;
+import de.thatsich.openfx.preprocessing.intern.control.command.commands.CreateTrainedPreProcessorCommand;
 import de.thatsich.openfx.preprocessing.intern.control.command.preprocessor.core.IPreProcessor;
 import de.thatsich.openfx.preprocessing.intern.control.command.provider.IPreProcessingCommandProvider;
 import de.thatsich.openfx.preprocessing.intern.control.handler.RemovePreProcessingSucceededHandler;
@@ -79,7 +79,11 @@ public class PreProcessingInputPresenter extends AFXMLPresenter
 		this.nodeChoiceBoxPreProcessor.valueProperty().bindBidirectional(this.preProcessors.selected());
 		this.log.info("Bound " + this.nodeChoiceBoxPreProcessor + " to Model.");
 
-		this.nodeChoiceBoxPreProcessor.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
+		this.nodeChoiceBoxPreProcessor.getSelectionModel().selectedIndexProperty().addListener((
+			observable,
+			oldValue,
+			newValue
+		) -> {
 			final SetLastPreProcessorIndexCommand lastCommand = this.commander.createSetLastPreProcessorIndexCommand(newValue.intValue());
 			lastCommand.start();
 		});
@@ -105,7 +109,7 @@ public class PreProcessingInputPresenter extends AFXMLPresenter
 		final List<IFeature> featureVectorSetList = this.features.get();
 		final IFeature selectedFeatureVectorSet = this.features.selected().get();
 
-		final TrainPreProcessorCommand command = this.commander.createTrainPreProcessorCommand(selectedPreProcessor, selectedFeatureVectorSet, featureVectorSetList);
+		final CreateTrainedPreProcessorCommand command = this.commander.createTrainPreProcessorCommand(selectedPreProcessor, selectedFeatureVectorSet, featureVectorSetList);
 		command.setOnSucceededCommandHandler(TrainPreProcessorSucceededHandler.class);
 		command.start();
 	}
@@ -113,7 +117,7 @@ public class PreProcessingInputPresenter extends AFXMLPresenter
 	@FXML
 	private void onRemovePreProcessingAction()
 	{
-		final IPreProcessing selected = this.preProcessings.selected().get();
+		final ITrainedPreProcessor selected = this.preProcessings.selected().get();
 
 		final RemovePreProcessingCommand command = this.commander.createRemovePreProcessingCommand(selected);
 		command.setOnSucceededCommandHandler(RemovePreProcessingSucceededHandler.class);
@@ -124,11 +128,11 @@ public class PreProcessingInputPresenter extends AFXMLPresenter
 	@FXML
 	private void onResetPreProcessingAction()
 	{
-		final List<IPreProcessing> list = this.preProcessings.list();
+		final List<ITrainedPreProcessor> list = this.preProcessings.list();
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(list.size());
 		this.log.info("Initialized " + executor + " for resetting.");
 
-		for (IPreProcessing pp : list)
+		for (ITrainedPreProcessor pp : list)
 		{
 			final RemovePreProcessingCommand command = this.commander.createRemovePreProcessingCommand(pp);
 			command.setOnSucceededCommandHandler(RemovePreProcessingSucceededHandler.class);

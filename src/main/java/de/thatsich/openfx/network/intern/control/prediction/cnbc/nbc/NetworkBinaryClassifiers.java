@@ -1,10 +1,10 @@
-package de.thatsich.openfx.network.intern.control.cnbc.nbc;
+package de.thatsich.openfx.network.intern.control.prediction.cnbc.nbc;
 
 import de.thatsich.openfx.classification.api.control.entity.IBinaryClassification;
 import de.thatsich.openfx.classification.api.control.entity.IBinaryClassifier;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
+import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureVector;
 import de.thatsich.openfx.featureextraction.api.model.IFeatures;
-import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVector;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -56,7 +56,7 @@ public class NetworkBinaryClassifiers implements INBC
 
 	public void addNewFeatureVectorSet(final IFeature fvs) {}
 
-	public void addNewFeature(final FeatureVector fv)
+	public void addNewFeature(final IFeatureVector fv)
 	{
 
 	}

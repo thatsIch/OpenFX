@@ -8,6 +8,7 @@ import de.thatsich.openfx.errorgeneration.api.control.entity.IErrorGenerator;
 import de.thatsich.openfx.errorgeneration.intern.control.command.service.ErrorFileStorageService;
 import de.thatsich.openfx.errorgeneration.intern.control.entity.Error;
 import de.thatsich.openfx.errorgeneration.intern.control.entity.ErrorConfig;
+import de.thatsich.openfx.imageprocessing.api.control.entity.IImage;
 import org.opencv.core.Mat;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
@@ -31,10 +32,17 @@ public class CreateErrorCommand extends ACommand<IError>
 	private final ErrorFileStorageService storage;
 
 	@Inject
-	public CreateErrorCommand(@Assisted String errorClass, @Assisted Mat imageMat, @Assisted IErrorGenerator generator, @Assisted("smooth") boolean smooth, @Assisted("threshold") boolean threshold, @Assisted("denoising") boolean denoising, final ErrorFileStorageService storage)
+	public CreateErrorCommand(
+		@Assisted IImage image,
+		@Assisted IErrorGenerator generator,
+		@Assisted("smooth") boolean smooth,
+		@Assisted("threshold") boolean threshold,
+		@Assisted("denoising") boolean denoising,
+		final ErrorFileStorageService storage
+	)
 	{
-		this.imageMat = imageMat;
-		this.errorClass = errorClass;
+		this.imageMat = image.getImageMat().clone();
+		this.errorClass = generator.getName();
 		this.generator = generator;
 		this.smooth = smooth;
 		this.threshold = threshold;
@@ -43,7 +51,7 @@ public class CreateErrorCommand extends ACommand<IError>
 	}
 
 	@Override
-	protected IError call() throws Exception
+	public IError call() throws Exception
 	{
 		final Mat blank = Mat.zeros(this.imageMat.size(), this.imageMat.type());
 		final Mat error = this.generator.generateError(blank);

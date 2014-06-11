@@ -2,10 +2,10 @@ package de.thatsich.openfx.preprocessing.intern.control.command.service;
 
 import com.google.inject.Inject;
 import de.thatsich.core.AFileStorageService;
-import de.thatsich.openfx.preprocessing.api.control.entity.IPreProcessing;
+import de.thatsich.openfx.preprocessing.api.control.entity.ITrainedPreProcessor;
 import de.thatsich.openfx.preprocessing.api.model.IPreProcessingState;
-import de.thatsich.openfx.preprocessing.intern.control.command.preprocessing.AANNPreProcessing;
-import de.thatsich.openfx.preprocessing.intern.control.command.preprocessing.IdentityPreProcessing;
+import de.thatsich.openfx.preprocessing.intern.control.command.preprocessing.AANNTrainedPreProcessor;
+import de.thatsich.openfx.preprocessing.intern.control.command.preprocessing.IdentityTrainedPreProcessor;
 import de.thatsich.openfx.preprocessing.intern.control.command.preprocessing.core.PreProcessingConfig;
 import org.encog.neural.networks.BasicNetwork;
 import org.encog.persist.EncogDirectoryPersistence;
@@ -23,21 +23,21 @@ import java.util.List;
  * @author thatsIch
  * @since 06.06.2014.
  */
-public class PreProcessingFileStorageService extends AFileStorageService<IPreProcessing>
+public class TrainedPreProcessorFileStorageService extends AFileStorageService<ITrainedPreProcessor>
 {
 	private static final String AANN_EXT = ".aann";
 	private static final String ID_EXT = ".id";
 
 	@Inject
-	protected PreProcessingFileStorageService(IPreProcessingState state)
+	protected TrainedPreProcessorFileStorageService(IPreProcessingState state)
 	{
 		super(state.path().get());
 	}
 
 	@Override
-	public List<IPreProcessing> init() throws IOException
+	public List<ITrainedPreProcessor> init() throws IOException
 	{
-		final List<IPreProcessing> list = new LinkedList<>();
+		final List<ITrainedPreProcessor> list = new LinkedList<>();
 
 		// traverse whole directory and search for pp files
 		// try to open them
@@ -46,7 +46,7 @@ public class PreProcessingFileStorageService extends AFileStorageService<IPrePro
 		{
 			for (Path child : stream)
 			{
-				final IPreProcessing retrieve = this.retrieve(child);
+				final ITrainedPreProcessor retrieve = this.retrieve(child);
 
 				list.add(retrieve);
 				this.log.info("Added " + retrieve);
@@ -62,11 +62,11 @@ public class PreProcessingFileStorageService extends AFileStorageService<IPrePro
 	}
 
 	@Override
-	public IPreProcessing create(IPreProcessing elem) throws IOException
+	public ITrainedPreProcessor create(ITrainedPreProcessor elem) throws IOException
 	{
 		final String fileName = elem.getConfig().toString();
 		final String withExtension;
-		if (elem instanceof AANNPreProcessing)
+		if (elem instanceof AANNTrainedPreProcessor)
 		{
 			withExtension = fileName + AANN_EXT;
 		}
@@ -92,7 +92,7 @@ public class PreProcessingFileStorageService extends AFileStorageService<IPrePro
 	}
 
 	@Override
-	public IPreProcessing retrieve(Path path) throws IOException
+	public ITrainedPreProcessor retrieve(Path path) throws IOException
 	{
 		final Path filePath = path.getFileName();
 		final String fileName = filePath.toString();
@@ -104,25 +104,25 @@ public class PreProcessingFileStorageService extends AFileStorageService<IPrePro
 
 		if (fileName.endsWith(AANN_EXT))
 		{
-			return new AANNPreProcessing(network, config);
+			return new AANNTrainedPreProcessor(network, config);
 		}
 		else
 		{
-			return new IdentityPreProcessing(network, config);
+			return new IdentityTrainedPreProcessor(network, config);
 		}
 	}
 
 	@Override
-	public IPreProcessing update(IPreProcessing elem) throws IOException
+	public ITrainedPreProcessor update(ITrainedPreProcessor elem) throws IOException
 	{
 		return null;
 	}
 
 	@Override
-	public void delete(IPreProcessing elem) throws IOException
+	public void delete(ITrainedPreProcessor elem) throws IOException
 	{
 		final String fileName;
-		if (elem instanceof AANNPreProcessing)
+		if (elem instanceof AANNTrainedPreProcessor)
 		{
 			fileName = elem.getConfig().toString() + AANN_EXT;
 		}

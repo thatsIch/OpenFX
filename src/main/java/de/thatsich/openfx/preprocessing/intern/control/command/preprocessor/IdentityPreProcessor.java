@@ -1,7 +1,7 @@
 package de.thatsich.openfx.preprocessing.intern.control.command.preprocessor;
 
 import com.google.inject.Inject;
-import de.thatsich.openfx.preprocessing.api.control.entity.IPreProcessing;
+import de.thatsich.openfx.preprocessing.api.control.entity.ITrainedPreProcessor;
 import de.thatsich.openfx.preprocessing.intern.control.command.preprocessing.core.PreProcessingConfig;
 import de.thatsich.openfx.preprocessing.intern.control.command.preprocessor.core.APreProcessor;
 import de.thatsich.openfx.preprocessing.intern.control.command.provider.IPreProcessingProvider;
@@ -20,7 +20,7 @@ public class IdentityPreProcessor extends APreProcessor
 	}
 
 	@Override
-	public IPreProcessing train(double[][] trainData, double[][] idealData, PreProcessingConfig config)
+	public ITrainedPreProcessor train(double[][] trainData, double[][] idealData, PreProcessingConfig config)
 	{
 		final int vectorLength = trainData[0].length;
 		final BasicNetwork network = new BasicNetwork();
