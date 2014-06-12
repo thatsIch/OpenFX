@@ -3,8 +3,8 @@ package de.thatsich.openfx.classification.intern.control.command.commands;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import de.thatsich.core.javafx.ACommand;
-import de.thatsich.openfx.classification.api.control.entity.IBinaryClassification;
 import de.thatsich.openfx.classification.api.control.entity.IBinaryClassifier;
+import de.thatsich.openfx.classification.api.control.entity.ITraindBinaryClassifier;
 import de.thatsich.openfx.classification.intern.control.classifier.core.BinaryClassificationConfig;
 import de.thatsich.openfx.classification.intern.control.command.service.ClassificationFileStorageService;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
@@ -14,7 +14,7 @@ import org.opencv.core.MatOfFloat;
 import java.util.UUID;
 
 
-public class CreateTrainedBinaryClassifierCommand extends ACommand<IBinaryClassification>
+public class CreateTrainedBinaryClassifierCommand extends ACommand<ITraindBinaryClassifier>
 {
 	// Properties
 	private final IBinaryClassifier binaryClassifier;
@@ -22,9 +22,7 @@ public class CreateTrainedBinaryClassifierCommand extends ACommand<IBinaryClassi
 	private final ClassificationFileStorageService storage;
 
 	@Inject
-	public CreateTrainedBinaryClassifierCommand(
-		@Assisted IBinaryClassifier classifier, @Assisted IFeature feature, ClassificationFileStorageService storage
-	)
+	public CreateTrainedBinaryClassifierCommand(@Assisted IBinaryClassifier classifier, @Assisted IFeature feature, ClassificationFileStorageService storage)
 	{
 		this.binaryClassifier = classifier;
 		this.feature = feature;
@@ -32,7 +30,7 @@ public class CreateTrainedBinaryClassifierCommand extends ACommand<IBinaryClassi
 	}
 
 	@Override
-	protected IBinaryClassification call() throws Exception
+	public ITraindBinaryClassifier call() throws Exception
 	{
 		final String binaryClassifierName = this.binaryClassifier.getName();
 		final String featureExtractorName = this.feature.extractorName().get();
@@ -48,9 +46,9 @@ public class CreateTrainedBinaryClassifierCommand extends ACommand<IBinaryClassi
 		{
 			final float[] floatArray = new float[vector.vector().size()];
 			int index = 0;
-			for (float f : vector.vector())
+			for (double d : vector.vector())
 			{
-				floatArray[index] = f;
+				floatArray[index] = (float) d;
 				index++;
 			}
 
@@ -68,7 +66,7 @@ public class CreateTrainedBinaryClassifierCommand extends ACommand<IBinaryClassi
 		final BinaryClassificationConfig config = new BinaryClassificationConfig(binaryClassifierName, featureExtractorName, tileSize, errorClassName, id);
 		this.log.info("Created BinaryClassificationConfig.");
 
-		final IBinaryClassification classification = this.binaryClassifier.train(positive, negative, config);
+		final ITraindBinaryClassifier classification = this.binaryClassifier.train(positive, negative, config);
 		this.log.info("Trained Binary Classifier with " + positive + " positive and " + negative + " negative samples.");
 
 		this.storage.create(classification);

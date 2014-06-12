@@ -5,7 +5,7 @@ import com.google.inject.assistedinject.Assisted;
 import de.thatsich.core.javafx.ACommand;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
 import de.thatsich.openfx.preprocessing.api.control.entity.ITrainedPreProcessor;
-import de.thatsich.openfx.preprocessing.intern.control.command.preprocessing.core.PreProcessingConfig;
+import de.thatsich.openfx.preprocessing.intern.control.command.preprocessing.core.TrainedPreProcessorConfig;
 import de.thatsich.openfx.preprocessing.intern.control.command.preprocessor.core.IPreProcessor;
 import de.thatsich.openfx.preprocessing.intern.control.command.service.TrainedPreProcessorFileStorageService;
 
@@ -25,9 +25,7 @@ public class CreateTrainedPreProcessorCommand extends ACommand<ITrainedPreProces
 	private final TrainedPreProcessorFileStorageService storage;
 
 	@Inject
-	public CreateTrainedPreProcessorCommand(
-		@Assisted IPreProcessor preProcessor, @Assisted IFeature feature, TrainedPreProcessorFileStorageService storage
-	)
+	public CreateTrainedPreProcessorCommand(@Assisted IPreProcessor preProcessor, @Assisted IFeature feature, TrainedPreProcessorFileStorageService storage)
 	{
 		this.preProcessor = preProcessor;
 		this.feature = feature;
@@ -45,7 +43,7 @@ public class CreateTrainedPreProcessorCommand extends ACommand<ITrainedPreProces
 		final double[][] data = this.convertToNativeMatrix(this.feature);
 		this.log.info("Prepared DataSets.");
 
-		final PreProcessingConfig config = new PreProcessingConfig(preProcessorName, featureVectorSize, 0, id);
+		final TrainedPreProcessorConfig config = new TrainedPreProcessorConfig(preProcessorName, featureVectorSize, 0, id);
 		this.log.info("Created PreProcessorConfiguration.");
 
 		final ITrainedPreProcessor preProcessing = this.preProcessor.train(data, data, config);
@@ -69,12 +67,12 @@ public class CreateTrainedPreProcessorCommand extends ACommand<ITrainedPreProces
 		final List<double[]> output = new LinkedList<>();
 
 		feature.vectors().forEach(featureVector -> {
-			final List<Float> vector = featureVector.vector();
+			final List<Double> vector = featureVector.vector();
 			final double[] featureArray = new double[vector.size()];
 			int index = 0;
-			for (float f : vector)
+			for (double d : vector)
 			{
-				featureArray[index] = f;
+				featureArray[index] = d;
 				index++;
 			}
 			output.add(featureArray);

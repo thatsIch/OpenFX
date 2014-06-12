@@ -3,7 +3,7 @@ package de.thatsich.openfx.classification.intern.control;
 import com.google.inject.Inject;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.javafx.CommandExecutor;
-import de.thatsich.openfx.classification.api.control.entity.IBinaryClassification;
+import de.thatsich.openfx.classification.api.control.entity.ITraindBinaryClassifier;
 import de.thatsich.openfx.classification.api.control.entity.IBinaryClassifier;
 import de.thatsich.openfx.classification.api.model.IBinaryClassifications;
 import de.thatsich.openfx.classification.api.model.IBinaryClassifiers;
@@ -84,11 +84,7 @@ public class ClassificationInputPresenter extends AFXMLPresenter
 		this.nodeChoiceBoxBinaryClassifier.valueProperty().bindBidirectional(this.binaryClassifiers.selected());
 		this.log.info("Bound ChoiceBoxBinaryClassifier to Model.");
 
-		this.nodeChoiceBoxBinaryClassifier.getSelectionModel().selectedIndexProperty().addListener((
-			observable,
-			oldValue,
-			newValue
-		) -> {
+		this.nodeChoiceBoxBinaryClassifier.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
 			final SetLastBinaryClassifierIndexCommand lastCommand = this.commander.createSetLastBinaryClassifierIndexCommand(newValue.intValue());
 			lastCommand.start();
 		});
@@ -120,7 +116,7 @@ public class ClassificationInputPresenter extends AFXMLPresenter
 	@FXML
 	private void onRemoveBinaryClassifierAction()
 	{
-		final IBinaryClassification selectedBinaryClassification = this.binaryClassifications.selected().get();
+		final ITraindBinaryClassifier selectedBinaryClassification = this.binaryClassifications.selected().get();
 
 		final DeleteBinaryClassificationCommand command = this.commander.createRemoveBinaryClassificationCommand(selectedBinaryClassification);
 		command.setOnSucceededCommandHandler(RemoveBinaryClassificationSucceededHandler.class);
@@ -131,11 +127,11 @@ public class ClassificationInputPresenter extends AFXMLPresenter
 	@FXML
 	private void onResetBinaryClassifierListAction()
 	{
-		final List<IBinaryClassification> binaryClassificationList = this.binaryClassifications.list();
+		final List<ITraindBinaryClassifier> binaryClassificationList = this.binaryClassifications.list();
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(binaryClassificationList.size());
 		this.log.info("Initialized Executor for resetting all Errors.");
 
-		for (IBinaryClassification classification : binaryClassificationList)
+		for (ITraindBinaryClassifier classification : binaryClassificationList)
 		{
 			final DeleteBinaryClassificationCommand command = this.commander.createRemoveBinaryClassificationCommand(classification);
 			command.setOnSucceededCommandHandler(RemoveBinaryClassificationSucceededHandler.class);

@@ -1,7 +1,7 @@
 package de.thatsich.openfx.network.api.control.entity;
 
 import de.thatsich.core.IEntity;
-import de.thatsich.openfx.network.intern.control.entity.NetworkConfig;
+import de.thatsich.openfx.network.intern.control.prediction.NetworkConfig;
 
 /**
  * @author thatsIch

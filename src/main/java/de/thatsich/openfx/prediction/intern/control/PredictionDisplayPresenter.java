@@ -7,8 +7,6 @@ import de.thatsich.openfx.prediction.api.model.IBinaryPredictions;
 import de.thatsich.openfx.prediction.intern.control.command.PredictionInitCommander;
 import de.thatsich.openfx.prediction.intern.control.entity.BinaryPrediction;
 import de.thatsich.openfx.prediction.intern.control.evaluation.PrecisionRecall;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -19,7 +17,11 @@ import org.opencv.imgproc.Imgproc;
 
 public class PredictionDisplayPresenter extends AFXMLPresenter
 {
+	// Injects
 	@Inject private PredictionInitCommander initCommander;
+	@Inject private IBinaryPredictions binaryPredictions;
+	@Inject private PrecisionRecall precisionRecall;
+
 	// Nodes
 	@FXML private ImageView nodeImageViewPrediction;
 	@FXML private Label nodeLabelPrecision;
@@ -29,17 +31,6 @@ public class PredictionDisplayPresenter extends AFXMLPresenter
 	@FXML private Label nodeLabelF05;
 	@FXML private Label nodeLabelF1;
 	@FXML private Label nodeLabelF2;
-	// Injects
-	@Inject
-	private IBinaryPredictions binaryPredictions;
-	@Inject
-	private PrecisionRecall precisionRecall;
-
-	// TODO use sigmoid?
-	public static double sigmoid(double x)
-	{
-		return 1 / (1 + Math.exp(-x));
-	}
 
 	@Override
 	protected void bindComponents()
@@ -59,50 +50,45 @@ public class PredictionDisplayPresenter extends AFXMLPresenter
 
 	private void initImageViewContent()
 	{
-		this.binaryPredictions.selected().addListener(new ChangeListener<BinaryPrediction>()
-		{
-			@Override
-			public void changed(ObservableValue<? extends BinaryPrediction> observable, BinaryPrediction oldValue, BinaryPrediction newValue)
+		this.binaryPredictions.selected().addListener((observable, oldValue, newValue) -> {
+			if (newValue != null)
 			{
-				if (newValue != null)
-				{
-					final Image image = predictionToImage(newValue);
-					nodeImageViewPrediction.imageProperty().set(image);
+				final Image image = this.predictionToImage(newValue);
+				this.nodeImageViewPrediction.imageProperty().set(image);
 
-					final int truePositive = newValue.truePositive().get();
-					final int falsePositive = newValue.falsePositive().get();
-					final int trueNegative = newValue.trueNegative().get();
-					final int falseNegative = newValue.falseNegative().get();
+				final int truePositive = newValue.truePositive().get();
+				final int falsePositive = newValue.falsePositive().get();
+				final int trueNegative = newValue.trueNegative().get();
+				final int falseNegative = newValue.falseNegative().get();
 
-					final double precision = precisionRecall.precision(truePositive, falsePositive, trueNegative, falseNegative);
-					final double recall = precisionRecall.recall(truePositive, falsePositive, trueNegative, falseNegative);
+				final double precision = this.precisionRecall.precision(truePositive, falsePositive, trueNegative, falseNegative);
+				final double recall = this.precisionRecall.recall(truePositive, falsePositive, trueNegative, falseNegative);
 
-					nodeLabelPrecision.setText(precision + "");
-					nodeLabelRecall.setText(recall + "");
-					nodeLabelSpecificity.setText(precisionRecall.specificity(truePositive, falsePositive, trueNegative, falseNegative) + "");
-					nodeLabelAccuracy.setText(precisionRecall.accuracy(truePositive, falsePositive, trueNegative, falseNegative) + "");
+				this.nodeLabelPrecision.setText(precision + "");
+				this.nodeLabelRecall.setText(recall + "");
+				this.nodeLabelSpecificity.setText(this.precisionRecall.specificity(truePositive, falsePositive, trueNegative, falseNegative) + "");
+				this.nodeLabelAccuracy.setText(this.precisionRecall.accuracy(truePositive, falsePositive, trueNegative, falseNegative) + "");
 
-					nodeLabelF05.setText(precisionRecall.f05(precision, recall) + "");
-					nodeLabelF1.setText(precisionRecall.f1(precision, recall) + "");
-					nodeLabelF2.setText(precisionRecall.f2(precision, recall) + "");
+				this.nodeLabelF05.setText(this.precisionRecall.f05(precision, recall) + "");
+				this.nodeLabelF1.setText(this.precisionRecall.f1(precision, recall) + "");
+				this.nodeLabelF2.setText(this.precisionRecall.f2(precision, recall) + "");
 
-					log.info("Selected new " + newValue);
-				}
-				else
-				{
-					nodeImageViewPrediction.imageProperty().set(null);
+				this.log.info("Selected new " + newValue);
+			}
+			else
+			{
+				this.nodeImageViewPrediction.imageProperty().set(null);
 
-					nodeLabelPrecision.setText(null);
-					nodeLabelRecall.setText(null);
-					nodeLabelSpecificity.setText(null);
-					nodeLabelAccuracy.setText(null);
+				this.nodeLabelPrecision.setText(null);
+				this.nodeLabelRecall.setText(null);
+				this.nodeLabelSpecificity.setText(null);
+				this.nodeLabelAccuracy.setText(null);
 
-					nodeLabelF05.setText(null);
-					nodeLabelF1.setText(null);
-					nodeLabelF2.setText(null);
+				this.nodeLabelF05.setText(null);
+				this.nodeLabelF1.setText(null);
+				this.nodeLabelF2.setText(null);
 
-					log.info("Deselected.");
-				}
+				this.log.info("Deselected.");
 			}
 		});
 	}

@@ -9,11 +9,11 @@ import de.thatsich.openfx.errorgeneration.intern.control.command.commands.Create
 import de.thatsich.openfx.errorgeneration.intern.control.command.service.ErrorFileStorageService;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureExtractor;
+import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureVector;
 import de.thatsich.openfx.featureextraction.intern.control.command.commands.CreateExtractedFeatureCommand;
 import de.thatsich.openfx.imageprocessing.api.control.entity.IImage;
 import de.thatsich.openfx.network.intern.control.prediction.cnbc.ClassSelection;
 import de.thatsich.openfx.network.intern.control.prediction.cnbc.CollectiveNetworkBinaryClassifiers;
-import de.thatsich.openfx.network.intern.control.prediction.cnbc.nbc.INBC;
 import de.thatsich.openfx.preprocessing.api.control.entity.ITrainedPreProcessor;
 import de.thatsich.openfx.preprocessing.intern.control.command.commands.CreateTrainedPreProcessorCommand;
 import de.thatsich.openfx.preprocessing.intern.control.command.preprocessor.core.IPreProcessor;
@@ -28,7 +28,7 @@ import java.util.concurrent.ThreadLocalRandom;
  * @author thatsIch
  * @since 10.06.2014.
  */
-public class NetworkSpace implements INetworkSpace
+public class NetworkSpace implements INetwokrSpace
 {
 	private static final int ERROR_ITERATION = 10;
 
@@ -42,17 +42,10 @@ public class NetworkSpace implements INetworkSpace
 	private final ClassSelection cs;
 	private final Log log;
 
+	private List<ITrainedPreProcessor> trainedPreProcessors;
+
 	@Inject
-	public NetworkSpace(
-		List<IImage> trainingImages,
-		List<IErrorGenerator> errorGenerators,
-		ErrorFileStorageService errorStorage,
-		List<IFeatureExtractor> featureExtractors,
-		List<IPreProcessor> preProcessors,
-		TrainedPreProcessorFileStorageService preproStorage,
-		List<IBinaryClassifier> binaryClassifiers,
-		Log log
-	)
+	public NetworkSpace(List<IImage> trainingImages, List<IErrorGenerator> errorGenerators, ErrorFileStorageService errorStorage, List<IFeatureExtractor> featureExtractors, List<IPreProcessor> preProcessors, TrainedPreProcessorFileStorageService preproStorage, List<IBinaryClassifier> binaryClassifiers, Log log)
 	{
 		this.trainingImages = trainingImages;
 		this.errorGenerators = errorGenerators;
@@ -60,8 +53,10 @@ public class NetworkSpace implements INetworkSpace
 		this.featureExtractors = featureExtractors;
 		this.preProcessors = preProcessors;
 		this.preproStorage = preproStorage;
-		this.cnbc = new CollectiveNetworkBinaryClassifiers(binaryClassifiers, log);
+
+		this.cnbc = new CollectiveNetworkBinaryClassifiers(log);
 		this.cs = new ClassSelection();
+
 		this.log = log;
 	}
 
@@ -70,15 +65,14 @@ public class NetworkSpace implements INetworkSpace
 	{
 		final List<IError> errors = this.getErrors(this.trainingImages, this.errorGenerators);
 		final List<IFeature> features = this.getFeatures(errors, this.featureExtractors);
-		final List<ITrainedPreProcessor> trainedPreProcessors = this.getTrainedPreProcessors(features, this.preProcessors);
-		final List<IFeature> preprocessedFeatures = this.getPreProcessedFeatures(features, trainedPreProcessors);
+		this.trainedPreProcessors = this.getTrainedPreProcessors(features, this.preProcessors);
+		final List<IFeature> preprocessedFeatures = this.getPreProcessedFeatures(features, this.trainedPreProcessors);
 
-		this.cnbc.train(preprocessedFeatures);
+		for (IFeature preprocessedFeature : preprocessedFeatures)
+		{
+			this.cnbc.addFeature(preprocessedFeature);
+		}
 		this.log.info("Trained CNBC with " + preprocessedFeatures + ".");
-
-		final List<INBC> nbcs = this.cnbc.getNbcs();
-		this.cs.train(nbcs);
-		this.log.info("Trained Class Selection.");
 	}
 
 	/**
@@ -156,9 +150,7 @@ public class NetworkSpace implements INetworkSpace
 		return features;
 	}
 
-	private List<ITrainedPreProcessor> getTrainedPreProcessors(
-		List<IFeature> features, List<IPreProcessor> preProcessors
-	) throws Exception
+	private List<ITrainedPreProcessor> getTrainedPreProcessors(List<IFeature> features, List<IPreProcessor> preProcessors) throws Exception
 	{
 		final List<ITrainedPreProcessor> trainedPreProcessors = new LinkedList<>();
 
@@ -175,25 +167,14 @@ public class NetworkSpace implements INetworkSpace
 		return trainedPreProcessors;
 	}
 
-	private List<IFeature> getPreProcessedFeatures(
-		List<IFeature> features, List<ITrainedPreProcessor> trainedPreProcessors
-	)
+	private List<IFeature> getPreProcessedFeatures(List<IFeature> features, List<ITrainedPreProcessor> trainedPreProcessors)
 	{
 		final List<IFeature> preprocessedFeatures = new LinkedList<>();
 
-		trainedPreProcessors.forEach(trained -> {
-			features.forEach(feature -> {
-				feature.vectors().forEach(vector -> {
-
-				});
-			});
-		});
 		for (ITrainedPreProcessor trainedPreProcessor : trainedPreProcessors)
 		{
-			for (IFeature feature : features)
-			{
-				trainedPreProcessor.
-			}
+			final List<IFeature> preprocess = trainedPreProcessor.preprocess(features);
+			preprocessedFeatures.addAll(preprocess);
 		}
 
 		return preprocessedFeatures;
@@ -210,7 +191,27 @@ public class NetworkSpace implements INetworkSpace
 			features.add(feature);
 		}
 
-		final List<Pair<String, Double>> predict = this.cnbc.predict(features);
-		return this.cs.predict(predict);
+		final List<IFeature> preprocessedFeatures = new LinkedList<>();
+		for (ITrainedPreProcessor trainedPreProcessor : this.trainedPreProcessors)
+		{
+			final List<IFeature> preprocess = trainedPreProcessor.preprocess(features);
+			preprocessedFeatures.addAll(preprocess);
+		}
+
+		final List<IFeatureVector> preprocessedFeatureVectors = new LinkedList<>();
+		for (IFeature preprocessedFeature : preprocessedFeatures)
+		{
+			final List<IFeatureVector> vectors = preprocessedFeature.vectors();
+			preprocessedFeatureVectors.addAll(vectors);
+		}
+
+		final List<Pair<String, Double>> predictions = new LinkedList<>();
+		for (IFeatureVector preprocessedFeatureVector : preprocessedFeatureVectors)
+		{
+			final List<Pair<String, Double>> predict = this.cnbc.predict(preprocessedFeatureVector);
+			predictions.addAll(predict);
+		}
+
+		return this.cs.predict(predictions);
 	}
 }

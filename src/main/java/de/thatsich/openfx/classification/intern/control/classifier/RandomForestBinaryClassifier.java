@@ -1,7 +1,7 @@
 package de.thatsich.openfx.classification.intern.control.classifier;
 
-import de.thatsich.openfx.classification.api.control.entity.IBinaryClassification;
-import de.thatsich.openfx.classification.intern.control.classification.RandomForestBinaryClassification;
+import de.thatsich.openfx.classification.api.control.entity.ITraindBinaryClassifier;
+import de.thatsich.openfx.classification.intern.control.classification.RandomForestTraindBinaryClassifier;
 import de.thatsich.openfx.classification.intern.control.classifier.core.ABinaryClassifier;
 import de.thatsich.openfx.classification.intern.control.classifier.core.BinaryClassificationConfig;
 import org.opencv.core.CvType;
@@ -15,7 +15,7 @@ import org.opencv.ml.CvRTrees;
 public class RandomForestBinaryClassifier extends ABinaryClassifier
 {
 	@Override
-	public IBinaryClassification train(MatOfFloat positiveTrainData, MatOfFloat negativeTrainData, BinaryClassificationConfig config)
+	public ITraindBinaryClassifier train(MatOfFloat positiveTrainData, MatOfFloat negativeTrainData, BinaryClassificationConfig config)
 	{
 		final CvRTrees trees = new CvRTrees();
 		final CvRTParams params = new CvRTParams();
@@ -47,6 +47,6 @@ public class RandomForestBinaryClassifier extends ABinaryClassifier
 
 		trees.train(trainData, 1, trainLabels, new Mat(), new Mat(), new Mat(), new Mat(), params);
 
-		return new RandomForestBinaryClassification(trees, config);
+		return new RandomForestTraindBinaryClassifier(trees, config);
 	}
 }

@@ -1,7 +1,7 @@
 package de.thatsich.openfx.preprocessing.intern.control.command.preprocessor.core;
 
 import de.thatsich.openfx.preprocessing.api.control.entity.ITrainedPreProcessor;
-import de.thatsich.openfx.preprocessing.intern.control.command.preprocessing.core.PreProcessingConfig;
+import de.thatsich.openfx.preprocessing.intern.control.command.preprocessing.core.TrainedPreProcessorConfig;
 
 
 /**
@@ -19,7 +19,7 @@ public interface IPreProcessor
 	 *
 	 * @return Trained PreProcessing
 	 */
-	ITrainedPreProcessor train(double[][] trainData, double[][] idealData, PreProcessingConfig config);
+	ITrainedPreProcessor train(double[][] trainData, double[][] idealData, TrainedPreProcessorConfig config);
 
 	/**
 	 * Gets the Name of the PreProcessor

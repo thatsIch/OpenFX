@@ -6,7 +6,7 @@ import de.thatsich.openfx.errorgeneration.api.control.entity.IError;
  * @author thatsIch
  * @since 10.06.2014.
  */
-public interface INetworkSpace
+public interface INetwokrSpace
 {
 	void train() throws Exception;
 

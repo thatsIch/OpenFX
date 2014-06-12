@@ -1,7 +1,7 @@
 package de.thatsich.openfx.classification.intern.control.provider;
 
 import de.thatsich.core.guice.ICommandProvider;
-import de.thatsich.openfx.classification.api.control.entity.IBinaryClassification;
+import de.thatsich.openfx.classification.api.control.entity.ITraindBinaryClassifier;
 import de.thatsich.openfx.classification.api.control.entity.IBinaryClassifier;
 import de.thatsich.openfx.classification.intern.control.command.commands.DeleteBinaryClassificationCommand;
 import de.thatsich.openfx.classification.intern.control.command.commands.SetLastBinaryClassificationIndexCommand;
@@ -13,13 +13,9 @@ import java.nio.file.Path;
 
 public interface IClassificationCommandProvider extends ICommandProvider
 {
-	CreateTrainedBinaryClassifierCommand createTrainBinaryClassifierCommand(
-		Path binaryClassifierFolderPath,
-		IBinaryClassifier classifier,
-		IFeature selected
-	);
+	CreateTrainedBinaryClassifierCommand createTrainBinaryClassifierCommand(Path binaryClassifierFolderPath, IBinaryClassifier classifier, IFeature selected);
 
-	DeleteBinaryClassificationCommand createRemoveBinaryClassificationCommand(IBinaryClassification binaryClassification);
+	DeleteBinaryClassificationCommand createRemoveBinaryClassificationCommand(ITraindBinaryClassifier binaryClassification);
 
 	SetLastBinaryClassifierIndexCommand createSetLastBinaryClassifierIndexCommand(int lastBinaryClassifierIndex);
 

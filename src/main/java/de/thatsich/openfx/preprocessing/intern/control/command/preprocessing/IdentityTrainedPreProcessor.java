@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
 import de.thatsich.openfx.preprocessing.intern.control.command.preprocessing.core.ATrainedPreProcessor;
-import de.thatsich.openfx.preprocessing.intern.control.command.preprocessing.core.PreProcessingConfig;
+import de.thatsich.openfx.preprocessing.intern.control.command.preprocessing.core.TrainedPreProcessorConfig;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import org.encog.neural.networks.BasicNetwork;
@@ -20,7 +20,7 @@ public class IdentityTrainedPreProcessor extends ATrainedPreProcessor
 	private ReadOnlyObjectProperty<BasicNetwork> networkProperty;
 
 	@Inject
-	public IdentityTrainedPreProcessor(@Assisted BasicNetwork network, @Assisted PreProcessingConfig config)
+	public IdentityTrainedPreProcessor(@Assisted BasicNetwork network, @Assisted TrainedPreProcessorConfig config)
 	{
 		super(config);
 		this.networkProperty = new ReadOnlyObjectWrapper<>(network);

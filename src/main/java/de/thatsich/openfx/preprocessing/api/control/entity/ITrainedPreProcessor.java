@@ -2,7 +2,7 @@ package de.thatsich.openfx.preprocessing.api.control.entity;
 
 import de.thatsich.core.IEntity;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
-import de.thatsich.openfx.preprocessing.intern.control.command.preprocessing.core.PreProcessingConfig;
+import de.thatsich.openfx.preprocessing.intern.control.command.preprocessing.core.TrainedPreProcessorConfig;
 import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyStringProperty;
@@ -38,5 +38,5 @@ public interface ITrainedPreProcessor extends IEntity
 	ReadOnlyObjectProperty<BasicNetwork> networkProperty();
 
 	@Override
-	PreProcessingConfig getConfig();
+	TrainedPreProcessorConfig getConfig();
 }

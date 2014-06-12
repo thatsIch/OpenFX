@@ -114,10 +114,10 @@ public class FeatureFileStorageService extends AFileStorageService<IFeature>
 			while ((vectorRow = vectorReader.readLine()) != null && (labelRow = labelReader.readLine()) != null)
 			{
 				final List<String> stringFloats = Arrays.asList(vectorRow.split(","));
-				final List<Float> floats = stringFloats.stream().map(Float::parseFloat).collect(Collectors.toCollection(LinkedList::new));
+				final List<Double> doubles = stringFloats.stream().map(Double::parseDouble).collect(Collectors.toCollection(LinkedList::new));
 				final boolean isPositive = Boolean.parseBoolean(labelRow);
 
-				featureVectors.add(new FeatureVector(floats, isPositive));
+				featureVectors.add(new FeatureVector(doubles, isPositive));
 			}
 		}
 

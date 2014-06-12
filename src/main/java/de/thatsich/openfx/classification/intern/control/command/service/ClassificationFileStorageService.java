@@ -2,10 +2,10 @@ package de.thatsich.openfx.classification.intern.control.command.service;
 
 import com.google.inject.Inject;
 import de.thatsich.core.AFileStorageService;
-import de.thatsich.openfx.classification.api.control.entity.IBinaryClassification;
+import de.thatsich.openfx.classification.api.control.entity.ITraindBinaryClassifier;
 import de.thatsich.openfx.classification.api.model.IClassificationState;
-import de.thatsich.openfx.classification.intern.control.classification.RandomForestBinaryClassification;
-import de.thatsich.openfx.classification.intern.control.classification.SVMBinaryClassification;
+import de.thatsich.openfx.classification.intern.control.classification.RandomForestTraindBinaryClassifier;
+import de.thatsich.openfx.classification.intern.control.classification.SVMTraindBinaryClassifier;
 import de.thatsich.openfx.classification.intern.control.classifier.core.BinaryClassificationConfig;
 import org.opencv.ml.CvRTrees;
 import org.opencv.ml.CvSVM;
@@ -22,7 +22,7 @@ import java.util.List;
  * @author thatsIch
  * @since 07.06.2014.
  */
-public class ClassificationFileStorageService extends AFileStorageService<IBinaryClassification>
+public class ClassificationFileStorageService extends AFileStorageService<ITraindBinaryClassifier>
 {
 	private static final String SVM_EXT = ".svm";
 	private static final String RF_EXT = ".rf";
@@ -34,15 +34,15 @@ public class ClassificationFileStorageService extends AFileStorageService<IBinar
 	}
 
 	@Override
-	public List<IBinaryClassification> init() throws IOException
+	public List<ITraindBinaryClassifier> init() throws IOException
 	{
-		final List<IBinaryClassification> classifications = new LinkedList<>();
+		final List<ITraindBinaryClassifier> classifications = new LinkedList<>();
 
 		try (DirectoryStream<Path> stream = Files.newDirectoryStream(this.storagePath))
 		{
 			for (Path child : stream)
 			{
-				final IBinaryClassification bc = this.retrieve(child);
+				final ITraindBinaryClassifier bc = this.retrieve(child);
 				classifications.add(bc);
 			}
 		}
@@ -56,11 +56,11 @@ public class ClassificationFileStorageService extends AFileStorageService<IBinar
 	}
 
 	@Override
-	public IBinaryClassification create(IBinaryClassification elem) throws IOException
+	public ITraindBinaryClassifier create(ITraindBinaryClassifier elem) throws IOException
 	{
 		final String fileName = elem.getConfig().toString();
 		final String withExtension;
-		if (elem instanceof SVMBinaryClassification)
+		if (elem instanceof SVMTraindBinaryClassifier)
 		{
 			withExtension = fileName + SVM_EXT;
 		}
@@ -85,7 +85,7 @@ public class ClassificationFileStorageService extends AFileStorageService<IBinar
 	}
 
 	@Override
-	public IBinaryClassification retrieve(Path path) throws IOException
+	public ITraindBinaryClassifier retrieve(Path path) throws IOException
 	{
 		final Path filePath = path.getFileName();
 		final String fileName = filePath.toString();
@@ -94,14 +94,14 @@ public class ClassificationFileStorageService extends AFileStorageService<IBinar
 		final String withoutExt = this.getFileNameWithoutExtension(path);
 		final BinaryClassificationConfig config = new BinaryClassificationConfig(withoutExt);
 
-		final IBinaryClassification bc;
+		final ITraindBinaryClassifier bc;
 		if (fileName.endsWith(SVM_EXT))
 		{
-			bc = new SVMBinaryClassification(new CvSVM(), config);
+			bc = new SVMTraindBinaryClassifier(new CvSVM(), config);
 		}
 		else
 		{
-			bc = new RandomForestBinaryClassification(new CvRTrees(), config);
+			bc = new RandomForestTraindBinaryClassifier(new CvRTrees(), config);
 		}
 		this.log.info("Resolved BinaryClassification.");
 
@@ -118,16 +118,16 @@ public class ClassificationFileStorageService extends AFileStorageService<IBinar
 	}
 
 	@Override
-	public IBinaryClassification update(IBinaryClassification elem) throws IOException
+	public ITraindBinaryClassifier update(ITraindBinaryClassifier elem) throws IOException
 	{
 		return null;
 	}
 
 	@Override
-	public void delete(IBinaryClassification elem) throws IOException
+	public void delete(ITraindBinaryClassifier elem) throws IOException
 	{
 		final String fileName;
-		if (elem instanceof SVMBinaryClassification)
+		if (elem instanceof SVMTraindBinaryClassifier)
 		{
 			fileName = elem.getConfig().toString() + SVM_EXT;
 		}

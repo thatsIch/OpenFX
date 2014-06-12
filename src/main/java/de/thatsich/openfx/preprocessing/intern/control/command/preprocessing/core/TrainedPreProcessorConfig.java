@@ -12,14 +12,14 @@ import java.util.StringJoiner;
  * @author thatsIch
  * @since 06.06.2014.
  */
-public class PreProcessingConfig implements IEntityConfig
+public class TrainedPreProcessorConfig implements IEntityConfig
 {
 	public final ReadOnlyStringProperty name;
 	public final ReadOnlyIntegerProperty inputSize;
 	public final ReadOnlyIntegerProperty outputSize;
 	public final ReadOnlyStringProperty id;
 
-	public PreProcessingConfig(String name, int inputSize, int outputSize, String id)
+	public TrainedPreProcessorConfig(String name, int inputSize, int outputSize, String id)
 	{
 		this.name = new ReadOnlyStringWrapper(name);
 		this.inputSize = new ReadOnlyIntegerWrapper(inputSize);
@@ -27,7 +27,7 @@ public class PreProcessingConfig implements IEntityConfig
 		this.id = new ReadOnlyStringWrapper(id);
 	}
 
-	public PreProcessingConfig(String fileName)
+	public TrainedPreProcessorConfig(String fileName)
 	{
 		final String splitString[] = fileName.split("_");
 

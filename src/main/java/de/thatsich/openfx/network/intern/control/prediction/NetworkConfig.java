@@ -1,4 +1,4 @@
-package de.thatsich.openfx.network.intern.control.entity;
+package de.thatsich.openfx.network.intern.control.prediction;
 
 import de.thatsich.core.IEntityConfig;
 

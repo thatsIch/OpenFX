@@ -1,7 +1,7 @@
 package de.thatsich.openfx.network.intern.control.command.commands;
 
 import de.thatsich.core.javafx.ACommand;
-import de.thatsich.openfx.network.intern.control.entity.Network;
+import de.thatsich.openfx.network.intern.control.prediction.Network;
 
 /**
  * // TODO train network

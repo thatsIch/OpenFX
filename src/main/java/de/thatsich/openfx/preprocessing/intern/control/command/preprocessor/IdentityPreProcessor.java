@@ -2,7 +2,7 @@ package de.thatsich.openfx.preprocessing.intern.control.command.preprocessor;
 
 import com.google.inject.Inject;
 import de.thatsich.openfx.preprocessing.api.control.entity.ITrainedPreProcessor;
-import de.thatsich.openfx.preprocessing.intern.control.command.preprocessing.core.PreProcessingConfig;
+import de.thatsich.openfx.preprocessing.intern.control.command.preprocessing.core.TrainedPreProcessorConfig;
 import de.thatsich.openfx.preprocessing.intern.control.command.preprocessor.core.APreProcessor;
 import de.thatsich.openfx.preprocessing.intern.control.command.provider.IPreProcessingProvider;
 import org.encog.neural.networks.BasicNetwork;
@@ -20,7 +20,7 @@ public class IdentityPreProcessor extends APreProcessor
 	}
 
 	@Override
-	public ITrainedPreProcessor train(double[][] trainData, double[][] idealData, PreProcessingConfig config)
+	public ITrainedPreProcessor train(double[][] trainData, double[][] idealData, TrainedPreProcessorConfig config)
 	{
 		final int vectorLength = trainData[0].length;
 		final BasicNetwork network = new BasicNetwork();
@@ -37,7 +37,7 @@ public class IdentityPreProcessor extends APreProcessor
 		final String name = config.name.get();
 		final int inputSize = config.inputSize.get();
 		final String id = config.id.get();
-		final PreProcessingConfig newConfig = new PreProcessingConfig(name, inputSize, inputSize, id);
+		final TrainedPreProcessorConfig newConfig = new TrainedPreProcessorConfig(name, inputSize, inputSize, id);
 
 		return this.provider.createIdentityPreProcessing(network, newConfig);
 	}

@@ -1,6 +1,6 @@
 package de.thatsich.openfx.classification.intern.model;
 
-import de.thatsich.openfx.classification.api.control.entity.IBinaryClassification;
+import de.thatsich.openfx.classification.api.control.entity.ITraindBinaryClassifier;
 import de.thatsich.openfx.classification.api.model.IBinaryClassifications;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
@@ -11,16 +11,16 @@ import javafx.collections.FXCollections;
 public class BinaryClassifications implements IBinaryClassifications
 {
 	// Properties
-	private final ListProperty<IBinaryClassification> binaryClassificationList = new SimpleListProperty<>(FXCollections.<IBinaryClassification>observableArrayList());
-	private final ObjectProperty<IBinaryClassification> selectedBinaryClassification = new SimpleObjectProperty<>();
+	private final ListProperty<ITraindBinaryClassifier> binaryClassificationList = new SimpleListProperty<>(FXCollections.<ITraindBinaryClassifier>observableArrayList());
+	private final ObjectProperty<ITraindBinaryClassifier> selectedBinaryClassification = new SimpleObjectProperty<>();
 
 	// Property Getter
-	public ListProperty<IBinaryClassification> list()
+	public ListProperty<ITraindBinaryClassifier> list()
 	{
 		return this.binaryClassificationList;
 	}
 
-	public ObjectProperty<IBinaryClassification> selected()
+	public ObjectProperty<ITraindBinaryClassifier> selected()
 	{
 		return this.selectedBinaryClassification;
 	}

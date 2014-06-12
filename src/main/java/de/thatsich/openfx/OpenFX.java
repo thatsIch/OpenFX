@@ -18,9 +18,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
-// TODO vllt einfach ein randomized EG etc haben, der dann einfach einen anderen aus der liste auswählt
-// Converters.Mat_to_vector_float( positiveTrainData, null );
-
 /**
  * Main Execution Class
  *

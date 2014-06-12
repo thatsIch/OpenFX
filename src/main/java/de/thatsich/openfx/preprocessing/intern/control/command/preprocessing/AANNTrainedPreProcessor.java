@@ -8,7 +8,7 @@ import de.thatsich.openfx.featureextraction.intern.control.entity.Feature;
 import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureConfig;
 import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVector;
 import de.thatsich.openfx.preprocessing.intern.control.command.preprocessing.core.ATrainedPreProcessor;
-import de.thatsich.openfx.preprocessing.intern.control.command.preprocessing.core.PreProcessingConfig;
+import de.thatsich.openfx.preprocessing.intern.control.command.preprocessing.core.TrainedPreProcessorConfig;
 import javafx.beans.property.ReadOnlyListProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -31,7 +31,7 @@ public class AANNTrainedPreProcessor extends ATrainedPreProcessor
 	private ReadOnlyObjectProperty<BasicNetwork> networkProperty;
 
 	@Inject
-	public AANNTrainedPreProcessor(@Assisted BasicNetwork network, @Assisted PreProcessingConfig config)
+	public AANNTrainedPreProcessor(@Assisted BasicNetwork network, @Assisted TrainedPreProcessorConfig config)
 	{
 		super(config);
 		this.networkProperty = new ReadOnlyObjectWrapper<>(network);

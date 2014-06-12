@@ -10,7 +10,7 @@ import javafx.beans.property.ReadOnlyStringProperty;
 public abstract class ATrainedPreProcessor implements ITrainedPreProcessor
 {
 	// Properties
-	private final PreProcessingConfig config;
+	private final TrainedPreProcessorConfig config;
 
 	// Injects
 	@Inject protected Log log;
@@ -18,7 +18,7 @@ public abstract class ATrainedPreProcessor implements ITrainedPreProcessor
 	/**
 	 * CTOR
 	 */
-	protected ATrainedPreProcessor(PreProcessingConfig config)
+	protected ATrainedPreProcessor(TrainedPreProcessorConfig config)
 	{
 		this.config = config;
 	}
@@ -48,7 +48,7 @@ public abstract class ATrainedPreProcessor implements ITrainedPreProcessor
 	}
 
 	@Override
-	public PreProcessingConfig getConfig()
+	public TrainedPreProcessorConfig getConfig()
 	{
 		return this.config;
 	}

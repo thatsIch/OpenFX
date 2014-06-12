@@ -2,7 +2,7 @@ package de.thatsich.openfx.classification.intern.control;
 
 import com.google.inject.Inject;
 import de.thatsich.core.javafx.AFXMLPresenter;
-import de.thatsich.openfx.classification.api.control.entity.IBinaryClassification;
+import de.thatsich.openfx.classification.api.control.entity.ITraindBinaryClassifier;
 import de.thatsich.openfx.classification.api.model.IBinaryClassifications;
 import de.thatsich.openfx.classification.intern.control.command.ClassificationInitCommander;
 import de.thatsich.openfx.classification.intern.control.command.commands.SetLastBinaryClassificationIndexCommand;
@@ -27,12 +27,12 @@ public class ClassificationListPresenter extends AFXMLPresenter
 	@Inject private IBinaryClassifications binaryClassifications;
 
 	// Nodes
-	@FXML private TableView<IBinaryClassification> nodeTableViewBinaryClassificationList;
-	@FXML private TableColumn<IBinaryClassification, String> nodeTableColumnClassifierName;
-	@FXML private TableColumn<IBinaryClassification, String> nodeTableColumnExtractorName;
-	@FXML private TableColumn<IBinaryClassification, Integer> nodeTableColumnFrameSize;
-	@FXML private TableColumn<IBinaryClassification, String> nodeTableErrorName;
-	@FXML private TableColumn<IBinaryClassification, String> nodeTableColumnID;
+	@FXML private TableView<ITraindBinaryClassifier> nodeTableViewBinaryClassificationList;
+	@FXML private TableColumn<ITraindBinaryClassifier, String> nodeTableColumnClassifierName;
+	@FXML private TableColumn<ITraindBinaryClassifier, String> nodeTableColumnExtractorName;
+	@FXML private TableColumn<ITraindBinaryClassifier, Integer> nodeTableColumnFrameSize;
+	@FXML private TableColumn<ITraindBinaryClassifier, String> nodeTableErrorName;
+	@FXML private TableColumn<ITraindBinaryClassifier, String> nodeTableColumnID;
 
 	@Override
 	protected void bindComponents()

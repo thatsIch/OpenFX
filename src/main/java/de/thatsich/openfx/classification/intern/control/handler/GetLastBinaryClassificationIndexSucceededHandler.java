@@ -2,7 +2,7 @@ package de.thatsich.openfx.classification.intern.control.handler;
 
 import com.google.inject.Inject;
 import de.thatsich.core.javafx.ACommandHandler;
-import de.thatsich.openfx.classification.api.control.entity.IBinaryClassification;
+import de.thatsich.openfx.classification.api.control.entity.ITraindBinaryClassifier;
 import de.thatsich.openfx.classification.api.model.IBinaryClassifications;
 
 /**
@@ -22,7 +22,7 @@ public class GetLastBinaryClassificationIndexSucceededHandler extends ACommandHa
 	{
 		if (value >= 0 && this.binaryClassifications.list().size() > 0)
 		{
-			final IBinaryClassification selected = this.binaryClassifications.list().get(value);
+			final ITraindBinaryClassifier selected = this.binaryClassifications.list().get(value);
 			this.binaryClassifications.selected().set(selected);
 			this.log.info("Set last selected BinaryClassification in Model.");
 		}

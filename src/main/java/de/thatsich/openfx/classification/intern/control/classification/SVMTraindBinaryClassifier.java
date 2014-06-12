@@ -2,13 +2,14 @@ package de.thatsich.openfx.classification.intern.control.classification;
 
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
-import de.thatsich.openfx.classification.intern.control.classification.core.ABinaryClassification;
+import de.thatsich.openfx.classification.intern.control.classification.core.ATraindBinaryClassifier;
 import de.thatsich.openfx.classification.intern.control.classifier.core.BinaryClassificationConfig;
-import org.opencv.core.Mat;
+import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureVector;
+import org.opencv.core.MatOfDouble;
 import org.opencv.ml.CvSVM;
 
 
-public class SVMBinaryClassification extends ABinaryClassification
+public class SVMTraindBinaryClassifier extends ATraindBinaryClassifier
 {
 
 	private final CvSVM svm;
@@ -23,19 +24,24 @@ public class SVMBinaryClassification extends ABinaryClassification
 	 * @param config Assisted Injected Config
 	 */
 	@Inject
-	public SVMBinaryClassification(@Assisted CvSVM svm, @Assisted BinaryClassificationConfig config)
+	public SVMTraindBinaryClassifier(@Assisted CvSVM svm, @Assisted BinaryClassificationConfig config)
 	{
 		super(config);
 		this.svm = svm;
 	}
 
-	/**
-	 * @see ABinaryClassification
-	 */
 	@Override
-	public double predict(Mat image)
+	public double predict(IFeatureVector fv)
 	{
-		return this.svm.predict(image);
+		final double[] featureArray = new double[fv.vector().size()];
+
+		for (int i = 0; i < fv.vector().size(); i++)
+		{
+			featureArray[i] = fv.vector().get(i);
+		}
+
+		final MatOfDouble featureMat = new MatOfDouble(featureArray);
+		return this.svm.predict(featureMat);
 	}
 
 	@Override

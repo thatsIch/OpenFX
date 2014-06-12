@@ -2,9 +2,9 @@ package de.thatsich.openfx.classification.api.control.entity;
 
 import de.thatsich.core.IEntity;
 import de.thatsich.openfx.classification.intern.control.classifier.core.BinaryClassificationConfig;
+import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureVector;
 import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.beans.property.ReadOnlyStringProperty;
-import org.opencv.core.Mat;
 
 
 /**
@@ -17,7 +17,7 @@ import org.opencv.core.Mat;
  *
  * @author thatsIch
  */
-public interface IBinaryClassification extends IEntity
+public interface ITraindBinaryClassifier extends IEntity
 {
 	/**
 	 * Gets the name of the BinaryClassification
@@ -27,13 +27,14 @@ public interface IBinaryClassification extends IEntity
 	String getName();
 
 	/**
-	 * Uses an image (in Mat form) to predict
+	 * Uses an feature vector to predict
+	 * automatically converts to mat for opencv to use
 	 *
-	 * @param image predicted image
+	 * @param fv feature vector
 	 *
-	 * @return probability of image prediction
+	 * @return probability of error prediction
 	 */
-	double predict(Mat image);
+	double predict(IFeatureVector fv);
 
 	/**
 	 * Saves to a full string path

@@ -38,8 +38,8 @@ public class FeatureTest
 		this.vectorWith1 = new LinkedList<>();
 		this.vectorWith2 = new LinkedList<>();
 
-		List<Float> floats1 = Arrays.asList(1F);
-		List<Float> floats2 = Arrays.asList(2F);
+		List<Double> floats1 = Arrays.asList(1D);
+		List<Double> floats2 = Arrays.asList(2D);
 
 		this.vectorWith1.add(new FeatureVector(floats1, false));
 		this.vectorWith2.add(new FeatureVector(floats2, false));

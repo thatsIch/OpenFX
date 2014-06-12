@@ -1,19 +1,20 @@
 package de.thatsich.openfx.network.intern.control.prediction.cnbc.nbc;
 
+import de.thatsich.openfx.classification.api.control.entity.IBinaryClassifier;
+import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
+import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureVector;
+
 /**
  * @author thatsIch
  * @since 03.06.2014.
  */
 public interface INBC
 {
-	String getUnqiueImageClass();
+	void addBinaryClassifier(IBinaryClassifier bc) throws Exception;
 
-	void evolve();
+	void addFeature(IFeature feature) throws Exception;
 
-	void addFeature();
+	double predict(IFeatureVector fv);
 
-	void removeFeature();
-
-	double getFuserOutput();
-
+	String getUniqueErrorClassName();
 }

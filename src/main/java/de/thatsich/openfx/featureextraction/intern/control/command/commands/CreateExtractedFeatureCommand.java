@@ -14,6 +14,7 @@ import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVector;
 import javafx.collections.FXCollections;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
+import org.opencv.core.MatOfDouble;
 import org.opencv.core.MatOfFloat;
 
 import java.util.List;
@@ -27,9 +28,7 @@ public class CreateExtractedFeatureCommand extends ACommand<IFeature>
 	private final int frameSize;
 
 	@Inject
-	public CreateExtractedFeatureCommand(
-		@Assisted IError error, @Assisted IFeatureExtractor extractor, @Assisted int frameSize
-	)
+	public CreateExtractedFeatureCommand(@Assisted IError error, @Assisted IFeatureExtractor extractor, @Assisted int frameSize)
 	{
 		this.error = error;
 		this.featureExtractor = extractor;
@@ -56,7 +55,8 @@ public class CreateExtractedFeatureCommand extends ACommand<IFeature>
 				try
 				{
 					final MatOfFloat featureVector = this.featureExtractor.extractFeature(originalErrorSplit[col][row]);
-					final List<Float> featureVectorAsList = featureVector.toList();
+					final MatOfDouble featureVectorAsDouble = new MatOfDouble(featureVector);
+					final List<Double> featureVectorAsList = featureVectorAsDouble.toList();
 
 					final boolean isPositive = Core.sumElems(errorSplit[col][row]).val[0] != 0;
 					featureVectorList.add(new FeatureVector(featureVectorAsList, isPositive));

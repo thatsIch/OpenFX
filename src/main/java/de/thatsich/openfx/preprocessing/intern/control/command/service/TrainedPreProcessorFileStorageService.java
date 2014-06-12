@@ -6,7 +6,7 @@ import de.thatsich.openfx.preprocessing.api.control.entity.ITrainedPreProcessor;
 import de.thatsich.openfx.preprocessing.api.model.IPreProcessingState;
 import de.thatsich.openfx.preprocessing.intern.control.command.preprocessing.AANNTrainedPreProcessor;
 import de.thatsich.openfx.preprocessing.intern.control.command.preprocessing.IdentityTrainedPreProcessor;
-import de.thatsich.openfx.preprocessing.intern.control.command.preprocessing.core.PreProcessingConfig;
+import de.thatsich.openfx.preprocessing.intern.control.command.preprocessing.core.TrainedPreProcessorConfig;
 import org.encog.neural.networks.BasicNetwork;
 import org.encog.persist.EncogDirectoryPersistence;
 
@@ -100,7 +100,7 @@ public class TrainedPreProcessorFileStorageService extends AFileStorageService<I
 
 		final BasicNetwork network = (BasicNetwork) EncogDirectoryPersistence.loadObject(file);
 		final String withoutExt = this.getFileNameWithoutExtension(path);
-		final PreProcessingConfig config = new PreProcessingConfig(withoutExt);
+		final TrainedPreProcessorConfig config = new TrainedPreProcessorConfig(withoutExt);
 
 		if (fileName.endsWith(AANN_EXT))
 		{

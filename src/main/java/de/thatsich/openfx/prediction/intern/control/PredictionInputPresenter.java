@@ -3,7 +3,7 @@ package de.thatsich.openfx.prediction.intern.control;
 import com.google.inject.Inject;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.javafx.CommandExecutor;
-import de.thatsich.openfx.classification.api.control.entity.IBinaryClassification;
+import de.thatsich.openfx.classification.api.control.entity.ITraindBinaryClassifier;
 import de.thatsich.openfx.classification.api.model.IBinaryClassifications;
 import de.thatsich.openfx.errorgeneration.api.control.entity.IErrorGenerator;
 import de.thatsich.openfx.errorgeneration.api.model.IErrorGenerators;
@@ -80,7 +80,7 @@ public class PredictionInputPresenter extends AFXMLPresenter
 	private void onPredictBinaryPredictionAction()
 	{
 		final Path predictionFolderPath = this.predictionState.path().get();
-		final IBinaryClassification binaryClassification = this.binaryClassifications.selected().get();
+		final ITraindBinaryClassifier binaryClassification = this.binaryClassifications.selected().get();
 		final String errorGeneratorName = binaryClassification.errorNameProperty().get();
 		final String featureExtractorName = binaryClassification.extractorNameProperty().get();
 		this.log.info("Prepared all information.");
