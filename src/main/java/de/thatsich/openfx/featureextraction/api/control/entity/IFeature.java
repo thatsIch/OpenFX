@@ -16,6 +16,8 @@ public interface IFeature extends IEntity
 
 	ReadOnlyStringProperty className();
 
+	ReadOnlyStringProperty preProcessorName();
+
 	ReadOnlyIntegerProperty tileSize();
 
 	ReadOnlyListProperty<IFeatureVector> vectors();

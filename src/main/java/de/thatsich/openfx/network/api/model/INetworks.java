@@ -1,6 +1,6 @@
 package de.thatsich.openfx.network.api.model;
 
-import de.thatsich.openfx.network.api.control.entity.INetwork;
+import de.thatsich.openfx.network.api.control.entity.ITrainedNetwork;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
 
@@ -10,7 +10,7 @@ import javafx.beans.property.ObjectProperty;
  */
 public interface INetworks
 {
-	ListProperty<INetwork> list();
+	ListProperty<ITrainedNetwork> list();
 
-	ObjectProperty<INetwork> selected();
+	ObjectProperty<ITrainedNetwork> selected();
 }

@@ -42,6 +42,12 @@ public class Feature implements IFeature
 	}
 
 	@Override
+	public ReadOnlyStringProperty preProcessorName()
+	{
+		return null;
+	}
+
+	@Override
 	public ReadOnlyIntegerProperty tileSize()
 	{
 		return this.config.tileSize.getReadOnlyProperty();

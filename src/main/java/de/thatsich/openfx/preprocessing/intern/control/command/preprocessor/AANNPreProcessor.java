@@ -95,7 +95,26 @@ public class AANNPreProcessor extends APreProcessor
 
 		// build a new network based on the trained one with only 3 Layers to
 		// reduce the dimension
-		final BasicNetwork rebuildNetwork = this.rebuildNetworkForDimensionReduction(bestSetup.getKey());
+		final BasicNetwork key = bestSetup.getKey();
+		final BasicNetwork rebuildNetwork;
+		if (key == null)
+		{
+			rebuildNetwork = new BasicNetwork();
+
+			final BasicLayer inputLayer = new BasicLayer(null, false, featureVectorLength);
+			final BasicLayer outputLayer = new BasicLayer(null, false, featureVectorLength);
+
+			rebuildNetwork.addLayer(inputLayer);
+			rebuildNetwork.addLayer(outputLayer);
+
+			rebuildNetwork.getStructure().finalizeStructure();
+			rebuildNetwork.reset();
+		}
+		else
+		{
+			rebuildNetwork = this.rebuildNetworkForDimensionReduction(key);
+		}
+		this.log.info("Rebuild network with best setup.");
 
 		// rebuild config
 		final String preProcessorName = config.name.get();
@@ -104,6 +123,8 @@ public class AANNPreProcessor extends APreProcessor
 		final String id = config.id.get();
 
 		final TrainedPreProcessorConfig newerConfig = new TrainedPreProcessorConfig(preProcessorName, inputSize, outputSize, id);
+		this.log.info("Rebuild preprocessor config.");
+
 		return this.provider.createAANNPreProcessing(rebuildNetwork, newerConfig);
 	}
 

@@ -70,7 +70,15 @@ public class AANNTrainedPreProcessor extends ATrainedPreProcessor
 		final List<IFeatureVector> preProcessedFeatureVectors = this.getPreProcessedFeatureVectors(featureVectors);
 
 		final FeatureConfig config = feature.getConfig();
-		final IFeature proprocessedFeature = new Feature(config, preProcessedFeatureVectors);
+
+		final String className = config.className.get();
+		final String extractorName = config.extractorName.get();
+		final String preProcessorName = this.nameProperty().get();
+		final int tileSize = config.tileSize.get();
+
+		final FeatureConfig newConfig = new FeatureConfig(className, extractorName, preProcessorName, tileSize);
+
+		final IFeature proprocessedFeature = new Feature(newConfig, preProcessedFeatureVectors);
 
 		return proprocessedFeature;
 	}

@@ -14,12 +14,14 @@ public class FeatureConfig implements IEntityConfig
 {
 	public final ReadOnlyStringWrapper className;
 	public final ReadOnlyStringWrapper extractorName;
+	public final ReadOnlyStringWrapper preProcessorName;
 	public final ReadOnlyIntegerWrapper tileSize;
 
-	public FeatureConfig(final String className, final String extractorName, final int tileSize)
+	public FeatureConfig(final String className, final String extractorName, final String preProcessorName, final int tileSize)
 	{
 		this.className = new ReadOnlyStringWrapper(className);
 		this.extractorName = new ReadOnlyStringWrapper(extractorName);
+		this.preProcessorName = new ReadOnlyStringWrapper(preProcessorName);
 		this.tileSize = new ReadOnlyIntegerWrapper(tileSize);
 	}
 
@@ -28,7 +30,8 @@ public class FeatureConfig implements IEntityConfig
 		final String[] fileNameSplit = fileName.split("_");
 		this.className = new ReadOnlyStringWrapper(fileNameSplit[0]);
 		this.extractorName = new ReadOnlyStringWrapper(fileNameSplit[1]);
-		this.tileSize = new ReadOnlyIntegerWrapper(Integer.parseInt(fileNameSplit[2]));
+		this.preProcessorName = new ReadOnlyStringWrapper(fileNameSplit[2]);
+		this.tileSize = new ReadOnlyIntegerWrapper(Integer.parseInt(fileNameSplit[3]));
 	}
 
 	@Override
@@ -37,6 +40,7 @@ public class FeatureConfig implements IEntityConfig
 		final StringJoiner joiner = new StringJoiner("_");
 		joiner.add(this.className.get());
 		joiner.add(this.extractorName.get());
+		joiner.add(this.preProcessorName.get());
 		joiner.add(String.valueOf(this.tileSize.get()));
 
 		return joiner.toString();

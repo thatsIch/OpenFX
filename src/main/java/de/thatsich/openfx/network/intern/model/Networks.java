@@ -1,6 +1,6 @@
 package de.thatsich.openfx.network.intern.model;
 
-import de.thatsich.openfx.network.api.control.entity.INetwork;
+import de.thatsich.openfx.network.api.control.entity.ITrainedNetwork;
 import de.thatsich.openfx.network.api.model.INetworks;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
@@ -14,17 +14,17 @@ import javafx.collections.FXCollections;
  */
 public class Networks implements INetworks
 {
-	final private ObjectProperty<INetwork> selectedNetwork = new SimpleObjectProperty<>();
-	final private ListProperty<INetwork> networkList = new SimpleListProperty<>(FXCollections.<INetwork>observableArrayList());
+	final private ObjectProperty<ITrainedNetwork> selectedNetwork = new SimpleObjectProperty<>();
+	final private ListProperty<ITrainedNetwork> networkList = new SimpleListProperty<>(FXCollections.<ITrainedNetwork>observableArrayList());
 
 	@Override
-	public ListProperty<INetwork> list()
+	public ListProperty<ITrainedNetwork> list()
 	{
 		return this.networkList;
 	}
 
 	@Override
-	public ObjectProperty<INetwork> selected()
+	public ObjectProperty<ITrainedNetwork> selected()
 	{
 		return this.selectedNetwork;
 	}

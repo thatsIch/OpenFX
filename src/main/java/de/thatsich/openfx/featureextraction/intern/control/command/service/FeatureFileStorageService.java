@@ -63,6 +63,7 @@ public class FeatureFileStorageService extends AFileStorageService<IFeature>
 		final FeatureConfig config = feature.getConfig();
 		final String fileName = config.toString();
 		final Path filePath = super.storagePath.resolve(fileName);
+		this.createInvalidDirectory(filePath);
 
 		final Path vectorPath = filePath.resolve("vector.csv");
 		final Path labelPath = filePath.resolve("label.csv");

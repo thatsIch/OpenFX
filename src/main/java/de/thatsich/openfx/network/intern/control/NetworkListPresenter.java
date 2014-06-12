@@ -2,7 +2,7 @@ package de.thatsich.openfx.network.intern.control;
 
 import com.google.inject.Inject;
 import de.thatsich.core.javafx.AFXMLPresenter;
-import de.thatsich.openfx.network.api.control.entity.INetwork;
+import de.thatsich.openfx.network.api.control.entity.ITrainedNetwork;
 import de.thatsich.openfx.network.api.model.INetworks;
 import de.thatsich.openfx.network.intern.control.command.NetworkInitCommander;
 import de.thatsich.openfx.network.intern.control.command.commands.SetLastNetworkIndexCommand;
@@ -24,12 +24,12 @@ public class NetworkListPresenter extends AFXMLPresenter
 	@Inject private INetworkCommandProvider provider;
 
 	// Nodes
-	@FXML private TableView<INetwork> nodeTableViewNetworkList;
-	@FXML private TableColumn<INetwork, String> nodeTableColumnClassifierName;
-	@FXML private TableColumn<INetwork, String> nodeTableColumnExtractorName;
-	@FXML private TableColumn<INetwork, Integer> nodeTableColumnFrameSize;
-	@FXML private TableColumn<INetwork, String> nodeTableColumnErrorClassName;
-	@FXML private TableColumn<INetwork, String> nodeTableColumnID;
+	@FXML private TableView<ITrainedNetwork> nodeTableViewNetworkList;
+	@FXML private TableColumn<ITrainedNetwork, String> nodeTableColumnClassifierName;
+	@FXML private TableColumn<ITrainedNetwork, String> nodeTableColumnExtractorName;
+	@FXML private TableColumn<ITrainedNetwork, Integer> nodeTableColumnFrameSize;
+	@FXML private TableColumn<ITrainedNetwork, String> nodeTableColumnErrorClassName;
+	@FXML private TableColumn<ITrainedNetwork, String> nodeTableColumnID;
 
 	@Override
 	protected void bindComponents()

@@ -3,7 +3,7 @@ package de.thatsich.openfx.network.intern.control;
 import com.google.inject.Inject;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.javafx.CommandExecutor;
-import de.thatsich.openfx.network.api.control.entity.INetwork;
+import de.thatsich.openfx.network.api.control.entity.ITrainedNetwork;
 import de.thatsich.openfx.network.api.model.INetworkState;
 import de.thatsich.openfx.network.api.model.INetworks;
 import de.thatsich.openfx.network.intern.control.command.NetworkInitCommander;
@@ -63,7 +63,7 @@ public class NetworkInputPresenter extends AFXMLPresenter
 	@FXML
 	private void onDeleteNetworkAction()
 	{
-		final INetwork selected = this.networks.selected().get();
+		final ITrainedNetwork selected = this.networks.selected().get();
 		final DeleteNetworkCommand command = this.provider.createDeleteNetworkCommand(selected);
 		command.setOnSucceededCommandHandler(DeleteNetworkSucceededHandler.class);
 		command.start();
@@ -73,10 +73,10 @@ public class NetworkInputPresenter extends AFXMLPresenter
 	@FXML
 	private void onResetNetworkAction()
 	{
-		final List<INetwork> networkList = this.networks.list();
+		final List<ITrainedNetwork> networkList = this.networks.list();
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(networkList.size());
 
-		for (final INetwork network : networkList)
+		for (final ITrainedNetwork network : networkList)
 		{
 			final DeleteNetworkCommand command = this.provider.createDeleteNetworkCommand(network);
 			command.setOnSucceededCommandHandler(DeleteNetworkSucceededHandler.class);

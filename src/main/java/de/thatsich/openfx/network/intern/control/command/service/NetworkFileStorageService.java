@@ -2,7 +2,7 @@ package de.thatsich.openfx.network.intern.control.command.service;
 
 import com.google.inject.Inject;
 import de.thatsich.core.AFileStorageService;
-import de.thatsich.openfx.network.api.control.entity.INetwork;
+import de.thatsich.openfx.network.api.control.entity.ITrainedNetwork;
 import de.thatsich.openfx.network.api.model.INetworkState;
 
 import java.io.IOException;
@@ -17,7 +17,7 @@ import java.util.List;
  * @author thatsIch
  * @since 01.06.2014.
  */
-public class NetworkFileStorageService extends AFileStorageService<INetwork>
+public class NetworkFileStorageService extends AFileStorageService<ITrainedNetwork>
 {
 	private static final String NETWORK_EXT = ".network";
 
@@ -28,15 +28,15 @@ public class NetworkFileStorageService extends AFileStorageService<INetwork>
 	}
 
 	@Override
-	public List<INetwork> init() throws IOException
+	public List<ITrainedNetwork> init() throws IOException
 	{
-		final List<INetwork> networks = new LinkedList<>();
+		final List<ITrainedNetwork> networks = new LinkedList<>();
 
 		try (DirectoryStream<Path> stream = Files.newDirectoryStream(this.storagePath))
 		{
 			for (Path child : stream)
 			{
-				final INetwork network = this.retrieve(child);
+				final ITrainedNetwork network = this.retrieve(child);
 				networks.add(network);
 			}
 		}
@@ -50,27 +50,27 @@ public class NetworkFileStorageService extends AFileStorageService<INetwork>
 	}
 
 	@Override
-	public INetwork create(final INetwork elem)
+	public ITrainedNetwork create(final ITrainedNetwork elem)
 	{
 		return elem;
 		// TODO create network
 	}
 
 	@Override
-	public INetwork retrieve(final Path path)
+	public ITrainedNetwork retrieve(final Path path)
 	{
 		// TODO retrieve network
 		return null;
 	}
 
 	@Override
-	public INetwork update(final INetwork elem) throws IOException
+	public ITrainedNetwork update(final ITrainedNetwork elem) throws IOException
 	{
 		return elem;
 	}
 
 	@Override
-	public void delete(final INetwork elem) throws IOException
+	public void delete(final ITrainedNetwork elem) throws IOException
 	{
 		final String fileName = elem.getConfig().toString();
 		final Path filePath = this.storagePath.resolve(fileName);

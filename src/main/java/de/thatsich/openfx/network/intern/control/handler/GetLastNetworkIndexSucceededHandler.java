@@ -2,7 +2,7 @@ package de.thatsich.openfx.network.intern.control.handler;
 
 import com.google.inject.Inject;
 import de.thatsich.core.javafx.ACommandHandler;
-import de.thatsich.openfx.network.api.control.entity.INetwork;
+import de.thatsich.openfx.network.api.control.entity.ITrainedNetwork;
 import de.thatsich.openfx.network.api.model.INetworks;
 
 /**
@@ -19,7 +19,7 @@ public class GetLastNetworkIndexSucceededHandler extends ACommandHandler<Integer
 	{
 		if (value >= 0 && this.networks.list().size() > 0)
 		{
-			final INetwork selectedNetwork = this.networks.list().get(value);
+			final ITrainedNetwork selectedNetwork = this.networks.list().get(value);
 			this.networks.selected().set(selectedNetwork);
 			this.log.info("Set Network in Model.");
 		}

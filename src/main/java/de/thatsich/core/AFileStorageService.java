@@ -30,7 +30,7 @@ public abstract class AFileStorageService<T> implements IFileStorageService<T>
 	 *
 	 * @param directory to be created directory
 	 */
-	private void createInvalidDirectory(Path directory)
+	protected void createInvalidDirectory(Path directory)
 	{
 		if (Files.notExists(directory) || !Files.isDirectory(directory))
 		{

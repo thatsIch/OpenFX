@@ -13,6 +13,7 @@ import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureConfig;
 import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureVector;
 import javafx.collections.FXCollections;
 import org.opencv.core.Core;
+import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfDouble;
 import org.opencv.core.MatOfFloat;
@@ -55,7 +56,8 @@ public class CreateExtractedFeatureCommand extends ACommand<IFeature>
 				try
 				{
 					final MatOfFloat featureVector = this.featureExtractor.extractFeature(originalErrorSplit[col][row]);
-					final MatOfDouble featureVectorAsDouble = new MatOfDouble(featureVector);
+					final MatOfDouble featureVectorAsDouble = new MatOfDouble();
+					featureVector.convertTo(featureVectorAsDouble, CvType.CV_64F);
 					final List<Double> featureVectorAsList = featureVectorAsDouble.toList();
 
 					final boolean isPositive = Core.sumElems(errorSplit[col][row]).val[0] != 0;
@@ -68,7 +70,7 @@ public class CreateExtractedFeatureCommand extends ACommand<IFeature>
 			}
 		}
 
-		final FeatureConfig config = new FeatureConfig(className, extractorName, this.frameSize);
+		final FeatureConfig config = new FeatureConfig(className, extractorName, "", this.frameSize);
 		final IFeature feature = new Feature(config, featureVectorList);
 		this.log.info("Extracted FeatureVectors: " + featureVectorList.size());
 
