@@ -20,7 +20,7 @@ public class GetLastPreProcessorIndexSucceededHandler extends ACommandHandler<In
 	@Override
 	public void handle(Integer value)
 	{
-		final IPreProcessor selected = this.pps.get().get(value);
+		final IPreProcessor selected = this.pps.list().get(value);
 		this.pps.selected().set(selected);
 		this.log.info("Set LastPreProcessorIndex in Model.");
 	}

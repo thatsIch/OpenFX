@@ -16,7 +16,7 @@ public class InitPreProcessorListSucceededHandler extends ACommandHandler<List<I
 	@Override
 	public void handle(List<IPreProcessor> value)
 	{
-		this.pps.get().addAll(value);
+		this.pps.list().addAll(value);
 		this.log.info("Added " + value + " to DataBase.");
 	}
 }

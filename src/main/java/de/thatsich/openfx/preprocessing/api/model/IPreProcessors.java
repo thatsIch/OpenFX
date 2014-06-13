@@ -20,7 +20,7 @@ public interface IPreProcessors
 	 *
 	 * @return ListProperty of PreProcessors
 	 */
-	ListProperty<IPreProcessor> get();
+	ListProperty<IPreProcessor> list();
 
 	/**
 	 * PropertyGetter of selected PreProcessor

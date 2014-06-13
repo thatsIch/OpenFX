@@ -17,7 +17,7 @@ public class PreProcessors implements IPreProcessors
 	private final ObjectProperty<IPreProcessor> selected = new SimpleObjectProperty<>();
 
 	@Override
-	public ListProperty<IPreProcessor> get()
+	public ListProperty<IPreProcessor> list()
 	{
 		return this.list;
 	}

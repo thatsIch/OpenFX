@@ -10,9 +10,9 @@ import de.thatsich.openfx.preprocessing.api.model.IPreProcessingState;
 import de.thatsich.openfx.preprocessing.api.model.IPreProcessings;
 import de.thatsich.openfx.preprocessing.api.model.IPreProcessors;
 import de.thatsich.openfx.preprocessing.intern.control.command.PreProcessingInitCommander;
+import de.thatsich.openfx.preprocessing.intern.control.command.commands.CreateTrainedPreProcessorCommand;
 import de.thatsich.openfx.preprocessing.intern.control.command.commands.RemovePreProcessingCommand;
 import de.thatsich.openfx.preprocessing.intern.control.command.commands.SetLastPreProcessorIndexCommand;
-import de.thatsich.openfx.preprocessing.intern.control.command.commands.CreateTrainedPreProcessorCommand;
 import de.thatsich.openfx.preprocessing.intern.control.command.preprocessor.core.IPreProcessor;
 import de.thatsich.openfx.preprocessing.intern.control.command.provider.IPreProcessingCommandProvider;
 import de.thatsich.openfx.preprocessing.intern.control.handler.RemovePreProcessingSucceededHandler;
@@ -75,15 +75,11 @@ public class PreProcessingInputPresenter extends AFXMLPresenter
 		});
 		this.log.info("Bound " + this.nodeChoiceBoxPreProcessor + " proper Name display.");
 
-		this.nodeChoiceBoxPreProcessor.itemsProperty().bindBidirectional(this.preProcessors.get());
+		this.nodeChoiceBoxPreProcessor.itemsProperty().bindBidirectional(this.preProcessors.list());
 		this.nodeChoiceBoxPreProcessor.valueProperty().bindBidirectional(this.preProcessors.selected());
 		this.log.info("Bound " + this.nodeChoiceBoxPreProcessor + " to Model.");
 
-		this.nodeChoiceBoxPreProcessor.getSelectionModel().selectedIndexProperty().addListener((
-			observable,
-			oldValue,
-			newValue
-		) -> {
+		this.nodeChoiceBoxPreProcessor.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
 			final SetLastPreProcessorIndexCommand lastCommand = this.commander.createSetLastPreProcessorIndexCommand(newValue.intValue());
 			lastCommand.start();
 		});
