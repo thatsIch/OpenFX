@@ -20,7 +20,7 @@ public class Features implements IFeatures
 
 	// Property Getter
 	@Override
-	public ListProperty<IFeature> get()
+	public ListProperty<IFeature> list()
 	{
 		return this.list;
 	}

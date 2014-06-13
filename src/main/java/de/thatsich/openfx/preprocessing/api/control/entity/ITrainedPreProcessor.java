@@ -8,8 +8,6 @@ import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyStringProperty;
 import org.encog.neural.networks.BasicNetwork;
 
-import java.util.List;
-
 
 /**
  * Result of an IPreProcessor
@@ -25,7 +23,7 @@ public interface ITrainedPreProcessor extends IEntity
 	 *
 	 * @return Preprocessed feature
 	 */
-	List<IFeature> preprocess(List<IFeature> feature);
+	IFeature preprocess(IFeature feature);
 
 	ReadOnlyStringProperty nameProperty();
 

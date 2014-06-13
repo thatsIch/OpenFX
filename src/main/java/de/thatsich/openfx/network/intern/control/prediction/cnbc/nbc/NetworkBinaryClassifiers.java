@@ -7,7 +7,6 @@ import de.thatsich.openfx.classification.intern.control.command.commands.CreateT
 import de.thatsich.openfx.classification.intern.control.command.service.ClassificationFileStorageService;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureVector;
-import org.opencv.core.Mat;
 
 import java.util.HashSet;
 import java.util.LinkedList;

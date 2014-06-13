@@ -1,8 +1,8 @@
 package de.thatsich.openfx.errorgeneration.intern.control.command.handler;
 
 import com.google.inject.Inject;
-import de.thatsich.openfx.errorgeneration.api.model.IErrorState;
 import de.thatsich.core.javafx.ACommandHandler;
+import de.thatsich.openfx.errorgeneration.api.model.IErrorState;
 
 /**
  * Handler for what should happen if the Command was successfull
@@ -12,7 +12,7 @@ import de.thatsich.core.javafx.ACommandHandler;
  */
 public class GetLastErrorLoopCountSucceededHandler extends ACommandHandler<Integer>
 {
-	@Inject	private IErrorState errorState;
+	@Inject private IErrorState errorState;
 
 	@Override
 	public void handle(Integer value)

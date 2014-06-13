@@ -20,7 +20,7 @@ public class InitFeaturesSucceededHandler extends ACommandHandler<List<IFeature>
 	@Override
 	public void handle(List<IFeature> features)
 	{
-		this.features.get().addAll(features);
+		this.features.list().addAll(features);
 		this.log.info("Added FeatureExtractor to Database.");
 	}
 }

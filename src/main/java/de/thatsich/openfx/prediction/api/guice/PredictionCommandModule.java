@@ -1,9 +1,9 @@
 package de.thatsich.openfx.prediction.api.guice;
 
-import de.thatsich.openfx.prediction.intern.control.provider.IPredictionCommandProvider;
-import de.thatsich.openfx.prediction.intern.control.provider.IPredictionInitCommandProvider;
 import de.thatsich.core.guice.ACommandModule;
 import de.thatsich.core.guice.ICommandProvider;
+import de.thatsich.openfx.prediction.intern.control.provider.IPredictionCommandProvider;
+import de.thatsich.openfx.prediction.intern.control.provider.IPredictionInitCommandProvider;
 
 import java.util.List;
 

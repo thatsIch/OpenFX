@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="200.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8"
+            fx:controller="de.thatsich.openfx.preprocessed.intern.control.PreProcessedDisplayPresenter">
+	<center>
+
+		<TableView fx:id="nodeTableViewVectors" BorderPane.alignment="CENTER">
+			<columns>
+				<TableColumn fx:id="nodeTableColumnVector" editable="false" minWidth="80.0" prefWidth="80.0"
+				             sortable="false" text="Vector"/>
+				<TableColumn fx:id="nodeTableColumnLabel" editable="false" maxWidth="40.0" minWidth="40.0"
+				             prefWidth="40.0" sortable="false" text="Label"/>
+			</columns>
+			<columnResizePolicy>
+				<TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+			</columnResizePolicy>
+		</TableView>
+	</center>
+	<bottom>
+		<HBox spacing="5.0" BorderPane.alignment="CENTER">
+			<padding>
+				<Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+			</padding>
+			<Label minWidth="40.0" text="Count"/>
+			<Label fx:id="nodeLabelCount" minWidth="40.0" text="0">
+				<font>
+					<Font name="System Bold" size="11.0"/>
+				</font>
+			</Label>
+			<Label minWidth="40.0" text="Dimension"/>
+			<Label fx:id="nodeLabelDimension" minWidth="40.0" text="0"/>
+		</HBox>
+	</bottom>
+</BorderPane>

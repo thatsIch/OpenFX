@@ -2,6 +2,7 @@ package de.thatsich.openfx.network.api.guice;
 
 import com.google.inject.Scopes;
 import de.thatsich.core.guice.AWiringModule;
+import de.thatsich.openfx.network.api.control.entity.INetworkSpace;
 import de.thatsich.openfx.network.api.model.INetworkState;
 import de.thatsich.openfx.network.api.model.INetworks;
 import de.thatsich.openfx.network.api.view.INetworkDisplayView;
@@ -9,6 +10,7 @@ import de.thatsich.openfx.network.api.view.INetworkInputView;
 import de.thatsich.openfx.network.api.view.INetworkListView;
 import de.thatsich.openfx.network.intern.control.command.service.NetworkConfigService;
 import de.thatsich.openfx.network.intern.control.command.service.NetworkFileStorageService;
+import de.thatsich.openfx.network.intern.control.prediction.NetworkSpace;
 import de.thatsich.openfx.network.intern.model.NetworkState;
 import de.thatsich.openfx.network.intern.model.Networks;
 import de.thatsich.openfx.network.intern.view.NetworkDisplayView;
@@ -28,10 +30,10 @@ public class NetworkWiringModule extends AWiringModule
 	}
 
 	@Override
-	protected void bindService()
+	protected void bindModel()
 	{
-		super.bind(NetworkFileStorageService.class).in(Scopes.SINGLETON);
-		super.bind(NetworkConfigService.class).in(Scopes.SINGLETON);
+		super.bind(INetworks.class).to(Networks.class).in(Scopes.SINGLETON);
+		super.bind(INetworkState.class).to(NetworkState.class).in(Scopes.SINGLETON);
 	}
 
 	@Override
@@ -45,7 +47,7 @@ public class NetworkWiringModule extends AWiringModule
 	@Override
 	protected void bindControl()
 	{
-
+		super.bind(INetworkSpace.class).to(NetworkSpace.class).in(Scopes.SINGLETON);
 	}
 
 	@Override
@@ -55,9 +57,9 @@ public class NetworkWiringModule extends AWiringModule
 	}
 
 	@Override
-	protected void bindModel()
+	protected void bindService()
 	{
-		super.bind(INetworks.class).to(Networks.class).in(Scopes.SINGLETON);
-		super.bind(INetworkState.class).to(NetworkState.class).in(Scopes.SINGLETON);
+		super.bind(NetworkFileStorageService.class).in(Scopes.SINGLETON);
+		super.bind(NetworkConfigService.class).in(Scopes.SINGLETON);
 	}
 }

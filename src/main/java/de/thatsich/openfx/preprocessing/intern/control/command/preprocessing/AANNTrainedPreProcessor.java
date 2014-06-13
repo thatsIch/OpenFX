@@ -38,17 +38,11 @@ public class AANNTrainedPreProcessor extends ATrainedPreProcessor
 	}
 
 	@Override
-	public List<IFeature> preprocess(List<IFeature> features)
+	public IFeature preprocess(IFeature feature)
 	{
-		final List<IFeature> preprocessedFeatures = new LinkedList<>();
+		final IFeature preProcessedFeature = this.getPreProcessedFeature(feature);
 
-		for (IFeature feature : features)
-		{
-			final IFeature preProcessedFeature = this.getPreProcessedFeature(feature);
-			preprocessedFeatures.add(preProcessedFeature);
-		}
-
-		return preprocessedFeatures;
+		return preProcessedFeature;
 	}
 
 	@Override

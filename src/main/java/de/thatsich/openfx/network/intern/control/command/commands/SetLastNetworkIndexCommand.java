@@ -2,8 +2,8 @@ package de.thatsich.openfx.network.intern.control.command.commands;
 
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
-import de.thatsich.openfx.network.intern.control.command.service.NetworkConfigService;
 import de.thatsich.core.javafx.ACommand;
+import de.thatsich.openfx.network.intern.control.command.service.NetworkConfigService;
 
 /**
  * @author thatsIch

@@ -1,12 +1,12 @@
 package de.thatsich.openfx.classification.intern.control.provider;
 
 import de.thatsich.core.guice.ICommandProvider;
-import de.thatsich.openfx.classification.api.control.entity.ITraindBinaryClassifier;
 import de.thatsich.openfx.classification.api.control.entity.IBinaryClassifier;
+import de.thatsich.openfx.classification.api.control.entity.ITraindBinaryClassifier;
+import de.thatsich.openfx.classification.intern.control.command.commands.CreateTrainedBinaryClassifierCommand;
 import de.thatsich.openfx.classification.intern.control.command.commands.DeleteBinaryClassificationCommand;
 import de.thatsich.openfx.classification.intern.control.command.commands.SetLastBinaryClassificationIndexCommand;
 import de.thatsich.openfx.classification.intern.control.command.commands.SetLastBinaryClassifierIndexCommand;
-import de.thatsich.openfx.classification.intern.control.command.commands.CreateTrainedBinaryClassifierCommand;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
 
 import java.nio.file.Path;

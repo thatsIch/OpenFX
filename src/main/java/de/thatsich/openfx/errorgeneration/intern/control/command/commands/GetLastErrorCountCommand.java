@@ -1,8 +1,8 @@
 package de.thatsich.openfx.errorgeneration.intern.control.command.commands;
 
 import com.google.inject.Inject;
-import de.thatsich.openfx.errorgeneration.intern.control.command.service.ErrorConfigService;
 import de.thatsich.core.javafx.ACommand;
+import de.thatsich.openfx.errorgeneration.intern.control.command.service.ErrorConfigService;
 
 public class GetLastErrorCountCommand extends ACommand<Integer>
 {

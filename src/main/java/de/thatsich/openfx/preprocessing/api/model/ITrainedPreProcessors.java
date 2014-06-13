@@ -13,7 +13,7 @@ import javafx.beans.property.ObjectProperty;
  *
  * @author thatsIch
  */
-public interface IPreProcessings
+public interface ITrainedPreProcessors
 {
 	/**
 	 * PropertyGetter of PreProcessing List

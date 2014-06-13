@@ -8,6 +8,7 @@ import de.thatsich.openfx.featureextraction.api.guice.FeatureWiringModule;
 import de.thatsich.openfx.imageprocessing.api.guice.ImageWiringModule;
 import de.thatsich.openfx.network.api.guice.NetworkWiringModule;
 import de.thatsich.openfx.prediction.api.guice.PredictionWiringModule;
+import de.thatsich.openfx.preprocessed.api.guice.PreProcessedWiringModule;
 import de.thatsich.openfx.preprocessing.api.guice.PreProcessingWiringModule;
 import de.thatsich.openfx.taboverview.api.view.ITabOverviewView;
 import de.thatsich.openfx.taboverview.intern.view.TabOverviewView;
@@ -25,6 +26,7 @@ public class TabOverviewWiringModule extends AWiringModule
 		this.install(new ClassificationWiringModule());
 		this.install(new ErrorWiringModule());
 		this.install(new PreProcessingWiringModule());
+		this.install(new PreProcessedWiringModule());
 		this.install(new FeatureWiringModule());
 		this.install(new ImageWiringModule());
 	}

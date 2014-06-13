@@ -7,8 +7,8 @@ import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
 import de.thatsich.openfx.featureextraction.api.model.IFeatures;
 import de.thatsich.openfx.preprocessing.api.control.entity.ITrainedPreProcessor;
 import de.thatsich.openfx.preprocessing.api.model.IPreProcessingState;
-import de.thatsich.openfx.preprocessing.api.model.IPreProcessings;
 import de.thatsich.openfx.preprocessing.api.model.IPreProcessors;
+import de.thatsich.openfx.preprocessing.api.model.ITrainedPreProcessors;
 import de.thatsich.openfx.preprocessing.intern.control.command.PreProcessingInitCommander;
 import de.thatsich.openfx.preprocessing.intern.control.command.commands.CreateTrainedPreProcessorCommand;
 import de.thatsich.openfx.preprocessing.intern.control.command.commands.RemovePreProcessingCommand;
@@ -32,7 +32,7 @@ public class PreProcessingInputPresenter extends AFXMLPresenter
 	@Inject private PreProcessingInitCommander initCommander;
 	@Inject private IPreProcessingCommandProvider commander;
 	@Inject private IPreProcessors preProcessors;
-	@Inject private IPreProcessings preProcessings;
+	@Inject private ITrainedPreProcessors preProcessings;
 	@Inject private IPreProcessingState state;
 	@Inject private IFeatures features;
 
@@ -101,11 +101,10 @@ public class PreProcessingInputPresenter extends AFXMLPresenter
 	@FXML
 	private void onTrainPreProcessorAction()
 	{
-		final IPreProcessor selectedPreProcessor = this.preProcessors.selected().get();
-		final List<IFeature> featureVectorSetList = this.features.get();
-		final IFeature selectedFeatureVectorSet = this.features.selected().get();
+		final IPreProcessor preProcessor = this.preProcessors.selected().get();
+		final IFeature feature = this.features.selected().get();
 
-		final CreateTrainedPreProcessorCommand command = this.commander.createTrainPreProcessorCommand(selectedPreProcessor, selectedFeatureVectorSet, featureVectorSetList);
+		final CreateTrainedPreProcessorCommand command = this.commander.createTrainPreProcessorCommand(preProcessor, feature);
 		command.setOnSucceededCommandHandler(TrainPreProcessorSucceededHandler.class);
 		command.start();
 	}

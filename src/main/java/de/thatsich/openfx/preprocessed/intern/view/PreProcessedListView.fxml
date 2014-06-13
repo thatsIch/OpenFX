@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2"
+            fx:controller="de.thatsich.openfx.preprocessed.intern.control.PreProcessedListPresenter">
+
+	<TableView fx:id="nodeTableViewFeatures"
+	           AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+	           AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+		<columns>
+			<TableColumn fx:id="nodeTableColumnExtractorName" editable="false"
+			             minWidth="80.0" prefWidth="80.0" sortable="false" text="Extractor"/>
+			<TableColumn fx:id="nodeTableColumnClassName" editable="false"
+			             minWidth="80.0" prefWidth="80.0" sortable="false" text="Class"/>
+			<TableColumn fx:id="nodeTableColumnPreProcessorName" editable="false"
+			             minWidth="80.0" prefWidth="80.0" sortable="false" text="Class"/>
+			<TableColumn fx:id="nodeTableColumnTileSize" editable="false"
+			             minWidth="40.0" prefWidth="40.0" sortable="false" text="TileSize"/>
+		</columns>
+		<columnResizePolicy>
+			<TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+		</columnResizePolicy>
+	</TableView>
+
+</AnchorPane>

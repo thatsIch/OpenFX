@@ -5,20 +5,27 @@ import de.thatsich.core.Log;
 import de.thatsich.openfx.classification.api.control.entity.IBinaryClassifier;
 import de.thatsich.openfx.errorgeneration.api.control.entity.IError;
 import de.thatsich.openfx.errorgeneration.api.control.entity.IErrorGenerator;
+import de.thatsich.openfx.errorgeneration.api.model.IErrors;
 import de.thatsich.openfx.errorgeneration.intern.control.command.commands.CreateErrorCommand;
 import de.thatsich.openfx.errorgeneration.intern.control.command.service.ErrorFileStorageService;
+import de.thatsich.openfx.errorgeneration.intern.control.provider.IErrorCommandProvider;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureExtractor;
+import de.thatsich.openfx.featureextraction.api.model.IFeatures;
 import de.thatsich.openfx.featureextraction.intern.control.command.commands.CreateExtractedFeatureCommand;
+import de.thatsich.openfx.featureextraction.intern.control.command.provider.IFeatureCommandProvider;
 import de.thatsich.openfx.imageprocessing.api.control.entity.IImage;
 import de.thatsich.openfx.network.api.control.entity.INetworkSpace;
 import de.thatsich.openfx.network.api.control.entity.ITrainedNetwork;
 import de.thatsich.openfx.network.intern.control.prediction.cnbc.CollectiveNetworkBinaryClassifiers;
 import de.thatsich.openfx.network.intern.control.prediction.cnbc.ICNBC;
 import de.thatsich.openfx.preprocessing.api.control.entity.ITrainedPreProcessor;
+import de.thatsich.openfx.preprocessing.api.model.ITrainedPreProcessors;
 import de.thatsich.openfx.preprocessing.intern.control.command.commands.CreateTrainedPreProcessorCommand;
 import de.thatsich.openfx.preprocessing.intern.control.command.preprocessor.core.IPreProcessor;
+import de.thatsich.openfx.preprocessing.intern.control.command.provider.IPreProcessingCommandProvider;
 import de.thatsich.openfx.preprocessing.intern.control.command.service.TrainedPreProcessorFileStorageService;
+import javafx.application.Platform;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -33,9 +40,16 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class NetworkSpace implements INetworkSpace
 {
-	private static final int ERROR_ITERATION = 10;
+	private static final int ERROR_ITERATION = 1;
 	private static final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-SSS");
 
+	@Inject private IErrorCommandProvider errorProvider;
+	@Inject private IFeatureCommandProvider featureProvider;
+	@Inject private IPreProcessingCommandProvider preProcessingProvider;
+
+	@Inject private IErrors errors;
+	@Inject private IFeatures features;
+	@Inject private ITrainedPreProcessors preProcessings;
 
 	@Inject private Log log;
 
@@ -43,6 +57,8 @@ public class NetworkSpace implements INetworkSpace
 	public ITrainedNetwork train(List<IImage> trainingImages, List<IErrorGenerator> errorGenerators, ErrorFileStorageService errorStorage, List<IFeatureExtractor> featureExtractors, List<IPreProcessor> preProcessors, TrainedPreProcessorFileStorageService preproStorage, List<IBinaryClassifier> binaryClassifiers) throws Exception
 	{
 		final long startTime = System.currentTimeMillis();
+		this.log.info("Started training at " + startTime);
+
 		final List<IError> errors = this.getErrors(trainingImages, errorGenerators, errorStorage);
 		final List<IFeature> features = this.getFeatures(errors, featureExtractors);
 		final List<ITrainedPreProcessor> trainedPreProcessors = this.getTrainedPreProcessors(features, preProcessors, preproStorage);
@@ -79,6 +95,7 @@ public class NetworkSpace implements INetworkSpace
 		final ThreadLocalRandom random = ThreadLocalRandom.current();
 		final int imageBound = images.size();
 		final int errorGenBound = errorGenerators.size();
+		this.log.info("Prepared error generation.");
 
 		final List<IError> errors = new LinkedList<>();
 		for (int index = 0; index < ERROR_ITERATION; index++)
@@ -93,11 +110,16 @@ public class NetworkSpace implements INetworkSpace
 			final boolean randomThreshold = random.nextBoolean();
 			final boolean randomDenoising = random.nextBoolean();
 
-			final CreateErrorCommand create = new CreateErrorCommand(randomImage, randomErrorGen, randomSmooth, randomThreshold, randomDenoising, storage);
+			final CreateErrorCommand create = this.errorProvider.createCreateErrorCommand(randomImage, randomErrorGen, randomSmooth, randomThreshold, randomDenoising);
 			final IError error = create.call();
+			this.log.info("Created error " + error);
+
+			Platform.runLater(() -> this.errors.list().add(error));
 
 			errors.add(error);
 		}
+
+		this.log.info("Generated errors " + errors);
 
 		return errors;
 	}
@@ -116,24 +138,34 @@ public class NetworkSpace implements INetworkSpace
 	private List<IFeature> getFeatures(List<IError> errors, List<IFeatureExtractor> featureExtractors) throws Exception
 	{
 		final List<IFeature> features = new LinkedList<>();
+
 		for (IFeatureExtractor featureExtractor : featureExtractors)
 		{
-			IFeature result = null;
+			this.log.info("Feature Extractor " + featureExtractor.getName());
+
+			IFeature feature = null;
 			for (IError error : errors)
 			{
-				final CreateExtractedFeatureCommand create = new CreateExtractedFeatureCommand(error, featureExtractor, 31);
-				final IFeature feature = create.call();
+				final CreateExtractedFeatureCommand create = this.featureProvider.createExtractFeatureCommand(error, featureExtractor, 15);
+				final IFeature subFeature = create.call();
+				this.log.info("Created subFeature " + subFeature + " through " + error.clazzProperty().get() + ", " + featureExtractor.getName());
 
-				if (result == null)
+				if (feature == null)
 				{
-					result = feature;
+					feature = subFeature;
+					this.log.info("Initated subFeature.");
 				}
 				else
 				{
-					result.merge(feature);
+					feature.merge(subFeature);
+					this.log.info("Merged features.");
 				}
 			}
-			features.add(result);
+			final IFeature finalFeature = feature;
+			Platform.runLater(() -> this.features.list().add(finalFeature));
+
+			features.add(feature);
+			this.log.info("Added feature " + feature);
 		}
 
 		return features;
@@ -147,9 +179,21 @@ public class NetworkSpace implements INetworkSpace
 		{
 			for (IFeature feature : features)
 			{
-				final CreateTrainedPreProcessorCommand command = new CreateTrainedPreProcessorCommand(preProcessor, feature, storage);
-				final ITrainedPreProcessor trained = command.call();
+				final CreateTrainedPreProcessorCommand command = this.preProcessingProvider.createTrainPreProcessorCommand(preProcessor, feature);
+
+				ITrainedPreProcessor trained = null;
+				try
+				{
+					trained = command.call();
+				}
+				catch (Exception e)
+				{
+					e.printStackTrace();
+				}
 				trainedPreProcessors.add(trained);
+
+				final ITrainedPreProcessor finalTrained = trained;
+				Platform.runLater(() -> this.preProcessings.list().add(finalTrained));
 			}
 		}
 
@@ -162,11 +206,13 @@ public class NetworkSpace implements INetworkSpace
 
 		for (ITrainedPreProcessor trainedPreProcessor : trainedPreProcessors)
 		{
-			final List<IFeature> preprocess = trainedPreProcessor.preprocess(features);
-			preprocessedFeatures.addAll(preprocess);
+			for (IFeature feature : features)
+			{
+				final IFeature preprocess = trainedPreProcessor.preprocess(feature);
+				preprocessedFeatures.add(preprocess);
+			}
 		}
 
 		return preprocessedFeatures;
 	}
-
 }

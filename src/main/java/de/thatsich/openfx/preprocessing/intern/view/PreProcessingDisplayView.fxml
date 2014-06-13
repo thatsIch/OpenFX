@@ -1,63 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
 <ScrollPane xmlns:fx="http://javafx.com/fxml/1" fitToHeight="true"
             fitToWidth="true" xmlns="http://javafx.com/javafx/8"
             fx:controller="de.thatsich.openfx.preprocessing.intern.control.PreProcessingDisplayPresenter">
-    <content>
-        <StackPane>
-            <children>
-                <Group>
-                    <children>
-                        <GridPane>
-                            <children>
-                                <Label text="PreProcessing" GridPane.columnIndex="0"
-                                       GridPane.rowIndex="0">
-                                    <font>
-                                        <Font name="System Bold" size="11.0" fx:id="x1"/>
-                                    </font>
-                                </Label>
-                                <Label font="$x1" text="InputSize" GridPane.columnIndex="0"
-                                       GridPane.rowIndex="1"/>
-                                <Label font="$x1" text="OutputSize" GridPane.columnIndex="0"
-                                       GridPane.rowIndex="2"/>
-                                <Label font="$x1" text="ID" GridPane.columnIndex="0"
-                                       GridPane.rowIndex="3"/>
-                                <Label fx:id="nodeLabelPreProcessingName" text=""
-                                       GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-                                <Label fx:id="nodeLabelInputSize" text=""
-                                       GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-                                <Label fx:id="nodeLabelOutputSize" text=""
-                                       GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-                                <Label fx:id="nodeLabelID" text="" GridPane.columnIndex="1"
-                                       GridPane.rowIndex="3"/>
-                            </children>
+	<content>
+		<StackPane>
+			<children>
+				<Group>
+					<children>
+						<GridPane>
+							<children>
+								<Label text="PreProcessing" GridPane.columnIndex="0"
+								       GridPane.rowIndex="0">
+									<font>
+										<Font name="System Bold" size="11.0" fx:id="x1"/>
+									</font>
+								</Label>
+								<Label font="$x1" text="InputSize" GridPane.columnIndex="0"
+								       GridPane.rowIndex="1"/>
+								<Label font="$x1" text="OutputSize" GridPane.columnIndex="0"
+								       GridPane.rowIndex="2"/>
+								<Label font="$x1" text="ID" GridPane.columnIndex="0"
+								       GridPane.rowIndex="3"/>
+								<Label fx:id="nodeLabelPreProcessingName" text=""
+								       GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+								<Label fx:id="nodeLabelInputSize" text=""
+								       GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+								<Label fx:id="nodeLabelOutputSize" text=""
+								       GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+								<Label fx:id="nodeLabelID" text="" GridPane.columnIndex="1"
+								       GridPane.rowIndex="3"/>
+							</children>
 
-                            <columnConstraints>
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"
-                                                   prefWidth="100.0"/>
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"
-                                                   prefWidth="100.0"/>
-                            </columnConstraints>
-                            <rowConstraints>
-                                <RowConstraints maxHeight="25.0" minHeight="10.0"
-                                                prefHeight="25.0" vgrow="SOMETIMES"/>
-                                <RowConstraints maxHeight="25.0" minHeight="10.0"
-                                                prefHeight="25.0" vgrow="SOMETIMES"/>
-                                <RowConstraints maxHeight="25.0" minHeight="10.0"
-                                                prefHeight="25.0" vgrow="SOMETIMES"/>
-                                <RowConstraints maxHeight="25.0" minHeight="10.0"
-                                                prefHeight="25.0" vgrow="SOMETIMES"/>
-                            </rowConstraints>
-                        </GridPane>
-                    </children>
-                </Group>
-            </children>
-        </StackPane>
-    </content>
+							<columnConstraints>
+								<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"
+								                   prefWidth="100.0"/>
+								<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"
+								                   prefWidth="100.0"/>
+							</columnConstraints>
+							<rowConstraints>
+								<RowConstraints maxHeight="25.0" minHeight="10.0"
+								                prefHeight="25.0" vgrow="SOMETIMES"/>
+								<RowConstraints maxHeight="25.0" minHeight="10.0"
+								                prefHeight="25.0" vgrow="SOMETIMES"/>
+								<RowConstraints maxHeight="25.0" minHeight="10.0"
+								                prefHeight="25.0" vgrow="SOMETIMES"/>
+								<RowConstraints maxHeight="25.0" minHeight="10.0"
+								                prefHeight="25.0" vgrow="SOMETIMES"/>
+							</rowConstraints>
+						</GridPane>
+					</children>
+				</Group>
+			</children>
+		</StackPane>
+	</content>
 </ScrollPane>

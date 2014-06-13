@@ -3,7 +3,7 @@ package de.thatsich.openfx.preprocessing.intern.control;
 import com.google.inject.Inject;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.openfx.preprocessing.api.control.entity.ITrainedPreProcessor;
-import de.thatsich.openfx.preprocessing.api.model.IPreProcessings;
+import de.thatsich.openfx.preprocessing.api.model.ITrainedPreProcessors;
 import de.thatsich.openfx.preprocessing.intern.control.command.PreProcessingInitCommander;
 import de.thatsich.openfx.preprocessing.intern.control.command.commands.SetLastPreProcessingIndexCommand;
 import de.thatsich.openfx.preprocessing.intern.control.command.provider.IPreProcessingCommandProvider;
@@ -32,7 +32,7 @@ public class PreProcessingListPresenter extends AFXMLPresenter
 	@Inject
 	private IPreProcessingCommandProvider commander;
 	@Inject
-	private IPreProcessings preProcessings;
+	private ITrainedPreProcessors preProcessings;
 
 	@Override
 	protected void bindComponents()
@@ -70,11 +70,7 @@ public class PreProcessingListPresenter extends AFXMLPresenter
 	 */
 	private void bindTableViewSelectionModel()
 	{
-		this.nodeTableViewPreProcessingList.getSelectionModel().selectedItemProperty().addListener((
-			observable,
-			oldValue,
-			newValue
-		) -> {
+		this.nodeTableViewPreProcessingList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
 			this.preProcessings.selected().set(newValue);
 			this.log.info("Selected " + newValue);
 
@@ -84,11 +80,7 @@ public class PreProcessingListPresenter extends AFXMLPresenter
 		});
 		this.log.info("Bound Selection to Model.");
 
-		this.preProcessings.selected().addListener((
-			observable,
-			oldValue,
-			newValue
-		) -> this.nodeTableViewPreProcessingList.getSelectionModel().select(newValue));
+		this.preProcessings.selected().addListener((observable, oldValue, newValue) -> this.nodeTableViewPreProcessingList.getSelectionModel().select(newValue));
 		this.log.info("Bound Model to Selection.");
 	}
 

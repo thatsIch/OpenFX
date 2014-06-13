@@ -32,14 +32,7 @@ public class CreateErrorCommand extends ACommand<IError>
 	private final ErrorFileStorageService storage;
 
 	@Inject
-	public CreateErrorCommand(
-		@Assisted IImage image,
-		@Assisted IErrorGenerator generator,
-		@Assisted("smooth") boolean smooth,
-		@Assisted("threshold") boolean threshold,
-		@Assisted("denoising") boolean denoising,
-		final ErrorFileStorageService storage
-	)
+	public CreateErrorCommand(@Assisted IImage image, @Assisted IErrorGenerator generator, @Assisted("smooth") boolean smooth, @Assisted("threshold") boolean threshold, @Assisted("denoising") boolean denoising, final ErrorFileStorageService storage)
 	{
 		this.imageMat = image.getImageMat().clone();
 		this.errorClass = generator.getName();
@@ -65,20 +58,24 @@ public class CreateErrorCommand extends ACommand<IError>
 			final Mat dst = Mat.zeros(error.size(), error.type());
 			Imgproc.adaptiveBilateralFilter(modified, dst, new Size(11, 11), 22);
 			dst.copyTo(modified);
+			this.log.info("Activated Smoothing.");
 		}
 
 		if (this.threshold)
 		{
 			Imgproc.threshold(modified, modified, 0, 255, Imgproc.THRESH_OTSU);
+			this.log.info("Activated thresholding.");
 		}
 
 		if (this.denoising)
 		{
 			Photo.fastNlMeansDenoising(modified, modified);
+			this.log.info("Activated Denoising.");
 		}
 
 		// store created error
 		this.storage.create(entry);
+		this.log.info("Error stored.");
 
 		return entry;
 	}

@@ -10,6 +10,7 @@ import de.thatsich.openfx.errorgeneration.api.view.IErrorInputView;
 import de.thatsich.openfx.errorgeneration.api.view.IErrorListView;
 import de.thatsich.openfx.errorgeneration.intern.control.command.ErrorInitCommander;
 import de.thatsich.openfx.errorgeneration.intern.control.command.service.ErrorConfigService;
+import de.thatsich.openfx.errorgeneration.intern.control.command.service.ErrorFileStorageService;
 import de.thatsich.openfx.errorgeneration.intern.model.ErrorGenerators;
 import de.thatsich.openfx.errorgeneration.intern.model.ErrorState;
 import de.thatsich.openfx.errorgeneration.intern.model.Errors;
@@ -64,5 +65,6 @@ public class ErrorWiringModule extends AWiringModule
 	protected void bindService()
 	{
 		super.bind(ErrorConfigService.class).in(Scopes.SINGLETON);
+		super.bind(ErrorFileStorageService.class).in(Scopes.SINGLETON);
 	}
 }

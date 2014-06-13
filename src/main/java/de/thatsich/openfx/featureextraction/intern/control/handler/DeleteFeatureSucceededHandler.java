@@ -22,7 +22,7 @@ public class DeleteFeatureSucceededHandler extends ACommandHandler<IFeature>
 	@Override
 	public void handle(IFeature feature)
 	{
-		final List<IFeature> list = this.features.get();
+		final List<IFeature> list = this.features.list();
 		list.remove(feature);
 		this.log.info("Removed FeatureVector from Database.");
 

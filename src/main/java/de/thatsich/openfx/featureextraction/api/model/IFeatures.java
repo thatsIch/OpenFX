@@ -10,7 +10,7 @@ import javafx.beans.property.ObjectProperty;
  */
 public interface IFeatures
 {
-	ListProperty<IFeature> get();
+	ListProperty<IFeature> list();
 
 	ObjectProperty<IFeature> selected();
 }

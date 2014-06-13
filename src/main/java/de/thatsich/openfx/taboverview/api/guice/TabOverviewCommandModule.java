@@ -1,14 +1,15 @@
 package de.thatsich.openfx.taboverview.api.guice;
 
+import de.thatsich.core.guice.ACommandModule;
+import de.thatsich.core.guice.ICommandProvider;
 import de.thatsich.openfx.classification.api.guice.ClassificationCommandModule;
-import de.thatsich.openfx.network.api.guice.NetworkCommandModule;
 import de.thatsich.openfx.errorgeneration.api.guice.ErrorCommandModule;
 import de.thatsich.openfx.featureextraction.api.guice.FeatureCommandModule;
 import de.thatsich.openfx.imageprocessing.api.guice.ImageCommandModule;
+import de.thatsich.openfx.network.api.guice.NetworkCommandModule;
 import de.thatsich.openfx.prediction.api.guice.PredictionCommandModule;
+import de.thatsich.openfx.preprocessed.api.guice.PreProcessedCommandModule;
 import de.thatsich.openfx.preprocessing.api.guice.PreProcessingCommandModule;
-import de.thatsich.core.guice.ACommandModule;
-import de.thatsich.core.guice.ICommandProvider;
 
 import java.util.List;
 
@@ -22,6 +23,7 @@ public class TabOverviewCommandModule extends ACommandModule
 		this.install(new ClassificationCommandModule());
 		this.install(new ErrorCommandModule());
 		this.install(new PreProcessingCommandModule());
+		this.install(new PreProcessedCommandModule());
 		this.install(new FeatureCommandModule());
 		this.install(new ImageCommandModule());
 	}

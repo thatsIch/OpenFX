@@ -2,8 +2,8 @@ package de.thatsich.openfx.prediction.intern.control.command.commands;
 
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
-import de.thatsich.openfx.prediction.intern.control.command.service.BinaryPredictionConfigService;
 import de.thatsich.core.javafx.ACommand;
+import de.thatsich.openfx.prediction.intern.control.command.service.BinaryPredictionConfigService;
 
 public class SetLastBinaryPredictionIndexCommand extends ACommand<Void>
 {

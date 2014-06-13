@@ -9,7 +9,7 @@ import javafx.util.Pair;
  */
 public class FeatureConfigService extends AConfigurationService
 {
-	private static final Pair<String, Integer> TILE_SIZE = new Pair<>("tile_size", 31);
+	private static final Pair<String, Integer> TILE_SIZE = new Pair<>("tile_size", 15);
 	private static final Pair<String, Integer> EXTRACTOR = new Pair<>("extractor", 0);
 	private static final Pair<String, Integer> INDEX = new Pair<>("index", 0);
 

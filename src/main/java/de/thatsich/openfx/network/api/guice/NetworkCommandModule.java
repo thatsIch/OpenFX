@@ -1,9 +1,9 @@
 package de.thatsich.openfx.network.api.guice;
 
-import de.thatsich.openfx.network.intern.control.provider.INetworkCommandProvider;
-import de.thatsich.openfx.network.intern.control.provider.INetworkInitCommandProvider;
 import de.thatsich.core.guice.ACommandModule;
 import de.thatsich.core.guice.ICommandProvider;
+import de.thatsich.openfx.network.intern.control.provider.INetworkCommandProvider;
+import de.thatsich.openfx.network.intern.control.provider.INetworkInitCommandProvider;
 
 import java.util.List;
 

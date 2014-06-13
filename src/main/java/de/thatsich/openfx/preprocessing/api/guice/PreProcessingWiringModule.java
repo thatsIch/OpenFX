@@ -3,8 +3,8 @@ package de.thatsich.openfx.preprocessing.api.guice;
 import com.google.inject.Scopes;
 import de.thatsich.core.guice.AWiringModule;
 import de.thatsich.openfx.preprocessing.api.model.IPreProcessingState;
-import de.thatsich.openfx.preprocessing.api.model.IPreProcessings;
 import de.thatsich.openfx.preprocessing.api.model.IPreProcessors;
+import de.thatsich.openfx.preprocessing.api.model.ITrainedPreProcessors;
 import de.thatsich.openfx.preprocessing.api.view.IPreProcessingDisplayView;
 import de.thatsich.openfx.preprocessing.api.view.IPreProcessingInputView;
 import de.thatsich.openfx.preprocessing.api.view.IPreProcessingListView;
@@ -13,8 +13,8 @@ import de.thatsich.openfx.preprocessing.intern.control.command.preprocessor.Iden
 import de.thatsich.openfx.preprocessing.intern.control.command.service.PreProcessingConfigService;
 import de.thatsich.openfx.preprocessing.intern.control.command.service.TrainedPreProcessorFileStorageService;
 import de.thatsich.openfx.preprocessing.intern.model.PreProcessingState;
-import de.thatsich.openfx.preprocessing.intern.model.PreProcessings;
 import de.thatsich.openfx.preprocessing.intern.model.PreProcessors;
+import de.thatsich.openfx.preprocessing.intern.model.TrainedPreProcessors;
 import de.thatsich.openfx.preprocessing.intern.view.PreProcessingDisplayView;
 import de.thatsich.openfx.preprocessing.intern.view.PreProcessingInputView;
 import de.thatsich.openfx.preprocessing.intern.view.PreProcessingListView;
@@ -32,7 +32,7 @@ public class PreProcessingWiringModule extends AWiringModule
 	protected void bindModel()
 	{
 		super.bind(IPreProcessors.class).to(PreProcessors.class).in(Scopes.SINGLETON);
-		super.bind(IPreProcessings.class).to(PreProcessings.class).in(Scopes.SINGLETON);
+		super.bind(ITrainedPreProcessors.class).to(TrainedPreProcessors.class).in(Scopes.SINGLETON);
 		super.bind(IPreProcessingState.class).to(PreProcessingState.class).in(Scopes.SINGLETON);
 	}
 

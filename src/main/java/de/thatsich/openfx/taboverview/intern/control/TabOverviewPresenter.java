@@ -5,9 +5,6 @@ import com.google.inject.Singleton;
 import de.thatsich.openfx.classification.api.view.IClassificationDisplayView;
 import de.thatsich.openfx.classification.api.view.IClassificationInputView;
 import de.thatsich.openfx.classification.api.view.IClassificationListView;
-import de.thatsich.openfx.network.api.view.INetworkDisplayView;
-import de.thatsich.openfx.network.api.view.INetworkInputView;
-import de.thatsich.openfx.network.api.view.INetworkListView;
 import de.thatsich.openfx.errorgeneration.api.view.IErrorDisplayView;
 import de.thatsich.openfx.errorgeneration.api.view.IErrorInputView;
 import de.thatsich.openfx.errorgeneration.api.view.IErrorListView;
@@ -17,9 +14,15 @@ import de.thatsich.openfx.featureextraction.api.view.IFeatureListView;
 import de.thatsich.openfx.imageprocessing.api.view.IImageDisplayView;
 import de.thatsich.openfx.imageprocessing.api.view.IImageInputView;
 import de.thatsich.openfx.imageprocessing.api.view.IImageListView;
+import de.thatsich.openfx.network.api.view.INetworkDisplayView;
+import de.thatsich.openfx.network.api.view.INetworkInputView;
+import de.thatsich.openfx.network.api.view.INetworkListView;
 import de.thatsich.openfx.prediction.api.view.IPredictionDisplayView;
 import de.thatsich.openfx.prediction.api.view.IPredictionInputView;
 import de.thatsich.openfx.prediction.api.view.IPredictionListView;
+import de.thatsich.openfx.preprocessed.api.view.IPreProcessedDisplayView;
+import de.thatsich.openfx.preprocessed.api.view.IPreProcessedInputView;
+import de.thatsich.openfx.preprocessed.api.view.IPreProcessedListView;
 import de.thatsich.openfx.preprocessing.api.view.IPreProcessingDisplayView;
 import de.thatsich.openfx.preprocessing.api.view.IPreProcessingInputView;
 import de.thatsich.openfx.preprocessing.api.view.IPreProcessingListView;
@@ -42,11 +45,13 @@ import java.util.ResourceBundle;
 @Singleton
 public class TabOverviewPresenter implements Initializable
 {
+
 	// TabContents
 	@FXML private BorderPane paneImageProcessing;
 	@FXML private BorderPane paneErrorGeneration;
 	@FXML private BorderPane paneFeatureExtraction;
 	@FXML private BorderPane panePreProcessing;
+	@FXML private BorderPane panePreProcessed;
 	@FXML private BorderPane paneClassification;
 	@FXML private BorderPane panePrediction;
 	@FXML private BorderPane paneNetwork;
@@ -67,6 +72,10 @@ public class TabOverviewPresenter implements Initializable
 	@Inject private IPreProcessingInputView preProcessingInputView;
 	@Inject private IPreProcessingDisplayView preProcessingDisplayView;
 	@Inject private IPreProcessingListView preProcessingListView;
+
+	@Inject private IPreProcessedInputView preProcessedInputView;
+	@Inject private IPreProcessedDisplayView preProcessedDisplayView;
+	@Inject private IPreProcessedListView preProcessedListView;
 
 	@Inject private IClassificationInputView classificationInputView;
 	@Inject private IClassificationDisplayView classificationDisplayView;
@@ -101,6 +110,10 @@ public class TabOverviewPresenter implements Initializable
 		this.panePreProcessing.setTop(this.preProcessingInputView.getRoot());
 		this.panePreProcessing.setLeft(this.preProcessingListView.getRoot());
 		this.panePreProcessing.setCenter(this.preProcessingDisplayView.getRoot());
+
+		this.panePreProcessed.setTop(this.preProcessedInputView.getRoot());
+		this.panePreProcessed.setLeft(this.preProcessedListView.getRoot());
+		this.panePreProcessed.setCenter(this.preProcessedDisplayView.getRoot());
 
 		this.paneClassification.setTop(this.classificationInputView.getRoot());
 		this.paneClassification.setLeft(this.classificationListView.getRoot());

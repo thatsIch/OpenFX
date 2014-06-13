@@ -1,9 +1,9 @@
 package de.thatsich.openfx.preprocessing.intern.control.command.commands;
 
 import com.google.inject.Inject;
+import de.thatsich.core.javafx.ACommand;
 import de.thatsich.openfx.preprocessing.intern.control.command.service.EPreProcessingConfigType;
 import de.thatsich.openfx.preprocessing.intern.control.command.service.PreProcessingConfigService;
-import de.thatsich.core.javafx.ACommand;
 
 
 public class GetLastPreProcessorIndexCommand extends ACommand<Integer>

@@ -6,8 +6,8 @@ import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
 import de.thatsich.openfx.featureextraction.api.model.IFeatures;
 import de.thatsich.openfx.featureextraction.api.model.IVectors;
 import de.thatsich.openfx.featureextraction.intern.control.command.FeatureInitCommander;
-import de.thatsich.openfx.featureextraction.intern.control.command.provider.IFeatureCommandProvider;
 import de.thatsich.openfx.featureextraction.intern.control.command.commands.SetLastFeatureIndexCommand;
+import de.thatsich.openfx.featureextraction.intern.control.command.provider.IFeatureCommandProvider;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -46,7 +46,7 @@ public class FeatureListPresenter extends AFXMLPresenter
 
 	private void bindTableViewContent()
 	{
-		this.nodeTableViewFeatures.itemsProperty().bind(this.features.get());
+		this.nodeTableViewFeatures.itemsProperty().bind(this.features.list());
 		this.log.info("Bound nodeTableViewFeatures to features.");
 	}
 

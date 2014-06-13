@@ -62,7 +62,7 @@ public class ExtractFeatureSucceededHandler extends ACommandHandler<IFeature>
 		}
 		else
 		{
-			features.get().add(feature);
+			features.list().add(feature);
 
 			return feature;
 		}
@@ -70,7 +70,7 @@ public class ExtractFeatureSucceededHandler extends ACommandHandler<IFeature>
 
 	private Optional<IFeature> getMatchingFeature(IFeatures features, IFeature feature)
 	{
-		for (IFeature iFeature : features.get())
+		for (IFeature iFeature : features.list())
 		{
 			final boolean sameSize = iFeature.tileSize().get() == feature.tileSize().get();
 			final boolean sameClass = iFeature.className().get().equals(feature.className().get());

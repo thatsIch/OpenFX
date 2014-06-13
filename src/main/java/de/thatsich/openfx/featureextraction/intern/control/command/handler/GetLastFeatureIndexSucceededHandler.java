@@ -16,9 +16,9 @@ public class GetLastFeatureIndexSucceededHandler extends ACommandHandler<Integer
 	@Override
 	public void handle(final Integer value)
 	{
-		if (value >= 0 && this.features.get().size() > 0)
+		if (value >= 0 && this.features.list().size() > 0)
 		{
-			final IFeature selected = this.features.get().get(value);
+			final IFeature selected = this.features.list().get(value);
 			this.features.selected().set(selected);
 			this.log.info("Set LastFeatureIndex in Model.");
 		}

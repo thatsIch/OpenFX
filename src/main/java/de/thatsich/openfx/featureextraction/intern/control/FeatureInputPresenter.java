@@ -11,8 +11,8 @@ import de.thatsich.openfx.featureextraction.api.model.IFeatureExtractors;
 import de.thatsich.openfx.featureextraction.api.model.IFeatureState;
 import de.thatsich.openfx.featureextraction.api.model.IFeatures;
 import de.thatsich.openfx.featureextraction.intern.control.command.FeatureInitCommander;
-import de.thatsich.openfx.featureextraction.intern.control.command.commands.DeleteFeatureCommand;
 import de.thatsich.openfx.featureextraction.intern.control.command.commands.CreateExtractedFeatureCommand;
+import de.thatsich.openfx.featureextraction.intern.control.command.commands.DeleteFeatureCommand;
 import de.thatsich.openfx.featureextraction.intern.control.command.provider.IFeatureCommandProvider;
 import de.thatsich.openfx.featureextraction.intern.control.handler.DeleteFeatureSucceededHandler;
 import de.thatsich.openfx.featureextraction.intern.control.handler.ExtractFeatureSucceededHandler;
@@ -77,9 +77,7 @@ public class FeatureInputPresenter extends AFXMLPresenter
 		this.nodeChoiceBoxFeatureExtractor.valueProperty().bindBidirectional(this.featureExtractors.selected());
 		this.log.info("Bound ChoiceBoxFeatureExtractor to Model.");
 
-		this.nodeChoiceBoxFeatureExtractor.getSelectionModel().selectedIndexProperty().addListener((
-			observable, oldValue, newValue
-		) -> this.provider.createSetLastFeatureExtractorIndexCommand(newValue.intValue()).start());
+		this.nodeChoiceBoxFeatureExtractor.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> this.provider.createSetLastFeatureExtractorIndexCommand(newValue.intValue()).start());
 		this.log.info("Bound ChoiceBoxFeatureExtractor to Config.");
 	}
 
@@ -108,7 +106,7 @@ public class FeatureInputPresenter extends AFXMLPresenter
 	{
 		this.nodeButtonExtractFeatureVector.disableProperty().bind(this.errors.selected().isNull().or(this.nodeChoiceBoxFeatureExtractor.valueProperty().isNull()));
 		this.nodeButtonRemoveFeatureVector.disableProperty().bind(this.features.selected().isNull());
-		this.nodeButtonResetFeatureVectorList.disableProperty().bind(this.features.get().emptyProperty());
+		this.nodeButtonResetFeatureVectorList.disableProperty().bind(this.features.list().emptyProperty());
 	}
 
 	// ================================================== 
@@ -135,7 +133,7 @@ public class FeatureInputPresenter extends AFXMLPresenter
 	@FXML
 	private void onResetAction()
 	{
-		final List<IFeature> list = this.features.get();
+		final List<IFeature> list = this.features.list();
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(list.size());
 		this.log.info("Initialized Executor for resetting all FeatureVectors.");
 

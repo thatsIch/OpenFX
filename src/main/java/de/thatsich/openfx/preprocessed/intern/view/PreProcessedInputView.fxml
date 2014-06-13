@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.FlowPane?>
+<FlowPane xmlns:fx="http://javafx.com/fxml/1" hgap="5.0" prefWidth="-1.0"
+          xmlns="http://javafx.com/javafx/8"
+          fx:controller="de.thatsich.openfx.preprocessed.intern.control.PreProcessedInputPresenter">
+
+	<padding>
+		<Insets bottom="10.0"/>
+	</padding>
+
+	<Button fx:id="nodeButtonPreProcessFeature" onAction="#onPreProcessAction">
+		<graphic>
+			<ImageView>
+				<Image url="@add.png"/>
+			</ImageView>
+		</graphic>
+		<tooltip>
+			<Tooltip text="Train PreProcessor and add the PreProcession to the List."/>
+		</tooltip>
+	</Button>
+	<Button fx:id="nodeButtonRemovePreProcessedFeature" onAction="#onRemoveAction">
+		<graphic>
+			<ImageView>
+				<Image url="@remove.png"/>
+			</ImageView>
+		</graphic>
+		<tooltip>
+			<Tooltip text="Removes a PreProcessing from the List."/>
+		</tooltip>
+	</Button>
+	<Button fx:id="nodeButtonResetPreProcessedFeatures" onAction="#onResetAction">
+		<graphic>
+			<ImageView>
+				<Image url="@delete.png"/>
+			</ImageView>
+		</graphic>
+		<tooltip>
+			<Tooltip text="Resets the whole PreProcessing List physically. CAUTION!"/>
+		</tooltip>
+	</Button>
+
+</FlowPane>

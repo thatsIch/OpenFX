@@ -2,8 +2,8 @@ package de.thatsich.openfx.classification.intern.control.command.commands;
 
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
-import de.thatsich.openfx.classification.intern.control.command.service.ClassificationConfigService;
 import de.thatsich.core.javafx.ACommand;
+import de.thatsich.openfx.classification.intern.control.command.service.ClassificationConfigService;
 
 public class SetLastBinaryClassifierIndexCommand extends ACommand<Void>
 {

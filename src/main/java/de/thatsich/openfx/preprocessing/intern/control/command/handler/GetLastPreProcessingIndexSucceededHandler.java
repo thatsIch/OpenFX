@@ -3,7 +3,7 @@ package de.thatsich.openfx.preprocessing.intern.control.command.handler;
 import com.google.inject.Inject;
 import de.thatsich.core.javafx.ACommandHandler;
 import de.thatsich.openfx.preprocessing.api.control.entity.ITrainedPreProcessor;
-import de.thatsich.openfx.preprocessing.api.model.IPreProcessings;
+import de.thatsich.openfx.preprocessing.api.model.ITrainedPreProcessors;
 
 
 /**
@@ -15,7 +15,7 @@ import de.thatsich.openfx.preprocessing.api.model.IPreProcessings;
 public class GetLastPreProcessingIndexSucceededHandler extends ACommandHandler<Integer>
 {
 	@Inject
-	private IPreProcessings pps;
+	private ITrainedPreProcessors pps;
 
 	@Override
 	public void handle(Integer value)

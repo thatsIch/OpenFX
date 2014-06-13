@@ -1,10 +1,10 @@
 package de.thatsich.openfx.preprocessing.api.guice;
 
+import de.thatsich.core.guice.ACommandModule;
+import de.thatsich.core.guice.ICommandProvider;
 import de.thatsich.openfx.preprocessing.intern.control.command.provider.IPreProcessingCommandProvider;
 import de.thatsich.openfx.preprocessing.intern.control.command.provider.IPreProcessingInitCommandProvider;
 import de.thatsich.openfx.preprocessing.intern.control.command.provider.IPreProcessingProvider;
-import de.thatsich.core.guice.ACommandModule;
-import de.thatsich.core.guice.ICommandProvider;
 
 import java.util.List;
 

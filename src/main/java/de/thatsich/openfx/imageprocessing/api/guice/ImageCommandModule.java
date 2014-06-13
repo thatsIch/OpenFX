@@ -1,9 +1,9 @@
 package de.thatsich.openfx.imageprocessing.api.guice;
 
-import de.thatsich.openfx.imageprocessing.intern.control.command.provider.IImageCommandProvider;
-import de.thatsich.openfx.imageprocessing.intern.control.command.provider.IImageInitCommandProvider;
 import de.thatsich.core.guice.ACommandModule;
 import de.thatsich.core.guice.ICommandProvider;
+import de.thatsich.openfx.imageprocessing.intern.control.command.provider.IImageCommandProvider;
+import de.thatsich.openfx.imageprocessing.intern.control.command.provider.IImageInitCommandProvider;
 
 import java.util.List;
 

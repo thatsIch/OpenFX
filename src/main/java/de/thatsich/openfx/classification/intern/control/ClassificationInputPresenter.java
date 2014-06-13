@@ -3,15 +3,15 @@ package de.thatsich.openfx.classification.intern.control;
 import com.google.inject.Inject;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.javafx.CommandExecutor;
-import de.thatsich.openfx.classification.api.control.entity.ITraindBinaryClassifier;
 import de.thatsich.openfx.classification.api.control.entity.IBinaryClassifier;
+import de.thatsich.openfx.classification.api.control.entity.ITraindBinaryClassifier;
 import de.thatsich.openfx.classification.api.model.IBinaryClassifications;
 import de.thatsich.openfx.classification.api.model.IBinaryClassifiers;
 import de.thatsich.openfx.classification.api.model.IClassificationState;
 import de.thatsich.openfx.classification.intern.control.command.ClassificationInitCommander;
+import de.thatsich.openfx.classification.intern.control.command.commands.CreateTrainedBinaryClassifierCommand;
 import de.thatsich.openfx.classification.intern.control.command.commands.DeleteBinaryClassificationCommand;
 import de.thatsich.openfx.classification.intern.control.command.commands.SetLastBinaryClassifierIndexCommand;
-import de.thatsich.openfx.classification.intern.control.command.commands.CreateTrainedBinaryClassifierCommand;
 import de.thatsich.openfx.classification.intern.control.handler.RemoveBinaryClassificationSucceededHandler;
 import de.thatsich.openfx.classification.intern.control.handler.TrainBinaryClassifierSucceededHandler;
 import de.thatsich.openfx.classification.intern.control.provider.IClassificationCommandProvider;
@@ -93,7 +93,7 @@ public class ClassificationInputPresenter extends AFXMLPresenter
 
 	private void bindButtons()
 	{
-		this.nodeButtonTrainBinaryClassifier.disableProperty().bind(this.features.get().isNull());
+		this.nodeButtonTrainBinaryClassifier.disableProperty().bind(this.features.list().isNull());
 		this.nodeButtonRemoveBinaryClassifier.disableProperty().bind(this.binaryClassifications.selected().isNull());
 		this.nodeButtonResetBinaryClassifierList.disableProperty().bind(this.binaryClassifications.list().emptyProperty());
 	}
