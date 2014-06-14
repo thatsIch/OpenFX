@@ -8,6 +8,7 @@ import de.thatsich.openfx.network.api.model.INetworks;
 import de.thatsich.openfx.network.api.view.INetworkDisplayView;
 import de.thatsich.openfx.network.api.view.INetworkInputView;
 import de.thatsich.openfx.network.api.view.INetworkListView;
+import de.thatsich.openfx.network.intern.control.command.NetworkInitCommander;
 import de.thatsich.openfx.network.intern.control.command.service.NetworkConfigService;
 import de.thatsich.openfx.network.intern.control.command.service.NetworkFileStorageService;
 import de.thatsich.openfx.network.intern.control.prediction.NetworkSpace;
@@ -53,7 +54,7 @@ public class NetworkWiringModule extends AWiringModule
 	@Override
 	protected void bindCommand()
 	{
-
+		super.bind(NetworkInitCommander.class).in(Scopes.SINGLETON);
 	}
 
 	@Override

@@ -1,6 +1,7 @@
 package de.thatsich.openfx.network.intern.control.command;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import de.thatsich.core.Log;
 import de.thatsich.core.javafx.CommandExecutor;
 import de.thatsich.openfx.network.api.model.INetworkState;
@@ -18,6 +19,7 @@ import java.util.concurrent.ExecutorService;
  * @author thatsIch
  * @since 01.06.2014.
  */
+@Singleton
 public class NetworkInitCommander
 {
 	@Inject private Log log;

@@ -17,8 +17,8 @@ import de.thatsich.openfx.featureextraction.intern.control.command.provider.IFea
 import de.thatsich.openfx.imageprocessing.api.control.entity.IImage;
 import de.thatsich.openfx.network.api.control.entity.INetworkSpace;
 import de.thatsich.openfx.network.api.control.entity.ITrainedNetwork;
-import de.thatsich.openfx.network.intern.control.prediction.cnbc.CollectiveNetworkBinaryClassifiers;
 import de.thatsich.openfx.network.intern.control.prediction.cnbc.ICNBC;
+import de.thatsich.openfx.network.intern.control.provider.INetworkCommandProvider;
 import de.thatsich.openfx.preprocessing.intern.control.command.preprocessor.core.IPreProcessor;
 import de.thatsich.openfx.preprocessing.intern.control.command.provider.IPreProcessingCommandProvider;
 import de.thatsich.openfx.preprocessing.intern.control.command.service.TrainedPreProcessorFileStorageService;
@@ -43,6 +43,7 @@ public class NetworkSpace implements INetworkSpace
 	@Inject private IErrorCommandProvider errorProvider;
 	@Inject private IFeatureCommandProvider featureProvider;
 	@Inject private IPreProcessingCommandProvider preProcessingProvider;
+	@Inject private INetworkCommandProvider networkProvider;
 
 	@Inject private IErrors errors;
 	@Inject private IFeatures features;
@@ -57,7 +58,7 @@ public class NetworkSpace implements INetworkSpace
 
 		final List<ErrorClass> errorClasses = this.getErrorClasses(trainingImages, errorGenerators, errorStorage);
 		final List<IFeature> features = this.getFeatures(errorClasses, featureExtractors);
-		final ICNBC cnbc = this.getCNBC(features, this.log);
+		final ICNBC cnbc = this.getCNBC(features);
 
 		final long stopTime = System.currentTimeMillis();
 
@@ -131,7 +132,7 @@ public class NetworkSpace implements INetworkSpace
 		for (IFeatureExtractor featureExtractor : featureExtractors)
 		{
 			this.log.info("Feature Extractor " + featureExtractor.getName());
-
+			this.log.info("ErrorClasses: " + errorClasses.size());
 			for (ErrorClass errorClass : errorClasses)
 			{
 				final List<IError> errors = errorClass.errors;
@@ -164,9 +165,9 @@ public class NetworkSpace implements INetworkSpace
 		return features;
 	}
 
-	private ICNBC getCNBC(List<IFeature> features, Log log) throws Exception
+	private ICNBC getCNBC(List<IFeature> features) throws Exception
 	{
-		final ICNBC cnbc = new CollectiveNetworkBinaryClassifiers(log);
+		final ICNBC cnbc = this.networkProvider.createCollectiveNetworkBinaryClassifiers();
 
 		for (IFeature preprocessedFeature : features)
 		{

@@ -5,7 +5,7 @@ import de.thatsich.core.Log;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureVector;
 import de.thatsich.openfx.network.intern.control.prediction.cnbc.nbc.INBC;
-import de.thatsich.openfx.network.intern.control.prediction.cnbc.nbc.NetworkBinaryClassifiers;
+import de.thatsich.openfx.network.intern.control.provider.INetworkCommandProvider;
 import javafx.util.Pair;
 
 import java.util.HashSet;
@@ -22,6 +22,8 @@ public class CollectiveNetworkBinaryClassifiers implements ICNBC
 	private final Log log;
 	private final List<INBC> nbcs;
 	private final Set<String> uniqueErrorClasses;
+
+	@Inject private INetworkCommandProvider provider;
 
 	@Inject
 	public CollectiveNetworkBinaryClassifiers(Log log)
@@ -52,14 +54,18 @@ public class CollectiveNetworkBinaryClassifiers implements ICNBC
 		{
 			this.uniqueErrorClasses.add(potUniqueErrorClass);
 
-			final INBC nbc = new NetworkBinaryClassifiers(potUniqueErrorClass, new LinkedList<>());
+			final INBC nbc = this.provider.createNetworkBinaryClassifiers(potUniqueErrorClass, new LinkedList<>());
 			this.nbcs.add(nbc);
-			this.log.info("Created new NBC for unique errorclass " + potUniqueErrorClass);
+			this.log.info("Created new NBC " + nbc + " for unique errorclass " + potUniqueErrorClass);
 		}
+
+		this.log.info("NBC Size " + this.nbcs.size());
 
 		for (INBC nbc : this.nbcs)
 		{
+			this.log.info("Adding feature " + feature + " to NBC " + nbc);
 			nbc.addFeature(feature);
+			this.log.info("Added feature " + feature + " to NBC " + nbc);
 		}
 	}
 

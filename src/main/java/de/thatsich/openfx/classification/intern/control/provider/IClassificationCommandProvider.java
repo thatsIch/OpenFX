@@ -9,11 +9,9 @@ import de.thatsich.openfx.classification.intern.control.command.commands.SetLast
 import de.thatsich.openfx.classification.intern.control.command.commands.SetLastBinaryClassifierIndexCommand;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
 
-import java.nio.file.Path;
-
 public interface IClassificationCommandProvider extends ICommandProvider
 {
-	CreateTrainedBinaryClassifierCommand createTrainBinaryClassifierCommand(Path binaryClassifierFolderPath, IBinaryClassifier classifier, IFeature selected);
+	CreateTrainedBinaryClassifierCommand createTrainBinaryClassifierCommand(IBinaryClassifier classifier, IFeature selected);
 
 	DeleteBinaryClassificationCommand createRemoveBinaryClassificationCommand(ITrainedBinaryClassifier binaryClassification);
 

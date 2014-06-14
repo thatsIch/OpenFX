@@ -22,7 +22,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.util.StringConverter;
 
-import java.nio.file.Path;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 
@@ -104,11 +103,10 @@ public class ClassificationInputPresenter extends AFXMLPresenter
 	@FXML
 	private void onTrainBinaryClassifierAction()
 	{
-		final Path path = this.trainState.path().get();
 		final IBinaryClassifier selectedBC = this.binaryClassifiers.selected().get();
 		final IFeature selectedF = this.features.selected().get();
 
-		final CreateTrainedBinaryClassifierCommand command = this.commander.createTrainBinaryClassifierCommand(path, selectedBC, selectedF);
+		final CreateTrainedBinaryClassifierCommand command = this.commander.createTrainBinaryClassifierCommand(selectedBC, selectedF);
 		command.setOnSucceededCommandHandler(TrainBinaryClassifierSucceededHandler.class);
 		command.start();
 	}

@@ -2,6 +2,7 @@ package de.thatsich.openfx.network.intern.control.provider;
 
 import de.thatsich.core.guice.ICommandProvider;
 import de.thatsich.openfx.classification.api.control.entity.IBinaryClassifier;
+import de.thatsich.openfx.classification.api.control.entity.ITrainedBinaryClassifier;
 import de.thatsich.openfx.errorgeneration.api.control.entity.IErrorGenerator;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureExtractor;
 import de.thatsich.openfx.imageprocessing.api.control.entity.IImage;
@@ -9,6 +10,8 @@ import de.thatsich.openfx.network.api.control.entity.ITrainedNetwork;
 import de.thatsich.openfx.network.intern.control.command.commands.CreateTrainedNetworkCommand;
 import de.thatsich.openfx.network.intern.control.command.commands.DeleteNetworkCommand;
 import de.thatsich.openfx.network.intern.control.command.commands.SetLastNetworkIndexCommand;
+import de.thatsich.openfx.network.intern.control.prediction.cnbc.CollectiveNetworkBinaryClassifiers;
+import de.thatsich.openfx.network.intern.control.prediction.cnbc.nbc.NetworkBinaryClassifiers;
 import de.thatsich.openfx.preprocessing.intern.control.command.preprocessor.core.IPreProcessor;
 
 import java.util.List;
@@ -20,6 +23,10 @@ import java.util.List;
 public interface INetworkCommandProvider extends ICommandProvider
 {
 	CreateTrainedNetworkCommand createTrainNetworkCommand(List<IImage> images, List<IErrorGenerator> errorGenerators, List<IFeatureExtractor> featureExtractors, List<IPreProcessor> preProcessors, List<IBinaryClassifier> binaryClassifiers);
+
+	NetworkBinaryClassifiers createNetworkBinaryClassifiers(String errorClass, List<ITrainedBinaryClassifier> bcs);
+
+	CollectiveNetworkBinaryClassifiers createCollectiveNetworkBinaryClassifiers();
 
 	DeleteNetworkCommand createDeleteNetworkCommand(ITrainedNetwork selected);
 

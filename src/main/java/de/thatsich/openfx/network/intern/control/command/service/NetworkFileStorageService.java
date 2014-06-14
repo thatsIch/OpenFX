@@ -48,14 +48,17 @@ public class NetworkFileStorageService extends AFileStorageService<ITrainedNetwo
 	@Override
 	public List<ITrainedNetwork> init() throws IOException
 	{
+		this.log.info("Initiating networks.");
 		final List<ITrainedNetwork> networks = new LinkedList<>();
 
 		try (DirectoryStream<Path> stream = Files.newDirectoryStream(this.storagePath))
 		{
 			for (Path child : stream)
 			{
+				this.log.info("Found potential network in " + child.getFileName().toString());
 				final ITrainedNetwork network = this.retrieve(child);
 				networks.add(network);
+				this.log.info("Added network " + network + " to position " + networks.size());
 			}
 		}
 		catch (IOException | DirectoryIteratorException e)
