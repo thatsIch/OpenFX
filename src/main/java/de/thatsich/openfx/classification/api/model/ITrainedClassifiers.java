@@ -1,6 +1,6 @@
 package de.thatsich.openfx.classification.api.model;
 
-import de.thatsich.openfx.classification.api.control.entity.ITraindBinaryClassifier;
+import de.thatsich.openfx.classification.api.control.entity.ITrainedBinaryClassifier;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
 
@@ -13,19 +13,19 @@ import javafx.beans.property.ObjectProperty;
  *
  * @author thatsIch
  */
-public interface IBinaryClassifications
+public interface ITrainedClassifiers
 {
 	/**
 	 * PropertyGetter of Binary Classification List
 	 *
 	 * @return ListProperty of Binary Classifications
 	 */
-	public ListProperty<ITraindBinaryClassifier> list();
+	public ListProperty<ITrainedBinaryClassifier> list();
 
 	/**
 	 * PropertyGetter of selected Binary Classification
 	 *
 	 * @return Property of selected Binary Classification
 	 */
-	public ObjectProperty<ITraindBinaryClassifier> selected();
+	public ObjectProperty<ITrainedBinaryClassifier> selected();
 }

@@ -19,9 +19,6 @@ import de.thatsich.openfx.network.api.control.entity.INetworkSpace;
 import de.thatsich.openfx.network.api.control.entity.ITrainedNetwork;
 import de.thatsich.openfx.network.intern.control.prediction.cnbc.CollectiveNetworkBinaryClassifiers;
 import de.thatsich.openfx.network.intern.control.prediction.cnbc.ICNBC;
-import de.thatsich.openfx.preprocessing.api.control.entity.ITrainedPreProcessor;
-import de.thatsich.openfx.preprocessing.api.model.ITrainedPreProcessors;
-import de.thatsich.openfx.preprocessing.intern.control.command.commands.CreateTrainedPreProcessorCommand;
 import de.thatsich.openfx.preprocessing.intern.control.command.preprocessor.core.IPreProcessor;
 import de.thatsich.openfx.preprocessing.intern.control.command.provider.IPreProcessingCommandProvider;
 import de.thatsich.openfx.preprocessing.intern.control.command.service.TrainedPreProcessorFileStorageService;
@@ -49,7 +46,6 @@ public class NetworkSpace implements INetworkSpace
 
 	@Inject private IErrors errors;
 	@Inject private IFeatures features;
-	@Inject private ITrainedPreProcessors preProcessings;
 
 	@Inject private Log log;
 
@@ -59,25 +55,18 @@ public class NetworkSpace implements INetworkSpace
 		final long startTime = System.currentTimeMillis();
 		this.log.info("Started training at " + startTime);
 
-		final List<IError> errors = this.getErrors(trainingImages, errorGenerators, errorStorage);
-		final List<IFeature> features = this.getFeatures(errors, featureExtractors);
-		final List<ITrainedPreProcessor> trainedPreProcessors = this.getTrainedPreProcessors(features, preProcessors, preproStorage);
-		final List<IFeature> preprocessedFeatures = this.getPreProcessedFeatures(features, trainedPreProcessors);
+		final List<ErrorClass> errorClasses = this.getErrorClasses(trainingImages, errorGenerators, errorStorage);
+		final List<IFeature> features = this.getFeatures(errorClasses, featureExtractors);
+		final ICNBC cnbc = this.getCNBC(features, this.log);
 
-		final ICNBC cnbc = new CollectiveNetworkBinaryClassifiers(this.log);
-		for (IFeature preprocessedFeature : preprocessedFeatures)
-		{
-			cnbc.addFeature(preprocessedFeature);
-		}
-		this.log.info("Trained CNBC with " + preprocessedFeatures + ".");
 		final long stopTime = System.currentTimeMillis();
 
 		final String creationTime = format.format(new Date());
 		final String id = UUID.randomUUID().toString();
-		final NetworkConfig config = new NetworkConfig(creationTime, id);
 		final long trainTime = stopTime - startTime;
+		final NetworkConfig config = new NetworkConfig(creationTime, id, trainTime);
 
-		return new TrainedNetwork(config, featureExtractors, trainedPreProcessors, cnbc, trainTime);
+		return new TrainedNetwork(config, featureExtractors, cnbc);
 	}
 
 	/**
@@ -90,52 +79,52 @@ public class NetworkSpace implements INetworkSpace
 	 *
 	 * @throws Exception when errors cant be saved
 	 */
-	private List<IError> getErrors(List<IImage> images, List<IErrorGenerator> errorGenerators, ErrorFileStorageService storage) throws Exception
+	private List<ErrorClass> getErrorClasses(List<IImage> images, List<IErrorGenerator> errorGenerators, ErrorFileStorageService storage) throws Exception
 	{
 		final ThreadLocalRandom random = ThreadLocalRandom.current();
 		final int imageBound = images.size();
-		final int errorGenBound = errorGenerators.size();
 		this.log.info("Prepared error generation.");
 
-		final List<IError> errors = new LinkedList<>();
-		for (int index = 0; index < ERROR_ITERATION; index++)
+		final List<ErrorClass> errorClasses = new LinkedList<>();
+		for (IErrorGenerator errorGenerator : errorGenerators)
 		{
-			final int randomImageIndex = random.nextInt(imageBound);
-			final int randomErrorGenIndex = random.nextInt(errorGenBound);
+			final String errorClassName = errorGenerator.getName();
+			final List<IError> errors = new LinkedList<>();
+			for (int index = 0; index < ERROR_ITERATION; index++)
+			{
+				final int randomImageIndex = random.nextInt(imageBound);
+				final IImage randomImage = images.get(randomImageIndex);
 
-			final IImage randomImage = images.get(randomImageIndex);
-			final IErrorGenerator randomErrorGen = errorGenerators.get(randomErrorGenIndex);
+				final CreateErrorCommand create = this.errorProvider.createCreateErrorCommand(randomImage, errorGenerator, false, false, false);
+				final IError error = create.call();
+				this.log.info("Created error " + error);
 
-			final boolean randomSmooth = random.nextBoolean();
-			final boolean randomThreshold = random.nextBoolean();
-			final boolean randomDenoising = random.nextBoolean();
+				Platform.runLater(() -> this.errors.list().add(error));
 
-			final CreateErrorCommand create = this.errorProvider.createCreateErrorCommand(randomImage, randomErrorGen, randomSmooth, randomThreshold, randomDenoising);
-			final IError error = create.call();
-			this.log.info("Created error " + error);
+				errors.add(error);
+			}
 
-			Platform.runLater(() -> this.errors.list().add(error));
-
-			errors.add(error);
+			final ErrorClass errorClass = new ErrorClass(errorClassName, errors);
+			errorClasses.add(errorClass);
 		}
 
-		this.log.info("Generated errors " + errors);
+		this.log.info("Generated errors " + errorClasses);
 
-		return errors;
+		return errorClasses;
 	}
 
 	/**
-	 * Extracts features out of a given list of featureextractors and errors.
+	 * Extracts features out of a given list of featureextractors and errorClasses.
 	 * All possible permutations are being generated
 	 *
-	 * @param errors            given errors
+	 * @param errorClasses      given errorClasses
 	 * @param featureExtractors given feature extractors
 	 *
 	 * @return list of features
 	 *
 	 * @throws Exception when a feature cant be stored
 	 */
-	private List<IFeature> getFeatures(List<IError> errors, List<IFeatureExtractor> featureExtractors) throws Exception
+	private List<IFeature> getFeatures(List<ErrorClass> errorClasses, List<IFeatureExtractor> featureExtractors) throws Exception
 	{
 		final List<IFeature> features = new LinkedList<>();
 
@@ -143,76 +132,61 @@ public class NetworkSpace implements INetworkSpace
 		{
 			this.log.info("Feature Extractor " + featureExtractor.getName());
 
-			IFeature feature = null;
-			for (IError error : errors)
+			for (ErrorClass errorClass : errorClasses)
 			{
-				final CreateExtractedFeatureCommand create = this.featureProvider.createExtractFeatureCommand(error, featureExtractor, 15);
-				final IFeature subFeature = create.call();
-				this.log.info("Created subFeature " + subFeature + " through " + error.clazzProperty().get() + ", " + featureExtractor.getName());
+				final List<IError> errors = errorClass.errors;
+				IFeature feature = null;
+				for (IError error : errors)
+				{
+					final CreateExtractedFeatureCommand create = this.featureProvider.createExtractFeatureCommand(error, featureExtractor, 15);
+					final IFeature subFeature = create.call();
+					this.log.info("Created subFeature " + subFeature + " through " + error.clazzProperty().get() + ", " + featureExtractor.getName());
 
-				if (feature == null)
-				{
-					feature = subFeature;
-					this.log.info("Initated subFeature.");
+					if (feature == null)
+					{
+						feature = subFeature;
+						this.log.info("Initated subFeature.");
+					}
+					else
+					{
+						feature.merge(subFeature);
+						this.log.info("Merged features.");
+					}
 				}
-				else
-				{
-					feature.merge(subFeature);
-					this.log.info("Merged features.");
-				}
+				final IFeature finalFeature = feature;
+				Platform.runLater(() -> this.features.list().add(finalFeature));
+
+				features.add(feature);
+				this.log.info("Added feature " + feature);
 			}
-			final IFeature finalFeature = feature;
-			Platform.runLater(() -> this.features.list().add(finalFeature));
-
-			features.add(feature);
-			this.log.info("Added feature " + feature);
 		}
 
 		return features;
 	}
 
-	private List<ITrainedPreProcessor> getTrainedPreProcessors(List<IFeature> features, List<IPreProcessor> preProcessors, TrainedPreProcessorFileStorageService storage) throws Exception
+	private ICNBC getCNBC(List<IFeature> features, Log log) throws Exception
 	{
-		final List<ITrainedPreProcessor> trainedPreProcessors = new LinkedList<>();
+		final ICNBC cnbc = new CollectiveNetworkBinaryClassifiers(log);
 
-		for (IPreProcessor preProcessor : preProcessors)
+		for (IFeature preprocessedFeature : features)
 		{
-			for (IFeature feature : features)
-			{
-				final CreateTrainedPreProcessorCommand command = this.preProcessingProvider.createTrainPreProcessorCommand(preProcessor, feature);
-
-				ITrainedPreProcessor trained = null;
-				try
-				{
-					trained = command.call();
-				}
-				catch (Exception e)
-				{
-					e.printStackTrace();
-				}
-				trainedPreProcessors.add(trained);
-
-				final ITrainedPreProcessor finalTrained = trained;
-				Platform.runLater(() -> this.preProcessings.list().add(finalTrained));
-			}
+			cnbc.addFeature(preprocessedFeature);
 		}
+		this.log.info("Trained CNBC with " + features + ".");
 
-		return trainedPreProcessors;
+		return cnbc;
 	}
 
-	private List<IFeature> getPreProcessedFeatures(List<IFeature> features, List<ITrainedPreProcessor> trainedPreProcessors)
+	private class ErrorClass
 	{
-		final List<IFeature> preprocessedFeatures = new LinkedList<>();
+		public final String errorClassName;
+		public final List<IError> errors;
 
-		for (ITrainedPreProcessor trainedPreProcessor : trainedPreProcessors)
+		public ErrorClass(String errorClassName, List<IError> errors)
 		{
-			for (IFeature feature : features)
-			{
-				final IFeature preprocess = trainedPreProcessor.preprocess(feature);
-				preprocessedFeatures.add(preprocess);
-			}
-		}
 
-		return preprocessedFeatures;
+			this.errorClassName = errorClassName;
+			this.errors = errors;
+		}
 	}
 }

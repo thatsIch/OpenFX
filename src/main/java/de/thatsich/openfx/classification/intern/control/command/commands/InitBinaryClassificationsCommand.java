@@ -2,13 +2,13 @@ package de.thatsich.openfx.classification.intern.control.command.commands;
 
 import com.google.inject.Inject;
 import de.thatsich.core.javafx.ACommand;
-import de.thatsich.openfx.classification.api.control.entity.ITraindBinaryClassifier;
+import de.thatsich.openfx.classification.api.control.entity.ITrainedBinaryClassifier;
 import de.thatsich.openfx.classification.intern.control.command.service.ClassificationFileStorageService;
 
 import java.util.List;
 
 
-public class InitBinaryClassificationsCommand extends ACommand<List<ITraindBinaryClassifier>>
+public class InitBinaryClassificationsCommand extends ACommand<List<ITrainedBinaryClassifier>>
 {
 	private final ClassificationFileStorageService storage;
 
@@ -19,7 +19,7 @@ public class InitBinaryClassificationsCommand extends ACommand<List<ITraindBinar
 	}
 
 	@Override
-	protected List<ITraindBinaryClassifier> call() throws Exception
+	protected List<ITrainedBinaryClassifier> call() throws Exception
 	{
 		return this.storage.init();
 	}

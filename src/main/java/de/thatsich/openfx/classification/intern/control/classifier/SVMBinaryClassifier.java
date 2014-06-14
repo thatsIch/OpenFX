@@ -1,6 +1,6 @@
 package de.thatsich.openfx.classification.intern.control.classifier;
 
-import de.thatsich.openfx.classification.api.control.entity.ITraindBinaryClassifier;
+import de.thatsich.openfx.classification.api.control.entity.ITrainedBinaryClassifier;
 import de.thatsich.openfx.classification.intern.control.classification.SVMTraindBinaryClassifier;
 import de.thatsich.openfx.classification.intern.control.classifier.core.ABinaryClassifier;
 import de.thatsich.openfx.classification.intern.control.classifier.core.BinaryClassificationConfig;
@@ -13,7 +13,7 @@ import org.opencv.ml.CvSVM;
 public class SVMBinaryClassifier extends ABinaryClassifier
 {
 	@Override
-	public ITraindBinaryClassifier train(MatOfFloat positiveTrainData, MatOfFloat negativeTrainData, BinaryClassificationConfig config)
+	public ITrainedBinaryClassifier train(MatOfFloat positiveTrainData, MatOfFloat negativeTrainData, BinaryClassificationConfig config)
 	{
 		final CvSVM svm = new CvSVM();
 

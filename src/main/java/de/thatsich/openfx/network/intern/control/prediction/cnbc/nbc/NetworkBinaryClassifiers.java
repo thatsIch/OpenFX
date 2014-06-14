@@ -2,7 +2,8 @@ package de.thatsich.openfx.network.intern.control.prediction.cnbc.nbc;
 
 import com.google.inject.Inject;
 import de.thatsich.openfx.classification.api.control.entity.IBinaryClassifier;
-import de.thatsich.openfx.classification.api.control.entity.ITraindBinaryClassifier;
+import de.thatsich.openfx.classification.api.control.entity.ITrainedBinaryClassifier;
+import de.thatsich.openfx.classification.api.model.ITrainedClassifiers;
 import de.thatsich.openfx.classification.intern.control.command.commands.CreateTrainedBinaryClassifierCommand;
 import de.thatsich.openfx.classification.intern.control.command.service.ClassificationFileStorageService;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
@@ -20,20 +21,27 @@ import java.util.Set;
 public class NetworkBinaryClassifiers implements INBC
 {
 	private final Set<IBinaryClassifier> binaryClassifiers;
-	private final List<ITraindBinaryClassifier> trainedBinaryClassifier;
+	private final List<ITrainedBinaryClassifier> trainedBinaryClassifier;
 	private final Fuser fuser;
 	private final String uniqueErrorClassName;
 	private final List<IFeature> trainedFeatures;
 	@Inject private ClassificationFileStorageService storage;
+	@Inject private ITrainedClassifiers binaryClassifications;
 
-	public NetworkBinaryClassifiers(String uniqueErrorClassName)
+	public NetworkBinaryClassifiers(String uniqueErrorClassName, List<ITrainedBinaryClassifier> bcs)
 	{
 		this.uniqueErrorClassName = uniqueErrorClassName;
 		this.binaryClassifiers = new HashSet<>();
 		this.trainedFeatures = new LinkedList<>();
-		this.trainedBinaryClassifier = new LinkedList<>();
+		this.trainedBinaryClassifier = bcs;
 
 		this.fuser = new Fuser();
+	}
+
+	@Override
+	public List<ITrainedBinaryClassifier> getTrainedBinaryClassifier()
+	{
+		return this.trainedBinaryClassifier;
 	}
 
 	/**
@@ -54,8 +62,10 @@ public class NetworkBinaryClassifiers implements INBC
 		for (IFeature trainedFeature : this.trainedFeatures)
 		{
 			final CreateTrainedBinaryClassifierCommand command = new CreateTrainedBinaryClassifierCommand(bc, trainedFeature, this.storage);
-			final ITraindBinaryClassifier trained = command.call();
+			final ITrainedBinaryClassifier trained = command.call();
 			this.trainedBinaryClassifier.add(trained);
+
+			this.binaryClassifications.list().add(trained);
 		}
 	}
 
@@ -67,7 +77,7 @@ public class NetworkBinaryClassifiers implements INBC
 		for (IBinaryClassifier binaryClassifier : this.binaryClassifiers)
 		{
 			final CreateTrainedBinaryClassifierCommand command = new CreateTrainedBinaryClassifierCommand(binaryClassifier, feature, this.storage);
-			final ITraindBinaryClassifier trained = command.call();
+			final ITrainedBinaryClassifier trained = command.call();
 			this.trainedBinaryClassifier.add(trained);
 		}
 	}
@@ -76,7 +86,7 @@ public class NetworkBinaryClassifiers implements INBC
 	public double predict(IFeatureVector fv)
 	{
 		final List<Double> values = new LinkedList<>();
-		for (ITraindBinaryClassifier trained : this.trainedBinaryClassifier)
+		for (ITrainedBinaryClassifier trained : this.trainedBinaryClassifier)
 		{
 			final double prediction = trained.predict(fv);
 			values.add(prediction);

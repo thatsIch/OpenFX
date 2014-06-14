@@ -3,9 +3,9 @@ package de.thatsich.openfx.prediction.intern.control;
 import com.google.inject.Inject;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.opencv.Images;
+import de.thatsich.openfx.prediction.api.control.entity.IBinaryPrediction;
 import de.thatsich.openfx.prediction.api.model.IBinaryPredictions;
 import de.thatsich.openfx.prediction.intern.control.command.PredictionInitCommander;
-import de.thatsich.openfx.prediction.intern.control.entity.BinaryPrediction;
 import de.thatsich.openfx.prediction.intern.control.evaluation.PrecisionRecall;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -93,7 +93,7 @@ public class PredictionDisplayPresenter extends AFXMLPresenter
 		});
 	}
 
-	private Image predictionToImage(BinaryPrediction prediction)
+	private Image predictionToImage(IBinaryPrediction prediction)
 	{
 		final Mat originalMat = prediction.modified().get().clone();
 		final Mat onlyErrorMat = prediction.errorIndication().get();

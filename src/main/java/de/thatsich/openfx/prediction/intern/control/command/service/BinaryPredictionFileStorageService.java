@@ -2,6 +2,7 @@ package de.thatsich.openfx.prediction.intern.control.command.service;
 
 import com.google.inject.Inject;
 import de.thatsich.core.AFileStorageService;
+import de.thatsich.openfx.prediction.api.control.entity.IBinaryPrediction;
 import de.thatsich.openfx.prediction.api.model.IPredictionState;
 import de.thatsich.openfx.prediction.intern.control.entity.BinaryPrediction;
 import org.opencv.core.Core;
@@ -19,7 +20,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.StringJoiner;
 
-public class BinaryPredictionFileStorageService extends AFileStorageService<BinaryPrediction>
+public class BinaryPredictionFileStorageService extends AFileStorageService<IBinaryPrediction>
 {
 	@Inject
 	protected BinaryPredictionFileStorageService(IPredictionState state)
@@ -28,9 +29,9 @@ public class BinaryPredictionFileStorageService extends AFileStorageService<Bina
 	}
 
 	@Override
-	public List<BinaryPrediction> init() throws IOException
+	public List<IBinaryPrediction> init() throws IOException
 	{
-		final List<BinaryPrediction> binaryPredictions = new LinkedList<>();
+		final List<IBinaryPrediction> binaryPredictions = new LinkedList<>();
 
 		final String GLOB_PATTERN = "*.{png}";
 
@@ -55,7 +56,7 @@ public class BinaryPredictionFileStorageService extends AFileStorageService<Bina
 	}
 
 	@Override
-	public BinaryPrediction create(BinaryPrediction prediction)
+	public IBinaryPrediction create(IBinaryPrediction prediction)
 	{
 		// Preprare each information
 		final StringJoiner joiner = new StringJoiner("_");
@@ -110,13 +111,13 @@ public class BinaryPredictionFileStorageService extends AFileStorageService<Bina
 	}
 
 	@Override
-	public BinaryPrediction update(final BinaryPrediction elem) throws IOException
+	public IBinaryPrediction update(final IBinaryPrediction elem) throws IOException
 	{
 		return elem;
 	}
 
 	@Override
-	public void delete(final BinaryPrediction prediction) throws IOException
+	public void delete(final IBinaryPrediction prediction) throws IOException
 	{
 		final StringJoiner joiner = new StringJoiner("_");
 		joiner.add(prediction.classifierName().get());

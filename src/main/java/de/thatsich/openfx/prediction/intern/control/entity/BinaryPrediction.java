@@ -1,5 +1,6 @@
 package de.thatsich.openfx.prediction.intern.control.entity;
 
+import de.thatsich.openfx.prediction.api.control.entity.IBinaryPrediction;
 import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.beans.property.ReadOnlyIntegerWrapper;
 import javafx.beans.property.ReadOnlyObjectProperty;
@@ -9,7 +10,7 @@ import javafx.beans.property.ReadOnlyStringWrapper;
 import org.opencv.core.Mat;
 
 
-public class BinaryPrediction
+public class BinaryPrediction implements IBinaryPrediction
 {
 	// Properties
 	private final ReadOnlyObjectWrapper<Mat> withError = new ReadOnlyObjectWrapper<>();
@@ -86,61 +87,73 @@ public class BinaryPrediction
 	}
 
 	// Property Getters
+	@Override
 	public ReadOnlyObjectProperty<Mat> modified()
 	{
 		return this.withError.getReadOnlyProperty();
 	}
 
+	@Override
 	public ReadOnlyObjectProperty<Mat> errorIndication()
 	{
 		return this.errorIndication.getReadOnlyProperty();
 	}
 
+	@Override
 	public ReadOnlyObjectProperty<Mat> errorPrediction()
 	{
 		return this.errorPrediction.getReadOnlyProperty();
 	}
 
+	@Override
 	public ReadOnlyStringProperty classifierName()
 	{
 		return this.classifierName.getReadOnlyProperty();
 	}
 
+	@Override
 	public ReadOnlyStringProperty extractorName()
 	{
 		return this.extractorName.getReadOnlyProperty();
 	}
 
+	@Override
 	public ReadOnlyIntegerProperty frameSize()
 	{
 		return this.frameSize.getReadOnlyProperty();
 	}
 
+	@Override
 	public ReadOnlyStringProperty errorClassName()
 	{
 		return this.errorClassName.getReadOnlyProperty();
 	}
 
+	@Override
 	public ReadOnlyStringProperty id()
 	{
 		return this.id.getReadOnlyProperty();
 	}
 
+	@Override
 	public ReadOnlyIntegerProperty truePositive()
 	{
 		return this.truePositive.getReadOnlyProperty();
 	}
 
+	@Override
 	public ReadOnlyIntegerProperty trueNegative()
 	{
 		return this.trueNegative.getReadOnlyProperty();
 	}
 
+	@Override
 	public ReadOnlyIntegerProperty falsePositive()
 	{
 		return this.falsePositive.getReadOnlyProperty();
 	}
 
+	@Override
 	public ReadOnlyIntegerProperty falseNegative()
 	{
 		return this.falseNegative.getReadOnlyProperty();

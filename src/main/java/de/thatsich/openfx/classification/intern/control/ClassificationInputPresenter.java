@@ -4,10 +4,10 @@ import com.google.inject.Inject;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.javafx.CommandExecutor;
 import de.thatsich.openfx.classification.api.control.entity.IBinaryClassifier;
-import de.thatsich.openfx.classification.api.control.entity.ITraindBinaryClassifier;
-import de.thatsich.openfx.classification.api.model.IBinaryClassifications;
+import de.thatsich.openfx.classification.api.control.entity.ITrainedBinaryClassifier;
 import de.thatsich.openfx.classification.api.model.IBinaryClassifiers;
 import de.thatsich.openfx.classification.api.model.IClassificationState;
+import de.thatsich.openfx.classification.api.model.ITrainedClassifiers;
 import de.thatsich.openfx.classification.intern.control.command.ClassificationInitCommander;
 import de.thatsich.openfx.classification.intern.control.command.commands.CreateTrainedBinaryClassifierCommand;
 import de.thatsich.openfx.classification.intern.control.command.commands.DeleteBinaryClassificationCommand;
@@ -33,7 +33,7 @@ public class ClassificationInputPresenter extends AFXMLPresenter
 	@Inject private ClassificationInitCommander initCommander;
 	@Inject private IClassificationCommandProvider commander;
 	@Inject private IBinaryClassifiers binaryClassifiers;
-	@Inject private IBinaryClassifications binaryClassifications;
+	@Inject private ITrainedClassifiers binaryClassifications;
 	@Inject private IClassificationState trainState;
 	@Inject private IFeatures features;
 
@@ -116,7 +116,7 @@ public class ClassificationInputPresenter extends AFXMLPresenter
 	@FXML
 	private void onRemoveBinaryClassifierAction()
 	{
-		final ITraindBinaryClassifier selectedBinaryClassification = this.binaryClassifications.selected().get();
+		final ITrainedBinaryClassifier selectedBinaryClassification = this.binaryClassifications.selected().get();
 
 		final DeleteBinaryClassificationCommand command = this.commander.createRemoveBinaryClassificationCommand(selectedBinaryClassification);
 		command.setOnSucceededCommandHandler(RemoveBinaryClassificationSucceededHandler.class);
@@ -127,11 +127,11 @@ public class ClassificationInputPresenter extends AFXMLPresenter
 	@FXML
 	private void onResetBinaryClassifierListAction()
 	{
-		final List<ITraindBinaryClassifier> binaryClassificationList = this.binaryClassifications.list();
+		final List<ITrainedBinaryClassifier> binaryClassificationList = this.binaryClassifications.list();
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(binaryClassificationList.size());
 		this.log.info("Initialized Executor for resetting all Errors.");
 
-		for (ITraindBinaryClassifier classification : binaryClassificationList)
+		for (ITrainedBinaryClassifier classification : binaryClassificationList)
 		{
 			final DeleteBinaryClassificationCommand command = this.commander.createRemoveBinaryClassificationCommand(classification);
 			command.setOnSucceededCommandHandler(RemoveBinaryClassificationSucceededHandler.class);

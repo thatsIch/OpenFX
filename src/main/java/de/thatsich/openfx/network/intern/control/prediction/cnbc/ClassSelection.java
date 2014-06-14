@@ -2,11 +2,11 @@ package de.thatsich.openfx.network.intern.control.prediction.cnbc;
 
 import javafx.util.Pair;
 
-import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
 /**
+ * Class Selection with Winner takes it all
+ *
  * @author thatsIch
  * @since 02.06.2014.
  */
@@ -14,56 +14,25 @@ public class ClassSelection
 {
 	public String predict(List<Pair<String, Double>> values)
 	{
-		final double sum = this.getSum(values);
-		final List<Pair<String, Double>> normalized = this.normalize(values, sum);
-		final List<Pair<String, Double>> sorted = this.sort(normalized);
-		final String random = this.getRandomElement(sorted);
+		final List<Pair<String, Double>> sorted = this.sort(values);
+		final String random = this.getWinnerElement(sorted);
 
 		return random;
 
 	}
 
-	private double getSum(List<Pair<String, Double>> values)
+	private List<Pair<String, Double>> sort(List<Pair<String, Double>> toBeSorted)
 	{
-		double sum = 0;
-		for (Pair<String, Double> value : values)
-		{
-			sum += value.getValue();
-		}
+		toBeSorted.sort((p1, p2) -> p1.getValue().compareTo(p2.getValue()));
 
-		return sum;
+		return toBeSorted;
 	}
 
-	private List<Pair<String, Double>> normalize(List<Pair<String, Double>> values, double sum)
+	private String getWinnerElement(List<Pair<String, Double>> sorted)
 	{
-		final List<Pair<String, Double>> normalized = new LinkedList<>();
+		final int lastItemIndex = sorted.size();
+		final Pair<String, Double> winner = sorted.get(lastItemIndex);
 
-		for (Pair<String, Double> pair : values)
-		{
-			final double modified = pair.getValue() / sum;
-			final String key = pair.getKey();
-			final Pair<String, Double> newPair = new Pair<>(key, modified);
-
-			normalized.add(newPair);
-		}
-
-		return normalized;
-	}
-
-	private List<Pair<String, Double>> sort(List<Pair<String, Double>> normalized)
-	{
-		normalized.sort((p1, p2) -> p1.getValue().compareTo(p2.getValue()));
-
-		return normalized;
-	}
-
-	private String getRandomElement(List<Pair<String, Double>> sorted)
-	{
-		final ThreadLocalRandom random = ThreadLocalRandom.current();
-		final double gaussian = random.nextGaussian() * sorted.size();
-		final long rounded = Math.round(gaussian);
-		final int index = (int) rounded;
-
-		return sorted.get(index).getKey();
+		return winner.getKey();
 	}
 }

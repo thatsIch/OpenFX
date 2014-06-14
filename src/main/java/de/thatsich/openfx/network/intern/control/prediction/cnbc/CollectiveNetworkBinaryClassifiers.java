@@ -2,7 +2,6 @@ package de.thatsich.openfx.network.intern.control.prediction.cnbc;
 
 import com.google.inject.Inject;
 import de.thatsich.core.Log;
-import de.thatsich.openfx.classification.api.control.entity.IBinaryClassifier;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureVector;
 import de.thatsich.openfx.network.intern.control.prediction.cnbc.nbc.INBC;
@@ -23,7 +22,6 @@ public class CollectiveNetworkBinaryClassifiers implements ICNBC
 	private final Log log;
 	private final List<INBC> nbcs;
 	private final Set<String> uniqueErrorClasses;
-	private List<IBinaryClassifier> binaryClassifiers;
 
 	@Inject
 	public CollectiveNetworkBinaryClassifiers(Log log)
@@ -33,18 +31,17 @@ public class CollectiveNetworkBinaryClassifiers implements ICNBC
 		this.uniqueErrorClasses = new HashSet<>();
 	}
 
-	public void addBinaryClassifier(IBinaryClassifier binaryClassifier)
+	public CollectiveNetworkBinaryClassifiers(List<INBC> nbcs, Set<String> uniqueErrorClasses, Log log)
 	{
-		this.nbcs.forEach(nbc -> {
-			try
-			{
-				nbc.addBinaryClassifier(binaryClassifier);
-			}
-			catch (Exception e)
-			{
-				e.printStackTrace();
-			}
-		});
+		this.log = log;
+		this.nbcs = nbcs;
+		this.uniqueErrorClasses = uniqueErrorClasses;
+	}
+
+	@Override
+	public List<INBC> getNbcs()
+	{
+		return this.nbcs;
 	}
 
 	@Override
@@ -55,8 +52,9 @@ public class CollectiveNetworkBinaryClassifiers implements ICNBC
 		{
 			this.uniqueErrorClasses.add(potUniqueErrorClass);
 
-			final INBC nbc = new NetworkBinaryClassifiers(potUniqueErrorClass);
+			final INBC nbc = new NetworkBinaryClassifiers(potUniqueErrorClass, new LinkedList<>());
 			this.nbcs.add(nbc);
+			this.log.info("Created new NBC for unique errorclass " + potUniqueErrorClass);
 		}
 
 		for (INBC nbc : this.nbcs)
@@ -77,6 +75,7 @@ public class CollectiveNetworkBinaryClassifiers implements ICNBC
 			final Pair<String, Double> pair = new Pair<>(name, predict);
 
 			pairs.add(pair);
+			this.log.info("Predicted " + pair);
 		}
 
 		return pairs;

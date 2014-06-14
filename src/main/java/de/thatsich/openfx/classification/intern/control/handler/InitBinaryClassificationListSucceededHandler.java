@@ -2,8 +2,8 @@ package de.thatsich.openfx.classification.intern.control.handler;
 
 import com.google.inject.Inject;
 import de.thatsich.core.javafx.ACommandHandler;
-import de.thatsich.openfx.classification.api.control.entity.ITraindBinaryClassifier;
-import de.thatsich.openfx.classification.api.model.IBinaryClassifications;
+import de.thatsich.openfx.classification.api.control.entity.ITrainedBinaryClassifier;
+import de.thatsich.openfx.classification.api.model.ITrainedClassifiers;
 
 import java.util.List;
 
@@ -13,14 +13,14 @@ import java.util.List;
  *
  * @author Minh
  */
-public class InitBinaryClassificationListSucceededHandler extends ACommandHandler<List<ITraindBinaryClassifier>>
+public class InitBinaryClassificationListSucceededHandler extends ACommandHandler<List<ITrainedBinaryClassifier>>
 {
 
 	@Inject
-	private IBinaryClassifications binaryClassifications;
+	private ITrainedClassifiers binaryClassifications;
 
 	@Override
-	public void handle(List<ITraindBinaryClassifier> trainedBinaryClassifierList)
+	public void handle(List<ITrainedBinaryClassifier> trainedBinaryClassifierList)
 	{
 		this.binaryClassifications.list().addAll(trainedBinaryClassifierList);
 		this.log.info("Added TrainedBinaryClassifierList to Database.");

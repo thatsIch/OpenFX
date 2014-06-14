@@ -8,7 +8,8 @@ import de.thatsich.openfx.featureextraction.intern.control.command.commands.Crea
 import de.thatsich.openfx.network.api.control.entity.ITrainedNetwork;
 import de.thatsich.openfx.network.intern.control.prediction.cnbc.ClassSelection;
 import de.thatsich.openfx.network.intern.control.prediction.cnbc.ICNBC;
-import de.thatsich.openfx.preprocessing.api.control.entity.ITrainedPreProcessor;
+import javafx.beans.property.ReadOnlyLongProperty;
+import javafx.beans.property.ReadOnlyStringProperty;
 import javafx.util.Pair;
 
 import java.util.LinkedList;
@@ -22,38 +23,51 @@ public class TrainedNetwork implements ITrainedNetwork
 {
 	private final NetworkConfig config;
 	private final List<IFeatureExtractor> featureExtractors;
-	private final List<ITrainedPreProcessor> trainedPreProcessors;
 	private final ICNBC cnbc;
 	private final ClassSelection cs;
-	private final long trainTime;
 
-	public TrainedNetwork(NetworkConfig config, List<IFeatureExtractor> featureExtractors, List<ITrainedPreProcessor> trainedPreProcessors, ICNBC cnbc, long trainTime)
+	public TrainedNetwork(NetworkConfig config, List<IFeatureExtractor> featureExtractors, ICNBC cnbc)
 	{
 		this.config = config;
 		this.featureExtractors = featureExtractors;
-		this.trainedPreProcessors = trainedPreProcessors;
 		this.cnbc = cnbc;
 		this.cs = new ClassSelection();
-
-		this.trainTime = trainTime;
 	}
 
 	@Override
-	public long getTrainTime()
+	public ICNBC getCnbc()
 	{
-		return this.trainTime;
+		return this.cnbc;
 	}
 
 	@Override
 	public String predict(IError error) throws Exception
 	{
 		final List<IFeature> features = this.getFeatures(error, this.featureExtractors);
-		final List<IFeature> preProcessedFeatures = this.getPreProcessedFeatures(features, this.trainedPreProcessors);
-		final List<IFeatureVector> preProcessedFeatureVectors = this.getPreProcessedFeatureVectors(preProcessedFeatures);
-		final List<Pair<String, Double>> predictions = this.getPredictions(preProcessedFeatureVectors, this.cnbc);
+		final List<IFeatureVector> featureVectors = this.getFeatureVectors(features);
+		final List<Pair<String, Double>> predictions = this.getPredictions(featureVectors, this.cnbc);
 
 		return this.cs.predict(predictions);
 	}
+
+	@Override
+	public ReadOnlyStringProperty date()
+	{
+		return this.config.date;
+	}
+
+	@Override
+	public ReadOnlyStringProperty id()
+	{
+		return this.config.id;
+	}
+
+	@Override
+	public ReadOnlyLongProperty trainTime()
+	{
+		return this.config.trainTime;
+	}
+
 
 	@Override
 	public NetworkConfig getConfig()
@@ -74,23 +88,7 @@ public class TrainedNetwork implements ITrainedNetwork
 		return features;
 	}
 
-	private List<IFeature> getPreProcessedFeatures(List<IFeature> features, List<ITrainedPreProcessor> trainedPreProcessors)
-	{
-		final List<IFeature> preprocessedFeatures = new LinkedList<>();
-
-		for (ITrainedPreProcessor trainedPreProcessor : trainedPreProcessors)
-		{
-			for (IFeature feature : features)
-			{
-				final IFeature preprocess = trainedPreProcessor.preprocess(feature);
-				preprocessedFeatures.add(preprocess);
-			}
-		}
-
-		return preprocessedFeatures;
-	}
-
-	private List<IFeatureVector> getPreProcessedFeatureVectors(List<IFeature> preProcessedFeatures)
+	private List<IFeatureVector> getFeatureVectors(List<IFeature> preProcessedFeatures)
 	{
 		final List<IFeatureVector> preprocessedFeatureVectors = new LinkedList<>();
 

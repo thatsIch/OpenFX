@@ -2,12 +2,12 @@ package de.thatsich.openfx.prediction.intern.control.command.commands;
 
 import com.google.inject.Inject;
 import de.thatsich.core.javafx.ACommand;
+import de.thatsich.openfx.prediction.api.control.entity.IBinaryPrediction;
 import de.thatsich.openfx.prediction.intern.control.command.service.BinaryPredictionFileStorageService;
-import de.thatsich.openfx.prediction.intern.control.entity.BinaryPrediction;
 
 import java.util.List;
 
-public class InitBinaryPredictionsCommand extends ACommand<List<BinaryPrediction>>
+public class InitBinaryPredictionsCommand extends ACommand<List<IBinaryPrediction>>
 {
 	private final BinaryPredictionFileStorageService storage;
 
@@ -18,7 +18,7 @@ public class InitBinaryPredictionsCommand extends ACommand<List<BinaryPrediction
 	}
 
 	@Override
-	protected List<BinaryPrediction> call() throws Exception
+	protected List<IBinaryPrediction> call() throws Exception
 	{
 		return this.storage.init();
 	}

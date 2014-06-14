@@ -2,13 +2,11 @@ package de.thatsich.openfx.prediction.intern.control;
 
 import com.google.inject.Inject;
 import de.thatsich.core.javafx.AFXMLPresenter;
+import de.thatsich.openfx.prediction.api.control.entity.IBinaryPrediction;
 import de.thatsich.openfx.prediction.api.model.IBinaryPredictions;
 import de.thatsich.openfx.prediction.intern.control.command.PredictionInitCommander;
 import de.thatsich.openfx.prediction.intern.control.command.commands.SetLastBinaryPredictionIndexCommand;
-import de.thatsich.openfx.prediction.intern.control.entity.BinaryPrediction;
 import de.thatsich.openfx.prediction.intern.control.provider.IPredictionCommandProvider;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -17,14 +15,14 @@ import javafx.scene.control.cell.PropertyValueFactory;
 public class PredictionListPresenter extends AFXMLPresenter
 {
 
-	@Inject PredictionInitCommander initCommander;
+	@Inject private PredictionInitCommander initCommander;
 	// Nodes
-	@FXML TableView<BinaryPrediction> nodeTableViewBinaryPredictionList;
-	@FXML TableColumn<BinaryPrediction, String> nodeTableColumnClassifierName;
-	@FXML TableColumn<BinaryPrediction, String> nodeTableColumnExtractorName;
-	@FXML TableColumn<BinaryPrediction, Integer> nodeTableColumnFrameSize;
-	@FXML TableColumn<BinaryPrediction, String> nodeTableColumnErrorClassName;
-	@FXML TableColumn<BinaryPrediction, String> nodeTableColumnID;
+	@FXML private TableView<IBinaryPrediction> nodeTableViewBinaryPredictionList;
+	@FXML private TableColumn<IBinaryPrediction, String> nodeTableColumnClassifierName;
+	@FXML private TableColumn<IBinaryPrediction, String> nodeTableColumnExtractorName;
+	@FXML private TableColumn<IBinaryPrediction, Integer> nodeTableColumnFrameSize;
+	@FXML private TableColumn<IBinaryPrediction, String> nodeTableColumnErrorClassName;
+	@FXML private TableColumn<IBinaryPrediction, String> nodeTableColumnID;
 	// Injects
 	@Inject
 	private IBinaryPredictions binaryPredictions;
@@ -58,42 +56,26 @@ public class PredictionListPresenter extends AFXMLPresenter
 
 	private void bindTableViewSelection()
 	{
-		this.nodeTableViewBinaryPredictionList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<BinaryPrediction>()
-		{
-			@Override
-			public void changed(ObservableValue<? extends BinaryPrediction> paramObservableValue, BinaryPrediction oldvalue, BinaryPrediction newValue)
-			{
-				binaryPredictions.selected().set(newValue);
-				log.info("Set Selected BinaryPrediction in Model.");
+		this.nodeTableViewBinaryPredictionList.getSelectionModel().selectedItemProperty().addListener((paramObservableValue, oldvalue, newValue) -> {
+			this.binaryPredictions.selected().set(newValue);
+			this.log.info("Set Selected BinaryPrediction in Model.");
 
-				final int index = nodeTableViewBinaryPredictionList.getSelectionModel().getSelectedIndex();
-				final SetLastBinaryPredictionIndexCommand command = provider.createSetLastBinaryPredictionIndexCommand(index);
-				command.start();
-			}
+			final int index = this.nodeTableViewBinaryPredictionList.getSelectionModel().getSelectedIndex();
+			final SetLastBinaryPredictionIndexCommand command = this.provider.createSetLastBinaryPredictionIndexCommand(index);
+			command.start();
 		});
 		this.log.info("Bound Selection to Model.");
 
-		this.binaryPredictions.selected().addListener(new ChangeListener<BinaryPrediction>()
-		{
-
-			@Override
-			public void changed(ObservableValue<? extends BinaryPrediction> observable, BinaryPrediction oldValue, BinaryPrediction newValue)
-			{
-
-				nodeTableViewBinaryPredictionList.getSelectionModel().select(newValue);
-
-			}
-
-		});
+		this.binaryPredictions.selected().addListener((observable, oldValue, newValue) -> this.nodeTableViewBinaryPredictionList.getSelectionModel().select(newValue));
 		this.log.info("Bound Model to Selection.");
 	}
 
 	private void bindTableViewCellValue()
 	{
-		this.nodeTableColumnClassifierName.setCellValueFactory(new PropertyValueFactory<BinaryPrediction, String>("getClassifierName"));
-		this.nodeTableColumnExtractorName.setCellValueFactory(new PropertyValueFactory<BinaryPrediction, String>("extractorName"));
-		this.nodeTableColumnFrameSize.setCellValueFactory(new PropertyValueFactory<BinaryPrediction, Integer>("tileSize"));
-		this.nodeTableColumnErrorClassName.setCellValueFactory(new PropertyValueFactory<BinaryPrediction, String>("getErrorClassName"));
-		this.nodeTableColumnID.setCellValueFactory(new PropertyValueFactory<BinaryPrediction, String>("getID"));
+		this.nodeTableColumnClassifierName.setCellValueFactory(new PropertyValueFactory<>("getClassifierName"));
+		this.nodeTableColumnExtractorName.setCellValueFactory(new PropertyValueFactory<>("extractorName"));
+		this.nodeTableColumnFrameSize.setCellValueFactory(new PropertyValueFactory<>("tileSize"));
+		this.nodeTableColumnErrorClassName.setCellValueFactory(new PropertyValueFactory<>("getErrorClassName"));
+		this.nodeTableColumnID.setCellValueFactory(new PropertyValueFactory<>("getID"));
 	}
 }

@@ -2,7 +2,7 @@ package de.thatsich.openfx.classification.intern.control;
 
 import com.google.inject.Inject;
 import de.thatsich.core.javafx.AFXMLPresenter;
-import de.thatsich.openfx.classification.api.model.IBinaryClassifications;
+import de.thatsich.openfx.classification.api.model.ITrainedClassifiers;
 import de.thatsich.openfx.classification.intern.control.command.ClassificationInitCommander;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -12,7 +12,7 @@ public class ClassificationDisplayPresenter extends AFXMLPresenter
 {
 	// Injects
 	@Inject private ClassificationInitCommander initCommander;
-	@Inject private IBinaryClassifications binaryClassifications;
+	@Inject private ITrainedClassifiers binaryClassifications;
 
 	// Nodes
 	@FXML private Label nodeLabelClassificationName;

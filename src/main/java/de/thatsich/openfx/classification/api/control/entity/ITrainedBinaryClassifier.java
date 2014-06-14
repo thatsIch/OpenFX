@@ -17,7 +17,7 @@ import javafx.beans.property.ReadOnlyStringProperty;
  *
  * @author thatsIch
  */
-public interface ITraindBinaryClassifier extends IEntity
+public interface ITrainedBinaryClassifier extends IEntity
 {
 	/**
 	 * Gets the name of the BinaryClassification

@@ -2,8 +2,8 @@ package de.thatsich.openfx.classification.intern.control;
 
 import com.google.inject.Inject;
 import de.thatsich.core.javafx.AFXMLPresenter;
-import de.thatsich.openfx.classification.api.control.entity.ITraindBinaryClassifier;
-import de.thatsich.openfx.classification.api.model.IBinaryClassifications;
+import de.thatsich.openfx.classification.api.control.entity.ITrainedBinaryClassifier;
+import de.thatsich.openfx.classification.api.model.ITrainedClassifiers;
 import de.thatsich.openfx.classification.intern.control.command.ClassificationInitCommander;
 import de.thatsich.openfx.classification.intern.control.command.commands.SetLastBinaryClassificationIndexCommand;
 import de.thatsich.openfx.classification.intern.control.provider.IClassificationCommandProvider;
@@ -24,15 +24,15 @@ public class ClassificationListPresenter extends AFXMLPresenter
 	// Injects
 	@Inject private ClassificationInitCommander init;
 	@Inject private IClassificationCommandProvider provider;
-	@Inject private IBinaryClassifications binaryClassifications;
+	@Inject private ITrainedClassifiers binaryClassifications;
 
 	// Nodes
-	@FXML private TableView<ITraindBinaryClassifier> nodeTableViewBinaryClassificationList;
-	@FXML private TableColumn<ITraindBinaryClassifier, String> nodeTableColumnClassifierName;
-	@FXML private TableColumn<ITraindBinaryClassifier, String> nodeTableColumnExtractorName;
-	@FXML private TableColumn<ITraindBinaryClassifier, Integer> nodeTableColumnFrameSize;
-	@FXML private TableColumn<ITraindBinaryClassifier, String> nodeTableErrorName;
-	@FXML private TableColumn<ITraindBinaryClassifier, String> nodeTableColumnID;
+	@FXML private TableView<ITrainedBinaryClassifier> nodeTableViewBinaryClassificationList;
+	@FXML private TableColumn<ITrainedBinaryClassifier, String> nodeTableColumnClassifierName;
+	@FXML private TableColumn<ITrainedBinaryClassifier, String> nodeTableColumnExtractorName;
+	@FXML private TableColumn<ITrainedBinaryClassifier, Integer> nodeTableColumnFrameSize;
+	@FXML private TableColumn<ITrainedBinaryClassifier, String> nodeTableErrorName;
+	@FXML private TableColumn<ITrainedBinaryClassifier, String> nodeTableColumnID;
 
 	@Override
 	protected void bindComponents()

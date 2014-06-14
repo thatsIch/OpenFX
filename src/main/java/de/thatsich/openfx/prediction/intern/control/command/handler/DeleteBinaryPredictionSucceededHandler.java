@@ -2,8 +2,8 @@ package de.thatsich.openfx.prediction.intern.control.command.handler;
 
 import com.google.inject.Inject;
 import de.thatsich.core.javafx.ACommandHandler;
+import de.thatsich.openfx.prediction.api.control.entity.IBinaryPrediction;
 import de.thatsich.openfx.prediction.api.model.IBinaryPredictions;
-import de.thatsich.openfx.prediction.intern.control.entity.BinaryPrediction;
 
 import java.util.List;
 
@@ -13,22 +13,22 @@ import java.util.List;
  *
  * @author Minh
  */
-public class DeleteBinaryPredictionSucceededHandler extends ACommandHandler<BinaryPrediction>
+public class DeleteBinaryPredictionSucceededHandler extends ACommandHandler<IBinaryPrediction>
 {
 
 	@Inject
 	private IBinaryPredictions binaryPredictions;
 
 	@Override
-	public void handle(BinaryPrediction value)
+	public void handle(IBinaryPrediction value)
 	{
-		final List<BinaryPrediction> binaryPredictionList = this.binaryPredictions.list();
+		final List<IBinaryPrediction> binaryPredictionList = this.binaryPredictions.list();
 		binaryPredictionList.remove(value);
 		this.log.info("Removed BinaryPrediction from List.");
 
 		if (binaryPredictionList.size() > 0)
 		{
-			final BinaryPrediction first = binaryPredictionList.get(0);
+			final IBinaryPrediction first = binaryPredictionList.get(0);
 			this.binaryPredictions.selected().set(first);
 			this.log.info("Reset to first BinaryPrediction.");
 		}

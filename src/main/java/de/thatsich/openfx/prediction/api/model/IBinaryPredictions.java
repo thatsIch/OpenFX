@@ -1,13 +1,13 @@
 package de.thatsich.openfx.prediction.api.model;
 
-import de.thatsich.openfx.prediction.intern.control.entity.BinaryPrediction;
+import de.thatsich.openfx.prediction.api.control.entity.IBinaryPrediction;
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
 
 public interface IBinaryPredictions
 {
 	// Property Getter
-	public ListProperty<BinaryPrediction> list();
+	public ListProperty<IBinaryPrediction> list();
 
-	public ObjectProperty<BinaryPrediction> selected();
+	public ObjectProperty<IBinaryPrediction> selected();
 }

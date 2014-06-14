@@ -2,8 +2,8 @@ package de.thatsich.openfx.classification.intern.control.handler;
 
 import com.google.inject.Inject;
 import de.thatsich.core.javafx.ACommandHandler;
-import de.thatsich.openfx.classification.api.control.entity.ITraindBinaryClassifier;
-import de.thatsich.openfx.classification.api.model.IBinaryClassifications;
+import de.thatsich.openfx.classification.api.control.entity.ITrainedBinaryClassifier;
+import de.thatsich.openfx.classification.api.model.ITrainedClassifiers;
 
 /**
  * Handler for what should happen if the Command was successfull
@@ -15,14 +15,14 @@ public class GetLastBinaryClassificationIndexSucceededHandler extends ACommandHa
 {
 
 	@Inject
-	private IBinaryClassifications binaryClassifications;
+	private ITrainedClassifiers binaryClassifications;
 
 	@Override
 	public void handle(Integer value)
 	{
 		if (value >= 0 && this.binaryClassifications.list().size() > 0)
 		{
-			final ITraindBinaryClassifier selected = this.binaryClassifications.list().get(value);
+			final ITrainedBinaryClassifier selected = this.binaryClassifications.list().get(value);
 			this.binaryClassifications.selected().set(selected);
 			this.log.info("Set last selected BinaryClassification in Model.");
 		}

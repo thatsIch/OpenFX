@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import de.thatsich.core.javafx.ACommand;
 import de.thatsich.openfx.classification.api.control.entity.IBinaryClassifier;
-import de.thatsich.openfx.classification.api.control.entity.ITraindBinaryClassifier;
+import de.thatsich.openfx.classification.api.control.entity.ITrainedBinaryClassifier;
 import de.thatsich.openfx.classification.intern.control.classifier.core.BinaryClassificationConfig;
 import de.thatsich.openfx.classification.intern.control.command.service.ClassificationFileStorageService;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
@@ -14,7 +14,7 @@ import org.opencv.core.MatOfFloat;
 import java.util.UUID;
 
 
-public class CreateTrainedBinaryClassifierCommand extends ACommand<ITraindBinaryClassifier>
+public class CreateTrainedBinaryClassifierCommand extends ACommand<ITrainedBinaryClassifier>
 {
 	// Properties
 	private final IBinaryClassifier binaryClassifier;
@@ -30,7 +30,7 @@ public class CreateTrainedBinaryClassifierCommand extends ACommand<ITraindBinary
 	}
 
 	@Override
-	public ITraindBinaryClassifier call() throws Exception
+	public ITrainedBinaryClassifier call() throws Exception
 	{
 		final String binaryClassifierName = this.binaryClassifier.getName();
 		final String featureExtractorName = this.feature.extractorName().get();
@@ -66,7 +66,7 @@ public class CreateTrainedBinaryClassifierCommand extends ACommand<ITraindBinary
 		final BinaryClassificationConfig config = new BinaryClassificationConfig(binaryClassifierName, featureExtractorName, tileSize, errorClassName, id);
 		this.log.info("Created BinaryClassificationConfig.");
 
-		final ITraindBinaryClassifier classification = this.binaryClassifier.train(positive, negative, config);
+		final ITrainedBinaryClassifier classification = this.binaryClassifier.train(positive, negative, config);
 		this.log.info("Trained Binary Classifier with " + positive + " positive and " + negative + " negative samples.");
 
 		this.storage.create(classification);

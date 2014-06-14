@@ -10,7 +10,6 @@ import de.thatsich.openfx.network.intern.control.provider.INetworkCommandProvide
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 
 /**
  * @author thatsIch
@@ -25,11 +24,9 @@ public class NetworkListPresenter extends AFXMLPresenter
 
 	// Nodes
 	@FXML private TableView<ITrainedNetwork> nodeTableViewNetworkList;
-	@FXML private TableColumn<ITrainedNetwork, String> nodeTableColumnClassifierName;
-	@FXML private TableColumn<ITrainedNetwork, String> nodeTableColumnExtractorName;
-	@FXML private TableColumn<ITrainedNetwork, Integer> nodeTableColumnFrameSize;
-	@FXML private TableColumn<ITrainedNetwork, String> nodeTableColumnErrorClassName;
+	@FXML private TableColumn<ITrainedNetwork, String> nodeTableColumnDate;
 	@FXML private TableColumn<ITrainedNetwork, String> nodeTableColumnID;
+	@FXML private TableColumn<ITrainedNetwork, Long> nodeTableColumnTrainTime;
 
 	@Override
 	protected void bindComponents()
@@ -74,10 +71,8 @@ public class NetworkListPresenter extends AFXMLPresenter
 
 	private void bindTableViewCellValue()
 	{
-		this.nodeTableColumnClassifierName.setCellValueFactory(new PropertyValueFactory<>("getClassifierName"));
-		this.nodeTableColumnExtractorName.setCellValueFactory(new PropertyValueFactory<>("extractorName"));
-		this.nodeTableColumnFrameSize.setCellValueFactory(new PropertyValueFactory<>("tileSize"));
-		this.nodeTableColumnErrorClassName.setCellValueFactory(new PropertyValueFactory<>("getErrorClassName"));
-		this.nodeTableColumnID.setCellValueFactory(new PropertyValueFactory<>("getID"));
+		this.nodeTableColumnDate.setCellValueFactory(cellData -> cellData.getValue().date());
+		this.nodeTableColumnID.setCellValueFactory(cellData -> cellData.getValue().id());
+		this.nodeTableColumnTrainTime.setCellValueFactory(cellData -> cellData.getValue().trainTime().asObject());
 	}
 }

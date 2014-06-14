@@ -2,8 +2,8 @@ package de.thatsich.openfx.classification.intern.control.handler;
 
 import com.google.inject.Inject;
 import de.thatsich.core.javafx.ACommandHandler;
-import de.thatsich.openfx.classification.api.control.entity.ITraindBinaryClassifier;
-import de.thatsich.openfx.classification.api.model.IBinaryClassifications;
+import de.thatsich.openfx.classification.api.control.entity.ITrainedBinaryClassifier;
+import de.thatsich.openfx.classification.api.model.ITrainedClassifiers;
 import javafx.collections.ObservableList;
 
 /**
@@ -12,20 +12,20 @@ import javafx.collections.ObservableList;
  *
  * @author Minh
  */
-public class RemoveBinaryClassificationSucceededHandler extends ACommandHandler<ITraindBinaryClassifier>
+public class RemoveBinaryClassificationSucceededHandler extends ACommandHandler<ITrainedBinaryClassifier>
 {
-	@Inject private IBinaryClassifications binaryClassifications;
+	@Inject private ITrainedClassifiers binaryClassifications;
 
 	@Override
-	public void handle(ITraindBinaryClassifier deletion)
+	public void handle(ITrainedBinaryClassifier deletion)
 	{
-		final ObservableList<ITraindBinaryClassifier> binaryClassificationList = this.binaryClassifications.list();
+		final ObservableList<ITrainedBinaryClassifier> binaryClassificationList = this.binaryClassifications.list();
 		binaryClassificationList.remove(deletion);
 		log.info("Removed BinaryClassification from Database.");
 
 		if (binaryClassificationList.size() > 0)
 		{
-			final ITraindBinaryClassifier first = binaryClassificationList.get(0);
+			final ITrainedBinaryClassifier first = binaryClassificationList.get(0);
 			this.binaryClassifications.selected().set(first);
 			this.log.info("Reset Selection to first BinaryClassifcation.");
 		}

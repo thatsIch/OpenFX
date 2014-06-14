@@ -2,13 +2,13 @@ package de.thatsich.openfx.classification.intern.control.classification.core;
 
 import com.google.inject.Inject;
 import de.thatsich.core.Log;
-import de.thatsich.openfx.classification.api.control.entity.ITraindBinaryClassifier;
+import de.thatsich.openfx.classification.api.control.entity.ITrainedBinaryClassifier;
 import de.thatsich.openfx.classification.intern.control.classifier.core.BinaryClassificationConfig;
 import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.beans.property.ReadOnlyStringProperty;
 
 
-public abstract class ATraindBinaryClassifier implements ITraindBinaryClassifier
+public abstract class ATraindBinaryClassifier implements ITrainedBinaryClassifier
 {
 	// Properties
 	private final BinaryClassificationConfig config;

@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import de.thatsich.core.javafx.ACommand;
 import de.thatsich.core.opencv.Images;
-import de.thatsich.openfx.classification.api.control.entity.ITraindBinaryClassifier;
+import de.thatsich.openfx.classification.api.control.entity.ITrainedBinaryClassifier;
 import de.thatsich.openfx.errorgeneration.api.control.entity.IErrorGenerator;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureExtractor;
 import de.thatsich.openfx.imageprocessing.api.control.entity.IImage;
@@ -26,14 +26,14 @@ public class TestBinaryClassificationCommand extends ACommand<BinaryPrediction>
 	private final int frameSize;
 	private final IErrorGenerator errorGenerator;
 	private final IFeatureExtractor featureExtractor;
-	private final ITraindBinaryClassifier binaryClassification;
+	private final ITrainedBinaryClassifier binaryClassification;
 
 	// Injections
 	@Inject
 	private BinaryPredictionFileStorageService storage;
 
 	@Inject
-	private TestBinaryClassificationCommand(@Assisted IImage image, @Assisted int frameSize, @Assisted IErrorGenerator errorGenerator, @Assisted IFeatureExtractor featureExtractor, @Assisted ITraindBinaryClassifier binaryClassification)
+	private TestBinaryClassificationCommand(@Assisted IImage image, @Assisted int frameSize, @Assisted IErrorGenerator errorGenerator, @Assisted IFeatureExtractor featureExtractor, @Assisted ITrainedBinaryClassifier binaryClassification)
 	{
 		this.image = image;
 		this.frameSize = frameSize;
@@ -161,7 +161,7 @@ public class TestBinaryClassificationCommand extends ACommand<BinaryPrediction>
 		return featureVectorSplit;
 	}
 
-	private Mat[][] predictError(MatOfFloat[][] featureVectorSplit, int predictionFrameSize, ITraindBinaryClassifier classification)
+	private Mat[][] predictError(MatOfFloat[][] featureVectorSplit, int predictionFrameSize, ITrainedBinaryClassifier classification)
 	{
 		final int cols = featureVectorSplit.length;
 		final int rows = featureVectorSplit[0].length;

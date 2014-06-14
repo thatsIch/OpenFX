@@ -2,7 +2,7 @@ package de.thatsich.openfx.classification.intern.control.command.service;
 
 import com.google.inject.Inject;
 import de.thatsich.core.AFileStorageService;
-import de.thatsich.openfx.classification.api.control.entity.ITraindBinaryClassifier;
+import de.thatsich.openfx.classification.api.control.entity.ITrainedBinaryClassifier;
 import de.thatsich.openfx.classification.api.model.IClassificationState;
 import de.thatsich.openfx.classification.intern.control.classification.RandomForestTraindBinaryClassifier;
 import de.thatsich.openfx.classification.intern.control.classification.SVMTraindBinaryClassifier;
@@ -22,7 +22,7 @@ import java.util.List;
  * @author thatsIch
  * @since 07.06.2014.
  */
-public class ClassificationFileStorageService extends AFileStorageService<ITraindBinaryClassifier>
+public class ClassificationFileStorageService extends AFileStorageService<ITrainedBinaryClassifier>
 {
 	private static final String SVM_EXT = ".svm";
 	private static final String RF_EXT = ".rf";
@@ -34,15 +34,15 @@ public class ClassificationFileStorageService extends AFileStorageService<ITrain
 	}
 
 	@Override
-	public List<ITraindBinaryClassifier> init() throws IOException
+	public List<ITrainedBinaryClassifier> init() throws IOException
 	{
-		final List<ITraindBinaryClassifier> classifications = new LinkedList<>();
+		final List<ITrainedBinaryClassifier> classifications = new LinkedList<>();
 
 		try (DirectoryStream<Path> stream = Files.newDirectoryStream(this.storagePath))
 		{
 			for (Path child : stream)
 			{
-				final ITraindBinaryClassifier bc = this.retrieve(child);
+				final ITrainedBinaryClassifier bc = this.retrieve(child);
 				classifications.add(bc);
 			}
 		}
@@ -56,7 +56,7 @@ public class ClassificationFileStorageService extends AFileStorageService<ITrain
 	}
 
 	@Override
-	public ITraindBinaryClassifier create(ITraindBinaryClassifier elem) throws IOException
+	public ITrainedBinaryClassifier create(ITrainedBinaryClassifier elem) throws IOException
 	{
 		final String fileName = elem.getConfig().toString();
 		final String withExtension;
@@ -85,7 +85,7 @@ public class ClassificationFileStorageService extends AFileStorageService<ITrain
 	}
 
 	@Override
-	public ITraindBinaryClassifier retrieve(Path path) throws IOException
+	public ITrainedBinaryClassifier retrieve(Path path) throws IOException
 	{
 		final Path filePath = path.getFileName();
 		final String fileName = filePath.toString();
@@ -94,7 +94,7 @@ public class ClassificationFileStorageService extends AFileStorageService<ITrain
 		final String withoutExt = this.getFileNameWithoutExtension(path);
 		final BinaryClassificationConfig config = new BinaryClassificationConfig(withoutExt);
 
-		final ITraindBinaryClassifier bc;
+		final ITrainedBinaryClassifier bc;
 		if (fileName.endsWith(SVM_EXT))
 		{
 			bc = new SVMTraindBinaryClassifier(new CvSVM(), config);
@@ -118,13 +118,13 @@ public class ClassificationFileStorageService extends AFileStorageService<ITrain
 	}
 
 	@Override
-	public ITraindBinaryClassifier update(ITraindBinaryClassifier elem) throws IOException
+	public ITrainedBinaryClassifier update(ITrainedBinaryClassifier elem) throws IOException
 	{
 		return null;
 	}
 
 	@Override
-	public void delete(ITraindBinaryClassifier elem) throws IOException
+	public void delete(ITrainedBinaryClassifier elem) throws IOException
 	{
 		final String fileName;
 		if (elem instanceof SVMTraindBinaryClassifier)

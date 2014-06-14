@@ -5,7 +5,7 @@ import org.opencv.core.MatOfFloat;
 
 public interface IBinaryClassifier
 {
-	ITraindBinaryClassifier train(MatOfFloat positiveTrainData, MatOfFloat negativeTrainData, BinaryClassificationConfig config);
+	ITrainedBinaryClassifier train(MatOfFloat positiveTrainData, MatOfFloat negativeTrainData, BinaryClassificationConfig config);
 
 	String getName();
 }
