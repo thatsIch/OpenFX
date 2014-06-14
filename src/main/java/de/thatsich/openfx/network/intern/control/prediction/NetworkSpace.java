@@ -14,6 +14,7 @@ import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureExtractor
 import de.thatsich.openfx.featureextraction.api.model.IFeatures;
 import de.thatsich.openfx.featureextraction.intern.control.command.commands.CreateExtractedFeatureCommand;
 import de.thatsich.openfx.featureextraction.intern.control.command.provider.IFeatureCommandProvider;
+import de.thatsich.openfx.featureextraction.intern.control.command.service.FeatureFileStorageService;
 import de.thatsich.openfx.imageprocessing.api.control.entity.IImage;
 import de.thatsich.openfx.network.api.control.entity.INetworkSpace;
 import de.thatsich.openfx.network.api.control.entity.ITrainedNetwork;
@@ -44,6 +45,8 @@ public class NetworkSpace implements INetworkSpace
 	@Inject private IFeatureCommandProvider featureProvider;
 	@Inject private IPreProcessingCommandProvider preProcessingProvider;
 	@Inject private INetworkCommandProvider networkProvider;
+
+	@Inject private FeatureFileStorageService featureStorage;
 
 	@Inject private IErrors errors;
 	@Inject private IFeatures features;
@@ -156,6 +159,7 @@ public class NetworkSpace implements INetworkSpace
 				}
 				final IFeature finalFeature = feature;
 				Platform.runLater(() -> this.features.list().add(finalFeature));
+				this.featureStorage.create(finalFeature);
 
 				features.add(feature);
 				this.log.info("Added feature " + feature);

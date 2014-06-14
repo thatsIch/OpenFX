@@ -27,6 +27,7 @@
 			</padding>
 		</BorderPane>
 	</Tab>
+	<!--
 	<Tab closable="false" text="PreProcessing">
 		<BorderPane fx:id="panePreProcessing" prefHeight="-1.0" prefWidth="-1.0">
 			<padding>
@@ -41,6 +42,7 @@
 			</padding>
 		</BorderPane>
 	</Tab>
+	-->
 	<Tab closable="false" text="Classification">
 		<BorderPane fx:id="paneClassification" prefHeight="-1.0" prefWidth="-1.0">
 			<padding>
@@ -48,15 +50,15 @@
 			</padding>
 		</BorderPane>
 	</Tab>
-	<Tab closable="false" text="Prediction">
-		<BorderPane fx:id="panePrediction" prefHeight="-1.0" prefWidth="-1.0">
+	<Tab closable="false" text="Network">
+		<BorderPane fx:id="paneNetwork" prefHeight="-1.0" prefWidth="-1.0">
 			<padding>
 				<Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
 			</padding>
 		</BorderPane>
 	</Tab>
-	<Tab closable="false" text="Network">
-		<BorderPane fx:id="paneNetwork" prefHeight="-1.0" prefWidth="-1.0">
+	<Tab closable="false" text="Prediction">
+		<BorderPane fx:id="panePrediction" prefHeight="-1.0" prefWidth="-1.0">
 			<padding>
 				<Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
 			</padding>

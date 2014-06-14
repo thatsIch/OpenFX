@@ -50,8 +50,8 @@ public class TabOverviewPresenter implements Initializable
 	@FXML private BorderPane paneImageProcessing;
 	@FXML private BorderPane paneErrorGeneration;
 	@FXML private BorderPane paneFeatureExtraction;
-	@FXML private BorderPane panePreProcessing;
-	@FXML private BorderPane panePreProcessed;
+	//	@FXML private BorderPane panePreProcessing;
+	//	@FXML private BorderPane panePreProcessed;
 	@FXML private BorderPane paneClassification;
 	@FXML private BorderPane panePrediction;
 	@FXML private BorderPane paneNetwork;
@@ -107,13 +107,13 @@ public class TabOverviewPresenter implements Initializable
 		this.paneFeatureExtraction.setLeft(this.featureListView.getRoot());
 		this.paneFeatureExtraction.setCenter(this.featureDisplayView.getRoot());
 
-		this.panePreProcessing.setTop(this.preProcessingInputView.getRoot());
-		this.panePreProcessing.setLeft(this.preProcessingListView.getRoot());
-		this.panePreProcessing.setCenter(this.preProcessingDisplayView.getRoot());
-
-		this.panePreProcessed.setTop(this.preProcessedInputView.getRoot());
-		this.panePreProcessed.setLeft(this.preProcessedListView.getRoot());
-		this.panePreProcessed.setCenter(this.preProcessedDisplayView.getRoot());
+		//		this.panePreProcessing.setTop(this.preProcessingInputView.getRoot());
+		//		this.panePreProcessing.setLeft(this.preProcessingListView.getRoot());
+		//		this.panePreProcessing.setCenter(this.preProcessingDisplayView.getRoot());
+		//
+		//		this.panePreProcessed.setTop(this.preProcessedInputView.getRoot());
+		//		this.panePreProcessed.setLeft(this.preProcessedListView.getRoot());
+		//		this.panePreProcessed.setCenter(this.preProcessedDisplayView.getRoot());
 
 		this.paneClassification.setTop(this.classificationInputView.getRoot());
 		this.paneClassification.setLeft(this.classificationListView.getRoot());

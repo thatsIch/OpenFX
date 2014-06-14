@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -9,46 +10,38 @@
 <FlowPane xmlns:fx="http://javafx.com/fxml/1" hgap="5.0" prefWidth="-1.0" xmlns="http://javafx.com/javafx/8"
           fx:controller="de.thatsich.openfx.network.intern.control.NetworkInputPresenter">
 
-	<children>
-		<Button fx:id="nodeButtonTrainNetwork" onAction="#onTrainNetworkAction">
-			<graphic>
-				<ImageView>
-					<image>
-						<Image url="@add.png"/>
-					</image>
-				</ImageView>
-			</graphic>
-			<tooltip>
-				<Tooltip text="Trains a Network and adds the Network to the List."/>
-			</tooltip>
-		</Button>
-		<Button fx:id="nodeButtonDeleteNetwork" onAction="#onDeleteNetworkAction">
-			<graphic>
-				<ImageView>
-					<image>
-						<Image url="@remove.png"/>
-					</image>
-				</ImageView>
-			</graphic>
-			<tooltip>
-				<Tooltip text="Deletes a Network from the List."/>
-			</tooltip>
-		</Button>
-		<Button fx:id="nodeButtonResetNetwork" onAction="#onResetNetworkAction">
-			<graphic>
-				<ImageView>
-					<image>
-						<Image url="@delete.png"/>
-					</image>
-				</ImageView>
-			</graphic>
-			<tooltip>
-				<Tooltip text="Resets the whole Network List physically. CAUTION!"/>
-			</tooltip>
-		</Button>
-	</children>
 	<padding>
 		<Insets bottom="10.0"/>
 	</padding>
 
+	<Button fx:id="nodeButtonTrainNetwork" onAction="#onTrainNetworkAction">
+		<graphic>
+			<ImageView>
+				<Image url="@add.png"/>
+			</ImageView>
+		</graphic>
+		<tooltip>
+			<Tooltip text="Trains a Network and adds the Network to the List."/>
+		</tooltip>
+	</Button>
+	<Button fx:id="nodeButtonDeleteNetwork" onAction="#onDeleteNetworkAction">
+		<graphic>
+			<ImageView>
+				<Image url="@remove.png"/>
+			</ImageView>
+		</graphic>
+		<tooltip>
+			<Tooltip text="Deletes a Network from the List."/>
+		</tooltip>
+	</Button>
+	<Button fx:id="nodeButtonResetNetwork" onAction="#onResetNetworkAction">
+		<graphic>
+			<ImageView>
+				<Image url="@delete.png"/>
+			</ImageView>
+		</graphic>
+		<tooltip>
+			<Tooltip text="Resets the whole Network List physically. CAUTION!"/>
+		</tooltip>
+	</Button>
 </FlowPane>

@@ -58,7 +58,6 @@ public class NetworkBinaryClassifiers implements INBC
 	@Override
 	public void addBinaryClassifier(IBinaryClassifier bc) throws Exception
 	{
-		System.out.println("Test");
 		if (this.binaryClassifiers.list().contains(bc)) return;
 
 		this.binaryClassifiers.list().add(bc);
