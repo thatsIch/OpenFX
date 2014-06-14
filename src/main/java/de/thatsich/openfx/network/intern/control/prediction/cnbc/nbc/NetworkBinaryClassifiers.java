@@ -1,6 +1,7 @@
 package de.thatsich.openfx.network.intern.control.prediction.cnbc.nbc;
 
 import com.google.inject.Inject;
+import de.thatsich.core.Log;
 import de.thatsich.openfx.classification.api.control.entity.IBinaryClassifier;
 import de.thatsich.openfx.classification.api.control.entity.ITrainedBinaryClassifier;
 import de.thatsich.openfx.classification.api.model.ITrainedClassifiers;
@@ -27,6 +28,7 @@ public class NetworkBinaryClassifiers implements INBC
 	private final List<IFeature> trainedFeatures;
 	@Inject private ClassificationFileStorageService storage;
 	@Inject private ITrainedClassifiers binaryClassifications;
+	@Inject private Log log;
 
 	public NetworkBinaryClassifiers(String uniqueErrorClassName, List<ITrainedBinaryClassifier> bcs)
 	{
@@ -74,6 +76,7 @@ public class NetworkBinaryClassifiers implements INBC
 	{
 		this.trainedFeatures.add(feature);
 
+		System.out.println("Test Size: " + this.binaryClassifiers.size());
 		for (IBinaryClassifier binaryClassifier : this.binaryClassifiers)
 		{
 			final CreateTrainedBinaryClassifierCommand command = new CreateTrainedBinaryClassifierCommand(binaryClassifier, feature, this.storage);

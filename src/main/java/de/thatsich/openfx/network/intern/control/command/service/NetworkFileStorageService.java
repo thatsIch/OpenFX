@@ -81,17 +81,23 @@ public class NetworkFileStorageService extends AFileStorageService<ITrainedNetwo
 		for (final INBC nbc : nbcs)
 		{
 			final Path nbcPath = filePath.resolve(nbc.getUniqueErrorClassName());
+			final StringJoiner joiner = new StringJoiner(System.lineSeparator());
+			final List<ITrainedBinaryClassifier> trainedBinaryClassifiers = nbc.getTrainedBinaryClassifier();
+			this.log.info("Trained Binary Classifier Size for Network: " + trainedBinaryClassifiers.size());
+			for (ITrainedBinaryClassifier bc : trainedBinaryClassifiers)
+			{
+				final String bcID = bc.getConfig().toString();
+				joiner.add(bcID);
+				this.log.info("Joined " + bcID);
+			}
 
 			try (final BufferedWriter writer = Files.newBufferedWriter(nbcPath, StandardCharsets.US_ASCII))
 			{
-				final StringJoiner joiner = new StringJoiner(System.lineSeparator());
-				final List<ITrainedBinaryClassifier> trainedBinaryClassifiers = nbc.getTrainedBinaryClassifier();
-				for (ITrainedBinaryClassifier bc : trainedBinaryClassifiers)
-				{
-					joiner.add(bc.getConfig().toString());
-				}
-
 				writer.write(joiner.toString());
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
 			}
 		}
 		this.log.info("Stored Network " + network);
@@ -138,16 +144,8 @@ public class NetworkFileStorageService extends AFileStorageService<ITrainedNetwo
 	{
 		final String fileName = elem.getConfig().toString();
 		final Path filePath = this.storagePath.resolve(fileName);
-
-		if (Files.exists(filePath))
-		{
-			Files.delete(filePath);
-			this.log.info(filePath + " deleted.");
-		}
-		else
-		{
-			this.log.warning("Could not delete " + filePath + " because it was not found.");
-		}
+		this.deleteRecursively(filePath);
+		this.log.info("Deleted Path " + filePath + "with Children.");
 	}
 
 	private INBC retrieveNBC(Path path) throws IOException
