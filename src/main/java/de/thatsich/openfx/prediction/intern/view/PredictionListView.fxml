@@ -12,9 +12,9 @@
 
 		<columns>
 			<TableColumn editable="false" prefWidth="100.0"
-			             sortable="false" text="Class" fx:id="nodeTableColumnDateTime"/>
+			             sortable="false" text="DateTime" fx:id="nodeTableColumnDateTime"/>
 			<TableColumn editable="false" prefWidth="100.0"
-			             sortable="false" text="Extractor" fx:id="nodeTableColumnPredictedErrorClass"/>
+			             sortable="false" text="Predicted Error Class" fx:id="nodeTableColumnPredictedErrorClass"/>
 			<TableColumn editable="false" prefWidth="100.0"
 			             sortable="false" text="ID" fx:id="nodeTableColumnID"/>
 		</columns>
