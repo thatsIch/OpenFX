@@ -2,8 +2,8 @@ package de.thatsich.openfx.prediction.intern.control.command.handler;
 
 import com.google.inject.Inject;
 import de.thatsich.core.javafx.ACommandHandler;
-import de.thatsich.openfx.prediction.api.control.entity.IBinaryPrediction;
-import de.thatsich.openfx.prediction.api.model.IBinaryPredictions;
+import de.thatsich.openfx.prediction.api.control.entity.INetworkPrediction;
+import de.thatsich.openfx.prediction.api.model.INetworkPredictions;
 
 import java.util.List;
 
@@ -13,14 +13,14 @@ import java.util.List;
  *
  * @author Minh
  */
-public class InitBinaryPredictionListSucceededHandler extends ACommandHandler<List<IBinaryPrediction>>
+public class InitBinaryPredictionListSucceededHandler extends ACommandHandler<List<INetworkPrediction>>
 {
 
 	@Inject
-	private IBinaryPredictions binaryPredictions;
+	private INetworkPredictions binaryPredictions;
 
 	@Override
-	public void handle(List<IBinaryPrediction> binaryPredictionList)
+	public void handle(List<INetworkPrediction> binaryPredictionList)
 	{
 		this.binaryPredictions.list().addAll(binaryPredictionList);
 		this.log.info("Added BinaryPredictionList to Database.");

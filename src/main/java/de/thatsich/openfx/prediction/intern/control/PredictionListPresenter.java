@@ -2,8 +2,8 @@ package de.thatsich.openfx.prediction.intern.control;
 
 import com.google.inject.Inject;
 import de.thatsich.core.javafx.AFXMLPresenter;
-import de.thatsich.openfx.prediction.api.control.entity.IBinaryPrediction;
-import de.thatsich.openfx.prediction.api.model.IBinaryPredictions;
+import de.thatsich.openfx.prediction.api.control.entity.INetworkPrediction;
+import de.thatsich.openfx.prediction.api.model.INetworkPredictions;
 import de.thatsich.openfx.prediction.intern.control.command.PredictionInitCommander;
 import de.thatsich.openfx.prediction.intern.control.command.commands.SetLastBinaryPredictionIndexCommand;
 import de.thatsich.openfx.prediction.intern.control.provider.IPredictionCommandProvider;
@@ -17,15 +17,15 @@ public class PredictionListPresenter extends AFXMLPresenter
 
 	@Inject private PredictionInitCommander initCommander;
 	// Nodes
-	@FXML private TableView<IBinaryPrediction> nodeTableViewBinaryPredictionList;
-	@FXML private TableColumn<IBinaryPrediction, String> nodeTableColumnClassifierName;
-	@FXML private TableColumn<IBinaryPrediction, String> nodeTableColumnExtractorName;
-	@FXML private TableColumn<IBinaryPrediction, Integer> nodeTableColumnFrameSize;
-	@FXML private TableColumn<IBinaryPrediction, String> nodeTableColumnErrorClassName;
-	@FXML private TableColumn<IBinaryPrediction, String> nodeTableColumnID;
+	@FXML private TableView<INetworkPrediction> nodeTableViewBinaryPredictionList;
+	@FXML private TableColumn<INetworkPrediction, String> nodeTableColumnClassifierName;
+	@FXML private TableColumn<INetworkPrediction, String> nodeTableColumnExtractorName;
+	@FXML private TableColumn<INetworkPrediction, Integer> nodeTableColumnFrameSize;
+	@FXML private TableColumn<INetworkPrediction, String> nodeTableColumnErrorClassName;
+	@FXML private TableColumn<INetworkPrediction, String> nodeTableColumnID;
 	// Injects
 	@Inject
-	private IBinaryPredictions binaryPredictions;
+	private INetworkPredictions binaryPredictions;
 	@Inject
 	private IPredictionCommandProvider provider;
 

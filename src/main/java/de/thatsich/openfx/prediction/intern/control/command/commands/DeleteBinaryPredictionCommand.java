@@ -3,23 +3,23 @@ package de.thatsich.openfx.prediction.intern.control.command.commands;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import de.thatsich.core.javafx.ACommand;
-import de.thatsich.openfx.prediction.api.control.entity.IBinaryPrediction;
-import de.thatsich.openfx.prediction.intern.control.command.service.BinaryPredictionFileStorageService;
+import de.thatsich.openfx.prediction.api.control.entity.INetworkPrediction;
+import de.thatsich.openfx.prediction.intern.control.command.service.NetworkPredictionFileStorageService;
 
-public class DeleteBinaryPredictionCommand extends ACommand<IBinaryPrediction>
+public class DeleteBinaryPredictionCommand extends ACommand<INetworkPrediction>
 {
-	final IBinaryPrediction prediction;
-	final BinaryPredictionFileStorageService storage;
+	final INetworkPrediction prediction;
+	final NetworkPredictionFileStorageService storage;
 
 	@Inject
-	private DeleteBinaryPredictionCommand(@Assisted IBinaryPrediction prediction, final BinaryPredictionFileStorageService storage)
+	private DeleteBinaryPredictionCommand(@Assisted INetworkPrediction prediction, final NetworkPredictionFileStorageService storage)
 	{
 		this.prediction = prediction;
 		this.storage = storage;
 	}
 
 	@Override
-	protected IBinaryPrediction call() throws Exception
+	protected INetworkPrediction call() throws Exception
 	{
 		this.storage.delete(this.prediction);
 		return this.prediction;

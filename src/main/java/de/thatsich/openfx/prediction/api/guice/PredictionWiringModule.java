@@ -2,14 +2,14 @@ package de.thatsich.openfx.prediction.api.guice;
 
 import com.google.inject.Scopes;
 import de.thatsich.core.guice.AWiringModule;
-import de.thatsich.openfx.prediction.api.model.IBinaryPredictions;
+import de.thatsich.openfx.prediction.api.model.INetworkPredictions;
 import de.thatsich.openfx.prediction.api.model.IPredictionState;
 import de.thatsich.openfx.prediction.api.view.IPredictionDisplayView;
 import de.thatsich.openfx.prediction.api.view.IPredictionInputView;
 import de.thatsich.openfx.prediction.api.view.IPredictionListView;
 import de.thatsich.openfx.prediction.intern.control.command.service.BinaryPredictionConfigService;
-import de.thatsich.openfx.prediction.intern.control.command.service.BinaryPredictionFileStorageService;
-import de.thatsich.openfx.prediction.intern.model.BinaryPredictions;
+import de.thatsich.openfx.prediction.intern.control.command.service.NetworkPredictionFileStorageService;
+import de.thatsich.openfx.prediction.intern.model.NetworkPredictions;
 import de.thatsich.openfx.prediction.intern.model.PredictionState;
 import de.thatsich.openfx.prediction.intern.view.PredictionDisplayView;
 import de.thatsich.openfx.prediction.intern.view.PredictionInputView;
@@ -30,10 +30,10 @@ public class PredictionWiringModule extends AWiringModule
 	}
 
 	@Override
-	protected void bindService()
+	protected void bindModel()
 	{
-		super.bind(BinaryPredictionFileStorageService.class).in(Scopes.SINGLETON);
-		super.bind(BinaryPredictionConfigService.class).in(Scopes.SINGLETON);
+		super.bind(INetworkPredictions.class).to(NetworkPredictions.class).in(Scopes.SINGLETON);
+		super.bind(IPredictionState.class).to(PredictionState.class).in(Scopes.SINGLETON);
 	}
 
 	@Override
@@ -55,9 +55,9 @@ public class PredictionWiringModule extends AWiringModule
 	}
 
 	@Override
-	protected void bindModel()
+	protected void bindService()
 	{
-		super.bind(IBinaryPredictions.class).to(BinaryPredictions.class).in(Scopes.SINGLETON);
-		super.bind(IPredictionState.class).to(PredictionState.class).in(Scopes.SINGLETON);
+		super.bind(NetworkPredictionFileStorageService.class).in(Scopes.SINGLETON);
+		super.bind(BinaryPredictionConfigService.class).in(Scopes.SINGLETON);
 	}
 }

@@ -3,28 +3,29 @@ package de.thatsich.openfx.prediction.intern.control;
 import com.google.inject.Inject;
 import de.thatsich.core.javafx.AFXMLPresenter;
 import de.thatsich.core.javafx.CommandExecutor;
-import de.thatsich.openfx.classification.api.control.entity.ITrainedBinaryClassifier;
 import de.thatsich.openfx.classification.api.model.ITrainedClassifiers;
 import de.thatsich.openfx.errorgeneration.api.control.entity.IErrorGenerator;
 import de.thatsich.openfx.errorgeneration.api.model.IErrorGenerators;
-import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureExtractor;
 import de.thatsich.openfx.featureextraction.api.model.IFeatureExtractors;
 import de.thatsich.openfx.imageprocessing.api.control.entity.IImage;
 import de.thatsich.openfx.imageprocessing.api.model.IImages;
-import de.thatsich.openfx.prediction.api.control.entity.IBinaryPrediction;
-import de.thatsich.openfx.prediction.api.model.IBinaryPredictions;
+import de.thatsich.openfx.network.api.control.entity.ITrainedNetwork;
+import de.thatsich.openfx.network.api.model.INetworks;
+import de.thatsich.openfx.prediction.api.control.entity.INetworkPrediction;
+import de.thatsich.openfx.prediction.api.model.INetworkPredictions;
 import de.thatsich.openfx.prediction.api.model.IPredictionState;
 import de.thatsich.openfx.prediction.intern.control.command.PredictionInitCommander;
 import de.thatsich.openfx.prediction.intern.control.command.commands.DeleteBinaryPredictionCommand;
-import de.thatsich.openfx.prediction.intern.control.command.commands.TestBinaryClassificationCommand;
+import de.thatsich.openfx.prediction.intern.control.command.commands.PredictNetworkCommand;
 import de.thatsich.openfx.prediction.intern.control.command.handler.DeleteBinaryPredictionSucceededHandler;
-import de.thatsich.openfx.prediction.intern.control.command.handler.PredictBinaryClassificationSucceededHandler;
+import de.thatsich.openfx.prediction.intern.control.command.handler.PredictNetworkSucceededHandler;
 import de.thatsich.openfx.prediction.intern.control.provider.IPredictionCommandProvider;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class PredictionInputPresenter extends AFXMLPresenter
 {
@@ -36,8 +37,9 @@ public class PredictionInputPresenter extends AFXMLPresenter
 	@Inject private IFeatureExtractors featureExtractors;
 	@Inject private ITrainedClassifiers binaryClassifications;
 	@Inject private IPredictionState predictionState;
-	@Inject private IBinaryPredictions binaryPredictions;
+	@Inject private INetworkPredictions binaryPredictions;
 	@Inject private IPredictionCommandProvider commander;
+	@Inject private INetworks networks;
 
 	// Nodes
 	@FXML private Button nodeButtonPredictBinaryClassification;
@@ -63,7 +65,7 @@ public class PredictionInputPresenter extends AFXMLPresenter
 	// ==================================================
 	private void bindButtons()
 	{
-		this.nodeButtonPredictBinaryClassification.disableProperty().bind(this.imageEntries.selected().isNull().or(this.binaryClassifications.selected().isNull()));
+		this.nodeButtonPredictBinaryClassification.disableProperty().bind(this.networks.selected().isNull());
 		this.nodeButtonDeleteBinaryPrediction.disableProperty().bind(this.binaryPredictions.selected().isNull());
 		this.nodeButtonResetBinaryPrediction.disableProperty().bind(this.binaryPredictions.list().emptyProperty());
 	}
@@ -78,53 +80,37 @@ public class PredictionInputPresenter extends AFXMLPresenter
 	@FXML
 	private void onPredictBinaryPredictionAction()
 	{
-		final ITrainedBinaryClassifier binaryClassification = this.binaryClassifications.selected().get();
-		final String errorGeneratorName = binaryClassification.errorNameProperty().get();
-		final String featureExtractorName = binaryClassification.extractorNameProperty().get();
-		this.log.info("Prepared all information.");
-
-		final IImage imageEntry = this.imageEntries.selected().get();
-		final int frameSize = binaryClassification.tileSizeProperty().get();
-		final IErrorGenerator errorGenerator = this.getErrorGenerator(errorGeneratorName);
-		final IFeatureExtractor featureExtractor = this.getFeatureExtractor(featureExtractorName);
+		final IImage image = this.getRandomImage(this.imageEntries.list());
+		final IErrorGenerator errorGenerator = this.getRandomErrorGenerator(this.errorGenerators.list());
+		final ITrainedNetwork network = this.networks.selected().get();
 		this.log.info("Prepared all Tools.");
 
-		final TestBinaryClassificationCommand command = this.commander.createTestBinaryClassificationCommand(imageEntry, frameSize, errorGenerator, featureExtractor, binaryClassification);
-		command.setOnSucceededCommandHandler(PredictBinaryClassificationSucceededHandler.class);
+		final PredictNetworkCommand command = this.commander.createPredictNetworkCommand(image, errorGenerator, network);
+		command.setOnSucceededCommandHandler(PredictNetworkSucceededHandler.class);
 		command.start();
 		this.log.info("Initiated testing the binary classification.");
 	}
 
-	private IErrorGenerator getErrorGenerator(String errorGeneratorName)
+	private IImage getRandomImage(List<IImage> images)
 	{
-		for (IErrorGenerator generator : this.errorGenerators.list())
-		{
-			if (errorGeneratorName.equals(generator.getName()))
-			{
-				return generator;
-			}
-		}
+		final ThreadLocalRandom random = ThreadLocalRandom.current();
+		final int randomIndex = random.nextInt(images.size());
 
-		throw new IllegalStateException("ErrorGenerator not found: " + errorGeneratorName);
+		return images.get(randomIndex);
 	}
 
-	private IFeatureExtractor getFeatureExtractor(String featureExtractorName)
+	private IErrorGenerator getRandomErrorGenerator(List<IErrorGenerator> errorGenerators)
 	{
-		for (IFeatureExtractor extractor : this.featureExtractors.list())
-		{
-			if (featureExtractorName.equals(extractor.getName()))
-			{
-				return extractor;
-			}
-		}
+		final ThreadLocalRandom random = ThreadLocalRandom.current();
+		final int randomIndex = random.nextInt(errorGenerators.size());
 
-		throw new IllegalStateException("FeatureExtractor not found: " + featureExtractorName);
+		return errorGenerators.get(randomIndex);
 	}
 
 	@FXML
 	private void onDeleteBinaryPredictionAction()
 	{
-		final IBinaryPrediction selected = this.binaryPredictions.selected().get();
+		final INetworkPrediction selected = this.binaryPredictions.selected().get();
 		final DeleteBinaryPredictionCommand command = this.commander.createDeleteBinaryPredictionCommand(selected);
 		command.setOnSucceededCommandHandler(DeleteBinaryPredictionSucceededHandler.class);
 		command.start();
@@ -134,10 +120,10 @@ public class PredictionInputPresenter extends AFXMLPresenter
 	@FXML
 	private void onResetBinaryPredictionAction()
 	{
-		final List<IBinaryPrediction> binaryPredictionList = this.binaryPredictions.list();
+		final List<INetworkPrediction> binaryPredictionList = this.binaryPredictions.list();
 		final ExecutorService executor = CommandExecutor.newFixedThreadPool(binaryPredictionList.size());
 
-		for (final IBinaryPrediction binaryPrediction : binaryPredictionList)
+		for (final INetworkPrediction binaryPrediction : binaryPredictionList)
 		{
 			final DeleteBinaryPredictionCommand command = this.commander.createDeleteBinaryPredictionCommand(binaryPrediction);
 			command.setOnSucceededCommandHandler(DeleteBinaryPredictionSucceededHandler.class);
