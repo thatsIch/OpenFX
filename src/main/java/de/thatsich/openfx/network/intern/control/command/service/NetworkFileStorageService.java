@@ -4,8 +4,8 @@ import com.google.inject.Inject;
 import de.thatsich.core.AFileStorageService;
 import de.thatsich.openfx.classification.api.control.entity.ITrainedBinaryClassifier;
 import de.thatsich.openfx.classification.intern.control.command.service.ClassificationFileStorageService;
-import de.thatsich.openfx.errorgeneration.intern.control.entity.ErrorConfig;
 import de.thatsich.openfx.featureextraction.api.model.IFeatureExtractors;
+import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureConfig;
 import de.thatsich.openfx.network.api.control.entity.ITrainedNetwork;
 import de.thatsich.openfx.network.api.model.INetworkState;
 import de.thatsich.openfx.network.intern.control.prediction.NetworkConfig;
@@ -159,8 +159,8 @@ public class NetworkFileStorageService extends AFileStorageService<ITrainedNetwo
 	private INBC retrieveNBC(Path path) throws IOException
 	{
 		final String fileName = path.getFileName().toString();
-		final ErrorConfig config = new ErrorConfig(fileName);
-		final String errorClassName = config.clazz.get();
+		final FeatureConfig config = new FeatureConfig(fileName);
+		final String errorClassName = config.className.get();
 
 		final List<ITrainedBinaryClassifier> bcs = new LinkedList<>();
 		try (final BufferedReader vectorReader = Files.newBufferedReader(path, StandardCharsets.US_ASCII))
