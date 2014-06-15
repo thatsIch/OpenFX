@@ -99,6 +99,6 @@ public class Fuser
 		final long rounded = Math.round(gaussian);
 		final int index = (int) rounded;
 
-		return sorted.get(index);
+		return (index > 0) ? sorted.get(index) : 0;
 	}
 }

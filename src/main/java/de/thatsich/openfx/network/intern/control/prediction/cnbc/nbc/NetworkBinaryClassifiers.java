@@ -89,14 +89,15 @@ public class NetworkBinaryClassifiers implements INBC
 	@Override
 	public double predict(IFeature f)
 	{
+		final String featureErrorName = f.className().get();
+		final String featureExtractorName = f.extractorName().get();
+
 		this.log.info("Predicting feature " + f + " over " + this.trainedBinaryClassifier.size() + " trained BCs.");
 		final List<Double> values = new LinkedList<>();
 		for (ITrainedBinaryClassifier trained : this.trainedBinaryClassifier)
 		{
 			final String trainedErrorName = trained.errorNameProperty().get();
 			final String trainedExtractorName = trained.extractorNameProperty().get();
-			final String featureErrorName = f.className().get();
-			final String featureExtractorName = f.extractorName().get();
 
 			this.log.info("Trying to match " + trainedErrorName + " = " + featureErrorName + " | " + trainedExtractorName + " = " + featureExtractorName);
 
@@ -115,8 +116,12 @@ public class NetworkBinaryClassifiers implements INBC
 				}
 			}
 		}
+		this.log.info("Finished predictions (" + values.size() + ")");
 
-		return this.fuser.predict(values);
+		final double fused = this.fuser.predict(values);
+		this.log.info("Fused " + fused);
+
+		return fused;
 	}
 
 	@Override
