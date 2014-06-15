@@ -1,6 +1,7 @@
 package de.thatsich.openfx.network.intern.control.prediction.cnbc;
 
 import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 import de.thatsich.core.Log;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureVector;
@@ -8,7 +9,6 @@ import de.thatsich.openfx.network.intern.control.prediction.cnbc.nbc.INBC;
 import de.thatsich.openfx.network.intern.control.provider.INetworkCommandProvider;
 import javafx.util.Pair;
 
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -26,14 +26,7 @@ public class CollectiveNetworkBinaryClassifiers implements ICNBC
 	@Inject private INetworkCommandProvider provider;
 
 	@Inject
-	public CollectiveNetworkBinaryClassifiers(Log log)
-	{
-		this.log = log;
-		this.nbcs = new LinkedList<>();
-		this.uniqueErrorClasses = new HashSet<>();
-	}
-
-	public CollectiveNetworkBinaryClassifiers(List<INBC> nbcs, Set<String> uniqueErrorClasses, Log log)
+	public CollectiveNetworkBinaryClassifiers(@Assisted List<INBC> nbcs, @Assisted Set<String> uniqueErrorClasses, Log log)
 	{
 		this.log = log;
 		this.nbcs = nbcs;
@@ -73,6 +66,7 @@ public class CollectiveNetworkBinaryClassifiers implements ICNBC
 	public List<Pair<String, Double>> predict(IFeatureVector fv)
 	{
 		final List<Pair<String, Double>> pairs = new LinkedList<>();
+		this.log.info("Predicting over " + this.nbcs.size() + " NBCs");
 
 		for (INBC nbc : this.nbcs)
 		{

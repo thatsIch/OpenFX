@@ -8,11 +8,9 @@ import de.thatsich.openfx.featureextraction.api.model.IFeatureExtractors;
 import de.thatsich.openfx.network.api.control.entity.ITrainedNetwork;
 import de.thatsich.openfx.network.api.model.INetworkState;
 import de.thatsich.openfx.network.intern.control.prediction.NetworkConfig;
-import de.thatsich.openfx.network.intern.control.prediction.TrainedNetwork;
-import de.thatsich.openfx.network.intern.control.prediction.cnbc.CollectiveNetworkBinaryClassifiers;
 import de.thatsich.openfx.network.intern.control.prediction.cnbc.ICNBC;
 import de.thatsich.openfx.network.intern.control.prediction.cnbc.nbc.INBC;
-import de.thatsich.openfx.network.intern.control.prediction.cnbc.nbc.NetworkBinaryClassifiers;
+import de.thatsich.openfx.network.intern.control.provider.INetworkCommandProvider;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -36,13 +34,15 @@ public class NetworkFileStorageService extends AFileStorageService<ITrainedNetwo
 {
 	private final IFeatureExtractors featureExtractors;
 	private final ITrainedClassifiers classifiers;
+	private final INetworkCommandProvider networkProvider;
 
 	@Inject
-	protected NetworkFileStorageService(INetworkState state, IFeatureExtractors featureExtractors, ITrainedClassifiers classifiers)
+	protected NetworkFileStorageService(INetworkState state, IFeatureExtractors featureExtractors, ITrainedClassifiers classifiers, INetworkCommandProvider networkProvider)
 	{
 		super(state.path().get());
 		this.featureExtractors = featureExtractors;
 		this.classifiers = classifiers;
+		this.networkProvider = networkProvider;
 	}
 
 	@Override
@@ -122,7 +122,9 @@ public class NetworkFileStorageService extends AFileStorageService<ITrainedNetwo
 			{
 				final INBC inbc = this.retrieveNBC(dir);
 				nbcs.add(inbc);
-				uniqueErrorClassNames.add(inbc.getUniqueErrorClassName());
+				final String uniqueErrorClassName = inbc.getUniqueErrorClassName();
+				uniqueErrorClassNames.add(uniqueErrorClassName);
+				this.log.info("Retrieved NBC " + inbc + " with errorClass " + uniqueErrorClassName);
 			}
 		}
 		catch (IOException | DirectoryIteratorException e)
@@ -130,8 +132,9 @@ public class NetworkFileStorageService extends AFileStorageService<ITrainedNetwo
 			e.printStackTrace();
 		}
 
-		final ICNBC cnbc = new CollectiveNetworkBinaryClassifiers(nbcs, uniqueErrorClassNames, this.log);
-		final ITrainedNetwork trained = new TrainedNetwork(config, this.featureExtractors.list(), cnbc);
+		final ICNBC cnbc = this.networkProvider.createCollectiveNetworkBinaryClassifiers(nbcs, uniqueErrorClassNames);
+		final ITrainedNetwork trained = this.networkProvider.createTrainedNetwork(config, this.featureExtractors.list(), cnbc);
+		this.log.info("Retrieved CNBC with " + cnbc.getNbcs().size() + " NBCs.");
 
 		return trained;
 	}
@@ -172,7 +175,7 @@ public class NetworkFileStorageService extends AFileStorageService<ITrainedNetwo
 			}
 		}
 
-		final INBC nbc = new NetworkBinaryClassifiers(errorClassName, bcs);
+		final INBC nbc = this.networkProvider.createNetworkBinaryClassifiers(errorClassName, bcs);
 
 		return nbc;
 	}

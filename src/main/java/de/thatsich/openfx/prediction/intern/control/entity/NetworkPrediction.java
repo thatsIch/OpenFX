@@ -103,6 +103,12 @@ public class NetworkPrediction implements INetworkPrediction
 	{
 		return this.config.id;
 	}
+
+	@Override
+	public NetworkPredictionConfig getConfig()
+	{
+		return this.config;
+	}
 	//
 	//	@Override
 	//	public ReadOnlyIntegerProperty truePositive()

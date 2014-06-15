@@ -19,6 +19,7 @@ import de.thatsich.openfx.imageprocessing.api.control.entity.IImage;
 import de.thatsich.openfx.network.api.control.entity.INetworkSpace;
 import de.thatsich.openfx.network.api.control.entity.ITrainedNetwork;
 import de.thatsich.openfx.network.intern.control.prediction.cnbc.ICNBC;
+import de.thatsich.openfx.network.intern.control.prediction.cnbc.nbc.INBC;
 import de.thatsich.openfx.network.intern.control.provider.INetworkCommandProvider;
 import de.thatsich.openfx.preprocessing.intern.control.command.preprocessor.core.IPreProcessor;
 import de.thatsich.openfx.preprocessing.intern.control.command.provider.IPreProcessingCommandProvider;
@@ -27,8 +28,10 @@ import javafx.application.Platform;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -70,7 +73,7 @@ public class NetworkSpace implements INetworkSpace
 		final long trainTime = stopTime - startTime;
 		final NetworkConfig config = new NetworkConfig(creationTime, id, trainTime);
 
-		return new TrainedNetwork(config, featureExtractors, cnbc);
+		return this.networkProvider.createTrainedNetwork(config, featureExtractors, cnbc);
 	}
 
 	/**
@@ -171,7 +174,9 @@ public class NetworkSpace implements INetworkSpace
 
 	private ICNBC getCNBC(List<IFeature> features) throws Exception
 	{
-		final ICNBC cnbc = this.networkProvider.createCollectiveNetworkBinaryClassifiers();
+		final List<INBC> initialNBCs = new LinkedList<>();
+		final Set<String> initialClasses = new HashSet<>();
+		final ICNBC cnbc = this.networkProvider.createCollectiveNetworkBinaryClassifiers(initialNBCs, initialClasses);
 
 		for (IFeature preprocessedFeature : features)
 		{

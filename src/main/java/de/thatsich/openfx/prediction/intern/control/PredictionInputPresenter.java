@@ -38,7 +38,7 @@ public class PredictionInputPresenter extends AFXMLPresenter
 	@Inject private ITrainedClassifiers binaryClassifications;
 	@Inject private IPredictionState predictionState;
 	@Inject private INetworkPredictions binaryPredictions;
-	@Inject private IPredictionCommandProvider commander;
+	@Inject private IPredictionCommandProvider provider;
 	@Inject private INetworks networks;
 
 	// Nodes
@@ -85,7 +85,7 @@ public class PredictionInputPresenter extends AFXMLPresenter
 		final ITrainedNetwork network = this.networks.selected().get();
 		this.log.info("Prepared all Tools.");
 
-		final PredictNetworkCommand command = this.commander.createPredictNetworkCommand(image, errorGenerator, network);
+		final PredictNetworkCommand command = this.provider.createPredictNetworkCommand(image, errorGenerator, network);
 		command.setOnSucceededCommandHandler(PredictNetworkSucceededHandler.class);
 		command.start();
 		this.log.info("Initiated testing the binary classification.");
@@ -111,7 +111,7 @@ public class PredictionInputPresenter extends AFXMLPresenter
 	private void onDeleteBinaryPredictionAction()
 	{
 		final INetworkPrediction selected = this.binaryPredictions.selected().get();
-		final DeleteBinaryPredictionCommand command = this.commander.createDeleteBinaryPredictionCommand(selected);
+		final DeleteBinaryPredictionCommand command = this.provider.createDeleteBinaryPredictionCommand(selected);
 		command.setOnSucceededCommandHandler(DeleteBinaryPredictionSucceededHandler.class);
 		command.start();
 		this.log.info("Initiated Delete of BinaryPrediction.");
@@ -125,7 +125,7 @@ public class PredictionInputPresenter extends AFXMLPresenter
 
 		for (final INetworkPrediction binaryPrediction : binaryPredictionList)
 		{
-			final DeleteBinaryPredictionCommand command = this.commander.createDeleteBinaryPredictionCommand(binaryPrediction);
+			final DeleteBinaryPredictionCommand command = this.provider.createDeleteBinaryPredictionCommand(binaryPrediction);
 			command.setOnSucceededCommandHandler(DeleteBinaryPredictionSucceededHandler.class);
 			command.setExecutor(executor);
 			command.start();

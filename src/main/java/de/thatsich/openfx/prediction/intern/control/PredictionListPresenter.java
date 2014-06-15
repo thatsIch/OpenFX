@@ -10,24 +10,19 @@ import de.thatsich.openfx.prediction.intern.control.provider.IPredictionCommandP
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 
 public class PredictionListPresenter extends AFXMLPresenter
 {
+	// Injects
+	@Inject private PredictionInitCommander init;
+	@Inject private INetworkPredictions predictions;
+	@Inject private IPredictionCommandProvider provider;
 
-	@Inject private PredictionInitCommander initCommander;
 	// Nodes
 	@FXML private TableView<INetworkPrediction> nodeTableViewBinaryPredictionList;
-	@FXML private TableColumn<INetworkPrediction, String> nodeTableColumnClassifierName;
-	@FXML private TableColumn<INetworkPrediction, String> nodeTableColumnExtractorName;
-	@FXML private TableColumn<INetworkPrediction, Integer> nodeTableColumnFrameSize;
-	@FXML private TableColumn<INetworkPrediction, String> nodeTableColumnErrorClassName;
+	@FXML private TableColumn<INetworkPrediction, String> nodeTableColumnDateTime;
+	@FXML private TableColumn<INetworkPrediction, String> nodeTableColumnPredictedErrorClass;
 	@FXML private TableColumn<INetworkPrediction, String> nodeTableColumnID;
-	// Injects
-	@Inject
-	private INetworkPredictions binaryPredictions;
-	@Inject
-	private IPredictionCommandProvider provider;
 
 	@Override
 	protected void bindComponents()
@@ -50,14 +45,14 @@ public class PredictionListPresenter extends AFXMLPresenter
 
 	private void bindTableViewModel()
 	{
-		this.nodeTableViewBinaryPredictionList.itemsProperty().bind(this.binaryPredictions.list());
+		this.nodeTableViewBinaryPredictionList.itemsProperty().bind(this.predictions.list());
 		this.log.info("Bound Content to Model.");
 	}
 
 	private void bindTableViewSelection()
 	{
 		this.nodeTableViewBinaryPredictionList.getSelectionModel().selectedItemProperty().addListener((paramObservableValue, oldvalue, newValue) -> {
-			this.binaryPredictions.selected().set(newValue);
+			this.predictions.selected().set(newValue);
 			this.log.info("Set Selected BinaryPrediction in Model.");
 
 			final int index = this.nodeTableViewBinaryPredictionList.getSelectionModel().getSelectedIndex();
@@ -66,16 +61,14 @@ public class PredictionListPresenter extends AFXMLPresenter
 		});
 		this.log.info("Bound Selection to Model.");
 
-		this.binaryPredictions.selected().addListener((observable, oldValue, newValue) -> this.nodeTableViewBinaryPredictionList.getSelectionModel().select(newValue));
+		this.predictions.selected().addListener((observable, oldValue, newValue) -> this.nodeTableViewBinaryPredictionList.getSelectionModel().select(newValue));
 		this.log.info("Bound Model to Selection.");
 	}
 
 	private void bindTableViewCellValue()
 	{
-		this.nodeTableColumnClassifierName.setCellValueFactory(new PropertyValueFactory<>("getClassifierName"));
-		this.nodeTableColumnExtractorName.setCellValueFactory(new PropertyValueFactory<>("extractorName"));
-		this.nodeTableColumnFrameSize.setCellValueFactory(new PropertyValueFactory<>("tileSize"));
-		this.nodeTableColumnErrorClassName.setCellValueFactory(new PropertyValueFactory<>("getErrorClassName"));
-		this.nodeTableColumnID.setCellValueFactory(new PropertyValueFactory<>("getID"));
+		this.nodeTableColumnDateTime.setCellValueFactory(cellData -> cellData.getValue().dateTime());
+		this.nodeTableColumnPredictedErrorClass.setCellValueFactory(cellData -> cellData.getValue().predictedClassName());
+		this.nodeTableColumnID.setCellValueFactory(cellData -> cellData.getValue().id());
 	}
 }

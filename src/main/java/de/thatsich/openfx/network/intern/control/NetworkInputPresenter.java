@@ -77,7 +77,7 @@ public class NetworkInputPresenter extends AFXMLPresenter
 		final List<IPreProcessor> preProcessors = this.preProcessors.list();
 		final List<IBinaryClassifier> binaryClassifiers = this.binaryClassifiers.list();
 
-		final CreateTrainedNetworkCommand command = this.provider.createTrainNetworkCommand(images, errorGenerators, featureExtractors, preProcessors, binaryClassifiers);
+		final CreateTrainedNetworkCommand command = this.provider.createTrainedNetworkCommand(images, errorGenerators, featureExtractors, preProcessors, binaryClassifiers);
 		command.setOnSucceededCommandHandler(TrainNetworkSucceededHandler.class);
 		command.start();
 		this.log.info("Initiated Creation of Network.");

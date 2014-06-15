@@ -10,11 +10,17 @@ import de.thatsich.openfx.network.api.control.entity.ITrainedNetwork;
 import de.thatsich.openfx.network.intern.control.command.commands.CreateTrainedNetworkCommand;
 import de.thatsich.openfx.network.intern.control.command.commands.DeleteNetworkCommand;
 import de.thatsich.openfx.network.intern.control.command.commands.SetLastNetworkIndexCommand;
+import de.thatsich.openfx.network.intern.control.prediction.NetworkConfig;
+import de.thatsich.openfx.network.intern.control.prediction.TrainedNetwork;
+import de.thatsich.openfx.network.intern.control.prediction.cnbc.ClassSelection;
 import de.thatsich.openfx.network.intern.control.prediction.cnbc.CollectiveNetworkBinaryClassifiers;
+import de.thatsich.openfx.network.intern.control.prediction.cnbc.ICNBC;
+import de.thatsich.openfx.network.intern.control.prediction.cnbc.nbc.INBC;
 import de.thatsich.openfx.network.intern.control.prediction.cnbc.nbc.NetworkBinaryClassifiers;
 import de.thatsich.openfx.preprocessing.intern.control.command.preprocessor.core.IPreProcessor;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author thatsIch
@@ -22,11 +28,15 @@ import java.util.List;
  */
 public interface INetworkCommandProvider extends ICommandProvider
 {
-	CreateTrainedNetworkCommand createTrainNetworkCommand(List<IImage> images, List<IErrorGenerator> errorGenerators, List<IFeatureExtractor> featureExtractors, List<IPreProcessor> preProcessors, List<IBinaryClassifier> binaryClassifiers);
+	CreateTrainedNetworkCommand createTrainedNetworkCommand(List<IImage> images, List<IErrorGenerator> errorGenerators, List<IFeatureExtractor> featureExtractors, List<IPreProcessor> preProcessors, List<IBinaryClassifier> binaryClassifiers);
 
 	NetworkBinaryClassifiers createNetworkBinaryClassifiers(String errorClass, List<ITrainedBinaryClassifier> bcs);
 
-	CollectiveNetworkBinaryClassifiers createCollectiveNetworkBinaryClassifiers();
+	TrainedNetwork createTrainedNetwork(NetworkConfig config, List<IFeatureExtractor> featureExtractors, ICNBC cnbc);
+
+	CollectiveNetworkBinaryClassifiers createCollectiveNetworkBinaryClassifiers(List<INBC> nbcs, Set<String> uniqueErrorClasses);
+
+	ClassSelection createClassSelection();
 
 	DeleteNetworkCommand createDeleteNetworkCommand(ITrainedNetwork selected);
 

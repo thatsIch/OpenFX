@@ -1,13 +1,18 @@
 package de.thatsich.openfx.network.intern.control.prediction;
 
+import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
+import de.thatsich.core.Log;
 import de.thatsich.openfx.errorgeneration.api.control.entity.IError;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureExtractor;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureVector;
 import de.thatsich.openfx.featureextraction.intern.control.command.commands.CreateExtractedFeatureCommand;
+import de.thatsich.openfx.featureextraction.intern.control.command.provider.IFeatureCommandProvider;
 import de.thatsich.openfx.network.api.control.entity.ITrainedNetwork;
 import de.thatsich.openfx.network.intern.control.prediction.cnbc.ClassSelection;
 import de.thatsich.openfx.network.intern.control.prediction.cnbc.ICNBC;
+import de.thatsich.openfx.network.intern.control.provider.INetworkCommandProvider;
 import javafx.beans.property.ReadOnlyLongProperty;
 import javafx.beans.property.ReadOnlyStringProperty;
 import javafx.util.Pair;
@@ -24,14 +29,21 @@ public class TrainedNetwork implements ITrainedNetwork
 	private final NetworkConfig config;
 	private final List<IFeatureExtractor> featureExtractors;
 	private final ICNBC cnbc;
+	private final IFeatureCommandProvider featureProvider;
+	private final INetworkCommandProvider networkProvider;
+	private final Log log;
 	private final ClassSelection cs;
 
-	public TrainedNetwork(NetworkConfig config, List<IFeatureExtractor> featureExtractors, ICNBC cnbc)
+	@Inject
+	public TrainedNetwork(@Assisted NetworkConfig config, @Assisted List<IFeatureExtractor> featureExtractors, @Assisted ICNBC cnbc, IFeatureCommandProvider featureProvider, INetworkCommandProvider networkProvider, Log log)
 	{
 		this.config = config;
 		this.featureExtractors = featureExtractors;
 		this.cnbc = cnbc;
-		this.cs = new ClassSelection();
+		this.featureProvider = featureProvider;
+		this.networkProvider = networkProvider;
+		this.log = log;
+		this.cs = this.networkProvider.createClassSelection();
 	}
 
 	@Override
@@ -44,8 +56,13 @@ public class TrainedNetwork implements ITrainedNetwork
 	public String predict(IError error) throws Exception
 	{
 		final List<IFeature> features = this.getFeatures(error, this.featureExtractors);
+		this.log.info("Extracted features: " + features.size());
+
 		final List<IFeatureVector> featureVectors = this.getFeatureVectors(features);
+		this.log.info("Extracted featureVectors: " + featureVectors.size());
+
 		final List<Pair<String, Double>> predictions = this.getPredictions(featureVectors, this.cnbc);
+		this.log.info("Extracted predictions: " + predictions.size());
 
 		return this.cs.predict(predictions);
 	}
@@ -101,13 +118,13 @@ public class TrainedNetwork implements ITrainedNetwork
 		return preprocessedFeatureVectors;
 	}
 
-	private List<Pair<String, Double>> getPredictions(List<IFeatureVector> preProcessedFeatureVectors, ICNBC cnbc)
+	private List<Pair<String, Double>> getPredictions(List<IFeatureVector> featureVectors, ICNBC cnbc)
 	{
 		final List<Pair<String, Double>> predictions = new LinkedList<>();
 
-		for (IFeatureVector preprocessedFeatureVector : preProcessedFeatureVectors)
+		for (IFeatureVector fv : featureVectors)
 		{
-			final List<Pair<String, Double>> predict = cnbc.predict(preprocessedFeatureVector);
+			final List<Pair<String, Double>> predict = cnbc.predict(fv);
 			predictions.addAll(predict);
 		}
 
@@ -116,7 +133,7 @@ public class TrainedNetwork implements ITrainedNetwork
 
 	private IFeature getFeature(IError error, IFeatureExtractor featureExtractor) throws Exception
 	{
-		final CreateExtractedFeatureCommand command = new CreateExtractedFeatureCommand(error, featureExtractor, 15);
+		final CreateExtractedFeatureCommand command = this.featureProvider.createExtractFeatureCommand(error, featureExtractor, 15);
 		final IFeature feature = command.call();
 
 		return feature;
