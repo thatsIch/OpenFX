@@ -5,8 +5,6 @@ import de.thatsich.openfx.errorgeneration.api.control.entity.IErrorGenerator;
 import de.thatsich.openfx.errorgeneration.intern.control.command.service.ErrorFileStorageService;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureExtractor;
 import de.thatsich.openfx.imageprocessing.api.control.entity.IImage;
-import de.thatsich.openfx.preprocessing.intern.control.command.preprocessor.core.IPreProcessor;
-import de.thatsich.openfx.preprocessing.intern.control.command.service.TrainedPreProcessorFileStorageService;
 
 import java.util.List;
 
@@ -16,5 +14,5 @@ import java.util.List;
  */
 public interface INetworkSpace
 {
-	ITrainedNetwork train(List<IImage> trainingImages, List<IErrorGenerator> errorGenerators, ErrorFileStorageService errorStorage, List<IFeatureExtractor> featureExtractors, List<IPreProcessor> preProcessors, TrainedPreProcessorFileStorageService preproStorage, List<IBinaryClassifier> binaryClassifiers) throws Exception;
+	ITrainedNetwork train(List<IImage> trainingImages, List<IErrorGenerator> errorGenerators, ErrorFileStorageService errorStorage, List<IFeatureExtractor> featureExtractors, List<IBinaryClassifier> binaryClassifiers) throws Exception;
 }

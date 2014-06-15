@@ -11,18 +11,20 @@ import javafx.collections.FXCollections;
 public class TrainedClassifiers implements ITrainedClassifiers
 {
 	// Properties
-	private final ListProperty<ITrainedBinaryClassifier> binaryClassificationList = new SimpleListProperty<>(FXCollections.<ITrainedBinaryClassifier>observableArrayList());
-	private final ObjectProperty<ITrainedBinaryClassifier> selectedBinaryClassification = new SimpleObjectProperty<>();
+	private final ListProperty<ITrainedBinaryClassifier> list = new SimpleListProperty<>(FXCollections.<ITrainedBinaryClassifier>observableArrayList());
+	private final ObjectProperty<ITrainedBinaryClassifier> selected = new SimpleObjectProperty<>();
 
 	// Property Getter
+	@Override
 	public ListProperty<ITrainedBinaryClassifier> list()
 	{
-		return this.binaryClassificationList;
+		return this.list;
 	}
 
+	@Override
 	public ObjectProperty<ITrainedBinaryClassifier> selected()
 	{
-		return this.selectedBinaryClassification;
+		return this.selected;
 	}
 
 }

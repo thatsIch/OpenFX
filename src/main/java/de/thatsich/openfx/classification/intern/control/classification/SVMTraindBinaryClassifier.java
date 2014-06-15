@@ -5,7 +5,7 @@ import com.google.inject.assistedinject.Assisted;
 import de.thatsich.openfx.classification.intern.control.classification.core.ATraindBinaryClassifier;
 import de.thatsich.openfx.classification.intern.control.classifier.core.BinaryClassificationConfig;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureVector;
-import org.opencv.core.MatOfDouble;
+import org.opencv.core.MatOfFloat;
 import org.opencv.ml.CvSVM;
 
 
@@ -33,15 +33,18 @@ public class SVMTraindBinaryClassifier extends ATraindBinaryClassifier
 	@Override
 	public double predict(IFeatureVector fv)
 	{
-		final double[] featureArray = new double[fv.vector().size()];
+		final float[] featureArray = new float[fv.vector().size()];
 
 		for (int i = 0; i < fv.vector().size(); i++)
 		{
-			featureArray[i] = fv.vector().get(i);
+			featureArray[i] = fv.vector().get(i).floatValue();
 		}
 
-		final MatOfDouble featureMat = new MatOfDouble(featureArray);
-		return this.svm.predict(featureMat);
+		final MatOfFloat floatMat = new MatOfFloat(featureArray);
+		final float predict = this.svm.predict(floatMat);
+		this.log.info("Predicted " + predict);
+
+		return predict;
 	}
 
 	@Override

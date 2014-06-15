@@ -1,9 +1,10 @@
 package de.thatsich.openfx.classification.intern.control.classifier;
 
+import com.google.inject.Inject;
 import de.thatsich.openfx.classification.api.control.entity.ITrainedBinaryClassifier;
-import de.thatsich.openfx.classification.intern.control.classification.SVMTraindBinaryClassifier;
 import de.thatsich.openfx.classification.intern.control.classifier.core.ABinaryClassifier;
 import de.thatsich.openfx.classification.intern.control.classifier.core.BinaryClassificationConfig;
+import de.thatsich.openfx.classification.intern.control.provider.IClassificationCommandProvider;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfFloat;
@@ -12,6 +13,8 @@ import org.opencv.ml.CvSVM;
 
 public class SVMBinaryClassifier extends ABinaryClassifier
 {
+	@Inject private IClassificationCommandProvider provider;
+
 	@Override
 	public ITrainedBinaryClassifier train(MatOfFloat positiveTrainData, MatOfFloat negativeTrainData, BinaryClassificationConfig config)
 	{
@@ -36,6 +39,6 @@ public class SVMBinaryClassifier extends ABinaryClassifier
 
 		svm.train(trainData, trainLabels);
 
-		return new SVMTraindBinaryClassifier(svm, config);
+		return this.provider.createSVMTraindBinaryClassifier(svm, config);
 	}
 }

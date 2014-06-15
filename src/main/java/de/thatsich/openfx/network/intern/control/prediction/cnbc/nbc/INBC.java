@@ -3,7 +3,6 @@ package de.thatsich.openfx.network.intern.control.prediction.cnbc.nbc;
 import de.thatsich.openfx.classification.api.control.entity.IBinaryClassifier;
 import de.thatsich.openfx.classification.api.control.entity.ITrainedBinaryClassifier;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
-import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureVector;
 
 import java.util.List;
 
@@ -19,7 +18,7 @@ public interface INBC
 
 	void addFeature(IFeature feature) throws Exception;
 
-	double predict(IFeatureVector fv);
+	double predict(IFeature f);
 
 	String getUniqueErrorClassName();
 }

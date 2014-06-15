@@ -23,6 +23,6 @@ public class InitBinaryClassificationListSucceededHandler extends ACommandHandle
 	public void handle(List<ITrainedBinaryClassifier> trainedBinaryClassifierList)
 	{
 		this.binaryClassifications.list().addAll(trainedBinaryClassifierList);
-		this.log.info("Added TrainedBinaryClassifierList to Database.");
+		this.log.info("Added TrainedBinaryClassifiers (" + trainedBinaryClassifierList.size() + ") to Database.");
 	}
 }

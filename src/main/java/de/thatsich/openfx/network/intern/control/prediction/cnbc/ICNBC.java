@@ -1,7 +1,6 @@
 package de.thatsich.openfx.network.intern.control.prediction.cnbc;
 
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
-import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureVector;
 import de.thatsich.openfx.network.intern.control.prediction.cnbc.nbc.INBC;
 import javafx.util.Pair;
 
@@ -17,5 +16,5 @@ public interface ICNBC
 
 	void addFeature(IFeature feature) throws Exception;
 
-	List<Pair<String, Double>> predict(IFeatureVector fv);
+	List<Pair<String, Double>> predict(IFeature f);
 }

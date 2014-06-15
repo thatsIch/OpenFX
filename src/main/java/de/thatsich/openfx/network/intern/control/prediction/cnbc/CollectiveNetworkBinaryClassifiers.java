@@ -4,7 +4,6 @@ import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import de.thatsich.core.Log;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
-import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureVector;
 import de.thatsich.openfx.network.intern.control.prediction.cnbc.nbc.INBC;
 import de.thatsich.openfx.network.intern.control.provider.INetworkCommandProvider;
 import javafx.util.Pair;
@@ -63,14 +62,14 @@ public class CollectiveNetworkBinaryClassifiers implements ICNBC
 	}
 
 	@Override
-	public List<Pair<String, Double>> predict(IFeatureVector fv)
+	public List<Pair<String, Double>> predict(IFeature f)
 	{
 		final List<Pair<String, Double>> pairs = new LinkedList<>();
 		this.log.info("Predicting over " + this.nbcs.size() + " NBCs");
 
 		for (INBC nbc : this.nbcs)
 		{
-			final double predict = nbc.predict(fv);
+			final double predict = nbc.predict(f);
 			final String name = nbc.getUniqueErrorClassName();
 			final Pair<String, Double> pair = new Pair<>(name, predict);
 

@@ -21,9 +21,7 @@ import de.thatsich.openfx.network.api.control.entity.ITrainedNetwork;
 import de.thatsich.openfx.network.intern.control.prediction.cnbc.ICNBC;
 import de.thatsich.openfx.network.intern.control.prediction.cnbc.nbc.INBC;
 import de.thatsich.openfx.network.intern.control.provider.INetworkCommandProvider;
-import de.thatsich.openfx.preprocessing.intern.control.command.preprocessor.core.IPreProcessor;
 import de.thatsich.openfx.preprocessing.intern.control.command.provider.IPreProcessingCommandProvider;
-import de.thatsich.openfx.preprocessing.intern.control.command.service.TrainedPreProcessorFileStorageService;
 import javafx.application.Platform;
 
 import java.text.SimpleDateFormat;
@@ -57,7 +55,7 @@ public class NetworkSpace implements INetworkSpace
 	@Inject private Log log;
 
 	@Override
-	public ITrainedNetwork train(List<IImage> trainingImages, List<IErrorGenerator> errorGenerators, ErrorFileStorageService errorStorage, List<IFeatureExtractor> featureExtractors, List<IPreProcessor> preProcessors, TrainedPreProcessorFileStorageService preproStorage, List<IBinaryClassifier> binaryClassifiers) throws Exception
+	public ITrainedNetwork train(List<IImage> trainingImages, List<IErrorGenerator> errorGenerators, ErrorFileStorageService errorStorage, List<IFeatureExtractor> featureExtractors, List<IBinaryClassifier> binaryClassifiers) throws Exception
 	{
 		final long startTime = System.currentTimeMillis();
 		this.log.info("Started training at " + startTime);

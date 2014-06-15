@@ -6,7 +6,6 @@ import de.thatsich.core.Log;
 import de.thatsich.openfx.errorgeneration.api.control.entity.IError;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureExtractor;
-import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureVector;
 import de.thatsich.openfx.featureextraction.intern.control.command.commands.CreateExtractedFeatureCommand;
 import de.thatsich.openfx.featureextraction.intern.control.command.provider.IFeatureCommandProvider;
 import de.thatsich.openfx.network.api.control.entity.ITrainedNetwork;
@@ -30,7 +29,6 @@ public class TrainedNetwork implements ITrainedNetwork
 	private final List<IFeatureExtractor> featureExtractors;
 	private final ICNBC cnbc;
 	private final IFeatureCommandProvider featureProvider;
-	private final INetworkCommandProvider networkProvider;
 	private final Log log;
 	private final ClassSelection cs;
 
@@ -41,9 +39,8 @@ public class TrainedNetwork implements ITrainedNetwork
 		this.featureExtractors = featureExtractors;
 		this.cnbc = cnbc;
 		this.featureProvider = featureProvider;
-		this.networkProvider = networkProvider;
 		this.log = log;
-		this.cs = this.networkProvider.createClassSelection();
+		this.cs = networkProvider.createClassSelection();
 	}
 
 	@Override
@@ -58,10 +55,7 @@ public class TrainedNetwork implements ITrainedNetwork
 		final List<IFeature> features = this.getFeatures(error, this.featureExtractors);
 		this.log.info("Extracted features: " + features.size());
 
-		final List<IFeatureVector> featureVectors = this.getFeatureVectors(features);
-		this.log.info("Extracted featureVectors: " + featureVectors.size());
-
-		final List<Pair<String, Double>> predictions = this.getPredictions(featureVectors, this.cnbc);
+		final List<Pair<String, Double>> predictions = this.getPredictions(features, this.cnbc);
 		this.log.info("Extracted predictions: " + predictions.size());
 
 		return this.cs.predict(predictions);
@@ -105,26 +99,13 @@ public class TrainedNetwork implements ITrainedNetwork
 		return features;
 	}
 
-	private List<IFeatureVector> getFeatureVectors(List<IFeature> preProcessedFeatures)
-	{
-		final List<IFeatureVector> preprocessedFeatureVectors = new LinkedList<>();
-
-		for (IFeature preprocessedFeature : preProcessedFeatures)
-		{
-			final List<IFeatureVector> vectors = preprocessedFeature.vectors();
-			preprocessedFeatureVectors.addAll(vectors);
-		}
-
-		return preprocessedFeatureVectors;
-	}
-
-	private List<Pair<String, Double>> getPredictions(List<IFeatureVector> featureVectors, ICNBC cnbc)
+	private List<Pair<String, Double>> getPredictions(List<IFeature> features, ICNBC cnbc)
 	{
 		final List<Pair<String, Double>> predictions = new LinkedList<>();
 
-		for (IFeatureVector fv : featureVectors)
+		for (IFeature f : features)
 		{
-			final List<Pair<String, Double>> predict = cnbc.predict(fv);
+			final List<Pair<String, Double>> predict = cnbc.predict(f);
 			predictions.addAll(predict);
 		}
 

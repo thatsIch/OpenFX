@@ -4,9 +4,9 @@ import com.google.inject.Inject;
 import de.thatsich.core.AFileStorageService;
 import de.thatsich.openfx.classification.api.control.entity.ITrainedBinaryClassifier;
 import de.thatsich.openfx.classification.api.model.IClassificationState;
-import de.thatsich.openfx.classification.intern.control.classification.RandomForestTraindBinaryClassifier;
 import de.thatsich.openfx.classification.intern.control.classification.SVMTraindBinaryClassifier;
 import de.thatsich.openfx.classification.intern.control.classifier.core.BinaryClassificationConfig;
+import de.thatsich.openfx.classification.intern.control.provider.IClassificationCommandProvider;
 import org.opencv.ml.CvRTrees;
 import org.opencv.ml.CvSVM;
 
@@ -27,10 +27,13 @@ public class ClassificationFileStorageService extends AFileStorageService<ITrain
 	private static final String SVM_EXT = ".svm";
 	private static final String RF_EXT = ".rf";
 
+	private final IClassificationCommandProvider provider;
+
 	@Inject
-	protected ClassificationFileStorageService(IClassificationState state)
+	protected ClassificationFileStorageService(IClassificationState state, IClassificationCommandProvider provider)
 	{
 		super(state.path().get());
+		this.provider = provider;
 	}
 
 	@Override
@@ -97,13 +100,13 @@ public class ClassificationFileStorageService extends AFileStorageService<ITrain
 		final ITrainedBinaryClassifier bc;
 		if (fileName.endsWith(SVM_EXT))
 		{
-			bc = new SVMTraindBinaryClassifier(new CvSVM(), config);
+			bc = this.provider.createSVMTraindBinaryClassifier(new CvSVM(), config);
 		}
 		else
 		{
-			bc = new RandomForestTraindBinaryClassifier(new CvRTrees(), config);
+			bc = this.provider.createRandomForestTraindBinaryClassifier(new CvRTrees(), config);
 		}
-		this.log.info("Resolved BinaryClassification.");
+		this.log.info("Resolved BinaryClassification " + bc);
 
 		try
 		{

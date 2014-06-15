@@ -3,7 +3,7 @@ package de.thatsich.openfx.network.intern.control.command.service;
 import com.google.inject.Inject;
 import de.thatsich.core.AFileStorageService;
 import de.thatsich.openfx.classification.api.control.entity.ITrainedBinaryClassifier;
-import de.thatsich.openfx.classification.api.model.ITrainedClassifiers;
+import de.thatsich.openfx.classification.intern.control.command.service.ClassificationFileStorageService;
 import de.thatsich.openfx.featureextraction.api.model.IFeatureExtractors;
 import de.thatsich.openfx.network.api.control.entity.ITrainedNetwork;
 import de.thatsich.openfx.network.api.model.INetworkState;
@@ -33,15 +33,16 @@ import java.util.StringJoiner;
 public class NetworkFileStorageService extends AFileStorageService<ITrainedNetwork>
 {
 	private final IFeatureExtractors featureExtractors;
-	private final ITrainedClassifiers classifiers;
+	private final List<ITrainedBinaryClassifier> classifiers;
 	private final INetworkCommandProvider networkProvider;
 
 	@Inject
-	protected NetworkFileStorageService(INetworkState state, IFeatureExtractors featureExtractors, ITrainedClassifiers classifiers, INetworkCommandProvider networkProvider)
+	NetworkFileStorageService(INetworkState state, IFeatureExtractors featureExtractors, ClassificationFileStorageService service, INetworkCommandProvider networkProvider) throws IOException
 	{
 		super(state.path().get());
+
 		this.featureExtractors = featureExtractors;
-		this.classifiers = classifiers;
+		this.classifiers = service.init();
 		this.networkProvider = networkProvider;
 	}
 
@@ -164,12 +165,15 @@ public class NetworkFileStorageService extends AFileStorageService<ITrainedNetwo
 			String trainedClassifierID;
 			while ((trainedClassifierID = vectorReader.readLine()) != null)
 			{
-				for (ITrainedBinaryClassifier bc : this.classifiers.list())
+				this.log.info("Trying to find " + trainedClassifierID + " in BCs of size " + this.classifiers.size());
+				for (ITrainedBinaryClassifier bc : this.classifiers)
 				{
 					final String bcID = bc.getConfig().toString();
+					this.log.info("Comparing " + trainedClassifierID + " with " + bcID);
 					if (bcID.equals(trainedClassifierID))
 					{
 						bcs.add(bc);
+						this.log.info("Found matching BC.");
 					}
 				}
 			}

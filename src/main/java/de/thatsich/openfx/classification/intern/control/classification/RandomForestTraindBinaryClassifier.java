@@ -32,7 +32,10 @@ public class RandomForestTraindBinaryClassifier extends ATraindBinaryClassifier
 		}
 
 		final MatOfDouble featureMat = new MatOfDouble(featureArray);
-		return this.trees.predict_prob(featureMat);
+		final float predict = this.trees.predict_prob(featureMat);
+		this.log.info("Predicted " + predict);
+
+		return predict;
 	}
 
 	@Override

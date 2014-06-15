@@ -3,11 +3,16 @@ package de.thatsich.openfx.classification.intern.control.provider;
 import de.thatsich.core.guice.ICommandProvider;
 import de.thatsich.openfx.classification.api.control.entity.IBinaryClassifier;
 import de.thatsich.openfx.classification.api.control.entity.ITrainedBinaryClassifier;
+import de.thatsich.openfx.classification.intern.control.classification.RandomForestTraindBinaryClassifier;
+import de.thatsich.openfx.classification.intern.control.classification.SVMTraindBinaryClassifier;
+import de.thatsich.openfx.classification.intern.control.classifier.core.BinaryClassificationConfig;
 import de.thatsich.openfx.classification.intern.control.command.commands.CreateTrainedBinaryClassifierCommand;
 import de.thatsich.openfx.classification.intern.control.command.commands.DeleteBinaryClassificationCommand;
 import de.thatsich.openfx.classification.intern.control.command.commands.SetLastBinaryClassificationIndexCommand;
 import de.thatsich.openfx.classification.intern.control.command.commands.SetLastBinaryClassifierIndexCommand;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
+import org.opencv.ml.CvRTrees;
+import org.opencv.ml.CvSVM;
 
 public interface IClassificationCommandProvider extends ICommandProvider
 {
@@ -18,4 +23,8 @@ public interface IClassificationCommandProvider extends ICommandProvider
 	SetLastBinaryClassifierIndexCommand createSetLastBinaryClassifierIndexCommand(int lastBinaryClassifierIndex);
 
 	SetLastBinaryClassificationIndexCommand createSetLastBinaryClassificationIndexCommand(int lastBinaryClassificationIndex);
+
+	RandomForestTraindBinaryClassifier createRandomForestTraindBinaryClassifier(CvRTrees trees, BinaryClassificationConfig config);
+
+	SVMTraindBinaryClassifier createSVMTraindBinaryClassifier(CvSVM svm, BinaryClassificationConfig config);
 }
