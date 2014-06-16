@@ -123,7 +123,7 @@ public class ClassificationFileStorageService extends AFileStorageService<ITrain
 	@Override
 	public ITrainedBinaryClassifier update(ITrainedBinaryClassifier elem) throws IOException
 	{
-		return null;
+		return elem;
 	}
 
 	@Override

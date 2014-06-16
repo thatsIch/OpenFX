@@ -61,14 +61,30 @@ public abstract class AFileStorageService<T> implements IFileStorageService<T>
 			@Override
 			public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException
 			{
-				Files.delete(file);
+				try
+				{
+					Files.delete(file);
+				}
+				catch (IOException e)
+				{
+					e.printStackTrace();
+				}
+
 				return FileVisitResult.CONTINUE;
 			}
 
 			@Override
 			public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException
 			{
-				Files.delete(dir);
+				try
+				{
+					Files.delete(dir);
+				}
+				catch (IOException e)
+				{
+					e.printStackTrace();
+				}
+
 				return FileVisitResult.CONTINUE;
 			}
 		});

@@ -38,7 +38,7 @@ public class NetworkPredictionFileStorageService extends AFileStorageService<INe
 		{
 			for (Path child : stream)
 			{
-				final NetworkPrediction prediction = this.retrieve(child);
+				final INetworkPrediction prediction = this.retrieve(child);
 				binaryPredictions.add(prediction);
 			}
 		}
@@ -66,7 +66,7 @@ public class NetworkPredictionFileStorageService extends AFileStorageService<INe
 	}
 
 	@Override
-	public NetworkPrediction retrieve(Path filePath)
+	public INetworkPrediction retrieve(Path filePath)
 	{
 		final String fileName = filePath.getFileName().toString();
 
@@ -89,6 +89,6 @@ public class NetworkPredictionFileStorageService extends AFileStorageService<INe
 		final String fileName = config.toString();
 		final Path path = super.storagePath.resolve(fileName);
 
-		this.deleteRecursively(path);
+		super.deleteRecursively(path);
 	}
 }

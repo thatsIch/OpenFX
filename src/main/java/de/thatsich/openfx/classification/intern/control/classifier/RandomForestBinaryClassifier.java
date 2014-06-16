@@ -20,20 +20,18 @@ public class RandomForestBinaryClassifier extends ABinaryClassifier
 	@Override
 	public ITrainedBinaryClassifier train(MatOfFloat positiveTrainData, MatOfFloat negativeTrainData, BinaryClassificationConfig config)
 	{
-		final CvRTrees trees = new CvRTrees();
-		final CvRTParams params = new CvRTParams();
-		params.set_max_depth(25);
-		params.set_min_sample_count(5);
-		params.set_regression_accuracy(0);
-		params.set_use_surrogates(false);
-		params.set_max_categories(25);
-		params.set_calc_var_importance(false);
-		params.set_nactive_vars(4);
-		params.set_term_crit(new TermCriteria(TermCriteria.MAX_ITER + TermCriteria.EPS, 100, 0F));
 
 		// Labels
 		final Mat positiveLabels = Mat.ones(positiveTrainData.rows(), 1, CvType.CV_8U);
 		final Mat negativeLabels = Mat.zeros(negativeTrainData.rows(), 1, CvType.CV_8U);
+
+		final int sampleCount = (int) Math.ceil(0.01 * (positiveTrainData.rows() + negativeTrainData.rows()));
+		final CvRTrees trees = new CvRTrees();
+		final CvRTParams params = new CvRTParams();
+		params.set_max_depth(25);
+		params.set_min_sample_count(sampleCount);
+		params.set_term_crit(new TermCriteria(TermCriteria.MAX_ITER + TermCriteria.EPS, 100, 0F));
+
 
 		Mat trainLabels = new MatOfFloat();
 		trainLabels.push_back(positiveLabels);

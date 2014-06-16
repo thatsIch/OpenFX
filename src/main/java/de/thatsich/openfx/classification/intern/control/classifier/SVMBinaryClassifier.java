@@ -9,6 +9,7 @@ import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfFloat;
 import org.opencv.ml.CvSVM;
+import org.opencv.ml.CvSVMParams;
 
 
 public class SVMBinaryClassifier extends ABinaryClassifier
@@ -38,6 +39,7 @@ public class SVMBinaryClassifier extends ABinaryClassifier
 		this.log.info("Data with Size (" + trainData.cols() + ", " + trainData.rows() + ") is " + trainData.type());
 
 		svm.train(trainData, trainLabels);
+		new CvSVMParams();
 
 		return this.provider.createSVMTraindBinaryClassifier(svm, config);
 	}

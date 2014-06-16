@@ -12,7 +12,7 @@ public class DeleteBinaryPredictionCommand extends ACommand<INetworkPrediction>
 	final NetworkPredictionFileStorageService storage;
 
 	@Inject
-	private DeleteBinaryPredictionCommand(@Assisted INetworkPrediction prediction, final NetworkPredictionFileStorageService storage)
+	DeleteBinaryPredictionCommand(@Assisted INetworkPrediction prediction, final NetworkPredictionFileStorageService storage)
 	{
 		this.prediction = prediction;
 		this.storage = storage;
@@ -22,6 +22,7 @@ public class DeleteBinaryPredictionCommand extends ACommand<INetworkPrediction>
 	protected INetworkPrediction call() throws Exception
 	{
 		this.storage.delete(this.prediction);
+
 		return this.prediction;
 	}
 }

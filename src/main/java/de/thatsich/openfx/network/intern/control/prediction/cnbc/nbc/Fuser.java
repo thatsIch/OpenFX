@@ -2,6 +2,7 @@ package de.thatsich.openfx.network.intern.control.prediction.cnbc.nbc;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Fuser uses values to find a normal distributed random value
@@ -53,8 +54,9 @@ public class Fuser
 	{
 		if (sorted.size() > 0)
 		{
-			final int lastItemIndex = sorted.size();
-			final double winner = sorted.get(lastItemIndex - 1);
+			final int bound = sorted.size();
+			final int randomIndex = this.getNextNormalDistributedRandomBetweenZeroAndX(bound);
+			final double winner = sorted.get(randomIndex);
 
 			return winner;
 		}
@@ -62,5 +64,19 @@ public class Fuser
 		{
 			return 0;
 		}
+	}
+
+	private int getNextNormalDistributedRandomBetweenZeroAndX(double x)
+	{
+		final ThreadLocalRandom random = ThreadLocalRandom.current();
+
+		int result;
+		do
+		{
+			final double fit = random.nextGaussian() / 3 * x + 0.5;
+			result = (int) Math.round(fit);
+		} while (result < 0 || result > 1);
+
+		return result;
 	}
 }

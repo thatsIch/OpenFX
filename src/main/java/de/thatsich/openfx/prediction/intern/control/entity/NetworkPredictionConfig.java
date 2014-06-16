@@ -26,10 +26,15 @@ public class NetworkPredictionConfig implements IEntityConfig
 	public NetworkPredictionConfig(String fileName)
 	{
 		final String splitString[] = fileName.split("_");
+		final int lastSplitIndex = splitString.length - 1;
 
-		this.dateTime = new ReadOnlyStringWrapper(splitString[0]);
-		this.predictedClassName = new ReadOnlyStringWrapper(splitString[1]);
-		this.id = new ReadOnlyStringWrapper(splitString[2]);
+		final String dateTime = splitString[0];
+		final String id = splitString[lastSplitIndex];
+		final String prediction = fileName.replaceFirst(dateTime + "_", "").replaceFirst("_" + id, "");
+
+		this.dateTime = new ReadOnlyStringWrapper(dateTime);
+		this.predictedClassName = new ReadOnlyStringWrapper(prediction);
+		this.id = new ReadOnlyStringWrapper(id);
 	}
 
 
