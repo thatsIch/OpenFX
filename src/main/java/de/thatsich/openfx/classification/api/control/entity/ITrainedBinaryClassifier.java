@@ -4,6 +4,7 @@ import de.thatsich.core.IEntity;
 import de.thatsich.openfx.classification.intern.control.classifier.core.BinaryClassificationConfig;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureVector;
 import javafx.beans.property.ReadOnlyIntegerProperty;
+import javafx.beans.property.ReadOnlyLongProperty;
 import javafx.beans.property.ReadOnlyStringProperty;
 
 
@@ -55,28 +56,28 @@ public interface ITrainedBinaryClassifier extends IEntity
 	 *
 	 * @return Property of FilePath
 	 */
-	ReadOnlyStringProperty classificationNameProperty();
+	ReadOnlyStringProperty classificationName();
 
 	/**
 	 * Gets Property of ExtractorName
 	 *
 	 * @return Property of ExtractorName
 	 */
-	ReadOnlyStringProperty extractorNameProperty();
+	ReadOnlyStringProperty extractorName();
 
 	/**
 	 * Gets Property of FrameSize
 	 *
 	 * @return Property of FrameSize
 	 */
-	ReadOnlyIntegerProperty tileSizeProperty();
+	ReadOnlyIntegerProperty tileSize();
 
 	/**
 	 * Gets Property of ErrorName
 	 *
 	 * @return Property of ErrorName
 	 */
-	ReadOnlyStringProperty errorNameProperty();
+	ReadOnlyStringProperty errorName();
 
 	/**
 	 * Gets Property of ID
@@ -92,4 +93,6 @@ public interface ITrainedBinaryClassifier extends IEntity
 	 */
 	@Override
 	BinaryClassificationConfig getConfig();
+
+	ReadOnlyLongProperty trainTime();
 }

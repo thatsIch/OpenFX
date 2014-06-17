@@ -21,7 +21,7 @@
 				<TableColumn editable="false" prefWidth="100.0"
 				             sortable="false" text="Error" fx:id="nodeTableErrorName"/>
 				<TableColumn editable="false" prefWidth="100.0"
-				             sortable="false" text="ID" fx:id="nodeTableColumnID"/>
+				             sortable="false" text="ID" fx:id="nodeTableColumnTrainTime"/>
 			</columns>
 
 			<columnResizePolicy>

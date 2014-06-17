@@ -41,10 +41,10 @@ public class ClassificationDisplayPresenter extends AFXMLPresenter
 		this.binaryClassifications.selected().addListener((observable, oldValue, newValue) -> {
 			if (newValue != null)
 			{
-				this.nodeLabelClassificationName.setText(newValue.classificationNameProperty().getValue());
-				this.nodeLabelExtractorName.setText(newValue.extractorNameProperty().getValue());
-				this.nodeLabelFrameSize.setText(newValue.tileSizeProperty().getValue().toString());
-				this.nodeLabelErrorName.setText(newValue.errorNameProperty().getValue());
+				this.nodeLabelClassificationName.setText(newValue.classificationName().getValue());
+				this.nodeLabelExtractorName.setText(newValue.extractorName().getValue());
+				this.nodeLabelFrameSize.setText(newValue.tileSize().getValue().toString());
+				this.nodeLabelErrorName.setText(newValue.errorName().getValue());
 				this.nodeLabelID.setText(newValue.idProperty().getValue());
 			}
 			else

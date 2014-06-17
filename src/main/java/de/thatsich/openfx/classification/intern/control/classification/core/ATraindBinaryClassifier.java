@@ -5,6 +5,7 @@ import de.thatsich.core.Log;
 import de.thatsich.openfx.classification.api.control.entity.ITrainedBinaryClassifier;
 import de.thatsich.openfx.classification.intern.control.classifier.core.BinaryClassificationConfig;
 import javafx.beans.property.ReadOnlyIntegerProperty;
+import javafx.beans.property.ReadOnlyLongProperty;
 import javafx.beans.property.ReadOnlyStringProperty;
 
 
@@ -35,25 +36,25 @@ public abstract class ATraindBinaryClassifier implements ITrainedBinaryClassifie
 	}
 
 	@Override
-	public ReadOnlyStringProperty classificationNameProperty()
+	public ReadOnlyStringProperty classificationName()
 	{
 		return this.config.classificationName;
 	}
 
 	@Override
-	public ReadOnlyStringProperty extractorNameProperty()
+	public ReadOnlyStringProperty extractorName()
 	{
 		return this.config.extractorName;
 	}
 
 	@Override
-	public ReadOnlyIntegerProperty tileSizeProperty()
+	public ReadOnlyIntegerProperty tileSize()
 	{
 		return this.config.tileSize;
 	}
 
 	@Override
-	public ReadOnlyStringProperty errorNameProperty()
+	public ReadOnlyStringProperty errorName()
 	{
 		return this.config.errorName;
 	}
@@ -69,4 +70,7 @@ public abstract class ATraindBinaryClassifier implements ITrainedBinaryClassifie
 	{
 		return this.config;
 	}
+
+	@Override
+	public ReadOnlyLongProperty trainTime() { return this.config.trainTime; }
 }

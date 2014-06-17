@@ -11,7 +11,9 @@ import de.thatsich.openfx.classification.intern.control.command.commands.CreateT
 import de.thatsich.openfx.classification.intern.control.provider.IClassificationCommandProvider;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureVector;
+import javafx.application.Platform;
 
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -32,13 +34,13 @@ public class NetworkBinaryClassifiers implements INBC
 	@Inject private Log log;
 
 	@Inject
-	public NetworkBinaryClassifiers(@Assisted String uniqueErrorClassName, @Assisted List<ITrainedBinaryClassifier> bcs)
+	public NetworkBinaryClassifiers(@Assisted String uniqueErrorClassName, @Assisted List<ITrainedBinaryClassifier> bcs, Fuser fuser)
 	{
 		this.uniqueErrorClassName = uniqueErrorClassName;
 		this.trainedFeatures = new LinkedList<>();
 		this.trainedBinaryClassifier = bcs;
 
-		this.fuser = new Fuser();
+		this.fuser = fuser;
 	}
 
 	@Override
@@ -68,7 +70,7 @@ public class NetworkBinaryClassifiers implements INBC
 			final ITrainedBinaryClassifier trained = command.call();
 			this.trainedBinaryClassifier.add(trained);
 
-			this.binaryClassifications.list().add(trained);
+			Platform.runLater(() -> this.binaryClassifications.list().add(trained));
 		}
 	}
 
@@ -78,12 +80,22 @@ public class NetworkBinaryClassifiers implements INBC
 		this.trainedFeatures.add(feature);
 		this.log.info("Adding feature " + feature);
 
-		for (IBinaryClassifier binaryClassifier : this.binaryClassifiers.list())
+		try
 		{
-			final CreateTrainedBinaryClassifierCommand command = this.provider.createTrainBinaryClassifierCommand(binaryClassifier, feature);
-			final ITrainedBinaryClassifier trained = command.call();
-			this.trainedBinaryClassifier.add(trained);
+			for (IBinaryClassifier binaryClassifier : this.binaryClassifiers.list())
+			{
+				final CreateTrainedBinaryClassifierCommand command = this.provider.createTrainBinaryClassifierCommand(binaryClassifier, feature);
+				final ITrainedBinaryClassifier trained = command.call();
+
+				this.trainedBinaryClassifier.add(trained);
+				Platform.runLater(() -> this.binaryClassifications.list().add(trained));
+			}
 		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+		this.log.info("Trained additional BCs for new feature " + feature);
 	}
 
 	@Override
@@ -96,8 +108,8 @@ public class NetworkBinaryClassifiers implements INBC
 		final List<Double> values = new LinkedList<>();
 		for (ITrainedBinaryClassifier trained : this.trainedBinaryClassifier)
 		{
-			final String trainedErrorName = trained.errorNameProperty().get();
-			final String trainedExtractorName = trained.extractorNameProperty().get();
+			final String trainedErrorName = trained.errorName().get();
+			final String trainedExtractorName = trained.extractorName().get();
 
 			this.log.info("Trying to match " + trainedErrorName + " = " + featureErrorName + " | " + trainedExtractorName + " = " + featureExtractorName);
 

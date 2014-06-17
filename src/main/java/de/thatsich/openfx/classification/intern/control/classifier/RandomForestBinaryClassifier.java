@@ -53,8 +53,8 @@ public class RandomForestBinaryClassifier extends ABinaryClassifier
 		final String className = config.classificationName.get();
 		final String extractorName = config.extractorName.get();
 		final int tileSize = config.tileSize.get();
-		final String errorName = config.errorName.getName();
-		final String id = config.id.getName();
+		final String errorName = config.errorName.get();
+		final String id = config.id.get();
 
 		final long endTime = System.currentTimeMillis();
 		final long learnTime = endTime - startTime;

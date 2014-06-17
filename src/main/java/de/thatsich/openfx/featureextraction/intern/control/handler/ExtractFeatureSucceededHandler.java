@@ -3,12 +3,10 @@ package de.thatsich.openfx.featureextraction.intern.control.handler;
 import com.google.inject.Inject;
 import de.thatsich.core.javafx.ACommandHandler;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
-import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureVector;
 import de.thatsich.openfx.featureextraction.api.model.IFeatures;
 import de.thatsich.openfx.featureextraction.intern.control.command.service.FeatureFileStorageService;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -54,9 +52,7 @@ public class ExtractFeatureSucceededHandler extends ACommandHandler<IFeature>
 		if (maybeMatch.isPresent())
 		{
 			final IFeature match = maybeMatch.get();
-			final List<IFeatureVector> vectors = feature.vectors();
-
-			match.vectors().addAll(vectors);
+			match.merge(feature);
 
 			return match;
 		}

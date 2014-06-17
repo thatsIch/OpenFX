@@ -10,7 +10,6 @@ import de.thatsich.openfx.errorgeneration.intern.control.provider.IErrorCommandP
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 
 public class ErrorListPresenter extends AFXMLPresenter
 {
@@ -22,7 +21,6 @@ public class ErrorListPresenter extends AFXMLPresenter
 	// Nodes
 	@FXML private TableView<IError> nodeTableViewErrorList;
 	@FXML private TableColumn<IError, String> nodeTableColumnErrorClass;
-	@FXML private TableColumn<IError, String> nodeTableColumnErrorName;
 
 	@Override
 	protected void bindComponents()
@@ -75,7 +73,6 @@ public class ErrorListPresenter extends AFXMLPresenter
 	 */
 	private void bindTableViewCellValue()
 	{
-		this.nodeTableColumnErrorClass.setCellValueFactory(new PropertyValueFactory<>("clazz"));
-		this.nodeTableColumnErrorName.setCellValueFactory(new PropertyValueFactory<>("id"));
+		this.nodeTableColumnErrorClass.setCellValueFactory(cell -> cell.getValue().clazzProperty());
 	}
 }

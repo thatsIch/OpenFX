@@ -42,24 +42,31 @@ public class CreateTrainedBinaryClassifierCommand extends ACommand<ITrainedBinar
 		final MatOfFloat negative = new MatOfFloat();
 		this.log.info("Prepared all data for Training.");
 
-		for (IFeatureVector vector : this.feature.vectors())
+		try
 		{
-			final float[] floatArray = new float[vector.vector().size()];
-			int index = 0;
-			for (double d : vector.vector())
+			for (IFeatureVector vector : this.feature.vectors())
 			{
-				floatArray[index] = (float) d;
-				index++;
-			}
+				final float[] floatArray = new float[vector.vector().size()];
+				int index = 0;
+				for (double d : vector.vector())
+				{
+					floatArray[index] = (float) d;
+					index++;
+				}
 
-			if (vector.isPositive().get())
-			{
-				positive.push_back(new MatOfFloat(floatArray).t());
+				if (vector.isPositive().get())
+				{
+					positive.push_back(new MatOfFloat(floatArray).t());
+				}
+				else
+				{
+					negative.push_back(new MatOfFloat(floatArray).t());
+				}
 			}
-			else
-			{
-				negative.push_back(new MatOfFloat(floatArray).t());
-			}
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
 		}
 		this.log.info("Prepared Negative and Positive DataSets.");
 

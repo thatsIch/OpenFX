@@ -10,7 +10,6 @@ import de.thatsich.openfx.classification.intern.control.provider.IClassification
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 
 
 /**
@@ -32,7 +31,7 @@ public class ClassificationListPresenter extends AFXMLPresenter
 	@FXML private TableColumn<ITrainedBinaryClassifier, String> nodeTableColumnExtractorName;
 	@FXML private TableColumn<ITrainedBinaryClassifier, Integer> nodeTableColumnFrameSize;
 	@FXML private TableColumn<ITrainedBinaryClassifier, String> nodeTableErrorName;
-	@FXML private TableColumn<ITrainedBinaryClassifier, String> nodeTableColumnID;
+	@FXML private TableColumn<ITrainedBinaryClassifier, Long> nodeTableColumnTrainTime;
 
 	@Override
 	protected void bindComponents()
@@ -92,10 +91,10 @@ public class ClassificationListPresenter extends AFXMLPresenter
 	 */
 	private void bindTableViewCellValue()
 	{
-		this.nodeTableColumnClassifierName.setCellValueFactory(new PropertyValueFactory<>("classificationName"));
-		this.nodeTableColumnExtractorName.setCellValueFactory(new PropertyValueFactory<>("extractorName"));
-		this.nodeTableColumnFrameSize.setCellValueFactory(new PropertyValueFactory<>("tileSize"));
-		this.nodeTableErrorName.setCellValueFactory(new PropertyValueFactory<>("errorName"));
-		this.nodeTableColumnID.setCellValueFactory(new PropertyValueFactory<>("id"));
+		this.nodeTableColumnClassifierName.setCellValueFactory(cell -> cell.getValue().classificationName());
+		this.nodeTableColumnExtractorName.setCellValueFactory(cell -> cell.getValue().extractorName());
+		this.nodeTableColumnFrameSize.setCellValueFactory(cell -> cell.getValue().tileSize().asObject());
+		this.nodeTableErrorName.setCellValueFactory(cell -> cell.getValue().errorName());
+		this.nodeTableColumnTrainTime.setCellValueFactory(cell -> cell.getValue().trainTime().asObject());
 	}
 }

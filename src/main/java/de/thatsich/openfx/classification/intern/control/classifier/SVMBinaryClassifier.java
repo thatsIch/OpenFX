@@ -32,14 +32,14 @@ public class SVMBinaryClassifier extends ABinaryClassifier
 		trainLabels.push_back(positiveLabels);
 		trainLabels.push_back(negativeLabels);
 		trainLabels.convertTo(trainLabels, CvType.CV_32FC1);
-		this.log.info("Labels with Size (" + trainLabels.cols() + ", " + trainLabels.rows() + ") is " + trainLabels.type());
+		this.log.info("Labels with Size (" + trainLabels.cols() + ", " + trainLabels.rows() + ") is Type " + trainLabels.type());
 
 		// Data
 		MatOfFloat trainData = new MatOfFloat();
 		trainData.push_back(positiveTrainData);
 		trainData.push_back(negativeTrainData);
 		trainData.convertTo(trainData, CvType.CV_32FC1);
-		this.log.info("Data with Size (" + trainData.cols() + ", " + trainData.rows() + ") is " + trainData.type());
+		this.log.info("Data with Size (" + trainData.cols() + ", " + trainData.rows() + ") is Type " + trainData.type());
 
 		svm.train(trainData, trainLabels);
 		new CvSVMParams();
@@ -47,8 +47,8 @@ public class SVMBinaryClassifier extends ABinaryClassifier
 		final String className = config.classificationName.get();
 		final String extractorName = config.extractorName.get();
 		final int tileSize = config.tileSize.get();
-		final String errorName = config.errorName.getName();
-		final String id = config.id.getName();
+		final String errorName = config.errorName.get();
+		final String id = config.id.get();
 
 		final long endTime = System.currentTimeMillis();
 		final long learnTime = endTime - startTime;
