@@ -39,7 +39,7 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class NetworkSpace implements INetworkSpace
 {
-	private static final int ERROR_ITERATION = 5;
+	private static final int ERROR_ITERATION = 1;
 	private static final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-SSS");
 
 	@Inject private IErrorCommandProvider errorProvider;

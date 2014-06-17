@@ -41,9 +41,12 @@ public class CollectiveNetworkBinaryClassifiers implements ICNBC
 	@Override
 	public void addFeature(IFeature feature) throws Exception
 	{
-		final String potUniqueErrorClass = feature.getConfig().toString();
+		final String potUniqueErrorClass = feature.getConfig().className.get();
+
+		this.log.info("Checking if " + potUniqueErrorClass + " is already in uniqueErrorClasses " + this.uniqueErrorClasses);
 		if (!this.uniqueErrorClasses.contains(potUniqueErrorClass))
 		{
+			this.log.info("Its not.");
 			this.uniqueErrorClasses.add(potUniqueErrorClass);
 
 			final INBC nbc = this.provider.createNetworkBinaryClassifiers(potUniqueErrorClass, new LinkedList<>());
@@ -55,9 +58,12 @@ public class CollectiveNetworkBinaryClassifiers implements ICNBC
 
 		for (INBC nbc : this.nbcs)
 		{
-			this.log.info("Adding feature " + feature + " to NBC " + nbc);
-			nbc.addFeature(feature);
-			this.log.info("Added feature " + feature + " to NBC " + nbc);
+			if (feature.className().get().contentEquals(nbc.getUniqueErrorClassName()))
+			{
+				this.log.info("Adding feature " + feature + " to NBC " + nbc);
+				nbc.addFeature(feature);
+				this.log.info("Added feature " + feature + " to NBC " + nbc);
+			}
 		}
 	}
 

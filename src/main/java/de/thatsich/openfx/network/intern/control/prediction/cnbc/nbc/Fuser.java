@@ -73,7 +73,7 @@ public class Fuser
 		int result;
 		do
 		{
-			final double fit = random.nextGaussian() / 3 * x + 0.5;
+			final double fit = Math.abs(random.nextGaussian() / 3 * x);
 			result = (int) Math.round(fit);
 		} while (result < 0 || result > 1);
 

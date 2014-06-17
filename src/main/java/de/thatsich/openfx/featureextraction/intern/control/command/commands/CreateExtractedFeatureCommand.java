@@ -64,6 +64,7 @@ public class CreateExtractedFeatureCommand extends ACommand<IFeature>
 					final MatOfFloat featureVector = this.featureExtractor.extractFeature(originalErrorSplit[col][row]);
 					final MatOfDouble featureVectorAsDouble = new MatOfDouble();
 					featureVector.convertTo(featureVectorAsDouble, CvType.CV_64F);
+					Core.normalize(featureVectorAsDouble, featureVectorAsDouble);
 					final List<Double> featureVectorAsList = featureVectorAsDouble.toList();
 
 					final boolean isPositive = Core.sumElems(errorSplit[col][row]).val[0] != 0;

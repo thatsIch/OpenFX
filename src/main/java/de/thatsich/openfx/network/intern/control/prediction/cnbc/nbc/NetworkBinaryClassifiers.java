@@ -82,6 +82,7 @@ public class NetworkBinaryClassifiers implements INBC
 
 		try
 		{
+			this.log.info("Training new BCs through the list of size " + this.binaryClassifiers.list().size());
 			for (IBinaryClassifier binaryClassifier : this.binaryClassifiers.list())
 			{
 				final CreateTrainedBinaryClassifierCommand command = this.provider.createTrainBinaryClassifierCommand(binaryClassifier, feature);

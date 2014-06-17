@@ -33,7 +33,7 @@ public class ClassSelection
 	private List<Pair<String, Double>> sort(List<Pair<String, Double>> toBeSorted)
 	{
 		toBeSorted.sort((p1, p2) -> p1.getValue().compareTo(p2.getValue()));
-		this.log.info("Sorted pairs.");
+		this.log.info("Sorted pairs: " + toBeSorted.get(0) + " < " + toBeSorted.get(toBeSorted.size() - 1) + " in " + toBeSorted);
 
 		return toBeSorted;
 	}
