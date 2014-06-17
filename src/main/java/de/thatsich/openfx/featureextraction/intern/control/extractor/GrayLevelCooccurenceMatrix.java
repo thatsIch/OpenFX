@@ -7,7 +7,6 @@ import org.opencv.core.MatOfFloat;
 
 public class GrayLevelCooccurenceMatrix extends AFeatureExtractor
 {
-
 	@Override
 	public MatOfFloat extractFeature(Mat image)
 	{
@@ -77,8 +76,16 @@ public class GrayLevelCooccurenceMatrix extends AFeatureExtractor
 		}
 
 		// Transform the GLCM to be used;
-		GLCM = GLCM.reshape(1, 1);
-		GLCM.convertTo(GLCM, CvType.CV_32F);
+
+		try
+		{
+			GLCM = GLCM.reshape(1, 1);
+			GLCM.convertTo(GLCM, CvType.CV_32F);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 
 		return new MatOfFloat(GLCM);
 	}

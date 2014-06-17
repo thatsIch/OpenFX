@@ -54,7 +54,7 @@ public abstract class AFXMLView implements IFXMLView
 			}
 			catch (IOException e)
 			{
-				throw new IllegalStateException("Could not retrieve " + urlFXML, e);
+				throw new IllegalStateException("Could not retrieve " + urlFXML + " from " + this.getClass().getSimpleName(), e);
 			}
 
 			this.pane = res.getRoot();

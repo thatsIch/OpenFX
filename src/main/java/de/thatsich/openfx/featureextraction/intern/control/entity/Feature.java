@@ -5,6 +5,7 @@ import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureVector;
 import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.beans.property.ReadOnlyListProperty;
 import javafx.beans.property.ReadOnlyListWrapper;
+import javafx.beans.property.ReadOnlyLongProperty;
 import javafx.beans.property.ReadOnlyStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -32,25 +33,31 @@ public class Feature implements IFeature
 	@Override
 	public ReadOnlyStringProperty extractorName()
 	{
-		return this.config.extractorName.getReadOnlyProperty();
+		return this.config.extractorName;
 	}
 
 	@Override
 	public ReadOnlyStringProperty className()
 	{
-		return this.config.className.getReadOnlyProperty();
+		return this.config.className;
 	}
 
 	@Override
 	public ReadOnlyStringProperty preProcessorName()
 	{
-		return null;
+		return this.config.preProcessorName;
 	}
 
 	@Override
 	public ReadOnlyIntegerProperty tileSize()
 	{
-		return this.config.tileSize.getReadOnlyProperty();
+		return this.config.tileSize;
+	}
+
+	@Override
+	public ReadOnlyLongProperty trainTime()
+	{
+		return this.config.trainTime;
 	}
 
 	@Override
@@ -65,6 +72,12 @@ public class Feature implements IFeature
 		if (this.equals(that))
 		{
 			this.featureVectors.addAll(that.vectors());
+
+			final long oldTrainTime = this.config.trainTime.get();
+			final long addTrainTime = that.getConfig().trainTime.get();
+			final long newTrainTime = oldTrainTime + addTrainTime;
+
+			this.config.trainTime.set(newTrainTime);
 		}
 
 		return this;

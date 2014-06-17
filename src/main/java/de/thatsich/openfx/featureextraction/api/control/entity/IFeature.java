@@ -4,6 +4,7 @@ import de.thatsich.core.IEntity;
 import de.thatsich.openfx.featureextraction.intern.control.entity.FeatureConfig;
 import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.beans.property.ReadOnlyListProperty;
+import javafx.beans.property.ReadOnlyLongProperty;
 import javafx.beans.property.ReadOnlyStringProperty;
 
 /**
@@ -19,6 +20,8 @@ public interface IFeature extends IEntity
 	ReadOnlyStringProperty preProcessorName();
 
 	ReadOnlyIntegerProperty tileSize();
+
+	ReadOnlyLongProperty trainTime();
 
 	ReadOnlyListProperty<IFeatureVector> vectors();
 

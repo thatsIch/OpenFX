@@ -1,8 +1,11 @@
 package de.thatsich.openfx.featureextraction.intern.control.entity;
 
 import de.thatsich.core.IEntityConfig;
-import javafx.beans.property.ReadOnlyIntegerWrapper;
-import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.beans.property.ReadOnlyIntegerProperty;
+import javafx.beans.property.ReadOnlyLongWrapper;
+import javafx.beans.property.ReadOnlyStringProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 
 import java.util.StringJoiner;
 
@@ -12,26 +15,30 @@ import java.util.StringJoiner;
  */
 public class FeatureConfig implements IEntityConfig
 {
-	public final ReadOnlyStringWrapper className;
-	public final ReadOnlyStringWrapper extractorName;
-	public final ReadOnlyStringWrapper preProcessorName;
-	public final ReadOnlyIntegerWrapper tileSize;
+	public final ReadOnlyStringProperty className;
+	public final ReadOnlyStringProperty extractorName;
+	public final ReadOnlyStringProperty preProcessorName;
+	public final ReadOnlyIntegerProperty tileSize;
+	public final ReadOnlyLongWrapper trainTime;
 
-	public FeatureConfig(final String className, final String extractorName, final String preProcessorName, final int tileSize)
+	public FeatureConfig(final String className, final String extractorName, final String preProcessorName, final int tileSize, final long trainTime)
 	{
-		this.className = new ReadOnlyStringWrapper(className);
-		this.extractorName = new ReadOnlyStringWrapper(extractorName);
-		this.preProcessorName = new ReadOnlyStringWrapper(preProcessorName);
-		this.tileSize = new ReadOnlyIntegerWrapper(tileSize);
+		this.className = new SimpleStringProperty(className);
+		this.extractorName = new SimpleStringProperty(extractorName);
+		this.preProcessorName = new SimpleStringProperty(preProcessorName);
+		this.tileSize = new SimpleIntegerProperty(tileSize);
+		this.trainTime = new ReadOnlyLongWrapper(trainTime);
 	}
 
 	public FeatureConfig(final String fileName)
 	{
 		final String[] fileNameSplit = fileName.split("_");
-		this.className = new ReadOnlyStringWrapper(fileNameSplit[0]);
-		this.extractorName = new ReadOnlyStringWrapper(fileNameSplit[1]);
-		this.preProcessorName = new ReadOnlyStringWrapper(fileNameSplit[2]);
-		this.tileSize = new ReadOnlyIntegerWrapper(Integer.parseInt(fileNameSplit[3]));
+
+		this.className = new SimpleStringProperty(fileNameSplit[0]);
+		this.extractorName = new SimpleStringProperty(fileNameSplit[1]);
+		this.preProcessorName = new SimpleStringProperty(fileNameSplit[2]);
+		this.tileSize = new SimpleIntegerProperty(Integer.parseInt(fileNameSplit[3]));
+		this.trainTime = new ReadOnlyLongWrapper(Long.parseLong(fileNameSplit[4]));
 	}
 
 	@Override
@@ -42,6 +49,7 @@ public class FeatureConfig implements IEntityConfig
 		joiner.add(this.extractorName.get());
 		joiner.add(this.preProcessorName.get());
 		joiner.add(String.valueOf(this.tileSize.get()));
+		joiner.add(String.valueOf(this.trainTime.get()));
 
 		return joiner.toString();
 	}

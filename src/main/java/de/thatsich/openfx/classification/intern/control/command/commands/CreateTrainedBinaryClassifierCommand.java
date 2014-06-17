@@ -63,7 +63,7 @@ public class CreateTrainedBinaryClassifierCommand extends ACommand<ITrainedBinar
 		}
 		this.log.info("Prepared Negative and Positive DataSets.");
 
-		final BinaryClassificationConfig config = new BinaryClassificationConfig(binaryClassifierName, featureExtractorName, tileSize, errorClassName, id);
+		final BinaryClassificationConfig config = new BinaryClassificationConfig(binaryClassifierName, featureExtractorName, tileSize, errorClassName, id, 0);
 		this.log.info("Created BinaryClassificationConfig.");
 
 		final ITrainedBinaryClassifier classification = this.binaryClassifier.train(positive, negative, config);

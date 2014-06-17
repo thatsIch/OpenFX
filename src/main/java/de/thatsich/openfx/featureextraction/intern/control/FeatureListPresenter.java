@@ -24,6 +24,7 @@ public class FeatureListPresenter extends AFXMLPresenter
 	@FXML private TableColumn<IFeature, String> nodeTableColumnExtractorName;
 	@FXML private TableColumn<IFeature, String> nodeTableColumnClassName;
 	@FXML private TableColumn<IFeature, Integer> nodeTableColumnTileSize;
+	@FXML private TableColumn<IFeature, Long> nodeTableColumnTrainTime;
 
 	@Override
 	protected void bindComponents()
@@ -84,6 +85,7 @@ public class FeatureListPresenter extends AFXMLPresenter
 		this.nodeTableColumnExtractorName.setCellValueFactory(feature -> feature.getValue().extractorName());
 		this.nodeTableColumnClassName.setCellValueFactory(feature -> feature.getValue().className());
 		this.nodeTableColumnTileSize.setCellValueFactory(feature -> feature.getValue().tileSize().asObject());
+		this.nodeTableColumnTrainTime.setCellValueFactory(feature -> feature.getValue().trainTime().asObject());
 		this.log.info("Setup CellValueFactory for nodeTableViewFeatures.");
 	}
 }

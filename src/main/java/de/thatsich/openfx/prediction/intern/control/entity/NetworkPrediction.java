@@ -16,7 +16,7 @@ public class NetworkPrediction implements INetworkPrediction
 	//	private final ReadOnlyObjectWrapper<Mat> errorPrediction = new ReadOnlyObjectWrapper<>();
 	//	private final ReadOnlyStringWrapper classifierName = new ReadOnlyStringWrapper();
 	//	private final ReadOnlyStringWrapper extractorName = new ReadOnlyStringWrapper();
-	//	private final ReadOnlyIntegerWrapper frameSize = new ReadOnlyIntegerWrapper();
+	//	private final ReadOnlyIntegerWrapper trainTime = new ReadOnlyIntegerWrapper();
 	//	private final ReadOnlyStringWrapper errorClassName = new ReadOnlyStringWrapper();
 	//	private final ReadOnlyStringWrapper id = new ReadOnlyStringWrapper();
 

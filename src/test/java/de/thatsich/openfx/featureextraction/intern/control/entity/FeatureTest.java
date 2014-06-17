@@ -32,8 +32,8 @@ public class FeatureTest
 
 	public FeatureTest()
 	{
-		this.thisConfig = new FeatureConfig("class", "extractor", "", 1);
-		this.thatConfig = new FeatureConfig("class", "extractor", "", 2);
+		this.thisConfig = new FeatureConfig("class", "extractor", "", 1, 0);
+		this.thatConfig = new FeatureConfig("class", "extractor", "", 2, 0);
 		this.emptyVector = new LinkedList<>();
 		this.vectorWith1 = new LinkedList<>();
 		this.vectorWith2 = new LinkedList<>();

@@ -2,6 +2,7 @@ package de.thatsich.openfx.classification.intern.control.classifier;
 
 import com.google.inject.Inject;
 import de.thatsich.openfx.classification.api.control.entity.ITrainedBinaryClassifier;
+import de.thatsich.openfx.classification.intern.control.classification.SVMTraindBinaryClassifier;
 import de.thatsich.openfx.classification.intern.control.classifier.core.ABinaryClassifier;
 import de.thatsich.openfx.classification.intern.control.classifier.core.BinaryClassificationConfig;
 import de.thatsich.openfx.classification.intern.control.provider.IClassificationCommandProvider;
@@ -19,6 +20,8 @@ public class SVMBinaryClassifier extends ABinaryClassifier
 	@Override
 	public ITrainedBinaryClassifier train(MatOfFloat positiveTrainData, MatOfFloat negativeTrainData, BinaryClassificationConfig config)
 	{
+		final long startTime = System.currentTimeMillis();
+
 		final CvSVM svm = new CvSVM();
 
 		// Labels
@@ -41,6 +44,18 @@ public class SVMBinaryClassifier extends ABinaryClassifier
 		svm.train(trainData, trainLabels);
 		new CvSVMParams();
 
-		return this.provider.createSVMTraindBinaryClassifier(svm, config);
+		final String className = config.classificationName.get();
+		final String extractorName = config.extractorName.get();
+		final int tileSize = config.tileSize.get();
+		final String errorName = config.errorName.getName();
+		final String id = config.id.getName();
+
+		final long endTime = System.currentTimeMillis();
+		final long learnTime = endTime - startTime;
+
+		final BinaryClassificationConfig newConfig = new BinaryClassificationConfig(className, extractorName, tileSize, errorName, id, learnTime);
+		final SVMTraindBinaryClassifier bc = this.provider.createSVMTraindBinaryClassifier(svm, newConfig);
+
+		return bc;
 	}
 }

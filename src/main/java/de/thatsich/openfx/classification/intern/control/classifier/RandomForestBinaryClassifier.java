@@ -2,6 +2,7 @@ package de.thatsich.openfx.classification.intern.control.classifier;
 
 import com.google.inject.Inject;
 import de.thatsich.openfx.classification.api.control.entity.ITrainedBinaryClassifier;
+import de.thatsich.openfx.classification.intern.control.classification.RandomForestTraindBinaryClassifier;
 import de.thatsich.openfx.classification.intern.control.classifier.core.ABinaryClassifier;
 import de.thatsich.openfx.classification.intern.control.classifier.core.BinaryClassificationConfig;
 import de.thatsich.openfx.classification.intern.control.provider.IClassificationCommandProvider;
@@ -20,6 +21,7 @@ public class RandomForestBinaryClassifier extends ABinaryClassifier
 	@Override
 	public ITrainedBinaryClassifier train(MatOfFloat positiveTrainData, MatOfFloat negativeTrainData, BinaryClassificationConfig config)
 	{
+		final long startTime = System.currentTimeMillis();
 
 		// Labels
 		final Mat positiveLabels = Mat.ones(positiveTrainData.rows(), 1, CvType.CV_8U);
@@ -48,6 +50,18 @@ public class RandomForestBinaryClassifier extends ABinaryClassifier
 
 		trees.train(trainData, 1, trainLabels, new Mat(), new Mat(), new Mat(), new Mat(), params);
 
-		return this.provider.createRandomForestTraindBinaryClassifier(trees, config);
+		final String className = config.classificationName.get();
+		final String extractorName = config.extractorName.get();
+		final int tileSize = config.tileSize.get();
+		final String errorName = config.errorName.getName();
+		final String id = config.id.getName();
+
+		final long endTime = System.currentTimeMillis();
+		final long learnTime = endTime - startTime;
+
+		final BinaryClassificationConfig newConfig = new BinaryClassificationConfig(className, extractorName, tileSize, errorName, id, learnTime);
+		final RandomForestTraindBinaryClassifier bc = this.provider.createRandomForestTraindBinaryClassifier(trees, newConfig);
+
+		return bc;
 	}
 }

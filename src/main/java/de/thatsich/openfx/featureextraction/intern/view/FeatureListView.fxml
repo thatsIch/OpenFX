@@ -16,6 +16,8 @@
 			             minWidth="80.0" prefWidth="80.0" sortable="false" text="Class"/>
 			<TableColumn fx:id="nodeTableColumnTileSize" editable="false"
 			             minWidth="40.0" prefWidth="40.0" sortable="false" text="TileSize"/>
+			<TableColumn fx:id="nodeTableColumnTrainTime" editable="false"
+			             minWidth="40.0" prefWidth="40.0" sortable="false" text="TrainTime"/>
 		</columns>
 		<columnResizePolicy>
 			<TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>

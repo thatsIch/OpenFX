@@ -39,6 +39,8 @@ public class CreateExtractedFeatureCommand extends ACommand<IFeature>
 	@Override
 	public IFeature call() throws Exception
 	{
+		final long startTime = System.currentTimeMillis();
+
 		final String className = this.error.clazzProperty().get();
 		final String extractorName = this.featureExtractor.getName();
 		final Mat modified = this.error.modifiedProperty().get().clone();
@@ -49,11 +51,15 @@ public class CreateExtractedFeatureCommand extends ACommand<IFeature>
 		final Mat[][] errorSplit = Images.split(this.error.errorProperty().get(), this.frameSize, this.frameSize);
 		this.log.info("Prepared split images.");
 
-		for (int col = 0; col < originalErrorSplit.length; col++)
+		final int cols = originalErrorSplit.length;
+		final int rows = originalErrorSplit[0].length;
+		this.log.info("Prepared size cols = " + cols + ", rows = " + rows);
+
+		try
 		{
-			for (int row = 0; row < originalErrorSplit[col].length; row++)
+			for (int col = 0; col < cols; col++)
 			{
-				try
+				for (int row = 0; row < rows; row++)
 				{
 					final MatOfFloat featureVector = this.featureExtractor.extractFeature(originalErrorSplit[col][row]);
 					final MatOfDouble featureVectorAsDouble = new MatOfDouble();
@@ -63,16 +69,20 @@ public class CreateExtractedFeatureCommand extends ACommand<IFeature>
 					final boolean isPositive = Core.sumElems(errorSplit[col][row]).val[0] != 0;
 					featureVectorList.add(new FeatureVector(featureVectorAsList, isPositive));
 				}
-				catch (Exception e)
-				{
-					e.printStackTrace();
-				}
 			}
 		}
-
-		final FeatureConfig config = new FeatureConfig(className, extractorName, "", this.frameSize);
-		final IFeature feature = new Feature(config, featureVectorList);
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 		this.log.info("Extracted FeatureVectors: " + featureVectorList.size());
+
+		final long endTime = System.currentTimeMillis();
+		final long learnTime = endTime - startTime;
+
+		final FeatureConfig config = new FeatureConfig(className, extractorName, "", this.frameSize, learnTime);
+		final IFeature feature = new Feature(config, featureVectorList);
+		this.log.info("Extracted Feature " + feature);
 
 		return feature;
 	}

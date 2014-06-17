@@ -69,8 +69,9 @@ public class AANNTrainedPreProcessor extends ATrainedPreProcessor
 		final String extractorName = config.extractorName.get();
 		final String preProcessorName = this.nameProperty().get();
 		final int tileSize = config.tileSize.get();
+		final long trainTime = config.trainTime.get();
 
-		final FeatureConfig newConfig = new FeatureConfig(className, extractorName, preProcessorName, tileSize);
+		final FeatureConfig newConfig = new FeatureConfig(className, extractorName, preProcessorName, tileSize, trainTime);
 
 		final IFeature proprocessedFeature = new Feature(newConfig, preProcessedFeatureVectors);
 
