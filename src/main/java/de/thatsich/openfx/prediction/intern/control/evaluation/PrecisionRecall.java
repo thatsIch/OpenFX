@@ -36,7 +36,14 @@ public class PrecisionRecall
 	 */
 	public double precision(int truePositive, int falsePositive, int trueNegative, int falseNegative)
 	{
-		return 1.0 * truePositive / (truePositive + falsePositive);
+		if (truePositive + falsePositive == 0)
+		{
+			return 0;
+		}
+		else
+		{
+			return 1.0 * truePositive / (truePositive + falsePositive);
+		}
 	}
 
 	/**

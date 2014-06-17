@@ -3,6 +3,7 @@ package de.thatsich.openfx.prediction.api.control.entity;
 import de.thatsich.core.IEntity;
 import de.thatsich.openfx.errorgeneration.api.control.entity.IError;
 import de.thatsich.openfx.prediction.intern.control.entity.NetworkPredictionConfig;
+import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyStringProperty;
 import org.opencv.core.Mat;
@@ -29,4 +30,12 @@ public interface INetworkPrediction extends IEntity
 
 	@Override
 	NetworkPredictionConfig getConfig();
+
+	ReadOnlyIntegerProperty truePositive();
+
+	ReadOnlyIntegerProperty trueNegative();
+
+	ReadOnlyIntegerProperty falsePositive();
+
+	ReadOnlyIntegerProperty falseNegative();
 }

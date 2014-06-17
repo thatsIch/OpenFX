@@ -20,7 +20,7 @@ public class GetLastBinaryPredictionIndexSucceededHandler extends ACommandHandle
 	@Override
 	public void handle(Integer value)
 	{
-		if (value >= 0 && this.binaryPredictions.list().size() > 0)
+		if (0 <= value && value < this.binaryPredictions.list().size())
 		{
 			final INetworkPrediction selected = this.binaryPredictions.list().get(value);
 			this.binaryPredictions.selected().set(selected);

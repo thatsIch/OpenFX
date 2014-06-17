@@ -2,6 +2,7 @@ package de.thatsich.openfx.prediction.intern.control.entity;
 
 import de.thatsich.openfx.errorgeneration.api.control.entity.IError;
 import de.thatsich.openfx.prediction.api.control.entity.INetworkPrediction;
+import javafx.beans.property.ReadOnlyIntegerProperty;
 import javafx.beans.property.ReadOnlyIntegerWrapper;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -133,28 +134,28 @@ public class NetworkPrediction implements INetworkPrediction
 	{
 		return this.config;
 	}
-	//
-	//	@Override
-	//	public ReadOnlyIntegerProperty truePositive()
-	//	{
-	//		return this.truePositive.getReadOnlyProperty();
-	//	}
-	//
-	//	@Override
-	//	public ReadOnlyIntegerProperty trueNegative()
-	//	{
-	//		return this.trueNegative.getReadOnlyProperty();
-	//	}
-	//
-	//	@Override
-	//	public ReadOnlyIntegerProperty falsePositive()
-	//	{
-	//		return this.falsePositive.getReadOnlyProperty();
-	//	}
-	//
-	//	@Override
-	//	public ReadOnlyIntegerProperty falseNegative()
-	//	{
-	//		return this.falseNegative.getReadOnlyProperty();
-	//	}
+
+	@Override
+	public ReadOnlyIntegerProperty truePositive()
+	{
+		return this.truePositive.getReadOnlyProperty();
+	}
+
+	@Override
+	public ReadOnlyIntegerProperty trueNegative()
+	{
+		return this.trueNegative.getReadOnlyProperty();
+	}
+
+	@Override
+	public ReadOnlyIntegerProperty falsePositive()
+	{
+		return this.falsePositive.getReadOnlyProperty();
+	}
+
+	@Override
+	public ReadOnlyIntegerProperty falseNegative()
+	{
+		return this.falseNegative.getReadOnlyProperty();
+	}
 }
