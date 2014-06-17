@@ -50,7 +50,7 @@ public class TrainedNetwork implements ITrainedNetwork
 	}
 
 	@Override
-	public String predict(IError error) throws Exception
+	public Pair<String, Double> predict(IError error) throws Exception
 	{
 		final List<IFeature> features = this.getFeatures(error, this.featureExtractors);
 		this.log.info("Extracted features: " + features.size());

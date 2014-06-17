@@ -2,32 +2,23 @@ package de.thatsich.openfx.classification.intern.control.classification;
 
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
-import de.thatsich.openfx.classification.intern.control.classification.core.ATraindBinaryClassifier;
+import de.thatsich.openfx.classification.intern.control.classification.core.ATrainedBinaryClassifier;
 import de.thatsich.openfx.classification.intern.control.classifier.core.BinaryClassificationConfig;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureVector;
 import org.opencv.core.MatOfFloat;
-import org.opencv.ml.CvSVM;
+import org.opencv.ml.CvRTrees;
 
 
-public class SVMTraindBinaryClassifier extends ATraindBinaryClassifier
+public class RandomForestTrainedBinaryClassifier extends ATrainedBinaryClassifier
 {
 
-	private final CvSVM svm;
+	private final CvRTrees trees;
 
-	/**
-	 * CTOR
-	 *
-	 * saves config to superclass
-	 * and svm to field
-	 *
-	 * @param svm    Assisted Injected SVM
-	 * @param config Assisted Injected Config
-	 */
 	@Inject
-	public SVMTraindBinaryClassifier(@Assisted CvSVM svm, @Assisted BinaryClassificationConfig config)
+	public RandomForestTrainedBinaryClassifier(@Assisted CvRTrees trees, @Assisted BinaryClassificationConfig config)
 	{
 		super(config);
-		this.svm = svm;
+		this.trees = trees;
 	}
 
 	@Override
@@ -41,8 +32,7 @@ public class SVMTraindBinaryClassifier extends ATraindBinaryClassifier
 		}
 
 		final MatOfFloat floatMat = new MatOfFloat(featureArray);
-		final float predict = this.svm.predict(floatMat);
-		this.log.info("Predicted " + predict);
+		final float predict = this.trees.predict_prob(floatMat);
 
 		return predict;
 	}
@@ -50,12 +40,12 @@ public class SVMTraindBinaryClassifier extends ATraindBinaryClassifier
 	@Override
 	public void save(String filePath)
 	{
-		this.svm.save(filePath);
+		this.trees.save(filePath);
 	}
 
 	@Override
 	public void load(String filePath)
 	{
-		this.svm.load(filePath);
+		this.trees.load(filePath);
 	}
 }

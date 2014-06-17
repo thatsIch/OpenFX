@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import de.thatsich.core.AFileStorageService;
 import de.thatsich.openfx.classification.api.control.entity.ITrainedBinaryClassifier;
 import de.thatsich.openfx.classification.api.model.IClassificationState;
-import de.thatsich.openfx.classification.intern.control.classification.SVMTraindBinaryClassifier;
+import de.thatsich.openfx.classification.intern.control.classification.SVMTrainedBinaryClassifier;
 import de.thatsich.openfx.classification.intern.control.classifier.core.BinaryClassificationConfig;
 import de.thatsich.openfx.classification.intern.control.provider.IClassificationCommandProvider;
 import org.opencv.ml.CvRTrees;
@@ -63,7 +63,7 @@ public class ClassificationFileStorageService extends AFileStorageService<ITrain
 	{
 		final String fileName = elem.getConfig().toString();
 		final String withExtension;
-		if (elem instanceof SVMTraindBinaryClassifier)
+		if (elem instanceof SVMTrainedBinaryClassifier)
 		{
 			withExtension = fileName + SVM_EXT;
 		}
@@ -130,7 +130,7 @@ public class ClassificationFileStorageService extends AFileStorageService<ITrain
 	public void delete(ITrainedBinaryClassifier elem) throws IOException
 	{
 		final String fileName;
-		if (elem instanceof SVMTraindBinaryClassifier)
+		if (elem instanceof SVMTrainedBinaryClassifier)
 		{
 			fileName = elem.getConfig().toString() + SVM_EXT;
 		}

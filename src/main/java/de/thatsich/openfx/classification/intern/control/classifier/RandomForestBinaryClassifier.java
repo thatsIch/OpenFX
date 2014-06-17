@@ -2,7 +2,7 @@ package de.thatsich.openfx.classification.intern.control.classifier;
 
 import com.google.inject.Inject;
 import de.thatsich.openfx.classification.api.control.entity.ITrainedBinaryClassifier;
-import de.thatsich.openfx.classification.intern.control.classification.RandomForestTraindBinaryClassifier;
+import de.thatsich.openfx.classification.intern.control.classification.RandomForestTrainedBinaryClassifier;
 import de.thatsich.openfx.classification.intern.control.classifier.core.ABinaryClassifier;
 import de.thatsich.openfx.classification.intern.control.classifier.core.BinaryClassificationConfig;
 import de.thatsich.openfx.classification.intern.control.provider.IClassificationCommandProvider;
@@ -60,7 +60,7 @@ public class RandomForestBinaryClassifier extends ABinaryClassifier
 		final long learnTime = endTime - startTime;
 
 		final BinaryClassificationConfig newConfig = new BinaryClassificationConfig(className, extractorName, tileSize, errorName, id, learnTime);
-		final RandomForestTraindBinaryClassifier bc = this.provider.createRandomForestTraindBinaryClassifier(trees, newConfig);
+		final RandomForestTrainedBinaryClassifier bc = this.provider.createRandomForestTraindBinaryClassifier(trees, newConfig);
 
 		return bc;
 	}

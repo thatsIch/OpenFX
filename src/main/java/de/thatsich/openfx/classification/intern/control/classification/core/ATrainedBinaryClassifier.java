@@ -9,7 +9,7 @@ import javafx.beans.property.ReadOnlyLongProperty;
 import javafx.beans.property.ReadOnlyStringProperty;
 
 
-public abstract class ATraindBinaryClassifier implements ITrainedBinaryClassifier
+public abstract class ATrainedBinaryClassifier implements ITrainedBinaryClassifier
 {
 	// Properties
 	private final BinaryClassificationConfig config;
@@ -23,7 +23,7 @@ public abstract class ATraindBinaryClassifier implements ITrainedBinaryClassifie
 	 * @param config Configuration of the BinaryClassifier (FilePath,
 	 *               ClassificaationName, ExtractorName, FrameSize, ErrorName, ID)
 	 */
-	protected ATraindBinaryClassifier(BinaryClassificationConfig config)
+	protected ATrainedBinaryClassifier(BinaryClassificationConfig config)
 	{
 		this.config = config;
 	}

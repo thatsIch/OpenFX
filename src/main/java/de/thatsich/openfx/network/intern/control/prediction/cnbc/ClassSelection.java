@@ -22,12 +22,12 @@ public class ClassSelection
 		this.log = log;
 	}
 
-	public String predict(List<Pair<String, Double>> values)
+	public Pair<String, Double> predict(List<Pair<String, Double>> values)
 	{
 		final List<Pair<String, Double>> sorted = this.sort(values);
-		final String random = this.getWinnerElement(sorted);
+		final Pair<String, Double> winner = this.getWinnerElement(sorted);
 
-		return random;
+		return winner;
 	}
 
 	private List<Pair<String, Double>> sort(List<Pair<String, Double>> toBeSorted)
@@ -38,7 +38,7 @@ public class ClassSelection
 		return toBeSorted;
 	}
 
-	private String getWinnerElement(List<Pair<String, Double>> sorted)
+	private Pair<String, Double> getWinnerElement(List<Pair<String, Double>> sorted)
 	{
 		final Pair<String, Double> winner;
 		try
@@ -47,13 +47,13 @@ public class ClassSelection
 			winner = sorted.get(lastItemIndex - 1);
 			this.log.info("Select winner pair " + winner);
 
-			return winner.getKey();
+			return winner;
 		}
 		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
 
-		return "";
+		throw new IllegalStateException("Got an empty list");
 	}
 }

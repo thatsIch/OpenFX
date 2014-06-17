@@ -105,23 +105,17 @@ public class NetworkBinaryClassifiers implements INBC
 		final String featureErrorName = f.className().get();
 		final String featureExtractorName = f.extractorName().get();
 
-		this.log.info("Predicting feature " + f + " over " + this.trainedBinaryClassifier.size() + " trained BCs.");
 		final List<Double> values = new LinkedList<>();
 		for (ITrainedBinaryClassifier trained : this.trainedBinaryClassifier)
 		{
 			final String trainedErrorName = trained.errorName().get();
 			final String trainedExtractorName = trained.extractorName().get();
 
-			this.log.info("Trying to match " + trainedErrorName + " = " + featureErrorName + " | " + trainedExtractorName + " = " + featureExtractorName);
-
 			final boolean sameErrorName = trainedErrorName.equals(featureErrorName);
 			final boolean sameExtractorName = trainedExtractorName.equals(featureExtractorName);
 
 			if (sameErrorName && sameExtractorName)
 			{
-				this.log.info("Found matching error and extractor names");
-				this.log.info("Using " + trained);
-
 				for (IFeatureVector fv : f.vectors())
 				{
 					final double prediction = trained.predict(fv);

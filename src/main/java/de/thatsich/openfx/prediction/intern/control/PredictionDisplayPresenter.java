@@ -96,10 +96,6 @@ public class PredictionDisplayPresenter extends AFXMLPresenter
 	private Image predictionToImage(INetworkPrediction prediction)
 	{
 		final Mat originalMat = prediction.modified().get().clone();
-		//		final Mat onlyErrorMat = prediction.errorIndication().get();
-		//		final Mat onlyPrediction = prediction.errorPrediction().get();
-
-		// convert originalMat into RGB
 		Imgproc.cvtColor(originalMat, originalMat, Imgproc.COLOR_GRAY2RGB);
 
 		// overwrite error pixel depending how they match with the prediction

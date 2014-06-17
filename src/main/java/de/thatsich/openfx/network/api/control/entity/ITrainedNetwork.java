@@ -6,6 +6,7 @@ import de.thatsich.openfx.network.intern.control.prediction.NetworkConfig;
 import de.thatsich.openfx.network.intern.control.prediction.cnbc.ICNBC;
 import javafx.beans.property.ReadOnlyLongProperty;
 import javafx.beans.property.ReadOnlyStringProperty;
+import javafx.util.Pair;
 
 /**
  * @author thatsIch
@@ -15,7 +16,7 @@ public interface ITrainedNetwork extends IEntity
 {
 	ICNBC getCnbc();
 
-	String predict(IError error) throws Exception;
+	Pair<String, Double> predict(IError error) throws Exception;
 
 	ReadOnlyStringProperty date();
 
