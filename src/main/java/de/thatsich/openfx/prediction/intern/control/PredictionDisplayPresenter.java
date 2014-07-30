@@ -117,6 +117,7 @@ public class PredictionDisplayPresenter extends AFXMLPresenter
 					final boolean hasError = this.hasError(errorMat);
 					final double[] buffer = originalMat.get(row, col);
 
+					// if error is there and predicted > Green
 					if (hasError && p > 0.75)
 					{
 						buffer[1] = 255;
@@ -128,17 +129,17 @@ public class PredictionDisplayPresenter extends AFXMLPresenter
 						buffer[2] = 255;
 					}
 
-					// if error is not there but predicted > Red
+					// if error is not there but predicted > Blue
 					else if (!hasError && p > 0.75)
 					{
 						buffer[0] = 255;
 					}
 
-					// if error is not there and predicted > Green
-					else if (!hasError && p <= 0.75)
-					{
-						buffer[1] = 255;
-					}
+					// if error is not there and not predicted > Green
+					//					else if (!hasError && p <= 0.75)
+					//					{
+					//						buffer[1] = 255;
+					//					}
 
 					originalMat.put(row, col, buffer);
 				}

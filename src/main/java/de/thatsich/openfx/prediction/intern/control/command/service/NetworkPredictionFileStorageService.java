@@ -74,8 +74,6 @@ public class NetworkPredictionFileStorageService extends AFileStorageService<INe
 
 		try
 		{
-
-
 			final Size size = modified.size();
 			this.log.info("whata " + size);
 			final IError[][] errors = prediction.errors().get();

@@ -8,7 +8,6 @@ import de.thatsich.core.AConfigurationService;
  */
 public class BinaryPredictionConfigService extends AConfigurationService
 {
-
 	/**
 	 *
 	 */
