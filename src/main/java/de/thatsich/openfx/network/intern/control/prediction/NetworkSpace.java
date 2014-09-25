@@ -91,6 +91,7 @@ public class NetworkSpace implements INetworkSpace
 		this.log.info("Prepared error generation.");
 
 		final List<ErrorClass> errorClasses = new LinkedList<>();
+
 		for (IErrorGenerator errorGenerator : errorGenerators)
 		{
 			final String errorClassName = errorGenerator.getName();

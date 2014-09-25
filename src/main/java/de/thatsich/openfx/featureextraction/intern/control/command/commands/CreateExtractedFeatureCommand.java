@@ -17,6 +17,7 @@ import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfDouble;
 import org.opencv.core.MatOfFloat;
+import org.opencv.core.Size;
 
 import java.util.List;
 
@@ -55,6 +56,7 @@ public class CreateExtractedFeatureCommand extends ACommand<IFeature>
 		final int rows = originalErrorSplit[0].length;
 		this.log.info("Prepared size cols = " + cols + ", rows = " + rows);
 
+		final Size singleDimension = new Size(1, 1);
 		try
 		{
 			for (int col = 0; col < cols; col++)
@@ -64,7 +66,11 @@ public class CreateExtractedFeatureCommand extends ACommand<IFeature>
 					final MatOfFloat featureVector = this.featureExtractor.extractFeature(originalErrorSplit[col][row]);
 					final MatOfDouble featureVectorAsDouble = new MatOfDouble();
 					featureVector.convertTo(featureVectorAsDouble, CvType.CV_64F);
-					Core.normalize(featureVectorAsDouble, featureVectorAsDouble);
+
+					if (!featureVectorAsDouble.size().equals(singleDimension))
+					{
+						Core.normalize(featureVectorAsDouble, featureVectorAsDouble);
+					}
 					final List<Double> featureVectorAsList = featureVectorAsDouble.toList();
 
 					final boolean isPositive = Core.sumElems(errorSplit[col][row]).val[0] != 0;

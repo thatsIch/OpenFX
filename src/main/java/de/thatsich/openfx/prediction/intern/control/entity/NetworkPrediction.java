@@ -35,8 +35,6 @@ public class NetworkPrediction implements INetworkPrediction
 		this.errorClasses.set(errorClasses);
 		this.errorPredictionMat.set(errorPredictionMat);
 
-		System.out.println("Set splits");
-
 		this.calcTrueFalsePositiveNegative(errorSplit, errorPredictionMat);
 	}
 

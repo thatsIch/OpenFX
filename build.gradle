@@ -13,11 +13,6 @@ repositories {
     // Use 'maven central' for resolving your dependencies.
     // You can declare any Maven/Ivy/file repository here.
     mavenCentral()
-
-    // for objectDB you need additional maven
-    maven {
-        url "http://m2.objectdb.com"
-    }
 }
 
 // In this section you declare the dependencies for your production and test code

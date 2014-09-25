@@ -1,31 +1,21 @@
 package de.thatsich.openfx.prediction.intern.control.evaluation;
 
 /**
- * Contains the result of how many
- * - true positive
- * - false positive
- * - true negative
- * - false negative
+ * Contains the result of how many - true positive - false positive - true negative - false negative
  *
- * a prediction had. Can evaluate them
- * with simple precision and recall functions
+ * a prediction had. Can evaluate them with simple precision and recall functions
  *
- * Usage:
- * pr = new PrecisionRecall(int truePositive, int falsePositive, int
- * trueNegative, int falseNegative);
- * pr.precision();
- * pr.recall();
- * pr.specificity();
- * pr.accuracy();
+ * Usage: pr = new PrecisionRecall(int truePositive, int falsePositive, int trueNegative, int falseNegative);
+ * pr.precision(); pr.recall(); pr.specificity(); pr.accuracy();
  *
  * @author Minh
  */
 public class PrecisionRecall
 {
+
 	/**
-	 * PPV (positive predictive value)
-	 * Precision is the probability that a (randomly selected) retrieved
-	 * document is relevant.
+	 * PPV (positive predictive value) Precision is the probability that a (randomly selected) retrieved document is
+	 * relevant.
 	 *
 	 * @param truePositive  Correct Result
 	 * @param falsePositive Unexpected Result
@@ -34,7 +24,7 @@ public class PrecisionRecall
 	 *
 	 * @return precision
 	 */
-	public double precision(int truePositive, int falsePositive, int trueNegative, int falseNegative)
+	public double precision(long truePositive, long falsePositive, long trueNegative, long falseNegative)
 	{
 		if (truePositive + falsePositive == 0)
 		{
@@ -47,8 +37,7 @@ public class PrecisionRecall
 	}
 
 	/**
-	 * NPV (negative predictive value)
-	 * Recall is the probability that a (randomly selected) relevant document is
+	 * NPV (negative predictive value) Recall is the probability that a (randomly selected) relevant document is
 	 * retrieved in a search.
 	 *
 	 * @param truePositive  Correct Result
@@ -58,14 +47,20 @@ public class PrecisionRecall
 	 *
 	 * @return recall
 	 */
-	public double recall(int truePositive, int falsePositive, int trueNegative, int falseNegative)
+	public double recall(long truePositive, long falsePositive, long trueNegative, long falseNegative)
 	{
-		return 1.0 * truePositive / (truePositive + falseNegative);
+		if (truePositive + falseNegative == 0)
+		{
+			return 0;
+		}
+		else
+		{
+			return 1.0 * truePositive / (truePositive + falseNegative);
+		}
 	}
 
 	/**
-	 * SPC (Specificity or TrueNegativeRate)
-	 * Specificity relates to the test's ability to identify negative results.
+	 * SPC (Specificity or TrueNegativeRate) Specificity relates to the test's ability to identify negative results.
 	 *
 	 * @param truePositive  Correct Result
 	 * @param falsePositive Unexpected Result
@@ -74,15 +69,20 @@ public class PrecisionRecall
 	 *
 	 * @return specificity
 	 */
-	public double specificity(int truePositive, int falsePositive, int trueNegative, int falseNegative)
+	public double specificity(long truePositive, long falsePositive, long trueNegative, long falseNegative)
 	{
-		return 1.0 * trueNegative / (trueNegative + falsePositive);
+		if (trueNegative + falsePositive == 0)
+		{
+			return 0;
+		}
+		else
+		{
+			return 1.0 * trueNegative / (trueNegative + falsePositive);
+		}
 	}
 
 	/**
-	 * ACC (Accuracy)
-	 * An accuracy of 100% means that the measured values are exactly the same
-	 * as the given values.
+	 * ACC (Accuracy) An accuracy of 100% means that the measured values are exactly the same as the given values.
 	 *
 	 * @param truePositive  Correct Result
 	 * @param falsePositive Unexpected Result
@@ -91,9 +91,16 @@ public class PrecisionRecall
 	 *
 	 * @return accuracy
 	 */
-	public double accuracy(int truePositive, int falsePositive, int trueNegative, int falseNegative)
+	public double accuracy(long truePositive, long falsePositive, long trueNegative, long falseNegative)
 	{
-		return 1.0 * (truePositive + trueNegative) / (truePositive + trueNegative + falsePositive + falseNegative);
+		if (truePositive + trueNegative + falsePositive + falseNegative == 0)
+		{
+			return 0;
+		}
+		else
+		{
+			return 1.0 * (truePositive + trueNegative) / (truePositive + trueNegative + falsePositive + falseNegative);
+		}
 	}
 
 	/**
@@ -110,8 +117,7 @@ public class PrecisionRecall
 	}
 
 	/**
-	 * F Measure
-	 * harmonic mean of precision and recall
+	 * F Measure harmonic mean of precision and recall
 	 *
 	 * @param precision Precision
 	 * @param recall    Recall
@@ -121,12 +127,15 @@ public class PrecisionRecall
 	 */
 	public double f(double precision, double recall, double beta)
 	{
-		if (beta < 0)
-		{
-			return -1;
-		}
 		final double betasquare = beta * beta;
-		return (1 + betasquare) * precision * recall / (betasquare * precision + recall);
+		if (betasquare * precision + recall == 0)
+		{
+			return 0;
+		}
+		else
+		{
+			return (1 + betasquare) * precision * recall / (betasquare * precision + recall);
+		}
 	}
 
 	/**
