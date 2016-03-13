@@ -33,17 +33,17 @@ public abstract class AFXMLView implements IFXMLView
 	 * ==================================================
 	 */
 	@Override
-	public Parent getRoot()
+	public Parent getView()
 	{
 		// lazy loading
 		if (this.pane == null)
 		{
 			// fetch FXML
 			final String fxml = this.getFXMLName();
-			URL urlFXML = this.getClass().getResource(fxml);
+			final URL urlFXML = this.getClass().getResource(fxml);
 			if (urlFXML == null)
 			{
-				throw new IllegalStateException("Could not find urlFXML");
+				throw new IllegalStateException("Could not find URL for '" + fxml + "'");
 			}
 
 			// retrieve FXML
@@ -79,7 +79,7 @@ public abstract class AFXMLView implements IFXMLView
 
 	/**
 	 * applyCSSIfPossible
-	 * checks if CSS File is avaiable and applies it
+	 * checks if CSS File is available and applies it
 	 *
 	 * @param parent Node which CSS is to be applied
 	 */
