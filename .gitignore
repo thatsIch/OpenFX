@@ -1,4 +1,26 @@
-.gradle
-.idea
-
-io/
+# exclude all
+/*
+
+# include important folders
+# need gradle
+!gradle/
+!gradlew
+!gradlew.bat
+!build.gradle
+!gradle.properties
+
+# include markdowns
+!README.md
+!LICENSE
+!CONTRIBUTING.md
+
+# include sourcecode
+!src/
+
+# include git important files
+!.gitmodules
+!.gitignore
+
+# libs and DLLs are required since no Java Bindings with auto installation in there
+!libs/
+!dll/
