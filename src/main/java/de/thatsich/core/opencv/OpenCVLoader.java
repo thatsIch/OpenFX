@@ -38,25 +38,17 @@ public class OpenCVLoader
 
 	private static void loadFromFileSystem(String libName) throws Exception
 	{
-		System.out.println("Try loading CV-Lib from FileSystem.");
-		try
-		{
-			System.loadLibrary(libName);
-			System.out.println("Loaded OpenCV-Lib from FileSystem.");
-		}
-		catch (Exception e)
-		{
-			System.out.println("Could not retrieve from FileSystem.");
-			throw new Exception("Could not retrieve from FileSystem.");
-		}
+		System.out.println("Try loading CV-Lib '" + libName + "' from FileSystem.");
+		System.loadLibrary(libName);
+		System.out.println("Loaded OpenCV-Lib '" + libName + "' from FileSystem.");
 	}
 
 	private static void loadFromJar(String libName)
 	{
 		try
 		{
-			System.out.println("Try loading CV-Lib from JAR.");
-			final InputStream is = OpenCVLoader.class.getClass().getResourceAsStream("/de/thatsich/core/opencv/" + libName + ".dll");
+            System.out.println("Try loading CV-Lib '" + libName + "' from JAR.");
+            final InputStream is = OpenCVLoader.class.getClass().getResourceAsStream("/de/thatsich/core/opencv/" + libName + ".dll");
 			final byte[] buffer = new byte[1024];
 			int read;
 			final File temp = File.createTempFile(libName, ".dll");

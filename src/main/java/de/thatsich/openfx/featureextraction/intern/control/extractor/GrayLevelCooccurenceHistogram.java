@@ -97,4 +97,8 @@ public class GrayLevelCooccurenceHistogram extends AFeatureExtractor implements 
 	{
 		return col < col - 1;
 	}
+
+	private int getGrayLevelOfImageAtPos(Mat image, int row, int col) {
+		return (int) image.get(row, col)[0];
+	}
 }

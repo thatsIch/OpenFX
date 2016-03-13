@@ -2,6 +2,7 @@ package de.thatsich.openfx.opencv.extractor;
 
 import de.thatsich.core.opencv.OpenCVLoader;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureExtractor;
+import org.assertj.core.api.Assertions;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,10 +36,12 @@ public abstract class AFeatureExtractorTest
 		OpenCVLoader.loadLibrary();
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testExtractFeature_NullImage_ShouldThrowException()
 	{
-		extractor.extractFeature(null);
+		Assertions
+				.assertThatExceptionOfType(IllegalArgumentException.class)
+				.isThrownBy(() -> extractor.extractFeature(null));
 	}
 
 	@Test(expected = IllegalArgumentException.class)

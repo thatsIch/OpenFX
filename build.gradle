@@ -21,6 +21,10 @@ targetCompatibility = 1.8
 
 // In this section you declare where to find the dependencies of your project
 repositories {
+    // use local maven first
+    mavenLocal()
+    // use jcenter first since it is faster and _should_ have all stuff Maven also has
+    jcenter()
     // Use 'maven central' for resolving your dependencies.
     // You can declare any Maven/Ivy/file repository here.
     mavenCentral()
@@ -130,4 +134,8 @@ idea {
 
 task wrapper(type: Wrapper) {
     gradleVersion = '2.11'
+}
+
+tasks.withType(Test) {
+    systemProperty "java.library.path", "dll"
 }

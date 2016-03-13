@@ -1,13 +1,11 @@
 package de.thatsich.openfx.opencv.extractor;
 
-import static org.junit.Assert.assertEquals;
-
+import de.thatsich.openfx.featureextraction.intern.control.extractor.GrayLevelCooccurenceHistogram;
+import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.opencv.core.MatOfInt;
-
-import de.thatsich.openfx.featureextraction.intern.control.extractor.GrayLevelCooccurenceHistogram;
 
 @RunWith(JUnit4.class)
 public class GrayLevelCooccurenceHistogramTest extends AFeatureExtractorTest {
@@ -18,16 +16,14 @@ public class GrayLevelCooccurenceHistogramTest extends AFeatureExtractorTest {
 	
 	@Test
 	public void test_ExtractFeature_ShouldPass() {
-		String test = super.extractor.extractFeature(eye2x2).dump();
+		final String actual = super.extractor.extractFeature(eye2x2).dump();
 		
-		int[] compareHistogram = new int[256];
-		compareHistogram[0] = 1;
-		compareHistogram[1] = 1;
-		MatOfInt compareMat = new MatOfInt(compareHistogram);
-		String compare = compareMat.dump();
-		
-		assertEquals(test + " ~= " + compare, test, compare);
+		final int[] compareHistogram = new int[256];
+		compareHistogram[0] = 2;
+		compareHistogram[1] = 4;
+		final MatOfInt compareMat = new MatOfInt(compareHistogram);
+		final String expected = compareMat.dump();
+
+		Assertions.assertThat(actual).isEqualTo(expected);
 	}
-	
-	
 }
