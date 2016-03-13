@@ -61,7 +61,7 @@ public class OpenFX extends GuiceApplication
 			throw new NullPointerException("View not instantiated.");
 		}
 
-		final Parent root = this.view.getRoot();
+		final Parent root = this.view.getView();
 		if (root == null)
 		{
 			throw new NullPointerException("Root damaged.");

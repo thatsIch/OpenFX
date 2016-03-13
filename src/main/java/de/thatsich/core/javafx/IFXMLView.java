@@ -10,5 +10,5 @@ import javafx.scene.Parent;
  */
 public abstract interface IFXMLView
 {
-	Parent getRoot();
+	Parent getView();
 }

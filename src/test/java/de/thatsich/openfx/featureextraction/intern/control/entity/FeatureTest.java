@@ -1,14 +1,12 @@
 package de.thatsich.openfx.featureextraction.intern.control.entity;
 
+import com.google.common.collect.Lists;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeature;
 import de.thatsich.openfx.featureextraction.api.control.entity.IFeatureVector;
-import org.jukito.JukitoRunner;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -16,7 +14,6 @@ import java.util.List;
  * @author thatsIch
  * @since 06.06.2014.
  */
-@RunWith(JukitoRunner.class)
 public class FeatureTest
 {
 	private final FeatureConfig thisConfig;
@@ -38,8 +35,8 @@ public class FeatureTest
 		this.vectorWith1 = new LinkedList<>();
 		this.vectorWith2 = new LinkedList<>();
 
-		List<Double> floats1 = Arrays.asList(1D);
-		List<Double> floats2 = Arrays.asList(2D);
+		List<Double> floats1 = Lists.newArrayList(1D);
+		List<Double> floats2 = Lists.newArrayList(2D);
 
 		this.vectorWith1.add(new FeatureVector(floats1, false));
 		this.vectorWith2.add(new FeatureVector(floats2, false));

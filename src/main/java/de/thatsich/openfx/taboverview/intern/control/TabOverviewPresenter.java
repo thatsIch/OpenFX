@@ -95,17 +95,17 @@ public class TabOverviewPresenter implements Initializable
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle)
 	{
-		this.paneImageProcessing.setTop(this.imageInputView.getRoot());
-		this.paneImageProcessing.setLeft(this.imageListView.getRoot());
-		this.paneImageProcessing.setCenter(this.imageDisplayView.getRoot());
+		this.paneImageProcessing.setTop(this.imageInputView.getView());
+		this.paneImageProcessing.setLeft(this.imageListView.getView());
+		this.paneImageProcessing.setCenter(this.imageDisplayView.getView());
 
-		this.paneErrorGeneration.setTop(this.errorInputView.getRoot());
-		this.paneErrorGeneration.setLeft(this.errorListView.getRoot());
-		this.paneErrorGeneration.setCenter(this.errorDisplayView.getRoot());
+		this.paneErrorGeneration.setTop(this.errorInputView.getView());
+		this.paneErrorGeneration.setLeft(this.errorListView.getView());
+		this.paneErrorGeneration.setCenter(this.errorDisplayView.getView());
 
-		this.paneFeatureExtraction.setTop(this.featureInputView.getRoot());
-		this.paneFeatureExtraction.setLeft(this.featureListView.getRoot());
-		this.paneFeatureExtraction.setCenter(this.featureDisplayView.getRoot());
+		this.paneFeatureExtraction.setTop(this.featureInputView.getView());
+		this.paneFeatureExtraction.setLeft(this.featureListView.getView());
+		this.paneFeatureExtraction.setCenter(this.featureDisplayView.getView());
 
 		//		this.panePreProcessing.setTop(this.preProcessingInputView.getRoot());
 		//		this.panePreProcessing.setLeft(this.preProcessingListView.getRoot());
@@ -115,16 +115,16 @@ public class TabOverviewPresenter implements Initializable
 		//		this.panePreProcessed.setLeft(this.preProcessedListView.getRoot());
 		//		this.panePreProcessed.setCenter(this.preProcessedDisplayView.getRoot());
 
-		this.paneClassification.setTop(this.classificationInputView.getRoot());
-		this.paneClassification.setLeft(this.classificationListView.getRoot());
-		this.paneClassification.setCenter(this.classificationDisplayView.getRoot());
+		this.paneClassification.setTop(this.classificationInputView.getView());
+		this.paneClassification.setLeft(this.classificationListView.getView());
+		this.paneClassification.setCenter(this.classificationDisplayView.getView());
 
-		this.panePrediction.setTop(this.predictionInputView.getRoot());
-		this.panePrediction.setLeft(this.predictionListView.getRoot());
-		this.panePrediction.setCenter(this.predictionDisplayView.getRoot());
+		this.panePrediction.setTop(this.predictionInputView.getView());
+		this.panePrediction.setLeft(this.predictionListView.getView());
+		this.panePrediction.setCenter(this.predictionDisplayView.getView());
 
-		this.paneNetwork.setTop(this.networkInputView.getRoot());
-		this.paneNetwork.setLeft(this.networkListView.getRoot());
-		this.paneNetwork.setCenter(this.networkDisplayView.getRoot());
+		this.paneNetwork.setTop(this.networkInputView.getView());
+		this.paneNetwork.setLeft(this.networkListView.getView());
+		this.paneNetwork.setCenter(this.networkDisplayView.getView());
 	}
 }

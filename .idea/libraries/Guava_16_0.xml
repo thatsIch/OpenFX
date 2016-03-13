@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="Guava 16.0">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/src/main/resources/de/thatsich/core/libs/Guava 16/guava-16.0.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

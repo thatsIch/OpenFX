@@ -13,15 +13,15 @@ import org.opencv.core.Mat;
 public abstract class AFeatureExtractorTest
 {
 
-	protected final IFeatureExtractor extractor;
-	protected final Mat zero1x1 = Mat.zeros(1, 1, CvType.CV_8U);
-	protected final Mat one1x1 = Mat.ones(1, 1, CvType.CV_8U);
-	protected final Mat one3x3 = Mat.ones(3, 3, CvType.CV_8U);
-	protected final Mat eye2x2 = Mat.eye(2, 2, CvType.CV_8U);
-	protected final Mat eye3x3 = Mat.eye(3, 3, CvType.CV_8U);
-	protected final Mat eye3x3NotGrayScale = Mat.eye(3, 3, CvType.CV_8UC4);
+	final IFeatureExtractor extractor;
+	final Mat zero1x1 = Mat.zeros(1, 1, CvType.CV_8U);
+	final Mat one1x1 = Mat.ones(1, 1, CvType.CV_8U);
+	final Mat one3x3 = Mat.ones(3, 3, CvType.CV_8U);
+	final Mat eye2x2 = Mat.eye(2, 2, CvType.CV_8U);
+	final Mat eye3x3 = Mat.eye(3, 3, CvType.CV_8U);
+	private final Mat eye3x3NotGrayScale = Mat.eye(3, 3, CvType.CV_8UC4);
 
-	public AFeatureExtractorTest(IFeatureExtractor extractor)
+	AFeatureExtractorTest(IFeatureExtractor extractor)
 	{
 		this.extractor = extractor;
 	}
